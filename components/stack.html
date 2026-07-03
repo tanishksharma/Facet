@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" data-theme="sand">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Stack · Facet</title>
+  <meta name="description" content="The Facet stack: vertical flow with themed gaps. Live demo and copy-paste snippet.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23EDE5C0'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%235F9E44'/></svg>">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+
+  <!-- Docs-only: visible blocks so the gaps between them can be seen. -->
+  <style>
+    .demo-block {
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-small);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-small);
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="container">
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding-block: var(--space-4);">
+      <a href="/">&larr; Facet</a>
+      <button class="btn btn-ghost btn-small" data-mode-toggle data-tip-below
+              data-tip="One attribute on the html tag flips the whole page">Light / dark</button>
+    </nav>
+  </header>
+
+  <main id="main" class="container stack-loose" style="padding-block: var(--space-7);">
+
+    <section class="stack">
+      <h1>Stack</h1>
+      <p>
+        Vertical flow with themed gaps. A stack says one thing: these sit
+        above and below each other, this far apart. The gaps come from the
+        spacing tokens, so a theme change restyles the rhythm of the page,
+        not just the components inside it.
+      </p>
+    </section>
+
+    <section class="stack">
+      <h2>Three gaps, live</h2>
+
+      <h3>.stack-tight</h3>
+      <div class="stack-tight">
+        <p class="demo-block">Lines that belong together</p>
+        <p class="demo-block">like a label and its field</p>
+        <p class="demo-block">gap: --space-2</p>
+      </div>
+
+      <h3>.stack</h3>
+      <div class="stack">
+        <p class="demo-block">The default flow</p>
+        <p class="demo-block">for content inside a section</p>
+        <p class="demo-block">gap: --space-4</p>
+      </div>
+
+      <h3>.stack-loose</h3>
+      <div class="stack-loose">
+        <p class="demo-block">Whole sections of a page</p>
+        <p class="demo-block">gap: --space-7</p>
+      </div>
+    </section>
+
+    <section class="stack">
+      <h2>Snippet</h2>
+      <pre id="snippet"><code>&lt;section class="stack"&gt;
+  &lt;h2&gt;A heading&lt;/h2&gt;
+  &lt;p&gt;Content flows down with themed gaps.&lt;/p&gt;
+  &lt;button class="btn btn-primary"&gt;An action&lt;/button&gt;
+&lt;/section&gt;
+
+&lt;!-- Other gaps --&gt;
+&lt;div class="stack-tight"&gt; label + field pairs &lt;/div&gt;
+&lt;main class="stack-loose"&gt; page sections &lt;/main&gt;</code></pre>
+      <p>
+        <button class="btn btn-primary" data-copy="#snippet"
+                data-tip="Copies the snippet to your clipboard" data-event="copy-snippet">Copy snippet</button>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="container" style="padding-block: var(--space-6); border-top: var(--border-width) solid var(--border);">
+    <small><a href="/">Facet</a> &middot; stack</small>
+  </footer>
+</body>
+</html>

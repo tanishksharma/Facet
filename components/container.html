@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" data-theme="sand">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Container · Facet</title>
+  <meta name="description" content="The Facet container: a page-width wrapper with themed padding. Live demo and copy-paste snippet.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23EDE5C0'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%235F9E44'/></svg>">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+
+  <!-- Docs-only: paint the demo containers so their edges are visible. -->
+  <style>
+    .demo {
+      background: var(--surface);
+      border: var(--border-width) dashed var(--border);
+      border-radius: var(--radius-small);
+      padding-block: var(--space-3);
+      font-size: var(--text-small);
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="container">
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding-block: var(--space-4);">
+      <a href="/">&larr; Facet</a>
+      <button class="btn btn-ghost btn-small" data-mode-toggle data-tip-below
+              data-tip="One attribute on the html tag flips the whole page">Light / dark</button>
+    </nav>
+  </header>
+
+  <main id="main" class="container stack-loose" style="padding-block: var(--space-7);">
+
+    <section class="stack">
+      <h1>Container</h1>
+      <p>
+        The page-width wrapper. It centers content, caps its width, and keeps
+        themed side padding, so one theme flip restyles the layout too. Use it
+        directly on semantic tags: <code>main</code>, <code>header</code>,
+        <code>footer</code>, <code>section</code>. Never nest a container in a
+        container.
+      </p>
+    </section>
+
+    <section class="stack">
+      <h2>Every width, live</h2>
+      <p>The dashed edges show each container's bounds inside this page.</p>
+      <div class="container-narrow demo">.container-narrow &middot; 40rem &middot; prose, forms, calculators</div>
+      <div class="container demo">.container &middot; 64rem &middot; most pages</div>
+      <div class="container-wide demo">.container-wide &middot; 80rem &middot; dashboards, galleries</div>
+      <div class="container-full demo">.container-full &middot; edge to edge, side padding kept</div>
+    </section>
+
+    <section class="stack">
+      <h2>Snippet</h2>
+      <pre id="snippet"><code>&lt;main class="container"&gt;
+  Page content sits here, centered, capped at 64rem,
+  with themed side padding.
+&lt;/main&gt;
+
+&lt;!-- Other widths --&gt;
+&lt;main class="container-narrow"&gt; prose, forms &lt;/main&gt;
+&lt;main class="container-wide"&gt; dashboards &lt;/main&gt;
+&lt;main class="container-full"&gt; edge to edge &lt;/main&gt;</code></pre>
+      <p>
+        <button class="btn btn-primary" data-copy="#snippet"
+                data-tip="Copies the snippet to your clipboard" data-event="copy-snippet">Copy snippet</button>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="container" style="padding-block: var(--space-6); border-top: var(--border-width) solid var(--border);">
+    <small><a href="/">Facet</a> &middot; container</small>
+  </footer>
+</body>
+</html>

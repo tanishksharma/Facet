@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" data-theme="sand">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Snap section · Facet</title>
+  <meta name="description" content="The Facet snap section: full-viewport scroll-snap areas, the calculator page skeleton. Live demo and copy-paste snippet.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23EDE5C0'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%235F9E44'/></svg>">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+
+  <!-- Docs-only: shrink the snap demo into a framed miniature viewport,
+       so the page itself stays an ordinary scrolling page. The .snap
+       container's height token is what makes this possible. -->
+  <style>
+    .demo-viewport {
+      height: 24rem;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-medium);
+      overflow: hidden;               /* clips the snap area to the frame */
+      box-shadow: var(--shadow-raised);
+    }
+    .demo-viewport .snap { height: 100%; }
+    .demo-viewport .snap-section { min-height: 24rem; }
+    .demo-viewport .snap-section:nth-child(even) { background: var(--surface); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="container">
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding-block: var(--space-4);">
+      <a href="/">&larr; Facet</a>
+      <button class="btn btn-ghost btn-small" data-mode-toggle data-tip-below
+              data-tip="One attribute on the html tag flips the whole page">Light / dark</button>
+    </nav>
+  </header>
+
+  <main id="main" class="container stack-loose" style="padding-block: var(--space-7);">
+
+    <section class="stack">
+      <h1>Snap section</h1>
+      <p>
+        Full-viewport scroll-snap areas: the calculator page skeleton. The
+        page scrolls one full screen at a time — intro, then inputs, then
+        results — and each section centers its content at a readable width.
+        The <code>.snap</code> wrapper exists to enable scrolling, which is
+        the one reason the wrapper law allows a container in a container.
+      </p>
+    </section>
+
+    <section class="stack">
+      <h2>Live, in miniature</h2>
+      <p>Scroll inside the frame. On a real page the frame is the viewport.</p>
+      <div class="demo-viewport">
+        <div class="snap">
+          <section class="snap-section">
+            <h3 style="text-align: center;">Intro</h3>
+            <p style="text-align: center;">What this calculator tells you, in one line.</p>
+          </section>
+          <section class="snap-section">
+            <h3 style="text-align: center;">Inputs</h3>
+            <p style="text-align: center;">Number inputs and sliders, prefilled with examples.</p>
+          </section>
+          <section class="snap-section">
+            <h3 style="text-align: center;">Results</h3>
+            <p style="text-align: center;">A verdict-first result block, recalculating live.</p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="stack">
+      <h2>Snippet</h2>
+      <pre id="snippet"><code>&lt;main class="snap"&gt;
+  &lt;section class="snap-section"&gt;
+    &lt;h1&gt;The intro screen&lt;/h1&gt;
+    &lt;p&gt;One line on what this page does.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;section class="snap-section"&gt;
+    Inputs go here.
+  &lt;/section&gt;
+  &lt;section class="snap-section"&gt;
+    Live results go here.
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre>
+      <p>
+        <button class="btn btn-primary" data-copy="#snippet"
+                data-tip="Copies the snippet to your clipboard" data-event="copy-snippet">Copy snippet</button>
+      </p>
+      <p>
+        Scroll snapping honours <code>prefers-reduced-motion</code>: smooth
+        scrolling collapses to instant jumps, the snapping itself stays.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="container" style="padding-block: var(--space-6); border-top: var(--border-width) solid var(--border);">
+    <small><a href="/">Facet</a> &middot; snap section</small>
+  </footer>
+</body>
+</html>

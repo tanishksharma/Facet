@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-theme="sand">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Button · Facet</title>
+  <meta name="description" content="The Facet button: primary, secondary and ghost variants in three sizes. Live demo and copy-paste snippet.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23EDE5C0'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%235F9E44'/></svg>">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+
+  <!-- Docs-only: rows that lay the button specimens side by side. -->
+  <style>
+    .demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="container">
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding-block: var(--space-4);">
+      <a href="/">&larr; Facet</a>
+      <button class="btn btn-ghost btn-small" data-mode-toggle data-tip-below
+              data-tip="One attribute on the html tag flips the whole page">Light / dark</button>
+    </nav>
+  </header>
+
+  <main id="main" class="container-narrow stack-loose" style="padding-block: var(--space-7);">
+
+    <section class="stack">
+      <h1>Button</h1>
+      <p>
+        Three variants, three sizes. One primary per screen — it carries the
+        accent and the screen's main verb. Everything else is secondary, and
+        quiet actions inside busy areas go ghost. A <code>.btn</code> works
+        the same on <code>&lt;button&gt;</code> and on <code>&lt;a&gt;</code>.
+      </p>
+    </section>
+
+    <section class="stack">
+      <h2>Variants</h2>
+      <div class="demo-row">
+        <button class="btn btn-primary" data-tip="The one main action on a screen">Primary</button>
+        <button class="btn btn-secondary" data-tip="Every other action">Secondary</button>
+        <button class="btn btn-ghost" data-tip="Quiet actions inside busy areas">Ghost</button>
+      </div>
+    </section>
+
+    <section class="stack">
+      <h2>Sizes</h2>
+      <div class="demo-row">
+        <button class="btn btn-primary btn-small" data-tip="Compact contexts, keeps a 44px touch target on phones">Small</button>
+        <button class="btn btn-primary" data-tip="The default size">Default</button>
+        <button class="btn btn-primary btn-large" data-tip="Hero and intro screens">Large</button>
+      </div>
+    </section>
+
+    <section class="stack">
+      <h2>States</h2>
+      <p>Hover and press any button above; tab to one for the focus ring. Disabled:</p>
+      <div class="demo-row">
+        <button class="btn btn-primary" disabled>Primary</button>
+        <button class="btn btn-secondary" disabled>Secondary</button>
+        <button class="btn btn-ghost" disabled>Ghost</button>
+      </div>
+    </section>
+
+    <section class="stack">
+      <h2>As a link</h2>
+      <div class="demo-row">
+        <a class="btn btn-secondary" href="/" data-tip="A link dressed as a button">Back to the library</a>
+      </div>
+    </section>
+
+    <section class="stack">
+      <h2>Snippet</h2>
+      <pre id="snippet"><code>&lt;button class="btn btn-primary" data-event="calc-run"
+        data-tip="Runs the calculation"&gt;Calculate&lt;/button&gt;
+
+&lt;button class="btn btn-secondary"&gt;Start over&lt;/button&gt;
+&lt;button class="btn btn-ghost"&gt;Skip&lt;/button&gt;
+
+&lt;!-- Sizes --&gt;
+&lt;button class="btn btn-primary btn-small"&gt;Small&lt;/button&gt;
+&lt;button class="btn btn-primary btn-large"&gt;Large&lt;/button&gt;</code></pre>
+      <p>
+        <button class="btn btn-primary" data-copy="#snippet"
+                data-tip="Copies the snippet to your clipboard" data-event="copy-snippet">Copy snippet</button>
+      </p>
+      <p>
+        The <code>data-event</code> attribute is the analytics hook: name the
+        button's key action there and any analytics tool can listen for it.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="container" style="padding-block: var(--space-6); border-top: var(--border-width) solid var(--border);">
+    <small><a href="/">Facet</a> &middot; button</small>
+  </footer>
+</body>
+</html>
