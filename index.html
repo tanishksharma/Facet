@@ -53,8 +53,15 @@
         No React, no build step, no npm install, never minified. This site is
         built with it, from it, and doubles as its documentation.
       </p>
-      <pre id="snippet-consume"><code>&lt;link rel="stylesheet" href="https://facet-lib.vercel.app/lib/facet.css"&gt;
-&lt;script src="https://facet-lib.vercel.app/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
+      <pre id="snippet-consume"><code>&lt;link rel="stylesheet" href="https://[domain]/lib/facet.css"&gt;
+&lt;script src="https://[domain]/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
+      <!-- The site itself always knows its own domain: fill it in, so the
+           copied snippet points at wherever this page is actually hosted. -->
+      <script>
+        document.getElementById("snippet-consume").textContent =
+          document.getElementById("snippet-consume").textContent
+            .replaceAll("https://[domain]", location.origin);
+      </script>
       <p>
         <button class="btn btn-primary" data-copy="#snippet-consume"
                 data-tip="Copies the two tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
