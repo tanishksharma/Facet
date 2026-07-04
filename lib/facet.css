@@ -23,6 +23,11 @@
     <html data-theme="sand">               Sand, light
     <html data-theme="sand" data-mode="dark">   Sand, dark
 
+  The same attributes work on any element, not just <html>: put
+  data-mode="dark" on a section and only that subtree flips — that is how
+  the library site shows light and dark side by side. Tokens are inherited
+  custom properties, so the nearest element carrying the attribute wins.
+
   Every color below is a semantic token (--background, --surface, --text...),
   so a theme swaps values in one block and the entire page restyles itself.
 
@@ -53,9 +58,11 @@
 
    The non-color tokens (type, spacing, shape, elevation, motion, focus)
    live here once and are shared by every theme; themes override only what
-   they change.
+   they change. [data-mode="light"] shares this block so a light subtree
+   can sit inside a dark page.
 */
-:root {
+:root,
+[data-mode="light"] {
 
   /* ----- Colors: core palette ----- */
   --background: #FFFFFF;      /* paper: the page itself */
@@ -147,7 +154,7 @@
    actions become paper on black. Only color tokens change; type, spacing,
    shape and motion carry over.
 */
-html[data-mode="dark"] {
+[data-mode="dark"] {
   --background: #121214;
   --surface: #1B1B1F;
   --text: #F4F4F5;
@@ -175,7 +182,7 @@ html[data-mode="dark"] {
    Minecraft desert biome blocks, with the ink darkened for AA contrast.
    Parked, not deleted: available whenever a project wants it.
 */
-html[data-theme="sand"] {
+[data-theme="sand"] {
   --background: #EDE5C0;      /* sand */
   --surface: #F6F0D8;         /* smooth sandstone */
   --text: #33291A;            /* dark earth */
@@ -201,7 +208,7 @@ html[data-theme="sand"] {
    Theme · Sand (dark). Composes: <html data-theme="sand" data-mode="dark">.
    Dark earth ground, sand-colored ink, cactus stays the accent.
 */
-html[data-theme="sand"][data-mode="dark"] {
+[data-theme="sand"][data-mode="dark"] {
   --background: #211A0F;
   --surface: #2C2415;
   --text: #EFE7C8;
@@ -242,6 +249,14 @@ html[data-theme="sand"][data-mode="dark"] {
 /* The browser's own widgets (scrollbars, form controls) follow the mode. */
 html[data-mode="dark"] { color-scheme: dark; }
 html { color-scheme: light; }
+
+/* A themed subtree (the attributes on any element below <html>) paints its
+   own ground, so a dark panel on a light page reads as one. */
+body [data-mode],
+body [data-theme] {
+  background: var(--background);
+  color: var(--text);
+}
 
 
 /* ==========================================================================

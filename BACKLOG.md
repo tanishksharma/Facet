@@ -118,14 +118,66 @@ the plan.
 
 - [x] Header: wordmark, theme switcher, GitHub link
 - [x] Get-started strip: link and script tags, one copy button
-- [x] Tokens section: swatches, type scale, spacing, in the active theme
+- [x] Rules on the page, near the top, same text as CLAUDE.md and llms.txt
+- [x] Typography section: the scale as a real article — display, headings,
+      body, lists, quote, callout, small, caption — each block tagged with
+      its token
+- [x] Color section: the same mini-interface twice, light and dark side by
+      side, following the active theme (subtree theming via data-mode on
+      any element)
+- [x] Spacing section: real components on a tinted ground — control-row
+      gaps, card padding, stack gaps, section rhythm
+- [x] Shape, elevation and motion section
 - [x] Element wall: every built component live, grouped by layer
+- [x] Dividers between sections and wall entries
 - [x] Code + copy button per element, serialized from the live DOM
 - [x] Description per element as AI instructions, same text as file comments
 - [x] Variant and state chips flipping the live demo
 - [x] Theme switcher with URL state (?theme=, ?mode=)
 - [x] Sidebar index with anchors, search filtering the wall
+- [x] Scrollspy: the section on screen highlights in the sidebar
 - [ ] Playground: editable HTML box rendering live
 - [x] llms.txt at the root for AI crawlers
 - [ ] Style Mixer, later: axis controls that export a new theme
 - [ ] Skin Lab, later: all themes side by side across layouts
+
+## Site ideas · from researching other libraries' docs
+
+Ranked by value-to-effort for a single static page with vanilla JS.
+Sources: shadcn/ui, Tailwind, Radix, MUI, Bootstrap, daisyUI, Storybook,
+Primer, Carbon, Polaris, Spectrum, Open Props.
+
+- [ ] Click-to-copy tokens: every swatch and token name copies its
+      var(--name) on click (Open Props)
+- [ ] Section permalink anchors: hover a heading, copy a deep link
+      (Tailwind)
+- [ ] Keyboard-first search: "/" or Cmd+K focuses the wall search, arrow
+      keys jump between results (shadcn/ui)
+- [ ] Copy section as Markdown: per-component "copy for LLM" button,
+      companion to llms.txt (shadcn/ui, Tailwind v4)
+- [ ] Class reference table per component: every class, modifier and data
+      attribute with a one-liner — the HTML equivalent of a props table
+      (Radix, MUI)
+- [ ] Keyboard interaction table on interactive components: Tab, Enter,
+      Esc, arrows (Radix)
+- [ ] Do/Don't pairs: one right and one wrong mini-demo per component with
+      a one-sentence reason (Polaris)
+- [ ] Accessibility notes per component: ARIA behavior, contrast, screen
+      reader expectations in place (Carbon)
+- [ ] Live contrast badges: computed AA/AAA chips next to color pairs,
+      re-checked on theme switch (daisyUI)
+- [ ] Component status badges: alpha / beta / stable chip per wall entry
+      (Primer)
+- [ ] Viewport preview toggles: phone/tablet/desktop widths on each demo
+      (Storybook, shadcn/ui blocks)
+- [ ] Open in CodePen: one button that posts the snippet plus the two tags
+      to codepen.io/pen/define — no backend needed (MUI's sandbox links)
+- [ ] Cheatsheet strip: one dense searchable table of every class in the
+      library (Bootstrap cheatsheet)
+- [ ] Edit-on-GitHub link per component section (Primer, Tailwind)
+- [ ] Templates gallery: scaled live iframes of deck/card/document once
+      Layer 5 lands (Bootstrap examples)
+- [ ] Version switcher + changelog once /lib/v1/ exists (Bootstrap)
+- [ ] Theme generator: pick the five semantic colors, live-restyle the
+      page, export the CSS block, share via URL — the Style Mixer, staged
+      (daisyUI theme generator)

@@ -61,8 +61,22 @@
       gap: var(--space-3);
     }
     .docs-index ul { list-style: none; padding: 0; }
-    .docs-index a { text-decoration: none; color: var(--text-muted); font-size: var(--text-small); }
+    .docs-index a {
+      display: block;
+      padding-block: 2px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: var(--text-small);
+      border-left: var(--border-width-strong) solid transparent;
+      padding-left: var(--space-2);
+    }
     .docs-index a:hover { color: var(--text); }
+    /* Scrollspy: the section currently on screen lights up in the index. */
+    .docs-index a.is-current {
+      color: var(--text);
+      font-weight: var(--weight-strong);
+      border-left-color: var(--accent);
+    }
     .docs-index strong {
       font-size: var(--text-caption);
       text-transform: uppercase;
@@ -74,8 +88,15 @@
       .docs-index { position: static; max-height: none; }
     }
 
+    /* Dividers: every top-level block in the main column starts with a
+       hairline, so sections and wall entries read as separate sheets. */
+    #main > * + * {
+      border-top: var(--border-width) solid var(--border);
+      padding-top: var(--space-6);
+    }
+    section[id], article[id] { scroll-margin-top: var(--space-4); }
+
     /* One wall entry. */
-    .element { scroll-margin-top: var(--space-4); }
     .element .demo {
       background: var(--background);
       border: var(--border-width) dashed var(--border);
@@ -99,21 +120,63 @@
       color: var(--on-accent);
     }
 
-    /* Token specimens. */
-    .swatches { display: flex; flex-wrap: wrap; gap: var(--space-3); padding: 0; list-style: none; }
-    .swatches li { width: 8.5rem; font-size: var(--text-caption); }
-    .swatch {
-      height: var(--space-7);
+    /* Typography specimen: a real article, each block tagged with its token. */
+    .type-label {
+      display: block;
+      color: var(--text-muted);
+      font-size: var(--text-caption);
+      font-family: var(--font-mono);
+      margin-top: var(--space-1);
+    }
+    .callout {
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-left: var(--border-width-strong) solid var(--accent);
+      border-radius: var(--radius-small);
+      padding: var(--space-3) var(--space-4);
+      max-width: 65ch;
+    }
+
+    /* Color: the same mini-interface twice, light and dark side by side.
+       The panels carry data-mode, which facet.css applies to any subtree. */
+    .mode-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 56rem) { .mode-pair { grid-template-columns: 1fr; } }
+    .mode-panel {
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-medium);
+      padding: var(--space-5);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .swatch-row { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; list-style: none; }
+    .swatch-row li { font-size: var(--text-caption); font-family: var(--font-mono); }
+    .swatch-row .swatch {
+      height: var(--space-6);
+      width: var(--space-8);
       border: var(--border-width) solid var(--border);
       border-radius: var(--radius-small);
       margin-bottom: var(--space-1);
     }
-    .specimen { border-bottom: var(--border-width) solid var(--border); padding-block: var(--space-2); }
-    .specimen small { color: var(--text-muted); display: block; }
-    .space-bars { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
-    .space-bars li { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-caption); }
-    .space-bars .bar { height: var(--space-3); background: var(--accent); border-radius: var(--radius-small); }
-    .space-bars code { min-width: 6rem; }
+
+    /* Spacing: real components on a tinted ground, so padding and gaps
+       show up as the tint between solid pieces. */
+    .space-viz {
+      background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+      border-radius: var(--radius-medium);
+    }
+    .space-viz .demo-box { color: var(--text); }
+
+    .demo-box {
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-small);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-small);
+      color: var(--text-muted);
+    }
+
+    /* Shape and elevation tiles. */
     .shape-row { display: flex; flex-wrap: wrap; gap: var(--space-4); padding: 0; list-style: none; }
     .shape-row li { font-size: var(--text-caption); text-align: center; }
     .shape-row .tile {
@@ -132,14 +195,6 @@
     #container .demo > * {
       outline: var(--border-width) dashed var(--text-muted);
       padding-block: var(--space-2);
-      font-size: var(--text-small);
-      color: var(--text-muted);
-    }
-    .demo-box {
-      background: var(--surface);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--radius-small);
-      padding: var(--space-2) var(--space-3);
       font-size: var(--text-small);
       color: var(--text-muted);
     }
@@ -195,7 +250,7 @@
     </p>
   </section>
 
-  <!-- Sidebar index + the wall. -->
+  <!-- Sidebar index + the content. -->
   <div class="docs-layout container-wide">
 
     <aside class="docs-index" aria-label="Page index">
@@ -203,15 +258,22 @@
       <input id="wall-search" type="search" placeholder="Filter components"
              data-tip="Type to filter the element wall below" data-tip-below>
       <nav aria-label="Sections">
-        <strong>Layer 1</strong>
+        <strong>Manual</strong>
         <ul>
-          <li><a href="#tokens">Tokens</a></li>
+          <li><a href="#rules">Rules</a></li>
+        </ul>
+        <strong>Layer 1 · Tokens</strong>
+        <ul>
+          <li><a href="#typography">Typography</a></li>
+          <li><a href="#color">Color</a></li>
+          <li><a href="#spacing">Spacing</a></li>
+          <li><a href="#shape">Shape &amp; motion</a></li>
         </ul>
         <strong>Layer 2</strong>
         <ul>
           <li><a href="#base">Base styles</a></li>
         </ul>
-        <strong>Layer 3</strong>
+        <strong>Layer 3 · Components</strong>
         <ul>
           <li><a href="#container">Container</a></li>
           <li><a href="#stack">Stack</a></li>
@@ -223,9 +285,8 @@
           <li><a href="#result-block">Result block</a></li>
           <li><a href="#tooltip">Tooltip</a></li>
         </ul>
-        <strong>Manual</strong>
+        <strong>For machines</strong>
         <ul>
-          <li><a href="#rules">Rules</a></li>
           <li><a href="/llms.txt">llms.txt</a></li>
         </ul>
       </nav>
@@ -234,73 +295,312 @@
     <main id="main" class="stack-loose">
 
       <!-- =============================================================
-           LAYER 1 · TOKENS
+           RULES · the manual, right after the intro
+           Same text as CLAUDE.md in the repo and /llms.txt.
            ============================================================= -->
-      <section id="tokens" class="stack">
-        <h2>Tokens</h2>
+      <section id="rules" class="stack">
+        <h2>Rules</h2>
         <p>
-          Every design decision is a CSS variable named by its role, never
-          its value: <code>--surface</code>, not <code>--gray-100</code>.
-          A theme swaps the values in one block — the switcher in the header
-          does exactly that, and everything on this page re-renders,
-          layout containers included. Dark mode is a second attribute and
-          composes with every theme.
+          How this library is built, used and grown — up front, because the
+          rules are the product as much as the components are. The same
+          rules live in the repo as
+          <a href="https://github.com/tanishksharma/Facet/blob/main/CLAUDE.md">CLAUDE.md</a>
+          for AI builders and at <a href="/llms.txt">/llms.txt</a> as plain
+          text for crawlers.
         </p>
 
-        <h3>Color</h3>
-        <ul class="swatches">
-          <li><div class="swatch" style="background: var(--background)"></div><code>--background</code></li>
-          <li><div class="swatch" style="background: var(--surface)"></div><code>--surface</code></li>
-          <li><div class="swatch" style="background: var(--text)"></div><code>--text</code></li>
-          <li><div class="swatch" style="background: var(--text-muted)"></div><code>--text-muted</code></li>
-          <li><div class="swatch" style="background: var(--border)"></div><code>--border</code></li>
-          <li><div class="swatch" style="background: var(--accent)"></div><code>--accent</code></li>
-          <li><div class="swatch" style="background: var(--success)"></div><code>--success</code></li>
-          <li><div class="swatch" style="background: var(--warning)"></div><code>--warning</code></li>
-          <li><div class="swatch" style="background: var(--error)"></div><code>--error</code></li>
-          <li><div class="swatch" style="background: var(--info)"></div><code>--info</code></li>
+        <h3>Core principles</h3>
+        <ul>
+          <li>Readability is the product. Modern frontend is div soup and minified garbage, unreadable by humans. This library is the opposite.</li>
+          <li>One-glance HTML: any page's structure makes sense on first read. Semantic tags, self-explanatory classes.</li>
+          <li>Not one extra wrapper. A container inside a container exists only to enable a real feature, like scrolling.</li>
+          <li>Least code that stays readable: entire products are assembled by writing HTML files with the right classes.</li>
+          <li>Pure HTML, CSS and JS. No build step, no framework, never minified. Gzip handles size.</li>
+          <li>One-step theme change: one attribute on the html tag restyles the whole page, layout containers included.</li>
+          <li>Everything explained in place: every interactive element carries a description tooltip.</li>
+          <li>Fully commented: every file self-describes with intros, usage notes and to-dos, so any AI can build products with it.</li>
+          <li>Accessible, SEO-ready and AI-crawlable by default. Enforced through the checklist below, not optional.</li>
+          <li>AI-native operation: everything built with Facet is operable by agents through the DOM alone — real buttons and links with accessible names, state in the URL, stable IDs and data-event names, llms.txt as the one-fetch manual.</li>
         </ul>
 
-        <h3>Type scale</h3>
-        <p class="specimen" style="font-size: var(--text-display); font-weight: var(--weight-heading); line-height: var(--leading-heading);">Display<small>--text-display</small></p>
-        <p class="specimen" style="font-size: var(--text-h1); font-weight: var(--weight-heading);">Heading one<small>--text-h1</small></p>
-        <p class="specimen" style="font-size: var(--text-h2); font-weight: var(--weight-heading);">Heading two<small>--text-h2</small></p>
-        <p class="specimen" style="font-size: var(--text-h3); font-weight: var(--weight-heading);">Heading three<small>--text-h3</small></p>
-        <p class="specimen" style="font-size: var(--text-body);">Body — most words on any page are set at this size.<small>--text-body</small></p>
-        <p class="specimen" style="font-size: var(--text-small);">Small — secondary lines and labels.<small>--text-small</small></p>
-        <p class="specimen" style="font-size: var(--text-caption);">Caption — hints, captions, fine print.<small>--text-caption</small></p>
-
-        <h3>Spacing · 4px base</h3>
-        <ul class="space-bars">
-          <li><code>--space-1</code><span class="bar" style="width: var(--space-1)"></span>4px</li>
-          <li><code>--space-2</code><span class="bar" style="width: var(--space-2)"></span>8px</li>
-          <li><code>--space-3</code><span class="bar" style="width: var(--space-3)"></span>12px</li>
-          <li><code>--space-4</code><span class="bar" style="width: var(--space-4)"></span>16px</li>
-          <li><code>--space-5</code><span class="bar" style="width: var(--space-5)"></span>24px</li>
-          <li><code>--space-6</code><span class="bar" style="width: var(--space-6)"></span>32px</li>
-          <li><code>--space-7</code><span class="bar" style="width: var(--space-7)"></span>48px</li>
-          <li><code>--space-8</code><span class="bar" style="width: var(--space-8)"></span>64px</li>
+        <h3>How to use the library</h3>
+        <ul>
+          <li>Every page starts from the library, never from blank CSS.</li>
+          <li>Pick a template (once Layer 5 lands), start from a shell, or lay the page out with the layout primitives — container, stack, snap — and fill each area with components.</li>
+          <li>Copy snippets straight off this wall. They render in any page that links facet.css.</li>
+          <li>App logic, data fetching and state management live in projects, never in the library.</li>
         </ul>
 
-        <h3>Shape and elevation</h3>
+        <h3>Markup rules</h3>
+        <ul>
+          <li>Semantic tags over div: header, nav, main, section, article, aside, footer, figure.</li>
+          <li>The wrapper law: an element exists only to hold content, create layout, or carry behavior. Anything else is deleted.</li>
+          <li>Container inside a container only to enable a real feature: scroll areas, sticky regions, overflow clipping.</li>
+          <li>Structural elements contain content or other structural elements. Never decorative nesting.</li>
+          <li>Buttons are <code>button</code>, links are <code>a</code>, form fields have real <code>label</code> elements.</li>
+          <li>One h1 per page. Heading levels never skip.</li>
+        </ul>
+
+        <h3>Adding a new component: the compliance checklist</h3>
+        <ul>
+          <li>Semantic tokens only. No raw hex, px sizes outside the scales, or hardcoded fonts.</li>
+          <li>Works in every theme and in light and dark with zero extra code.</li>
+          <li>All states covered: hover, focus, active, disabled, and where relevant empty, loading, error.</li>
+          <li>Keyboard operable with a visible focus ring. ARIA roles and labels where semantics fall short.</li>
+          <li>Interactive elements ship with a description tooltip.</li>
+          <li>Responsive and mobile-usable: 44px touch targets, no hover-only interactions.</li>
+          <li>Minimal semantic markup. Every element has a job, per the markup rules.</li>
+          <li>Fully commented in the file: what it is, how to use it, its options, open to-dos.</li>
+          <li>Names follow the naming rules. Nothing minified.</li>
+          <li>Analytics hook on its key action where relevant: a <code>data-event</code> attribute.</li>
+          <li>Wall entry added on this page: live demo, variant and state chips, exact snippet with copy.</li>
+          <li>Docs description added: what it is, what it is for, when to use it. Written to read as AI instructions, same text as the file comment and llms.txt.</li>
+          <li>BACKLOG.md item ticked. Committed to Git with a clear message.</li>
+        </ul>
+
+        <h3>Naming, maintaining, versioning</h3>
+        <ul>
+          <li>Tokens named by role, not value: <code>--surface</code>, not <code>--gray-100</code>.</li>
+          <li>One class prefix and pattern per component: <code>.btn</code>, <code>.btn-primary</code>, predictable everywhere.</li>
+          <li>JS: one small named function per behavior. The name says what it does.</li>
+          <li>Docs are demos. A component is not done until this page shows it live with its code.</li>
+          <li>One component, one clearly commented section in the CSS file. Nothing is scattered.</li>
+          <li>All changes go through Git commits. The live files are never edited ad hoc.</li>
+          <li>Growth by extraction: build a new pattern inside a project first, promote it once it repeats.</li>
+          <li>Consume by URL only. Tag releases in Git. On dependency, freeze a copy to <code>/lib/v1/</code> and keep working in <code>/lib/</code>.</li>
+        </ul>
+      </section>
+
+      <!-- =============================================================
+           LAYER 1 · TYPOGRAPHY
+           Not a table of sizes: a real piece of writing, every block
+           tagged with the token that sets it.
+           ============================================================= -->
+      <section id="typography" class="stack">
+        <h2>Typography</h2>
+        <p>
+          The scale in use, as a real page of writing. Every block below is
+          a raw HTML tag styled by the base layer; the mono tag under each
+          names the token doing the work. System font stacks throughout:
+          nothing to download, instant render, native feel on every device.
+        </p>
+
+        <article class="stack">
+          <p style="font-size: var(--text-display); font-weight: var(--weight-heading); line-height: var(--leading-heading); letter-spacing: -0.02em;">
+            Money, made concrete
+            <small class="type-label">--text-display · hero statements and big numbers</small>
+          </p>
+
+          <h3 style="font-size: var(--text-h1);">
+            A heading that opens the page
+            <small class="type-label">--text-h1 · one per page</small>
+          </h3>
+          <p>
+            Body text carries almost every word on any page, set at a
+            comfortable reading measure of 65 characters with a relaxed line
+            height. It holds <strong>strong text</strong>, a
+            <a href="#typography">link with a quiet underline</a>, inline
+            <code>code</code>, and a keyboard key like <kbd>Esc</kbd> without
+            breaking rhythm.
+            <small class="type-label">--text-body · --leading-body 1.6</small>
+          </p>
+
+          <h3 style="font-size: var(--text-h2);">
+            A section heading inside the page
+            <small class="type-label">--text-h2</small>
+          </h3>
+          <ul>
+            <li>Points under a heading sit at body size</li>
+            <li>With a four-pixel breath between lines</li>
+            <li>And the list marker hanging in the padding</li>
+          </ul>
+
+          <h3>
+            A third-level heading, interspersed
+            <small class="type-label">--text-h3</small>
+          </h3>
+          <p>
+            Headings share the body stack and differentiate by weight
+            (<code>--weight-heading</code>, 650) and a slightly tightened
+            letter-spacing, which is what keeps the whole page feeling like
+            one voice.
+          </p>
+
+          <blockquote>
+            A quote steps aside from the flow: indented, muted, italic, with
+            the accent as its spine.
+            <small class="type-label">blockquote</small>
+          </blockquote>
+
+          <aside class="callout">
+            <strong>A callout</strong> sits on the surface color with an
+            accent spine — for the one thing on the page the reader must not
+            miss.
+            <small class="type-label">surface + accent border, tokens only</small>
+          </aside>
+
+          <p><small>
+            Small text handles secondary lines: bylines, helper notes, legal
+            asides that still deserve reading.
+            <small class="type-label">--text-small</small>
+          </small></p>
+
+          <hr>
+          <p style="font-size: var(--text-caption); color: var(--text-muted);">
+            A caption or footnote, the finest print on the scale — image
+            credits, field hints, the words under a result.
+            <small class="type-label">--text-caption · --text-muted</small>
+          </p>
+        </article>
+      </section>
+
+      <!-- =============================================================
+           LAYER 1 · COLOR
+           The same interface twice: light beside dark. The panels carry
+           data-mode, which facet.css honours on any subtree.
+           ============================================================= -->
+      <section id="color" class="stack">
+        <h2>Color</h2>
+        <p>
+          Ten semantic roles, two modes, shown as the same interface twice.
+          Switch themes in the header and both panels re-render in that
+          theme's palette — the attribute that flips a whole page works on
+          any element, which is exactly how these panels are built.
+        </p>
+
+        <div class="mode-pair">
+          <section class="mode-panel" data-mode="light">
+            <h3>Light</h3>
+            <p>Ink on paper. <span style="color: var(--text-muted);">Muted text steps back for hints and captions.</span></p>
+            <ul class="swatch-row">
+              <li><div class="swatch" style="background: var(--background)"></div>--background</li>
+              <li><div class="swatch" style="background: var(--surface)"></div>--surface</li>
+              <li><div class="swatch" style="background: var(--text)"></div>--text</li>
+              <li><div class="swatch" style="background: var(--text-muted)"></div>--text-muted</li>
+              <li><div class="swatch" style="background: var(--border)"></div>--border</li>
+              <li><div class="swatch" style="background: var(--accent)"></div>--accent</li>
+            </ul>
+            <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
+              <button class="btn btn-primary btn-small">Primary</button>
+              <button class="btn btn-small">Secondary</button>
+            </p>
+            <label for="color-input-light">A field on this ground</label>
+            <input id="color-input-light" type="text" placeholder="Type here">
+            <p style="font-size: var(--text-small); max-width: none;">
+              <span style="color: var(--success);">Saved ✓</span> ·
+              <span style="color: var(--warning);">Expiring soon</span> ·
+              <span style="color: var(--error);">Failed</span> ·
+              <span style="color: var(--info);">3 updates</span>
+            </p>
+          </section>
+
+          <section class="mode-panel" data-mode="dark">
+            <h3>Dark</h3>
+            <p>Paper on ink. <span style="color: var(--text-muted);">Muted text steps back for hints and captions.</span></p>
+            <ul class="swatch-row">
+              <li><div class="swatch" style="background: var(--background)"></div>--background</li>
+              <li><div class="swatch" style="background: var(--surface)"></div>--surface</li>
+              <li><div class="swatch" style="background: var(--text)"></div>--text</li>
+              <li><div class="swatch" style="background: var(--text-muted)"></div>--text-muted</li>
+              <li><div class="swatch" style="background: var(--border)"></div>--border</li>
+              <li><div class="swatch" style="background: var(--accent)"></div>--accent</li>
+            </ul>
+            <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
+              <button class="btn btn-primary btn-small">Primary</button>
+              <button class="btn btn-small">Secondary</button>
+            </p>
+            <label for="color-input-dark">A field on this ground</label>
+            <input id="color-input-dark" type="text" placeholder="Type here">
+            <p style="font-size: var(--text-small); max-width: none;">
+              <span style="color: var(--success);">Saved ✓</span> ·
+              <span style="color: var(--warning);">Expiring soon</span> ·
+              <span style="color: var(--error);">Failed</span> ·
+              <span style="color: var(--info);">3 updates</span>
+            </p>
+          </section>
+        </div>
+        <p>
+          Every value lives once in <a href="/lib/facet.css">facet.css</a> as
+          a variable named by role — <code>--surface</code>, never
+          <code>--gray-100</code> — so a theme is one block of overrides and
+          nothing downstream changes.
+        </p>
+      </section>
+
+      <!-- =============================================================
+           LAYER 1 · SPACING
+           Real components on a tinted ground: the tint you can see
+           between and around the solid pieces IS the token.
+           ============================================================= -->
+      <section id="spacing" class="stack">
+        <h2>Spacing</h2>
+        <p>
+          A 4px base scale, <code>--space-1</code> (4px) to
+          <code>--space-8</code> (64px). Below, real pieces sit on a tinted
+          ground — the tint showing through is exactly the spacing token at
+          work.
+        </p>
+
+        <h3>Gaps inside a control row · --space-2</h3>
+        <div class="space-viz" style="display: inline-flex; gap: var(--space-2); padding: var(--space-2); flex-wrap: wrap;">
+          <button class="btn btn-primary">Calculate</button>
+          <button class="btn">Start over</button>
+          <button class="btn btn-ghost" style="background: var(--surface);">Skip</button>
+        </div>
+
+        <h3>Card padding · --space-6</h3>
+        <div class="space-viz" style="max-width: var(--width-narrow);">
+          <section style="padding: var(--space-6);">
+            <div class="demo-box" style="background: var(--background);">
+              The card's content box. Everything between this edge and the
+              tinted edge is <code>--space-6</code> of padding.
+            </div>
+          </section>
+        </div>
+
+        <h3>Stack gap between fields · --space-4</h3>
+        <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-4); max-width: var(--width-narrow);">
+          <div class="demo-box" style="background: var(--background);">Field one</div>
+          <div class="demo-box" style="background: var(--background);">Field two</div>
+          <div class="demo-box" style="background: var(--background);">Field three</div>
+        </div>
+
+        <h3>Between page sections · --space-7</h3>
+        <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-7); padding: var(--space-4); max-width: var(--width-narrow);">
+          <div class="demo-box" style="background: var(--background);">The end of one section</div>
+          <div class="demo-box" style="background: var(--background);">The start of the next</div>
+        </div>
+
+        <p>
+          Container widths cap the horizontal rhythm the same way:
+          <code>--width-narrow</code> 40rem for prose and calculators,
+          <code>--width-default</code> 64rem for most pages,
+          <code>--width-wide</code> 80rem for dashboards.
+        </p>
+      </section>
+
+      <!-- =============================================================
+           LAYER 1 · SHAPE, ELEVATION, MOTION
+           ============================================================= -->
+      <section id="shape" class="stack">
+        <h2>Shape, elevation, motion</h2>
         <ul class="shape-row">
-          <li><div class="tile" style="border-radius: var(--radius-small)"></div><code>--radius-small</code></li>
-          <li><div class="tile" style="border-radius: var(--radius-medium)"></div><code>--radius-medium</code></li>
-          <li><div class="tile" style="border-radius: var(--radius-large)"></div><code>--radius-large</code></li>
-          <li><div class="tile" style="border-radius: var(--radius-pill)"></div><code>--radius-pill</code></li>
-          <li><div class="tile" style="box-shadow: var(--shadow-raised)"></div><code>--shadow-raised</code></li>
-          <li><div class="tile" style="box-shadow: var(--shadow-floating)"></div><code>--shadow-floating</code></li>
-          <li><div class="tile" style="box-shadow: var(--shadow-overlay)"></div><code>--shadow-overlay</code></li>
+          <li><div class="tile" style="border-radius: var(--radius-small)"></div>--radius-small</li>
+          <li><div class="tile" style="border-radius: var(--radius-medium)"></div>--radius-medium</li>
+          <li><div class="tile" style="border-radius: var(--radius-large)"></div>--radius-large</li>
+          <li><div class="tile" style="border-radius: var(--radius-pill)"></div>--radius-pill</li>
+          <li><div class="tile" style="box-shadow: var(--shadow-raised)"></div>--shadow-raised</li>
+          <li><div class="tile" style="box-shadow: var(--shadow-floating)"></div>--shadow-floating</li>
+          <li><div class="tile" style="box-shadow: var(--shadow-overlay)"></div>--shadow-overlay</li>
         </ul>
         <p>
-          Container widths come as narrow, default and wide
-          (<code>--width-narrow</code> 40rem, <code>--width-default</code>
-          64rem, <code>--width-wide</code> 80rem). Motion runs on
-          <code>--duration-fast / normal / slow</code> with two easing
-          curves, and collapses to nothing under
-          <code>prefers-reduced-motion</code>. The full token list lives at
-          the top of <a href="/lib/facet.css">facet.css</a> — the readable,
-          commented source.
+          Small radii on controls, medium on cards, large on overlays, pill
+          for chips and thumbs. Shadows stay whisper-flat in every theme.
+          Motion runs on <code>--duration-fast</code> 120ms for hovers,
+          <code>--duration-normal</code> 200ms for reveals and
+          <code>--duration-slow</code> 320ms for overlays, with two easing
+          curves — and every transition in the library collapses to nothing
+          under <code>prefers-reduced-motion</code>.
         </p>
       </section>
 
@@ -311,25 +611,11 @@
         <h2>Base styles</h2>
         <p>
           Everything below is raw HTML with no classes. Write semantic tags
-          and the page already looks like Facet: headings, text, links,
-          lists, quotes, code, tables and form fields all have themed
-          defaults, plus focus rings, selection colors, scrollbars, a
-          skip-to-content link and a print base.
+          and the page already looks like Facet — the typography section
+          above showed the text tags; here are the working ones, plus focus
+          rings, selection colors, scrollbars, a skip-to-content link and a
+          print base, all included.
         </p>
-
-        <blockquote>Readability is the product. One-glance HTML, not one extra wrapper, least code that stays readable.</blockquote>
-
-        <p>
-          A paragraph with a <a href="#main">link</a>, some <strong>strong
-          text</strong>, inline <code>code</code>, and a keyboard key like
-          <kbd>Esc</kbd>.
-        </p>
-
-        <ul>
-          <li>Semantic tags over div, everywhere</li>
-          <li>Buttons are buttons, links are links</li>
-          <li>One h1 per page, heading levels never skip</li>
-        </ul>
 
         <table>
           <thead>
@@ -344,6 +630,9 @@
 
         <label for="demo-raw-input">A raw text input</label>
         <input id="demo-raw-input" type="text" placeholder="Type here">
+
+        <pre><code>&lt;p&gt;No classes anywhere in this section's table,
+input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </section>
 
       <!-- =============================================================
@@ -354,7 +643,7 @@
            snippet is serialized from the demo's actual DOM, so what you
            copy is what renders.
            ============================================================= -->
-      <section class="stack">
+      <section id="components" class="stack">
         <h2>Components</h2>
         <p>
           Every built component, live. The chips flip variants and states on
@@ -655,80 +944,6 @@
         <p><button class="btn btn-small" data-copy="#code-tooltip" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- =============================================================
-           RULES · the manual, on the page itself
-           Same text as CLAUDE.md in the repo and /llms.txt.
-           ============================================================= -->
-      <section id="rules" class="stack">
-        <h2>Rules</h2>
-        <p>
-          How this library is built, used and grown. The same rules live in
-          the repo as <a href="https://github.com/tanishksharma/Facet/blob/main/CLAUDE.md">CLAUDE.md</a>
-          for AI builders and at <a href="/llms.txt">/llms.txt</a> as plain
-          text for crawlers.
-        </p>
-
-        <h3>Core principles</h3>
-        <ul>
-          <li>Readability is the product. Modern frontend is div soup and minified garbage, unreadable by humans. This library is the opposite.</li>
-          <li>One-glance HTML: any page's structure makes sense on first read. Semantic tags, self-explanatory classes.</li>
-          <li>Not one extra wrapper. A container inside a container exists only to enable a real feature, like scrolling.</li>
-          <li>Least code that stays readable: entire products are assembled by writing HTML files with the right classes.</li>
-          <li>Pure HTML, CSS and JS. No build step, no framework, never minified. Gzip handles size.</li>
-          <li>One-step theme change: one attribute on the html tag restyles the whole page, layout containers included.</li>
-          <li>Everything explained in place: every interactive element carries a description tooltip.</li>
-          <li>Fully commented: every file self-describes with intros, usage notes and to-dos, so any AI can build products with it.</li>
-          <li>Accessible, SEO-ready and AI-crawlable by default. Enforced through the checklist below, not optional.</li>
-        </ul>
-
-        <h3>How to use the library</h3>
-        <ul>
-          <li>Every page starts from the library, never from blank CSS.</li>
-          <li>Pick a template (once Layer 5 lands), start from a shell, or lay the page out with the layout primitives — container, stack, snap — and fill each area with components.</li>
-          <li>Copy snippets straight off this wall. They render in any page that links facet.css.</li>
-          <li>App logic, data fetching and state management live in projects, never in the library.</li>
-        </ul>
-
-        <h3>Markup rules</h3>
-        <ul>
-          <li>Semantic tags over div: header, nav, main, section, article, aside, footer, figure.</li>
-          <li>The wrapper law: an element exists only to hold content, create layout, or carry behavior. Anything else is deleted.</li>
-          <li>Container inside a container only to enable a real feature: scroll areas, sticky regions, overflow clipping.</li>
-          <li>Structural elements contain content or other structural elements. Never decorative nesting.</li>
-          <li>Buttons are <code>button</code>, links are <code>a</code>, form fields have real <code>label</code> elements.</li>
-          <li>One h1 per page. Heading levels never skip.</li>
-        </ul>
-
-        <h3>Adding a new component: the compliance checklist</h3>
-        <ul>
-          <li>Semantic tokens only. No raw hex, px sizes outside the scales, or hardcoded fonts.</li>
-          <li>Works in every theme and in light and dark with zero extra code.</li>
-          <li>All states covered: hover, focus, active, disabled, and where relevant empty, loading, error.</li>
-          <li>Keyboard operable with a visible focus ring. ARIA roles and labels where semantics fall short.</li>
-          <li>Interactive elements ship with a description tooltip.</li>
-          <li>Responsive and mobile-usable: 44px touch targets, no hover-only interactions.</li>
-          <li>Minimal semantic markup. Every element has a job, per the markup rules.</li>
-          <li>Fully commented in the file: what it is, how to use it, its options, open to-dos.</li>
-          <li>Names follow the naming rules. Nothing minified.</li>
-          <li>Analytics hook on its key action where relevant: a <code>data-event</code> attribute.</li>
-          <li>Wall entry added on this page: live demo, variant and state chips, exact snippet with copy.</li>
-          <li>Docs description added: what it is, what it is for, when to use it. Written to read as AI instructions, same text as the file comment and llms.txt.</li>
-          <li>Committed to Git with a clear message.</li>
-        </ul>
-
-        <h3>Naming, maintaining, versioning</h3>
-        <ul>
-          <li>Tokens named by role, not value: <code>--surface</code>, not <code>--gray-100</code>.</li>
-          <li>One class prefix and pattern per component: <code>.btn</code>, <code>.btn-primary</code>, predictable everywhere.</li>
-          <li>JS: one small named function per behavior. The name says what it does.</li>
-          <li>Docs are demos. A component is not done until this page shows it live with its code.</li>
-          <li>One component, one clearly commented section in the CSS file. Nothing is scattered.</li>
-          <li>All changes go through Git commits. The live files are never edited ad hoc.</li>
-          <li>Growth by extraction: build a new pattern inside a project first, promote it once it repeats.</li>
-          <li>Consume by URL only. Tag releases in Git. On dependency, freeze a copy to <code>/lib/v1/</code> and keep working in <code>/lib/</code>.</li>
-        </ul>
-      </section>
-
     </main>
   </div>
 
@@ -736,9 +951,10 @@
     <small>Facet · plain HTML, CSS and JS · <a href="https://github.com/tanishksharma/Facet">source on GitHub</a> · <a href="/llms.txt">llms.txt</a></small>
   </footer>
 
-  <!-- Docs-site behaviours: chips, live snippets, wall search. These are
-       site features, not library features, so they live here and not in
-       facet.js. One small named function per behavior. -->
+  <!-- Docs-site behaviours: chips, live snippets, wall search, scrollspy,
+       theme sync for the color panels. These are site features, not
+       library features, so they live here and not in facet.js. One small
+       named function per behavior. -->
   <script>
     /* The snippet under each wall entry is not hand-written: it is the
        demo's actual DOM, serialized. Flip a chip and the snippet follows,
@@ -833,10 +1049,56 @@
       });
     }
 
+    /* Scrollspy: as the page scrolls, the sidebar link for the section on
+       screen lights up, so you always know where you are and what is left. */
+    function initScrollSpy() {
+      const links = [...document.querySelectorAll(".docs-index a[href^='#']")];
+      const targets = links
+        .map(link => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      let ticking = false;
+      const highlight = () => {
+        ticking = false;
+        const line = window.scrollY + window.innerHeight / 4; // reading line
+        let current = targets[0];
+        for (const target of targets) {
+          if (!target.hidden && target.offsetTop <= line) current = target;
+        }
+        for (const link of links) {
+          link.classList.toggle("is-current", link.getAttribute("href") === "#" + current.id);
+        }
+      };
+      addEventListener("scroll", () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(highlight); }
+      }, { passive: true });
+      highlight();
+    }
+
+    /* The color panels follow the active theme: when the header switcher
+       changes data-theme on <html>, mirror it onto each panel so they show
+       this theme's light and dark, not just the Default's. */
+    function initModePanels() {
+      const panels = document.querySelectorAll(".mode-panel");
+      const sync = () => {
+        const theme = document.documentElement.dataset.theme;
+        for (const panel of panels) {
+          if (theme) panel.dataset.theme = theme;
+          else delete panel.dataset.theme;
+        }
+      };
+      new MutationObserver(sync).observe(document.documentElement, {
+        attributes: true, attributeFilter: ["data-theme"],
+      });
+      sync();
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
       initChips();
       initWallSearch();
+      initScrollSpy();
+      initModePanels();
     });
   </script>
 </body>

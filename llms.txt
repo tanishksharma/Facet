@@ -37,6 +37,12 @@ link opens in the sender's theme. Buttons with data-theme-switch="sand"
 data-mode-toggle flip light and dark. Both write their choice back to the
 URL.
 
+The same attributes work on any element, not just html: put
+data-mode="dark" (or "light", or data-theme="sand") on a section and only
+that subtree flips — tokens are inherited custom properties, so the
+nearest element carrying the attribute wins. A themed subtree paints its
+own background and text automatically.
+
 ## Tokens
 
 Every design decision is a CSS variable named by its role, never its value.
