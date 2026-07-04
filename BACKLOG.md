@@ -239,9 +239,12 @@ Platform laws docs and the R11 chart item.
 - [x] Analytics bridge: the five-line closest("[data-event]") snippet
       documented under Rules → Analytics on the page, in llms.txt's
       analytics section, with a copy button.
-- [ ] Playground: one editable HTML box rendering live through the
-      library.
-- [ ] Cheatsheet: every class on one dense, searchable screen.
+- [x] Playground: #playground — a textarea rendering debounced into a
+      framed real page built on the two shipped files, following the
+      docs page's theme and mode live.
+- [x] Cheatsheet: #cheatsheet — components, global attributes, tokens
+      and the JS API rendered from facet.json (one source, can never
+      drift), with a filter that hides rows and emptied groups.
 - [x] Live size badge: the get-started strip fetches both lib files
       and gzips them in the visitor's own browser (CompressionStream)
       — the real number, never a claim; absent when it cannot be

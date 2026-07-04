@@ -18,6 +18,9 @@ always gets the latest straight from the web; from v1, frozen /lib/v1/
 copies pin old projects and cached updates apply only at page
 boundaries. /facet.json is the machine-readable manifest: every theme,
 token, class, data attribute, component and API call in one fetch.
+The homepage adds tools over it: a Playground (one editable HTML box
+rendering live through the real library) and a Cheatsheet (the whole
+manifest as one dense filterable screen).
 
 App-ready (PWA): a one-line sw.js stub — importScripts of
 /lib/facet-sw.js — gives any project the shared caching strategy:

@@ -230,6 +230,25 @@
       cursor: pointer;
     }
 
+    /* Cheatsheet rows: dense definition rows, filterable. */
+    .cheat-row {
+      display: grid;
+      grid-template-columns: minmax(12rem, 1fr) 2fr;
+      gap: var(--space-3);
+      padding-block: var(--space-2);
+      border-bottom: var(--border-width) solid var(--border);
+      font-size: var(--text-small);
+    }
+    .cheat-row code { word-break: break-word; }
+    .cheat-row span { color: var(--text-muted); }
+    .cheat-head {
+      margin-top: var(--space-4);
+      font-size: var(--text-caption);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
     /* Rows of copy buttons under snippets sit side by side. */
     .element p:has(> [data-copy]) { display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none; }
 
@@ -379,9 +398,15 @@
           <li><a href="#choice-grid">Choice grid</a></li>
           <li><a href="#map">Themed map</a></li>
         </ul>
+        <strong>Tools</strong>
+        <ul>
+          <li><a href="#playground">Playground</a></li>
+          <li><a href="#cheatsheet">Cheatsheet</a></li>
+        </ul>
         <strong>For machines</strong>
         <ul>
           <li><a href="/llms.txt">llms.txt</a></li>
+          <li><a href="/facet.json">facet.json</a></li>
         </ul>
       </nav>
     </aside>
@@ -497,6 +522,8 @@
           <li>Copy as Markdown on every wall entry: the description and exact snippet packaged for an LLM prompt in one click.</li>
           <li>The analytics bridge, documented in Rules: five lines wire any vendor to every <code>data-event</code> hook the library ships.</li>
           <li>A live size badge in the get-started strip: the two files fetched and gzipped in your own browser — the real number, never a claim.</li>
+          <li>Playground: one editable HTML box rendering live through the real library files, following this page's theme and mode.</li>
+          <li>Cheatsheet: every class, attribute and API call on one dense filterable screen, rendered from facet.json so it can never drift.</li>
         </ul>
       </section>
 
@@ -1068,6 +1095,46 @@
           page pulling the same facet.css this site uses.
         </p>
         <div class="lab-grid" id="lab-grid"></div>
+      </section>
+
+      <!-- =============================================================
+           TOOLS · PLAYGROUND
+           One editable box, rendered live through the real library.
+           ============================================================= -->
+      <section id="playground" class="stack">
+        <h2>Playground</h2>
+        <p>
+          What it is: one editable HTML box rendering live through the
+          real facet.css and facet.js — the frame below is a genuine
+          page with the two tags. What it is for: trying a snippet
+          before it goes in your file; paste anything off the wall,
+          bend it, watch it. When to use it: whenever "would this
+          work?" is faster typed than reasoned. The frame follows this
+          page's theme and mode.
+        </p>
+        <label for="playground-input">Your HTML</label>
+        <textarea id="playground-input" rows="8" spellcheck="false" data-tip="Renders below as you type"></textarea>
+        <iframe id="playground-frame" class="lab-frame" style="height: 16rem;" title="Playground preview"></iframe>
+      </section>
+
+      <!-- =============================================================
+           TOOLS · CHEATSHEET
+           Every class and attribute on one dense screen, straight from
+           facet.json so it can never drift from the manifest.
+           ============================================================= -->
+      <section id="cheatsheet" class="stack">
+        <h2>Cheatsheet</h2>
+        <p>
+          What it is: every class, data attribute and API call on one
+          dense screen, rendered from <a href="/facet.json">facet.json</a>
+          so it can never drift from the manifest. What it is for: the
+          lookup you keep open while writing HTML in another window.
+          When to use it: once you know the components and only need
+          their names.
+        </p>
+        <label for="cheat-filter">Filter the sheet</label>
+        <input id="cheat-filter" type="search" placeholder="btn, data-tip, mapStyle…" data-tip="Hides every row that does not match">
+        <div id="cheat-body" class="stack-tight"></div>
       </section>
 
       <!-- =============================================================
@@ -1938,6 +2005,93 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       } catch { /* offline: no badge beats a wrong badge */ }
     }
 
+    /* Playground: the textarea renders into a real framed page built
+       on the two shipped files, re-rendered as you type (debounced).
+       The frame mirrors this page's theme and mode attributes. */
+    function initPlayground() {
+      const input = document.querySelector("#playground-input");
+      const frame = document.querySelector("#playground-frame");
+      if (!input || !frame) return;
+      input.value = '<main class="container stack" style="padding: 1rem;">\n  <h2>Hello, Facet</h2>\n  <button class="btn btn-primary" data-tip="A real button">Try me</button>\n</main>';
+      let timer;
+      const render = () => {
+        const html = document.documentElement;
+        frame.srcdoc = `<!doctype html>
+          <html${html.dataset.theme ? ` data-theme="${html.dataset.theme}"` : ""}${html.dataset.mode ? ` data-mode="${html.dataset.mode}"` : ""}>
+          <head><meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet" href="${location.origin}/lib/facet.css">
+          <script src="${location.origin}/lib/facet.js" defer><\/script></head>
+          <body>${input.value}</body></html>`;
+      };
+      input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(render, 350); });
+      new MutationObserver(render).observe(document.documentElement, {
+        attributes: true, attributeFilter: ["data-theme", "data-mode"],
+      });
+      render();
+    }
+
+    /* Cheatsheet: rendered from facet.json, so the dense screen and
+       the machine manifest are one source. The filter hides rows and
+       whole groups that stop matching. */
+    async function initCheatsheet() {
+      const body = document.querySelector("#cheat-body");
+      const filter = document.querySelector("#cheat-filter");
+      if (!body || !filter) return;
+      let manifest;
+      try { manifest = await (await fetch("/facet.json")).json(); }
+      catch { body.textContent = "facet.json did not load."; return; }
+
+      const row = (term, note) => {
+        const div = document.createElement("div");
+        div.className = "cheat-row";
+        const code = document.createElement("code");
+        code.textContent = term;
+        const span = document.createElement("span");
+        span.textContent = note;
+        div.append(code, span);
+        return div;
+      };
+      const head = (text) => {
+        const h = document.createElement("p");
+        h.className = "cheat-head";
+        h.textContent = text;
+        return h;
+      };
+
+      body.append(head("Components"));
+      for (const c of manifest.components) {
+        body.append(row([...(c.classes || []), ...(c.attributes || [])].join("  "), `${c.name} — ${c.summary}`));
+      }
+      body.append(head("Global attributes"));
+      for (const a of manifest.globalAttributes) {
+        body.append(row(a.attribute, `on ${a.on} — ${a.summary}`));
+      }
+      body.append(head("Tokens"));
+      for (const [group, names] of Object.entries(manifest.tokens)) {
+        body.append(row(names.join("  "), group));
+      }
+      body.append(head("JavaScript API"));
+      for (const [call, note] of Object.entries(manifest.api)) {
+        body.append(row(call + "()", note));
+      }
+
+      filter.addEventListener("input", () => {
+        const q = filter.value.trim().toLowerCase();
+        let groupHead = null, groupHasHit = false;
+        for (const el of body.children) {
+          if (el.classList.contains("cheat-head")) {
+            if (groupHead) groupHead.hidden = !groupHasHit && !!q;
+            groupHead = el; groupHasHit = false;
+            continue;
+          }
+          const hit = !q || el.textContent.toLowerCase().includes(q);
+          el.hidden = !hit;
+          if (hit) groupHasHit = true;
+        }
+        if (groupHead) groupHead.hidden = !groupHasHit && !!q;
+      });
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
       initChips();
@@ -1950,6 +2104,8 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initSkinLab();
       initMarkdownButtons();
       initSizeBadge();
+      initPlayground();
+      initCheatsheet();
       const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
       if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
     });
