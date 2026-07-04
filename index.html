@@ -378,6 +378,7 @@
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
+          <li>Speaks the visitor's numbers and language: grouping and the words helper follow the locale — lakh/crore where that is the norm, million/billion elsewhere — defaulting from <code>facet.location</code>, overridable with <code>data-numbers</code>. Every string the library ships comes from one translation table, switched with <code>data-language</code> and extendable in one line: <code>facet.strings.ta = {...}</code>. No right-to-left support, by design.</li>
           <li>Built-in context: <code>facet.now()</code> answers the date, time and timezone synchronously; <code>facet.location</code> resolves the visitor's rough place (city, region, country) from a configurable, disablable IP lookup, upgraded to GPS only where permission already exists. Null on failure, never a prompt, never a throw.</li>
         </ul>
 
@@ -936,21 +937,29 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p>
           What it is: a labelled field wrapping the calculator-grade number
           input, with a clear button inside the field and a words helper
-          under it. What it is for: money and other large numbers entered the
-          Indian way. The input ships prefilled with an example value, clears
-          fully on the first tap — and never again once the visitor has
-          typed — groups digits Indian-style as they are typed (25,00,000),
-          and reads the number back in words underneath: 25 lakh. All three
-          behaviours come from facet.js the moment the input carries
+          under it. What it is for: money and other large numbers, entered
+          the way the visitor says them. The input ships prefilled with an
+          example value, clears fully on the first tap — and never again
+          once the visitor has typed — groups digits for the locale as they
+          are typed (25,00,000 where lakh and crore are the norm, 2,500,000
+          elsewhere), and reads the number back in words underneath, in the
+          active language: 25 lakh, 2.5 million, 25 लाख. The locale follows
+          facet.location and the browser, overridable with
+          data-numbers="indian|western"; the language with data-language.
+          All behaviours come from facet.js the moment the input carries
           data-number. When to use it: every numeric entry in a calculator.
           Read the plain number in app code with facet.numberValue(input).
           For the error state, put .field-invalid on the field and swap the
           hint for a .field-error line.
         </p>
-        <p class="chips" role="group" aria-label="Number input states">
+        <p class="chips" role="group" aria-label="Number input states and locale">
           <button class="chip" aria-pressed="true" data-chip-class="" data-chip-group="state">Normal</button>
           <button class="chip" aria-pressed="false" data-chip-class="field-invalid" data-chip-group="state">Error</button>
           <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="input">Disabled</button>
+          <button class="chip" aria-pressed="false" data-config-key="numbers" data-config-value="indian" data-tip="Lakh and crore, page-wide">Indian numbers</button>
+          <button class="chip" aria-pressed="false" data-config-key="numbers" data-config-value="western" data-tip="Million and billion, page-wide">Western numbers</button>
+          <button class="chip" aria-pressed="false" data-config-key="language" data-config-value="" data-tip="Library strings in English">English words</button>
+          <button class="chip" aria-pressed="false" data-config-key="language" data-config-value="hi" data-tip="Library strings in Hindi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368; words</button>
         </p>
         <div class="demo">
           <label class="field">
@@ -1093,6 +1102,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
        indentation that comes from this page's own nesting. */
     function tidySnippet(html) {
       html = html.replace(/ data-edited="true"/g, "").replace(/ placeholder="0"/g, "");
+      html = html.replace(/(<span class="number-words"[^>]*>)[^<]*(<\/span>)/g, "$1$2");
       const lines = html.split("\n");
       const rest = lines.slice(1).filter(line => line.trim());
       const cut = rest.length ? Math.min(...rest.map(line => line.match(/^ */)[0].length)) : 0;
@@ -1140,7 +1150,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
        data-chip-target narrows the element acted on (default: the demo's
        first child). Every flip re-renders the snippet. */
     function initChips() {
-      for (const chip of document.querySelectorAll(".element .chip")) {
+      for (const chip of document.querySelectorAll(".element .chip:not([data-config-key])")) {
         chip.addEventListener("click", () => {
           const article = chip.closest(".element");
           const demo = article.querySelector(".demo");
@@ -1172,6 +1182,20 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           }
 
           renderSnippet(article);
+        });
+      }
+    }
+
+    /* Chips that drive page-wide configuration through facet.set() —
+       the same API projects use. Radio behavior within each config key. */
+    function initConfigChips() {
+      for (const chip of document.querySelectorAll(".chip[data-config-key]")) {
+        chip.addEventListener("click", () => {
+          facet.set({ [chip.dataset.configKey]: chip.dataset.configValue || null });
+          for (const other of document.querySelectorAll(
+            `.chip[data-config-key="${chip.dataset.configKey}"]`)) {
+            other.setAttribute("aria-pressed", String(other === chip));
+          }
         });
       }
     }
@@ -1253,6 +1277,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initScrollSpy();
       initModePanels();
       initSetupStrip();
+      initConfigChips();
     });
   </script>
 </body>

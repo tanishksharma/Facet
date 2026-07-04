@@ -870,12 +870,16 @@ figcaption {
 
    What it is: a labelled field wrapping the calculator-grade number input,
    with a clear button inside the field and a words helper under it.
-   What it is for: money and other large numbers entered the Indian way. The
-   input ships prefilled with an example value, clears fully on the first
-   tap — and never again once the visitor has typed — groups digits
-   Indian-style as they are typed (25,00,000), and reads the number back in
-   words underneath: 25 lakh. All three behaviours come from facet.js the
-   moment the input carries data-number.
+   What it is for: money and other large numbers, entered the way the
+   visitor says them. The input ships prefilled with an example value,
+   clears fully on the first tap — and never again once the visitor has
+   typed — groups digits for the locale as they are typed (25,00,000 where
+   lakh and crore are the norm, 2,500,000 elsewhere), and reads the number
+   back in words underneath, in the active language: 25 lakh, 2.5 million,
+   25 लाख. The locale follows facet.location and the browser, overridable
+   with data-numbers="indian|western"; the language with data-language.
+   All behaviours come from facet.js the moment the input carries
+   data-number.
    When to use it: every numeric entry in a calculator. Read the plain
    number in app code with facet.numberValue(input). For the error state,
    put .field-invalid on the field and swap the hint for a .field-error

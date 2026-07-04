@@ -50,7 +50,8 @@ Components and behaviours: themed layout primitives (container in four
 widths, stack in three gaps, full-viewport snap sections); buttons in
 three variants and three sizes working on <button> and <a>; icon buttons;
 the calculator-grade number input (prefilled example, one-tap clear,
-Indian digit grouping, words helper); labelled fields with hints and
+locale-aware grouping, words helper in the active language); labelled
+fields with hints and
 error states; themed sliders with live readouts; verdict-first result
 blocks with aria-live; the data-tip description tooltip on one attribute;
 all behaviour self-wires to data attributes; built-in context —
@@ -58,6 +59,13 @@ facet.now() for date/time/timezone and facet.location for the visitor's
 rough place (configurable, disablable, GPS-upgraded only with existing
 permission); JS API: facet.set, facet.now, facet.locate,
 facet.numberValue, facet.groupIndian, facet.numberWords.
+
+Internationalised: every built-in string comes from one translation
+table (facet.strings), switched with data-language and extendable in one
+line; number grouping and words follow the locale — lakh/crore where
+that is the norm, million/billion elsewhere — defaulting from
+facet.location, overridable with data-numbers. No right-to-left layout,
+by design.
 
 Accessible by default: AA contrast in every theme light and dark;
 everything keyboard operable; ARIA where semantics fall short; icon-only
@@ -255,15 +263,19 @@ text color in every theme.
 
 What it is: a labelled field wrapping the calculator-grade number input,
 with a clear button inside the field and a words helper under it. What it
-is for: money and other large numbers entered the Indian way. The input
-ships prefilled with an example value, clears fully on the first tap — and
-never again once the visitor has typed — groups digits Indian-style as
-they are typed (25,00,000), and reads the number back in words underneath:
-25 lakh. All three behaviours come from facet.js the moment the input
-carries data-number. When to use it: every numeric entry in a calculator.
-Read the plain number in app code with facet.numberValue(input). For the
-error state, put .field-invalid on the field and swap the hint for a
-.field-error line.
+is for: money and other large numbers, entered the way the visitor says
+them. The input ships prefilled with an example value, clears fully on
+the first tap — and never again once the visitor has typed — groups
+digits for the locale as they are typed (25,00,000 where lakh and crore
+are the norm, 2,500,000 elsewhere), and reads the number back in words
+underneath, in the active language: 25 lakh, 2.5 million, 25 लाख. The
+locale follows facet.location and the browser, overridable with
+data-numbers="indian|western"; the language with data-language. All
+behaviours come from facet.js the moment the input carries data-number.
+When to use it: every numeric entry in a calculator. Read the plain
+number in app code with facet.numberValue(input). For the error state,
+put .field-invalid on the field and swap the hint for a .field-error
+line.
 
     <label class="field">
       <span class="field-label">Monthly investment</span>
@@ -346,8 +358,12 @@ for calculator apps:
                                already granted. facet.locate() is the
                                promise behind it. Never throws.
     facet.numberValue(input)   the plain number behind a grouped input
-    facet.groupIndian(n)       74250000 -> "7,42,50,000"
-    facet.numberWords(n)       74250000 -> "7.43 crore"
+    facet.groupNumber(n)       grouped for the active locale
+    facet.groupIndian(n)       74250000 -> "7,42,50,000", always Indian
+    facet.numberWords(n)       "7.43 crore" / "74.25 million" / "7.43
+                               करोड़" per locale and language
+    facet.numberSystem()       "indian" or "western", however resolved
+    facet.strings              the translation table; extend in place"
 
 ## Rules for building on Facet
 

@@ -56,12 +56,12 @@ RTL no — decided 4 Jul 2026.
 
 ### Internationalisation — R4 (no RTL, by decision)
 
-- [ ] Strings table: every built-in string the library ships moves into
+- [x] Strings table: every built-in string the library ships moves into
       one table in facet.js; no hardcoded literals remain.
-- [ ] Language switch: one attribute or facet.set({language}) switches
+- [x] Language switch: one attribute or facet.set({language}) switches
       all library strings; projects can extend the table with their own
       languages.
-- [ ] Locale-aware numbers: grouping and words helper follow the locale —
+- [x] Locale-aware numbers: grouping and words helper follow the locale —
       lakh/crore for India, million/billion elsewhere — defaulting from
       facet.location, overridable by the page.
 
