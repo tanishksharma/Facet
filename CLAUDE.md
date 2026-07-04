@@ -214,22 +214,28 @@ with every theme. facet.js also carries both in the URL query (?theme=,
 ### Theme · Default (ships first, no attribute)
 
 Paper white, near-black ink, gray hairlines, small radii, whisper shadows.
-Zero decoration, the quiet base. The accent is the ink itself; hover and
-pressed deepen to full black.
+Zero decoration, the quiet base. The accent ranks are the ink itself.
 
 - Background: `#FFFFFF`
 - Surface: `#FAFAFA`
 - Text: `#17171B`
 - Muted text: `#6E6E76`
 - Borders: `#E4E4E8`
-- Accent: `#17171B`, the ink. Hover `#09090B`, pressed `#000000`.
+- Accent-1 (primary actions): `#17171B`, deepening to `#000000`
+- Accent-2 (secondary fill): the surface family, `#FAFAFA` to `#E4E4E8`
+- Accent-3 (links, labels, focus): the ink, until R2 wires the OS accent
+
+Color is ranked, not named: components use `--accent-1/-2/-3` (each with
+`-hover`, `-pressed`, `--on-accent-N`) and never pick raw colors. One
+accent-1 action per screen.
 
 ### Theme · Sand (`data-theme="sand"`, parked but working)
 
 Modern beige, boring on purpose, quietly elegant. Palette pulled from
 Minecraft desert biome blocks, with the ink darkened so text passes AA
 contrast. Background `#EDE5C0`, surface `#F6F0D8`, text `#33291A`, muted
-`#86794F`, borders `#D9CD9E`, accent `#5F9E44` cactus.
+`#86794F`, borders `#D9CD9E`. Accent-1 `#5F9E44` cactus, accent-2 the
+sandstone fill, accent-3 `#48802F` deep cactus.
 
 ### Themes · Aero and Elegant (stubs)
 

@@ -75,7 +75,7 @@
     .docs-index a.is-current {
       color: var(--text);
       font-weight: var(--weight-strong);
-      border-left-color: var(--accent);
+      border-left-color: var(--accent-3);
     }
     .docs-index strong {
       font-size: var(--text-caption);
@@ -115,9 +115,9 @@
       font-size: var(--text-small);
     }
     .chip[aria-pressed="true"] {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--on-accent);
+      background: var(--accent-3);
+      border-color: var(--accent-3);
+      color: var(--on-accent-3);
     }
 
     /* Typography specimen: a real article, each block tagged with its token. */
@@ -131,7 +131,7 @@
     .callout {
       background: var(--surface);
       border: var(--border-width) solid var(--border);
-      border-left: var(--border-width-strong) solid var(--accent);
+      border-left: var(--border-width-strong) solid var(--accent-3);
       border-radius: var(--radius-small);
       padding: var(--space-3) var(--space-4);
       max-width: 65ch;
@@ -162,7 +162,7 @@
     /* Spacing: real components on a tinted ground, so padding and gaps
        show up as the tint between solid pieces. */
     .space-viz {
-      background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+      background: color-mix(in srgb, var(--accent-3) 10%, var(--surface));
       border-radius: var(--radius-medium);
     }
     .space-viz .demo-box { color: var(--text); }
@@ -210,7 +210,7 @@
       <a class="wordmark" href="/">facet</a>
       <div class="site-controls" role="group" aria-label="Theme">
         <button class="btn btn-ghost btn-small" data-theme-switch="" data-tip-below
-                data-tip="Default theme: white and black, accent is the ink">Default</button>
+                data-tip="Default theme: white and black, the accent ranks are the ink">Default</button>
         <button class="btn btn-ghost btn-small" data-theme-switch="sand" data-tip-below
                 data-tip="Sand theme: Minecraft desert beige">Sand</button>
         <button class="btn btn-ghost btn-small" disabled data-tip-below
@@ -333,6 +333,7 @@
         <h3>Tokens</h3>
         <ul>
           <li>Every design decision is a CSS variable named by role — color, type, spacing, container widths, radii, borders, shadows, motion, focus. Build with tokens and a theme change costs zero code.</li>
+          <li>Ranked accents: base family plus accent-1 (the one primary action), accent-2 (every secondary action's fill) and accent-3 (links, labels, quiet affordances), each with hover, pressed and on-colors, in every theme. Components pick ranks, never colors.</li>
           <li>Status colors (success, warning, error, info) tuned per theme, light and dark.</li>
           <li>Whisper-flat shadow scale and a 4px spacing scale shared by every component and layout primitive.</li>
         </ul>
@@ -557,10 +558,14 @@
       <section id="color" class="stack">
         <h2>Color</h2>
         <p>
-          Ten semantic roles, two modes, shown as the same interface twice.
-          Switch themes in the header and both panels re-render in that
-          theme's palette — the attribute that flips a whole page works on
-          any element, which is exactly how these panels are built.
+          The base family plus three accent ranks, two modes, shown as the
+          same interface twice. Components never pick colors, they pick
+          ranks: accent-1 is the one primary action on a screen, accent-2
+          fills every secondary action, accent-3 is the quiet interactive
+          color for links, labels and small affordances. Switch themes in
+          the header and both panels re-render in that theme's palette —
+          the attribute that flips a whole page works on any element, which
+          is exactly how these panels are built.
         </p>
 
         <div class="mode-pair">
@@ -573,7 +578,9 @@
               <li><div class="swatch" style="background: var(--text)"></div>--text</li>
               <li><div class="swatch" style="background: var(--text-muted)"></div>--text-muted</li>
               <li><div class="swatch" style="background: var(--border)"></div>--border</li>
-              <li><div class="swatch" style="background: var(--accent)"></div>--accent</li>
+              <li><div class="swatch" style="background: var(--accent-1)"></div>--accent-1</li>
+              <li><div class="swatch" style="background: var(--accent-2)"></div>--accent-2</li>
+              <li><div class="swatch" style="background: var(--accent-3)"></div>--accent-3</li>
             </ul>
             <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
               <button class="btn btn-primary btn-small">Primary</button>
@@ -598,7 +605,9 @@
               <li><div class="swatch" style="background: var(--text)"></div>--text</li>
               <li><div class="swatch" style="background: var(--text-muted)"></div>--text-muted</li>
               <li><div class="swatch" style="background: var(--border)"></div>--border</li>
-              <li><div class="swatch" style="background: var(--accent)"></div>--accent</li>
+              <li><div class="swatch" style="background: var(--accent-1)"></div>--accent-1</li>
+              <li><div class="swatch" style="background: var(--accent-2)"></div>--accent-2</li>
+              <li><div class="swatch" style="background: var(--accent-3)"></div>--accent-3</li>
             </ul>
             <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
               <button class="btn btn-primary btn-small">Primary</button>
@@ -950,7 +959,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <h3>Slider</h3>
         <p>
           What it is: a real range input wearing the theme — hairline track,
-          accent thumb — paired with a live value readout. What it is for:
+          accent-3 thumb — paired with a live value readout. What it is for:
           picking a number inside a known range where the feel of
           more-and-less matters more than exact digits: years, percentages,
           counts. When to use it: bounded inputs with sensible ends. When the

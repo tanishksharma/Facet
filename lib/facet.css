@@ -52,9 +52,10 @@
 /*
    Theme · Default (light). Ships first, no attribute needed.
    Paper white, near-black ink, gray hairlines, small radii, whisper
-   shadows. Zero decoration, the quiet base. The accent is the ink itself:
-   primary actions are black on white, and hover and pressed deepen to
-   full black.
+   shadows. Zero decoration, the quiet base. The accent ranks are the ink
+   itself: accent-1 primary actions are black on white deepening to full
+   black, accent-2 is the quiet surface fill, accent-3 the interactive
+   ink for links and small affordances.
 
    The non-color tokens (type, spacing, shape, elevation, motion, focus)
    live here once and are shared by every theme; themes override only what
@@ -71,11 +72,27 @@
   --text-muted: #6E6E76;      /* secondary text, hints, captions */
   --border: #E4E4E8;          /* gray hairlines and edges */
 
-  /* ----- Colors: accent (the ink itself) ----- */
-  --accent: #17171B;
-  --accent-hover: #09090B;
-  --accent-pressed: #000000;
-  --on-accent: #FFFFFF;       /* text and icons sitting on the accent color */
+  /* ----- Colors: the accent ranks ----- */
+  /* Components never pick colors; they pick ranks. Accent-1 is the one
+     primary action on a screen. Accent-2 is every secondary action's
+     fill. Accent-3 is the quiet interactive color: links, labels, focus,
+     small affordances. Each rank carries hover, pressed and an on-color
+     for text sitting on it. In Default, accent-1 and accent-3 are the
+     ink itself; accent-2 is the surface family. */
+  --accent-1: #17171B;
+  --accent-1-hover: #09090B;
+  --accent-1-pressed: #000000;
+  --on-accent-1: #FFFFFF;
+
+  --accent-2: #FAFAFA;
+  --accent-2-hover: #F0F0F2;
+  --accent-2-pressed: #E4E4E8;
+  --on-accent-2: #17171B;
+
+  --accent-3: #17171B;        /* TODO R2: follows the OS accent color */
+  --accent-3-hover: #09090B;
+  --accent-3-pressed: #000000;
+  --on-accent-3: #FFFFFF;
 
   /* ----- Colors: status ----- */
   --success: #187C3D;         /* things that went well */
@@ -144,15 +161,15 @@
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);  /* things moving */
 
   /* ----- Focus ----- */
-  --focus-ring: 2px solid var(--accent);
+  --focus-ring: 2px solid var(--accent-3);
   --focus-offset: 2px;
 }
 
 /*
    Theme · Default (dark). <html data-mode="dark">.
-   Near-black ground, paper ink. The accent flips with the ink: primary
-   actions become paper on black. Only color tokens change; type, spacing,
-   shape and motion carry over.
+   Near-black ground, paper ink. The ranks flip with the ink: accent-1
+   primary actions become paper on black. Only color tokens change; type,
+   spacing, shape and motion carry over.
 */
 [data-mode="dark"] {
   --background: #121214;
@@ -161,10 +178,20 @@
   --text-muted: #9C9CA3;
   --border: #2E2E33;
 
-  --accent: #F4F4F5;
-  --accent-hover: #FFFFFF;
-  --accent-pressed: #E2E2E5;
-  --on-accent: #17171B;
+  --accent-1: #F4F4F5;
+  --accent-1-hover: #FFFFFF;
+  --accent-1-pressed: #E2E2E5;
+  --on-accent-1: #17171B;
+
+  --accent-2: #1B1B1F;
+  --accent-2-hover: #232328;
+  --accent-2-pressed: #2E2E33;
+  --on-accent-2: #F4F4F5;
+
+  --accent-3: #F4F4F5;
+  --accent-3-hover: #FFFFFF;
+  --accent-3-pressed: #E2E2E5;
+  --on-accent-3: #17171B;
 
   --success: #56B87A;
   --warning: #D8A23E;
@@ -189,10 +216,20 @@
   --text-muted: #86794F;      /* dead bush */
   --border: #D9CD9E;          /* sandstone shadow */
 
-  --accent: #5F9E44;          /* cactus */
-  --accent-hover: #549038;
-  --accent-pressed: #48802F;
-  --on-accent: #FFFFFF;
+  --accent-1: #5F9E44;        /* cactus */
+  --accent-1-hover: #549038;
+  --accent-1-pressed: #48802F;
+  --on-accent-1: #FFFFFF;
+
+  --accent-2: #F6F0D8;        /* smooth sandstone, the quiet action fill */
+  --accent-2-hover: #F0E9CE;
+  --accent-2-pressed: #E5DBB4;
+  --on-accent-2: #33291A;
+
+  --accent-3: #48802F;        /* deep cactus: AA as text on sand */
+  --accent-3-hover: #3E7027;
+  --accent-3-pressed: #345F20;
+  --on-accent-3: #FFFFFF;
 
   --success: #57923F;
   --warning: #A97B24;
@@ -215,10 +252,20 @@
   --text-muted: #A99C6E;
   --border: #453B24;
 
-  --accent: #6FAE52;
-  --accent-hover: #7CBB5F;
-  --accent-pressed: #619E46;
-  --on-accent: #1C2611;
+  --accent-1: #6FAE52;
+  --accent-1-hover: #7CBB5F;
+  --accent-1-pressed: #619E46;
+  --on-accent-1: #1C2611;
+
+  --accent-2: #2C2415;
+  --accent-2-hover: #352C1A;
+  --accent-2-pressed: #453B24;
+  --on-accent-2: #EFE7C8;
+
+  --accent-3: #7CBB5F;        /* lighter cactus: AA as text on dark earth */
+  --accent-3-hover: #8AC46E;
+  --accent-3-pressed: #6FAE52;
+  --on-accent-3: #1C2611;
 
   --success: #6FAE52;
   --warning: #C79A45;
@@ -349,7 +396,7 @@ small { font-size: var(--text-small); }
 strong, b { font-weight: var(--weight-strong); }
 
 a {
-  color: var(--text);           /* links are ink with an underline, every theme */
+  color: var(--accent-3);       /* the quiet interactive rank, every theme */
   text-decoration: underline;
   text-underline-offset: 0.15em;
   text-decoration-color: var(--border);
@@ -366,7 +413,7 @@ li + li { margin-top: var(--space-1); }
 
 blockquote {
   padding-left: var(--space-4);
-  border-left: var(--border-width-strong) solid var(--accent);
+  border-left: var(--border-width-strong) solid var(--accent-3);
   color: var(--text-muted);
   font-style: italic;
 }
@@ -518,8 +565,8 @@ figcaption {
 /* ----- Text selection ----- */
 
 ::selection {
-  background: var(--accent);
-  color: var(--on-accent);
+  background: var(--accent-3);
+  color: var(--on-accent-3);
 }
 
 /* ----- Scrollbars ----- */
@@ -726,7 +773,8 @@ figcaption {
   padding: var(--space-2) var(--space-5);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-small);
-  background: var(--surface);
+  background: var(--accent-2);
+  color: var(--on-accent-2);
   font-weight: var(--weight-strong);
   text-decoration: none;                  /* .btn also works on <a> */
   transition:
@@ -737,21 +785,27 @@ figcaption {
 
 .btn:active { transform: translateY(1px); }
 
-/* Primary: accent-filled. One per screen. */
+/* Primary: filled with accent-1. One per screen. */
 .btn-primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
+  background: var(--accent-1);
+  border-color: var(--accent-1);
+  color: var(--on-accent-1);
   box-shadow: var(--shadow-raised);
 }
 
-.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
-.btn-primary:active { background: var(--accent-pressed); border-color: var(--accent-pressed); }
+.btn-primary:hover { background: var(--accent-1-hover); border-color: var(--accent-1-hover); }
+.btn-primary:active { background: var(--accent-1-pressed); border-color: var(--accent-1-pressed); }
 
-/* Secondary: surface with a hairline. The default look. */
+/* Secondary: the accent-2 fill with a hairline. The default look. */
 .btn-secondary:hover,
 .btn:not(.btn-primary):not(.btn-ghost):hover {
+  background: var(--accent-2-hover);
   border-color: var(--text-muted);
+}
+
+.btn-secondary:active,
+.btn:not(.btn-primary):not(.btn-ghost):active {
+  background: var(--accent-2-pressed);
 }
 
 /* Ghost: no fill, no border, until hovered. */
@@ -761,8 +815,12 @@ figcaption {
 }
 
 .btn-ghost:hover {
-  background: var(--surface);
+  background: var(--accent-2);
   border-color: var(--border);
+}
+
+.btn-ghost:active {
+  background: var(--accent-2-hover);
 }
 
 /* Sizes. Small keeps the 44px touch target via min-height on mobile. */
@@ -899,15 +957,15 @@ figcaption {
 .number-words {
   min-height: 1.2em;                      /* reserves the line: no layout jump */
   font-size: var(--text-caption);
-  color: var(--text-muted);
+  color: var(--accent-3);
   font-weight: var(--weight-strong);
 }
 
 /* --------------------------------------------------------------------------
    SLIDER
 
-   What it is: a real range input wearing the theme — hairline track, accent
-   thumb — paired with a live value readout.
+   What it is: a real range input wearing the theme — hairline track,
+   accent-3 thumb — paired with a live value readout.
    What it is for: picking a number inside a known range where the feel of
    more-and-less matters more than exact digits: years, percentages, counts.
    When to use it: bounded inputs with sensible ends. When the exact number
@@ -949,7 +1007,7 @@ figcaption {
 /* Filled part of the track, Firefox only (WebKit has no equivalent). */
 .slider::-moz-range-progress {
   height: 4px;
-  background: var(--accent);
+  background: var(--accent-3);
   border-radius: var(--radius-pill);
 }
 
@@ -959,7 +1017,7 @@ figcaption {
   width: 24px;
   height: 24px;
   margin-top: -10px;                      /* centers on the 4px track */
-  background: var(--accent);
+  background: var(--accent-3);
   border: var(--border-width-strong) solid var(--surface);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-raised);
@@ -969,7 +1027,7 @@ figcaption {
 .slider::-moz-range-thumb {
   width: 24px;
   height: 24px;
-  background: var(--accent);
+  background: var(--accent-3);
   border: var(--border-width-strong) solid var(--surface);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-raised);
@@ -978,8 +1036,8 @@ figcaption {
 
 .slider:hover::-webkit-slider-thumb { transform: scale(1.15); }
 .slider:hover::-moz-range-thumb { transform: scale(1.15); }
-.slider:active::-webkit-slider-thumb { background: var(--accent-pressed); }
-.slider:active::-moz-range-thumb { background: var(--accent-pressed); }
+.slider:active::-webkit-slider-thumb { background: var(--accent-3-pressed); }
+.slider:active::-moz-range-thumb { background: var(--accent-3-pressed); }
 
 /* The live value readout inside the field label. */
 .field output {

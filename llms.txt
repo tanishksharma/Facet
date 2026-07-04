@@ -28,7 +28,11 @@ color-scheme.
 Tokens: every design decision is a role-named CSS variable — color with
 per-theme status colors, type scale, weights, spacing on a 4px base,
 container widths, radii, border widths, whisper-flat shadows, motion
-durations and easings, focus ring.
+durations and easings, focus ring. Ranked accents: the base family plus
+accent-1 (the one primary action), accent-2 (every secondary action's
+fill) and accent-3 (links, labels, quiet affordances), each with hover,
+pressed and on-colors in every theme — components pick ranks, never
+colors.
 
 Adapts to the reader: all sizes in rem, so device/browser text-size
 settings scale the whole interface; fluid hero type via clamp(); 44px
@@ -83,8 +87,9 @@ included. Dark mode is a second attribute and composes with every theme.
     <html data-theme="sand">                  Sand theme, light
     <html data-theme="sand" data-mode="dark"> Sand theme, dark
 
-Themes: Default (white and black, the accent is the ink itself) ships
-first. Sand (Minecraft desert beige, cactus accent) is parked and working.
+Themes: Default (white and black, the accent ranks are the ink itself)
+ships first. Sand (Minecraft desert beige, cactus accent-1) is parked and
+working.
 Aero (glass and sky) and Elegant (cream and gold) are stubbed; their
 palettes get locked when they are built.
 
@@ -105,9 +110,13 @@ own background and text automatically.
 Every design decision is a CSS variable named by its role, never its value.
 Use tokens, never raw hex or px, in anything built on Facet.
 
-Color: --background, --surface, --text, --text-muted, --border,
---accent, --accent-hover, --accent-pressed, --on-accent,
---success, --warning, --error, --info
+Color: --background, --surface, --text, --text-muted, --border, then
+the accent ranks — components pick ranks, never colors:
+--accent-1 / -hover / -pressed / --on-accent-1   the one primary action
+--accent-2 / -hover / -pressed / --on-accent-2   secondary action fill
+--accent-3 / -hover / -pressed / --on-accent-3   links, labels, focus,
+                                                 quiet affordances
+Status: --success, --warning, --error, --info
 
 Type: --font-heading, --font-body, --font-mono; --text-display, --text-h1,
 --text-h2, --text-h3, --text-h4, --text-body, --text-small, --text-caption;
@@ -197,9 +206,9 @@ reason the wrapper law allows a container inside a container.
 
 What it is: the action element, in three variants and three sizes, working
 identically on <button> and on <a>. What it is for: .btn-primary carries
-the screen's one main action in the accent color. .btn-secondary is every
-other action. .btn-ghost is for quiet actions inside busy areas, invisible
-until hovered. When to use it: any click that does something. One primary
+the screen's one main action in accent-1. .btn-secondary is every other
+action, on the accent-2 fill. .btn-ghost is for quiet actions inside busy
+areas, invisible until hovered. When to use it: any click that does something. One primary
 per screen at most. Navigation dressed as a button is an <a class="btn">.
 Put the button's key action name in a data-event attribute as the
 analytics hook.
@@ -256,8 +265,8 @@ error state, put .field-invalid on the field and swap the hint for a
 
 ### Slider
 
-What it is: a real range input wearing the theme — hairline track, accent
-thumb — paired with a live value readout. What it is for: picking a number
+What it is: a real range input wearing the theme — hairline track,
+accent-3 thumb — paired with a live value readout. What it is for: picking a number
 inside a known range where the feel of more-and-less matters more than
 exact digits: years, percentages, counts. When to use it: bounded inputs
 with sensible ends. When the exact number matters, pair it with or swap it

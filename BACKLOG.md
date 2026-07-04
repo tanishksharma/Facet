@@ -20,16 +20,16 @@ RTL no — decided 4 Jul 2026.
 
 ### Accent ranks — R1
 
-- [ ] Retokenise color: keep the base family (--background, --surface,
+- [x] Retokenise color: keep the base family (--background, --surface,
       --text, --text-muted, --border), replace --accent/--accent-hover/
       --accent-pressed/--on-accent with --accent-1/-2/-3, each with
       -hover, -pressed and --on-accent-N, defined for Default light/dark
       and Sand light/dark. Old names removed, not aliased.
-- [ ] Migrate every component to ranks: btn-primary → accent-1,
+- [x] Migrate every component to ranks: btn-primary → accent-1,
       btn-secondary and ghost hover → accent-2, links, slider thumb,
       selection, focus ring, number-words, chips → accent-3. One primary
       per screen stays the rule.
-- [ ] Docs update for ranks: Color section teaches base + three accents
+- [x] Docs update for ranks: Color section teaches base + three accents
       with live swatches per rank; Features line, llms.txt, CLAUDE.md
       theme sections all reworded in the same commit.
 
@@ -100,6 +100,8 @@ these tokens.
 - [ ] Wall entry for motion: Lively / Calm / Off chips that flip the
       whole page live so the difference is felt, not described — plus
       the Features and llms.txt lines.
+
+### Seamless page transitions — R13
 
 - [ ] Cross-page transitions: @view-transition navigation rules so
       moving between pages of a Facet product animates old-page-out /
