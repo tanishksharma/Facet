@@ -49,8 +49,9 @@ colors.
 
 Adapts to the reader: all sizes in rem, so device/browser text-size
 settings scale the whole interface; fluid hero type via clamp(); 44px
-touch targets; no hover-only interactions; prefers-reduced-motion
-collapses all motion; print base included.
+touch targets; no hover-only interactions; motion with personality —
+Lively springs by default, data-motion="calm" for quiet, "off" for
+none, prefers-reduced-motion above all of it; print base included.
 
 Base layer: raw semantic HTML looks designed with no classes; one visible
 keyboard focus ring everywhere; selection colors, thin scrollbars,
@@ -167,9 +168,16 @@ Shape: --radius-small, --radius-medium, --radius-large, --radius-pill;
 Elevation: --shadow-flat, --shadow-raised, --shadow-floating,
 --shadow-overlay (whisper-flat, all of them)
 
-Motion: --duration-fast 120ms, --duration-normal 200ms, --duration-slow
-320ms; --ease-out, --ease-in-out. All motion collapses to nothing under
-prefers-reduced-motion.
+Motion: the personality system. Lively, the default — momentum, weight,
+playful spring (--ease-spring is a true linear() spring curve where
+supported): --duration-fast 150ms, --duration-normal 280ms,
+--duration-slow 450ms, --ease-out, --ease-in-out, --ease-spring.
+data-motion="calm" swaps the whole set for short, near-linear, slight
+values; data-motion="off" stops animation entirely; both work on any
+subtree and through facet.set({motion}). Every transition in the
+library reads these tokens — no component hardcodes an easing. All
+motion collapses to nothing under prefers-reduced-motion, above any
+page choice.
 
 Focus: --focus-ring, --focus-offset. One visible ring everywhere,
 keyboard only.

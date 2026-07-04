@@ -113,7 +113,12 @@
       border: var(--border-width) solid var(--border);
       border-radius: var(--radius-pill);
       font-size: var(--text-small);
+      transition:
+        background var(--duration-fast) var(--ease-out),
+        border-color var(--duration-fast) var(--ease-out),
+        transform var(--duration-normal) var(--ease-spring);
     }
+    .chip:active { transform: scale(0.92); }
     .chip[aria-pressed="true"] {
       background: var(--accent-3);
       border-color: var(--accent-3);
@@ -281,7 +286,8 @@
           <li><a href="#typography">Typography</a></li>
           <li><a href="#color">Color</a></li>
           <li><a href="#spacing">Spacing</a></li>
-          <li><a href="#shape">Shape &amp; motion</a></li>
+          <li><a href="#shape">Shape &amp; elevation</a></li>
+          <li><a href="#motion">Motion</a></li>
         </ul>
         <strong>Layer 2</strong>
         <ul>
@@ -358,7 +364,8 @@
           <li>Respects the phone's text-size setting: every font size and space is set in rem, so when a reader raises their device or browser text size, the entire interface scales with it — type, padding, gaps, all of it.</li>
           <li>Fluid display and h1 sizes: <code>clamp()</code> scales hero type between phone and desktop with no breakpoints to manage.</li>
           <li>Mobile-first: 44px touch targets everywhere, no hover-only interactions, safe viewport handling.</li>
-          <li><code>prefers-reduced-motion</code> honoured: every transition and animation in the library collapses to nothing.</li>
+          <li>Motion with personality: Lively by default — presses have weight, arrivals settle with a playful spring (a true <code>linear()</code> spring curve where supported) — or <code>data-motion="calm"</code> for short, near-linear motion, <code>data-motion="off"</code> for none. One attribute, page-wide or per subtree; every transition reads the motion tokens.</li>
+          <li><code>prefers-reduced-motion</code> honoured above any page choice: every transition and animation in the library collapses to nothing.</li>
           <li>Print base included: sensible margins, navigation hidden, ink-friendly colors when a page is printed.</li>
         </ul>
 
@@ -704,7 +711,7 @@
            LAYER 1 · SHAPE, ELEVATION, MOTION
            ============================================================= -->
       <section id="shape" class="stack">
-        <h2>Shape, elevation, motion</h2>
+        <h2>Shape and elevation</h2>
         <ul class="shape-row">
           <li><div class="tile" style="border-radius: var(--radius-small)"></div>--radius-small</li>
           <li><div class="tile" style="border-radius: var(--radius-medium)"></div>--radius-medium</li>
@@ -717,13 +724,51 @@
         <p>
           Small radii on controls, medium on cards, large on overlays, pill
           for chips and thumbs. Shadows stay whisper-flat in every theme.
-          Motion runs on <code>--duration-fast</code> 120ms for hovers,
-          <code>--duration-normal</code> 200ms for reveals and
-          <code>--duration-slow</code> 320ms for overlays, with two easing
-          curves — and every transition in the library collapses to nothing
-          under <code>prefers-reduced-motion</code>.
+          How things move is its own system — see
+          <a href="#motion">Motion</a> just below.
         </p>
       </section>
+
+      <!-- =============================================================
+           LAYER 1 · MOTION PERSONALITY
+           Felt, not described: the chips flip the whole page's motion.
+           ============================================================= -->
+      <article class="element stack" id="motion">
+        <h3>Motion</h3>
+        <p>
+          What it is: the library's motion personality — how everything
+          moves, as a system. Two complete motion sets behind one
+          attribute. Lively, the default: momentum, weight and a playful
+          spring — presses sink and bounce back, tooltips and reveals
+          arrive with a settle, thumbs carry momentum. Calm: short,
+          near-linear, slight, for products that should whisper. What it
+          is for: every transition in the library reads the motion tokens
+          (<code>--duration-fast/normal/slow</code>,
+          <code>--ease-out</code>, <code>--ease-in-out</code>,
+          <code>--ease-spring</code>), so the personality applies
+          everywhere at once and no component ever hardcodes an easing.
+          When to use it: nothing to do for Lively. Set
+          <code>data-motion="calm"</code> on the html tag — or
+          <code>facet.set({motion: "calm"})</code> — for the quiet set,
+          <code>data-motion="off"</code> to stop animation entirely. Works
+          on any subtree, like every Facet attribute, and
+          <code>prefers-reduced-motion</code> overrides everything: for
+          those visitors all motion collapses to nothing, whatever the
+          page chose.
+        </p>
+        <p class="chips" role="group" aria-label="Motion personality">
+          <button class="chip" aria-pressed="true" data-config-key="motion" data-config-value="" data-tip="Momentum, weight, playful spring — the default">Lively</button>
+          <button class="chip" aria-pressed="false" data-config-key="motion" data-config-value="calm" data-tip="Short, near-linear, slight">Calm</button>
+          <button class="chip" aria-pressed="false" data-config-key="motion" data-config-value="off" data-tip="No animation at all">Off</button>
+        </p>
+        <div class="demo" style="display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center;">
+          <button class="btn btn-primary" data-tip="Press and hold, then release">Press me</button>
+          <button class="btn" data-tip="The spring is in the release">And me</button>
+          <button class="btn btn-icon" aria-label="Feel the press" data-tip="Weight, then bounce">&times;</button>
+        </div>
+        <pre id="code-motion"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-motion" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
 
       <!-- =============================================================
            LAYER 2 · BASE STYLES

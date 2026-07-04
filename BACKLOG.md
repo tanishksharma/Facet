@@ -84,20 +84,20 @@ How the library moves, not just how it looks. Everything downstream —
 page transitions (R13), the parallax/idle motion pack (R11) — inherits
 these tokens.
 
-- [ ] Personality tokens: two complete motion sets selectable with one
+- [x] Personality tokens: two complete motion sets selectable with one
       attribute or config key. Lively, the default: momentum, inertia
       and playful bounce — spring-like overshoot easings (CSS linear()
       spring curves with cubic-bezier fallback), weight in every press,
       settle in every arrival. Calm: short, near-linear, slight — for
       products that should whisper. prefers-reduced-motion stays the
       third level above both: everything collapses to nothing.
-- [ ] Apply the personality everywhere: every existing transition moves
+- [x] Apply the personality everywhere: every existing transition moves
       to the personality tokens — buttons press with weight and spring
       back, chips and toggles bounce as they flip, tooltips and reveals
       arrive with a settle, slider thumbs carry momentum. No component
       ever hardcodes an easing or duration again; the tokens are the
       only source.
-- [ ] Wall entry for motion: Lively / Calm / Off chips that flip the
+- [x] Wall entry for motion: Lively / Calm / Off chips that flip the
       whole page live so the difference is felt, not described — plus
       the Features and llms.txt lines.
 

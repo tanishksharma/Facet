@@ -153,12 +153,20 @@
   --shadow-floating: 0 4px 12px rgb(23 23 27 / 0.08);
   --shadow-overlay: 0 12px 32px rgb(23 23 27 / 0.14);
 
-  /* ----- Motion ----- */
-  --duration-fast: 120ms;     /* hovers, presses */
-  --duration-normal: 200ms;   /* reveals, toggles */
-  --duration-slow: 320ms;     /* overlays, page-level moves */
+  /* ----- Motion: the personality ----- */
+  /* Lively, the default: momentum, weight, a settle in every arrival.
+     Color changes use --ease-out; anything that moves or scales uses
+     --ease-spring, which overshoots slightly and settles. Swap the whole
+     personality with data-motion="calm" (quiet, near-linear) or stop it
+     with data-motion="off" — one attribute, page-wide or per subtree.
+     prefers-reduced-motion sits above all of it. */
+  --duration-fast: 150ms;     /* hovers, color changes */
+  --duration-normal: 280ms;   /* presses, reveals, toggles */
+  --duration-slow: 450ms;     /* overlays, page-level moves */
   --ease-out: cubic-bezier(0.2, 0, 0, 1);       /* things arriving */
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);  /* things moving */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);  /* bouncy back-out;
+                                upgraded to a true spring curve below */
 
   /* ----- Focus ----- */
   --focus-ring: 2px solid var(--accent-3);
@@ -292,6 +300,49 @@
    TODO: palette locked when it gets built. Until then this attribute
    falls back to the Default theme.
 */
+
+/*
+   Motion personality · the spring, upgraded. Browsers that understand
+   linear() get a real spring for --ease-spring: overshoot, then settle
+   with momentum. Everyone else keeps the bouncy back-out fallback above.
+*/
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: linear(
+      0, 0.06 2.5%, 0.235 6.3%, 0.575 12.6%, 0.819 17.6%, 1.003 22.6%,
+      1.071 26.2%, 1.104 30%, 1.106 33.9%, 1.084 38.7%, 1.032 47.3%,
+      1.003 54.5%, 0.995 62.5%, 1
+    );
+  }
+}
+
+/*
+   Motion personality · Calm. <html data-motion="calm"> (or any subtree).
+   Short, near-linear, slight — for products that should whisper. Same
+   tokens, quieter values; no component changes a thing.
+*/
+[data-motion="calm"] {
+  --duration-fast: 100ms;
+  --duration-normal: 160ms;
+  --duration-slow: 240ms;
+  --ease-out: cubic-bezier(0.33, 0, 0.67, 1);
+  --ease-in-out: cubic-bezier(0.33, 0, 0.67, 1);
+  --ease-spring: cubic-bezier(0.33, 0, 0.67, 1);
+}
+
+/*
+   Motion personality · Off. <html data-motion="off">. The explicit stop:
+   everything snaps, nothing animates. prefers-reduced-motion (further
+   down) does the same thing for visitors who asked the OS for it.
+*/
+[data-motion="off"],
+[data-motion="off"] *,
+[data-motion="off"] *::before,
+[data-motion="off"] *::after {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
 
 /* The browser's own widgets (scrollbars, form controls) follow the mode. */
 html[data-mode="dark"] { color-scheme: dark; }
@@ -591,6 +642,7 @@ figcaption {
   border-radius: var(--radius-small);
   box-shadow: var(--shadow-floating);
   transform: translateY(-200%);   /* parked offscreen until focused */
+  transition: transform var(--duration-normal) var(--ease-spring);
 }
 
 .skip-link:focus {
@@ -780,10 +832,11 @@ figcaption {
   transition:
     background var(--duration-fast) var(--ease-out),
     border-color var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+    transform var(--duration-normal) var(--ease-spring);
 }
 
-.btn:active { transform: translateY(1px); }
+/* Press with weight; release springs back with the personality. */
+.btn:active { transform: translateY(1px) scale(0.97); }
 
 /* Primary: filled with accent-1. One per screen. */
 .btn-primary {
@@ -1025,7 +1078,7 @@ figcaption {
   border: var(--border-width-strong) solid var(--surface);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-raised);
-  transition: transform var(--duration-fast) var(--ease-out);
+  transition: transform var(--duration-normal) var(--ease-spring);
 }
 
 .slider::-moz-range-thumb {
@@ -1035,7 +1088,7 @@ figcaption {
   border: var(--border-width-strong) solid var(--surface);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-raised);
-  transition: transform var(--duration-fast) var(--ease-out);
+  transition: transform var(--duration-normal) var(--ease-spring);
 }
 
 .slider:hover::-webkit-slider-thumb { transform: scale(1.15); }
@@ -1171,7 +1224,7 @@ figcaption {
   pointer-events: none;
   transition:
     opacity var(--duration-fast) var(--ease-out),
-    translate var(--duration-fast) var(--ease-out);
+    translate var(--duration-normal) var(--ease-spring);
 }
 
 [data-tip]:hover::after,
