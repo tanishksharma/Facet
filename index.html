@@ -323,6 +323,17 @@
       color: var(--text-muted);
     }
     .demo-width-chips { margin-top: var(--space-2); }
+    .ref { font-size: var(--text-small); }
+    .ref summary { cursor: pointer; color: var(--text-muted); }
+    .ref table { width: 100%; border-collapse: collapse; margin-top: var(--space-2); }
+    .ref td, .ref th {
+      text-align: left;
+      padding: var(--space-1) var(--space-3) var(--space-1) 0;
+      border-bottom: var(--border-width) solid var(--border);
+      vertical-align: top;
+    }
+    .ref th { color: var(--text-muted); font-weight: var(--weight-strong); }
+    .ref .ref-note { color: var(--text-muted); margin-top: var(--space-2); max-width: none; }
 
     /* Backgrounds demo: a fixed-height canvas so the pattern reads. */
     #backgrounds .demo > section { min-height: 11rem; border-radius: var(--radius-medium); }
@@ -591,6 +602,7 @@
           <li>Keyboard-first: <kbd>/</kbd> or <kbd>Cmd</kbd>+<kbd>K</kbd> jumps to search, arrow keys walk the index.</li>
           <li>Live AA/AAA contrast badges under each color panel, recomputed on every theme and mode switch.</li>
           <li>Every wall entry carries its maturity badge (alpha / beta / stable), phone/tablet/desktop preview widths, Open in CodePen, and an edit-on-GitHub link.</li>
+          <li>A reference block per wall entry, rendered from facet.json: every class with its one-liner, the keyboard table, a Do/Don't pair with the reason, and the accessibility note.</li>
         </ul>
       </section>
 
@@ -2433,6 +2445,64 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       }
     }
 
+    /* Reference block per wall entry, rendered from facet.json: the
+       class table with one-liners, the keyboard table, the Do/Don't
+       pair with its reason, and the accessibility note. One source —
+       the manifest — so the wall and the machine view cannot drift. */
+    async function initReferenceBlocks() {
+      let manifest;
+      try { manifest = await (await fetch("/facet.json")).json(); }
+      catch { return; }
+      const byId = {};
+      const slug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+      for (const c of manifest.components) byId[slug(c.name)] = c;
+      const ALIAS = { "sheet": "sheet-menu", "map": "themed-map", "snap-section": "snap-section" };
+
+      for (const article of document.querySelectorAll("article.element")) {
+        const c = byId[ALIAS[article.id] || article.id];
+        if (!c) continue;
+        const details = document.createElement("details");
+        details.className = "ref";
+        const summary = document.createElement("summary");
+        summary.textContent = "Reference: classes, keyboard, do & don't, accessibility";
+        details.appendChild(summary);
+
+        const table = (head, rows) => {
+          const t = document.createElement("table");
+          const tr = document.createElement("tr");
+          for (const h of head) { const th = document.createElement("th"); th.textContent = h; tr.appendChild(th); }
+          t.appendChild(tr);
+          for (const cells of rows) {
+            const r = document.createElement("tr");
+            cells.forEach((cell, i) => {
+              const td = document.createElement("td");
+              if (i === 0) { const code = document.createElement("code"); code.textContent = cell; td.appendChild(code); }
+              else td.textContent = cell;
+              r.appendChild(td);
+            });
+            t.appendChild(r);
+          }
+          return t;
+        };
+
+        if (c.classNotes) details.appendChild(table(["Class", "Use it for"], Object.entries(c.classNotes)));
+        else if (c.attributes) details.appendChild(table(["Attribute", ""], c.attributes.map(a => [a, ""])));
+        if (c.keys) details.appendChild(table(["Key", "Does"], c.keys));
+
+        const note = document.createElement("p");
+        note.className = "ref-note";
+        const bits = [];
+        if (c.do) bits.push(`Do: ${c.do}`);
+        if (c.dont) bits.push(`Don't: ${c.dont}`);
+        if (c.why) bits.push(`Why: ${c.why}`);
+        if (c.a11y) bits.push(`Accessibility: ${c.a11y}`);
+        note.textContent = bits.join(" ");
+        if (bits.length) details.appendChild(note);
+
+        article.appendChild(details);
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
       initChips();
@@ -2452,6 +2522,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initPermalinks();
       initContrastBadges();
       initDemoTools();
+      initReferenceBlocks();
       const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
       if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
     });

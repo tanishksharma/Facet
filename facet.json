@@ -9,72 +9,675 @@
     "manual": "/llms.txt"
   },
   "themes": [
-    { "value": "", "name": "Default", "summary": "White and black; accent ranks are the ink. Accent-3 takes the OS accent where AccentColor exists (Safari 16.4+, Firefox 103+)." },
-    { "value": "sand", "name": "Sand", "summary": "Minecraft desert beige, cactus green accents." },
-    { "value": "velvet", "name": "Velvet", "summary": "Neumorphic matte fabric, one top light, gold ink, tuned press physics." },
-    { "value": "aero", "name": "Aero", "summary": "Frutiger Aero: pale sky, glass gloss, pill controls; dark is ocean glass." },
-    { "value": "elegant", "name": "Elegant", "summary": "Cream and gold, serif display, carved elevation; dark is obsidian and gold." }
+    {
+      "value": "",
+      "name": "Default",
+      "summary": "White and black; accent ranks are the ink. Accent-3 takes the OS accent where AccentColor exists (Safari 16.4+, Firefox 103+)."
+    },
+    {
+      "value": "sand",
+      "name": "Sand",
+      "summary": "Minecraft desert beige, cactus green accents."
+    },
+    {
+      "value": "velvet",
+      "name": "Velvet",
+      "summary": "Neumorphic matte fabric, one top light, gold ink, tuned press physics."
+    },
+    {
+      "value": "aero",
+      "name": "Aero",
+      "summary": "Frutiger Aero: pale sky, glass gloss, pill controls; dark is ocean glass."
+    },
+    {
+      "value": "elegant",
+      "name": "Elegant",
+      "summary": "Cream and gold, serif display, carved elevation; dark is obsidian and gold."
+    }
   ],
-  "modes": ["light", "dark"],
-  "motionPersonalities": ["lively", "calm", "off"],
-  "languages": ["en", "hi"],
+  "modes": [
+    "light",
+    "dark"
+  ],
+  "motionPersonalities": [
+    "lively",
+    "calm",
+    "off"
+  ],
+  "languages": [
+    "en",
+    "hi"
+  ],
   "tokens": {
-    "base": ["--background", "--surface", "--text", "--text-muted", "--border"],
-    "accents": [
-      "--accent-1", "--accent-1-hover", "--accent-1-pressed", "--on-accent-1",
-      "--accent-2", "--accent-2-hover", "--accent-2-pressed", "--on-accent-2",
-      "--accent-3", "--accent-3-hover", "--accent-3-pressed", "--on-accent-3"
+    "base": [
+      "--background",
+      "--surface",
+      "--text",
+      "--text-muted",
+      "--border"
     ],
-    "status": ["--success", "--warning", "--error", "--info"],
-    "type": ["--font-heading", "--font-body", "--font-mono", "--text-display", "--text-h1", "--text-h2", "--text-h3", "--text-h4", "--text-body", "--text-small", "--text-caption", "--weight-heading", "--weight-body", "--weight-strong", "--leading-heading", "--leading-body"],
-    "space": ["--space-1", "--space-2", "--space-3", "--space-4", "--space-5", "--space-6", "--space-7", "--space-8"],
-    "shape": ["--radius-small", "--radius-medium", "--radius-large", "--radius-pill", "--border-width", "--border-width-strong"],
-    "elevation": ["--shadow-raised", "--shadow-floating", "--shadow-overlay"],
-    "motion": ["--duration-fast", "--duration-base", "--duration-slow", "--ease-out", "--ease-spring"],
-    "focus": ["--focus-ring", "--focus-offset"]
+    "accents": [
+      "--accent-1",
+      "--accent-1-hover",
+      "--accent-1-pressed",
+      "--on-accent-1",
+      "--accent-2",
+      "--accent-2-hover",
+      "--accent-2-pressed",
+      "--on-accent-2",
+      "--accent-3",
+      "--accent-3-hover",
+      "--accent-3-pressed",
+      "--on-accent-3"
+    ],
+    "status": [
+      "--success",
+      "--warning",
+      "--error",
+      "--info"
+    ],
+    "type": [
+      "--font-heading",
+      "--font-body",
+      "--font-mono",
+      "--text-display",
+      "--text-h1",
+      "--text-h2",
+      "--text-h3",
+      "--text-h4",
+      "--text-body",
+      "--text-small",
+      "--text-caption",
+      "--weight-heading",
+      "--weight-body",
+      "--weight-strong",
+      "--leading-heading",
+      "--leading-body"
+    ],
+    "space": [
+      "--space-1",
+      "--space-2",
+      "--space-3",
+      "--space-4",
+      "--space-5",
+      "--space-6",
+      "--space-7",
+      "--space-8"
+    ],
+    "shape": [
+      "--radius-small",
+      "--radius-medium",
+      "--radius-large",
+      "--radius-pill",
+      "--border-width",
+      "--border-width-strong"
+    ],
+    "elevation": [
+      "--shadow-raised",
+      "--shadow-floating",
+      "--shadow-overlay"
+    ],
+    "motion": [
+      "--duration-fast",
+      "--duration-base",
+      "--duration-slow",
+      "--ease-out",
+      "--ease-spring"
+    ],
+    "focus": [
+      "--focus-ring",
+      "--focus-offset"
+    ]
   },
   "globalAttributes": [
-    { "attribute": "data-theme", "on": "html or any element", "summary": "Switch the theme for the page or a subtree; empty/absent is Default." },
-    { "attribute": "data-mode", "on": "html or any element", "summary": "light or dark; composes with every theme; subtree-capable." },
-    { "attribute": "data-motion", "on": "html", "summary": "Motion personality: lively (default), calm, off." },
-    { "attribute": "data-transition", "on": "html", "summary": "page enables cross-document view transitions." },
-    { "attribute": "data-language", "on": "html", "summary": "Switches every library string (en, hi; extend facet.strings)." },
-    { "attribute": "data-numbers", "on": "html", "summary": "indian or western digit grouping; overrides the location default." },
-    { "attribute": "data-density", "on": "html or any element", "summary": "compact tightens the whole spacing scale; same mechanic as themes." },
-    { "attribute": "data-tip", "on": "any element", "summary": "Description tooltip; data-tip-below flips it under; taps peek it on touch." },
-    { "attribute": "data-event", "on": "actions", "summary": "Stable analytics hook name; wire any vendor with the documented bridge." },
-    { "attribute": "data-copy", "on": "button", "summary": "Copies the text of the selector it points at." },
-    { "attribute": "data-theme-switch", "on": "button", "summary": "One-line theme switcher; value is the theme, empty for Default." },
-    { "attribute": "data-mode-toggle", "on": "button", "summary": "One-line light/dark toggle." },
-    { "attribute": "data-install", "on": "button", "summary": "Appears when the browser offers PWA install; click prompts." },
-    { "attribute": "data-no-transition", "on": "a", "summary": "This link navigates without the page transition." },
-    { "attribute": "data-service-worker", "on": "facet.js script tag", "summary": "Path to your one-line sw.js stub; facet.js registers it." },
-    { "attribute": "data-location-endpoint", "on": "facet.js script tag", "summary": "Override or empty-string-disable the IP location lookup." },
-    { "attribute": "data-maps-key", "on": "facet.js script tag", "summary": "Your Google Maps key for every data-map on the page." }
+    {
+      "attribute": "data-theme",
+      "on": "html or any element",
+      "summary": "Switch the theme for the page or a subtree; empty/absent is Default."
+    },
+    {
+      "attribute": "data-mode",
+      "on": "html or any element",
+      "summary": "light or dark; composes with every theme; subtree-capable."
+    },
+    {
+      "attribute": "data-motion",
+      "on": "html",
+      "summary": "Motion personality: lively (default), calm, off."
+    },
+    {
+      "attribute": "data-transition",
+      "on": "html",
+      "summary": "page enables cross-document view transitions."
+    },
+    {
+      "attribute": "data-language",
+      "on": "html",
+      "summary": "Switches every library string (en, hi; extend facet.strings)."
+    },
+    {
+      "attribute": "data-numbers",
+      "on": "html",
+      "summary": "indian or western digit grouping; overrides the location default."
+    },
+    {
+      "attribute": "data-density",
+      "on": "html or any element",
+      "summary": "compact tightens the whole spacing scale; same mechanic as themes."
+    },
+    {
+      "attribute": "data-tip",
+      "on": "any element",
+      "summary": "Description tooltip; data-tip-below flips it under; taps peek it on touch."
+    },
+    {
+      "attribute": "data-event",
+      "on": "actions",
+      "summary": "Stable analytics hook name; wire any vendor with the documented bridge."
+    },
+    {
+      "attribute": "data-copy",
+      "on": "button",
+      "summary": "Copies the text of the selector it points at."
+    },
+    {
+      "attribute": "data-theme-switch",
+      "on": "button",
+      "summary": "One-line theme switcher; value is the theme, empty for Default."
+    },
+    {
+      "attribute": "data-mode-toggle",
+      "on": "button",
+      "summary": "One-line light/dark toggle."
+    },
+    {
+      "attribute": "data-install",
+      "on": "button",
+      "summary": "Appears when the browser offers PWA install; click prompts."
+    },
+    {
+      "attribute": "data-no-transition",
+      "on": "a",
+      "summary": "This link navigates without the page transition."
+    },
+    {
+      "attribute": "data-service-worker",
+      "on": "facet.js script tag",
+      "summary": "Path to your one-line sw.js stub; facet.js registers it."
+    },
+    {
+      "attribute": "data-location-endpoint",
+      "on": "facet.js script tag",
+      "summary": "Override or empty-string-disable the IP location lookup."
+    },
+    {
+      "attribute": "data-maps-key",
+      "on": "facet.js script tag",
+      "summary": "Your Google Maps key for every data-map on the page."
+    }
   ],
   "components": [
-    { "name": "Container", "classes": [".container", ".container-narrow", ".container-wide", ".container-full"], "summary": "Centered page column in four widths." },
-    { "name": "Stack", "classes": [".stack", ".stack-tight", ".stack-loose"], "summary": "Vertical flow with a themed gap." },
-    { "name": "Snap section", "classes": [".snap", ".snap-section"], "attributes": ["data-pager"], "summary": "Full-viewport sections; ≥90% viewport tall auto-upgrades to the iOS-proven pager (springs between tops, native inner scroll, rubber-band handoff). data-pager=\"off\" opts out. element.facetPager API." },
-    { "name": "Button", "classes": [".btn", ".btn-primary", ".btn-secondary", ".btn-ghost", ".btn-small", ".btn-large"], "attributes": ["data-event"], "summary": "The action element; one primary per screen." },
-    { "name": "Icon button", "classes": [".btn-icon"], "summary": "Square single-icon button; needs aria-label and data-tip." },
-    { "name": "Field", "classes": [".field", ".field-label", ".field-hint", ".field-error", ".field-invalid"], "summary": "Labelled input with hint and error state." },
-    { "name": "Number input", "classes": [".number-input", ".number-words"], "summary": "Locale-aware grouping (lakh/crore or million), words helper, one-tap clear." },
-    { "name": "Slider", "classes": [".slider", ".slider-wrap", ".slider-scale"], "attributes": ["data-minor", "data-label", "data-now"], "summary": "Range with live readout; wrap adds a built tick scale with a highlighted now value." },
-    { "name": "Result block", "classes": [".result", ".result-figures", ".result-number", ".result-verdict"], "summary": "The answer row a calculator produces." },
-    { "name": "Tooltip", "attributes": ["data-tip", "data-tip-below"], "summary": "Description bubble with tail; hover on desktop, five-second tap peek on touch." },
-    { "name": "Tab bar", "classes": [".tab-bar", ".tab-seg", ".tab-divider", ".tab-settings", ".tab-indicator"], "attributes": ["data-section"], "summary": "iOS-style bottom pill; injected spring indicator glides between segments; wires itself to the pager." },
-    { "name": "Sheet & menu", "classes": [".sheet", ".sheet-scrim", ".sheet-scroll", ".sheet-foot", ".sheet-group", ".menu-item", ".menu-label", ".menu-value", ".menu-icon-row", ".menu-icon-btn", ".menu-divider", ".menu-divider-inset"], "summary": "Right-edge settings panel on a rigid rubber-band spring; any button[aria-controls] pointing at it opens it; scrim tap and Esc close." },
-    { "name": "Float button", "classes": [".float-btn", ".float-btn-right"], "summary": "Lone floating round trigger pinned bottom-left (or right); aria-controls opens its sheet." },
-    { "name": "Scroll gauge", "classes": [".scroll-gauge", ".scroll-gauge-thumb", ".scroll-gauge-page"], "summary": "Scrollbar look-alike injected by facet.scrollGauge; page lane variant is draggable." },
-    { "name": "Choice grid", "classes": [".choice-grid", ".choice-btn", ".choice-sym", ".choice-cap"], "summary": "Exclusive pick from compact symbolic options; aria-pressed carries state." },
-    { "name": "Install nudge", "classes": [".nudge-scrim", ".nudge-card", ".nudge-add", ".nudge-later", ".nudge-never", ".eyebrow"], "summary": "Add-to-home-screen card driven by facet.installNudge." },
-    { "name": "Instruction overlay", "classes": [".overlay-guide", ".overlay-title", ".overlay-sub"], "summary": "Full-screen dark guide layer for one-time gestures." },
-    { "name": "Themed map", "attributes": ["data-map", "data-map-key", "data-lat", "data-lng", "data-zoom"], "summary": "Google Map wearing the active theme, restyled live on theme/mode switch; themed placeholder without a key." },
-    { "name": "Skip link", "classes": [".skip-link"], "summary": "Keyboard-first jump to content on every page." },
-    { "name": "Visually hidden", "classes": [".visually-hidden"], "summary": "Screen-reader-only text; the standard clip pattern." },
-    { "name": "Backgrounds", "classes": [".bg-grid", ".bg-dots", ".bg-ruled", ".bg-graph"], "summary": "Whisper-faint token-colored patterns — technical plus-grid, dots, ruled, graph paper; silent under prefers-contrast: more." },
-    { "name": "Text roles", "classes": [".text-display", ".text-h1", ".text-h2", ".text-h3", ".text-h4", ".text-body", ".text-small", ".text-caption"], "summary": "The type scale as classes — a scale step on any element without inline styles." }
+    {
+      "name": "Container",
+      "classes": [
+        ".container",
+        ".container-narrow",
+        ".container-wide",
+        ".container-full"
+      ],
+      "summary": "Centered page column in four widths.",
+      "classNotes": {
+        ".container": "most pages",
+        ".container-narrow": "prose, forms, calculators",
+        ".container-wide": "dashboards and dense screens",
+        ".container-full": "edge-to-edge strips that keep side padding"
+      },
+      "do": "Put it on the page's top-level semantic tag: main, header, footer, section.",
+      "dont": "Nest a container inside a container.",
+      "why": "One width decision per page region — the wrapper law.",
+      "a11y": "Layout only: no roles, focus or announcements to manage."
+    },
+    {
+      "name": "Stack",
+      "classes": [
+        ".stack",
+        ".stack-tight",
+        ".stack-loose"
+      ],
+      "summary": "Vertical flow with a themed gap.",
+      "classNotes": {
+        ".stack": "default gap from the spacing scale",
+        ".stack-tight": "close siblings: label + field + hint",
+        ".stack-loose": "page sections breathing apart"
+      },
+      "do": "Let the stack own all vertical spacing between its children.",
+      "dont": "Add top or bottom margins to children inside a stack.",
+      "why": "One gap owner keeps vertical rhythm identical everywhere.",
+      "a11y": "Layout only: no roles, focus or announcements to manage."
+    },
+    {
+      "name": "Snap section",
+      "classes": [
+        ".snap",
+        ".snap-section"
+      ],
+      "attributes": [
+        "data-pager"
+      ],
+      "summary": "Full-viewport sections; ≥90% viewport tall auto-upgrades to the iOS-proven pager (springs between tops, native inner scroll, rubber-band handoff). data-pager=\"off\" opts out. element.facetPager API.",
+      "classNotes": {
+        ".snap": "the outer rail; auto-upgrades to the pager at >=90% viewport height",
+        ".snap-section": "one full-viewport page inside the rail"
+      },
+      "keys": [
+        [
+          "Tab",
+          "reaches controls inside the active section"
+        ],
+        [
+          "Space / PageDown",
+          "scrolls the active section natively; the pager takes over at its edge"
+        ]
+      ],
+      "do": "Give every section its own heading and equal head/foot padding.",
+      "dont": "Rebuild full-page snapping with CSS scroll-snap: mandatory.",
+      "why": "The pager law: mandatory snap wedges tall sections on iOS.",
+      "a11y": "Sections stay in document order for readers; the tab bar mirrors position with aria-current."
+    },
+    {
+      "name": "Button",
+      "classes": [
+        ".btn",
+        ".btn-primary",
+        ".btn-secondary",
+        ".btn-ghost",
+        ".btn-small",
+        ".btn-large"
+      ],
+      "attributes": [
+        "data-event"
+      ],
+      "summary": "The action element; one primary per screen.",
+      "classNotes": {
+        ".btn": "secondary by default, on the accent-2 fill",
+        ".btn-primary": "the screen's one main action, accent-1",
+        ".btn-ghost": "quiet actions in busy areas, invisible until hovered",
+        ".btn-small": "compact contexts",
+        ".btn-large": "hero moments"
+      },
+      "keys": [
+        [
+          "Enter / Space",
+          "activates"
+        ]
+      ],
+      "do": "Keep one .btn-primary per screen and name its key action in data-event.",
+      "dont": "Dress navigation as a button element — use <a class=\"btn\">.",
+      "why": "Actions and destinations read differently to keyboards, readers and agents.",
+      "a11y": "Real <button>; text is the accessible name; disabled buttons drop from the tab order."
+    },
+    {
+      "name": "Icon button",
+      "classes": [
+        ".btn-icon"
+      ],
+      "summary": "Square single-icon button; needs aria-label and data-tip.",
+      "classNotes": {
+        ".btn-icon": "square, one inline SVG icon, combines with any variant and size"
+      },
+      "keys": [
+        [
+          "Enter / Space",
+          "activates"
+        ]
+      ],
+      "do": "Give every icon button an aria-label and a data-tip.",
+      "dont": "Ship an icon-only control whose meaning lives in your head.",
+      "why": "The icon alone says nothing to a reader or an agent.",
+      "a11y": "aria-label is the name; the tooltip is the description; the SVG stays aria-hidden."
+    },
+    {
+      "name": "Field",
+      "classes": [
+        ".field",
+        ".field-label",
+        ".field-hint",
+        ".field-error",
+        ".field-invalid"
+      ],
+      "summary": "Labelled input with hint and error state."
+    },
+    {
+      "name": "Number input",
+      "classes": [
+        ".number-input",
+        ".number-words"
+      ],
+      "summary": "Locale-aware grouping (lakh/crore or million), words helper, one-tap clear.",
+      "classNotes": {
+        ".number-input": "the field wrapper with the clear affordance",
+        ".number-words": "reads the value back in words: 25 lakh"
+      },
+      "keys": [
+        [
+          "Digits",
+          "group live without moving the caret"
+        ],
+        [
+          "First focus",
+          "selects the prefilled example for one-tap replace"
+        ]
+      ],
+      "do": "Keep the real <label> and let facet.numberValue() parse the value.",
+      "dont": "Strip inputmode or reformat the value yourself.",
+      "why": "Grouping, locale and parsing are one system — split it and they drift.",
+      "a11y": "A real labelled input; the words helper updates politely without stealing focus."
+    },
+    {
+      "name": "Slider",
+      "classes": [
+        ".slider",
+        ".slider-wrap",
+        ".slider-scale"
+      ],
+      "attributes": [
+        "data-minor",
+        "data-label",
+        "data-now"
+      ],
+      "summary": "Range with live readout; wrap adds a built tick scale with a highlighted now value.",
+      "classNotes": {
+        ".slider": "the range input itself",
+        ".slider-wrap": "range + scale together",
+        ".slider-scale": "built ticks: data-minor, data-label, data-now"
+      },
+      "keys": [
+        [
+          "Arrows",
+          "step"
+        ],
+        [
+          "Home / End",
+          "jump to min / max"
+        ]
+      ],
+      "do": "Show the live value next to the slider.",
+      "dont": "Use a slider for precise entry — pair it with the number input.",
+      "why": "Dragging is for exploring; typing is for exactness.",
+      "a11y": "Native range semantics; tick marks are aria-hidden decoration."
+    },
+    {
+      "name": "Result block",
+      "classes": [
+        ".result",
+        ".result-figures",
+        ".result-number",
+        ".result-verdict"
+      ],
+      "summary": "The answer row a calculator produces.",
+      "classNotes": {
+        ".result": "the answer row",
+        ".result-figures": "number pairs",
+        ".result-number": "the big figure",
+        ".result-verdict": "the one-line judgement"
+      },
+      "do": "Lead with the verdict, then the figures.",
+      "dont": "Bury the answer under the inputs.",
+      "why": "The result is what the screen is for.",
+      "a11y": "Announces recalculations politely via aria-live."
+    },
+    {
+      "name": "Tooltip",
+      "attributes": [
+        "data-tip",
+        "data-tip-below"
+      ],
+      "summary": "Description bubble with tail; hover on desktop, five-second tap peek on touch.",
+      "do": "Describe what the control does, in one sentence.",
+      "dont": "Use the tooltip as the control's only name.",
+      "why": "Tooltips are descriptions; names live in text or aria-label.",
+      "keys": [
+        [
+          "Focus",
+          "shows the bubble"
+        ],
+        [
+          "Tap (touch)",
+          "peeks it for five seconds"
+        ]
+      ],
+      "a11y": "Pure CSS on hover and focus-visible; touch peek replaces iOS sticky hover."
+    },
+    {
+      "name": "Tab bar",
+      "classes": [
+        ".tab-bar",
+        ".tab-seg",
+        ".tab-divider",
+        ".tab-settings",
+        ".tab-indicator"
+      ],
+      "attributes": [
+        "data-section"
+      ],
+      "summary": "iOS-style bottom pill; injected spring indicator glides between segments; wires itself to the pager.",
+      "classNotes": {
+        ".tab-bar": "the fixed bottom pill",
+        ".tab-seg": "one text segment; data-section routes the pager",
+        ".tab-divider": "the hairline before the gear",
+        ".tab-settings": "the trailing gear; aria-controls opens its sheet",
+        ".tab-indicator": "injected: the gliding pill"
+      },
+      "keys": [
+        [
+          "Tab",
+          "moves across segments and the gear"
+        ],
+        [
+          "Enter / Space",
+          "activates a segment or the gear"
+        ]
+      ],
+      "do": "Point each segment at its section with data-section.",
+      "dont": "Register the indicator pill with facetMotion.",
+      "why": "The pill already animates its own transform — two writers collide.",
+      "a11y": "aria-current marks the active segment; the gear manages aria-expanded."
+    },
+    {
+      "name": "Sheet & menu",
+      "classes": [
+        ".sheet",
+        ".sheet-scrim",
+        ".sheet-scroll",
+        ".sheet-foot",
+        ".sheet-group",
+        ".menu-item",
+        ".menu-label",
+        ".menu-value",
+        ".menu-icon-row",
+        ".menu-icon-btn",
+        ".menu-divider",
+        ".menu-divider-inset"
+      ],
+      "summary": "Right-edge settings panel on a rigid rubber-band spring; any button[aria-controls] pointing at it opens it; scrim tap and Esc close.",
+      "classNotes": {
+        ".sheet": "the right-edge panel, data-open carries state",
+        ".sheet-scrim": "the tap-to-close veil",
+        ".sheet-scroll": "the scrolling body",
+        ".sheet-foot": "the pinned footer",
+        ".menu-item": "one row: label + value",
+        ".menu-icon-row": "a row of square icon toggles",
+        ".menu-icon-btn": "one icon toggle, aria-pressed state"
+      },
+      "keys": [
+        [
+          "Esc",
+          "closes"
+        ],
+        [
+          "Tab",
+          "moves through the panel's controls"
+        ]
+      ],
+      "do": "Open it from a button carrying aria-controls with the sheet's id.",
+      "dont": "Put primary screen actions inside the settings sheet.",
+      "why": "Sheets hold preferences; the screen holds the work.",
+      "a11y": "Trigger manages aria-expanded; scrim click and Esc both close."
+    },
+    {
+      "name": "Float button",
+      "classes": [
+        ".float-btn",
+        ".float-btn-right"
+      ],
+      "summary": "Lone floating round trigger pinned bottom-left (or right); aria-controls opens its sheet.",
+      "classNotes": {
+        ".float-btn": "pinned bottom-left, safe-area aware",
+        ".float-btn-right": "the bottom-right twin"
+      },
+      "keys": [
+        [
+          "Enter / Space",
+          "opens its sheet"
+        ]
+      ],
+      "do": "Point aria-controls at the sheet it opens.",
+      "dont": "Float more than one trigger per corner.",
+      "why": "A lone floating control reads as the page's one utility.",
+      "a11y": "Needs an aria-label; manages aria-expanded like the gear."
+    },
+    {
+      "name": "Scroll gauge",
+      "classes": [
+        ".scroll-gauge",
+        ".scroll-gauge-thumb",
+        ".scroll-gauge-page"
+      ],
+      "summary": "Scrollbar look-alike injected by facet.scrollGauge; page lane variant is draggable.",
+      "classNotes": {
+        ".scroll-gauge": "the groove beside a scroller",
+        ".scroll-gauge-thumb": "the pill: size = visible share, position = progress",
+        ".scroll-gauge-page": "the draggable whole-page lane"
+      },
+      "do": "Use it where the native scrollbar is hidden by design.",
+      "dont": "Make it the only way to scroll.",
+      "why": "It is a reflection of scrolling, not the mechanism.",
+      "a11y": "aria-hidden decoration; keyboards and readers scroll natively underneath."
+    },
+    {
+      "name": "Choice grid",
+      "classes": [
+        ".choice-grid",
+        ".choice-btn",
+        ".choice-sym",
+        ".choice-cap"
+      ],
+      "summary": "Exclusive pick from compact symbolic options; aria-pressed carries state.",
+      "classNotes": {
+        ".choice-grid": "the grid, five per row on phones",
+        ".choice-btn": "one option, aria-pressed carries the pick",
+        ".choice-sym": "the symbol",
+        ".choice-cap": "the tiny caption"
+      },
+      "keys": [
+        [
+          "Tab",
+          "moves through options"
+        ],
+        [
+          "Enter / Space",
+          "picks; the previous pick releases"
+        ]
+      ],
+      "do": "Use it for one pick from up to about ten symbolic options.",
+      "dont": "Use it for multi-select — aria-pressed here means exactly one.",
+      "why": "Exclusivity is the contract the wiring enforces.",
+      "a11y": "role=group with an aria-label; aria-pressed announces the state."
+    },
+    {
+      "name": "Install nudge",
+      "classes": [
+        ".nudge-scrim",
+        ".nudge-card",
+        ".nudge-add",
+        ".nudge-later",
+        ".nudge-never",
+        ".eyebrow"
+      ],
+      "summary": "Add-to-home-screen card driven by facet.installNudge."
+    },
+    {
+      "name": "Instruction overlay",
+      "classes": [
+        ".overlay-guide",
+        ".overlay-title",
+        ".overlay-sub"
+      ],
+      "summary": "Full-screen dark guide layer for one-time gestures."
+    },
+    {
+      "name": "Themed map",
+      "attributes": [
+        "data-map",
+        "data-map-key",
+        "data-lat",
+        "data-lng",
+        "data-zoom"
+      ],
+      "summary": "Google Map wearing the active theme, restyled live on theme/mode switch; themed placeholder without a key.",
+      "do": "Name the place in an aria-label on the map div.",
+      "dont": "Ship a key in the library or docs — bring your own.",
+      "why": "Keys are project property, like analytics vendors.",
+      "a11y": "The live map is Google's own UI; the placeholder is plain readable text."
+    },
+    {
+      "name": "Skip link",
+      "classes": [
+        ".skip-link"
+      ],
+      "summary": "Keyboard-first jump to content on every page."
+    },
+    {
+      "name": "Visually hidden",
+      "classes": [
+        ".visually-hidden"
+      ],
+      "summary": "Screen-reader-only text; the standard clip pattern."
+    },
+    {
+      "name": "Backgrounds",
+      "classes": [
+        ".bg-grid",
+        ".bg-dots",
+        ".bg-ruled",
+        ".bg-graph"
+      ],
+      "summary": "Whisper-faint token-colored patterns — technical plus-grid, dots, ruled, graph paper; silent under prefers-contrast: more.",
+      "classNotes": {
+        ".bg-grid": "technical drawing: plus marks at intersections",
+        ".bg-dots": "dot grid",
+        ".bg-ruled": "writing lines",
+        ".bg-graph": "graph paper, minor + major"
+      },
+      "do": "Put one class on a section or body and write content straight on top.",
+      "dont": "Stack patterns or raise their contrast for effect.",
+      "why": "They are whispers; louder and they fight the content.",
+      "a11y": "Pure decoration with no contrast duty; they vanish under prefers-contrast: more."
+    },
+    {
+      "name": "Text roles",
+      "classes": [
+        ".text-display",
+        ".text-h1",
+        ".text-h2",
+        ".text-h3",
+        ".text-h4",
+        ".text-body",
+        ".text-small",
+        ".text-caption"
+      ],
+      "summary": "The type scale as classes — a scale step on any element without inline styles."
+    }
   ],
   "api": {
     "facet.set": "Apply {theme, mode, density, language, numbers, motion, transition} or any \"--token\" override live.",

@@ -306,12 +306,15 @@ Platform laws docs and the R11 chart item.
 - [x] Heading permalink anchors: every titled h2/h3 gains a hover/
       focus-revealed # button that copies the deep link and sets the
       hash.
-- [ ] Class reference table per component: every class, modifier and
-      data attribute with a one-liner.
-- [ ] Keyboard interaction table on interactive components.
-- [ ] Do/Don't pairs per component with a one-sentence reason.
-- [ ] Accessibility notes per component: ARIA behavior, contrast, screen
-      reader expectations.
+- [x] Class reference table per component: classNotes authored in
+      facet.json for all 16 wall components, rendered into each entry
+      as a details block — one source, cannot drift.
+- [x] Keyboard interaction table on interactive components (keys in
+      facet.json, same renderer).
+- [x] Do/Don't pairs per component with the one-sentence reason
+      (do/dont/why in facet.json).
+- [x] Accessibility notes per component (a11y in facet.json): ARIA
+      behavior, focus, announcements, honest limits.
 - [x] Live AA/AAA contrast badges: WCAG ratios for text/muted/
       on-accent-1/accent-3-link pairs under both color panels,
       probe-resolved per panel, re-rendered on theme/mode mutation.
