@@ -233,13 +233,19 @@ Platform laws docs and the R11 chart item.
       group, global data attributes, every component with classes/
       attributes/one-liner, the full facet.* API. Kept in sync by the
       three-places rule (updates in the same commit as any capability).
-- [ ] "Copy as Markdown for LLM" button per wall entry.
-- [ ] Analytics bridge: the documented five-line snippet wiring any
-      vendor to the data-event hooks.
+- [x] "Copy as Markdown for LLM" button per wall entry: docs script
+      adds it beside every copy button — heading + description + exact
+      snippet fenced as html, one paste per component.
+- [x] Analytics bridge: the five-line closest("[data-event]") snippet
+      documented under Rules → Analytics on the page, in llms.txt's
+      analytics section, with a copy button.
 - [ ] Playground: one editable HTML box rendering live through the
       library.
 - [ ] Cheatsheet: every class on one dense, searchable screen.
-- [ ] Live size badge: "X KB gzipped, zero dependencies," computed.
+- [x] Live size badge: the get-started strip fetches both lib files
+      and gzips them in the visitor's own browser (CompressionStream)
+      — the real number, never a claim; absent when it cannot be
+      computed.
 
 ### Reader adaptation — R3
 

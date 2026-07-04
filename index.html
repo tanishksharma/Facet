@@ -230,6 +230,9 @@
       cursor: pointer;
     }
 
+    /* Rows of copy buttons under snippets sit side by side. */
+    .element p:has(> [data-copy]) { display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none; }
+
     /* Skin Lab: the theme-by-mode gallery of framed mini pages. */
     .lab-grid {
       display: grid;
@@ -299,6 +302,7 @@
       the library: documentation, living demo and proof of distribution in
       one — everything you see is built from the two files below.
     </p>
+    <p id="size-badge" hidden style="font-size: var(--text-small); color: var(--text-muted);"></p>
     <pre id="snippet-consume"><code>&lt;link rel="stylesheet" href="https://[domain]/lib/facet.css"&gt;
 &lt;script src="https://[domain]/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
     <!-- The site itself always knows its own domain: fill it in, so the
@@ -490,6 +494,9 @@
           <li>The docs are the demo: every component live on this one page, with variant and state chips that flip the real thing.</li>
           <li>The copy button gives you the exact HTML of what you are looking at — the snippet is serialized from the live DOM, never hand-written.</li>
           <li>Search that filters the wall and the index together; a scrollspy sidebar that shows where you are; the whole page re-renders in any theme from the header.</li>
+          <li>Copy as Markdown on every wall entry: the description and exact snippet packaged for an LLM prompt in one click.</li>
+          <li>The analytics bridge, documented in Rules: five lines wire any vendor to every <code>data-event</code> hook the library ships.</li>
+          <li>A live size badge in the get-started strip: the two files fetched and gzipped in your own browser — the real number, never a claim.</li>
         </ul>
       </section>
 
@@ -794,6 +801,22 @@
           <li><strong>Parallax exclusion.</strong> Elements carrying their own transform physics — velvet lift and press, the pager's rubber-band translate — never register with facetMotion: two writers on one inline transform collide, and the loser flickers.</li>
           <li><strong>Font-list law.</strong> Never put <code>inherit</code> inside a font-family list (<code>ui-rounded, "SF Pro Rounded", inherit</code> is silently invalid and drops the whole declaration). A stack ends in a generic family, always.</li>
         </ul>
+
+        <h3 id="analytics">Analytics: bring your own vendor</h3>
+        <p>
+          No analytics tool is baked in. Every key action in the library
+          carries a stable, documented <code>data-event</code> name — the
+          same hooks agents target. This five-line bridge wires any
+          vendor to all of them at once; swap the <code>track</code>
+          call for your tool's API and you are done.
+        </p>
+        <pre id="code-analytics"><code>&lt;script&gt;
+  addEventListener("click", (event) =&gt; {
+    const hook = event.target.closest("[data-event]");
+    if (hook) yourAnalytics.track(hook.dataset.event, { page: location.pathname });
+  });
+&lt;/script&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-analytics" data-tip="Copies the bridge snippet above">Copy</button></p>
       </section>
 
       <!-- =============================================================
@@ -1867,6 +1890,54 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       }
     }
 
+    /* Copy as Markdown: every wall entry gains a second copy button
+       that packages the component's description and exact snippet as
+       Markdown — one paste puts a whole component in an LLM prompt. */
+    function initMarkdownButtons() {
+      for (const article of document.querySelectorAll("article.element")) {
+        const copyBtn = article.querySelector("[data-copy]");
+        const code = article.querySelector("pre code");
+        const title = article.querySelector("h3");
+        const desc = article.querySelector("p");
+        if (!copyBtn || !code || !title || !desc) continue;
+        const btn = document.createElement("button");
+        btn.className = "btn btn-small";
+        btn.textContent = "Copy as Markdown";
+        btn.dataset.event = "copy-markdown";
+        btn.dataset.tip = "The description and snippet as Markdown, ready for an LLM prompt";
+        btn.addEventListener("click", async () => {
+          const md = "## Facet: " + title.textContent.trim() + "\n\n"
+            + desc.textContent.replace(/\s+/g, " ").trim() + "\n\n"
+            + "```html\n" + code.textContent.trim() + "\n```\n";
+          try { await navigator.clipboard.writeText(md); } catch { /* clipboard denied */ }
+          btn.textContent = "Copied";
+          setTimeout(() => { btn.textContent = "Copy as Markdown"; }, 1400);
+        });
+        copyBtn.parentElement.appendChild(btn);
+      }
+    }
+
+    /* Size badge: fetches the two shipped files, gzips them right here
+       in the browser (CompressionStream), and states the real number.
+       Quietly absent where the API is missing — never a made-up figure. */
+    async function initSizeBadge() {
+      const badge = document.querySelector("#size-badge");
+      if (!badge || typeof CompressionStream === "undefined") return;
+      try {
+        const gzipped = async (url) => {
+          const raw = await (await fetch(url)).blob();
+          const gz = await new Response(
+            raw.stream().pipeThrough(new CompressionStream("gzip"))
+          ).blob();
+          return gz.size;
+        };
+        const [css, js] = await Promise.all([gzipped("/lib/facet.css"), gzipped("/lib/facet.js")]);
+        badge.textContent =
+          `${((css + js) / 1024).toFixed(1)} KB gzipped over the wire — two files, zero dependencies, never minified.`;
+        badge.hidden = false;
+      } catch { /* offline: no badge beats a wrong badge */ }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
       initChips();
@@ -1877,6 +1948,8 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initConfigChips();
       initStyleMixer();
       initSkinLab();
+      initMarkdownButtons();
+      initSizeBadge();
       const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
       if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
     });

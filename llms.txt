@@ -569,6 +569,17 @@ state chips, exact snippet with copy. Docs description — what it is, what
 it is for, when to use it — same text as the file comment and this file.
 Committed to Git with a clear message.
 
+Analytics: no vendor is baked in. Every key action carries a stable,
+documented data-event name — the same hooks agents target. Five lines
+wire any tool to all of them at once:
+
+    <script>
+      addEventListener("click", (event) => {
+        const hook = event.target.closest("[data-event]");
+        if (hook) yourAnalytics.track(hook.dataset.event, { page: location.pathname });
+      });
+    </script>
+
 Naming: tokens by role, not value. One class prefix and pattern per
 component (.btn, .btn-primary). JS: one small named function per behavior.
 
