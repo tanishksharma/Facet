@@ -111,7 +111,25 @@ RTL no — decided 4 Jul 2026.
 - [ ] Skin Lab: every theme in light and dark side by side across real
       layouts.
 
-### AI-native and DX — R9
+### Themed map — R16
+
+- [ ] Map styling engine: a Google Maps style generated from the active
+      theme's tokens — ground/water/parks from the base family, roads
+      and labels from text/muted/border, highlights from the accent
+      ranks — so every theme (and every future theme) gets its map for
+      free, light and dark. Styles derive from tokens; never hand-tuned
+      per theme.
+- [ ] Map component: a div carrying data-map (the wrapper law allows it:
+      it carries behavior) that facet.js wires up — loads the Maps JS
+      API with the project's own key (bring-your-own-key, like the
+      analytics rule; the library never ships a key), applies the
+      current theme's style, and restyles live when theme or mode
+      switches. Graceful themed placeholder when there is no key or no
+      network.
+- [ ] Map on the library page: wall entry with the live map in the
+      active theme, chips for mode, snippet with copy. Decide the docs
+      key at build time: a referrer-restricted key owned by the site,
+      or the placeholder if quota/cost says no — never a broken embed.
 
 - [ ] facet.json: machine-readable manifest of every class, data
       attribute, token and component, kept in sync by the three-places
