@@ -1,0 +1,964 @@
+/*
+  facet.css — the whole Facet design system in one readable file.
+
+  Facet is a plain HTML, CSS and JS design library. Any project consumes it
+  with one link tag pointed at this file's public URL, plus one script tag
+  for facet.js. No build step, no framework, never minified.
+
+  How this file is organised, top to bottom:
+
+    1. TOKENS       every design decision as a CSS variable, named by role
+    2. RESET        box sizing, margin reset, sensible element defaults
+    3. BASE STYLES  defaults for every raw HTML tag: text, forms, media,
+                    tables, focus rings, selection, scrollbars, print
+    4. COMPONENTS   one clearly commented section per component
+
+  Theming: `data-theme="sand"` on the <html> tag is the default theme, and
+  `data-mode="dark"` flips it dark. Every color below is a semantic token
+  (--background, --surface, --text...), so a theme swaps values in one block
+  and the entire page, layout containers included, restyles itself.
+
+  Rules that hold everywhere in this file:
+    - Tokens are named by role, not value: --surface, never --gray-100.
+    - Components use tokens only. No raw hex or magic px below the token layer.
+    - One component, one section. Nothing is scattered.
+    - prefers-reduced-motion is honoured: all motion collapses to none.
+
+  To-dos are marked "TODO" inline where they sit.
+*/
+
+
+/* ==========================================================================
+   1. TOKENS
+   Layer 1 of the library. Everything downstream reads these variables.
+   ========================================================================== */
+
+/*
+   Theme 1 · Sand (default, light).
+   Modern beige, boring on purpose, quietly elegant. Palette pulled from
+   Minecraft desert biome blocks, with the ink darkened for AA contrast.
+   The bare :root block means Sand light is what you get with no attributes
+   at all; data-theme="sand" is spelled out so themes stay explicit.
+*/
+:root,
+html[data-theme="sand"] {
+
+  /* ----- Colors: core palette ----- */
+  --background: #EDE5C0;      /* sand: the page itself */
+  --surface: #F6F0D8;         /* smooth sandstone: cards, inputs, raised areas */
+  --text: #33291A;            /* dark earth: AA on background and surface */
+  --text-muted: #86794F;      /* dead bush: secondary text, hints, captions */
+  --border: #D9CD9E;          /* sandstone shadow: hairlines and edges */
+
+  /* ----- Colors: accent (cactus) ----- */
+  --accent: #5F9E44;
+  --accent-hover: #549038;
+  --accent-pressed: #48802F;
+  --on-accent: #FFFFFF;       /* text and icons sitting on the accent color */
+
+  /* ----- Colors: status ----- */
+  --success: #57923F;         /* cactus family: things that went well */
+  --warning: #A97B24;         /* ochre: needs attention, not danger */
+  --error: #A6503A;           /* terracotta: something failed */
+  --info: #58788C;            /* dusty sky: neutral notices */
+
+  /* ----- Typography: font stacks ----- */
+  /* System stacks: nothing to download, instant render, native feel.
+     Headings share the body stack and differentiate by weight and spacing. */
+  --font-heading: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  /* ----- Typography: type scale ----- */
+  --text-display: clamp(2.5rem, 6vw, 3.5rem);  /* hero numbers and statements */
+  --text-h1: clamp(1.875rem, 4vw, 2.25rem);
+  --text-h2: 1.5rem;
+  --text-h3: 1.25rem;
+  --text-h4: 1.125rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-caption: 0.75rem;
+
+  /* ----- Typography: weights and line heights ----- */
+  --weight-heading: 650;      /* variable-font friendly; falls back to bold */
+  --weight-body: 400;
+  --weight-strong: 600;
+  --leading-heading: 1.2;
+  --leading-body: 1.6;
+
+  /* ----- Spacing: 4px base scale ----- */
+  --space-1: 0.25rem;   /*  4px */
+  --space-2: 0.5rem;    /*  8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.5rem;    /* 24px */
+  --space-6: 2rem;      /* 32px */
+  --space-7: 3rem;      /* 48px */
+  --space-8: 4rem;      /* 64px */
+
+  /* ----- Spacing: container widths ----- */
+  --width-narrow: 40rem;      /* prose, forms, calculators */
+  --width-default: 64rem;     /* most pages */
+  --width-wide: 80rem;        /* dashboards, galleries */
+
+  /* ----- Shape ----- */
+  --radius-small: 6px;        /* buttons, inputs, chips */
+  --radius-medium: 10px;      /* cards, result blocks */
+  --radius-large: 16px;       /* modals, hero surfaces */
+  --radius-pill: 999px;       /* pills, sliders, avatars */
+  --border-width: 1px;
+  --border-width-strong: 2px;
+
+  /* ----- Elevation: whisper-flat shadows ----- */
+  --shadow-flat: none;
+  --shadow-raised: 0 1px 2px rgb(51 41 26 / 0.08);
+  --shadow-floating: 0 4px 12px rgb(51 41 26 / 0.10);
+  --shadow-overlay: 0 12px 32px rgb(51 41 26 / 0.16);
+
+  /* ----- Motion ----- */
+  --duration-fast: 120ms;     /* hovers, presses */
+  --duration-normal: 200ms;   /* reveals, toggles */
+  --duration-slow: 320ms;     /* overlays, page-level moves */
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);       /* things arriving */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);  /* things moving */
+
+  /* ----- Focus ----- */
+  --focus-ring: 2px solid var(--accent);
+  --focus-offset: 2px;
+}
+
+/*
+   Sand · dark. One attribute flips the whole page: <html data-mode="dark">.
+   Only color tokens change; type, spacing, shape and motion carry over.
+   Dark earth ground, sand-colored ink, cactus stays the accent.
+*/
+html[data-mode="dark"] {
+  --background: #211A0F;
+  --surface: #2C2415;
+  --text: #EFE7C8;
+  --text-muted: #A99C6E;
+  --border: #453B24;
+
+  --accent: #6FAE52;
+  --accent-hover: #7CBB5F;
+  --accent-pressed: #619E46;
+  --on-accent: #1C2611;
+
+  --success: #6FAE52;
+  --warning: #C79A45;
+  --error: #C4735C;
+  --info: #7FA0B4;
+
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-floating: 0 4px 12px rgb(0 0 0 / 0.45);
+  --shadow-overlay: 0 12px 32px rgb(0 0 0 / 0.55);
+}
+
+/* Dark mode uses a dark scrollbar and form controls from the browser too. */
+html[data-mode="dark"] { color-scheme: dark; }
+html { color-scheme: light; }
+
+
+/* ==========================================================================
+   2. RESET
+   Small on purpose: box sizing, margin zeroing, media defaults.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+/* Form elements inherit the page's typography instead of browser defaults. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Media never overflows its container. */
+img,
+video,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* ==========================================================================
+   3. BASE STYLES
+   What every raw HTML tag looks like before any class is added.
+   Write plain semantic HTML and it already looks like Facet.
+   ========================================================================== */
+
+/* ----- Page ----- */
+
+html {
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-body);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  font-size: var(--text-body);
+}
+
+/* ----- Headings ----- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-heading);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); }
+h4, h5, h6 { font-size: var(--text-h4); }
+
+/* ----- Text ----- */
+
+p {
+  max-width: 65ch;              /* comfortable reading measure by default */
+  text-wrap: pretty;
+}
+
+small { font-size: var(--text-small); }
+
+strong, b { font-weight: var(--weight-strong); }
+
+a {
+  color: var(--accent-pressed); /* the darkest accent shade: AA as link text */
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-color: var(--border);
+  transition: text-decoration-color var(--duration-fast) var(--ease-out);
+}
+
+a:hover { text-decoration-color: currentColor; }
+
+ul, ol {
+  padding-left: var(--space-5);
+}
+
+li + li { margin-top: var(--space-1); }
+
+blockquote {
+  padding-left: var(--space-4);
+  border-left: var(--border-width-strong) solid var(--accent);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+hr {
+  border: none;
+  border-top: var(--border-width) solid var(--border);
+}
+
+/* ----- Code ----- */
+
+code, kbd, samp, pre {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* Inline code gets a quiet chip; code inside pre stays bare. */
+code {
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-small);
+  padding: 0.1em 0.35em;
+}
+
+pre {
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-medium);
+  padding: var(--space-4);
+  overflow-x: auto;             /* wrapper law: this container exists to scroll */
+}
+
+pre code {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+/* ----- Forms ----- */
+
+label {
+  display: block;
+  font-size: var(--text-small);
+  font-weight: var(--weight-strong);
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  min-height: 44px;             /* touch target */
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-small);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  border-color: var(--text-muted);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled,
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+textarea {
+  min-height: calc(var(--space-8) * 2);
+  resize: vertical;
+}
+
+fieldset {
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-medium);
+  padding: var(--space-4);
+}
+
+legend {
+  font-size: var(--text-small);
+  font-weight: var(--weight-strong);
+  padding-inline: var(--space-2);
+}
+
+/* Bare buttons pick up the secondary button look; see COMPONENTS for .btn. */
+button {
+  cursor: pointer;
+}
+
+/* ----- Tables ----- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-small);
+}
+
+th, td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+th {
+  font-weight: var(--weight-strong);
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+tbody tr:hover {
+  background: var(--surface);
+}
+
+/* ----- Figures ----- */
+
+figure img,
+figure video {
+  border-radius: var(--radius-medium);
+}
+
+figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+
+/* ----- Focus rings ----- */
+/* One visible ring everywhere, keyboard only. Never remove, only restyle. */
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-small);
+}
+
+/* ----- Text selection ----- */
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* ----- Scrollbars ----- */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* ----- Skip-to-content link ----- */
+/* First element inside <body> on every page:
+   <a class="skip-link" href="#main">Skip to content</a> */
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-floating);
+  transform: translateY(-200%);   /* parked offscreen until focused */
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ----- Print base ----- */
+
+@media print {
+  html {
+    background: white;
+    color: black;
+  }
+
+  nav, .skip-link, [data-no-print] {
+    display: none;
+  }
+}
+
+/* ----- Reduced motion ----- */
+/* Every transition and animation in the library collapses to nothing. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ==========================================================================
+   4. COMPONENTS
+   One section per component. Each section states what it is, how to use it,
+   and its options. Docs with live demos: /components/<name>.html
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CONTAINER
+   Page-width wrapper with themed padding. Centers content and caps its width.
+
+   Usage:  <main class="container"> ... </main>
+   Options: .container-narrow  prose and forms (40rem)
+            .container         default pages (64rem)
+            .container-wide    dashboards (80rem)
+            .container-full    edge to edge, keeps side padding
+   -------------------------------------------------------------------------- */
+
+.container,
+.container-narrow,
+.container-wide,
+.container-full {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.container { max-width: var(--width-default); }
+.container-narrow { max-width: var(--width-narrow); }
+.container-wide { max-width: var(--width-wide); }
+
+@media (min-width: 640px) {
+  .container,
+  .container-narrow,
+  .container-wide,
+  .container-full {
+    padding-inline: var(--space-6);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   STACK
+   Vertical flow with themed gaps. Says only: these sit above and below
+   each other, this far apart.
+
+   Usage:  <section class="stack"> ... </section>
+   Options: .stack-tight  small gap    .stack        default gap
+            .stack-loose  section gap
+   -------------------------------------------------------------------------- */
+
+.stack,
+.stack-tight,
+.stack-loose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.stack-tight { gap: var(--space-2); }
+.stack-loose { gap: var(--space-7); }
+
+/* --------------------------------------------------------------------------
+   SNAP SECTION
+   Full-viewport scroll-snap areas: the calculator page skeleton. The page
+   scrolls one full screen at a time; each section centers its content.
+   The .snap container exists to enable scrolling — a real feature, so the
+   wrapper law allows it.
+
+   Usage:  <main class="snap">
+             <section class="snap-section"> intro </section>
+             <section class="snap-section"> inputs </section>
+             <section class="snap-section"> results </section>
+           </main>
+   -------------------------------------------------------------------------- */
+
+.snap {
+  height: 100dvh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.snap-section {
+  min-height: 100dvh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-5);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Keep content inside a snap section at a readable width, like a container. */
+.snap-section > * {
+  width: 100%;
+  max-width: var(--width-narrow);
+  margin-inline: auto;
+}
+
+/* --------------------------------------------------------------------------
+   BUTTON
+   Usage:  <button class="btn btn-primary" data-event="calc-run">Calculate</button>
+   Variants: .btn-primary    the one main action on a screen
+             .btn-secondary  everything else (default for bare .btn)
+             .btn-ghost      quiet actions inside busy areas
+   Sizes:    .btn-small  .btn (default)  .btn-large
+   States:   hover, focus ring, pressed, :disabled — all built in.
+   Analytics: put a data-event attribute on the button's key action.
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;                       /* touch target */
+  padding: var(--space-2) var(--space-5);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-small);
+  background: var(--surface);
+  font-weight: var(--weight-strong);
+  text-decoration: none;                  /* .btn also works on <a> */
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.btn:active { transform: translateY(1px); }
+
+/* Primary: accent-filled. One per screen. */
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--shadow-raised);
+}
+
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn-primary:active { background: var(--accent-pressed); border-color: var(--accent-pressed); }
+
+/* Secondary: surface with a hairline. The default look. */
+.btn-secondary:hover,
+.btn:not(.btn-primary):not(.btn-ghost):hover {
+  border-color: var(--text-muted);
+}
+
+/* Ghost: no fill, no border, until hovered. */
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+/* Sizes. Small keeps the 44px touch target via min-height on mobile. */
+.btn-small {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-small);
+  min-height: 36px;
+}
+
+.btn-large {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-h4);
+}
+
+@media (pointer: coarse) {
+  .btn-small { min-height: 44px; }        /* fingers get the full target */
+}
+
+/* --------------------------------------------------------------------------
+   ICON BUTTON
+   A square button holding a single icon. Always needs an aria-label and a
+   description tooltip, because the icon alone says nothing.
+
+   Usage:  <button class="btn btn-icon" aria-label="Clear" data-tip="Clear the field">
+             <svg>...</svg>
+           </button>
+   Combines with .btn-primary / .btn-ghost / .btn-small like any button.
+   -------------------------------------------------------------------------- */
+
+.btn-icon {
+  width: 44px;
+  min-width: 44px;
+  padding: 0;
+}
+
+.btn-icon.btn-small { width: 36px; min-width: 36px; }
+.btn-icon.btn-large { width: 56px; min-width: 56px; }
+
+/* --------------------------------------------------------------------------
+   FIELD + NUMBER INPUT
+   A labelled field wrapping the calculator-grade number input:
+     - ships prefilled with an example value
+     - first tap clears it fully in one go (facet.js), never after the user edits
+     - Indian digit grouping as you type: 25,00,000 (facet.js)
+     - a words helper reads the number back: "25 lakh" (facet.js)
+
+   Usage:
+     <label class="field">
+       <span class="field-label">Monthly investment</span>
+       <span class="number-input">
+         <input type="text" inputmode="numeric" value="25000" data-number>
+         <button type="button" class="btn btn-ghost btn-icon btn-small number-clear"
+                 aria-label="Clear" data-tip="Clear this field">&times;</button>
+       </span>
+       <span class="number-words" aria-live="polite"></span>
+       <span class="field-hint">What you invest every month</span>
+     </label>
+
+   The .number-input wrapper exists to overlay the clear button on the input —
+   a real layout job, allowed by the wrapper law. facet.js finds every
+   [data-number] input and wires the three behaviours on.
+
+   Options: <span class="field-error"> replaces the hint in the error state,
+   and putting .field-invalid on the .field colors the input border.
+   -------------------------------------------------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field-label {
+  font-size: var(--text-small);
+  font-weight: var(--weight-strong);
+}
+
+.field-hint {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  font-weight: var(--weight-body);
+}
+
+.field-error {
+  font-size: var(--text-caption);
+  color: var(--error);
+  font-weight: var(--weight-body);
+}
+
+.field-invalid input,
+.field-invalid textarea,
+.field-invalid select {
+  border-color: var(--error);
+}
+
+/* The input + clear button overlay. */
+.number-input {
+  position: relative;
+  display: block;
+}
+
+.number-input input {
+  padding-right: var(--space-8);          /* room for the clear button */
+  font-size: var(--text-h4);              /* numbers deserve to be legible */
+  font-variant-numeric: tabular-nums;     /* digits align while typing */
+}
+
+.number-input .number-clear {
+  position: absolute;
+  top: 50%;
+  right: var(--space-1);
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.number-input .number-clear:active { transform: translateY(-50%); }
+
+/* Hide the clear button while the field is empty: nothing to clear. */
+.number-input:has(input:placeholder-shown) .number-clear {
+  display: none;
+}
+
+/* The words helper under the input: "25 lakh", "1.2 crore". */
+.number-words {
+  min-height: 1.2em;                      /* reserves the line: no layout jump */
+  font-size: var(--text-caption);
+  color: var(--accent-pressed);
+  font-weight: var(--weight-strong);
+}
+
+/* --------------------------------------------------------------------------
+   SLIDER
+   A themed range input. Pairs with an <output> in the field label so the
+   current value always reads back; facet.js keeps the two in sync.
+
+   Usage:
+     <label class="field">
+       <span class="field-label">Years <output>10</output></span>
+       <input type="range" class="slider" min="1" max="40" value="10"
+              data-tip="Drag to change the number of years">
+     </label>
+
+   The track and thumb are styled per browser engine below; the shared
+   look is: hairline track, accent-filled round thumb, focus ring.
+   -------------------------------------------------------------------------- */
+
+.slider {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 44px;                       /* touch target around the track */
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Track: a quiet hairline. */
+.slider::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+}
+
+.slider::-moz-range-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+}
+
+/* Filled part of the track, Firefox only (WebKit has no equivalent). */
+.slider::-moz-range-progress {
+  height: 4px;
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+}
+
+/* Thumb: accent circle, grows slightly on hover. */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -10px;                      /* centers on the 4px track */
+  background: var(--accent);
+  border: var(--border-width-strong) solid var(--surface);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-raised);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: var(--accent);
+  border: var(--border-width-strong) solid var(--surface);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-raised);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.slider:hover::-webkit-slider-thumb { transform: scale(1.15); }
+.slider:hover::-moz-range-thumb { transform: scale(1.15); }
+.slider:active::-webkit-slider-thumb { background: var(--accent-pressed); }
+.slider:active::-moz-range-thumb { background: var(--accent-pressed); }
+
+/* The live value readout inside the field label. */
+.field output {
+  float: right;                           /* sits at the label's right edge */
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-pressed);
+}
+
+/* --------------------------------------------------------------------------
+   RESULT BLOCK
+   Verdict-first: one plain-language sentence, one big number, then the
+   supporting figures. The centrepiece of every calculator's results screen.
+
+   Usage:
+     <section class="result" aria-live="polite">
+       <p class="result-verdict">Your money halves in value every 10 years</p>
+       <p class="result-number">&#8377;46,319</p>
+       <dl class="result-figures">
+         <div><dt>Total invested</dt><dd>&#8377;12,00,000</dd></div>
+         <div><dt>Real return</dt><dd>4.1% a year</dd></div>
+       </dl>
+     </section>
+
+   aria-live="polite" makes screen readers announce recalculations.
+   The <dl> is the semantic fit for label–value pairs; each <div> row is
+   markup the dl spec itself requires for grouping, not decoration.
+   -------------------------------------------------------------------------- */
+
+.result {
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-raised);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.result-verdict {
+  font-size: var(--text-h3);
+  font-weight: var(--weight-strong);
+  margin-inline: auto;
+  text-wrap: balance;
+}
+
+.result-number {
+  font-size: var(--text-display);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-heading);
+  color: var(--accent-pressed);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.result-figures {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-6);
+  border-top: var(--border-width) solid var(--border);
+  padding-top: var(--space-4);
+}
+
+.result-figures dt {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.result-figures dd {
+  margin: 0;
+  font-size: var(--text-h4);
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   DESCRIPTION TOOLTIP
+   Every interactive element carries a description: put a data-tip attribute
+   on it and the explanation appears on hover and on keyboard focus. Pure
+   CSS, readable by anyone, no JS involved.
+
+   Usage:  <button class="btn" data-tip="Runs the calculation">Calculate</button>
+
+   Limits (fine for v1): single line, appears above the element, clipped by
+   overflow:hidden ancestors. TODO: JS-positioned tooltips once a real page
+   hits the clipping limit.
+   -------------------------------------------------------------------------- */
+
+[data-tip] {
+  position: relative;
+}
+
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + var(--space-2));
+  left: 50%;
+  translate: -50% 2px;
+  z-index: 10;
+  width: max-content;
+  max-width: 16rem;
+  padding: var(--space-1) var(--space-3);
+  background: var(--text);
+  color: var(--background);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-body);
+  text-align: center;
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-floating);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    translate var(--duration-fast) var(--ease-out);
+}
+
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+/* Elements near the top of the viewport add data-tip-below, so the tip
+   drops under them instead of clipping off the screen. */
+[data-tip][data-tip-below]::after {
+  bottom: auto;
+  top: calc(100% + var(--space-2));
+}

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" data-theme="sand">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Slider · Facet</title>
+  <meta name="description" content="The Facet slider: a themed range input with a live value readout. Live demo and copy-paste snippet.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23EDE5C0'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%235F9E44'/></svg>">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="container">
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding-block: var(--space-4);">
+      <a href="/">&larr; Facet</a>
+      <button class="btn btn-ghost btn-small" data-mode-toggle data-tip-below
+              data-tip="One attribute on the html tag flips the whole page">Light / dark</button>
+    </nav>
+  </header>
+
+  <main id="main" class="container-narrow stack-loose" style="padding-block: var(--space-7);">
+
+    <section class="stack">
+      <h1>Slider</h1>
+      <p>
+        A real <code>&lt;input type="range"&gt;</code> wearing the theme:
+        hairline track, cactus thumb, full keyboard support for free. Put an
+        <code>&lt;output&gt;</code> in the field label and
+        <code>facet.js</code> keeps it showing the live value.
+      </p>
+    </section>
+
+    <section class="stack">
+      <h2>Live</h2>
+
+      <label class="field">
+        <span class="field-label">Years <output>10</output></span>
+        <input type="range" class="slider" min="1" max="40" value="10"
+               data-tip="Drag, or use the arrow keys">
+        <span class="field-hint">How long the money stays invested</span>
+      </label>
+
+      <label class="field">
+        <span class="field-label">Expected return, % a year <output>12</output></span>
+        <input type="range" class="slider" min="1" max="30" value="12" step="0.5"
+               data-tip="Drag, or use the arrow keys. Steps of 0.5.">
+      </label>
+    </section>
+
+    <section class="stack">
+      <h2>States</h2>
+
+      <h3>Disabled</h3>
+      <label class="field">
+        <span class="field-label">Inflation, % a year <output>6</output></span>
+        <input type="range" class="slider" min="1" max="15" value="6" disabled
+               data-tip="Fixed at the long-run average for this calculator">
+        <span class="field-hint">Fixed for this calculation</span>
+      </label>
+
+      <p>
+        Hover grows the thumb, dragging shows the pressed shade, and the
+        keyboard focus ring is the same ring every control in the library
+        wears. Tab to a slider above to see it.
+      </p>
+    </section>
+
+    <section class="stack">
+      <h2>Snippet</h2>
+      <pre id="snippet"><code>&lt;label class="field"&gt;
+  &lt;span class="field-label"&gt;Years &lt;output&gt;10&lt;/output&gt;&lt;/span&gt;
+  &lt;input type="range" class="slider" min="1" max="40" value="10"
+         data-tip="Drag, or use the arrow keys"&gt;
+  &lt;span class="field-hint"&gt;How long the money stays invested&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+      <p>
+        <button class="btn btn-primary" data-copy="#snippet"
+                data-tip="Copies the snippet to your clipboard" data-event="copy-snippet">Copy snippet</button>
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="container" style="padding-block: var(--space-6); border-top: var(--border-width) solid var(--border);">
+    <small><a href="/">Facet</a> &middot; slider</small>
+  </footer>
+</body>
+</html>
