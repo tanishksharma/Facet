@@ -113,12 +113,11 @@ these tokens.
 
 ### Velvet ingestion — R18 · from the inflation-app handoff
 
-Source of truth: handoff-velvet.md in the repo root (verbatim export
-from apps/inflation.html in tanishksharmacom — user-approved, shipped
-work). Trust its code over any prose. Ingest in its suggested order;
-delete handoff-velvet.md when every box below is ticked. Each item
-still runs the full pipeline (checklist, wall entry, Features +
-llms.txt, verify, commit).
+COMPLETE. Source of truth was handoff-velvet.md in the repo root
+(verbatim export from apps/inflation.html in tanishksharmacom —
+user-approved, shipped work), deleted when the last box below ticked;
+everything it carried now lives in the library files, the wall, the
+Platform laws docs and the R11 chart item.
 
 - [x] Velvet theme (§1): [data-theme="velvet"] light + dark — the two
       --v-* value blocks plus the standard base/accent-rank tokens
@@ -136,7 +135,7 @@ llms.txt, verify, commit).
       entries live for tab bar, sheet & menu, float button, scroll
       gauge, choice grid; tick scale on the slider entry; golden CTA and
       typography voices ship inside the velvet theme; chart theming
-      rules stay documented in handoff-velvet.md until charts exist.
+      rules moved to the R11 chart item (the handoff is deleted).
       Full list: tab bar + spring pill, sheet, menu list +
       icon toggles, scroll gauge (panel + draggable page variants),
       velvet slider with gold jewel + tick scale, choice grid
@@ -149,10 +148,13 @@ llms.txt, verify, commit).
       facetMotion (parallax off/cursor/tilt — the R11 motion pack,
       arriving by extraction), plus facetTouchPolish and the controls
       wiring pattern.
-- [ ] Rules / laws (§5): the iOS platform laws into the docs — app
-      shell law, pager law, touch laws, parallax exclusion, font-list
-      law — on the page, in CLAUDE.md where they bind building, and in
-      llms.txt.
+- [x] Rules / laws (§5): the iOS platform laws into the docs — pager
+      law, gesture law, app shell law, caching law, parallax exclusion,
+      font-list law — as "Platform laws" in the Rules section on the
+      page, in CLAUDE.md where they bind building, and in llms.txt.
+      The caching law superseded the R6 worker: facet-sw.js is now
+      network-first for pages and unversioned /lib/ files (cache only
+      answers offline), cache-first + revalidate for other assets.
 
 ### System-native Default theme — R2
 
@@ -277,6 +279,16 @@ llms.txt, verify, commit).
 - [ ] Tabs, breadcrumb, pagination
 - [ ] Nav link states: default, hover, active
 - [ ] Table component: header, zebra rows, row hover
+- [ ] Chart (SVG line chart, from the inflation app): theming rules
+      carried from the handoff — the chart card is a carved well, the
+      data line is accent-1 at 2.5px (dashed for projected spans), dots
+      accent-1 with a background ring, grid on --border, axis text
+      muted, event markers as faint dashed verticals labelled in a
+      reserved band ABOVE the plot, crosshair dashed muted, dropped on
+      pointer lift. Draw the SVG at ~1 unit per rendered pixel so type
+      reads true. The surface is touch-action: none — dragging reads
+      values, never scrolls (gesture law). Reference classes: .chart
+      .grid/.line/.dot/.lbl/.lbl-m/.xhair/.evt/.lbl-e/.line.proj.
 - [ ] Badge, chip, avatar, progress bar
 - [ ] Skeleton, spinner, empty state block
 - [ ] Flagship link: the signature style for linking to another page

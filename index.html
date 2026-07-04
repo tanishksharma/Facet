@@ -356,7 +356,7 @@
           <li>Two files, one link tag and one script tag, hosted at a public URL. No React, no npm, no build step, nothing to install.</li>
           <li>Never minified: the shipped files are the readable, commented source. Gzip handles size.</li>
           <li>Projects consume by URL and update the moment the library does — until v1, always the latest, straight from the web. From v1: frozen copies under /lib/v1/ pin old projects forever, and cached updates take over only on the next page load, never mid-page.</li>
-          <li>App-ready out of the box: a one-line service worker stub gives any project the Facet caching strategy — opens instantly from cache, works offline, revalidates in the background. <code>data-service-worker</code> registers it; <code>data-install</code> buttons appear when the browser offers installation; a manifest template ships in /templates.</li>
+          <li>App-ready out of the box: a one-line service worker stub gives any project the Facet caching strategy — pages network-first so deploys land on the very next refresh, cache as the offline fallback, other assets cached instantly and revalidated behind. <code>data-service-worker</code> registers it; <code>data-install</code> buttons appear when the browser offers installation; a manifest template ships in /templates.</li>
         </ul>
 
         <h3>Theming</h3>
@@ -691,6 +691,22 @@
           <li>All changes go through Git commits. The live files are never edited ad hoc.</li>
           <li>Growth by extraction: build a new pattern inside a project first, promote it once it repeats.</li>
           <li>Consume by URL only. Tag releases in Git. On dependency, freeze a copy to <code>/lib/v1/</code> and keep working in <code>/lib/</code>.</li>
+        </ul>
+
+        <h3 id="platform-laws">Platform laws — paid for on iOS</h3>
+        <p>
+          Hard-won facts from shipped app work, mostly against mobile
+          Safari. They bind everything built with Facet; the library
+          already obeys each one, so following them costs nothing — the
+          laws are here so nobody relearns them the expensive way.
+        </p>
+        <ul>
+          <li><strong>Pager law.</strong> Full-page snap sections that can outgrow the viewport are never built with CSS scroll-snap: <code>mandatory</code> re-snaps a tall section back to its top after a flick and wedges the next gesture, <code>proximity</code> feels like no snap, and a free-scrolling outer with a JS settle-snap is mushy and fights momentum. The model that works is the pager <code>.snap</code> ships: the outer never free-scrolls, JS springs its scrollTop between section tops, each section is 100dvh and scrolls natively inside, and gestures hand off at section edges with a rubber-band hint.</li>
+          <li><strong>Gesture law.</strong> Tame iOS with <code>touch-action</code>: <code>pan-y</code> on scrollers (vertical scroll only — also kills double-tap zoom and pinch), <code>manipulation</code> on fixed chrome, <code>none</code> on drag surfaces such as scrubbing charts and the page gauge. Pair with a <code>gesturestart</code> preventDefault for older iOS pinch — facet.js does this globally. Never rely on viewport <code>user-scalable=no</code> or <code>maximum-scale</code>; iOS ignores both.</li>
+          <li><strong>App shell law.</strong> For a standalone PWA, <code>viewport-fit=cover</code> alone is not enough on iOS: without <code>apple-mobile-web-app-capable</code> and <code>apple-mobile-web-app-status-bar-style</code> set to <code>black-translucent</code>, the installed app gets an opaque strip cutting the page at the status bar. Every app page carries both metas, keeps safe-area <code>env()</code> insets in its section padding, and the manifest's background_color and theme_color match the shipped theme.</li>
+          <li><strong>Caching law.</strong> HTML documents and, until versioned freezes exist, the /lib/ files themselves are never cache-first: every refresh loads from the network and caches answer only offline. A worker that serves pages from cache and revalidates behind makes every deploy invisible until a second refresh — that bug shipped once and is now law. facet-sw.js implements this: network-first for pages and /lib/, cache-first with background revalidation for other static assets.</li>
+          <li><strong>Parallax exclusion.</strong> Elements carrying their own transform physics — velvet lift and press, the pager's rubber-band translate — never register with facetMotion: two writers on one inline transform collide, and the loser flickers.</li>
+          <li><strong>Font-list law.</strong> Never put <code>inherit</code> inside a font-family list (<code>ui-rounded, "SF Pro Rounded", inherit</code> is silently invalid and drops the whole declaration). A stack ends in a generic family, always.</li>
         </ul>
       </section>
 

@@ -289,8 +289,8 @@
 /*
    Theme · Velvet (light). <html data-theme="velvet">.
    A CRED-inspired neumorphic material, extracted from the shipped
-   inflation app (reference: handoff-velvet.md, tuned in /apps/velvet-tuner
-   and user-approved — trust these values over taste). Matte velvet
+   inflation app (hand-tuned in the app's velvet-tuner and user-approved
+   — trust these values over taste). Matte velvet
    surfaces, ONE light source from straight above: elements are either
    RAISED out of the fabric (face gradient + key light + cast shadow +
    bevel) or CARVED into it (wells and pits with interior shadows). Gold
@@ -1681,8 +1681,8 @@ figcaption {
 /* --------------------------------------------------------------------------
    APP COMPONENTS — ingested verbatim from the shipped inflation app.
    Base recipes, tokens only; their velvet skins live in the velvet theme
-   block. Wall entries and full canonical descriptions land with the
-   R18 §3 pass; markup contracts are in handoff-velvet.md until then.
+   block. Every piece has its wall entry on the homepage; the copy button
+   under each demo gives the exact markup contract.
      TAB BAR   .tab-bar > .tab-seg / .tab-divider / .tab-settings
      SHEET     .sheet-scrim + .sheet[data-open] > .sheet-scroll/.sheet-foot
      MENU LIST .menu-item / .menu-label / .menu-icon-row / .menu-icon-btn

@@ -170,10 +170,37 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 
 - The starter is installable: manifest.json plus a full icon set out of the
   box.
-- A simple service worker template: offline shell, cached library files.
-  Ships updates by redeploying.
+- The shared service worker (facet-sw.js): pages and /lib/ files
+  network-first with the cache as offline fallback, other assets
+  cache-first with background revalidation. Ships updates by redeploying.
 - Mobile-first defaults: safe-area insets, touch targets, viewport handled
   in the base.
+
+## Platform laws — paid for on iOS
+
+Hard-won facts from shipped app work; they bind everything built with or
+added to the library. The full wording lives in the Rules section on
+index.html and in llms.txt — same text in all three places.
+
+- Pager law: full-page snap sections that can outgrow the viewport are
+  never built with CSS scroll-snap; the pager model (.snap upgraded by
+  facet.js) is the only thing that survives iOS.
+- Gesture law: `touch-action: pan-y` on scrollers, `manipulation` on
+  fixed chrome, `none` on drag surfaces; `gesturestart` preventDefault
+  covers older iOS pinch; never rely on viewport `user-scalable=no`.
+- App shell law: standalone PWAs need `viewport-fit=cover` PLUS the
+  apple-mobile-web-app metas (capable + black-translucent status bar),
+  safe-area env() insets in section padding, and manifest colors that
+  match the shipped theme.
+- Caching law: HTML and unversioned /lib/ files are never cache-first —
+  network first, cache only offline. Cache-first pages hide every deploy
+  until a second refresh; that bug shipped once and is now law.
+- Parallax exclusion: elements carrying their own transform physics
+  (velvet lift/press, the pager's rubber-band) never register with
+  facetMotion — two writers on one inline transform collide.
+- Font-list law: never put `inherit` inside a font-family list; it
+  silently invalidates the whole declaration. Stacks end in a generic
+  family.
 
 ## Analytics
 
@@ -241,8 +268,8 @@ sandstone fill, accent-3 `#48802F` deep cactus.
 
 ### Theme · Velvet (`data-theme="velvet"`)
 
-Neumorphic matte material extracted from the shipped inflation app
-(reference: handoff-velvet.md until fully ingested). One light source
+Neumorphic matte material extracted from the shipped inflation app,
+fully ingested (R18 complete). One light source
 from straight above; elements are raised faces or carved wells; gold is
 the only accent ink (accent-1 and accent-3 gold, accent-2 the raised
 gray face family); serif display headings, rounded control voice.

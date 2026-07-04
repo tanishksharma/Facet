@@ -20,8 +20,9 @@ boundaries.
 
 App-ready (PWA): a one-line sw.js stub — importScripts of
 /lib/facet-sw.js — gives any project the shared caching strategy:
-cache-first serving, background revalidation, offline shell, updates
-that take over on the next refresh or navigation, never mid-page.
+pages network-first so deploys land on the very next refresh, cache as
+the offline fallback, other static assets cached instantly and
+revalidated behind.
 data-service-worker="/sw.js" on the script tag registers it;
 [data-install] buttons show only when the browser offers installation
 (facet.install() for programmatic prompts); /templates/manifest.json is
@@ -431,9 +432,10 @@ centrally.) Then opt in on the script tag:
     <script src="https://[domain]/lib/facet.js"
             data-service-worker="/sw.js" defer></script>
 
-Pages then serve from cache instantly and work offline; every request
-revalidates in the background, and newer versions take over on the next
-refresh or navigation. Add <link rel="manifest" href="/manifest.json">
+Pages and the /lib/ files are then network-first (per the caching law:
+every refresh loads the current deploy, the cache answers only offline)
+while other static assets serve from cache instantly and revalidate in
+the background. Add <link rel="manifest" href="/manifest.json">
 using /templates/manifest.json (name, colors matched to your theme's
 --background, icons 192 / 512 / 512-maskable), give any button
 data-install, and the button appears exactly when installation is
@@ -474,7 +476,8 @@ look-alike; .scroll-gauge-page is the draggable whole-page lane), and
 .float-btn — a lone floating round trigger pinned bottom-left
 (.float-btn-right for bottom-right): give it aria-controls pointing at
 a .sheet and it opens it, aria-expanded managed, press feedback
-included. Markup contracts: handoff-velvet.md until wall entries land.
+included. Markup contracts: the wall entries on the homepage — the
+copy button under each demo gives the exact HTML.
 
 Modules on window.facet: feedback (synthesized UI sounds + haptics, ON
 by default; feedback.sound.enabled / feedback.haptic.enabled are the
@@ -525,3 +528,51 @@ Distribution: consume by URL only. Releases are Git tags. When a project
 ships, freeze a copy of the current files to /lib/v1/ and leave them
 untouched; work continues in /lib/. Old projects point at their frozen
 folder forever.
+
+## Platform laws — paid for on iOS
+
+Hard-won facts from shipped app work, mostly against mobile Safari. They
+bind everything built with Facet; the library already obeys each one, so
+following them costs nothing — the laws are here so nobody relearns them
+the expensive way.
+
+Pager law: full-page snap sections that can outgrow the viewport are
+never built with CSS scroll-snap — mandatory re-snaps a tall section
+back to its top after a flick and wedges the next gesture, proximity
+feels like no snap, and a free-scrolling outer with a JS settle-snap is
+mushy and fights momentum. The model that works is the pager .snap
+ships: the outer never free-scrolls, JS springs its scrollTop between
+section tops, each section is 100dvh and scrolls natively inside, and
+gestures hand off at section edges with a rubber-band hint.
+
+Gesture law: tame iOS with touch-action — pan-y on scrollers (vertical
+scroll only, also kills double-tap zoom and pinch), manipulation on
+fixed chrome, none on drag surfaces such as scrubbing charts and the
+page gauge. Pair with a gesturestart preventDefault for older iOS pinch
+(facet.js does this globally). Never rely on viewport user-scalable=no
+or maximum-scale; iOS ignores both.
+
+App shell law: for a standalone PWA, viewport-fit=cover alone is not
+enough on iOS — without apple-mobile-web-app-capable and
+apple-mobile-web-app-status-bar-style set to black-translucent, the
+installed app gets an opaque strip cutting the page at the status bar.
+Every app page carries both metas, keeps safe-area env() insets in its
+section padding, and the manifest's background_color and theme_color
+match the shipped theme.
+
+Caching law: HTML documents and, until versioned freezes exist, the
+/lib/ files themselves are never cache-first — every refresh loads from
+the network and caches answer only offline. A worker that serves pages
+from cache and revalidates behind makes every deploy invisible until a
+second refresh; that bug shipped once and is now law. facet-sw.js
+implements this: network-first for pages and /lib/, cache-first with
+background revalidation for other static assets.
+
+Parallax exclusion: elements carrying their own transform physics —
+velvet lift and press, the pager's rubber-band translate — never
+register with facetMotion. Two writers on one inline transform collide,
+and the loser flickers.
+
+Font-list law: never put inherit inside a font-family list
+(ui-rounded, "SF Pro Rounded", inherit is silently invalid and drops
+the whole declaration). A stack ends in a generic family, always.
