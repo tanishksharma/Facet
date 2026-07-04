@@ -111,6 +111,43 @@ these tokens.
       per-link opt-out, and a facet.js helper for programmatic
       navigation with the same transition.
 
+### Velvet ingestion — R18 · from the inflation-app handoff
+
+Source of truth: handoff-velvet.md in the repo root (verbatim export
+from apps/inflation.html in tanishksharmacom — user-approved, shipped
+work). Trust its code over any prose. Ingest in its suggested order;
+delete handoff-velvet.md when every box below is ticked. Each item
+still runs the full pipeline (checklist, wall entry, Features +
+llms.txt, verify, commit).
+
+- [ ] Velvet theme (§1): [data-theme="velvet"] light + dark — the two
+      --v-* value blocks plus the standard base/accent-rank tokens
+      mapped from them (gold = accent-1, gray face = accent-2, gold ink
+      = accent-3); component recipes fold into facet.css scoped under
+      the theme; behavioral laws recorded as comments. Composition
+      layer (type voices, gold ink, spacing) with it.
+- [ ] Snap-pager layout (§2): the iOS-proven model — outer never
+      free-scrolls, JS spring between section tops, sections scroll
+      natively inside, gesture handoff with rubber-band hint, wheel
+      paging, equal head/foot padding. Ships as facetPager in facet.js
+      plus the layout CSS.
+- [ ] Components (§3): tab bar + spring pill, sheet, menu list +
+      icon toggles, scroll gauge (panel + draggable page variants),
+      velvet slider with gold jewel + tick scale, choice grid
+      (generalized .choice-grid), capsule number input, golden primary
+      CTA, tooltip tail + touch peek (folds into [data-tip] — fixes
+      iOS sticky hover), install nudge card, full-screen instruction
+      overlay, typography voices, chart theming rules.
+- [ ] JS modules (§4, verbatim): facetFeedback (sounds + haptics),
+      facetSheet, facetScrollGauge, facetTabIndicator, facetInstallNudge,
+      facetMotion (parallax off/cursor/tilt — the R11 motion pack,
+      arriving by extraction), plus facetTouchPolish and the controls
+      wiring pattern.
+- [ ] Rules / laws (§5): the iOS platform laws into the docs — app
+      shell law, pager law, touch laws, parallax exclusion, font-list
+      law — on the page, in CLAUDE.md where they bind building, and in
+      llms.txt.
+
 ### System-native Default theme — R2
 
 - [ ] Support matrix first: test AccentColor, AccentColorText, Highlight,
