@@ -378,6 +378,7 @@
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
+          <li>Built-in context: <code>facet.now()</code> answers the date, time and timezone synchronously; <code>facet.location</code> resolves the visitor's rough place (city, region, country) from a configurable, disablable IP lookup, upgraded to GPS only where permission already exists. Null on failure, never a prompt, never a throw.</li>
         </ul>
 
         <h3>Accessible by default</h3>

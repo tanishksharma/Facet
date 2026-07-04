@@ -47,9 +47,9 @@ RTL no — decided 4 Jul 2026.
 
 ### Context in facet.js — R5
 
-- [ ] facet.now: date, time, timezone and pre-formatted helpers,
+- [x] facet.now: date, time, timezone and pre-formatted helpers,
       available synchronously.
-- [ ] facet.location: country/region/city from IP lookup (endpoint
+- [x] facet.location: country/region/city from IP lookup (endpoint
       documented, overridable, disablable), upgraded via Geolocation
       when permitted; promise + cached property; null on failure, never
       throws.

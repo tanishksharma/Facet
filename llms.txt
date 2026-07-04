@@ -53,8 +53,11 @@ the calculator-grade number input (prefilled example, one-tap clear,
 Indian digit grouping, words helper); labelled fields with hints and
 error states; themed sliders with live readouts; verdict-first result
 blocks with aria-live; the data-tip description tooltip on one attribute;
-all behaviour self-wires to data attributes; JS API: facet.numberValue,
-facet.groupIndian, facet.numberWords.
+all behaviour self-wires to data attributes; built-in context —
+facet.now() for date/time/timezone and facet.location for the visitor's
+rough place (configurable, disablable, GPS-upgraded only with existing
+permission); JS API: facet.set, facet.now, facet.locate,
+facet.numberValue, facet.groupIndian, facet.numberWords.
 
 Accessible by default: AA contrast in every theme light and dark;
 everything keyboard operable; ARIA where semantics fall short; icon-only
@@ -332,6 +335,16 @@ for calculator apps:
 
     facet.set({...})           apply configuration live: theme, mode,
                                density, language, or any --token override
+    facet.now()                { date, iso, dateText, timeText, timezone,
+                               year } — synchronous, fresh every call
+    facet.location             null until resolved, then { city, region,
+                               country, countryCode, latitude, longitude,
+                               source } from an IP lookup (default
+                               ipwho.is; override or disable with
+                               data-location-endpoint on the script tag),
+                               upgraded to GPS only where permission was
+                               already granted. facet.locate() is the
+                               promise behind it. Never throws.
     facet.numberValue(input)   the plain number behind a grouped input
     facet.groupIndian(n)       74250000 -> "7,42,50,000"
     facet.numberWords(n)       74250000 -> "7.43 crore"
