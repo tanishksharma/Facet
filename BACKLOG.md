@@ -297,24 +297,31 @@ Platform laws docs and the R11 chart item.
 
 ### Site polish — R10
 
-- [ ] Click-to-copy tokens: every swatch and token name copies its
-      var(--name) on click.
-- [ ] Keyboard-first search: "/" or Cmd+K focuses the wall search, arrow
-      keys move through results.
-- [ ] Heading permalink anchors: hover a heading, copy the deep link.
+- [x] Click-to-copy tokens: every swatch and every token name in the
+      type labels is a real button copying its var(--name), with a
+      feedback tap.
+- [x] Keyboard-first search: "/" or Cmd/Ctrl+K focuses the wall
+      search; ArrowDown enters the index and arrows walk its visible
+      links, ArrowUp at the top returns to the box.
+- [x] Heading permalink anchors: every titled h2/h3 gains a hover/
+      focus-revealed # button that copies the deep link and sets the
+      hash.
 - [ ] Class reference table per component: every class, modifier and
       data attribute with a one-liner.
 - [ ] Keyboard interaction table on interactive components.
 - [ ] Do/Don't pairs per component with a one-sentence reason.
 - [ ] Accessibility notes per component: ARIA behavior, contrast, screen
       reader expectations.
-- [ ] Live AA/AAA contrast badges on color pairs, re-checked on theme
-      switch.
-- [ ] Component status badges: alpha / beta / stable per wall entry.
-- [ ] Viewport-width toggles on demos: phone / tablet / desktop.
-- [ ] Open in CodePen: posts the snippet plus the two tags to
-      codepen.io/pen/define.
-- [ ] Edit-on-GitHub link per component section.
+- [x] Live AA/AAA contrast badges: WCAG ratios for text/muted/
+      on-accent-1/accent-3-link pairs under both color panels,
+      probe-resolved per panel, re-rendered on theme/mode mutation.
+- [x] Component status badges: data-status on each wall h3 (stable
+      core, beta app kit, alpha map), rendered as a pill chip.
+- [x] Viewport-width toggles on every demo: phone 375 / tablet 640 /
+      desktop chips constraining the demo box.
+- [x] Open in CodePen on every wall entry: POSTs the snippet plus the
+      two real tags to codepen.io/pen/define.
+- [x] Edit-on-GitHub link on every wall entry.
 
 ### Components — R11
 

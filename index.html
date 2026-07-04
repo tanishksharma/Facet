@@ -271,6 +271,59 @@
       background: transparent;
     }
 
+    /* Site polish: status chips, permalinks, token copy, badges. */
+    .element h3[data-status]::after {
+      content: attr(data-status);
+      margin-left: var(--space-2);
+      font-size: var(--text-caption);
+      font-weight: var(--weight-body);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 1px var(--space-2);
+      vertical-align: middle;
+    }
+    .permalink {
+      margin-left: var(--space-2);
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      font: inherit;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity var(--duration-fast) var(--ease-out);
+    }
+    h2:hover .permalink, h3:hover .permalink,
+    .permalink:focus-visible { opacity: 1; }
+    .token-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      border: none;
+      background: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+    .token-copy:hover { color: var(--accent-3); }
+    .contrast-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      font-size: var(--text-caption);
+      max-width: none;
+    }
+    .contrast-badges span {
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 1px var(--space-2);
+      color: var(--text-muted);
+    }
+    .demo-width-chips { margin-top: var(--space-2); }
+
     /* Backgrounds demo: a fixed-height canvas so the pattern reads. */
     #backgrounds .demo > section { min-height: 11rem; border-radius: var(--radius-medium); }
 
@@ -534,13 +587,17 @@
           <li>A live size badge in the get-started strip: the two files fetched and gzipped in your own browser — the real number, never a claim.</li>
           <li>Playground: one editable HTML box rendering live through the real library files, following this page's theme and mode.</li>
           <li>Cheatsheet: every class, attribute and API call on one dense filterable screen, rendered from facet.json so it can never drift.</li>
+          <li>Click any swatch or token name to copy its <code>var(--name)</code>; hover any heading for its permalink.</li>
+          <li>Keyboard-first: <kbd>/</kbd> or <kbd>Cmd</kbd>+<kbd>K</kbd> jumps to search, arrow keys walk the index.</li>
+          <li>Live AA/AAA contrast badges under each color panel, recomputed on every theme and mode switch.</li>
+          <li>Every wall entry carries its maturity badge (alpha / beta / stable), phone/tablet/desktop preview widths, Open in CodePen, and an edit-on-GitHub link.</li>
         </ul>
       </section>
 
 
       <!-- TAB BAR -->
       <article class="element stack" id="tab-bar">
-        <h3>Tab bar</h3>
+        <h3 data-status="beta">Tab bar</h3>
         <p>
           What it is: the iOS-style bottom pill — text segments, a hairline
           divider, a trailing gear — with one injected .tab-indicator pill
@@ -575,7 +632,7 @@
 
       <!-- SHEET & MENU -->
       <article class="element stack" id="sheet">
-        <h3>Sheet &amp; menu</h3>
+        <h3 data-status="beta">Sheet &amp; menu</h3>
         <p>
           What it is: the settings panel — a right-edge slab floating clear
           of the screen over a dark scrim, sliding in as one rigid block on
@@ -623,7 +680,7 @@
 
       <!-- FLOAT BUTTON -->
       <article class="element stack" id="float-button">
-        <h3>Float button</h3>
+        <h3 data-status="beta">Float button</h3>
         <p>
           What it is: a lone floating round button pinned to the bottom-left
           of the page — the tab bar's trailing icon without the bar. What
@@ -649,7 +706,7 @@
 
       <!-- SCROLL GAUGE -->
       <article class="element stack" id="scroll-gauge">
-        <h3>Scroll gauge</h3>
+        <h3 data-status="beta">Scroll gauge</h3>
         <p>
           What it is: a pill thumb inset in an embossed groove beside a
           scroller — thumb height is the visible share of the content,
@@ -681,7 +738,7 @@
 
       <!-- CHOICE GRID -->
       <article class="element stack" id="choice-grid">
-        <h3>Choice grid</h3>
+        <h3 data-status="beta">Choice grid</h3>
         <p>
           What it is: a grid of small square choice buttons — a symbol
           above a tiny caption, five per row on phones. What it is for: one
@@ -719,7 +776,7 @@
 
       <!-- THEMED MAP -->
       <article class="element stack" id="map">
-        <h3>Themed map</h3>
+        <h3 data-status="alpha">Themed map</h3>
         <p>
           What it is: a Google Map wearing the active theme — ground,
           water, parks and roads derived from the base family, labels
@@ -749,7 +806,7 @@
 
       <!-- BACKGROUNDS -->
       <article class="element stack" id="backgrounds">
-        <h3>Backgrounds</h3>
+        <h3 data-status="beta">Backgrounds</h3>
         <p>
           What it is: whisper-faint page and section backgrounds drawn
           with CSS gradients only, colored by the tokens so every theme
@@ -1384,7 +1441,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 
       <!-- CONTAINER -->
       <article class="element stack" id="container">
-        <h3>Container</h3>
+        <h3 data-status="stable">Container</h3>
         <p>
           What it is: a page-width wrapper with themed padding. It centers
           content, caps its width, and keeps consistent side padding from the
@@ -1412,7 +1469,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 
       <!-- STACK -->
       <article class="element stack" id="stack">
-        <h3>Stack</h3>
+        <h3 data-status="stable">Stack</h3>
         <p>
           What it is: vertical flow with themed gaps. A stack says one thing:
           these sit above and below each other, this far apart. What it is
@@ -1441,7 +1498,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 
       <!-- SNAP SECTION -->
       <article class="element stack" id="snap-section">
-        <h3>Snap section</h3>
+        <h3 data-status="stable">Snap section</h3>
         <p>
           What it is: full-viewport scroll-snap areas. The .snap wrapper
           scrolls one full screen at a time and each .snap-section centers
@@ -1477,7 +1534,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 
       <!-- BUTTON -->
       <article class="element stack" id="button">
-        <h3>Button</h3>
+        <h3 data-status="stable">Button</h3>
         <p>
           What it is: the action element, in three variants and three sizes,
           working identically on <code>&lt;button&gt;</code> and on
@@ -1507,7 +1564,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 
       <!-- ICON BUTTON -->
       <article class="element stack" id="icon-button">
-        <h3>Icon button</h3>
+        <h3 data-status="stable">Icon button</h3>
         <p>
           What it is: a square button holding a single icon. What it is for:
           compact actions whose meaning the icon plus its tooltip carries —
@@ -1539,7 +1596,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 
       <!-- NUMBER INPUT -->
       <article class="element stack" id="number-input">
-        <h3>Number input</h3>
+        <h3 data-status="stable">Number input</h3>
         <p>
           What it is: a labelled field wrapping the calculator-grade number
           input, with a clear button inside the field and a words helper
@@ -1586,7 +1643,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 
       <!-- SLIDER -->
       <article class="element stack" id="slider">
-        <h3>Slider</h3>
+        <h3 data-status="stable">Slider</h3>
         <p>
           What it is: a real range input wearing the theme — hairline track,
           accent-3 thumb — paired with a live value readout. What it is for:
@@ -1625,7 +1682,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 
       <!-- RESULT BLOCK -->
       <article class="element stack" id="result-block">
-        <h3>Result block</h3>
+        <h3 data-status="stable">Result block</h3>
         <p>
           What it is: a verdict-first result card: one plain-language
           sentence a person can repeat at dinner, one big number, then the
@@ -1666,7 +1723,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 
       <!-- DESCRIPTION TOOLTIP -->
       <article class="element stack" id="tooltip">
-        <h3>Description tooltip</h3>
+        <h3 data-status="stable">Description tooltip</h3>
         <p>
           What it is: a one-attribute explanation bubble: put data-tip on any
           element and the text appears above it on hover and on keyboard
@@ -2170,6 +2227,212 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       });
     }
 
+    /* Click-to-copy tokens: every swatch and every token name in a
+       type label becomes a real button copying its var(--name). */
+    function initTokenCopy() {
+      const copyable = (btnText) => {
+        const m = btnText.match(/--[a-z0-9-]+/);
+        return m ? `var(${m[0]})` : null;
+      };
+      const arm = (btn) => {
+        const payload = copyable(btn.textContent);
+        if (!payload) return;
+        btn.dataset.tip = `Copies ${payload}`;
+        btn.addEventListener("click", async () => {
+          try { await navigator.clipboard.writeText(payload); } catch { /* denied */ }
+          if (window.facet && facet.feedback) facet.feedback.tap();
+        });
+      };
+      for (const li of document.querySelectorAll(".swatch-row li")) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "token-copy";
+        btn.append(...li.childNodes);
+        li.appendChild(btn);
+        arm(btn);
+      }
+      for (const label of document.querySelectorAll(".type-label")) {
+        const parts = label.textContent.split("·").map(s => s.trim()).filter(Boolean);
+        label.textContent = "";
+        parts.forEach((part, i) => {
+          if (i) label.append(" · ");
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "token-copy";
+          btn.textContent = part;
+          label.append(btn);
+          arm(btn);
+        });
+      }
+    }
+
+    /* Keyboard-first search: "/" or Cmd/Ctrl+K focuses the wall
+       search; arrows walk the visible sidebar links from there. */
+    function initSearchKeys() {
+      const search = document.querySelector("#wall-search") || document.querySelector(".docs-index input");
+      if (!search) return;
+      addEventListener("keydown", (e) => {
+        const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
+        if ((e.key === "/" && !typing) || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k")) {
+          e.preventDefault();
+          search.focus();
+          search.select();
+        }
+      });
+      const links = () => [...document.querySelectorAll(".docs-index a")].filter(a => !a.parentElement.hidden);
+      search.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown") { e.preventDefault(); links()[0]?.focus(); }
+      });
+      document.querySelector(".docs-index").addEventListener("keydown", (e) => {
+        if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+        const list = links();
+        const i = list.indexOf(document.activeElement);
+        if (i === -1) return;
+        e.preventDefault();
+        (list[i + (e.key === "ArrowDown" ? 1 : -1)] || (e.key === "ArrowUp" ? search : list[i]))?.focus();
+      });
+    }
+
+    /* Heading permalinks: hover a titled section heading, copy the
+       deep link. The buttons are real buttons, keyboard reachable. */
+    function initPermalinks() {
+      for (const h of document.querySelectorAll("main h2, main h3")) {
+        const target = h.id || h.closest("[id]")?.id;
+        if (!target) continue;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "permalink";
+        btn.textContent = "#";
+        btn.setAttribute("aria-label", `Copy link to ${h.textContent.trim()}`);
+        btn.dataset.tip = "Copies the deep link to this section";
+        btn.addEventListener("click", async () => {
+          const url = `${location.origin}${location.pathname}#${target}`;
+          try { await navigator.clipboard.writeText(url); } catch { /* denied */ }
+          history.replaceState(null, "", `#${target}`);
+        });
+        h.appendChild(btn);
+      }
+    }
+
+    /* Live contrast badges: WCAG ratios for the working pairs in each
+       color panel, re-checked whenever theme or mode changes. */
+    function initContrastBadges() {
+      const ratio = (fg, bg) => {
+        const lum = (rgb) => {
+          const [r, g, b] = rgb.match(/[\d.]+/g).slice(0, 3).map(Number).map(v => {
+            const c = v / 255;
+            return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+          });
+          return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        };
+        const [a, b] = [lum(fg), lum(bg)];
+        return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      };
+      const PAIRS = [
+        ["text", "--text", "--background"],
+        ["muted", "--text-muted", "--background"],
+        ["accent-1", "--on-accent-1", "--accent-1"],
+        ["accent-3 link", "--accent-3", "--background"],
+      ];
+      const rows = [];
+      for (const panel of document.querySelectorAll(".mode-panel")) {
+        const row = document.createElement("p");
+        row.className = "contrast-badges";
+        panel.appendChild(row);
+        rows.push([panel, row]);
+      }
+      const probeIn = (panel, token) => {
+        const s = document.createElement("span");
+        s.hidden = true;
+        s.style.color = `var(${token})`;
+        panel.appendChild(s);
+        const c = getComputedStyle(s).color;
+        s.remove();
+        return c;
+      };
+      const render = () => {
+        for (const [panel, row] of rows) {
+          row.replaceChildren();
+          for (const [name, fg, bg] of PAIRS) {
+            const r = ratio(probeIn(panel, fg), probeIn(panel, bg));
+            const grade = r >= 7 ? "AAA" : r >= 4.5 ? "AA" : r >= 3 ? "AA-large" : "fails";
+            const badge = document.createElement("span");
+            badge.textContent = `${name} ${r.toFixed(1)}:1 ${grade}`;
+            row.appendChild(badge);
+          }
+        }
+      };
+      new MutationObserver(render).observe(document.documentElement, {
+        attributes: true, attributeFilter: ["data-theme", "data-mode"],
+      });
+      render();
+    }
+
+    /* Viewport-width toggles, Open in CodePen, Edit on GitHub: one
+       small tool row appended to every wall entry. */
+    function initDemoTools() {
+      for (const article of document.querySelectorAll("article.element")) {
+        const demo = article.querySelector(".demo");
+        const code = article.querySelector("pre code");
+        const copyRow = article.querySelector("[data-copy]")?.closest("p");
+        if (!demo || !code || !copyRow) continue;
+
+        const widths = document.createElement("p");
+        widths.className = "chips demo-width-chips";
+        widths.setAttribute("role", "group");
+        widths.setAttribute("aria-label", "Preview width");
+        for (const [label, w] of [["Phone", "375px"], ["Tablet", "640px"], ["Desktop", ""]]) {
+          const chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "chip";
+          chip.textContent = label;
+          chip.dataset.tip = w ? `Constrains the demo to ${w}` : "Full width again";
+          chip.setAttribute("aria-pressed", String(!w));
+          chip.addEventListener("click", () => {
+            demo.style.maxWidth = w;
+            for (const c of widths.children) c.setAttribute("aria-pressed", "false");
+            chip.setAttribute("aria-pressed", "true");
+          });
+          widths.appendChild(chip);
+        }
+        demo.before(widths);
+
+        const pen = document.createElement("button");
+        pen.type = "button";
+        pen.className = "btn btn-small";
+        pen.textContent = "Open in CodePen";
+        pen.dataset.event = "open-codepen";
+        pen.dataset.tip = "The snippet plus the two tags, live on CodePen";
+        pen.addEventListener("click", () => {
+          const form = document.createElement("form");
+          form.action = "https://codepen.io/pen/define";
+          form.method = "POST";
+          form.target = "_blank";
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = "data";
+          input.value = JSON.stringify({
+            title: "Facet — " + article.querySelector("h3").textContent.trim(),
+            head: `<link rel="stylesheet" href="${location.origin}/lib/facet.css">\n<script src="${location.origin}/lib/facet.js" defer><\/script>`,
+            html: code.textContent,
+            editors: "100",
+          });
+          form.appendChild(input);
+          document.body.appendChild(form);
+          form.submit();
+          form.remove();
+        });
+        copyRow.appendChild(pen);
+
+        const edit = document.createElement("a");
+        edit.className = "btn btn-ghost btn-small";
+        edit.href = "https://github.com/tanishksharma/Facet/blob/main/index.html";
+        edit.textContent = "Edit on GitHub";
+        edit.dataset.tip = "This page's readable source in the repo";
+        copyRow.appendChild(edit);
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
       initChips();
@@ -2184,6 +2447,11 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initSizeBadge();
       initPlayground();
       initCheatsheet();
+      initTokenCopy();
+      initSearchKeys();
+      initPermalinks();
+      initContrastBadges();
+      initDemoTools();
       const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
       if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
     });
