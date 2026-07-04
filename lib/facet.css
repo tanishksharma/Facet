@@ -737,12 +737,117 @@
 }
 
 /*
-   Theme · Elegant (stub). <html data-theme="elegant">.
-   The old Gems signature carried forward: cream surfaces, gold hairlines,
-   serif display type, carved elevation. Dark twin is obsidian and gold.
-   TODO: palette locked when it gets built. Until then this attribute
-   falls back to the Default theme.
+   Theme · Elegant (light). <html data-theme="elegant">.
+   The old Gems signature carried forward: cream surfaces, gold
+   hairlines, serif display type, carved elevation. Warm ivory ground,
+   umber ink, antique gold as the only accent voice — accent-1 and
+   accent-3 are golds, accent-2 the quiet cream fill. Headings switch
+   to the serif stack through the --font-heading token alone; the
+   --e-carve token presses panels gently INTO the cream instead of
+   floating them above it.
 */
+[data-theme="elegant"] {
+  --background: #F7F2E9;      /* cream */
+  --surface: #FDFAF3;         /* ivory panel */
+  --text: #2B2417;            /* umber ink */
+  --text-muted: #7A6F58;
+  --border: #D6C08D;          /* the gold hairline */
+
+  --accent-1: #8C6D1F;        /* antique gold: the one primary action */
+  --accent-1-hover: #7A5F1B;
+  --accent-1-pressed: #695217;
+  --on-accent-1: #FFF8E7;
+
+  --accent-2: #F1E9D6;        /* cream fill for every quiet action */
+  --accent-2-hover: #EAE0C8;
+  --accent-2-pressed: #DFD2B2;
+  --on-accent-2: #2B2417;
+
+  --accent-3: #7A5F1B;        /* deep gold: AA as text on cream */
+  --accent-3-hover: #695217;
+  --accent-3-pressed: #584512;
+  --on-accent-3: #FFF8E7;
+
+  --success: #5E7C3A;         /* olive */
+  --warning: #A2701D;
+  --error: #A44A35;           /* terracotta */
+  --info: #5B6E8C;            /* slate */
+
+  /* Warm depth, and shallow: elegance never casts a heavy shadow. */
+  --shadow-raised: 0 1px 2px rgb(43 36 23 / 0.08);
+  --shadow-floating: 0 4px 12px rgb(43 36 23 / 0.10);
+  --shadow-overlay: 0 12px 32px rgb(43 36 23 / 0.18);
+
+  /* Serif display voice — the token does all the work downstream.
+     Stack ends in a generic family (font-list law). */
+  --font-heading: "Iowan Old Style", "Palatino Linotype", Palatino,
+                  Georgia, "Times New Roman", serif;
+
+  /* ----- Carved elevation ----- */
+  /* Panels are pressed into the cream: a soft interior top shadow and
+     a bright lower lip, never a drop shadow. */
+  --e-carve: inset 0 1px 3px rgb(43 36 23 / 0.12),
+             inset 0 -1px 0 rgb(255 255 255 / 0.65);
+}
+
+/*
+   Theme · Elegant (dark). Composes: <html data-theme="elegant"
+   data-mode="dark">. The obsidian twin: near-black warm ground, lit
+   gold for both accent voices, the hairlines dimmed to old brass.
+*/
+[data-theme="elegant"][data-mode="dark"] {
+  --background: #14110B;      /* obsidian */
+  --surface: #1E1910;
+  --text: #F0E7D4;
+  --text-muted: #A79A76;
+  --border: #4A3E20;          /* old brass hairline */
+
+  --accent-1: #D8B75B;        /* lit gold */
+  --accent-1-hover: #E2C46E;
+  --accent-1-pressed: #C9A748;
+  --on-accent-1: #201806;
+
+  --accent-2: #1E1910;
+  --accent-2-hover: #272113;
+  --accent-2-pressed: #322A17;
+  --on-accent-2: #F0E7D4;
+
+  --accent-3: #DCC077;        /* pale gold ink: AA on obsidian */
+  --accent-3-hover: #E6CB88;
+  --accent-3-pressed: #D0B364;
+  --on-accent-3: #1A1204;
+
+  --success: #8FAE5F;
+  --warning: #CFA145;
+  --error: #C97B62;
+  --info: #8FA3C0;
+
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-floating: 0 4px 12px rgb(0 0 0 / 0.45);
+  --shadow-overlay: 0 12px 32px rgb(0 0 0 / 0.55);
+
+  --e-carve: inset 0 1px 3px rgb(0 0 0 / 0.55),
+             inset 0 -1px 0 rgb(255 255 255 / 0.07);
+}
+
+/*
+   Elegant recipes: carved panels and hairline gold edges. The serif
+   headings arrive through --font-heading with no rule at all.
+*/
+[data-theme="elegant"] .result,
+[data-theme="elegant"] .sheet,
+[data-theme="elegant"] .menu-item {
+  box-shadow: var(--e-carve);
+}
+[data-theme="elegant"] input:not(.slider),
+[data-theme="elegant"] textarea,
+[data-theme="elegant"] select {
+  box-shadow: var(--e-carve);
+}
+/* Quiet actions carry the hairline instead of a filled edge. */
+[data-theme="elegant"] .btn {
+  border-color: var(--border);
+}
 
 /*
    System-native accent (R2). In browsers that expose the OS accent as a

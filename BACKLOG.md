@@ -188,8 +188,11 @@ Platform laws docs and the R11 chart item.
       glass fill, blue glow); recipes for buttons (pills + gloss),
       inputs (glass capsules), result/tab-bar/sheet/float-btn panels;
       dark is ocean glass. Switcher and setup strip enabled.
-- [ ] Elegant theme, light and dark: cream and gold, serif display,
-      carved elevation; obsidian-and-gold dark twin.
+- [x] Elegant theme, light and dark: cream and gold, serif display
+      via the --font-heading token, carved elevation via the --e-carve
+      inset token (panels pressed in, never floated), gold hairline
+      borders; obsidian-and-gold dark twin. Switcher and setup strip
+      enabled; palette locked in the theme block.
 - [ ] Theme generator (Style Mixer): pickers for the semantic colors,
       live restyle of the whole page, export as the R14 key-value config
       block, shareable via URL.

@@ -290,12 +290,15 @@ material tokens carry the glass (gloss gradient with the hard 50% line,
 translucent border, blue glow on the primary); recipes make buttons and
 inputs pills.
 
-### Theme · Elegant (stub)
+### Theme · Elegant (`data-theme="elegant"`)
 
-Cream surfaces, gold hairlines, serif display type, carved elevation;
-dark twin is obsidian and gold. Commented stub block in facet.css;
-palette gets locked when it is built. Until then the attribute falls
-back to Default.
+The old Gems signature: cream surfaces `#F7F2E9`, umber ink `#2B2417`,
+gold hairline borders `#D6C08D`, serif display headings (through the
+`--font-heading` token alone), carved elevation (the `--e-carve` inset
+token presses panels into the cream — never a drop shadow). Accent-1
+antique gold `#8C6D1F`, accent-2 the cream fill, accent-3 deep gold.
+Dark twin is obsidian and gold: near-black warm ground `#14110B`, lit
+gold `#D8B75B`, old-brass hairlines.
 
 All hexes live in `/lib/facet.css` as CSS variables and nowhere else.
 Everything downstream uses the semantic tokens.

@@ -140,7 +140,10 @@ cushion-press physics that hold in every motion personality. Aero
 controls with the hard gloss line, translucent plastic fills, pill
 buttons and inputs, a blue glow on the one primary action; dark is
 ocean glass — deep water, lifted sky blue, sea-glass green. Elegant
-(cream and gold) is stubbed; its palette gets locked when it is built.
+(data-theme="elegant") is cream and gold: ivory surfaces, umber ink,
+gold hairline borders, serif display headings, carved elevation —
+panels pressed into the cream, never floated on shadows; its dark twin
+is obsidian and gold.
 
 facet.js also reads ?theme= and ?mode= from the URL on load, so a shared
 link opens in the sender's theme. Buttons with data-theme-switch="sand"
