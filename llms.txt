@@ -136,8 +136,11 @@ extracted from the shipped inflation app: matte velvet surfaces, one
 light source from above, elements raised out of the fabric or carved
 into it, gold as the only accent ink, serif display headings, tuned
 cushion-press physics that hold in every motion personality. Aero
-(glass and sky) and Elegant (cream and gold) are stubbed; their
-palettes get locked when they are built.
+(data-theme="aero") is the Frutiger Aero era: pale sky ground, glass
+controls with the hard gloss line, translucent plastic fills, pill
+buttons and inputs, a blue glow on the one primary action; dark is
+ocean glass — deep water, lifted sky blue, sea-glass green. Elegant
+(cream and gold) is stubbed; its palette gets locked when it is built.
 
 facet.js also reads ?theme= and ?mode= from the URL on load, so a shared
 link opens in the sender's theme. Buttons with data-theme-switch="sand"

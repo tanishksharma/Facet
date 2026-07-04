@@ -279,13 +279,23 @@ Cushion-press physics are hand-tuned finals and hold in every motion
 personality. The --v-* material tokens are kept verbatim from the
 reference implementation.
 
-### Themes · Aero and Elegant (stubs)
+### Theme · Aero (`data-theme="aero"`)
 
-Aero: Frutiger Aero era — sky aqua, glass gloss, translucent plastic, pill
-buttons. Elegant: cream surfaces, gold hairlines, serif display type,
-carved elevation; dark twin is obsidian and gold. Both have commented stub
-blocks in facet.css; palettes get locked when they are built. Until then
-the attributes fall back to Default.
+Frutiger Aero era: sky aqua, glass gloss, translucent plastic, pill
+buttons. Light: pale sky `#EAF6FD`, white glass surface, deep sea ink
+`#0C3049`; accent-1 glossy sky blue `#0E82D6`, accent-2 the translucent
+plastic fill, accent-3 aero grass green `#0A7D5F`. Dark is ocean glass:
+deep water `#062A40`, lifted sky blue, sea-glass green. The `--a-*`
+material tokens carry the glass (gloss gradient with the hard 50% line,
+translucent border, blue glow on the primary); recipes make buttons and
+inputs pills.
+
+### Theme · Elegant (stub)
+
+Cream surfaces, gold hairlines, serif display type, carved elevation;
+dark twin is obsidian and gold. Commented stub block in facet.css;
+palette gets locked when it is built. Until then the attribute falls
+back to Default.
 
 All hexes live in `/lib/facet.css` as CSS variables and nowhere else.
 Everything downstream uses the semantic tokens.

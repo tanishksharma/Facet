@@ -182,8 +182,12 @@ Platform laws docs and the R11 chart item.
       with a live example (subtree override on the demo container) and
       the copyable :root block; facet.set named as the runtime path;
       AA note on the on-color included.
-- [ ] Aero theme, light and dark: sky aqua, glass gloss, translucent
-      plastic, pill buttons; palette locked in the theme block.
+- [x] Aero theme, light and dark: sky aqua, glass gloss, translucent
+      plastic, pill buttons; palette locked in the theme block; --a-*
+      material tokens (gloss with the hard 50% line, glass border,
+      glass fill, blue glow); recipes for buttons (pills + gloss),
+      inputs (glass capsules), result/tab-bar/sheet/float-btn panels;
+      dark is ocean glass. Switcher and setup strip enabled.
 - [ ] Elegant theme, light and dark: cream and gold, serif display,
       carved elevation; obsidian-and-gold dark twin.
 - [ ] Theme generator (Style Mixer): pickers for the semantic colors,
