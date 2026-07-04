@@ -65,10 +65,6 @@ Projects consume the library by URL, never by copying files in:
 - Whenever a component or rule changes, three places update together with
   the same wording: the file comment in facet.css/facet.js, the wall entry
   on index.html, and llms.txt.
-- Requirements flow: owner decisions land in REQUIREMENTS.md. Claude breaks
-  each requirement into BACKLOG.md checkboxes sized one commit each, marks
-  it `[backlogged]`, and works the backlog top-down. Notion is not part of
-  the loop anymore; the repo is the whole system of record.
 
 ## Core principles
 
