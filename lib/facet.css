@@ -1641,3 +1641,447 @@ figcaption {
   bottom: auto;
   top: calc(100% + var(--space-2));
 }
+
+/* --------------------------------------------------------------------------
+   APP COMPONENTS — ingested verbatim from the shipped inflation app.
+   Base recipes, tokens only; their velvet skins live in the velvet theme
+   block. Wall entries and full canonical descriptions land with the
+   R18 §3 pass; markup contracts are in handoff-velvet.md until then.
+     TAB BAR   .tab-bar > .tab-seg / .tab-divider / .tab-settings
+     SHEET     .sheet-scrim + .sheet[data-open] > .sheet-scroll/.sheet-foot
+     MENU LIST .menu-item / .menu-label / .menu-icon-row / .menu-icon-btn
+     GAUGE     .scroll-gauge / .scroll-gauge-thumb / .scroll-gauge-page
+   -------------------------------------------------------------------------- */
+
+
+/* ----- TAB BAR: iOS-style bottom pill of segments + a trailing icon -----
+   Embossed frosted glass: translucent over a backdrop blur, pressed INTO
+   the page via inset shadows (dark from the top, faint from the bottom).
+   The active highlight is one .tab-indicator pill (injected by
+   facetTabIndicator) that glides between segments like iOS. */
+.tab-bar {
+  position: fixed;
+  bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  padding: var(--space-1);
+  /* Light blur only: content should visibly move behind the glass. */
+  background: color-mix(in srgb, var(--surface) 32%, transparent);
+  -webkit-backdrop-filter: blur(5px) saturate(1.4);
+  backdrop-filter: blur(5px) saturate(1.4);
+  border: var(--border-width) solid color-mix(in srgb, var(--border) 65%, transparent);
+  border-radius: var(--radius-pill);
+  box-shadow:
+    inset 0 2px 5px color-mix(in srgb, var(--text) 22%, transparent),
+    inset 0 -1px 3px color-mix(in srgb, var(--text) 9%, transparent),
+    0 1px 0 color-mix(in srgb, var(--surface) 55%, transparent);
+  white-space: nowrap;
+}
+.tab-indicator {
+  position: absolute;
+  top: var(--space-1);
+  left: 0;
+  height: calc(100% - var(--space-1) * 2);
+  width: 0;
+  border-radius: var(--radius-pill);
+  /* raised pill gliding inside the inset bar; facetTabIndicator
+     animates transform/width itself (squash-and-stretch), so no
+     CSS transition here */
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow:
+    0 2px 5px color-mix(in srgb, var(--text) 25%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--background) 85%, transparent);
+  pointer-events: none;
+}
+.tab-seg {
+  position: relative;
+  z-index: 1;
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  font-weight: var(--weight-strong);
+  /* letterpress: inactive labels sit pressed into the inset bar */
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--background) 65%, transparent);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.tab-seg[aria-current="true"] {
+  color: var(--accent-pressed);
+  /* the active label rides the raised pill: crisper, lighter press */
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--background) 40%, transparent);
+}
+.tab-divider {
+  width: var(--border-width);
+  height: var(--space-5);
+  background: var(--border);
+  margin-inline: var(--space-1);
+}
+.tab-settings {
+  position: relative;
+  z-index: 1;
+  width: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+/* The gear turns a quarter with the panel: in on open, back on close. */
+.tab-settings svg {
+  transition: transform var(--duration-slow) var(--ease-in-out);
+}
+.tab-settings[aria-expanded="true"] {
+  color: var(--accent-pressed);
+}
+.tab-settings[aria-expanded="true"] svg {
+  transform: rotate(90deg);
+}
+
+/* ----- SHEET: right-edge slide-in panel over a darkening scrim -----
+   Vertically centred; caps at 60% of the viewport height and 80% of
+   its width on phones. Content taller than the cap scrolls INSIDE
+   .sheet-body. Toggle via data-open on both elements. */
+.sheet-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgb(0 0 0 / 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-slow) var(--ease-in-out);
+}
+.sheet-scrim[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+.sheet {
+  position: fixed;
+  top: 50%;
+  right: var(--space-3);
+  z-index: 41;
+  width: min(80vw, 20rem);
+  height: 80dvh;
+  display: flex;
+  flex-direction: column;
+  background: color-mix(in srgb, var(--surface) 40%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  backdrop-filter: blur(24px) saturate(1.5);
+  border: var(--border-width) solid color-mix(in srgb, var(--border) 65%, transparent);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-overlay);
+  /* facetSheet drives entry/exit with the tab pill's per-edge springs
+     (frame stretches, right edge never crosses its resting line) —
+     no CSS transform transition here, JS owns transform + width. */
+  transform: translate(calc(100% + var(--space-4)), -50%);
+  visibility: hidden;
+}
+/* Nav + actions scroll in the top region; the icon row lives in a foot
+   pinned below it. The scroll region keeps the panel's RESTING width and
+   anchors to the right edge, so while the frame's left edge overshoots
+   and breathes, the text inside lands linearly and then stays still —
+   the tab bar's still-labels/moving-pill split, applied to the panel.
+   The foot spans the frame itself, so its buttons stretch and snap back
+   with the overshoot. */
+.sheet-scroll {
+  flex: 1;
+  min-height: 0;
+  width: min(80vw, 20rem);
+  margin-left: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-5) var(--space-3) var(--space-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;        /* groups stack close, no spread */
+  gap: var(--space-4);
+}
+/* the foot keeps the RESTING width too: its buttons stay a fixed size
+   while the frame overshoots around them */
+.sheet-foot {
+  width: min(80vw, 20rem);
+  margin-left: auto;
+  padding: var(--space-2) var(--space-3) var(--space-3);
+}
+.sheet-group {
+  display: flex;
+  flex-direction: column;
+}
+.sheet-scroll .sheet-group { gap: var(--space-1); }
+/* SCROLL GAUGE: a pill thumb inset in an embossed groove, top right —
+   thumb height shows how much of the content is visible, position
+   shows where you are. Spans only the top quarter; its left edge
+   lines up with where the panel's corner radius ends. Momentum can
+   push the thumb past the groove, where it clips away. Injected by
+   facetScrollGauge; the native scrollbar hides in its favour. */
+.sheet-scroll { scrollbar-width: none; }
+.sheet-scroll::-webkit-scrollbar { display: none; }
+.scroll-gauge {
+  position: absolute;
+  top: var(--space-4);          /* clears the corner curve */
+  right: var(--space-2);
+  height: 25%;
+  width: 8px;                   /* left edge lands at the radius line */
+  padding: 2px;                 /* breathing room around the pill */
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  box-shadow:
+    inset 0 1px 2px color-mix(in srgb, var(--text) 20%, transparent),
+    inset 0 -1px 1px color-mix(in srgb, var(--text) 8%, transparent),
+    0 1px 0 color-mix(in srgb, var(--surface) 60%, transparent);
+  overflow: hidden;             /* out-of-bounds momentum disappears */
+  pointer-events: none;
+}
+.scroll-gauge-thumb {
+  width: 100%;
+  border-radius: var(--radius-pill);
+  /* a light raised pill sitting in the inset groove */
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--text) 30%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--background) 85%, transparent);
+  transition: height var(--duration-fast) var(--ease-out);
+}
+/* Page-level variant: a fixed lane floating just off the right edge,
+   half the viewport tall, vertically centred. The thumb is the
+   viewport's true share of the page, so snaps and smooth glides
+   read 1:1 on it. */
+.scroll-gauge-page {
+  position: fixed;
+  top: 50%;
+  right: var(--space-2);
+  transform: translateY(-50%);
+  height: 50dvh;
+  width: 10px;
+  z-index: 25;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;         /* the gauge drags the page, never scrolls */
+  transition: width 0.16s ease, right 0.16s ease;
+}
+/* grab: the lane widens and the pill lights up in the theme colour */
+.scroll-gauge-page.grabbing {
+  width: 18px;
+  right: calc(var(--space-2) - 4px);
+  cursor: grabbing;
+}
+.scroll-gauge-page .scroll-gauge-thumb { transition: background 0.16s ease; }
+.scroll-gauge-page.grabbing .scroll-gauge-thumb {
+  background: var(--v-gold);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.4);
+}
+
+/* Apple-style continuous corners wherever a rectangle has a radius.
+   Progressive: browsers without corner-shape keep plain rounding.
+   Pills (tab bar, gauge) stay true capsules on purpose. */
+@supports (corner-shape: squircle) {
+  .sheet,
+  .menu-item,
+  .menu-icon-btn,
+  .stat,
+  .chart-card,
+  .seg,
+  .btn,
+  input,
+  .result {
+    corner-shape: squircle;
+  }
+}
+
+/* ----- MENU LIST: rows for a sheet or dropdown ----- */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 40px;
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  border-radius: var(--radius-medium);
+  background: transparent;
+  color: var(--text);
+  font-size: var(--text-small);
+  font-weight: var(--weight-strong);
+  text-align: left;
+  text-decoration: none;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.menu-item:hover { background: color-mix(in srgb, var(--background) 55%, transparent); }
+.menu-item svg { flex: none; color: var(--text-muted); }
+/* Trailing state readout: "Auto", "On", "Tilt"... */
+.menu-value {
+  margin-left: auto;
+  color: var(--accent-pressed);
+  font-weight: var(--weight-strong);
+}
+.menu-value[data-off="true"] { color: var(--text-muted); }
+.menu-label {
+  padding: var(--space-2) var(--space-3) 0;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.menu-divider {
+  border: none;
+  border-top: var(--border-width) solid var(--border);
+  margin: var(--space-1) var(--space-2);
+}
+/* Inset divider: a short centred hairline, not edge to edge. */
+.menu-divider-inset {
+  width: 55%;
+  align-self: flex-start;
+  margin-left: var(--space-3);
+  margin-right: auto;
+}
+/* A horizontal row of icon controls: equal widths, proper button faces,
+   each with a tiny state caption. */
+.menu-icon-row {
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--space-2);
+}
+.menu-icon-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 56px;
+  padding: var(--space-2) var(--space-1);
+  border: var(--border-width) solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: var(--radius-medium);
+  /* ON reads raised: light face, soft drop shadow, lit top lip */
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  box-shadow:
+    0 2px 4px color-mix(in srgb, var(--text) 16%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--background) 85%, transparent);
+  color: var(--text);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.menu-icon-btn:hover {
+  background: color-mix(in srgb, var(--surface) 95%, transparent);
+  border-color: var(--text-muted);
+}
+.menu-icon-btn:active { transform: translateY(1px); }
+/* OFF reads pressed into the glass: darker well, inset shadows */
+.menu-icon-btn:has(.menu-value[data-off="true"]) {
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+  border-color: color-mix(in srgb, var(--border) 50%, transparent);
+  box-shadow:
+    inset 0 2px 4px color-mix(in srgb, var(--text) 20%, transparent),
+    inset 0 -1px 2px color-mix(in srgb, var(--text) 8%, transparent),
+    0 1px 0 color-mix(in srgb, var(--surface) 60%, transparent);
+  color: var(--text-muted);
+}
+.menu-icon-btn .menu-value {
+  margin-left: 0;
+  font-size: var(--text-caption);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ================== end FACET-CANDIDATE COMPONENTS ================== */
+
+
+/* --------------------------------------------------------------------------
+   FLOAT BUTTON
+
+   What it is: a lone floating round button pinned to the bottom-left of
+   the page — the tab bar's trailing icon without the bar. What it is
+   for: pages that need the settings sheet (or any panel) but not
+   section navigation: give it aria-controls pointing at a .sheet and
+   facet.js wires the open/close, the aria-expanded state and the press
+   feedback exactly like the tab bar's gear. When to use it: whenever a
+   page has one floating action; .float-btn-right pins it bottom-right
+   instead. Always an aria-label and a data-tip: the icon alone says
+   nothing.
+
+   Usage:
+     <button class="float-btn" aria-controls="settings-sheet"
+             aria-expanded="false" aria-label="Open settings"
+             data-tip="Settings" data-event="open-settings">
+       <svg>...gear...</svg>
+     </button>
+     <div class="sheet-scrim" data-open="false"></div>
+     <aside class="sheet" id="settings-sheet" data-open="false"
+            aria-hidden="true" aria-label="Settings"> ... </aside>
+   -------------------------------------------------------------------------- */
+
+.float-btn {
+  position: fixed;
+  left: calc(var(--space-4) + env(safe-area-inset-left, 0px));
+  bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: var(--border-width) solid color-mix(in srgb, var(--border) 65%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface) 32%, transparent);
+  -webkit-backdrop-filter: blur(5px) saturate(1.4);
+  backdrop-filter: blur(5px) saturate(1.4);
+  box-shadow:
+    inset 0 2px 5px color-mix(in srgb, var(--text) 22%, transparent),
+    inset 0 -1px 3px color-mix(in srgb, var(--text) 9%, transparent),
+    0 1px 0 color-mix(in srgb, var(--surface) 55%, transparent);
+  color: var(--text);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-normal) var(--ease-spring);
+}
+.float-btn:active { transform: translateY(1px) scale(0.96); }
+.float-btn[aria-expanded="true"] { background: color-mix(in srgb, var(--surface) 92%, transparent); }
+.float-btn-right {
+  left: auto;
+  right: calc(var(--space-4) + env(safe-area-inset-right, 0px));
+}
+
+/* Velvet: the floating trigger is a raised face; open, it wears the
+   pill like the tab bar's gear. Cushion press, face never changes. */
+[data-theme="velvet"] .float-btn {
+  position: fixed;                 /* the .btn recipe must not unpin it */
+  border: none;
+  background: var(--v-face);
+  box-shadow: var(--v-raised-2nd);
+  color: var(--v-ink);
+  transition: transform var(--v-press-out), box-shadow var(--v-press-out);
+}
+[data-theme="velvet"] .float-btn::after {
+  content: ""; position: absolute; inset: 0; border-radius: var(--radius-pill);
+  background: var(--v-dent-tap); opacity: 0; pointer-events: none;
+  transition: opacity var(--v-press-out);
+}
+[data-theme="velvet"] .float-btn:active { transform: translateY(1px); transition-duration: 0.09s, 0.09s; }
+[data-theme="velvet"] .float-btn:active::after { opacity: 1; transition: opacity var(--v-press-in); }
+[data-theme="velvet"] .float-btn[aria-expanded="true"] {
+  background: var(--v-face);
+  box-shadow: var(--v-pill);
+  color: var(--v-ink-strong);
+}
+[data-theme="velvet"] .float-btn svg { filter: var(--v-icon-filter); }

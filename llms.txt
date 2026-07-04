@@ -440,6 +440,29 @@ data-install, and the button appears exactly when installation is
 available. Until v1, the library itself is always the latest from the
 web; versioned freezes start at /lib/v1/.
 
+## The app kit (ingested from the shipped inflation app)
+
+Components: .tab-bar (bottom pill of .tab-seg segments + .tab-divider +
+trailing .tab-settings gear; a .tab-indicator pill is injected and
+glides on per-edge analytic springs), .sheet-scrim + .sheet
+(right-edge settings panel on a rigid rubber-band spring; scrim tap and
+Esc close), .menu-item/.menu-label/.menu-icon-row/.menu-icon-btn (thin
+menu rows and square icon toggles), .scroll-gauge (floating scrollbar
+look-alike; .scroll-gauge-page is the draggable whole-page lane), and
+.float-btn — a lone floating round trigger pinned bottom-left
+(.float-btn-right for bottom-right): give it aria-controls pointing at
+a .sheet and it opens it, aria-expanded managed, press feedback
+included. Markup contracts: handoff-velvet.md until wall entries land.
+
+Modules on window.facet: feedback (synthesized UI sounds + haptics, ON
+by default; feedback.sound.enabled / feedback.haptic.enabled are the
+switches), sheet(el, scrim, {onChange}), scrollGauge(scroller, {...}),
+tabIndicator(bar), installNudge(el, {...}), motion (parallax engine:
+register/init/setMode/cycle, modes off|cursor|tilt, reduced-motion
+off). Auto-wiring: .tab-bar finds the page's pager and its sheet; any
+button[aria-controls] on a .sheet opens it. Velvet law: elements with
+velvet lift/press transforms must not register with facet.motion.
+
 ## Rules for building on Facet
 
 Core principles: readability is the product. One-glance HTML. Not one

@@ -131,14 +131,17 @@ llms.txt, verify, commit).
       natively inside, gesture handoff with rubber-band hint, wheel
       paging, equal head/foot padding. Ships as facetPager in facet.js
       plus the layout CSS.
-- [ ] Components (§3): tab bar + spring pill, sheet, menu list +
+- [ ] Components (§3) — base CSS ingested and self-wiring; float-btn
+      shipped as the lone-trigger variant (owner request, 5 Jul).
+      Remaining: wall entries for tab bar / sheet / menu / gauge /
+      float-btn, then tick this with: tab bar + spring pill, sheet, menu list +
       icon toggles, scroll gauge (panel + draggable page variants),
       velvet slider with gold jewel + tick scale, choice grid
       (generalized .choice-grid), capsule number input, golden primary
       CTA, tooltip tail + touch peek (folds into [data-tip] — fixes
       iOS sticky hover), install nudge card, full-screen instruction
       overlay, typography voices, chart theming rules.
-- [ ] JS modules (§4, verbatim): facetFeedback (sounds + haptics),
+- [x] JS modules (§4, verbatim): facetFeedback (sounds + haptics),
       facetSheet, facetScrollGauge, facetTabIndicator, facetInstallNudge,
       facetMotion (parallax off/cursor/tilt — the R11 motion pack,
       arriving by extraction), plus facetTouchPolish and the controls
