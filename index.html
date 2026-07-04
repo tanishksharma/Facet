@@ -192,6 +192,18 @@
       margin-bottom: var(--space-1);
     }
 
+    /* App chrome shown statically inside wall demos: the real things
+       are position:fixed; here they sit in the flow so the page reads. */
+    .element .demo .tab-bar,
+    .element .demo .float-btn { position: static; transform: none; }
+    .element .demo .nudge-scrim,
+    .element .demo .overlay-guide { position: static; border-radius: var(--radius-medium); }
+    .element .demo .overlay-guide { padding: var(--space-6); gap: var(--space-3); }
+    #scroll-gauge .demo { position: relative; }
+    #scroll-gauge .demo-scroller {
+      height: 12rem; overflow-y: auto; padding-right: var(--space-5);
+    }
+
     /* Docs-only frames for specific demos. */
     #snap-section .demo { padding: 0; overflow: hidden; }   /* clips the mini viewport */
     #snap-section .snap { height: 20rem; }
@@ -307,6 +319,11 @@
           <li><a href="#slider">Slider</a></li>
           <li><a href="#result-block">Result block</a></li>
           <li><a href="#tooltip">Tooltip</a></li>
+          <li><a href="#tab-bar">Tab bar</a></li>
+          <li><a href="#sheet">Sheet &amp; menu</a></li>
+          <li><a href="#float-button">Float button</a></li>
+          <li><a href="#scroll-gauge">Scroll gauge</a></li>
+          <li><a href="#choice-grid">Choice grid</a></li>
         </ul>
         <strong>For machines</strong>
         <ul>
@@ -419,6 +436,186 @@
           <li>Search that filters the wall and the index together; a scrollspy sidebar that shows where you are; the whole page re-renders in any theme from the header.</li>
         </ul>
       </section>
+
+
+      <!-- TAB BAR -->
+      <article class="element stack" id="tab-bar">
+        <h3>Tab bar</h3>
+        <p>
+          What it is: the iOS-style bottom pill — text segments, a hairline
+          divider, a trailing gear — with one injected .tab-indicator pill
+          gliding behind the active segment on per-edge analytic springs:
+          the leading edge leads with momentum, the trailing edge lags so
+          the pill stretches, and both settle with a small fixed overshoot
+          whatever the jump length. What it is for: section navigation in
+          app-shaped pages; it wires itself to the page's snap pager
+          ([data-section] segments page there, and the pager's moves glide
+          the pill back behind a one-second nav lock so pass-through
+          sections stay quiet) and its gear opens the sheet it
+          aria-controls. When to use it: any snap-paged product. On a real
+          page it floats fixed above the bottom edge; here it sits in the
+          flow. Frosted and embossed in the base theme; a tuned translucent
+          well with a raised pill under Velvet.
+        </p>
+        <div class="demo">
+          <nav class="tab-bar" aria-label="Sections">
+            <button type="button" class="tab-seg" data-section="intro" aria-current="true">Intro</button>
+            <button type="button" class="tab-seg" data-section="inputs" aria-current="false">Inputs</button>
+            <button type="button" class="tab-seg" data-section="results" aria-current="false">Results</button>
+            <span class="tab-divider" aria-hidden="true"></span>
+            <button type="button" class="tab-settings" aria-expanded="false" aria-label="Open settings" data-tip="Opens the settings sheet">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+            </button>
+          </nav>
+        </div>
+        <p>Tap the segments: the pill stretches and settles between them, live.</p>
+        <pre id="code-tab-bar"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SHEET & MENU -->
+      <article class="element stack" id="sheet">
+        <h3>Sheet &amp; menu</h3>
+        <p>
+          What it is: the settings panel — a right-edge slab floating clear
+          of the screen over a dark scrim, sliding in as one rigid block on
+          a rubber-band spring that overshoots a touch and eases back;
+          inside it, menu groups of thin rows (.menu-item under a
+          .menu-label) and a foot row of square icon toggles
+          (.menu-icon-btn) whose ON state stands raised while OFF sinks
+          into a darker well. What it is for: navigation, actions and
+          app-level controls behind one trigger — any button that
+          aria-controls the sheet opens it; scrim tap and Esc close; the
+          trigger's aria-expanded is managed. When to use it: every
+          app-shaped product's settings. Press a row: it sinks INTO the
+          panel with a true bevel, never a dark smear. State changes ease —
+          toggles must never jump.
+        </p>
+        <div class="demo">
+          <button type="button" class="btn" aria-controls="demo-sheet" aria-expanded="false"
+                  data-tip="Opens the real sheet over this page" data-event="open-demo-sheet">Open the sheet</button>
+          <div class="sheet-scrim" data-open="false"></div>
+          <aside class="sheet" id="demo-sheet" data-open="false" aria-hidden="true" aria-label="Demo settings">
+            <div class="sheet-scroll">
+              <div class="sheet-group">
+                <span class="menu-label">Navigation</span>
+                <button type="button" class="menu-item" data-event="sheet-nav-top">Back to the top</button>
+                <button type="button" class="menu-item" data-event="sheet-nav-rules">The rules</button>
+              </div>
+              <div class="sheet-group">
+                <span class="menu-label">Actions</span>
+                <button type="button" class="menu-item" data-event="sheet-copy">Copy a link here</button>
+              </div>
+            </div>
+            <div class="sheet-foot">
+              <div class="sheet-group menu-icon-row">
+                <button type="button" class="menu-icon-btn" aria-label="Sounds: on or off" data-tip="Flips facet.feedback.sound.enabled" data-event="toggle-sounds">
+                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6v4h2.6L9 13V3L5.1 6z"/></svg>
+                  <span class="menu-value">On</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <pre id="code-sheet"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-sheet" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FLOAT BUTTON -->
+      <article class="element stack" id="float-button">
+        <h3>Float button</h3>
+        <p>
+          What it is: a lone floating round button pinned to the bottom-left
+          of the page — the tab bar's trailing icon without the bar. What
+          it is for: pages that need the settings sheet (or any panel) but
+          not section navigation: give it aria-controls pointing at a
+          .sheet and facet.js wires the open/close, the aria-expanded state
+          and the press feedback exactly like the tab bar's gear. When to
+          use it: whenever a page has one floating action; .float-btn-right
+          pins it bottom-right instead. Always an aria-label and a
+          data-tip: the icon alone says nothing. On a real page it floats
+          fixed; here it sits in the flow — this one opens the sheet from
+          the entry above.
+        </p>
+        <div class="demo">
+          <button class="float-btn" aria-controls="demo-sheet" aria-expanded="false"
+                  aria-label="Open settings" data-tip="Opens the demo sheet" data-event="open-settings">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+          </button>
+        </div>
+        <pre id="code-float-button"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-float-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SCROLL GAUGE -->
+      <article class="element stack" id="scroll-gauge">
+        <h3>Scroll gauge</h3>
+        <p>
+          What it is: a pill thumb inset in an embossed groove beside a
+          scroller — thumb height is the visible share of the content,
+          position is progress, and overscroll momentum slides it out of
+          the groove where the clip swallows it. What it is for: a themed,
+          unobtrusive scrollbar look-alike for panels and whole pages;
+          facet.scrollGauge(scroller) injects it, a metric option reports
+          composite scrolls (the pager's sections laid end to end), and
+          onScrub makes the lane a drag handle. When to use it: sheets and
+          app pages where the native scrollbar is hidden. Auto-hides when
+          nothing overflows. Scroll the box:
+        </p>
+        <div class="demo">
+          <div class="demo-scroller stack" data-tip="Scroll me and watch the groove">
+            <p>The gauge beside this box is injected by facet.scrollGauge.</p>
+            <p>Its thumb is exactly the visible share of this content.</p>
+            <p>Scroll with momentum and the pill slides out of the groove.</p>
+            <p>That spill is deliberate: the groove clips it away.</p>
+            <p>When content fits, the gauge fades out entirely.</p>
+            <p>Panels use it beside .sheet-scroll; pages use the draggable lane variant.</p>
+            <p>The lane variant, .scroll-gauge-page, floats off the right edge.</p>
+            <p>Its onScrub option turns the whole groove into a drag handle.</p>
+            <p>Grab it and the thumb turns gold while you hold it.</p>
+          </div>
+        </div>
+        <pre id="code-scroll-gauge"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-scroll-gauge" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CHOICE GRID -->
+      <article class="element stack" id="choice-grid">
+        <h3>Choice grid</h3>
+        <p>
+          What it is: a grid of small square choice buttons — a symbol
+          above a tiny caption, five per row on phones. What it is for: one
+          exclusive pick from up to about ten options where the choices are
+          compact and symbolic — currencies, units, categories;
+          aria-pressed carries the state and facet.js keeps the pick
+          exclusive. When to use it: any single pick too wide for a
+          segmented control; shipped as the inflation app's ten-currency
+          picker. State changes ease — selection must never jump. Velvet:
+          unselected options sit flat in carved wells, the selected one
+          stands proud with its symbol in gold.
+        </p>
+        <div class="demo">
+          <div class="choice-grid" role="group" aria-label="Currency">
+            <button type="button" class="choice-btn" aria-pressed="true" data-tip="Indian rupee" data-event="cur-inr">
+              <span class="choice-sym" aria-hidden="true">&#8377;</span><span class="choice-cap">INR</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="US dollar" data-event="cur-usd">
+              <span class="choice-sym" aria-hidden="true">$</span><span class="choice-cap">USD</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Euro" data-event="cur-eur">
+              <span class="choice-sym" aria-hidden="true">&euro;</span><span class="choice-cap">EUR</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="British pound" data-event="cur-gbp">
+              <span class="choice-sym" aria-hidden="true">&pound;</span><span class="choice-cap">GBP</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Japanese yen" data-event="cur-jpy">
+              <span class="choice-sym" aria-hidden="true">&yen;</span><span class="choice-cap">JPY</span>
+            </button>
+          </div>
+        </div>
+        <pre id="code-choice-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-choice-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
 
       <!-- =============================================================
            RULES · the manual, right after the features
@@ -1054,6 +1251,16 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
                    data-tip="Drag, or use the arrow keys">
             <span class="field-hint">How long the money stays invested</span>
           </label>
+
+          <label class="field" style="margin-top: var(--space-5);">
+            <span class="field-label">From year <output>2000</output></span>
+            <span class="slider-wrap">
+              <input type="range" class="slider" min="1960" max="2056" step="1" value="2000"
+                     data-tip="A long range grows a tick scale with landmarks">
+              <span class="slider-scale" data-minor="10" data-label="40" data-now="2026" aria-hidden="true"></span>
+            </span>
+            <span class="field-hint">The tick scale marks decades; the highlighted tick is now</span>
+          </label>
         </div>
         <pre id="code-slider"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-slider" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
@@ -1330,6 +1537,8 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initModePanels();
       initSetupStrip();
       initConfigChips();
+      const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
+      if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
     });
   </script>
 </body>

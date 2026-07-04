@@ -131,10 +131,13 @@ llms.txt, verify, commit).
       natively inside, gesture handoff with rubber-band hint, wheel
       paging, equal head/foot padding. Ships as facetPager in facet.js
       plus the layout CSS.
-- [ ] Components (§3) — base CSS ingested and self-wiring; float-btn
-      shipped as the lone-trigger variant (owner request, 5 Jul).
-      Remaining: wall entries for tab bar / sheet / menu / gauge /
-      float-btn, then tick this with: tab bar + spring pill, sheet, menu list +
+- [x] Components (§3) — base CSS ingested and self-wiring; float-btn
+      shipped as the lone-trigger variant (owner request, 5 Jul); wall
+      entries live for tab bar, sheet & menu, float button, scroll
+      gauge, choice grid; tick scale on the slider entry; golden CTA and
+      typography voices ship inside the velvet theme; chart theming
+      rules stay documented in handoff-velvet.md until charts exist.
+      Full list: tab bar + spring pill, sheet, menu list +
       icon toggles, scroll gauge (panel + draggable page variants),
       velvet slider with gold jewel + tick scale, choice grid
       (generalized .choice-grid), capsule number input, golden primary

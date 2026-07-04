@@ -1642,6 +1642,42 @@ figcaption {
   top: calc(100% + var(--space-2));
 }
 
+/* The tail: a small triangle under the bubble, flipping with
+   data-tip-below. */
+[data-tip]::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + var(--space-2) - 5px);
+  left: 50%;
+  translate: -50% 2px;
+  z-index: 10;
+  border: 5px solid transparent;
+  border-top-color: var(--text);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    translate var(--duration-fast) var(--ease-out);
+}
+[data-tip][data-tip-below]::before {
+  bottom: auto;
+  top: calc(100% + var(--space-2) - 5px);
+  border-top-color: transparent;
+  border-bottom-color: var(--text);
+}
+[data-tip]:hover::before,
+[data-tip]:focus-visible::before { opacity: 1; translate: -50% 0; }
+
+/* Touch: iOS applies a STICKY :hover on tap that never clears, so on
+   touch devices the hover bubble is forced off and facet.js peeks the
+   tip via .tip-on for a few seconds instead (initTouchPolish). */
+@media (hover: none) {
+  [data-tip]:hover::after,
+  [data-tip]:hover::before { opacity: 0; }
+}
+[data-tip].tip-on::after,
+[data-tip].tip-on::before { opacity: 1; translate: -50% 0; }
+
 /* --------------------------------------------------------------------------
    APP COMPONENTS — ingested verbatim from the shipped inflation app.
    Base recipes, tokens only; their velvet skins live in the velvet theme
@@ -2085,3 +2121,275 @@ figcaption {
   color: var(--v-ink-strong);
 }
 [data-theme="velvet"] .float-btn svg { filter: var(--v-icon-filter); }
+
+/* --------------------------------------------------------------------------
+   CHOICE GRID
+
+   What it is: a grid of small square choice buttons — a symbol above a
+   tiny caption, five per row on phones. What it is for: one exclusive
+   pick from up to about ten options where the choices are compact and
+   symbolic — currencies, units, categories; aria-pressed carries the
+   state and facet.js keeps the pick exclusive. When to use it: any
+   single pick too wide for a segmented control; shipped as the
+   inflation app's ten-currency picker. State changes ease — selection
+   must never jump. Velvet: unselected options sit flat in carved
+   wells, the selected one stands proud with its symbol in gold.
+
+   Usage:
+     <div class="choice-grid" role="group" aria-labelledby="cur-label">
+       <button type="button" class="choice-btn" aria-pressed="true"
+               data-tip="Indian rupee" data-event="cur-inr">
+         <span class="choice-sym" aria-hidden="true">&#8377;</span>
+         <span class="choice-cap">INR</span>
+       </button>
+       ...
+     </div>
+   -------------------------------------------------------------------------- */
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-2);
+}
+.choice-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: var(--space-2) 0;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-medium);
+  background: var(--surface);
+  color: var(--text-muted);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    transform var(--duration-normal) var(--ease-spring);
+}
+.choice-btn:active { transform: translateY(1px) scale(0.97); }
+.choice-btn .choice-sym { font-size: var(--text-h4); font-weight: 700; }
+.choice-btn .choice-cap { font-size: var(--text-caption); letter-spacing: 0.06em; }
+.choice-btn[aria-pressed="true"] {
+  background: var(--accent-2-hover);
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+.choice-btn[aria-pressed="true"] .choice-sym { color: var(--accent-3); }
+
+/* Velvet: wells for the field, a raised face for the pick, gold symbol. */
+[data-theme="velvet"] .choice-btn {
+  border: none;
+  border-radius: var(--radius-medium);
+  background: var(--v-well-bg);
+  box-shadow: var(--v-pit);
+  color: var(--text-muted);
+  font-family: var(--v-font);
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    color 0.25s ease,
+    transform var(--v-press-out);
+}
+[data-theme="velvet"] .choice-btn:active { transform: translateY(1px); }
+[data-theme="velvet"] .choice-btn[aria-pressed="true"] {
+  background: var(--v-face);
+  box-shadow: var(--v-raised-2nd);
+  color: var(--v-ink-strong);
+}
+[data-theme="velvet"] .choice-btn[aria-pressed="true"] .choice-sym { color: var(--v-gold); }
+
+/* --------------------------------------------------------------------------
+   SLIDER TICK SCALE
+
+   What it is: a tick scale hugging a slider's track — minor ticks,
+   sparse labels, and an optional highlighted "now" tick marking a
+   meaningful value (the current year where a projection begins). What
+   it is for: giving a long range slider landmarks so positions read as
+   values. When to use it: wrap slider and scale in a .slider-wrap; the
+   scale insets by half the knob so tick positions stay true; facet.js
+   builds the ticks from the slider's min/max (data-minor, data-label,
+   data-now configure the steps) and rebuilds on facet.sliderScale(wrap)
+   when the range changes.
+
+   Usage:
+     <div class="slider-wrap">
+       <input type="range" class="slider" min="1960" max="2056" value="2000">
+       <div class="slider-scale" data-minor="10" data-label="40"
+            data-now="2026" aria-hidden="true"></div>
+     </div>
+   -------------------------------------------------------------------------- */
+
+.slider-wrap {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.slider-wrap .slider { width: 100%; }
+.slider-scale {
+  position: relative;
+  height: 18px;
+  margin: -3px 16px 0;                /* hugs the track; half-knob inset */
+}
+.slider-scale .tick {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 5px;
+  background: var(--border);
+}
+.slider-scale .tick-label {
+  position: absolute;
+  top: 7px;
+  transform: translateX(-50%);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+.slider-scale .tick-now {
+  width: 2px;
+  height: 8px;
+  background: var(--accent-3);        /* velvet: accent-3 IS the gold */
+}
+.slider-scale .tick-now-label { color: var(--accent-3); opacity: 1; }
+
+/* --------------------------------------------------------------------------
+   INSTALL NUDGE CARD
+
+   What it is: a card over a dim blurred scrim, sitting just above the
+   bottom chrome: eyebrow, title, one-line pitch, a primary "Add now", a
+   dimmed "Add it later", fine-print "Don't ask again". What it is for:
+   the gentle add-to-home-screen ask, driven by facet.installNudge —
+   shown once per session after a delay, never when standalone,
+   installed or opted out. When to use it: installable products; wire
+   "Add now" to installNudge.addNow() and show the instruction overlay
+   when it returns "guide" (iOS has no native prompt).
+
+   Usage (markup contract, from the shipped app):
+     <div class="nudge-scrim" id="a2hs-nudge" hidden>
+       <div class="nudge-card" role="dialog" aria-modal="true"
+            aria-labelledby="nudge-title">
+         <span class="eyebrow">One tap away</span>
+         <h2 id="nudge-title">Add this to your Home Screen</h2>
+         <p>Quick access — full screen, works offline.</p>
+         <button type="button" class="btn btn-primary nudge-add" data-event="nudge-add">Add now</button>
+         <button type="button" class="btn nudge-later" data-event="nudge-later">Add it later</button>
+         <button type="button" class="nudge-never" data-event="nudge-never">Don't ask again</button>
+       </div>
+     </div>
+   -------------------------------------------------------------------------- */
+
+.eyebrow {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent-3);
+  display: block;
+}
+.nudge-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: var(--space-5);
+  padding-bottom: calc(var(--space-3) + 48px + env(safe-area-inset-bottom, 0px) + var(--space-6));
+  background: rgb(0 0 0 / 0.5);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+.nudge-card {
+  width: min(100%, 22rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-5) var(--space-4);
+  border-radius: calc(var(--radius-large) + 12px);
+  background: var(--background);
+  box-shadow: var(--shadow-overlay);
+  text-align: center;
+}
+.nudge-card h2 { font-size: var(--text-h3); }
+.nudge-card p { color: var(--text-muted); font-size: var(--text-small); max-width: 30ch; }
+.nudge-add { width: 100%; min-height: 52px; margin-top: var(--space-2); }
+.nudge-later {
+  width: 100%;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+.nudge-never {
+  border: none;
+  background: transparent;
+  padding: var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  opacity: 0.6;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+[data-theme="velvet"] .nudge-card {
+  background: var(--v-bg);
+  box-shadow:
+    0 30px 70px rgb(0 0 0 / 0.5),
+    0 10px 28px rgb(0 0 0 / 0.32),
+    var(--v-bevel);
+}
+
+/* --------------------------------------------------------------------------
+   INSTRUCTION OVERLAY
+
+   What it is: the whole screen goes near-black and the direction sits
+   up top where the eye lands — eyebrow, huge title with the key phrase
+   highlighted, muted body lines, a faint tap-anywhere-to-close. What it
+   is for: full-screen how-tos; shipped as the iOS Add-to-Home-Screen
+   walk-through. When to use it: any instruction that deserves the whole
+   screen. The palette is deliberately fixed — the screen goes dark in
+   every theme — with the highlight in the pale gold that reads on black.
+
+   Usage:
+     <div class="overlay-guide" hidden>
+       <span class="eyebrow">Install this app</span>
+       <p class="overlay-title">Select <strong>"Add to Home Screen"</strong></p>
+       <p class="overlay-sub">Tap Safari's Share button, then choose it.</p>
+       <p class="overlay-sub" style="opacity:.55">Tap anywhere to close</p>
+     </div>
+   -------------------------------------------------------------------------- */
+
+.overlay-guide {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgb(0 0 0 / 0.94);      /* deliberately fixed: dark in every theme */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  padding: calc(env(safe-area-inset-top, 0px) + var(--space-8)) var(--space-5) var(--space-8);
+}
+.overlay-guide .eyebrow { color: #dcbe8e; }   /* pale gold on black, fixed */
+.overlay-title {
+  font-size: clamp(2rem, 9vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #ffffff;
+  max-width: 20ch;
+}
+.overlay-title strong { color: #dcbe8e; }
+.overlay-sub { color: rgb(255 255 255 / 0.6); font-size: var(--text-h4); }
+
+/* Velvet capsule number input: the amount reads as one soft capsule. */
+[data-theme="velvet"] .number-input input {
+  border-radius: var(--radius-pill);
+  padding-inline: var(--space-5);
+  min-height: 54px;
+}

@@ -442,6 +442,28 @@ web; versioned freezes start at /lib/v1/.
 
 ## The app kit (ingested from the shipped inflation app)
 
+Tooltip on touch: the [data-tip] bubble gains a triangle tail, and on
+touch devices (where iOS makes :hover stick) a tap peeks the bubble for
+five seconds instead — automatic, nothing to wire. Pinch zoom is
+blocked at the gesture level.
+
+Choice grid: .choice-grid of .choice-btn (a .choice-sym above a
+.choice-cap), five per row; aria-pressed carries the pick and facet.js
+keeps it exclusive with a tick of feedback. For any single pick from up
+to ~10 symbolic options.
+
+Slider tick scale: wrap a .slider and a .slider-scale in a
+.slider-wrap; facet.js builds minor ticks (data-minor, default 10),
+sparse labels (data-label, default 40) and a highlighted data-now value
+from the slider's own min/max. facet.sliderScale(wrap) rebuilds after a
+range change.
+
+Install nudge card (.nudge-scrim > .nudge-card) and the full-screen
+instruction overlay (.overlay-guide): the gentle add-to-home-screen ask
+and the dark how-to screen, driven by facet.installNudge — addNow()
+returns "native" (Android prompt shown) or "guide" (show the overlay).
+The overlay's dark palette is deliberately fixed across themes.
+
 Components: .tab-bar (bottom pill of .tab-seg segments + .tab-divider +
 trailing .tab-settings gear; a .tab-indicator pill is injected and
 glides on per-edge analytic springs), .sheet-scrim + .sheet
