@@ -7,21 +7,32 @@
 
   How this file is organised, top to bottom:
 
-    1. TOKENS       every design decision as a CSS variable, named by role
+    1. TOKENS       every design decision as a CSS variable, named by role,
+                    one block per theme
     2. RESET        box sizing, margin reset, sensible element defaults
     3. BASE STYLES  defaults for every raw HTML tag: text, forms, media,
                     tables, focus rings, selection, scrollbars, print
     4. COMPONENTS   one clearly commented section per component
 
-  Theming: `data-theme="sand"` on the <html> tag is the default theme, and
-  `data-mode="dark"` flips it dark. Every color below is a semantic token
-  (--background, --surface, --text...), so a theme swaps values in one block
-  and the entire page, layout containers included, restyles itself.
+  Theming: one attribute on the <html> tag switches the theme, layout
+  containers included. No attribute at all is the Default theme. Dark mode
+  is a second attribute and composes with every theme:
+
+    <html>                                 Default, light
+    <html data-mode="dark">                Default, dark
+    <html data-theme="sand">               Sand, light
+    <html data-theme="sand" data-mode="dark">   Sand, dark
+
+  Every color below is a semantic token (--background, --surface, --text...),
+  so a theme swaps values in one block and the entire page restyles itself.
 
   Rules that hold everywhere in this file:
     - Tokens are named by role, not value: --surface, never --gray-100.
     - Components use tokens only. No raw hex or magic px below the token layer.
     - One component, one section. Nothing is scattered.
+    - Every component section opens with its canonical description — what it
+      is, what it is for, when to use it — the same text, word for word, as
+      its entry on the library site and in llms.txt.
     - prefers-reduced-motion is honoured: all motion collapses to none.
 
   To-dos are marked "TODO" inline where they sit.
@@ -34,33 +45,36 @@
    ========================================================================== */
 
 /*
-   Theme 1 · Sand (default, light).
-   Modern beige, boring on purpose, quietly elegant. Palette pulled from
-   Minecraft desert biome blocks, with the ink darkened for AA contrast.
-   The bare :root block means Sand light is what you get with no attributes
-   at all; data-theme="sand" is spelled out so themes stay explicit.
+   Theme · Default (light). Ships first, no attribute needed.
+   Paper white, near-black ink, gray hairlines, small radii, whisper
+   shadows. Zero decoration, the quiet base. The accent is the ink itself:
+   primary actions are black on white, and hover and pressed deepen to
+   full black.
+
+   The non-color tokens (type, spacing, shape, elevation, motion, focus)
+   live here once and are shared by every theme; themes override only what
+   they change.
 */
-:root,
-html[data-theme="sand"] {
+:root {
 
   /* ----- Colors: core palette ----- */
-  --background: #EDE5C0;      /* sand: the page itself */
-  --surface: #F6F0D8;         /* smooth sandstone: cards, inputs, raised areas */
-  --text: #33291A;            /* dark earth: AA on background and surface */
-  --text-muted: #86794F;      /* dead bush: secondary text, hints, captions */
-  --border: #D9CD9E;          /* sandstone shadow: hairlines and edges */
+  --background: #FFFFFF;      /* paper: the page itself */
+  --surface: #FAFAFA;         /* a breath above the page: cards, inputs */
+  --text: #17171B;            /* near-black ink */
+  --text-muted: #6E6E76;      /* secondary text, hints, captions */
+  --border: #E4E4E8;          /* gray hairlines and edges */
 
-  /* ----- Colors: accent (cactus) ----- */
-  --accent: #5F9E44;
-  --accent-hover: #549038;
-  --accent-pressed: #48802F;
+  /* ----- Colors: accent (the ink itself) ----- */
+  --accent: #17171B;
+  --accent-hover: #09090B;
+  --accent-pressed: #000000;
   --on-accent: #FFFFFF;       /* text and icons sitting on the accent color */
 
   /* ----- Colors: status ----- */
-  --success: #57923F;         /* cactus family: things that went well */
-  --warning: #A97B24;         /* ochre: needs attention, not danger */
-  --error: #A6503A;           /* terracotta: something failed */
-  --info: #58788C;            /* dusty sky: neutral notices */
+  --success: #187C3D;         /* things that went well */
+  --warning: #8A5A00;         /* needs attention, not danger */
+  --error: #B3261E;           /* something failed */
+  --info: #295FA6;            /* neutral notices */
 
   /* ----- Typography: font stacks ----- */
   /* System stacks: nothing to download, instant render, native feel.
@@ -111,9 +125,9 @@ html[data-theme="sand"] {
 
   /* ----- Elevation: whisper-flat shadows ----- */
   --shadow-flat: none;
-  --shadow-raised: 0 1px 2px rgb(51 41 26 / 0.08);
-  --shadow-floating: 0 4px 12px rgb(51 41 26 / 0.10);
-  --shadow-overlay: 0 12px 32px rgb(51 41 26 / 0.16);
+  --shadow-raised: 0 1px 2px rgb(23 23 27 / 0.06);
+  --shadow-floating: 0 4px 12px rgb(23 23 27 / 0.08);
+  --shadow-overlay: 0 12px 32px rgb(23 23 27 / 0.14);
 
   /* ----- Motion ----- */
   --duration-fast: 120ms;     /* hovers, presses */
@@ -128,11 +142,66 @@ html[data-theme="sand"] {
 }
 
 /*
-   Sand · dark. One attribute flips the whole page: <html data-mode="dark">.
-   Only color tokens change; type, spacing, shape and motion carry over.
-   Dark earth ground, sand-colored ink, cactus stays the accent.
+   Theme · Default (dark). <html data-mode="dark">.
+   Near-black ground, paper ink. The accent flips with the ink: primary
+   actions become paper on black. Only color tokens change; type, spacing,
+   shape and motion carry over.
 */
 html[data-mode="dark"] {
+  --background: #121214;
+  --surface: #1B1B1F;
+  --text: #F4F4F5;
+  --text-muted: #9C9CA3;
+  --border: #2E2E33;
+
+  --accent: #F4F4F5;
+  --accent-hover: #FFFFFF;
+  --accent-pressed: #E2E2E5;
+  --on-accent: #17171B;
+
+  --success: #56B87A;
+  --warning: #D8A23E;
+  --error: #E5766A;
+  --info: #7AA7DC;
+
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-floating: 0 4px 12px rgb(0 0 0 / 0.45);
+  --shadow-overlay: 0 12px 32px rgb(0 0 0 / 0.55);
+}
+
+/*
+   Theme · Sand (light). <html data-theme="sand">.
+   Modern beige, boring on purpose, quietly elegant. Palette pulled from
+   Minecraft desert biome blocks, with the ink darkened for AA contrast.
+   Parked, not deleted: available whenever a project wants it.
+*/
+html[data-theme="sand"] {
+  --background: #EDE5C0;      /* sand */
+  --surface: #F6F0D8;         /* smooth sandstone */
+  --text: #33291A;            /* dark earth */
+  --text-muted: #86794F;      /* dead bush */
+  --border: #D9CD9E;          /* sandstone shadow */
+
+  --accent: #5F9E44;          /* cactus */
+  --accent-hover: #549038;
+  --accent-pressed: #48802F;
+  --on-accent: #FFFFFF;
+
+  --success: #57923F;
+  --warning: #A97B24;
+  --error: #A6503A;
+  --info: #58788C;
+
+  --shadow-raised: 0 1px 2px rgb(51 41 26 / 0.08);
+  --shadow-floating: 0 4px 12px rgb(51 41 26 / 0.10);
+  --shadow-overlay: 0 12px 32px rgb(51 41 26 / 0.16);
+}
+
+/*
+   Theme · Sand (dark). Composes: <html data-theme="sand" data-mode="dark">.
+   Dark earth ground, sand-colored ink, cactus stays the accent.
+*/
+html[data-theme="sand"][data-mode="dark"] {
   --background: #211A0F;
   --surface: #2C2415;
   --text: #EFE7C8;
@@ -154,7 +223,23 @@ html[data-mode="dark"] {
   --shadow-overlay: 0 12px 32px rgb(0 0 0 / 0.55);
 }
 
-/* Dark mode uses a dark scrollbar and form controls from the browser too. */
+/*
+   Theme · Aero (stub). <html data-theme="aero">.
+   Frutiger Aero era: sky aqua, glass gloss, translucent plastic, pill
+   buttons. Light and dark ocean-glass variants.
+   TODO: palette locked when it gets built. Until then this attribute
+   falls back to the Default theme.
+*/
+
+/*
+   Theme · Elegant (stub). <html data-theme="elegant">.
+   The old Gems signature carried forward: cream surfaces, gold hairlines,
+   serif display type, carved elevation. Dark twin is obsidian and gold.
+   TODO: palette locked when it gets built. Until then this attribute
+   falls back to the Default theme.
+*/
+
+/* The browser's own widgets (scrollbars, form controls) follow the mode. */
 html[data-mode="dark"] { color-scheme: dark; }
 html { color-scheme: light; }
 
@@ -191,6 +276,12 @@ canvas {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+/* The hidden attribute always wins, even over components that set their
+   own display (flex, grid). Without this, .result and .stack ignore it. */
+[hidden] {
+  display: none !important;
 }
 
 
@@ -243,7 +334,7 @@ small { font-size: var(--text-small); }
 strong, b { font-weight: var(--weight-strong); }
 
 a {
-  color: var(--accent-pressed); /* the darkest accent shade: AA as link text */
+  color: var(--text);           /* links are ink with an underline, every theme */
   text-decoration: underline;
   text-underline-offset: 0.15em;
   text-decoration-color: var(--border);
@@ -474,19 +565,28 @@ figcaption {
 
 /* ==========================================================================
    4. COMPONENTS
-   One section per component. Each section states what it is, how to use it,
-   and its options. Docs with live demos: /components/<name>.html
+   One section per component. Each section opens with the component's
+   canonical description — the same text, word for word, as its entry on
+   the library site and in llms.txt — then how to use it and its options.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    CONTAINER
-   Page-width wrapper with themed padding. Centers content and caps its width.
+
+   What it is: a page-width wrapper with themed padding. It centers content,
+   caps its width, and keeps consistent side padding from the spacing tokens.
+   What it is for: giving every page the same horizontal rhythm, driven by
+   tokens, so a theme flip restyles the layout too, not just the components
+   inside it.
+   When to use it: put it directly on the top-level semantic tag of any
+   ordinary page — main, header, footer, section. Use .container-narrow for
+   prose, forms and calculators, .container for most pages, .container-wide
+   for dashboards, .container-full for edge-to-edge strips that keep side
+   padding. Never nest a container inside a container.
 
    Usage:  <main class="container"> ... </main>
-   Options: .container-narrow  prose and forms (40rem)
-            .container         default pages (64rem)
-            .container-wide    dashboards (80rem)
-            .container-full    edge to edge, keeps side padding
+   Options: .container-narrow  40rem   .container       64rem
+            .container-wide    80rem   .container-full  edge to edge
    -------------------------------------------------------------------------- */
 
 .container,
@@ -513,12 +613,19 @@ figcaption {
 
 /* --------------------------------------------------------------------------
    STACK
-   Vertical flow with themed gaps. Says only: these sit above and below
-   each other, this far apart.
+
+   What it is: vertical flow with themed gaps. A stack says one thing: these
+   sit above and below each other, this far apart.
+   What it is for: spacing content without per-element margins. The gaps come
+   from the spacing tokens, so a theme change restyles the rhythm of the
+   whole page.
+   When to use it: .stack is the default for content inside a section.
+   Use .stack-tight for lines that belong together, like a label and its
+   field. Use .stack-loose between whole sections of a page.
 
    Usage:  <section class="stack"> ... </section>
-   Options: .stack-tight  small gap    .stack        default gap
-            .stack-loose  section gap
+   Options: .stack-tight  --space-2    .stack  --space-4
+            .stack-loose  --space-7
    -------------------------------------------------------------------------- */
 
 .stack,
@@ -534,10 +641,16 @@ figcaption {
 
 /* --------------------------------------------------------------------------
    SNAP SECTION
-   Full-viewport scroll-snap areas: the calculator page skeleton. The page
-   scrolls one full screen at a time; each section centers its content.
-   The .snap container exists to enable scrolling — a real feature, so the
-   wrapper law allows it.
+
+   What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one
+   full screen at a time and each .snap-section centers its content at a
+   readable width.
+   What it is for: the calculator page skeleton — intro screen, then inputs,
+   then results — and any page that tells one story one screen at a time.
+   When to use it: single-purpose pages with a clear screen-by-screen flow.
+   Not for ordinary documents; normal pages just scroll. The .snap wrapper
+   exists to enable scrolling, which is the one reason the wrapper law
+   allows a container inside a container.
 
    Usage:  <main class="snap">
              <section class="snap-section"> intro </section>
@@ -572,13 +685,21 @@ figcaption {
 
 /* --------------------------------------------------------------------------
    BUTTON
-   Usage:  <button class="btn btn-primary" data-event="calc-run">Calculate</button>
-   Variants: .btn-primary    the one main action on a screen
-             .btn-secondary  everything else (default for bare .btn)
-             .btn-ghost      quiet actions inside busy areas
+
+   What it is: the action element, in three variants and three sizes, working
+   identically on <button> and on <a>.
+   What it is for: .btn-primary carries the screen's one main action in the
+   accent color. .btn-secondary is every other action. .btn-ghost is for
+   quiet actions inside busy areas, invisible until hovered.
+   When to use it: any click that does something. One primary per screen at
+   most. Navigation dressed as a button is an <a class="btn">. Put the
+   button's key action name in a data-event attribute as the analytics hook.
+
+   Usage:  <button class="btn btn-primary" data-event="calc-run"
+                   data-tip="Runs the calculation">Calculate</button>
+   Variants: .btn-primary  .btn-secondary (default for bare .btn)  .btn-ghost
    Sizes:    .btn-small  .btn (default)  .btn-large
    States:   hover, focus ring, pressed, :disabled — all built in.
-   Analytics: put a data-event attribute on the button's key action.
    -------------------------------------------------------------------------- */
 
 .btn {
@@ -647,13 +768,19 @@ figcaption {
 
 /* --------------------------------------------------------------------------
    ICON BUTTON
-   A square button holding a single icon. Always needs an aria-label and a
-   description tooltip, because the icon alone says nothing.
 
-   Usage:  <button class="btn btn-icon" aria-label="Clear" data-tip="Clear the field">
-             <svg>...</svg>
-           </button>
-   Combines with .btn-primary / .btn-ghost / .btn-small like any button.
+   What it is: a square button holding a single icon.
+   What it is for: compact actions whose meaning the icon plus its tooltip
+   carries — the clear cross in a number field, a close button, a share
+   arrow.
+   When to use it: when space is tight and the action is secondary. The icon
+   alone says nothing, so every icon button carries an aria-label for screen
+   readers and a data-tip tooltip for everyone else. Combines with any
+   button variant and size. Icons are inline SVG with stroke="currentColor"
+   so they take the button's text color in every theme.
+
+   Usage:  <button class="btn btn-icon" aria-label="Close"
+                   data-tip="Close this panel"> <svg>...</svg> </button>
    -------------------------------------------------------------------------- */
 
 .btn-icon {
@@ -667,11 +794,19 @@ figcaption {
 
 /* --------------------------------------------------------------------------
    FIELD + NUMBER INPUT
-   A labelled field wrapping the calculator-grade number input:
-     - ships prefilled with an example value
-     - first tap clears it fully in one go (facet.js), never after the user edits
-     - Indian digit grouping as you type: 25,00,000 (facet.js)
-     - a words helper reads the number back: "25 lakh" (facet.js)
+
+   What it is: a labelled field wrapping the calculator-grade number input,
+   with a clear button inside the field and a words helper under it.
+   What it is for: money and other large numbers entered the Indian way. The
+   input ships prefilled with an example value, clears fully on the first
+   tap — and never again once the visitor has typed — groups digits
+   Indian-style as they are typed (25,00,000), and reads the number back in
+   words underneath: 25 lakh. All three behaviours come from facet.js the
+   moment the input carries data-number.
+   When to use it: every numeric entry in a calculator. Read the plain
+   number in app code with facet.numberValue(input). For the error state,
+   put .field-invalid on the field and swap the hint for a .field-error
+   line.
 
    Usage:
      <label class="field">
@@ -685,12 +820,8 @@ figcaption {
        <span class="field-hint">What you invest every month</span>
      </label>
 
-   The .number-input wrapper exists to overlay the clear button on the input —
-   a real layout job, allowed by the wrapper law. facet.js finds every
-   [data-number] input and wires the three behaviours on.
-
-   Options: <span class="field-error"> replaces the hint in the error state,
-   and putting .field-invalid on the .field colors the input border.
+   The .number-input wrapper exists to overlay the clear button on the
+   input — a real layout job, allowed by the wrapper law.
    -------------------------------------------------------------------------- */
 
 .field {
@@ -753,24 +884,28 @@ figcaption {
 .number-words {
   min-height: 1.2em;                      /* reserves the line: no layout jump */
   font-size: var(--text-caption);
-  color: var(--accent-pressed);
+  color: var(--text-muted);
   font-weight: var(--weight-strong);
 }
 
 /* --------------------------------------------------------------------------
    SLIDER
-   A themed range input. Pairs with an <output> in the field label so the
-   current value always reads back; facet.js keeps the two in sync.
+
+   What it is: a real range input wearing the theme — hairline track, accent
+   thumb — paired with a live value readout.
+   What it is for: picking a number inside a known range where the feel of
+   more-and-less matters more than exact digits: years, percentages, counts.
+   When to use it: bounded inputs with sensible ends. When the exact number
+   matters, pair it with or swap it for the number input. Put an <output>
+   in the field label and facet.js keeps it showing the live value. Full
+   keyboard support comes free with the native element.
 
    Usage:
      <label class="field">
        <span class="field-label">Years <output>10</output></span>
        <input type="range" class="slider" min="1" max="40" value="10"
-              data-tip="Drag to change the number of years">
+              data-tip="Drag, or use the arrow keys">
      </label>
-
-   The track and thumb are styled per browser engine below; the shared
-   look is: hairline track, accent-filled round thumb, focus ring.
    -------------------------------------------------------------------------- */
 
 .slider {
@@ -835,13 +970,20 @@ figcaption {
 .field output {
   float: right;                           /* sits at the label's right edge */
   font-variant-numeric: tabular-nums;
-  color: var(--accent-pressed);
+  color: var(--text-muted);
 }
 
 /* --------------------------------------------------------------------------
    RESULT BLOCK
-   Verdict-first: one plain-language sentence, one big number, then the
-   supporting figures. The centrepiece of every calculator's results screen.
+
+   What it is: a verdict-first result card: one plain-language sentence a
+   person can repeat at dinner, one big number, then the supporting figures.
+   What it is for: the centrepiece of a results screen — readable at a
+   glance, and announced by screen readers on every recalculation when the
+   block carries aria-live="polite".
+   When to use it: whenever a calculation produces one headline answer.
+   Leave out the figures list when there is nothing to support the verdict.
+   For the empty state before any input, show a muted verdict line alone.
 
    Usage:
      <section class="result" aria-live="polite">
@@ -853,9 +995,8 @@ figcaption {
        </dl>
      </section>
 
-   aria-live="polite" makes screen readers announce recalculations.
    The <dl> is the semantic fit for label–value pairs; each <div> row is
-   markup the dl spec itself requires for grouping, not decoration.
+   grouping the dl spec itself provides, not decoration.
    -------------------------------------------------------------------------- */
 
 .result {
@@ -881,7 +1022,7 @@ figcaption {
   font-size: var(--text-display);
   font-weight: var(--weight-heading);
   line-height: var(--leading-heading);
-  color: var(--accent-pressed);
+  color: var(--text);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
@@ -911,15 +1052,21 @@ figcaption {
 
 /* --------------------------------------------------------------------------
    DESCRIPTION TOOLTIP
-   Every interactive element carries a description: put a data-tip attribute
-   on it and the explanation appears on hover and on keyboard focus. Pure
-   CSS, readable by anyone, no JS involved.
+
+   What it is: a one-attribute explanation bubble: put data-tip on any
+   element and the text appears above it on hover and on keyboard focus.
+   Pure CSS, no JS involved.
+   What it is for: explaining every interactive element in place — one of
+   the library's core principles. The description doubles as documentation
+   anyone can read by pointing at the thing.
+   When to use it: every interactive element ships with one. Add
+   data-tip-below on elements near the top of the viewport so the bubble
+   drops under them instead of clipping off the screen.
 
    Usage:  <button class="btn" data-tip="Runs the calculation">Calculate</button>
 
-   Limits (fine for v1): single line, appears above the element, clipped by
-   overflow:hidden ancestors. TODO: JS-positioned tooltips once a real page
-   hits the clipping limit.
+   Limits (fine for v1): single line, clipped by overflow:hidden ancestors.
+   TODO: JS-positioned tooltips once a real page hits the clipping limit.
    -------------------------------------------------------------------------- */
 
 [data-tip] {

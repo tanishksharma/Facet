@@ -1,0 +1,293 @@
+# Facet
+
+Facet is a plain HTML, CSS and JS design library. It is one CSS file and one
+JS file hosted at a public URL. Any page consumes it with one link tag and
+one script tag. No React, no build step, no npm install, never minified.
+This file is the full usage guide as plain text, for AI crawlers and
+builders. The same content lives rendered at the site root and as CLAUDE.md
+in the repo: https://github.com/tanishksharma/Facet
+
+## Consume it
+
+    <link rel="stylesheet" href="https://[domain]/lib/facet.css">
+    <script src="https://[domain]/lib/facet.js" defer></script>
+
+Replace [domain] with the domain this file is served from. Projects never
+copy the files in; they point at the hosted URL and update when the library
+does.
+
+## Theming
+
+One attribute on the html tag switches the theme, layout containers
+included. Dark mode is a second attribute and composes with every theme.
+
+    <html>                                    Default theme, light
+    <html data-mode="dark">                   Default theme, dark
+    <html data-theme="sand">                  Sand theme, light
+    <html data-theme="sand" data-mode="dark"> Sand theme, dark
+
+Themes: Default (white and black, the accent is the ink itself) ships
+first. Sand (Minecraft desert beige, cactus accent) is parked and working.
+Aero (glass and sky) and Elegant (cream and gold) are stubbed; their
+palettes get locked when they are built.
+
+facet.js also reads ?theme= and ?mode= from the URL on load, so a shared
+link opens in the sender's theme. Buttons with data-theme-switch="sand"
+(empty value = Default) switch the theme live; buttons with
+data-mode-toggle flip light and dark. Both write their choice back to the
+URL.
+
+## Tokens
+
+Every design decision is a CSS variable named by its role, never its value.
+Use tokens, never raw hex or px, in anything built on Facet.
+
+Color: --background, --surface, --text, --text-muted, --border,
+--accent, --accent-hover, --accent-pressed, --on-accent,
+--success, --warning, --error, --info
+
+Type: --font-heading, --font-body, --font-mono; --text-display, --text-h1,
+--text-h2, --text-h3, --text-h4, --text-body, --text-small, --text-caption;
+--weight-heading, --weight-body, --weight-strong; --leading-heading,
+--leading-body
+
+Spacing (4px base): --space-1 4px, --space-2 8px, --space-3 12px,
+--space-4 16px, --space-5 24px, --space-6 32px, --space-7 48px,
+--space-8 64px. Container widths: --width-narrow 40rem, --width-default
+64rem, --width-wide 80rem.
+
+Shape: --radius-small, --radius-medium, --radius-large, --radius-pill;
+--border-width, --border-width-strong
+
+Elevation: --shadow-flat, --shadow-raised, --shadow-floating,
+--shadow-overlay (whisper-flat, all of them)
+
+Motion: --duration-fast 120ms, --duration-normal 200ms, --duration-slow
+320ms; --ease-out, --ease-in-out. All motion collapses to nothing under
+prefers-reduced-motion.
+
+Focus: --focus-ring, --focus-offset. One visible ring everywhere,
+keyboard only.
+
+## Base styles
+
+Raw semantic HTML already looks like Facet: headings, paragraphs, links,
+lists, blockquotes, code and pre, tables, inputs, textareas, selects,
+buttons, fieldsets, figures. Also included: focus rings, selection colors,
+thin scrollbars, a .skip-link class for the skip-to-content link, and a
+print base. Start every page with:
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+## Components
+
+Each component below: what it is, what it is for, when to use it, then the
+copy-paste snippet. The snippet renders in any page that links facet.css.
+
+### Container
+
+What it is: a page-width wrapper with themed padding. It centers content,
+caps its width, and keeps consistent side padding from the spacing tokens.
+What it is for: giving every page the same horizontal rhythm, driven by
+tokens, so a theme flip restyles the layout too, not just the components
+inside it. When to use it: put it directly on the top-level semantic tag of
+any ordinary page — main, header, footer, section. Use .container-narrow
+for prose, forms and calculators, .container for most pages,
+.container-wide for dashboards, .container-full for edge-to-edge strips
+that keep side padding. Never nest a container inside a container.
+
+    <main class="container"> ... </main>
+
+### Stack
+
+What it is: vertical flow with themed gaps. A stack says one thing: these
+sit above and below each other, this far apart. What it is for: spacing
+content without per-element margins. The gaps come from the spacing tokens,
+so a theme change restyles the rhythm of the whole page. When to use it:
+.stack is the default for content inside a section. Use .stack-tight for
+lines that belong together, like a label and its field. Use .stack-loose
+between whole sections of a page.
+
+    <section class="stack">
+      <h2>A heading</h2>
+      <p>Content flows down with themed gaps.</p>
+    </section>
+
+### Snap section
+
+What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one
+full screen at a time and each .snap-section centers its content at a
+readable width. What it is for: the calculator page skeleton — intro
+screen, then inputs, then results — and any page that tells one story one
+screen at a time. When to use it: single-purpose pages with a clear
+screen-by-screen flow. Not for ordinary documents; normal pages just
+scroll. The .snap wrapper exists to enable scrolling, which is the one
+reason the wrapper law allows a container inside a container.
+
+    <main class="snap">
+      <section class="snap-section"> intro </section>
+      <section class="snap-section"> inputs </section>
+      <section class="snap-section"> results </section>
+    </main>
+
+### Button
+
+What it is: the action element, in three variants and three sizes, working
+identically on <button> and on <a>. What it is for: .btn-primary carries
+the screen's one main action in the accent color. .btn-secondary is every
+other action. .btn-ghost is for quiet actions inside busy areas, invisible
+until hovered. When to use it: any click that does something. One primary
+per screen at most. Navigation dressed as a button is an <a class="btn">.
+Put the button's key action name in a data-event attribute as the
+analytics hook.
+
+    <button class="btn btn-primary" data-event="calc-run"
+            data-tip="Runs the calculation">Calculate</button>
+
+Variants: .btn-primary, .btn-secondary (default for bare .btn), .btn-ghost
+Sizes: .btn-small, default, .btn-large
+States built in: hover, focus ring, pressed, :disabled
+
+### Icon button
+
+What it is: a square button holding a single icon. What it is for: compact
+actions whose meaning the icon plus its tooltip carries — the clear cross
+in a number field, a close button, a share arrow. When to use it: when
+space is tight and the action is secondary. The icon alone says nothing, so
+every icon button carries an aria-label for screen readers and a data-tip
+tooltip for everyone else. Combines with any button variant and size.
+Icons are inline SVG with stroke="currentColor" so they take the button's
+text color in every theme.
+
+    <button class="btn btn-icon" aria-label="Close" data-tip="Close this panel">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+           stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+           aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg>
+    </button>
+
+### Field + number input
+
+What it is: a labelled field wrapping the calculator-grade number input,
+with a clear button inside the field and a words helper under it. What it
+is for: money and other large numbers entered the Indian way. The input
+ships prefilled with an example value, clears fully on the first tap — and
+never again once the visitor has typed — groups digits Indian-style as
+they are typed (25,00,000), and reads the number back in words underneath:
+25 lakh. All three behaviours come from facet.js the moment the input
+carries data-number. When to use it: every numeric entry in a calculator.
+Read the plain number in app code with facet.numberValue(input). For the
+error state, put .field-invalid on the field and swap the hint for a
+.field-error line.
+
+    <label class="field">
+      <span class="field-label">Monthly investment</span>
+      <span class="number-input">
+        <input type="text" inputmode="numeric" value="25000" data-number
+               data-tip="Amount in rupees. First tap clears the example.">
+        <button type="button" class="btn btn-ghost btn-icon btn-small number-clear"
+                aria-label="Clear" data-tip="Clear this field">&times;</button>
+      </span>
+      <span class="number-words" aria-live="polite"></span>
+      <span class="field-hint">What you invest every month</span>
+    </label>
+
+### Slider
+
+What it is: a real range input wearing the theme — hairline track, accent
+thumb — paired with a live value readout. What it is for: picking a number
+inside a known range where the feel of more-and-less matters more than
+exact digits: years, percentages, counts. When to use it: bounded inputs
+with sensible ends. When the exact number matters, pair it with or swap it
+for the number input. Put an <output> in the field label and facet.js
+keeps it showing the live value. Full keyboard support comes free with the
+native element.
+
+    <label class="field">
+      <span class="field-label">Years <output>10</output></span>
+      <input type="range" class="slider" min="1" max="40" value="10"
+             data-tip="Drag, or use the arrow keys">
+    </label>
+
+### Result block
+
+What it is: a verdict-first result card: one plain-language sentence a
+person can repeat at dinner, one big number, then the supporting figures.
+What it is for: the centrepiece of a results screen — readable at a
+glance, and announced by screen readers on every recalculation when the
+block carries aria-live="polite". When to use it: whenever a calculation
+produces one headline answer. Leave out the figures list when there is
+nothing to support the verdict. For the empty state before any input, show
+a muted verdict line alone.
+
+    <section class="result" aria-live="polite">
+      <p class="result-verdict">Your money halves in value every 10 years</p>
+      <p class="result-number">Rs 46,319</p>
+      <dl class="result-figures">
+        <div><dt>Total invested</dt><dd>Rs 12,00,000</dd></div>
+        <div><dt>Real return</dt><dd>4.1% a year</dd></div>
+      </dl>
+    </section>
+
+### Description tooltip
+
+What it is: a one-attribute explanation bubble: put data-tip on any element
+and the text appears above it on hover and on keyboard focus. Pure CSS, no
+JS involved. What it is for: explaining every interactive element in
+place — one of the library's core principles. The description doubles as
+documentation anyone can read by pointing at the thing. When to use it:
+every interactive element ships with one. Add data-tip-below on elements
+near the top of the viewport so the bubble drops under them instead of
+clipping off the screen.
+
+    <button class="btn" data-tip="Runs the calculation">Calculate</button>
+
+## JavaScript API
+
+facet.js wires itself to data attributes on DOMContentLoaded; pages opt in
+by writing HTML, never JS. A tiny public API is exposed as window.facet
+for calculator apps:
+
+    facet.numberValue(input)   the plain number behind a grouped input
+    facet.groupIndian(n)       74250000 -> "7,42,50,000"
+    facet.numberWords(n)       74250000 -> "7.43 crore"
+
+## Rules for building on Facet
+
+Core principles: readability is the product. One-glance HTML. Not one
+extra wrapper. Least code that stays readable. Pure HTML, CSS and JS, no
+build step, never minified. One-step theme change. Everything explained in
+place. Fully commented. Accessible, SEO-ready and AI-crawlable by default.
+
+Markup rules: semantic tags over div (header, nav, main, section, article,
+aside, footer, figure). The wrapper law: an element exists only to hold
+content, create layout, or carry behavior; anything else is deleted.
+Container inside a container only to enable a real feature: scroll areas,
+sticky regions, overflow clipping. Buttons are button, links are a, form
+fields have real label elements. One h1 per page; heading levels never
+skip.
+
+Adding a new component, the compliance checklist: semantic tokens only.
+Works in every theme, light and dark, with zero extra code. All states
+covered. Keyboard operable with a visible focus ring. Interactive elements
+ship with a description tooltip. 44px touch targets, no hover-only
+interactions. Minimal semantic markup. Fully commented in the file. Names
+follow the naming rules, nothing minified. data-event analytics hook on
+the key action. Wall entry on the library homepage: live demo, variant and
+state chips, exact snippet with copy. Docs description — what it is, what
+it is for, when to use it — same text as the file comment and this file.
+Committed to Git with a clear message.
+
+Naming: tokens by role, not value. One class prefix and pattern per
+component (.btn, .btn-primary). JS: one small named function per behavior.
+
+Maintaining: docs are demos — a component is not done until the homepage
+shows it live with its code. One component, one commented section in the
+CSS. All changes go through Git commits. Growth by extraction: build a new
+pattern inside a project first, promote it once it repeats. App logic,
+data fetching and state management live in projects, never in the library.
+This file is updated whenever a component or rule changes.
+
+Distribution: consume by URL only. Releases are Git tags. When a project
+ships, freeze a copy of the current files to /lib/v1/ and leave them
+untouched; work continues in /lib/. Old projects point at their frozen
+folder forever.

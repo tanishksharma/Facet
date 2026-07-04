@@ -1,184 +1,843 @@
 <!doctype html>
-<html lang="en" data-theme="sand">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Facet — a plain HTML design library</title>
-  <meta name="description" content="Facet is a plain HTML, CSS and JS design library. One stylesheet, one script, no build step. This site is its documentation and living demo.">
+  <meta name="description" content="Facet is a plain HTML, CSS and JS design library. One stylesheet, one script, no build step. This page is the library: documentation, living demo and distribution in one.">
   <meta property="og:title" content="Facet — a plain HTML design library">
   <meta property="og:description" content="One stylesheet, one script, no build step. Readable by humans, buildable by AI.">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23EDE5C0'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%235F9E44'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23FFFFFF'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%2317171B'/></svg>">
 
   <!-- The site consumes the library exactly like any other project would:
        one link tag, one script tag, pointed at /lib. -->
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
 
-  <!-- Docs-only styles: swatches and specimens that show the tokens off.
-       Everything here reads tokens; no raw values. -->
+  <!-- Docs-only styles. Everything reads tokens; no raw values. These
+       classes exist for the docs site alone and are not part of the
+       library — if one starts repeating in real projects, it gets
+       promoted into facet.css per the growth-by-extraction rule. -->
   <style>
+    /* Site header: wordmark left, controls right. */
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-2);
+      padding-block: var(--space-3);
+      border-bottom: var(--border-width) solid var(--border);
+    }
+    .site-nav .wordmark {
+      font-weight: var(--weight-heading);
+      font-size: var(--text-h3);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .site-controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
+    [data-theme-switch][aria-pressed="true"] {
+      background: var(--surface);
+      border-color: var(--text-muted);
+    }
+
+    /* The sidebar + wall layout. The grid wrapper exists to put the index
+       beside the content — a real layout job. */
+    .docs-layout {
+      display: grid;
+      grid-template-columns: 14rem minmax(0, 1fr);
+      gap: var(--space-7);
+      align-items: start;
+      padding-block: var(--space-6);
+    }
+    .docs-index {
+      position: sticky;
+      top: var(--space-4);
+      max-height: calc(100dvh - var(--space-6));
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .docs-index ul { list-style: none; padding: 0; }
+    .docs-index a { text-decoration: none; color: var(--text-muted); font-size: var(--text-small); }
+    .docs-index a:hover { color: var(--text); }
+    .docs-index strong {
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+    @media (max-width: 56rem) {
+      .docs-layout { grid-template-columns: 1fr; gap: var(--space-5); }
+      .docs-index { position: static; max-height: none; }
+    }
+
+    /* One wall entry. */
+    .element { scroll-margin-top: var(--space-4); }
+    .element .demo {
+      background: var(--background);
+      border: var(--border-width) dashed var(--border);
+      border-radius: var(--radius-medium);
+      padding: var(--space-5);
+    }
+
+    /* Variant and state chips: small pills that flip the live demo. */
+    .chips { display: flex; flex-wrap: wrap; gap: var(--space-1); max-width: none; }
+    .chip {
+      min-height: 36px;
+      padding: var(--space-1) var(--space-3);
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-pill);
+      font-size: var(--text-small);
+    }
+    .chip[aria-pressed="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--on-accent);
+    }
+
+    /* Token specimens. */
     .swatches { display: flex; flex-wrap: wrap; gap: var(--space-3); padding: 0; list-style: none; }
-    .swatches li { width: 9rem; font-size: var(--text-caption); }
+    .swatches li { width: 8.5rem; font-size: var(--text-caption); }
     .swatch {
-      height: var(--space-8);
+      height: var(--space-7);
       border: var(--border-width) solid var(--border);
       border-radius: var(--radius-small);
       margin-bottom: var(--space-1);
     }
-    .swatches code { display: inline-block; margin-top: 2px; }
-    .specimen { border-bottom: var(--border-width) solid var(--border); padding-block: var(--space-3); }
+    .specimen { border-bottom: var(--border-width) solid var(--border); padding-block: var(--space-2); }
     .specimen small { color: var(--text-muted); display: block; }
+    .space-bars { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+    .space-bars li { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-caption); }
+    .space-bars .bar { height: var(--space-3); background: var(--accent); border-radius: var(--radius-small); }
+    .space-bars code { min-width: 6rem; }
+    .shape-row { display: flex; flex-wrap: wrap; gap: var(--space-4); padding: 0; list-style: none; }
+    .shape-row li { font-size: var(--text-caption); text-align: center; }
+    .shape-row .tile {
+      width: var(--space-8);
+      height: var(--space-8);
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      margin-bottom: var(--space-1);
+    }
+
+    /* Docs-only frames for specific demos. */
+    #snap-section .demo { padding: 0; overflow: hidden; }   /* clips the mini viewport */
+    #snap-section .snap { height: 20rem; }
+    #snap-section .snap-section { min-height: 20rem; }
+    #snap-section .snap-section:nth-child(even) { background: var(--surface); }
+    #container .demo > * {
+      outline: var(--border-width) dashed var(--text-muted);
+      padding-block: var(--space-2);
+      font-size: var(--text-small);
+      color: var(--text-muted);
+    }
+    .demo-box {
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-small);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-small);
+      color: var(--text-muted);
+    }
   </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="container">
-    <nav style="display: flex; justify-content: space-between; align-items: center; padding-block: var(--space-4);">
-      <strong>Facet</strong>
-      <button class="btn btn-ghost btn-small" data-mode-toggle data-tip-below
-              data-tip="One attribute on the html tag flips the whole page">Light / dark</button>
+  <!-- Header: wordmark, theme switcher, dark toggle, GitHub. The switcher
+       re-renders the whole page live and carries the choice in the URL. -->
+  <header class="container-wide">
+    <nav class="site-nav" aria-label="Site">
+      <a class="wordmark" href="/">facet</a>
+      <div class="site-controls" role="group" aria-label="Theme">
+        <button class="btn btn-ghost btn-small" data-theme-switch="" data-tip-below
+                data-tip="Default theme: white and black, accent is the ink">Default</button>
+        <button class="btn btn-ghost btn-small" data-theme-switch="sand" data-tip-below
+                data-tip="Sand theme: Minecraft desert beige">Sand</button>
+        <button class="btn btn-ghost btn-small" disabled data-tip-below
+                data-tip="Aero: glass and sky. Palette locked when it gets built.">Aero</button>
+        <button class="btn btn-ghost btn-small" disabled data-tip-below
+                data-tip="Elegant: cream and gold. Palette locked when it gets built.">Elegant</button>
+        <button class="btn btn-ghost btn-small" data-mode-toggle data-tip-below
+                data-tip="Dark mode composes with every theme">Light / dark</button>
+        <a class="btn btn-ghost btn-small" href="https://github.com/tanishksharma/Facet" data-tip-below
+           data-tip="The readable source, never minified">GitHub</a>
+      </div>
     </nav>
   </header>
 
-  <main id="main" class="container stack-loose" style="padding-block: var(--space-7);">
-
-    <!-- Hero: what this library is and how to consume it. -->
-    <section class="stack">
-      <h1>A design library in plain HTML, CSS and JS</h1>
-      <p>
-        Facet styles everything I make: apps, websites, pitch decks, documents
-        and business cards. It is one CSS file and one JS file at a public URL.
-        No React, no build step, no npm install, never minified. This site is
-        built with it, from it, and doubles as its documentation.
-      </p>
-      <pre id="snippet-consume"><code>&lt;link rel="stylesheet" href="https://[domain]/lib/facet.css"&gt;
+  <!-- Get-started strip: the two tags, one copy button. -->
+  <section class="container-wide stack" style="padding-block: var(--space-6);">
+    <h1>A design library in plain HTML, CSS and JS</h1>
+    <p>
+      Facet styles everything I make: apps, websites, pitch decks, documents
+      and business cards. It is one CSS file and one JS file at a public URL.
+      No React, no build step, no npm install, never minified. This page is
+      the library: documentation, living demo and proof of distribution in
+      one — everything you see is built from the two files below.
+    </p>
+    <pre id="snippet-consume"><code>&lt;link rel="stylesheet" href="https://[domain]/lib/facet.css"&gt;
 &lt;script src="https://[domain]/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
-      <!-- The site itself always knows its own domain: fill it in, so the
-           copied snippet points at wherever this page is actually hosted. -->
-      <script>
-        document.getElementById("snippet-consume").textContent =
-          document.getElementById("snippet-consume").textContent
-            .replaceAll("https://[domain]", location.origin);
-      </script>
-      <p>
-        <button class="btn btn-primary" data-copy="#snippet-consume"
-                data-tip="Copies the two tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
-      </p>
-    </section>
+    <!-- The site itself always knows its own domain: fill it in, so the
+         copied snippet points at wherever this page is actually hosted. -->
+    <script>
+      document.getElementById("snippet-consume").textContent =
+        document.getElementById("snippet-consume").textContent
+          .replaceAll("https://[domain]", location.origin);
+    </script>
+    <p>
+      <button class="btn btn-primary" data-copy="#snippet-consume"
+              data-tip="Copies the two tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
+    </p>
+  </section>
 
-    <!-- Tokens: the variables every component reads. Theme 1 is Sand. -->
-    <section class="stack">
-      <h2>Tokens · theme Sand</h2>
-      <p>
-        Every design decision is a CSS variable named by its role, never its
-        value. A theme swaps the values in one block; the toggle in the top
-        corner does exactly that. Palette pulled from Minecraft desert biome
-        blocks, ink darkened for AA contrast.
-      </p>
+  <!-- Sidebar index + the wall. -->
+  <div class="docs-layout container-wide">
 
-      <h3>Color</h3>
-      <ul class="swatches">
-        <li><div class="swatch" style="background: var(--background)"></div>sand<br><code>--background</code></li>
-        <li><div class="swatch" style="background: var(--surface)"></div>smooth sandstone<br><code>--surface</code></li>
-        <li><div class="swatch" style="background: var(--text)"></div>dark earth<br><code>--text</code></li>
-        <li><div class="swatch" style="background: var(--text-muted)"></div>dead bush<br><code>--text-muted</code></li>
-        <li><div class="swatch" style="background: var(--border)"></div>sandstone shadow<br><code>--border</code></li>
-        <li><div class="swatch" style="background: var(--accent)"></div>cactus<br><code>--accent</code></li>
-        <li><div class="swatch" style="background: var(--success)"></div>success<br><code>--success</code></li>
-        <li><div class="swatch" style="background: var(--warning)"></div>warning<br><code>--warning</code></li>
-        <li><div class="swatch" style="background: var(--error)"></div>error<br><code>--error</code></li>
-        <li><div class="swatch" style="background: var(--info)"></div>info<br><code>--info</code></li>
-      </ul>
+    <aside class="docs-index" aria-label="Page index">
+      <label for="wall-search">Search the wall</label>
+      <input id="wall-search" type="search" placeholder="Filter components"
+             data-tip="Type to filter the element wall below" data-tip-below>
+      <nav aria-label="Sections">
+        <strong>Layer 1</strong>
+        <ul>
+          <li><a href="#tokens">Tokens</a></li>
+        </ul>
+        <strong>Layer 2</strong>
+        <ul>
+          <li><a href="#base">Base styles</a></li>
+        </ul>
+        <strong>Layer 3</strong>
+        <ul>
+          <li><a href="#container">Container</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#snap-section">Snap section</a></li>
+          <li><a href="#button">Button</a></li>
+          <li><a href="#icon-button">Icon button</a></li>
+          <li><a href="#number-input">Number input</a></li>
+          <li><a href="#slider">Slider</a></li>
+          <li><a href="#result-block">Result block</a></li>
+          <li><a href="#tooltip">Tooltip</a></li>
+        </ul>
+        <strong>Manual</strong>
+        <ul>
+          <li><a href="#rules">Rules</a></li>
+          <li><a href="/llms.txt">llms.txt</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-      <h3>Type scale</h3>
-      <p class="specimen" style="font-size: var(--text-display); font-weight: var(--weight-heading); line-height: var(--leading-heading);">Display<small>--text-display</small></p>
-      <p class="specimen" style="font-size: var(--text-h1); font-weight: var(--weight-heading);">Heading one<small>--text-h1</small></p>
-      <p class="specimen" style="font-size: var(--text-h2); font-weight: var(--weight-heading);">Heading two<small>--text-h2</small></p>
-      <p class="specimen" style="font-size: var(--text-h3); font-weight: var(--weight-heading);">Heading three<small>--text-h3</small></p>
-      <p class="specimen" style="font-size: var(--text-body);">Body — most words on any page are set at this size.<small>--text-body</small></p>
-      <p class="specimen" style="font-size: var(--text-small);">Small — secondary lines and labels.<small>--text-small</small></p>
-      <p class="specimen" style="font-size: var(--text-caption);">Caption — hints, captions, fine print.<small>--text-caption</small></p>
+    <main id="main" class="stack-loose">
 
-      <h3>Everything else</h3>
-      <p>
-        Spacing runs on a 4px base (<code>--space-1</code> to
-        <code>--space-8</code>), container widths come as narrow, default and
-        wide, radii as small, medium, large and pill, shadows as flat, raised,
-        floating and overlay — whisper-flat, all of them — and motion as fast,
-        normal and slow with two easing curves.
-        <a href="/lib/facet.css">Read facet.css</a>: it is the readable,
-        commented source, and the full token list lives at the top of it.
-      </p>
-    </section>
+      <!-- =============================================================
+           LAYER 1 · TOKENS
+           ============================================================= -->
+      <section id="tokens" class="stack">
+        <h2>Tokens</h2>
+        <p>
+          Every design decision is a CSS variable named by its role, never
+          its value: <code>--surface</code>, not <code>--gray-100</code>.
+          A theme swaps the values in one block — the switcher in the header
+          does exactly that, and everything on this page re-renders,
+          layout containers included. Dark mode is a second attribute and
+          composes with every theme.
+        </p>
 
-    <!-- Base styles: raw tags, no classes. -->
-    <section class="stack">
-      <h2>Base styles</h2>
-      <p>
-        Everything below is raw HTML with no classes. Write semantic tags and
-        the page already looks like Facet.
-      </p>
+        <h3>Color</h3>
+        <ul class="swatches">
+          <li><div class="swatch" style="background: var(--background)"></div><code>--background</code></li>
+          <li><div class="swatch" style="background: var(--surface)"></div><code>--surface</code></li>
+          <li><div class="swatch" style="background: var(--text)"></div><code>--text</code></li>
+          <li><div class="swatch" style="background: var(--text-muted)"></div><code>--text-muted</code></li>
+          <li><div class="swatch" style="background: var(--border)"></div><code>--border</code></li>
+          <li><div class="swatch" style="background: var(--accent)"></div><code>--accent</code></li>
+          <li><div class="swatch" style="background: var(--success)"></div><code>--success</code></li>
+          <li><div class="swatch" style="background: var(--warning)"></div><code>--warning</code></li>
+          <li><div class="swatch" style="background: var(--error)"></div><code>--error</code></li>
+          <li><div class="swatch" style="background: var(--info)"></div><code>--info</code></li>
+        </ul>
 
-      <blockquote>Readability is the product. One-glance HTML, not one extra wrapper, least code that stays readable.</blockquote>
+        <h3>Type scale</h3>
+        <p class="specimen" style="font-size: var(--text-display); font-weight: var(--weight-heading); line-height: var(--leading-heading);">Display<small>--text-display</small></p>
+        <p class="specimen" style="font-size: var(--text-h1); font-weight: var(--weight-heading);">Heading one<small>--text-h1</small></p>
+        <p class="specimen" style="font-size: var(--text-h2); font-weight: var(--weight-heading);">Heading two<small>--text-h2</small></p>
+        <p class="specimen" style="font-size: var(--text-h3); font-weight: var(--weight-heading);">Heading three<small>--text-h3</small></p>
+        <p class="specimen" style="font-size: var(--text-body);">Body — most words on any page are set at this size.<small>--text-body</small></p>
+        <p class="specimen" style="font-size: var(--text-small);">Small — secondary lines and labels.<small>--text-small</small></p>
+        <p class="specimen" style="font-size: var(--text-caption);">Caption — hints, captions, fine print.<small>--text-caption</small></p>
 
-      <p>
-        A paragraph with a <a href="#main">link</a>, some <strong>strong
-        text</strong>, inline <code>code</code>, and a keyboard key like
-        <kbd>Esc</kbd>. Lists, tables and form fields follow.
-      </p>
+        <h3>Spacing · 4px base</h3>
+        <ul class="space-bars">
+          <li><code>--space-1</code><span class="bar" style="width: var(--space-1)"></span>4px</li>
+          <li><code>--space-2</code><span class="bar" style="width: var(--space-2)"></span>8px</li>
+          <li><code>--space-3</code><span class="bar" style="width: var(--space-3)"></span>12px</li>
+          <li><code>--space-4</code><span class="bar" style="width: var(--space-4)"></span>16px</li>
+          <li><code>--space-5</code><span class="bar" style="width: var(--space-5)"></span>24px</li>
+          <li><code>--space-6</code><span class="bar" style="width: var(--space-6)"></span>32px</li>
+          <li><code>--space-7</code><span class="bar" style="width: var(--space-7)"></span>48px</li>
+          <li><code>--space-8</code><span class="bar" style="width: var(--space-8)"></span>64px</li>
+        </ul>
 
-      <ul>
-        <li>Semantic tags over div, everywhere</li>
-        <li>Buttons are buttons, links are links</li>
-        <li>One h1 per page, heading levels never skip</li>
-      </ul>
+        <h3>Shape and elevation</h3>
+        <ul class="shape-row">
+          <li><div class="tile" style="border-radius: var(--radius-small)"></div><code>--radius-small</code></li>
+          <li><div class="tile" style="border-radius: var(--radius-medium)"></div><code>--radius-medium</code></li>
+          <li><div class="tile" style="border-radius: var(--radius-large)"></div><code>--radius-large</code></li>
+          <li><div class="tile" style="border-radius: var(--radius-pill)"></div><code>--radius-pill</code></li>
+          <li><div class="tile" style="box-shadow: var(--shadow-raised)"></div><code>--shadow-raised</code></li>
+          <li><div class="tile" style="box-shadow: var(--shadow-floating)"></div><code>--shadow-floating</code></li>
+          <li><div class="tile" style="box-shadow: var(--shadow-overlay)"></div><code>--shadow-overlay</code></li>
+        </ul>
+        <p>
+          Container widths come as narrow, default and wide
+          (<code>--width-narrow</code> 40rem, <code>--width-default</code>
+          64rem, <code>--width-wide</code> 80rem). Motion runs on
+          <code>--duration-fast / normal / slow</code> with two easing
+          curves, and collapses to nothing under
+          <code>prefers-reduced-motion</code>. The full token list lives at
+          the top of <a href="/lib/facet.css">facet.css</a> — the readable,
+          commented source.
+        </p>
+      </section>
 
-      <table>
-        <thead>
-          <tr><th>Scale step</th><th>Size</th><th>Used for</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>--space-2</td><td>8px</td><td>Gaps inside controls</td></tr>
-          <tr><td>--space-4</td><td>16px</td><td>Default stack gap</td></tr>
-          <tr><td>--space-7</td><td>48px</td><td>Between page sections</td></tr>
-        </tbody>
-      </table>
+      <!-- =============================================================
+           LAYER 2 · BASE STYLES
+           ============================================================= -->
+      <section id="base" class="stack">
+        <h2>Base styles</h2>
+        <p>
+          Everything below is raw HTML with no classes. Write semantic tags
+          and the page already looks like Facet: headings, text, links,
+          lists, quotes, code, tables and form fields all have themed
+          defaults, plus focus rings, selection colors, scrollbars, a
+          skip-to-content link and a print base.
+        </p>
 
-      <label for="demo-input">A raw text input</label>
-      <input id="demo-input" type="text" placeholder="Type here">
-    </section>
+        <blockquote>Readability is the product. One-glance HTML, not one extra wrapper, least code that stays readable.</blockquote>
 
-    <!-- The component index: one row per built component. -->
-    <section class="stack">
-      <h2>Components</h2>
-      <p>
-        One page per component: the live thing in every variant and state,
-        with the copy-paste snippet beside it. Built so far — the calculator
-        set:
-      </p>
-      <table>
-        <thead>
-          <tr><th>Component</th><th>What it is</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><a href="/components/container.html">Container</a></td><td>Page-width wrapper with themed padding</td></tr>
-          <tr><td><a href="/components/stack.html">Stack</a></td><td>Vertical flow with themed gaps</td></tr>
-          <tr><td><a href="/components/snap-section.html">Snap section</a></td><td>Full-viewport scroll-snap areas, the calculator page skeleton</td></tr>
-          <tr><td><a href="/components/number-input.html">Number input</a></td><td>Prefilled example, one-tap clear, Indian grouping with words helper</td></tr>
-          <tr><td><a href="/components/slider.html">Slider</a></td><td>Themed range input with a live value readout</td></tr>
-          <tr><td><a href="/components/result-block.html">Result block</a></td><td>Verdict-first big number with supporting figures</td></tr>
-          <tr><td><a href="/components/button.html">Button</a></td><td>Primary, secondary, ghost, three sizes</td></tr>
-          <tr><td><a href="/components/icon-button.html">Icon button</a></td><td>A square button holding a single icon</td></tr>
-        </tbody>
-      </table>
-    </section>
+        <p>
+          A paragraph with a <a href="#main">link</a>, some <strong>strong
+          text</strong>, inline <code>code</code>, and a keyboard key like
+          <kbd>Esc</kbd>.
+        </p>
 
-  </main>
+        <ul>
+          <li>Semantic tags over div, everywhere</li>
+          <li>Buttons are buttons, links are links</li>
+          <li>One h1 per page, heading levels never skip</li>
+        </ul>
 
-  <footer class="container" style="padding-block: var(--space-6); border-top: var(--border-width) solid var(--border);">
-    <small>Facet · plain HTML, CSS and JS · <a href="https://github.com/tanishksharma/facet">source on GitHub</a></small>
+        <table>
+          <thead>
+            <tr><th>Scale step</th><th>Size</th><th>Used for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>--space-2</td><td>8px</td><td>Gaps inside controls</td></tr>
+            <tr><td>--space-4</td><td>16px</td><td>Default stack gap</td></tr>
+            <tr><td>--space-7</td><td>48px</td><td>Between page sections</td></tr>
+          </tbody>
+        </table>
+
+        <label for="demo-raw-input">A raw text input</label>
+        <input id="demo-raw-input" type="text" placeholder="Type here">
+      </section>
+
+      <!-- =============================================================
+           LAYER 3 · THE ELEMENT WALL
+           Every component live. Each entry: the canonical description
+           (same text as its facet.css header comment and llms.txt),
+           chips that flip the live demo, and the exact HTML — the
+           snippet is serialized from the demo's actual DOM, so what you
+           copy is what renders.
+           ============================================================= -->
+      <section class="stack">
+        <h2>Components</h2>
+        <p>
+          Every built component, live. The chips flip variants and states on
+          the demo itself, and the snippet beside each element always shows
+          the exact HTML of what you are looking at — copy it into any page
+          that links <code>facet.css</code> and it renders the same.
+          Hover any control for its description; states like hover and focus
+          are real: point at things, tab to them.
+        </p>
+        <p id="wall-empty" hidden>Nothing matches that search. The wall grows one component at a time — check the <a href="#rules">rules</a> for how new ones get added.</p>
+      </section>
+
+      <!-- CONTAINER -->
+      <article class="element stack" id="container">
+        <h3>Container</h3>
+        <p>
+          What it is: a page-width wrapper with themed padding. It centers
+          content, caps its width, and keeps consistent side padding from the
+          spacing tokens. What it is for: giving every page the same
+          horizontal rhythm, driven by tokens, so a theme flip restyles the
+          layout too, not just the components inside it. When to use it: put
+          it directly on the top-level semantic tag of any ordinary page —
+          main, header, footer, section. Use .container-narrow for prose,
+          forms and calculators, .container for most pages, .container-wide
+          for dashboards, .container-full for edge-to-edge strips that keep
+          side padding. Never nest a container inside a container.
+        </p>
+        <p class="chips" role="group" aria-label="Container widths">
+          <button class="chip" aria-pressed="false" data-chip-group="width" data-chip-class="container-narrow">Narrow</button>
+          <button class="chip" aria-pressed="true" data-chip-group="width" data-chip-class="container">Default</button>
+          <button class="chip" aria-pressed="false" data-chip-group="width" data-chip-class="container-wide">Wide</button>
+          <button class="chip" aria-pressed="false" data-chip-group="width" data-chip-class="container-full">Full</button>
+        </p>
+        <div class="demo">
+          <section class="container">Content sits here: centered, width-capped, themed side padding. The dashed edge is this demo's bounds.</section>
+        </div>
+        <pre id="code-container"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-container" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- STACK -->
+      <article class="element stack" id="stack">
+        <h3>Stack</h3>
+        <p>
+          What it is: vertical flow with themed gaps. A stack says one thing:
+          these sit above and below each other, this far apart. What it is
+          for: spacing content without per-element margins. The gaps come
+          from the spacing tokens, so a theme change restyles the rhythm of
+          the whole page. When to use it: .stack is the default for content
+          inside a section. Use .stack-tight for lines that belong together,
+          like a label and its field. Use .stack-loose between whole sections
+          of a page.
+        </p>
+        <p class="chips" role="group" aria-label="Stack gaps">
+          <button class="chip" aria-pressed="false" data-chip-group="gap" data-chip-class="stack-tight">Tight</button>
+          <button class="chip" aria-pressed="true" data-chip-group="gap" data-chip-class="stack">Default</button>
+          <button class="chip" aria-pressed="false" data-chip-group="gap" data-chip-class="stack-loose">Loose</button>
+        </p>
+        <div class="demo">
+          <section class="stack">
+            <p class="demo-box">First block</p>
+            <p class="demo-box">Second block</p>
+            <p class="demo-box">Third block</p>
+          </section>
+        </div>
+        <pre id="code-stack"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-stack" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SNAP SECTION -->
+      <article class="element stack" id="snap-section">
+        <h3>Snap section</h3>
+        <p>
+          What it is: full-viewport scroll-snap areas. The .snap wrapper
+          scrolls one full screen at a time and each .snap-section centers
+          its content at a readable width. What it is for: the calculator
+          page skeleton — intro screen, then inputs, then results — and any
+          page that tells one story one screen at a time. When to use it:
+          single-purpose pages with a clear screen-by-screen flow. Not for
+          ordinary documents; normal pages just scroll. The .snap wrapper
+          exists to enable scrolling, which is the one reason the wrapper law
+          allows a container inside a container. On a real page the wrapper
+          is <code>&lt;main class="snap"&gt;</code> and each section fills
+          the viewport; here it is shrunk into a frame — scroll inside it.
+        </p>
+        <div class="demo">
+          <div class="snap">
+            <section class="snap-section">
+              <h4 style="text-align: center;">Intro</h4>
+              <p style="text-align: center;">What this page tells you, in one line.</p>
+            </section>
+            <section class="snap-section">
+              <h4 style="text-align: center;">Inputs</h4>
+              <p style="text-align: center;">Number inputs and sliders, prefilled with examples.</p>
+            </section>
+            <section class="snap-section">
+              <h4 style="text-align: center;">Results</h4>
+              <p style="text-align: center;">A verdict-first result block, recalculating live.</p>
+            </section>
+          </div>
+        </div>
+        <pre id="code-snap-section"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-snap-section" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- BUTTON -->
+      <article class="element stack" id="button">
+        <h3>Button</h3>
+        <p>
+          What it is: the action element, in three variants and three sizes,
+          working identically on <code>&lt;button&gt;</code> and on
+          <code>&lt;a&gt;</code>. What it is for: .btn-primary carries the
+          screen's one main action in the accent color. .btn-secondary is
+          every other action. .btn-ghost is for quiet actions inside busy
+          areas, invisible until hovered. When to use it: any click that does
+          something. One primary per screen at most. Navigation dressed as a
+          button is an <code>&lt;a class="btn"&gt;</code>. Put the button's
+          key action name in a data-event attribute as the analytics hook.
+        </p>
+        <p class="chips" role="group" aria-label="Button variants, sizes and states">
+          <button class="chip" aria-pressed="true" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
+          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-secondary">Secondary</button>
+          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-ghost">Ghost</button>
+          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-small">Small</button>
+          <button class="chip" aria-pressed="true" data-chip-group="size" data-chip-class="">Default size</button>
+          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-large">Large</button>
+          <button class="chip" aria-pressed="false" data-chip-attr="disabled">Disabled</button>
+        </p>
+        <div class="demo">
+          <button class="btn btn-primary" data-event="calc-run" data-tip="Runs the calculation">Calculate</button>
+        </div>
+        <pre id="code-button"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ICON BUTTON -->
+      <article class="element stack" id="icon-button">
+        <h3>Icon button</h3>
+        <p>
+          What it is: a square button holding a single icon. What it is for:
+          compact actions whose meaning the icon plus its tooltip carries —
+          the clear cross in a number field, a close button, a share arrow.
+          When to use it: when space is tight and the action is secondary.
+          The icon alone says nothing, so every icon button carries an
+          aria-label for screen readers and a data-tip tooltip for everyone
+          else. Combines with any button variant and size. Icons are inline
+          SVG with stroke="currentColor" so they take the button's text color
+          in every theme.
+        </p>
+        <p class="chips" role="group" aria-label="Icon button variants, sizes and states">
+          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
+          <button class="chip" aria-pressed="true" data-chip-group="variant" data-chip-class="">Secondary</button>
+          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-ghost">Ghost</button>
+          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-small">Small</button>
+          <button class="chip" aria-pressed="true" data-chip-group="size" data-chip-class="">Default size</button>
+          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-large">Large</button>
+          <button class="chip" aria-pressed="false" data-chip-attr="disabled">Disabled</button>
+        </p>
+        <div class="demo">
+          <button class="btn btn-icon" aria-label="Close" data-tip="Close this panel">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg>
+          </button>
+        </div>
+        <pre id="code-icon-button"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-icon-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- NUMBER INPUT -->
+      <article class="element stack" id="number-input">
+        <h3>Number input</h3>
+        <p>
+          What it is: a labelled field wrapping the calculator-grade number
+          input, with a clear button inside the field and a words helper
+          under it. What it is for: money and other large numbers entered the
+          Indian way. The input ships prefilled with an example value, clears
+          fully on the first tap — and never again once the visitor has
+          typed — groups digits Indian-style as they are typed (25,00,000),
+          and reads the number back in words underneath: 25 lakh. All three
+          behaviours come from facet.js the moment the input carries
+          data-number. When to use it: every numeric entry in a calculator.
+          Read the plain number in app code with facet.numberValue(input).
+          For the error state, put .field-invalid on the field and swap the
+          hint for a .field-error line.
+        </p>
+        <p class="chips" role="group" aria-label="Number input states">
+          <button class="chip" aria-pressed="true" data-chip-class="" data-chip-group="state">Normal</button>
+          <button class="chip" aria-pressed="false" data-chip-class="field-invalid" data-chip-group="state">Error</button>
+          <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="input">Disabled</button>
+        </p>
+        <div class="demo">
+          <label class="field">
+            <span class="field-label">Monthly investment</span>
+            <span class="number-input">
+              <input type="text" inputmode="numeric" value="25000" data-number
+                     data-tip="Amount in rupees. First tap clears the example.">
+              <button type="button" class="btn btn-ghost btn-icon btn-small number-clear"
+                      aria-label="Clear" data-tip="Clear this field">&times;</button>
+            </span>
+            <span class="number-words" aria-live="polite"></span>
+            <span class="field-hint">What you invest every month</span>
+          </label>
+        </div>
+        <pre id="code-number-input"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-number-input" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SLIDER -->
+      <article class="element stack" id="slider">
+        <h3>Slider</h3>
+        <p>
+          What it is: a real range input wearing the theme — hairline track,
+          accent thumb — paired with a live value readout. What it is for:
+          picking a number inside a known range where the feel of
+          more-and-less matters more than exact digits: years, percentages,
+          counts. When to use it: bounded inputs with sensible ends. When the
+          exact number matters, pair it with or swap it for the number input.
+          Put an <code>&lt;output&gt;</code> in the field label and facet.js
+          keeps it showing the live value. Full keyboard support comes free
+          with the native element.
+        </p>
+        <p class="chips" role="group" aria-label="Slider states">
+          <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="input">Disabled</button>
+        </p>
+        <div class="demo">
+          <label class="field">
+            <span class="field-label">Years <output>10</output></span>
+            <input type="range" class="slider" min="1" max="40" value="10"
+                   data-tip="Drag, or use the arrow keys">
+            <span class="field-hint">How long the money stays invested</span>
+          </label>
+        </div>
+        <pre id="code-slider"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-slider" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- RESULT BLOCK -->
+      <article class="element stack" id="result-block">
+        <h3>Result block</h3>
+        <p>
+          What it is: a verdict-first result card: one plain-language
+          sentence a person can repeat at dinner, one big number, then the
+          supporting figures. What it is for: the centrepiece of a results
+          screen — readable at a glance, and announced by screen readers on
+          every recalculation when the block carries aria-live="polite".
+          When to use it: whenever a calculation produces one headline
+          answer. Leave out the figures list when there is nothing to support
+          the verdict. For the empty state before any input, show a muted
+          verdict line alone.
+        </p>
+        <p class="chips" role="group" aria-label="Result block variants">
+          <button class="chip" aria-pressed="true" data-chip-show="#result-full">Full</button>
+          <button class="chip" aria-pressed="false" data-chip-show="#result-plain">Verdict and number</button>
+          <button class="chip" aria-pressed="false" data-chip-show="#result-empty">Empty state</button>
+        </p>
+        <div class="demo">
+          <section class="result" id="result-full" aria-live="polite">
+            <p class="result-verdict">At 6% inflation, today's &#8377;1&nbsp;lakh buys this much in 2036</p>
+            <p class="result-number">&#8377;55,839</p>
+            <dl class="result-figures">
+              <div><dt>Value lost</dt><dd>&#8377;44,161</dd></div>
+              <div><dt>Buying power kept</dt><dd>56%</dd></div>
+              <div><dt>Halves every</dt><dd>12 years</dd></div>
+            </dl>
+          </section>
+          <section class="result" id="result-plain" aria-live="polite" hidden>
+            <p class="result-verdict">Your retirement number</p>
+            <p class="result-number">&#8377;4.6 crore</p>
+          </section>
+          <section class="result" id="result-empty" hidden>
+            <p class="result-verdict" style="color: var(--text-muted);">Fill in the numbers above to see your result</p>
+          </section>
+        </div>
+        <pre id="code-result-block"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-result-block" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- DESCRIPTION TOOLTIP -->
+      <article class="element stack" id="tooltip">
+        <h3>Description tooltip</h3>
+        <p>
+          What it is: a one-attribute explanation bubble: put data-tip on any
+          element and the text appears above it on hover and on keyboard
+          focus. Pure CSS, no JS involved. What it is for: explaining every
+          interactive element in place — one of the library's core
+          principles. The description doubles as documentation anyone can
+          read by pointing at the thing. When to use it: every interactive
+          element ships with one. Add data-tip-below on elements near the top
+          of the viewport so the bubble drops under them instead of clipping
+          off the screen.
+        </p>
+        <p class="chips" role="group" aria-label="Tooltip position">
+          <button class="chip" aria-pressed="false" data-chip-attr="data-tip-below">Flip below</button>
+        </p>
+        <div class="demo" style="padding-block: var(--space-8);">
+          <button class="btn" data-tip="This text is the data-tip attribute">Hover or tab to me</button>
+        </div>
+        <pre id="code-tooltip"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-tooltip" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- =============================================================
+           RULES · the manual, on the page itself
+           Same text as CLAUDE.md in the repo and /llms.txt.
+           ============================================================= -->
+      <section id="rules" class="stack">
+        <h2>Rules</h2>
+        <p>
+          How this library is built, used and grown. The same rules live in
+          the repo as <a href="https://github.com/tanishksharma/Facet/blob/main/CLAUDE.md">CLAUDE.md</a>
+          for AI builders and at <a href="/llms.txt">/llms.txt</a> as plain
+          text for crawlers.
+        </p>
+
+        <h3>Core principles</h3>
+        <ul>
+          <li>Readability is the product. Modern frontend is div soup and minified garbage, unreadable by humans. This library is the opposite.</li>
+          <li>One-glance HTML: any page's structure makes sense on first read. Semantic tags, self-explanatory classes.</li>
+          <li>Not one extra wrapper. A container inside a container exists only to enable a real feature, like scrolling.</li>
+          <li>Least code that stays readable: entire products are assembled by writing HTML files with the right classes.</li>
+          <li>Pure HTML, CSS and JS. No build step, no framework, never minified. Gzip handles size.</li>
+          <li>One-step theme change: one attribute on the html tag restyles the whole page, layout containers included.</li>
+          <li>Everything explained in place: every interactive element carries a description tooltip.</li>
+          <li>Fully commented: every file self-describes with intros, usage notes and to-dos, so any AI can build products with it.</li>
+          <li>Accessible, SEO-ready and AI-crawlable by default. Enforced through the checklist below, not optional.</li>
+        </ul>
+
+        <h3>How to use the library</h3>
+        <ul>
+          <li>Every page starts from the library, never from blank CSS.</li>
+          <li>Pick a template (once Layer 5 lands), start from a shell, or lay the page out with the layout primitives — container, stack, snap — and fill each area with components.</li>
+          <li>Copy snippets straight off this wall. They render in any page that links facet.css.</li>
+          <li>App logic, data fetching and state management live in projects, never in the library.</li>
+        </ul>
+
+        <h3>Markup rules</h3>
+        <ul>
+          <li>Semantic tags over div: header, nav, main, section, article, aside, footer, figure.</li>
+          <li>The wrapper law: an element exists only to hold content, create layout, or carry behavior. Anything else is deleted.</li>
+          <li>Container inside a container only to enable a real feature: scroll areas, sticky regions, overflow clipping.</li>
+          <li>Structural elements contain content or other structural elements. Never decorative nesting.</li>
+          <li>Buttons are <code>button</code>, links are <code>a</code>, form fields have real <code>label</code> elements.</li>
+          <li>One h1 per page. Heading levels never skip.</li>
+        </ul>
+
+        <h3>Adding a new component: the compliance checklist</h3>
+        <ul>
+          <li>Semantic tokens only. No raw hex, px sizes outside the scales, or hardcoded fonts.</li>
+          <li>Works in every theme and in light and dark with zero extra code.</li>
+          <li>All states covered: hover, focus, active, disabled, and where relevant empty, loading, error.</li>
+          <li>Keyboard operable with a visible focus ring. ARIA roles and labels where semantics fall short.</li>
+          <li>Interactive elements ship with a description tooltip.</li>
+          <li>Responsive and mobile-usable: 44px touch targets, no hover-only interactions.</li>
+          <li>Minimal semantic markup. Every element has a job, per the markup rules.</li>
+          <li>Fully commented in the file: what it is, how to use it, its options, open to-dos.</li>
+          <li>Names follow the naming rules. Nothing minified.</li>
+          <li>Analytics hook on its key action where relevant: a <code>data-event</code> attribute.</li>
+          <li>Wall entry added on this page: live demo, variant and state chips, exact snippet with copy.</li>
+          <li>Docs description added: what it is, what it is for, when to use it. Written to read as AI instructions, same text as the file comment and llms.txt.</li>
+          <li>Committed to Git with a clear message.</li>
+        </ul>
+
+        <h3>Naming, maintaining, versioning</h3>
+        <ul>
+          <li>Tokens named by role, not value: <code>--surface</code>, not <code>--gray-100</code>.</li>
+          <li>One class prefix and pattern per component: <code>.btn</code>, <code>.btn-primary</code>, predictable everywhere.</li>
+          <li>JS: one small named function per behavior. The name says what it does.</li>
+          <li>Docs are demos. A component is not done until this page shows it live with its code.</li>
+          <li>One component, one clearly commented section in the CSS file. Nothing is scattered.</li>
+          <li>All changes go through Git commits. The live files are never edited ad hoc.</li>
+          <li>Growth by extraction: build a new pattern inside a project first, promote it once it repeats.</li>
+          <li>Consume by URL only. Tag releases in Git. On dependency, freeze a copy to <code>/lib/v1/</code> and keep working in <code>/lib/</code>.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="container-wide" style="padding-block: var(--space-6); border-top: var(--border-width) solid var(--border);">
+    <small>Facet · plain HTML, CSS and JS · <a href="https://github.com/tanishksharma/Facet">source on GitHub</a> · <a href="/llms.txt">llms.txt</a></small>
   </footer>
+
+  <!-- Docs-site behaviours: chips, live snippets, wall search. These are
+       site features, not library features, so they live here and not in
+       facet.js. One small named function per behavior. -->
+  <script>
+    /* The snippet under each wall entry is not hand-written: it is the
+       demo's actual DOM, serialized. Flip a chip and the snippet follows,
+       so what you copy is always exactly what you see. */
+    function renderSnippet(article) {
+      const demo = article.querySelector(".demo");
+      const code = article.querySelector("pre code");
+      if (!demo || !code) return;
+      const html = [...demo.children]
+        .filter(el => !el.hidden)
+        .map(el => el.outerHTML)
+        .join("\n\n");
+      code.textContent = tidySnippet(html);
+    }
+
+    /* Strips attributes facet.js adds at runtime and re-levels the
+       indentation that comes from this page's own nesting. */
+    function tidySnippet(html) {
+      html = html.replace(/ data-edited="true"/g, "").replace(/ placeholder="0"/g, "");
+      const lines = html.split("\n");
+      const rest = lines.slice(1).filter(line => line.trim());
+      const cut = rest.length ? Math.min(...rest.map(line => line.match(/^ */)[0].length)) : 0;
+      return [lines[0], ...lines.slice(1).map(line => line.slice(cut))].join("\n").trim();
+    }
+
+    /* Chips flip the live demo. Three kinds, by data attribute:
+         data-chip-group + data-chip-class   radio-style class swap
+         data-chip-attr                      toggle an attribute on/off
+         data-chip-show                      show one of several demo children
+       data-chip-target narrows the element acted on (default: the demo's
+       first child). Every flip re-renders the snippet. */
+    function initChips() {
+      for (const chip of document.querySelectorAll(".chip")) {
+        chip.addEventListener("click", () => {
+          const article = chip.closest(".element");
+          const demo = article.querySelector(".demo");
+          const target = chip.dataset.chipTarget
+            ? demo.querySelector(chip.dataset.chipTarget)
+            : demo.firstElementChild;
+
+          if (chip.dataset.chipGroup !== undefined) {
+            const group = article.querySelectorAll(`.chip[data-chip-group="${chip.dataset.chipGroup}"]`);
+            for (const other of group) {
+              if (other.dataset.chipClass) target.classList.remove(other.dataset.chipClass);
+              other.setAttribute("aria-pressed", "false");
+            }
+            if (chip.dataset.chipClass) target.classList.add(chip.dataset.chipClass);
+            chip.setAttribute("aria-pressed", "true");
+          } else if (chip.dataset.chipAttr !== undefined) {
+            const attr = chip.dataset.chipAttr;
+            const isOn = target.hasAttribute(attr);
+            if (isOn) target.removeAttribute(attr);
+            else target.setAttribute(attr, "");
+            chip.setAttribute("aria-pressed", String(!isOn));
+          } else if (chip.dataset.chipShow) {
+            for (const child of demo.children) child.hidden = true;
+            demo.querySelector(chip.dataset.chipShow).hidden = false;
+            for (const other of article.querySelectorAll(".chip[data-chip-show]")) {
+              other.setAttribute("aria-pressed", "false");
+            }
+            chip.setAttribute("aria-pressed", "true");
+          }
+
+          renderSnippet(article);
+        });
+      }
+    }
+
+    /* The search box filters the wall and the sidebar together. */
+    function initWallSearch() {
+      const box = document.querySelector("#wall-search");
+      const articles = [...document.querySelectorAll("article.element")];
+      const links = [...document.querySelectorAll(".docs-index a[href^='#']")];
+      const emptyNote = document.querySelector("#wall-empty");
+
+      box.addEventListener("input", () => {
+        const query = box.value.trim().toLowerCase();
+        let shown = 0;
+
+        for (const article of articles) {
+          const hit = !query || article.textContent.toLowerCase().includes(query);
+          article.hidden = !hit;
+          if (hit) shown++;
+        }
+        for (const link of links) {
+          const section = document.querySelector(link.getAttribute("href"));
+          if (section && section.matches("article.element")) {
+            link.parentElement.hidden = section.hidden;
+          }
+        }
+        emptyNote.hidden = !(query && shown === 0);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
+      initChips();
+      initWallSearch();
+    });
+  </script>
 </body>
 </html>
