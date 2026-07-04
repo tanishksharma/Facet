@@ -136,6 +136,8 @@ the plan.
 - [x] Theme switcher with URL state (?theme=, ?mode=)
 - [x] Sidebar index with anchors, search filtering the wall
 - [x] Scrollspy: the section on screen highlights in the sidebar
+- [x] Features section: the complete capability inventory on the page,
+      mirrored in llms.txt, with the no-orphan-features rule in CLAUDE.md
 - [ ] Playground: editable HTML box rendering live
 - [x] llms.txt at the root for AI crawlers
 - [ ] Style Mixer, later: axis controls that export a new theme

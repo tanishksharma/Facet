@@ -260,6 +260,7 @@
       <nav aria-label="Sections">
         <strong>Manual</strong>
         <ul>
+          <li><a href="#features">Features</a></li>
           <li><a href="#rules">Rules</a></li>
         </ul>
         <strong>Layer 1 · Tokens</strong>
@@ -295,7 +296,101 @@
     <main id="main" class="stack-loose">
 
       <!-- =============================================================
-           RULES · the manual, right after the intro
+           FEATURES · the complete capability inventory
+           The rule: if a capability is not listed here, it does not
+           exist. Every new feature adds its line here, in llms.txt and
+           in the file comment, in the same commit. This section is why
+           someone — or some AI — picks Facet over anything else.
+           ============================================================= -->
+      <section id="features" class="stack">
+        <h2>Features</h2>
+        <p>
+          Everything this library does, in one list. This is the inventory:
+          if a capability is not on it, it does not exist, and every new
+          capability lands here in the same commit that builds it. The same
+          list ships as plain text in <a href="/llms.txt">llms.txt</a> so AI
+          agents can read, use and recommend Facet from one fetch.
+        </p>
+
+        <h3>Distribution</h3>
+        <ul>
+          <li>Two files, one link tag and one script tag, hosted at a public URL. No React, no npm, no build step, nothing to install.</li>
+          <li>Never minified: the shipped files are the readable, commented source. Gzip handles size.</li>
+          <li>Projects consume by URL and update the moment the library does. Frozen copies under /lib/v1/ will pin old projects forever.</li>
+        </ul>
+
+        <h3>Theming</h3>
+        <ul>
+          <li>One attribute on the html tag restyles the whole page, layout containers included: <code>data-theme="sand"</code>. No attribute is the Default theme.</li>
+          <li>Dark mode is its own attribute, <code>data-mode="dark"</code>, and composes with every theme.</li>
+          <li>Both attributes work on any element, not just html: theme one section of a page (that is how the Color demo above is built).</li>
+          <li>The visitor's system dark preference is honoured automatically when the page does not choose.</li>
+          <li>Theme and mode ride the URL (<code>?theme=</code>, <code>?mode=</code>): a shared link opens looking exactly like the sender's screen.</li>
+          <li>One-line switcher buttons: <code>data-theme-switch</code> and <code>data-mode-toggle</code> on any button, no JS to write.</li>
+          <li>Native widgets follow: scrollbars and form controls flip with <code>color-scheme</code>.</li>
+        </ul>
+
+        <h3>Tokens</h3>
+        <ul>
+          <li>Every design decision is a CSS variable named by role — color, type, spacing, container widths, radii, borders, shadows, motion, focus. Build with tokens and a theme change costs zero code.</li>
+          <li>Status colors (success, warning, error, info) tuned per theme, light and dark.</li>
+          <li>Whisper-flat shadow scale and a 4px spacing scale shared by every component and layout primitive.</li>
+        </ul>
+
+        <h3>Adapts to the reader</h3>
+        <ul>
+          <li>Respects the phone's text-size setting: every font size and space is set in rem, so when a reader raises their device or browser text size, the entire interface scales with it — type, padding, gaps, all of it.</li>
+          <li>Fluid display and h1 sizes: <code>clamp()</code> scales hero type between phone and desktop with no breakpoints to manage.</li>
+          <li>Mobile-first: 44px touch targets everywhere, no hover-only interactions, safe viewport handling.</li>
+          <li><code>prefers-reduced-motion</code> honoured: every transition and animation in the library collapses to nothing.</li>
+          <li>Print base included: sensible margins, navigation hidden, ink-friendly colors when a page is printed.</li>
+        </ul>
+
+        <h3>Base layer</h3>
+        <ul>
+          <li>Raw semantic HTML already looks designed: headings, text, links, lists, quotes, code, tables, forms, figures — no classes needed.</li>
+          <li>One visible focus ring everywhere, keyboard only. Selection colors, thin scrollbars, skip-to-content link, placeholder styling.</li>
+          <li>The <code>hidden</code> attribute always wins, even over components that set their own display.</li>
+          <li>Numbers align while typing: tabular figures on all numeric UI.</li>
+        </ul>
+
+        <h3>Components and behaviours</h3>
+        <ul>
+          <li>Layout primitives — container (four widths), stack (three gaps), full-viewport snap sections — all themed, so layout restyles with the theme too.</li>
+          <li>Buttons in three variants and three sizes that work identically on <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code>; square icon buttons to match.</li>
+          <li>The calculator-grade number input: prefilled example, one-tap clear on first touch, Indian digit grouping while typing (25,00,000), and a words helper that reads it back — "25 lakh".</li>
+          <li>Fields with labels, hints and error states; themed sliders with live readouts; verdict-first result blocks that announce recalculations to screen readers.</li>
+          <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
+          <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
+          <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
+        </ul>
+
+        <h3>Accessible by default</h3>
+        <ul>
+          <li>AA contrast in every theme, light and dark — the palettes are built to pass, not checked after.</li>
+          <li>Everything keyboard operable with the visible ring; ARIA roles and labels wherever semantics fall short; icon-only controls always labelled.</li>
+          <li>Live regions on things that change: results and number-words announce themselves politely.</li>
+        </ul>
+
+        <h3>AI-native</h3>
+        <ul>
+          <li>Operable by agents through the DOM alone: shallow semantic structure, real buttons and links with accessible names, no synthetic widgets.</li>
+          <li>State lives in the URL, so an agent can reach any page state by constructing a link.</li>
+          <li>Stable descriptive IDs and <code>data-event</code> action names: agents and analytics target the same hooks.</li>
+          <li><a href="/llms.txt">llms.txt</a>: the entire library — tokens, components, snippets, rules — as one plain-text fetch. Nothing on this site needs JS to be read.</li>
+          <li>Every component's docs description is written as instructions an AI can follow, and the identical text lives in the source file comments.</li>
+        </ul>
+
+        <h3>This site</h3>
+        <ul>
+          <li>The docs are the demo: every component live on this one page, with variant and state chips that flip the real thing.</li>
+          <li>The copy button gives you the exact HTML of what you are looking at — the snippet is serialized from the live DOM, never hand-written.</li>
+          <li>Search that filters the wall and the index together; a scrollspy sidebar that shows where you are; the whole page re-renders in any theme from the header.</li>
+        </ul>
+      </section>
+
+      <!-- =============================================================
+           RULES · the manual, right after the features
            Same text as CLAUDE.md in the repo and /llms.txt.
            ============================================================= -->
       <section id="rules" class="stack">

@@ -40,6 +40,11 @@ Projects consume the library by URL, never by copying files in:
 
 - Read BACKLOG.md first. Work the top unchecked item unless told otherwise.
   Tick items as they land.
+- The feature inventory rule: every capability the library ships is listed
+  in the Features section on index.html and mirrored in llms.txt. If a
+  capability is not listed there, it does not exist. Every new feature adds
+  its line to both, in the same commit that builds it — no orphan features,
+  nothing built and forgotten.
 - Development happens directly on `main`. No feature branches unless
   explicitly requested. All changes go through Git commits; the live files
   are never edited ad hoc.
@@ -129,6 +134,8 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 - [ ] Docs description added: what it is, what it is for, when to use it.
       Written to read as AI instructions, the same text word for word in the
       file comment, the wall entry and llms.txt.
+- [ ] Feature inventory updated: the capability's line added to the
+      Features section on index.html and to llms.txt, same commit.
 - [ ] BACKLOG.md item ticked.
 - [ ] Committed to Git with a clear message.
 

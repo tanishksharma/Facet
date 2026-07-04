@@ -7,6 +7,63 @@ This file is the full usage guide as plain text, for AI crawlers and
 builders. The same content lives rendered at the site root and as CLAUDE.md
 in the repo: https://github.com/tanishksharma/Facet
 
+## Features — the complete capability inventory
+
+This list is the inventory: if a capability is not on it, it does not
+exist. It matches the Features section on the library homepage.
+
+Distribution: two files, one link + one script tag, public URL, no
+framework, no npm, no build step, never minified, frozen /lib/v1/ copies
+pin old projects when versioning starts.
+
+Theming: one attribute (data-theme) restyles the whole page including
+layout containers; dark mode is its own attribute (data-mode="dark") and
+composes with every theme; both attributes work on any element for subtree
+theming; system dark preference honoured when the page does not choose;
+theme and mode ride the URL (?theme=, ?mode=) so shared links open
+identically; one-line switcher buttons via data-theme-switch and
+data-mode-toggle; native scrollbars and form controls follow via
+color-scheme.
+
+Tokens: every design decision is a role-named CSS variable — color with
+per-theme status colors, type scale, weights, spacing on a 4px base,
+container widths, radii, border widths, whisper-flat shadows, motion
+durations and easings, focus ring.
+
+Adapts to the reader: all sizes in rem, so device/browser text-size
+settings scale the whole interface; fluid hero type via clamp(); 44px
+touch targets; no hover-only interactions; prefers-reduced-motion
+collapses all motion; print base included.
+
+Base layer: raw semantic HTML looks designed with no classes; one visible
+keyboard focus ring everywhere; selection colors, thin scrollbars,
+skip-to-content link, placeholder styling; the hidden attribute always
+wins; tabular figures on numeric UI.
+
+Components and behaviours: themed layout primitives (container in four
+widths, stack in three gaps, full-viewport snap sections); buttons in
+three variants and three sizes working on <button> and <a>; icon buttons;
+the calculator-grade number input (prefilled example, one-tap clear,
+Indian digit grouping, words helper); labelled fields with hints and
+error states; themed sliders with live readouts; verdict-first result
+blocks with aria-live; the data-tip description tooltip on one attribute;
+all behaviour self-wires to data attributes; JS API: facet.numberValue,
+facet.groupIndian, facet.numberWords.
+
+Accessible by default: AA contrast in every theme light and dark;
+everything keyboard operable; ARIA where semantics fall short; icon-only
+controls always labelled; live regions on changing content.
+
+AI-native: operable by agents through the DOM alone; shallow semantic
+structure; real buttons and links with accessible names; state in the
+URL; stable IDs and data-event action names; this file as the one-fetch
+manual; docs descriptions written as AI instructions, identical to source
+file comments.
+
+The library site: every component live on one page with variant/state
+chips; copy buttons serve the exact HTML serialized from the live DOM;
+search, scrollspy sidebar, live theme switching.
+
 ## Consume it
 
     <link rel="stylesheet" href="https://[domain]/lib/facet.css">
