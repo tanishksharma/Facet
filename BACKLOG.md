@@ -103,11 +103,11 @@ these tokens.
 
 ### Seamless page transitions — R13
 
-- [ ] Cross-page transitions: @view-transition navigation rules so
+- [x] Cross-page transitions: @view-transition navigation rules so
       moving between pages of a Facet product animates old-page-out /
       new-page-in while the URL changes; instant fallback where
       unsupported; off under prefers-reduced-motion.
-- [ ] Opt-in controls: one attribute enables transitions site-wide,
+- [x] Opt-in controls: one attribute enables transitions site-wide,
       per-link opt-out, and a facet.js helper for programmatic
       navigation with the same transition.
 

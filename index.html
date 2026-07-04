@@ -364,6 +364,7 @@
           <li>Respects the phone's text-size setting: every font size and space is set in rem, so when a reader raises their device or browser text size, the entire interface scales with it — type, padding, gaps, all of it.</li>
           <li>Fluid display and h1 sizes: <code>clamp()</code> scales hero type between phone and desktop with no breakpoints to manage.</li>
           <li>Mobile-first: 44px touch targets everywhere, no hover-only interactions, safe viewport handling.</li>
+          <li>Seamless page transitions: with <code>data-transition="page"</code> on the html tag, moving between pages animates the old page away and springs the new one in while the URL changes normally — real multi-page navigation, no router. Per-link opt-out with <code>data-no-transition</code>, <code>facet.go(url)</code> for programmatic moves; unsupported browsers just navigate instantly, and reduced motion snaps.</li>
           <li>Motion with personality: Lively by default — presses have weight, arrivals settle with a playful spring (a true <code>linear()</code> spring curve where supported) — or <code>data-motion="calm"</code> for short, near-linear motion, <code>data-motion="off"</code> for none. One attribute, page-wide or per subtree; every transition reads the motion tokens.</li>
           <li><code>prefers-reduced-motion</code> honoured above any page choice: every transition and animation in the library collapses to nothing.</li>
           <li>Print base included: sensible margins, navigation hidden, ink-friendly colors when a page is printed.</li>

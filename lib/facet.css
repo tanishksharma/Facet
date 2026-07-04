@@ -344,6 +344,65 @@
   scroll-behavior: auto !important;
 }
 
+/*
+   Seamless page transitions. <html data-transition="page">. Moving
+   between pages of a Facet product stops looking like one page died and
+   another loaded: the old page eases away, the new one springs in, and
+   the URL changes normally — real multi-page navigation, no router.
+
+   Built on cross-document view transitions. The at-rule below arms them
+   for every Facet page; the animations only play on pages that opt in
+   with the attribute (everyone else keeps an instant swap), only within
+   the same origin, and they ride the motion personality tokens — Lively
+   pages arrive with a settle, Calm pages slide quietly, data-motion="off"
+   and prefers-reduced-motion snap. Browsers without support simply
+   navigate: never broken, just instant.
+
+   Per-link opt-out: <a data-no-transition> snaps the old page straight
+   out (facet.js drops the attribute before leaving); the arrival is the
+   destination page's own choice. facet.go(url) navigates with the same
+   transition programmatically.
+*/
+@view-transition {
+  navigation: auto;
+}
+
+/* Pages that did not opt in keep the instant swap they always had. */
+:root:not([data-transition="page"])::view-transition-old(root),
+:root:not([data-transition="page"])::view-transition-new(root) {
+  animation-duration: 0s;
+}
+
+/* The opted-in move: old page eases up and away, new page springs in. */
+:root[data-transition="page"]::view-transition-old(root) {
+  animation: facet-page-out var(--duration-normal) var(--ease-in-out) both;
+}
+
+:root[data-transition="page"]::view-transition-new(root) {
+  animation: facet-page-in var(--duration-slow) var(--ease-spring) both;
+}
+
+@keyframes facet-page-out {
+  to { opacity: 0; translate: 0 calc(-1 * var(--space-4)); }
+}
+
+@keyframes facet-page-in {
+  from { opacity: 0; translate: 0 var(--space-5); }
+}
+
+/* Motion off — by attribute or by OS preference — means pages snap. */
+:root[data-motion="off"]::view-transition-old(root),
+:root[data-motion="off"]::view-transition-new(root) {
+  animation-duration: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0s !important;
+  }
+}
+
 /* The browser's own widgets (scrollbars, form controls) follow the mode. */
 html[data-mode="dark"] { color-scheme: dark; }
 html { color-scheme: light; }

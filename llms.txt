@@ -51,7 +51,12 @@ Adapts to the reader: all sizes in rem, so device/browser text-size
 settings scale the whole interface; fluid hero type via clamp(); 44px
 touch targets; no hover-only interactions; motion with personality —
 Lively springs by default, data-motion="calm" for quiet, "off" for
-none, prefers-reduced-motion above all of it; print base included.
+none, prefers-reduced-motion above all of it; seamless page
+transitions — data-transition="page" animates cross-page navigation
+(old page eases away, new one springs in, URL changes normally), with
+a[data-no-transition] per-link opt-out and facet.go(url) for
+programmatic moves, instant fallback where unsupported; print base
+included.
 
 Base layer: raw semantic HTML looks designed with no classes; one visible
 keyboard focus ring everywhere; selection colors, thin scrollbars,
@@ -384,6 +389,18 @@ for calculator apps:
     facet.numberSystem()       "indian" or "western", however resolved
     facet.strings              the translation table; extend in place
     facet.install()            show the install prompt when available
+    facet.go(url)              navigate with the page transition
+
+## Page transitions
+
+Put data-transition="page" on the html tag (or the facet.js script tag,
+or facet.set({transition: "page"})) and every same-origin navigation
+between Facet pages transitions: the old page eases up and away, the
+new one springs in per the motion personality, and the URL changes
+normally. A link with data-no-transition snaps out instead. facet.go(url)
+navigates programmatically with the same transition. Built on
+cross-document view transitions; browsers without support simply
+navigate. data-motion="off" and prefers-reduced-motion make pages snap.
 
 ## Offline, install and updates
 
