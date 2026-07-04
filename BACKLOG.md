@@ -200,8 +200,12 @@ Platform laws docs and the R11 chart item.
       mode, on-colors by luminance; mix rides ?mix= for sharing;
       export block renders the paste-ready facet.set script; reset
       returns to the active theme. Docs-only logic, inline.
-- [ ] Skin Lab: every theme in light and dark side by side across real
-      layouts.
+- [x] Skin Lab: #skin-lab on the homepage — 5 themes × 2 modes, each
+      panel its own tiny framed document (real facet.css, identical
+      markup, one attribute apart). Frames, not subtrees, on purpose:
+      material themes scope recipes under [data-theme] and an
+      ancestor's recipes would leak into differently-themed subtree
+      panels. Lazy-loaded.
 
 ### Themed map — R16
 

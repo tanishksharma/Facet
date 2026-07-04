@@ -230,6 +230,25 @@
       cursor: pointer;
     }
 
+    /* Skin Lab: the theme-by-mode gallery of framed mini pages. */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+      gap: var(--space-4);
+    }
+    .lab-cell { display: grid; gap: var(--space-1); }
+    .lab-cell figcaption {
+      font-size: var(--text-caption);
+      color: var(--text-muted);
+    }
+    .lab-frame {
+      width: 100%;
+      height: 21rem;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-medium);
+      background: transparent;
+    }
+
     /* Docs-only frames for specific demos. */
     #snap-section .demo { padding: 0; overflow: hidden; }   /* clips the mini viewport */
     #snap-section .snap { height: 20rem; }
@@ -329,6 +348,7 @@
           <li><a href="#typography">Typography</a></li>
           <li><a href="#color">Color</a></li>
           <li><a href="#style-mixer">Style Mixer</a></li>
+          <li><a href="#skin-lab">Skin Lab</a></li>
           <li><a href="#spacing">Spacing</a></li>
           <li><a href="#shape">Shape &amp; elevation</a></li>
           <li><a href="#motion">Motion</a></li>
@@ -401,6 +421,7 @@
           <li>System-native accent: in browsers that expose the OS accent (Safari 16.4+, Firefox 103+), the Default theme's accent-3 rank — links, labels, focus rings, selection — takes the user's own OS accent like a native app, light and dark. Everywhere else it stays the ink. Themed pages keep their own inks.</li>
           <li>Custom accent as a supported recipe: override a rank's four tokens (color, hover, pressed, on-color) in one block — page-wide on :root or per-subtree on any element — and every component using that rank follows in every state. The recipe with a live example is in the Color section; <code>facet.set</code> applies the same override live at runtime.</li>
           <li>Style Mixer, the theme generator: a picker per semantic token restyles this whole page live on top of any theme, hover/pressed shades and on-colors derive automatically, the mix rides the URL for sharing, and the result exports as a paste-ready <code>facet.set</code> config block.</li>
+          <li>Skin Lab: every theme in light and dark side by side, all rendering the same real slice of interface from identical markup — the one-attribute promise, proven in one glance.</li>
         </ul>
 
         <h3>Tokens</h3>
@@ -969,6 +990,28 @@
           <button class="btn btn-small" data-copy="#code-style-mixer" data-tip="Copies the config block for your own page">Copy the config</button>
         </p>
         <pre id="code-style-mixer"><code></code></pre>
+      </section>
+
+      <!-- =============================================================
+           LAYER 1 · SKIN LAB
+           Every theme, light and dark, side by side across the same
+           real layout. Each panel is its own tiny document (an iframe
+           the docs script builds), because material themes must not
+           leak recipes into each other — true isolation is the point.
+           ============================================================= -->
+      <section id="skin-lab" class="stack">
+        <h2>Skin Lab</h2>
+        <p>
+          What it is: every theme in light and dark, side by side, all
+          rendering the same real slice of interface — heading, prose
+          with a link, both button ranks, a labelled field, a result
+          row. What it is for: choosing a skin by looking, and proving
+          the library's core promise in one glance — identical markup,
+          ten different products. When to use it: at the start of any
+          new project, before a line is written. Each panel is a real
+          page pulling the same facet.css this site uses.
+        </p>
+        <div class="lab-grid" id="lab-grid"></div>
       </section>
 
       <!-- =============================================================
@@ -1747,6 +1790,50 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       syncPickers();
     }
 
+    /* Skin Lab: builds one framed mini page per theme × mode. Frames,
+       not subtrees, on purpose — material themes (velvet, aero) scope
+       component recipes under [data-theme], and inside one document an
+       ancestor's recipes would leak into a differently-themed panel.
+       Each frame is a genuine document with the two real tags, so it
+       is also living proof of the one-attribute promise. */
+    function initSkinLab() {
+      const grid = document.querySelector("#lab-grid");
+      if (!grid) return;
+      const THEMES = [["", "Default"], ["sand", "Sand"], ["velvet", "Velvet"], ["aero", "Aero"], ["elegant", "Elegant"]];
+      const LAYOUT = `
+        <main class="container stack" style="padding: 1rem;">
+          <h2 style="margin: 0;">Ledger</h2>
+          <p>The same markup as every other panel — <a href="#">one attribute</a> apart.</p>
+          <p style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-small">Save</button>
+            <button class="btn btn-small">Preview</button>
+          </p>
+          <label for="lab-amount">Amount</label>
+          <input id="lab-amount" type="text" value="12,500">
+          <div class="result"><span>Total</span><strong>₹ 12,500</strong></div>
+        </main>`;
+      for (const [theme, themeName] of THEMES) {
+        for (const mode of ["light", "dark"]) {
+          const cell = document.createElement("figure");
+          cell.className = "lab-cell";
+          const frame = document.createElement("iframe");
+          frame.className = "lab-frame";
+          frame.loading = "lazy";
+          frame.title = `${themeName}, ${mode}`;
+          frame.setAttribute("tabindex", "-1");
+          frame.srcdoc = `<!doctype html>
+            <html${theme ? ` data-theme="${theme}"` : ""} data-mode="${mode}">
+            <head><meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="${location.origin}/lib/facet.css"></head>
+            <body>${LAYOUT}</body></html>`;
+          const cap = document.createElement("figcaption");
+          cap.textContent = `${themeName} · ${mode}`;
+          cell.append(frame, cap);
+          grid.appendChild(cell);
+        }
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
       initChips();
@@ -1756,6 +1843,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initSetupStrip();
       initConfigChips();
       initStyleMixer();
+      initSkinLab();
       const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
       if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
     });

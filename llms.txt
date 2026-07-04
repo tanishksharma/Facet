@@ -46,7 +46,9 @@ a rank's four tokens in one block, page-wide on :root or per-subtree on
 any element, and every component using that rank follows; Style Mixer
 on the homepage — a picker per semantic token restyles the page live
 over any theme, derives hover/pressed/on-colors, rides the URL (?mix=)
-and exports a paste-ready facet.set config block.
+and exports a paste-ready facet.set config block; Skin Lab on the
+homepage — every theme in light and dark side by side, the same real
+layout from identical markup, one attribute apart.
 
 Tokens: every design decision is a role-named CSS variable — color with
 per-theme status colors, type scale, weights, spacing on a 4px base,
