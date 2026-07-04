@@ -37,7 +37,11 @@ identically; one-line switcher buttons via data-theme-switch and
 data-mode-toggle; setup by configuration — data attributes on the
 facet.js script tag boot a page into its look, and facet.set() changes
 theme, mode or any token live at runtime; native scrollbars and form
-controls follow via color-scheme.
+controls follow via color-scheme; system-native accent — in browsers
+that expose the OS accent (Safari 16.4+, Firefox 103+) the Default
+theme's accent-3 rank (links, labels, focus rings, selection) takes the
+user's own OS accent like a native app, light and dark, with the ink as
+the universal fallback.
 
 Tokens: every design decision is a role-named CSS variable — color with
 per-theme status colors, type scale, weights, spacing on a 4px base,
@@ -119,7 +123,12 @@ included. Dark mode is a second attribute and composes with every theme.
     <html data-theme="sand" data-mode="dark"> Sand theme, dark
 
 Themes: Default (white and black, the accent ranks are the ink itself)
-ships first. Sand (Minecraft desert beige, cactus accent-1) is parked and
+ships first. In browsers that expose the OS accent as a CSS system color
+(Safari 16.4+ and Firefox 103+ — Chrome does not support AccentColor),
+Default's accent-3 rank takes the user's own OS accent for links,
+labels, focus rings and selection, in both modes; everywhere else it
+stays the ink, and themed pages always keep their own inks. Sand
+(Minecraft desert beige, cactus accent-1) is parked and
 working. Velvet (data-theme="velvet") is the neumorphic material
 extracted from the shipped inflation app: matte velvet surfaces, one
 light source from above, elements raised out of the fabric or carved

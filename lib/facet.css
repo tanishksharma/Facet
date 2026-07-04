@@ -89,7 +89,9 @@
   --accent-2-pressed: #E4E4E8;
   --on-accent-2: #17171B;
 
-  --accent-3: #17171B;        /* TODO R2: follows the OS accent color */
+  --accent-3: #17171B;        /* ink fallback; the OS accent takes over
+                                 where AccentColor exists — see the
+                                 system-native accent block (R2) */
   --accent-3-hover: #09090B;
   --accent-3-pressed: #000000;
   --on-accent-3: #FFFFFF;
@@ -610,6 +612,59 @@
    TODO: palette locked when it gets built. Until then this attribute
    falls back to the Default theme.
 */
+
+/*
+   System-native accent (R2). In browsers that expose the OS accent as a
+   CSS system color, the Default theme's accent-3 rank — links, labels,
+   focus rings, selection — takes the user's own OS accent, exactly like
+   a native app. Everywhere else it stays the ink.
+
+   Support matrix (researched and probed, July 2026):
+   - AccentColor / AccentColorText: Safari 16.4+ (macOS: the real accent
+     from System Settings; iOS has no user accent, so it resolves to the
+     system blue) and Firefox 103+ (real accent on macOS and Windows).
+     Chrome and Edge: NOT supported — the keyword does not even parse
+     (probed Chromium: CSS.supports("color","AccentColor") is false),
+     which is exactly what makes the @supports gate below airtight.
+   - Highlight / HighlightText and SelectedItem / SelectedItemText:
+     parse in every engine, but Chromium resolves them to fixed browser
+     blues (probed: rgba(0,65,198,.8) and rgb(25,103,210)), not the OS
+     value — so they cannot carry the accent cross-browser and are not
+     used here. Selection needs no extra wiring either: ::selection
+     rides --accent-3, so it follows the OS accent through the tokens.
+   - color-mix() over system colors: works in every engine that passes
+     the gate — safe for the hover and pressed shades.
+
+   Scope: the Default theme only — a root without data-theme, and
+   [data-mode] subtrees without one. Sand, Velvet and future themes keep
+   their own inks (their blocks re-declare the rank; the :not() guard
+   keeps this block out of their subtrees). Both modes are wired: the
+   keyword resolves against color-scheme, so dark mode gets the OS
+   accent's dark rendering automatically; hover and pressed deepen
+   toward ink in light and lift toward paper in dark. The dark rule
+   sits after the light rule at equal specificity on purpose — a dark
+   root matches both, and the later one must win.
+
+   Caveat, recorded: a user-chosen yellow or graphite macOS accent can
+   dip below AA as link text. OS palettes are curated and native apps
+   accept the same trade — matching them is the point. The ink fallback,
+   and every browser that fails the gate, stays AA.
+*/
+@supports (color: AccentColor) {
+  :root:not([data-theme]),
+  [data-mode="light"]:not([data-theme]) {
+    --accent-3: AccentColor;
+    --accent-3-hover: color-mix(in srgb, AccentColor 86%, black);
+    --accent-3-pressed: color-mix(in srgb, AccentColor 74%, black);
+    --on-accent-3: AccentColorText;
+  }
+  [data-mode="dark"]:not([data-theme]) {
+    --accent-3: AccentColor;
+    --accent-3-hover: color-mix(in srgb, AccentColor 86%, white);
+    --accent-3-pressed: color-mix(in srgb, AccentColor 74%, white);
+    --on-accent-3: AccentColorText;
+  }
+}
 
 /*
    Motion personality · the spring, upgraded. Browsers that understand

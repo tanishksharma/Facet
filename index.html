@@ -369,6 +369,7 @@
           <li>One-line switcher buttons: <code>data-theme-switch</code> and <code>data-mode-toggle</code> on any button, no JS to write.</li>
           <li>Setup by configuration: <code>data-theme</code> / <code>data-mode</code> / <code>data-density</code> / <code>data-language</code> on the facet.js script tag boot a page straight into that look — copy the configured tags off this page's setup strip. At runtime, <code>facet.set({...})</code> changes theme, mode or any token live, no reload.</li>
           <li>Native widgets follow: scrollbars and form controls flip with <code>color-scheme</code>.</li>
+          <li>System-native accent: in browsers that expose the OS accent (Safari 16.4+, Firefox 103+), the Default theme's accent-3 rank — links, labels, focus rings, selection — takes the user's own OS accent like a native app, light and dark. Everywhere else it stays the ink. Themed pages keep their own inks.</li>
         </ul>
 
         <h3>Tokens</h3>

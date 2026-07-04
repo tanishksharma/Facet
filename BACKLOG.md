@@ -158,12 +158,22 @@ Platform laws docs and the R11 chart item.
 
 ### System-native Default theme — R2
 
-- [ ] Support matrix first: test AccentColor, AccentColorText, Highlight,
-      SelectedItem system colors across Safari/Chrome/Firefox, macOS and
-      iOS; record findings as comments in the theme block.
-- [ ] Wire the Default theme to the OS accent where supported (links,
-      accent-3 affordances, selection, focus ring) behind @supports, ink
-      fallback everywhere else; verify light and dark.
+- [x] Support matrix first: AccentColor/AccentColorText work in Safari
+      16.4+ and Firefox 103+ (real OS accent; iOS resolves to system
+      blue), do not parse at all in Chrome/Edge (probed Chromium —
+      CSS.supports false, a clean @supports gate); Highlight/
+      SelectedItem parse everywhere but are fixed browser blues in
+      Chromium, so they cannot carry the accent. Recorded as the
+      comment on the system-native accent block in facet.css.
+- [x] Wire the Default theme to the OS accent where supported: accent-3
+      rank (links, labels, focus ring, selection via ::selection's
+      tokens) becomes AccentColor/AccentColorText behind
+      @supports (color: AccentColor), hover/pressed via color-mix
+      toward ink in light and paper in dark; scoped with :not(
+      [data-theme]) so themed pages keep their inks; ink fallback
+      everywhere else. Cascade verified in-browser with a same-shape
+      probe (Chromium lacks AccentColor, so the selector logic was
+      proven with a substituted system color, plus fallback checks).
 
 ### Theming suite — R8
 

@@ -252,7 +252,9 @@ Zero decoration, the quiet base. The accent ranks are the ink itself.
 - Borders: `#E4E4E8`
 - Accent-1 (primary actions): `#17171B`, deepening to `#000000`
 - Accent-2 (secondary fill): the surface family, `#FAFAFA` to `#E4E4E8`
-- Accent-3 (links, labels, focus): the ink, until R2 wires the OS accent
+- Accent-3 (links, labels, focus): the ink; where the browser exposes
+  the OS accent (Safari 16.4+, Firefox 103+ — AccentColor behind an
+  @supports gate) it becomes the user's own OS accent instead (R2)
 
 Color is ranked, not named: components use `--accent-1/-2/-3` (each with
 `-hover`, `-pressed`, `--on-accent-N`) and never pick raw colors. One
