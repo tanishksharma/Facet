@@ -41,7 +41,9 @@ identically; one-line switcher buttons via data-theme-switch and
 data-mode-toggle; setup by configuration — data attributes on the
 facet.js script tag boot a page into its look, and facet.set() changes
 theme, mode or any token live at runtime; native scrollbars and form
-controls follow via color-scheme; system-native accent — in browsers
+controls follow via color-scheme and facet.js keeps the theme-color
+meta synced so the browser chrome wears the theme; system-native
+accent — in browsers
 that expose the OS accent (Safari 16.4+, Firefox 103+) the Default
 theme's accent-3 rank (links, labels, focus rings, selection) takes the
 user's own OS accent like a native app, light and dark, with the ink as
@@ -672,3 +674,29 @@ and the loser flickers.
 Font-list law: never put inherit inside a font-family list
 (ui-rounded, "SF Pro Rounded", inherit is silently invalid and drops
 the whole declaration). A stack ends in a generic family, always.
+
+## iOS, honestly: what a website can and cannot do
+
+What a website CAN do on iOS: tint Safari's chrome with theme-color
+(facet.js keeps the meta synced to the active theme's background,
+live); ship apple-touch-icon and install standalone (manifest + the
+apple metas from the app shell law); send web push and set an app
+badge — but only after the visitor adds the app to their home screen
+(iOS 16.4+), never from a plain Safari tab, and only from a user
+gesture. What it CANNOT do: see or join Screen Time, read a visitor's
+age, or apply parental controls — OS territory; do not design around
+it. Child safety has no web API: the real levers are self-labeling
+(adult content declares itself with the RTA rating meta,
+<meta name="rating" content="RTA-5042-1996-1400-1577-RTA">, so OS
+filters catch it; family content states isFamilyFriendly in JSON-LD)
+and restraint — nothing Facet ships autoplays, hooks, or dark-patterns
+anyone, children included.
+
+The head pack every Facet app page carries:
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#FFFFFF">  <!-- facet.js keeps this synced -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="manifest" href="/manifest.json">

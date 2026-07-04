@@ -451,7 +451,7 @@
           <li>Theme and mode ride the URL (<code>?theme=</code>, <code>?mode=</code>): a shared link opens looking exactly like the sender's screen.</li>
           <li>One-line switcher buttons: <code>data-theme-switch</code> and <code>data-mode-toggle</code> on any button, no JS to write.</li>
           <li>Setup by configuration: <code>data-theme</code> / <code>data-mode</code> / <code>data-density</code> / <code>data-language</code> on the facet.js script tag boot a page straight into that look — copy the configured tags off this page's setup strip. At runtime, <code>facet.set({...})</code> changes theme, mode or any token live, no reload.</li>
-          <li>Native widgets follow: scrollbars and form controls flip with <code>color-scheme</code>.</li>
+          <li>Native widgets follow: scrollbars and form controls flip with <code>color-scheme</code>, and facet.js keeps the <code>theme-color</code> meta synced so the browser's own chrome wears the theme too.</li>
           <li>System-native accent: in browsers that expose the OS accent (Safari 16.4+, Firefox 103+), the Default theme's accent-3 rank — links, labels, focus rings, selection — takes the user's own OS accent like a native app, light and dark. Everywhere else it stays the ink. Themed pages keep their own inks.</li>
           <li>Custom accent as a supported recipe: override a rank's four tokens (color, hover, pressed, on-color) in one block — page-wide on :root or per-subtree on any element — and every component using that rank follows in every state. The recipe with a live example is in the Color section; <code>facet.set</code> applies the same override live at runtime.</li>
           <li>Style Mixer, the theme generator: a picker per semantic token restyles this whole page live on top of any theme, hover/pressed shades and on-colors derive automatically, the mix rides the URL for sharing, and the result exports as a paste-ready <code>facet.set</code> config block.</li>
@@ -868,6 +868,44 @@
           <li><strong>Parallax exclusion.</strong> Elements carrying their own transform physics — velvet lift and press, the pager's rubber-band translate — never register with facetMotion: two writers on one inline transform collide, and the loser flickers.</li>
           <li><strong>Font-list law.</strong> Never put <code>inherit</code> inside a font-family list (<code>ui-rounded, "SF Pro Rounded", inherit</code> is silently invalid and drops the whole declaration). A stack ends in a generic family, always.</li>
         </ul>
+
+        <h3 id="ios">iOS, honestly: what a website can and cannot do</h3>
+        <p>
+          The research pass behind the platform laws, kept current so
+          nobody designs around a capability that does not exist.
+          What a website CAN do on iOS: tint Safari's own chrome with
+          <code>theme-color</code> (facet.js keeps it synced to the
+          active theme's background, live); ship a home-screen icon
+          (<code>apple-touch-icon</code>) and install as a standalone
+          app (manifest + the apple metas from the app shell law);
+          send <strong>web push</strong> and set an app
+          <strong>badge</strong> — but only after the visitor adds the
+          app to their home screen (iOS 16.4+), never from a plain
+          Safari tab, and only from a user gesture. What it CANNOT do:
+          see or join Screen Time, read a visitor's age, or apply
+          parental controls — all of that is OS territory, and any
+          design leaning on it is designing fiction.
+        </p>
+        <p>
+          Child safety, the honest version: there is no web API for
+          it. A site's real levers are self-labeling and restraint —
+          adult content declares itself with the RTA rating meta
+          (<code>&lt;meta name="rating"
+          content="RTA-5042-1996-1400-1577-RTA"&gt;</code>) so OS
+          filters like Screen Time's "Limit Adult Websites" catch it;
+          family content can state <code>isFamilyFriendly</code> in
+          its JSON-LD; and everything Facet ships is quiet by design —
+          no autoplay, no dark patterns, nothing engineered to hook
+          anyone, children included.
+        </p>
+        <p>The head pack every Facet app page carries:</p>
+        <pre id="code-headpack"><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"&gt;
+&lt;meta name="theme-color" content="#FFFFFF"&gt; &lt;!-- facet.js keeps this synced to the theme --&gt;
+&lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+&lt;meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"&gt;
+&lt;link rel="apple-touch-icon" href="/icons/icon-180.png"&gt;
+&lt;link rel="manifest" href="/manifest.json"&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-headpack" data-tip="Copies the head pack above">Copy</button></p>
 
         <h3 id="analytics">Analytics: bring your own vendor</h3>
         <p>

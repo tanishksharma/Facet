@@ -281,13 +281,19 @@ Platform laws docs and the R11 chart item.
 
 ### Safari/iOS capabilities and child safety — R7
 
-- [ ] Research pass: catalogue what iOS Safari lets websites do
-      (theme-color light/dark, apple-touch-icon, standalone display,
-      status bar, web push, Screen Time interaction) and what child
-      safety mechanisms actually exist for websites; findings written up
-      in the repo.
-- [ ] Implement the applicable head-pack defaults in the base/starter;
-      document honestly what is OS-only and out of a website's hands.
+- [x] Research pass: catalogued as "iOS, honestly" in the Rules
+      section and llms.txt — theme-color tints Safari's chrome;
+      standalone install via manifest + apple metas; web push and
+      badging only for home-screen apps on iOS 16.4+, from a user
+      gesture, never a plain tab; Screen Time, age reading and
+      parental controls are OS-only, no web API; child safety for
+      websites = self-labeling (RTA rating meta for adult content,
+      isFamilyFriendly JSON-LD for family content) plus restraint.
+- [x] Implemented: facet.js now creates and live-syncs the
+      theme-color meta to the active theme's --background (theme,
+      mode and system-scheme changes); the head pack is documented
+      with a copy button on the page and in llms.txt; the apple metas
+      and manifest mechanics were already law from R18/R6.
 
 ### Site polish — R10
 
