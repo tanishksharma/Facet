@@ -204,6 +204,32 @@
       height: 12rem; overflow-y: auto; padding-right: var(--space-5);
     }
 
+    /* Style Mixer: a grid of labelled color pickers. */
+    .mixer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+      gap: var(--space-3);
+    }
+    .mixer-grid label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      font-size: var(--text-small);
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-medium);
+      padding: var(--space-2) var(--space-3);
+    }
+    .mixer-grid input[type="color"] {
+      inline-size: 2.6rem;
+      block-size: 1.9rem;
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+    }
+
     /* Docs-only frames for specific demos. */
     #snap-section .demo { padding: 0; overflow: hidden; }   /* clips the mini viewport */
     #snap-section .snap { height: 20rem; }
@@ -302,6 +328,7 @@
         <ul>
           <li><a href="#typography">Typography</a></li>
           <li><a href="#color">Color</a></li>
+          <li><a href="#style-mixer">Style Mixer</a></li>
           <li><a href="#spacing">Spacing</a></li>
           <li><a href="#shape">Shape &amp; elevation</a></li>
           <li><a href="#motion">Motion</a></li>
@@ -373,6 +400,7 @@
           <li>Native widgets follow: scrollbars and form controls flip with <code>color-scheme</code>.</li>
           <li>System-native accent: in browsers that expose the OS accent (Safari 16.4+, Firefox 103+), the Default theme's accent-3 rank — links, labels, focus rings, selection — takes the user's own OS accent like a native app, light and dark. Everywhere else it stays the ink. Themed pages keep their own inks.</li>
           <li>Custom accent as a supported recipe: override a rank's four tokens (color, hover, pressed, on-color) in one block — page-wide on :root or per-subtree on any element — and every component using that rank follows in every state. The recipe with a live example is in the Color section; <code>facet.set</code> applies the same override live at runtime.</li>
+          <li>Style Mixer, the theme generator: a picker per semantic token restyles this whole page live on top of any theme, hover/pressed shades and on-colors derive automatically, the mix rides the URL for sharing, and the result exports as a paste-ready <code>facet.set</code> config block.</li>
         </ul>
 
         <h3>Tokens</h3>
@@ -905,6 +933,42 @@
   --on-accent-1: #FFFFFF;
 }</code></pre>
         <p><button class="btn btn-small" data-copy="#code-custom-accent" data-tip="Copies the CSS override block above">Copy</button></p>
+      </section>
+
+      <!-- =============================================================
+           LAYER 1 · STYLE MIXER
+           The theme generator: pickers over the semantic tokens restyle
+           this whole page live, the result exports as a paste-ready
+           config block and rides the URL. Docs-only logic, inline below.
+           ============================================================= -->
+      <section id="style-mixer" class="stack">
+        <h2>Style Mixer</h2>
+        <p>
+          What it is: the theme generator — a picker for each semantic
+          color token, applied to this whole page the moment you change
+          it. What it is for: mixing your own skin on top of any theme;
+          start from the active theme, pull the colors where you want
+          them, and the hover and pressed shades and on-colors derive
+          automatically. The mix rides this page's URL (share the link,
+          your mix opens with it) and exports below as a paste-ready
+          config block for your own project. When to use it: whenever
+          "which colors?" is the conversation — mix live, then copy.
+        </p>
+        <div class="mixer-grid" id="mixer-controls">
+          <label>Background <input type="color" data-mix="background" data-tip="The page itself"></label>
+          <label>Surface <input type="color" data-mix="surface" data-tip="Cards, inputs, panels"></label>
+          <label>Text <input type="color" data-mix="text" data-tip="The ink"></label>
+          <label>Muted text <input type="color" data-mix="text-muted" data-tip="Hints and captions"></label>
+          <label>Border <input type="color" data-mix="border" data-tip="Hairlines and edges"></label>
+          <label>Accent 1 <input type="color" data-mix="accent-1" data-tip="The one primary action"></label>
+          <label>Accent 2 <input type="color" data-mix="accent-2" data-tip="Every secondary fill"></label>
+          <label>Accent 3 <input type="color" data-mix="accent-3" data-tip="Links, labels, focus"></label>
+        </div>
+        <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
+          <button class="btn btn-small" id="mixer-reset" data-event="mixer-reset" data-tip="Clears the mix: back to the active theme's own colors">Reset to theme</button>
+          <button class="btn btn-small" data-copy="#code-style-mixer" data-tip="Copies the config block for your own page">Copy the config</button>
+        </p>
+        <pre id="code-style-mixer"><code></code></pre>
       </section>
 
       <!-- =============================================================
@@ -1578,6 +1642,111 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       sync();
     }
 
+    /* Style Mixer: a picker per semantic token, applied live through
+       facet.set (inline custom properties layered over the active
+       theme). Hover/pressed shades and on-colors derive automatically;
+       the mix rides ?mix= so a link reproduces it; the export block
+       below the pickers is always the paste-ready config for the
+       current mix. Docs-only logic — the library ships facet.set, this
+       is a UI over it. */
+    function initStyleMixer() {
+      const box = document.querySelector("#mixer-controls");
+      if (!box || !window.facet) return;
+      const pickers = [...box.querySelectorAll("[data-mix]")];
+      const exportCode = document.querySelector("#code-style-mixer code");
+      const root = document.documentElement;
+      const mixed = {};                       // token -> hex, only what the user changed
+
+      // Resolve any token value (hex, color-mix, AccentColor…) to #rrggbb
+      // by letting the browser compute it on a probe element.
+      const probe = document.createElement("span");
+      probe.hidden = true;
+      document.body.appendChild(probe);
+      const tokenHex = (token) => {
+        probe.style.color = `var(--${token})`;
+        const m = getComputedStyle(probe).color.match(/\d+/g) || [0, 0, 0];
+        return "#" + m.slice(0, 3).map(n => (+n).toString(16).padStart(2, "0")).join("");
+      };
+      const luma = (hex) => {
+        const n = parseInt(hex.slice(1), 16);
+        return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
+      };
+
+      // One picked color fans out to its derived tokens.
+      const derive = (token, hex) => {
+        const set = { ["--" + token]: hex };
+        if (token.startsWith("accent")) {
+          const toward = root.dataset.mode === "dark" ? "white" : "black";
+          set[`--${token}-hover`] = `color-mix(in srgb, ${hex} 86%, ${toward})`;
+          set[`--${token}-pressed`] = `color-mix(in srgb, ${hex} 74%, ${toward})`;
+          set[`--on-${token}`] = luma(hex) > 0.55 ? "#17171B" : "#FFFFFF";
+        }
+        return set;
+      };
+
+      const renderExport = () => {
+        const entries = Object.entries(mixed).flatMap(([t, hex]) => Object.entries(derive(t, hex)));
+        exportCode.textContent = entries.length
+          ? "<script>\n  addEventListener(\"DOMContentLoaded\", () => facet.set({\n"
+            + entries.map(([k, v]) => `    ${JSON.stringify(k)}: ${JSON.stringify(v)},`).join("\n")
+            + "\n  }));\n<\/script>"
+          : "<!-- Mix a color above and the paste-ready config appears here. -->";
+      };
+
+      const writeUrl = () => {
+        const url = new URL(location);
+        const packed = Object.entries(mixed).map(([t, hex]) => `${t}:${hex.slice(1)}`).join(",");
+        if (packed) url.searchParams.set("mix", packed);
+        else url.searchParams.delete("mix");
+        history.replaceState(null, "", url);
+      };
+
+      const syncPickers = () => {
+        for (const p of pickers) p.value = mixed[p.dataset.mix] || tokenHex(p.dataset.mix);
+      };
+
+      const apply = (token, hex) => {
+        mixed[token] = hex;
+        facet.set(derive(token, hex));
+        writeUrl();
+        renderExport();
+      };
+
+      for (const p of pickers) {
+        p.addEventListener("input", () => apply(p.dataset.mix, p.value));
+      }
+
+      document.querySelector("#mixer-reset").addEventListener("click", () => {
+        for (const [t, hex] of Object.entries(mixed)) {
+          for (const k of Object.keys(derive(t, hex))) root.style.removeProperty(k);
+          delete mixed[t];
+        }
+        writeUrl();
+        renderExport();
+        syncPickers();
+      });
+
+      // A shared link opens with the mix already applied.
+      const packed = new URLSearchParams(location.search).get("mix");
+      if (packed) {
+        for (const pair of packed.split(",")) {
+          const [t, hex] = pair.split(":");
+          if (/^[0-9a-f]{6}$/i.test(hex) && pickers.some(p => p.dataset.mix === t)) {
+            mixed[t] = "#" + hex.toLowerCase();
+            facet.set(derive(t, mixed[t]));
+          }
+        }
+      }
+
+      // Theme or mode switch under a mix: un-mixed pickers re-read the
+      // new theme; mixed tokens persist by design (a mix rides on top).
+      new MutationObserver(() => { syncPickers(); renderExport(); })
+        .observe(root, { attributes: true, attributeFilter: ["data-theme", "data-mode"] });
+
+      renderExport();
+      syncPickers();
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
       initChips();
@@ -1586,6 +1755,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initModePanels();
       initSetupStrip();
       initConfigChips();
+      initStyleMixer();
       const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
       if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
     });

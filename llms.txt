@@ -43,7 +43,10 @@ theme's accent-3 rank (links, labels, focus rings, selection) takes the
 user's own OS accent like a native app, light and dark, with the ink as
 the universal fallback; custom accent as a supported recipe — override
 a rank's four tokens in one block, page-wide on :root or per-subtree on
-any element, and every component using that rank follows.
+any element, and every component using that rank follows; Style Mixer
+on the homepage — a picker per semantic token restyles the page live
+over any theme, derives hover/pressed/on-colors, rides the URL (?mix=)
+and exports a paste-ready facet.set config block.
 
 Tokens: every design decision is a role-named CSS variable — color with
 per-theme status colors, type scale, weights, spacing on a 4px base,

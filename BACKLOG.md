@@ -193,9 +193,13 @@ Platform laws docs and the R11 chart item.
       inset token (panels pressed in, never floated), gold hairline
       borders; obsidian-and-gold dark twin. Switcher and setup strip
       enabled; palette locked in the theme block.
-- [ ] Theme generator (Style Mixer): pickers for the semantic colors,
-      live restyle of the whole page, export as the R14 key-value config
-      block, shareable via URL.
+- [x] Theme generator (Style Mixer): #style-mixer on the homepage —
+      eight pickers (base family + three accents) restyle the page
+      live via facet.set inline custom properties over the active
+      theme; hover/pressed derive via color-mix toward ink/paper by
+      mode, on-colors by luminance; mix rides ?mix= for sharing;
+      export block renders the paste-ready facet.set script; reset
+      returns to the active theme. Docs-only logic, inline.
 - [ ] Skin Lab: every theme in light and dark side by side across real
       layouts.
 
