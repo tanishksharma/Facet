@@ -252,6 +252,18 @@ reason the wrapper law allows a container inside a container.
       <section class="snap-section"> results </section>
     </main>
 
+With facet.js present, a full-viewport .snap auto-upgrades to the
+iOS-proven pager (CSS mandatory snap breaks on iOS): the outer never
+free-scrolls — a spring (w=11, z=0.9, tuned and final) moves it between
+section tops — sections stay one viewport tall and scroll natively
+inside themselves, pulling past an edge pages to the neighbour with a
+rubber-band hint, a wheel edge-push hops once with a cooldown, and
+paging up lands at the previous section's bottom. Gestures starting on
+.chart, input or textarea are ignored. The pager dispatches
+"facet:section" ({id, index}) on the .snap and exposes
+element.facetPager {go, toEl, index, settle}. data-pager="off" opts
+out; without JS, plain CSS snapping remains.
+
 ### Button
 
 What it is: the action element, in three variants and three sizes, working

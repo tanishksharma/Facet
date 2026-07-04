@@ -126,7 +126,7 @@ llms.txt, verify, commit).
       = accent-3); component recipes fold into facet.css scoped under
       the theme; behavioral laws recorded as comments. Composition
       layer (type voices, gold ink, spacing) with it.
-- [ ] Snap-pager layout (§2): the iOS-proven model — outer never
+- [x] Snap-pager layout (§2): the iOS-proven model — outer never
       free-scrolls, JS spring between section tops, sections scroll
       natively inside, gesture handoff with rubber-band hint, wheel
       paging, equal head/foot padding. Ships as facetPager in facet.js

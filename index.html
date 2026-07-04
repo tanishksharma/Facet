@@ -384,6 +384,7 @@
         <h3>Components and behaviours</h3>
         <ul>
           <li>Layout primitives — container (four widths), stack (three gaps), full-viewport snap sections — all themed, so layout restyles with the theme too.</li>
+          <li>The snap pager: full-viewport snap pages auto-upgrade to the iOS-proven pager — spring transitions between section tops, native scrolling inside sections, gesture handoff with a rubber-band hint, wheel paging with cooldown — because CSS scroll-snap alone breaks on iOS. No-JS pages keep plain CSS snapping; data-pager="off" opts out.</li>
           <li>Buttons in three variants and three sizes that work identically on <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code>; square icon buttons to match.</li>
           <li>The calculator-grade number input: prefilled example, one-tap clear on first touch, Indian digit grouping while typing (25,00,000), and a words helper that reads it back — "25 lakh".</li>
           <li>Fields with labels, hints and error states; themed sliders with live readouts; verdict-first result blocks that announce recalculations to screen readers.</li>

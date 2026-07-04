@@ -1166,6 +1166,39 @@ figcaption {
   margin-inline: auto;
 }
 
+/* THE PAGER MODEL (.is-paged, added by facet.js on full-viewport snaps).
+   The law, learned the hard way on iOS: CSS mandatory snap re-snaps any
+   section taller than the viewport and wedges the next gesture;
+   proximity doesn't snap; free-scrolling outers fight their sections.
+   So with JS present the outer NEVER free-scrolls — facet.js springs
+   its scrollTop between section tops — and every section is exactly one
+   viewport tall, scrolling natively inside itself. Without JS the plain
+   CSS snapping above still works. */
+.snap.is-paged {
+  scroll-snap-type: none;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  scroll-behavior: auto;        /* the pager sets scrollTop per frame */
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+}
+.snap.is-paged::-webkit-scrollbar { display: none; }
+.snap.is-paged,
+.snap.is-paged .snap-section { touch-action: pan-y; }
+.snap.is-paged .snap-section {
+  height: 100dvh;
+  min-height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  justify-content: flex-start;  /* centering via auto margins below: a
+                                   centered flex column would clip the
+                                   top of overflowing content */
+}
+.snap.is-paged .snap-section::-webkit-scrollbar { display: none; }
+.snap.is-paged .snap-section > :first-child { margin-top: auto; }
+.snap.is-paged .snap-section > :last-child { margin-bottom: auto; }
+
 /* --------------------------------------------------------------------------
    BUTTON
 
