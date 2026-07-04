@@ -177,8 +177,11 @@ Platform laws docs and the R11 chart item.
 
 ### Theming suite — R8
 
-- [ ] Custom accent recipe: overriding accent-1/2/3 in one small block,
-      documented as a supported feature with a live example.
+- [x] Custom accent recipe: overriding a rank's four tokens in one
+      block, documented as a supported feature in the Color section
+      with a live example (subtree override on the demo container) and
+      the copyable :root block; facet.set named as the runtime path;
+      AA note on the on-color included.
 - [ ] Aero theme, light and dark: sky aqua, glass gloss, translucent
       plastic, pill buttons; palette locked in the theme block.
 - [ ] Elegant theme, light and dark: cream and gold, serif display,

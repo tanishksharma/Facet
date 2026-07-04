@@ -41,7 +41,9 @@ controls follow via color-scheme; system-native accent — in browsers
 that expose the OS accent (Safari 16.4+, Firefox 103+) the Default
 theme's accent-3 rank (links, labels, focus rings, selection) takes the
 user's own OS accent like a native app, light and dark, with the ink as
-the universal fallback.
+the universal fallback; custom accent as a supported recipe — override
+a rank's four tokens in one block, page-wide on :root or per-subtree on
+any element, and every component using that rank follows.
 
 Tokens: every design decision is a role-named CSS variable — color with
 per-theme status colors, type scale, weights, spacing on a 4px base,
@@ -157,6 +159,22 @@ data-mode="dark" (or "light", or data-theme="sand") on a section and only
 that subtree flips — tokens are inherited custom properties, so the
 nearest element carrying the attribute wins. A themed subtree paints its
 own background and text automatically.
+
+Custom accent, the supported recipe: override a rank's four tokens in
+one block and every component using that rank follows, in every state.
+
+    :root {
+      --accent-1: #0F6FDE;
+      --accent-1-hover: #0B5FC2;
+      --accent-1-pressed: #0850A6;
+      --on-accent-1: #FFFFFF;
+    }
+
+Put the block on :root for the whole page, on any element for a
+subtree, or apply it live with facet.set({"--accent-1": "#0F6FDE"}).
+Check the on-color still passes AA against your accent. Ranks are the
+contract — components never pick raw colors, so this block is the whole
+theme surface you need.
 
 ## Tokens
 

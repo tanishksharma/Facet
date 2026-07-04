@@ -370,6 +370,7 @@
           <li>Setup by configuration: <code>data-theme</code> / <code>data-mode</code> / <code>data-density</code> / <code>data-language</code> on the facet.js script tag boot a page straight into that look — copy the configured tags off this page's setup strip. At runtime, <code>facet.set({...})</code> changes theme, mode or any token live, no reload.</li>
           <li>Native widgets follow: scrollbars and form controls flip with <code>color-scheme</code>.</li>
           <li>System-native accent: in browsers that expose the OS accent (Safari 16.4+, Firefox 103+), the Default theme's accent-3 rank — links, labels, focus rings, selection — takes the user's own OS accent like a native app, light and dark. Everywhere else it stays the ink. Themed pages keep their own inks.</li>
+          <li>Custom accent as a supported recipe: override a rank's four tokens (color, hover, pressed, on-color) in one block — page-wide on :root or per-subtree on any element — and every component using that rank follows in every state. The recipe with a live example is in the Color section; <code>facet.set</code> applies the same override live at runtime.</li>
         </ul>
 
         <h3>Tokens</h3>
@@ -873,6 +874,35 @@
           <code>--gray-100</code> — so a theme is one block of overrides and
           nothing downstream changes.
         </p>
+
+        <h3 id="custom-accent">Custom accent — the override recipe</h3>
+        <p>
+          What it is: your own brand color on any accent rank, one small
+          block of CSS, a supported feature. What it is for: products
+          that keep the Facet base but carry their own accent — override
+          a rank's four tokens (the color, its hover, its pressed, and
+          the on-color for text sitting on it) and every component using
+          that rank follows, in every state. What to know: override on
+          :root for the whole page or on any element for a subtree;
+          check the on-color still passes AA against your accent; the
+          live example below carries the block on its own container, and
+          facet.set({"--accent-1": "..."}) is the same override applied
+          live at runtime. Ranks are the contract —
+          components never pick raw colors, so this block is the whole
+          theme surface you need.
+        </p>
+        <div class="accent-demo" style="--accent-1: #0F6FDE; --accent-1-hover: #0B5FC2; --accent-1-pressed: #0850A6; --on-accent-1: #FFFFFF; display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <button class="btn btn-primary" data-tip="A primary action wearing the overridden accent-1">Brand primary</button>
+          <button class="btn" data-tip="Secondary actions keep accent-2, untouched by the override">Secondary</button>
+        </div>
+        <pre id="code-custom-accent"><code>/* Your accent, one block. Rank tokens only — every component follows. */
+:root {
+  --accent-1: #0F6FDE;
+  --accent-1-hover: #0B5FC2;
+  --accent-1-pressed: #0850A6;
+  --on-accent-1: #FFFFFF;
+}</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-custom-accent" data-tip="Copies the CSS override block above">Copy</button></p>
       </section>
 
       <!-- =============================================================
