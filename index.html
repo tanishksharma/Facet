@@ -244,9 +244,22 @@
         document.getElementById("snippet-consume").textContent
           .replaceAll("https://[domain]", location.origin);
     </script>
+
+    <!-- Set up your project: pick a look, and the script tag above
+         rewrites itself to carry it — data attributes on facet.js boot
+         any page straight into this configuration. The picks also apply
+         to this page live, through the same facet.set() API projects use. -->
+    <p style="margin-top: var(--space-2);"><strong>Set up your project</strong> — pick a look, the tags above update, this page follows:</p>
+    <p class="chips" id="setup-strip" role="group" aria-label="Project configuration">
+      <button class="chip" aria-pressed="true" data-setup="theme" data-setup-value="" data-tip="White and black, the quiet base">Default theme</button>
+      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="sand" data-tip="Minecraft desert beige">Sand theme</button>
+      <button class="chip" aria-pressed="true" data-setup="mode" data-setup-value="" data-tip="Follow each visitor's system preference">Auto mode</button>
+      <button class="chip" aria-pressed="false" data-setup="mode" data-setup-value="light" data-tip="Always light, whatever the system says">Light</button>
+      <button class="chip" aria-pressed="false" data-setup="mode" data-setup-value="dark" data-tip="Always dark, whatever the system says">Dark</button>
+    </p>
     <p>
       <button class="btn btn-primary" data-copy="#snippet-consume"
-              data-tip="Copies the two tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
+              data-tip="Copies the configured tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
     </p>
   </section>
 
@@ -327,6 +340,7 @@
           <li>The visitor's system dark preference is honoured automatically when the page does not choose.</li>
           <li>Theme and mode ride the URL (<code>?theme=</code>, <code>?mode=</code>): a shared link opens looking exactly like the sender's screen.</li>
           <li>One-line switcher buttons: <code>data-theme-switch</code> and <code>data-mode-toggle</code> on any button, no JS to write.</li>
+          <li>Setup by configuration: <code>data-theme</code> / <code>data-mode</code> / <code>data-density</code> / <code>data-language</code> on the facet.js script tag boot a page straight into that look — copy the configured tags off this page's setup strip. At runtime, <code>facet.set({...})</code> changes theme, mode or any token live, no reload.</li>
           <li>Native widgets follow: scrollbars and form controls flip with <code>color-scheme</code>.</li>
         </ul>
 
@@ -1084,6 +1098,40 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       return [lines[0], ...lines.slice(1).map(line => line.slice(cut))].join("\n").trim();
     }
 
+    /* The setup strip: theme and mode picks rewrite the consume snippet
+       (data attributes on the facet.js tag) and apply to this page live
+       through the same facet.set() API projects use. */
+    function initSetupStrip() {
+      const strip = document.querySelector("#setup-strip");
+      const snippet = document.querySelector("#snippet-consume");
+      const picks = { theme: "", mode: "" };
+
+      const renderSnippet = () => {
+        const attrs =
+          (picks.theme ? ` data-theme="${picks.theme}"` : "") +
+          (picks.mode ? ` data-mode="${picks.mode}"` : "");
+        snippet.textContent =
+          `<link rel="stylesheet" href="${location.origin}/lib/facet.css">\n` +
+          `<script src="${location.origin}/lib/facet.js"${attrs} defer><\/script>`;
+      };
+
+      for (const chip of strip.querySelectorAll(".chip")) {
+        chip.addEventListener("click", () => {
+          const group = chip.dataset.setup;
+          picks[group] = chip.dataset.setupValue;
+          for (const other of strip.querySelectorAll(`[data-setup="${group}"]`)) {
+            other.setAttribute("aria-pressed", String(other === chip));
+          }
+          // Auto mode means "no attribute, follow the system" — live-demo
+          // it by applying what this visitor's system prefers right now.
+          const liveMode = picks.mode ||
+            (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          facet.set({ theme: picks.theme || null, mode: liveMode });
+          renderSnippet();
+        });
+      }
+    }
+
     /* Chips flip the live demo. Three kinds, by data attribute:
          data-chip-group + data-chip-class   radio-style class swap
          data-chip-attr                      toggle an attribute on/off
@@ -1091,7 +1139,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
        data-chip-target narrows the element acted on (default: the demo's
        first child). Every flip re-renders the snippet. */
     function initChips() {
-      for (const chip of document.querySelectorAll(".chip")) {
+      for (const chip of document.querySelectorAll(".element .chip")) {
         chip.addEventListener("click", () => {
           const article = chip.closest(".element");
           const demo = article.querySelector(".demo");
@@ -1203,6 +1251,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initWallSearch();
       initScrollSpy();
       initModePanels();
+      initSetupStrip();
     });
   </script>
 </body>

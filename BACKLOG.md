@@ -35,14 +35,14 @@ RTL no — decided 4 Jul 2026.
 
 ### Setup and configuration — R14 (load-time core; generator lands with R8)
 
-- [ ] Load-time config: facet.js reads data-theme / data-mode / density /
+- [x] Load-time config: facet.js reads data-theme / data-mode / density /
       language off its own script tag or a facet-config JSON block, and
       boots the page into that configuration before first paint.
-- [ ] Runtime setters: facet.set({theme, mode, density, accent…}) applies
+- [x] Runtime setters: facet.set({theme, mode, density, accent…}) applies
       key-value pairs live — theme, dark/light, accent overrides restyle
       in real time, no reload. Attributes stay the source of truth so
       custom scripts keep working.
-- [ ] Document the setup step on the site: a "Set up your project"
+- [x] Document the setup step on the site: a "Set up your project"
       strip — pick theme and mode, copy the configured script tags.
 
 ### Context in facet.js — R5

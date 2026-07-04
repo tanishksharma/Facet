@@ -208,8 +208,10 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 One attribute on the html tag switches the theme, layout containers
 included. Dark mode is its own attribute, `data-mode="dark"`, and composes
 with every theme. facet.js also carries both in the URL query (?theme=,
-?mode=) and wires switcher buttons via `data-theme-switch` and
-`data-mode-toggle`.
+?mode=), wires switcher buttons via `data-theme-switch` and
+`data-mode-toggle`, boots a page from data attributes on its own script
+tag (`data-theme`, `data-mode`, ...), and exposes `facet.set({...})` for
+live configuration changes at runtime.
 
 ### Theme · Default (ships first, no attribute)
 
