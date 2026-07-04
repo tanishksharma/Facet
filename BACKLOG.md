@@ -67,16 +67,16 @@ RTL no — decided 4 Jul 2026.
 
 ### Offline, updates and PWA — R6 + R12
 
-- [ ] State the pre-v1 policy: "always the latest from the web until v1"
+- [x] State the pre-v1 policy: "always the latest from the web until v1"
       on the site and in llms.txt.
-- [ ] Service worker template: cached library files + offline shell,
+- [x] Service worker template: cached library files + offline shell,
       served instantly from cache, revalidated against the server when
       online; newer versions download in the background and a flag makes
       them take over on the next refresh or navigation, never mid-page.
-- [ ] Registration and install helpers in facet.js: one call (or data
+- [x] Registration and install helpers in facet.js: one call (or data
       attribute) registers the worker; beforeinstallprompt captured and
       exposed as a simple install-button wiring.
-- [ ] manifest.json template plus icon-set checklist in the starter.
+- [x] manifest.json template plus icon-set checklist in the starter.
 
 ### Motion personality — R17
 

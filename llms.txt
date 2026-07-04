@@ -13,8 +13,19 @@ This list is the inventory: if a capability is not on it, it does not
 exist. It matches the Features section on the library homepage.
 
 Distribution: two files, one link + one script tag, public URL, no
-framework, no npm, no build step, never minified, frozen /lib/v1/ copies
-pin old projects when versioning starts.
+framework, no npm, no build step, never minified. Until v1 every project
+always gets the latest straight from the web; from v1, frozen /lib/v1/
+copies pin old projects and cached updates apply only at page
+boundaries.
+
+App-ready (PWA): a one-line sw.js stub — importScripts of
+/lib/facet-sw.js — gives any project the shared caching strategy:
+cache-first serving, background revalidation, offline shell, updates
+that take over on the next refresh or navigation, never mid-page.
+data-service-worker="/sw.js" on the script tag registers it;
+[data-install] buttons show only when the browser offers installation
+(facet.install() for programmatic prompts); /templates/manifest.json is
+the fill-in manifest with the icon checklist.
 
 Theming: one attribute (data-theme) restyles the whole page including
 layout containers; dark mode is its own attribute (data-mode="dark") and
@@ -363,7 +374,30 @@ for calculator apps:
     facet.numberWords(n)       "7.43 crore" / "74.25 million" / "7.43
                                करोड़" per locale and language
     facet.numberSystem()       "indian" or "western", however resolved
-    facet.strings              the translation table; extend in place"
+    facet.strings              the translation table; extend in place
+    facet.install()            show the install prompt when available
+
+## Offline, install and updates
+
+Create sw.js at your project root with exactly one line:
+
+    importScripts("https://[domain]/lib/facet-sw.js");
+
+(The browser requires the registered file to be same-origin; the line is
+a pointer, not a copy — the strategy lives in the library and updates
+centrally.) Then opt in on the script tag:
+
+    <script src="https://[domain]/lib/facet.js"
+            data-service-worker="/sw.js" defer></script>
+
+Pages then serve from cache instantly and work offline; every request
+revalidates in the background, and newer versions take over on the next
+refresh or navigation. Add <link rel="manifest" href="/manifest.json">
+using /templates/manifest.json (name, colors matched to your theme's
+--background, icons 192 / 512 / 512-maskable), give any button
+data-install, and the button appears exactly when installation is
+available. Until v1, the library itself is always the latest from the
+web; versioned freezes start at /lib/v1/.
 
 ## Rules for building on Facet
 

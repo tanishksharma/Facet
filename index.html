@@ -329,7 +329,8 @@
         <ul>
           <li>Two files, one link tag and one script tag, hosted at a public URL. No React, no npm, no build step, nothing to install.</li>
           <li>Never minified: the shipped files are the readable, commented source. Gzip handles size.</li>
-          <li>Projects consume by URL and update the moment the library does. Frozen copies under /lib/v1/ will pin old projects forever.</li>
+          <li>Projects consume by URL and update the moment the library does — until v1, always the latest, straight from the web. From v1: frozen copies under /lib/v1/ pin old projects forever, and cached updates take over only on the next page load, never mid-page.</li>
+          <li>App-ready out of the box: a one-line service worker stub gives any project the Facet caching strategy — opens instantly from cache, works offline, revalidates in the background. <code>data-service-worker</code> registers it; <code>data-install</code> buttons appear when the browser offers installation; a manifest template ships in /templates.</li>
         </ul>
 
         <h3>Theming</h3>
