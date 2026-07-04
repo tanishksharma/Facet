@@ -2209,6 +2209,40 @@ figcaption {
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.4);
 }
 
+/* ----- THEMED MAP: a Google Map wearing the active theme -----
+   What it is: a Google Map wearing the active theme — ground, water,
+   parks and roads derived from the base family, labels from the text
+   family, boundaries from the quiet accent, recomputed live when the
+   theme or mode switches. What it is for: maps that belong to the
+   product instead of arriving in Google's own colors. When to use it:
+   any embedded map. Bring your own key: put data-map on a div, the key
+   in data-map-key (or data-maps-key on the facet.js script tag),
+   optional data-lat / data-lng / data-zoom. Without a key, or offline,
+   the div is this quiet themed placeholder — a token grid and one
+   line of type, never a broken embed. */
+[data-map] {
+  aspect-ratio: 16 / 10;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-medium);
+  overflow: hidden;              /* the live canvas honours the radius */
+  background:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px),
+    var(--surface);
+  background-size: 2rem 2rem, 2rem 2rem, auto;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  text-align: center;
+}
+[data-map="live"] {
+  display: block;                /* hand layout back to the Maps canvas */
+  padding: 0;
+  background: var(--surface);
+}
+
 /* Apple-style continuous corners wherever a rectangle has a radius.
    Progressive: browsers without corner-shape keep plain rounding.
    Pills (tab bar, gauge) stay true capsules on purpose. */

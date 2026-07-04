@@ -480,6 +480,22 @@ data-install, and the button appears exactly when installation is
 available. Until v1, the library itself is always the latest from the
 web; versioned freezes start at /lib/v1/.
 
+## Themed map
+
+A Google Map wearing the active theme — ground, water, parks and roads
+derived from the base family, labels from the text family, boundaries
+from the quiet accent, recomputed live when the theme or mode switches.
+Bring your own key (the library never ships one): put data-map on a
+div, the key in data-map-key (or data-maps-key on the facet.js script
+tag), optional data-lat / data-lng / data-zoom. Without a key, or
+offline, the div stays a quiet themed placeholder — never a broken
+embed. facet.mapStyle() returns the styles array for anything else.
+Styles derive from tokens by formula, never hand-tuned per theme, so
+every future theme gets its map for free.
+
+    <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12"
+         data-map-key="YOUR_KEY"></div>
+
 ## The app kit (ingested from the shipped inflation app)
 
 Tooltip on touch: the [data-tip] bubble gains a triangle tail, and on

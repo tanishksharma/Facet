@@ -373,6 +373,7 @@
           <li><a href="#float-button">Float button</a></li>
           <li><a href="#scroll-gauge">Scroll gauge</a></li>
           <li><a href="#choice-grid">Choice grid</a></li>
+          <li><a href="#map">Themed map</a></li>
         </ul>
         <strong>For machines</strong>
         <ul>
@@ -422,6 +423,7 @@
           <li>Custom accent as a supported recipe: override a rank's four tokens (color, hover, pressed, on-color) in one block — page-wide on :root or per-subtree on any element — and every component using that rank follows in every state. The recipe with a live example is in the Color section; <code>facet.set</code> applies the same override live at runtime.</li>
           <li>Style Mixer, the theme generator: a picker per semantic token restyles this whole page live on top of any theme, hover/pressed shades and on-colors derive automatically, the mix rides the URL for sharing, and the result exports as a paste-ready <code>facet.set</code> config block.</li>
           <li>Skin Lab: every theme in light and dark side by side, all rendering the same real slice of interface from identical markup — the one-attribute promise, proven in one glance.</li>
+          <li>Themed Google Map: <code>data-map</code> on a div, bring your own key, and the map wears the active theme — ground, water, roads and labels derived from the tokens by formula, restyled live on theme or mode switch; a quiet themed placeholder without a key, never a broken embed; <code>facet.mapStyle()</code> exposes the styles array.</li>
         </ul>
 
         <h3>Tokens</h3>
@@ -668,6 +670,36 @@
         </div>
         <pre id="code-choice-grid"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-choice-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- THEMED MAP -->
+      <article class="element stack" id="map">
+        <h3>Themed map</h3>
+        <p>
+          What it is: a Google Map wearing the active theme — ground,
+          water, parks and roads derived from the base family, labels
+          from the text family, boundaries from the quiet accent,
+          recomputed live when the theme or mode switches. What it is
+          for: maps that belong to the product instead of arriving in
+          Google's own colors. When to use it: any embedded map. Bring
+          your own key (like the analytics rule — the library never
+          ships one): put <code>data-map</code> on a div, the key in
+          <code>data-map-key</code> (or <code>data-maps-key</code> on
+          the facet.js script tag), optional <code>data-lat</code> /
+          <code>data-lng</code> / <code>data-zoom</code>. Without a
+          key, or offline, the div stays the quiet themed placeholder
+          you see below — never a broken embed.
+          <code>facet.mapStyle()</code> returns the styles array for
+          anything else. Styles derive from tokens by formula, never
+          hand-tuned per theme, so every future theme gets its map for
+          free. This page carries no key on purpose: the placeholder
+          IS the honest no-key state.
+        </p>
+        <div class="demo">
+          <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12" data-tip="Wears whatever theme this page is in"></div>
+        </div>
+        <pre id="code-map"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- =============================================================
