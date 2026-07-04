@@ -26,7 +26,7 @@
       "--accent-3", "--accent-3-hover", "--accent-3-pressed", "--on-accent-3"
     ],
     "status": ["--success", "--warning", "--error", "--info"],
-    "type": ["--font-heading", "--font-body", "--font-mono", "--text-display", "--text-title", "--text-heading", "--text-body", "--text-small", "--text-caption", "--weight-normal", "--weight-strong", "--weight-heading"],
+    "type": ["--font-heading", "--font-body", "--font-mono", "--text-display", "--text-h1", "--text-h2", "--text-h3", "--text-h4", "--text-body", "--text-small", "--text-caption", "--weight-heading", "--weight-body", "--weight-strong", "--leading-heading", "--leading-body"],
     "space": ["--space-1", "--space-2", "--space-3", "--space-4", "--space-5", "--space-6", "--space-7", "--space-8"],
     "shape": ["--radius-small", "--radius-medium", "--radius-large", "--radius-pill", "--border-width", "--border-width-strong"],
     "elevation": ["--shadow-raised", "--shadow-floating", "--shadow-overlay"],
@@ -40,6 +40,7 @@
     { "attribute": "data-transition", "on": "html", "summary": "page enables cross-document view transitions." },
     { "attribute": "data-language", "on": "html", "summary": "Switches every library string (en, hi; extend facet.strings)." },
     { "attribute": "data-numbers", "on": "html", "summary": "indian or western digit grouping; overrides the location default." },
+    { "attribute": "data-density", "on": "html or any element", "summary": "compact tightens the whole spacing scale; same mechanic as themes." },
     { "attribute": "data-tip", "on": "any element", "summary": "Description tooltip; data-tip-below flips it under; taps peek it on touch." },
     { "attribute": "data-event", "on": "actions", "summary": "Stable analytics hook name; wire any vendor with the documented bridge." },
     { "attribute": "data-copy", "on": "button", "summary": "Copies the text of the selector it points at." },
@@ -70,7 +71,9 @@
     { "name": "Install nudge", "classes": [".nudge-scrim", ".nudge-card", ".nudge-add", ".nudge-later", ".nudge-never", ".eyebrow"], "summary": "Add-to-home-screen card driven by facet.installNudge." },
     { "name": "Instruction overlay", "classes": [".overlay-guide", ".overlay-title", ".overlay-sub"], "summary": "Full-screen dark guide layer for one-time gestures." },
     { "name": "Themed map", "attributes": ["data-map", "data-map-key", "data-lat", "data-lng", "data-zoom"], "summary": "Google Map wearing the active theme, restyled live on theme/mode switch; themed placeholder without a key." },
-    { "name": "Skip link", "classes": [".skip-link"], "summary": "Keyboard-first jump to content on every page." }
+    { "name": "Skip link", "classes": [".skip-link"], "summary": "Keyboard-first jump to content on every page." },
+    { "name": "Visually hidden", "classes": [".visually-hidden"], "summary": "Screen-reader-only text; the standard clip pattern." },
+    { "name": "Text roles", "classes": [".text-display", ".text-h1", ".text-h2", ".text-h3", ".text-h4", ".text-body", ".text-small", ".text-caption"], "summary": "The type scale as classes — a scale step on any element without inline styles." }
   ],
   "api": {
     "facet.set": "Apply {theme, mode, density, language, numbers, motion, transition} or any \"--token\" override live.",

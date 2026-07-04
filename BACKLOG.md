@@ -252,15 +252,19 @@ Platform laws docs and the R11 chart item.
 
 ### Reader adaptation — R3
 
-- [ ] prefers-contrast: more — stronger borders and text tokens in every
-      theme.
-- [ ] Forced-colors mode: audit and fix the library under
-      forced-colors: active (Windows High Contrast).
-- [ ] data-density="compact": one attribute tightens the spacing scale
-      page-wide, same mechanic as themes.
-- [ ] .visually-hidden utility class for screen-reader-only text.
-- [ ] Text roles: one class per role, display down to caption, so the
-      scale is usable without inline styles (carried from Layer 1).
+- [x] prefers-contrast: more — token-layer formulas after every theme
+      block: muted text becomes the ink, borders mix 55% toward it,
+      focus ring thickens to 3px; holds in all themes and modes.
+- [x] Forced-colors mode: audited under emulation; background-shaped
+      pieces (tab indicator, gauge, sheet, nudge card, float button,
+      slider, tooltip) keep a real border in the system palette.
+- [x] data-density="compact": tightens the whole spacing scale, html
+      or any subtree, same mechanic as themes; config key already
+      wired through R14.
+- [x] .visually-hidden utility class, standard clip pattern.
+- [x] Text roles: .text-display/.text-h1…h4/.text-body/.text-small/
+      .text-caption — same names as the tokens; display and heading
+      steps carry the heading voice.
 
 ### Backgrounds — R15
 

@@ -903,6 +903,86 @@
 }
 
 /*
+   Reader adaptation (R3). The page bends to the reader, not the other
+   way around — and it bends at the token layer, so every theme and
+   every component adapts with zero extra code.
+*/
+
+/* Stronger contrast on request: muted text gives up its gray, borders
+   climb toward the ink, the focus ring thickens. Formulas over the
+   active theme's own tokens, so this holds in all five themes, light
+   and dark. Placed after every theme block on purpose — same-or-higher
+   specificity, later wins. */
+@media (prefers-contrast: more) {
+  :root,
+  [data-mode],
+  [data-theme],
+  [data-theme][data-mode] {
+    --text-muted: var(--text);
+    --border: color-mix(in srgb, var(--text) 55%, var(--background));
+    --focus-ring: 3px solid var(--accent-3);
+  }
+}
+
+/* Forced colors (Windows High Contrast): the OS repaints everything in
+   its own palette. The audit fixes the pieces that vanish — elements
+   whose shape was carried by a background alone get a real border, so
+   they keep their outline in the system palette. */
+@media (forced-colors: active) {
+  .tab-indicator,
+  .scroll-gauge,
+  .scroll-gauge-thumb,
+  .sheet,
+  .nudge-card,
+  .float-btn { border: 1px solid ButtonText; }
+  .slider { border: 1px solid ButtonText; border-radius: var(--radius-pill); }
+  [data-tip]::after { border: 1px solid CanvasText; }
+}
+
+/* Compact density: one attribute tightens the whole spacing scale —
+   the same mechanic as themes, works on html or any subtree.
+   <html data-density="compact">, or facet.set({density: "compact"}). */
+[data-density="compact"] {
+  --space-1: 0.125rem;  /*  2px */
+  --space-2: 0.375rem;  /*  6px */
+  --space-3: 0.5rem;    /*  8px */
+  --space-4: 0.75rem;   /* 12px */
+  --space-5: 1rem;      /* 16px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-7: 2rem;      /* 32px */
+  --space-8: 3rem;      /* 48px */
+}
+
+/* Screen-reader-only text: visually gone, fully read. The standard
+   clip pattern; undo by removing the class, never by overriding. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Text roles: the type scale as classes, one per token, so any element
+   can take a scale step without an inline style. Display and the
+   heading steps carry the heading voice; the rest stay in the body
+   voice. Same names as the tokens: .text-display, .text-h1 … .text-h4,
+   .text-body, .text-small, .text-caption. */
+.text-display { font-family: var(--font-heading); font-size: var(--text-display); font-weight: var(--weight-heading); line-height: 1.1; }
+.text-h1      { font-family: var(--font-heading); font-size: var(--text-h1); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
+.text-h2      { font-family: var(--font-heading); font-size: var(--text-h2); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
+.text-h3      { font-family: var(--font-heading); font-size: var(--text-h3); font-weight: var(--weight-strong); line-height: var(--leading-heading); }
+.text-h4      { font-family: var(--font-heading); font-size: var(--text-h4); font-weight: var(--weight-strong); line-height: var(--leading-heading); }
+.text-body    { font-size: var(--text-body);    line-height: var(--leading-body); }
+.text-small   { font-size: var(--text-small);   line-height: 1.5; }
+.text-caption { font-size: var(--text-caption); line-height: 1.4; color: var(--text-muted); }
+
+
+/*
    Motion personality · the spring, upgraded. Browsers that understand
    linear() get a real spring for --ease-spring: overshoot, then settle
    with momentum. Everyone else keeps the bouncy back-out fallback above.

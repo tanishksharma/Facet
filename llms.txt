@@ -234,6 +234,21 @@ page choice.
 Focus: --focus-ring, --focus-offset. One visible ring everywhere,
 keyboard only.
 
+## Reader adaptation
+
+The page bends to the reader at the token layer, so every theme and
+component adapts with zero extra code. prefers-contrast: more — muted
+text gives up its gray, borders climb toward the ink, the focus ring
+thickens, in every theme and mode. Forced colors (Windows High
+Contrast) — audited; background-shaped elements keep a real border in
+the system palette. data-density="compact" on html or any subtree (or
+the density script-tag/config key) tightens the whole spacing scale.
+.visually-hidden is screen-reader-only text. Text roles .text-display,
+.text-h1, .text-h2, .text-h3, .text-h4, .text-body, .text-small,
+.text-caption put the type scale on any element without inline styles.
+And rem sizing everywhere means the phone's text-size setting scales
+the entire interface.
+
 ## Base styles
 
 Raw semantic HTML already looks like Facet: headings, paragraphs, links,

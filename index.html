@@ -472,6 +472,11 @@
           <li>Seamless page transitions: with <code>data-transition="page"</code> on the html tag, moving between pages animates the old page away and springs the new one in while the URL changes normally — real multi-page navigation, no router. Per-link opt-out with <code>data-no-transition</code>, <code>facet.go(url)</code> for programmatic moves; unsupported browsers just navigate instantly, and reduced motion snaps.</li>
           <li>Motion with personality: Lively by default — presses have weight, arrivals settle with a playful spring (a true <code>linear()</code> spring curve where supported) — or <code>data-motion="calm"</code> for short, near-linear motion, <code>data-motion="off"</code> for none. One attribute, page-wide or per subtree; every transition reads the motion tokens.</li>
           <li><code>prefers-reduced-motion</code> honoured above any page choice: every transition and animation in the library collapses to nothing.</li>
+          <li><code>prefers-contrast: more</code> honoured at the token layer: muted text gives up its gray, borders climb toward the ink, the focus ring thickens — in every theme, light and dark, zero extra code.</li>
+          <li>Forced colors (Windows High Contrast) audited: elements whose shape was carried by a background alone keep a real border in the system palette.</li>
+          <li>Compact density: <code>data-density="compact"</code> tightens the whole spacing scale — the same one-attribute mechanic as themes, page-wide or per subtree, and a script-tag config key.</li>
+          <li><code>.visually-hidden</code>: screen-reader-only text with the standard clip pattern.</li>
+          <li>Text roles: <code>.text-display</code>, <code>.text-h1</code>…<code>.text-h4</code>, <code>.text-body</code>, <code>.text-small</code>, <code>.text-caption</code> — the type scale as classes, so any element takes a scale step without an inline style.</li>
           <li>Print base included: sensible margins, navigation hidden, ink-friendly colors when a page is printed.</li>
         </ul>
 
