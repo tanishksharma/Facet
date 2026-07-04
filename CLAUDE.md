@@ -26,6 +26,7 @@ static site on every push to main.
   document.html    A4 document template (future)
 index.html         the library: docs, demo and element wall in one page
 llms.txt           the full usage guide as plain text for AI crawlers
+REQUIREMENTS.md    owner decisions, numbered, waiting to be backlogged
 BACKLOG.md         the build list: one checkbox per item
 ```
 
@@ -53,11 +54,10 @@ Projects consume the library by URL, never by copying files in:
 - Whenever a component or rule changes, three places update together with
   the same wording: the file comment in facet.css/facet.js, the wall entry
   on index.html, and llms.txt.
-- If the Notion MCP is available: at session start, fetch the Facet Notion
-  page (id `38bb4fa1867c80d2a77cd2f4d318cc15`) and mirror any new
-  Requirements lines into BACKLOG.md. At session end, update that page's
-  Requirements if something shipped that completes one.
-- Never add implementation detail to Notion. It stays a charter.
+- Requirements flow: owner decisions land in REQUIREMENTS.md. Claude breaks
+  each requirement into BACKLOG.md checkboxes sized one commit each, marks
+  it `[backlogged]`, and works the backlog top-down. Notion is not part of
+  the loop anymore; the repo is the whole system of record.
 
 ## Core principles
 
