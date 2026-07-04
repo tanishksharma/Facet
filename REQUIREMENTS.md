@@ -9,7 +9,7 @@ mark it `[shipped]`.
 
 Decisions recorded on 4 Jul 2026. Explicit exclusions at the bottom.
 
-## R1 · Token model: base + three accents
+## R1 · Token model: base + three accents [backlogged]
 
 Move the color system from a single `--accent` to a ranked accent model:
 
@@ -28,7 +28,7 @@ ranks. Migration: all current components move to the new tokens; the old
 `--accent` names are removed, not aliased. The docs Color section, the
 Features list and llms.txt update to teach the ranked model.
 
-## R2 · System-native Default theme
+## R2 · System-native Default theme [backlogged]
 
 The Default (white/black) theme should feel native on Apple platforms
 automatically:
@@ -44,7 +44,7 @@ automatically:
   colors so the Default theme reads as "native app" on iPhone/Mac with
   zero configuration.
 
-## R3 · Reader adaptation (browser/OS-level respect)
+## R3 · Reader adaptation (browser/OS-level respect) [backlogged]
 
 - [shipped in part] Text size: the whole interface scales with the
   device/browser text-size setting (everything in rem). Keep this
@@ -56,7 +56,7 @@ automatically:
   page-wide, same one-attribute mechanic as themes.
 - `.visually-hidden` utility for screen-reader-only text.
 
-## R4 · Internationalisation (no RTL)
+## R4 · Internationalisation (no RTL) [backlogged]
 
 Build a full translation system for the library's own strings:
 
@@ -71,7 +71,7 @@ Build a full translation system for the library's own strings:
   locale.
 - Explicitly out of scope: right-to-left layout. No RTL work.
 
-## R5 · Context built into facet.js
+## R5 · Context built into facet.js [backlogged]
 
 facet.js exposes ready-to-use context properties so apps never rewrite
 this plumbing:
@@ -88,7 +88,7 @@ this plumbing:
 - These feed R4: detected location informs default locale for number
   words and translations, overridable by the page.
 
-## R6 · PWA mechanics inside facet.js
+## R6 · PWA mechanics inside facet.js [backlogged]
 
 The PWA machinery ships in the library, not in each project:
 
@@ -101,7 +101,7 @@ The PWA machinery ships in the library, not in each project:
   the starter; safe-area insets and viewport handled in the base (already
   shipped in part).
 
-## R7 · Safari/iOS web capabilities and child safety
+## R7 · Safari/iOS web capabilities and child safety [backlogged]
 
 Research task, then implementation of what applies:
 
@@ -116,7 +116,7 @@ Research task, then implementation of what applies:
   to be OS-only (not controllable by websites), record that finding in
   the docs instead of shipping placebo.
 
-## R8 · Theming suite
+## R8 · Theming suite [backlogged]
 
 - Aero theme: Frutiger Aero — sky aqua, glass gloss, translucent plastic,
   pill buttons. Light and dark.
@@ -130,7 +130,7 @@ Research task, then implementation of what applies:
 - Skin Lab: every theme in light and dark side by side across real
   layouts, for consistency checks.
 
-## R9 · AI-native and developer experience
+## R9 · AI-native and developer experience [backlogged]
 
 - `facet.json`: machine-readable manifest of every class, data attribute,
   token and component — the API surface as data, kept in sync by the same
@@ -144,7 +144,7 @@ Research task, then implementation of what applies:
 - Live size badge on the site: "X KB gzipped, zero dependencies,"
   computed, not hand-written.
 
-## R10 · Site polish (from the docs research)
+## R10 · Site polish (from the docs research) [backlogged]
 
 Click-to-copy tokens; "/" and Cmd+K keyboard search; heading permalink
 anchors; class-reference table per component; keyboard-interaction table
@@ -153,7 +153,7 @@ notes; live AA/AAA contrast badges that re-check on theme switch;
 component status badges (alpha/beta/stable); viewport-width toggles on
 demos; Open-in-CodePen buttons; edit-on-GitHub links per section.
 
-## R11 · Component roadmap (existing backlog, reaffirmed)
+## R11 · Component roadmap (existing backlog, reaffirmed) [backlogged]
 
 Row and grid primitives; switch, checkbox, radio; segmented control,
 stepper; card; modal, drawer, popover; accordion, toast, dropdown; tabs,
@@ -163,6 +163,48 @@ scroll inertia, gyroscope upgrade, idle animations, all off under
 reduced motion. Then Layer 4 blocks and Layer 5 templates (deck, A4,
 business card, landing, app shell, article, SEO starter, PWA starter),
 and versioning (/lib/v1/ freeze, changelog, version switcher).
+
+## R12 · Versioning, caching and the update flow [backlogged]
+
+- Until v1: projects always get the latest library straight from the web.
+  No cache pinning, no versions — a push to main updates every consumer.
+  This policy is stated on the site and in llms.txt.
+- From v1 onwards: versioning plus caching. The service worker serves the
+  cached library files instantly (app works offline and loads fast), and
+  when the device is online it revalidates against the server. If the
+  server has a newer version, it is downloaded and cached in the
+  background, and a flag is set so the new files take over on the next
+  refresh or the next page navigation — never mid-page.
+- Frozen copies under /lib/v1/ pin old projects forever; a changelog and
+  a version switcher on the site arrive with the first freeze.
+
+## R13 · Seamless page transitions [backlogged]
+
+Moving between pages of a Facet product must not look like one page died
+and another loaded in a flash. The old page transitions away and the new
+one transitions in, while the URL changes normally.
+
+- Opt-in feature: enable transition animations site-wide with one
+  attribute or one call; links can opt in/out individually.
+- Built on the View Transitions API for multi-page navigation where
+  supported, degrading to instant navigation elsewhere — never broken
+  navigation, and the URL always changes for real.
+- Collapses to nothing under prefers-reduced-motion, like all motion.
+
+## R14 · Setup and configuration system [backlogged]
+
+Using Facet in a project starts with a setup step, not with reading CSS:
+
+- On the library site: assemble your customized version of the theme —
+  colors, mode, density, language — and copy it out as key-value pairs.
+- In the project: load the library and hand it those key-value pairs (or
+  just a theme name and version) at the script tag / a small config
+  object. The page boots directly into that configuration.
+- Changes apply in real time: setting theme, dark/light mode or accent
+  colors through the config API restyles the page live, no reload.
+- Custom scripts keep working: the config API is plain JS, documented,
+  and everything it can do is also doable by setting the attributes and
+  tokens directly.
 
 ## Exclusions — decided, do not build
 

@@ -1,79 +1,193 @@
 # Facet backlog
 
-The build list, in working order. One checkbox per item, ticked as it lands.
+The build list. One checkbox per item, each sized to land in one commit.
 Every session: read this file, work the top unchecked item unless told
-otherwise, tick what ships. The Notion page is the charter; this file is
-the plan.
+otherwise, tick what ships. Items carry the requirement they come from
+(R1–R14 in REQUIREMENTS.md). Shipped work is recorded at the bottom.
 
-## Tokens
+Ordering logic: the accent-rank migration (R1) goes first because every
+component and theme sits on it. Then the config/theming spine (R14, R2),
+reader adaptation (R3), navigation and context (R13, R5), i18n (R4), the
+offline/update machinery (R6+R12), research (R7), the theming suite (R8),
+DX (R9), site polish (R10), and the long component/blocks/templates road
+(R11).
 
-- [x] Core palette: background, surface, text, muted text, borders
-- [x] Accent color plus hover and pressed shades
-- [x] Status colors: success, warning, error, info
-- [x] Dark mode values for every color token
-- [x] One-attribute theme switch on the html tag (Default, Sand; aero and elegant stubbed)
-- [x] Layout containers restyle with the theme: padding, gaps, backgrounds
-- [x] Font stack: one heading font, one body font, one mono font
-- [x] Type scale: display, h1 to h4, body, small, caption
-- [ ] Text roles: one class per role, display down to label
-- [x] Weights and line heights per scale step
-- [x] Spacing scale on a 4px base
-- [x] Container widths: narrow, default, wide, full
-- [x] Radius scale: small, medium, large, pill
-- [x] Border widths
-- [x] Shadow scale: flat, raised, floating, overlay
-- [x] Motion durations: fast, normal, slow
-- [x] Easing curves
-- [x] Reduced motion handling
+## Queue · in working order
 
-## Base styles
+### Accent ranks — R1
 
-- [x] Reset: box sizing, margin reset, sensible element defaults, [hidden] wins
-- [x] Text: headings, paragraphs, links, lists
-- [x] Blockquote, code, inline code, horizontal rule
-- [x] Forms: raw input, textarea, select and button defaults
-- [x] Labels, fieldsets, placeholder styling
-- [x] Media: responsive images and video
-- [x] Default table styling
-- [x] Focus rings, text selection, scrollbars
-- [x] Skip-to-content link
-- [x] Print base: page margins, hide non-print elements
+- [ ] Retokenise color: keep the base family (--background, --surface,
+      --text, --text-muted, --border), replace --accent/--accent-hover/
+      --accent-pressed/--on-accent with --accent-1/-2/-3, each with
+      -hover, -pressed and --on-accent-N, defined for Default light/dark
+      and Sand light/dark. Old names removed, not aliased.
+- [ ] Migrate every component to ranks: btn-primary → accent-1,
+      btn-secondary and ghost hover → accent-2, links, slider thumb,
+      selection, focus ring, number-words, chips → accent-3. One primary
+      per screen stays the rule.
+- [ ] Docs update for ranks: Color section teaches base + three accents
+      with live swatches per rank; Features line, llms.txt, CLAUDE.md
+      theme sections all reworded in the same commit.
 
-## Components
+### Setup and configuration — R14 (load-time core; generator lands with R8)
 
-- [x] Container: page-width wrapper with themed padding
-- [x] Stack: vertical flow with themed gaps
+- [ ] Load-time config: facet.js reads data-theme / data-mode / density /
+      language off its own script tag or a facet-config JSON block, and
+      boots the page into that configuration before first paint.
+- [ ] Runtime setters: facet.set({theme, mode, density, accent…}) applies
+      key-value pairs live — theme, dark/light, accent overrides restyle
+      in real time, no reload. Attributes stay the source of truth so
+      custom scripts keep working.
+- [ ] Document the setup step on the site: a "Set up your project"
+      strip — pick theme and mode, copy the configured script tags.
+
+### System-native Default theme — R2
+
+- [ ] Support matrix first: test AccentColor, AccentColorText, Highlight,
+      SelectedItem system colors across Safari/Chrome/Firefox, macOS and
+      iOS; record findings as comments in the theme block.
+- [ ] Wire the Default theme to the OS accent where supported (links,
+      accent-3 affordances, selection, focus ring) behind @supports, ink
+      fallback everywhere else; verify light and dark.
+
+### Reader adaptation — R3
+
+- [ ] prefers-contrast: more — stronger borders and text tokens in every
+      theme.
+- [ ] Forced-colors mode: audit and fix the library under
+      forced-colors: active (Windows High Contrast).
+- [ ] data-density="compact": one attribute tightens the spacing scale
+      page-wide, same mechanic as themes.
+- [ ] .visually-hidden utility class for screen-reader-only text.
+- [ ] Text roles: one class per role, display down to caption, so the
+      scale is usable without inline styles (carried from Layer 1).
+
+### Seamless page transitions — R13
+
+- [ ] Cross-page transitions: @view-transition navigation rules so
+      moving between pages of a Facet product animates old-page-out /
+      new-page-in while the URL changes; instant fallback where
+      unsupported; off under prefers-reduced-motion.
+- [ ] Opt-in controls: one attribute enables transitions site-wide,
+      per-link opt-out, and a facet.js helper for programmatic
+      navigation with the same transition.
+
+### Context in facet.js — R5
+
+- [ ] facet.now: date, time, timezone and pre-formatted helpers,
+      available synchronously.
+- [ ] facet.location: country/region/city from IP lookup (endpoint
+      documented, overridable, disablable), upgraded via Geolocation
+      when permitted; promise + cached property; null on failure, never
+      throws.
+
+### Internationalisation — R4 (no RTL, by decision)
+
+- [ ] Strings table: every built-in string the library ships moves into
+      one table in facet.js; no hardcoded literals remain.
+- [ ] Language switch: one attribute or facet.set({language}) switches
+      all library strings; projects can extend the table with their own
+      languages.
+- [ ] Locale-aware numbers: grouping and words helper follow the locale —
+      lakh/crore for India, million/billion elsewhere — defaulting from
+      facet.location, overridable by the page.
+
+### Offline, updates and PWA — R6 + R12
+
+- [ ] State the pre-v1 policy: "always the latest from the web until v1"
+      on the site and in llms.txt.
+- [ ] Service worker template: cached library files + offline shell,
+      served instantly from cache, revalidated against the server when
+      online; newer versions download in the background and a flag makes
+      them take over on the next refresh or navigation, never mid-page.
+- [ ] Registration and install helpers in facet.js: one call (or data
+      attribute) registers the worker; beforeinstallprompt captured and
+      exposed as a simple install-button wiring.
+- [ ] manifest.json template plus icon-set checklist in the starter.
+
+### Safari/iOS capabilities and child safety — R7
+
+- [ ] Research pass: catalogue what iOS Safari lets websites do
+      (theme-color light/dark, apple-touch-icon, standalone display,
+      status bar, web push, Screen Time interaction) and what child
+      safety mechanisms actually exist for websites; findings written up
+      in the repo.
+- [ ] Implement the applicable head-pack defaults in the base/starter;
+      document honestly what is OS-only and out of a website's hands.
+
+### Theming suite — R8
+
+- [ ] Custom accent recipe: overriding accent-1/2/3 in one small block,
+      documented as a supported feature with a live example.
+- [ ] Aero theme, light and dark: sky aqua, glass gloss, translucent
+      plastic, pill buttons; palette locked in the theme block.
+- [ ] Elegant theme, light and dark: cream and gold, serif display,
+      carved elevation; obsidian-and-gold dark twin.
+- [ ] Theme generator (Style Mixer): pickers for the semantic colors,
+      live restyle of the whole page, export as the R14 key-value config
+      block, shareable via URL.
+- [ ] Skin Lab: every theme in light and dark side by side across real
+      layouts.
+
+### AI-native and DX — R9
+
+- [ ] facet.json: machine-readable manifest of every class, data
+      attribute, token and component, kept in sync by the three-places
+      rule.
+- [ ] "Copy as Markdown for LLM" button per wall entry.
+- [ ] Analytics bridge: the documented five-line snippet wiring any
+      vendor to the data-event hooks.
+- [ ] Playground: one editable HTML box rendering live through the
+      library.
+- [ ] Cheatsheet: every class on one dense, searchable screen.
+- [ ] Live size badge: "X KB gzipped, zero dependencies," computed.
+
+### Site polish — R10
+
+- [ ] Click-to-copy tokens: every swatch and token name copies its
+      var(--name) on click.
+- [ ] Keyboard-first search: "/" or Cmd+K focuses the wall search, arrow
+      keys move through results.
+- [ ] Heading permalink anchors: hover a heading, copy the deep link.
+- [ ] Class reference table per component: every class, modifier and
+      data attribute with a one-liner.
+- [ ] Keyboard interaction table on interactive components.
+- [ ] Do/Don't pairs per component with a one-sentence reason.
+- [ ] Accessibility notes per component: ARIA behavior, contrast, screen
+      reader expectations.
+- [ ] Live AA/AAA contrast badges on color pairs, re-checked on theme
+      switch.
+- [ ] Component status badges: alpha / beta / stable per wall entry.
+- [ ] Viewport-width toggles on demos: phone / tablet / desktop.
+- [ ] Open in CodePen: posts the snippet plus the two tags to
+      codepen.io/pen/define.
+- [ ] Edit-on-GitHub link per component section.
+
+### Components — R11
+
 - [ ] Row: horizontal flow with wrap and themed gaps
 - [ ] Grid: responsive columns with themed gaps
-- [x] Snap section: full-viewport scroll-snap area, the calculator page skeleton
-- [x] Button: primary, secondary, ghost, three sizes
-- [x] Icon button
 - [ ] Switch, checkbox, radio
-- [x] Slider
 - [ ] Stepper, segmented control
-- [ ] Input, textarea, select, search field (as components with field wiring)
-- [x] Number input: prefilled example, one-tap clear, Indian digit grouping with words helper
-- [x] Labelled field with hint and error state
+- [ ] Input, textarea, select, search field as wired field components
 - [ ] File upload, date input
 - [ ] Card: default, outlined, clickable
 - [ ] Modal, drawer, popover
-- [x] Description tooltip attachable to any element with one attribute
 - [ ] Accordion, toast, dropdown menu
 - [ ] Tabs, breadcrumb, pagination
 - [ ] Nav link states: default, hover, active
-- [ ] Table component: header, zebra rows, row hover (beyond base styling)
+- [ ] Table component: header, zebra rows, row hover
 - [ ] Badge, chip, avatar, progress bar
-- [x] Result block: verdict-first big number with supporting figures
 - [ ] Skeleton, spinner, empty state block
 - [ ] Flagship link: the signature style for linking to another page
+- [ ] Icon set: thin 1.5px line glyphs, around 40 to start
 - [ ] Motion: desktop parallax driven by pointer position
-- [ ] Motion: mobile parallax driven by scroll, with velocity, weight and inertia
+- [ ] Motion: mobile parallax driven by scroll — velocity, weight,
+      inertia
 - [ ] Motion: gyroscope upgrade where permission is granted
 - [ ] Motion: idle animations on key elements at rest
-- [x] Motion: all effects disabled under prefers-reduced-motion
-- [ ] Icon set: thin 1.5px line glyphs, around 40 to start
 
-## Blocks
+### Blocks — R11
 
 - [ ] Grid of cards with responsive columns
 - [ ] Horizontal scrolling card row
@@ -96,12 +210,14 @@ the plan.
 - [ ] Prose block: styled long-form text
 - [ ] Media figure with caption, pull quote
 
-## Templates
+### Templates and versioning — R11 + R12
 
 - [ ] Landing page assembled from marketing blocks
 - [ ] App shell: sidebar plus top bar frame with one dashboard screen
-- [ ] Pitch deck: 1920x1080 slide class, full-screen presenting, arrow-key navigation
-- [ ] Pitch deck: slide layouts — title, content, two-column, chart, closing
+- [ ] Pitch deck: 1920x1080 slide class, full-screen presenting,
+      arrow-key navigation
+- [ ] Pitch deck: slide layouts — title, content, two-column, chart,
+      closing
 - [ ] Pitch deck: print-to-PDF export at exact 1080p
 - [ ] A4 document: page class with print margins
 - [ ] A4 document: letterhead, invoice table, one-pager layout
@@ -111,75 +227,49 @@ the plan.
 - [ ] SEO starter: head pack — title, meta description, OG tags, favicon
 - [ ] SEO starter: JSON-LD slots — article, product, organization
 - [ ] SEO starter: sitemap.xml and robots.txt
-- [ ] PWA starter: manifest.json plus icon set, installable out of the box
-- [ ] PWA starter: service worker — offline shell, cached library files
+- [ ] PWA starter: manifest plus icon set, installable out of the box
+      (mechanics land earlier under R6)
+- [ ] v1 freeze: copy /lib/ to /lib/v1/, tag the release, start the
+      changelog, add the version switcher to the site
 
-## Site
+## Shipped
 
-- [x] Header: wordmark, theme switcher, GitHub link
-- [x] Get-started strip: link and script tags, one copy button
-- [x] Rules on the page, near the top, same text as CLAUDE.md and llms.txt
-- [x] Typography section: the scale as a real article — display, headings,
-      body, lists, quote, callout, small, caption — each block tagged with
-      its token
-- [x] Color section: the same mini-interface twice, light and dark side by
-      side, following the active theme (subtree theming via data-mode on
-      any element)
-- [x] Spacing section: real components on a tinted ground — control-row
-      gaps, card padding, stack gaps, section rhythm
-- [x] Shape, elevation and motion section
-- [x] Element wall: every built component live, grouped by layer
-- [x] Dividers between sections and wall entries
-- [x] Code + copy button per element, serialized from the live DOM
-- [x] Description per element as AI instructions, same text as file comments
-- [x] Variant and state chips flipping the live demo
-- [x] Theme switcher with URL state (?theme=, ?mode=)
-- [x] Sidebar index with anchors, search filtering the wall
-- [x] Scrollspy: the section on screen highlights in the sidebar
-- [x] Features section: the complete capability inventory on the page,
-      mirrored in llms.txt, with the no-orphan-features rule in CLAUDE.md
-- [ ] Playground: editable HTML box rendering live
-- [x] llms.txt at the root for AI crawlers
-- [ ] Style Mixer, later: axis controls that export a new theme
-- [ ] Skin Lab, later: all themes side by side across layouts
+### Tokens and themes
+- [x] Core palette, accent + hover/pressed, status colors, dark values
+      for every token
+- [x] One-attribute theme switch (Default, Sand; aero and elegant
+      stubbed); layout containers restyle with the theme
+- [x] Subtree theming: data-theme / data-mode work on any element
+- [x] Font stacks, type scale, weights and line heights
+- [x] 4px spacing scale, container widths, radii, border widths, shadow
+      scale, motion durations and easings, reduced-motion handling
 
-## Site ideas · from researching other libraries' docs
+### Base styles
+- [x] Reset (box sizing, margins, media defaults, [hidden] wins)
+- [x] Text, forms, media, tables — every raw tag styled
+- [x] Focus rings, selection, scrollbars, skip link, print base
 
-Ranked by value-to-effort for a single static page with vanilla JS.
-Sources: shadcn/ui, Tailwind, Radix, MUI, Bootstrap, daisyUI, Storybook,
-Primer, Carbon, Polaris, Spectrum, Open Props.
+### Components
+- [x] Container (four widths) · Stack (three gaps) · Snap section
+- [x] Button (three variants, three sizes) · Icon button
+- [x] Number input: prefilled example, one-tap clear, Indian grouping,
+      words helper · Labelled field with hint and error state
+- [x] Slider with live readout · Result block (three variants)
+- [x] Description tooltip: data-tip on anything, data-tip-below variant
 
-- [ ] Click-to-copy tokens: every swatch and token name copies its
-      var(--name) on click (Open Props)
-- [ ] Section permalink anchors: hover a heading, copy a deep link
-      (Tailwind)
-- [ ] Keyboard-first search: "/" or Cmd+K focuses the wall search, arrow
-      keys jump between results (shadcn/ui)
-- [ ] Copy section as Markdown: per-component "copy for LLM" button,
-      companion to llms.txt (shadcn/ui, Tailwind v4)
-- [ ] Class reference table per component: every class, modifier and data
-      attribute with a one-liner — the HTML equivalent of a props table
-      (Radix, MUI)
-- [ ] Keyboard interaction table on interactive components: Tab, Enter,
-      Esc, arrows (Radix)
-- [ ] Do/Don't pairs: one right and one wrong mini-demo per component with
-      a one-sentence reason (Polaris)
-- [ ] Accessibility notes per component: ARIA behavior, contrast, screen
-      reader expectations in place (Carbon)
-- [ ] Live contrast badges: computed AA/AAA chips next to color pairs,
-      re-checked on theme switch (daisyUI)
-- [ ] Component status badges: alpha / beta / stable chip per wall entry
-      (Primer)
-- [ ] Viewport preview toggles: phone/tablet/desktop widths on each demo
-      (Storybook, shadcn/ui blocks)
-- [ ] Open in CodePen: one button that posts the snippet plus the two tags
-      to codepen.io/pen/define — no backend needed (MUI's sandbox links)
-- [ ] Cheatsheet strip: one dense searchable table of every class in the
-      library (Bootstrap cheatsheet)
-- [ ] Edit-on-GitHub link per component section (Primer, Tailwind)
-- [ ] Templates gallery: scaled live iframes of deck/card/document once
-      Layer 5 lands (Bootstrap examples)
-- [ ] Version switcher + changelog once /lib/v1/ exists (Bootstrap)
-- [ ] Theme generator: pick the five semantic colors, live-restyle the
-      page, export the CSS block, share via URL — the Style Mixer, staged
-      (daisyUI theme generator)
+### The library site
+- [x] Header: wordmark, live theme switcher with URL state, dark toggle,
+      GitHub link
+- [x] Get-started strip with self-filling domain and one copy button
+- [x] Features section: the complete capability inventory, mirrored in
+      llms.txt, no-orphan-features rule in CLAUDE.md
+- [x] Rules on the page, near the top, same text as CLAUDE.md and
+      llms.txt
+- [x] Typography as a real article · Color as light/dark side by side ·
+      Spacing through real components · Shape/elevation/motion section
+- [x] Element wall: every component live with description-as-AI-
+      instructions, variant/state chips, DOM-serialized snippets with
+      copy buttons
+- [x] Sidebar index with search filtering, scrollspy highlighting,
+      dividers between sections
+- [x] llms.txt: the full plain-text manual for AI crawlers
