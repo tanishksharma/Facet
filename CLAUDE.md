@@ -239,6 +239,17 @@ contrast. Background `#EDE5C0`, surface `#F6F0D8`, text `#33291A`, muted
 `#86794F`, borders `#D9CD9E`. Accent-1 `#5F9E44` cactus, accent-2 the
 sandstone fill, accent-3 `#48802F` deep cactus.
 
+### Theme · Velvet (`data-theme="velvet"`)
+
+Neumorphic matte material extracted from the shipped inflation app
+(reference: handoff-velvet.md until fully ingested). One light source
+from straight above; elements are raised faces or carved wells; gold is
+the only accent ink (accent-1 and accent-3 gold, accent-2 the raised
+gray face family); serif display headings, rounded control voice.
+Cushion-press physics are hand-tuned finals and hold in every motion
+personality. The --v-* material tokens are kept verbatim from the
+reference implementation.
+
 ### Themes · Aero and Elegant (stubs)
 
 Aero: Frutiger Aero era — sky aqua, glass gloss, translucent plastic, pill

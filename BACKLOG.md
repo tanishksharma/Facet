@@ -120,7 +120,7 @@ delete handoff-velvet.md when every box below is ticked. Each item
 still runs the full pipeline (checklist, wall entry, Features +
 llms.txt, verify, commit).
 
-- [ ] Velvet theme (§1): [data-theme="velvet"] light + dark — the two
+- [x] Velvet theme (§1): [data-theme="velvet"] light + dark — the two
       --v-* value blocks plus the standard base/accent-rank tokens
       mapped from them (gold = accent-1, gray face = accent-2, gold ink
       = accent-3); component recipes fold into facet.css scoped under

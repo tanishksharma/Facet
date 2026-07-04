@@ -285,6 +285,316 @@
   --shadow-overlay: 0 12px 32px rgb(0 0 0 / 0.55);
 }
 
+
+/*
+   Theme · Velvet (light). <html data-theme="velvet">.
+   A CRED-inspired neumorphic material, extracted from the shipped
+   inflation app (reference: handoff-velvet.md, tuned in /apps/velvet-tuner
+   and user-approved — trust these values over taste). Matte velvet
+   surfaces, ONE light source from straight above: elements are either
+   RAISED out of the fabric (face gradient + key light + cast shadow +
+   bevel) or CARVED into it (wells and pits with interior shadows). Gold
+   is the only accent ink.
+
+   The behavioral laws that ARE this theme (full text ships with the
+   library docs): one raised face per screen — the primary CTA wears the
+   accent; cushion press — the dent is a fading overlay, the face
+   gradient never changes on press; raised text rides up and dips while
+   pressed; icons engrave like text; state changes ease, never jump;
+   elements carrying velvet lift/press transforms must NOT register with
+   parallax modules (inline transforms collide); never put `inherit`
+   inside a font list.
+
+   Standard tokens are mapped so every Facet component works here:
+   accent-1 is the gold, accent-2 the raised gray face family, accent-3
+   the gold ink. The --v-* material tokens are kept verbatim from the
+   reference so recipes diff cleanly against the app.
+*/
+[data-theme="velvet"] {
+  --background: #e4e4e9;
+  --surface: #d6d6db;         /* the well: carved things sit on this */
+  --text: #636367;
+  --text-muted: #8c8c90;
+  --border: #cfcfd4;
+
+  --accent-1: #8a6c26;        /* the gold */
+  --accent-1-hover: #7a5f20;
+  --accent-1-pressed: #6b531c;
+  --on-accent-1: #FFFFFF;
+
+  --accent-2: #e6e6ea;        /* the raised face family */
+  --accent-2-hover: #dfdfe3;
+  --accent-2-pressed: #d6d6db;
+  --on-accent-2: #636367;
+
+  --accent-3: #8a6c26;        /* gold ink: links, focus, live values */
+  --accent-3-hover: #7a5f20;
+  --accent-3-pressed: #6b531c;
+  --on-accent-3: #FFFFFF;
+
+  /* Two type voices: an elegant serif display for statements, the
+     rounded stack for controls and micro labels. */
+  --font-heading: "Baskerville", "Palatino", "New York", ui-serif, Georgia, serif;
+  --weight-heading: 400;
+
+  /* ---- VELVET value block · light (verbatim from the reference) ---- */
+  --v-bg: #e4e4e9;
+  --v-well-bg: #d6d6db;
+  --v-face:
+    radial-gradient(120% 90% at 50% 0%, rgba(255,255,255,0.45), transparent 68%),
+    linear-gradient(180deg, #e6e6ea, #d6d6db);
+  --v-face-accent:
+    radial-gradient(120% 90% at 50% 0%, rgba(255,255,255,0.6), transparent 68%),
+    linear-gradient(180deg, #ecd8b2, #d1bb91);
+  --v-ink: #8c8c90;
+  --v-ink-strong: #636367;
+  --v-ink-accent: #5C4A18;
+  --v-gold: #8a6c26;
+  --v-weight: 750;
+  --v-text-shadow: 0 1px 1px rgba(255,255,255,0.5), 0 -1px 1px rgba(0,0,0,0.1);
+  --v-icon-filter: drop-shadow(0 1px 1px rgba(255,255,255,0.65)) drop-shadow(0 -1px 1px rgba(0,0,0,0.13));
+  --v-key: 0 -7px 16px rgba(255,255,255,0.9);
+  --v-cast: 0 12px 28px rgba(0,0,0,0.15);
+  --v-bevel:
+    inset 0 1.5px 2.5px rgba(255,255,255,0.95),
+    inset 0 -1.5px 2.5px rgba(255,255,255,0.35),
+    inset 0 -3px 5px rgba(0,0,0,0.12);
+  --v-raised: var(--v-key), var(--v-cast), var(--v-bevel);
+  --v-raised-pressed: 0 -5.95px 13.6px rgba(255,255,255,0.9), 0 10.2px 23.8px rgba(0,0,0,0.15), var(--v-bevel);
+  --v-pill: var(--v-cast), var(--v-bevel);   /* inside a well: no key light */
+  --v-raised-2nd: 0 -3.15px 7.2px rgba(255,255,255,0.9), 0 5.4px 12.6px rgba(0,0,0,0.15), var(--v-bevel);
+  --v-well-shadow:
+    var(--v-key), var(--v-cast),
+    inset 0 3px 6px rgba(255,255,255,0.5),
+    inset 0 2.8px 7px rgba(0,0,0,0.22),
+    inset 0 -2.8px 7px rgba(255,255,255,0.9);
+  --v-pit:
+    inset 0 2.8px 7px rgba(0,0,0,0.22),
+    inset 0 -2.8px 7px rgba(255,255,255,0.9);
+  --v-dent-btn: radial-gradient(72% 62% at 50% 58%, rgba(0,0,0,0.056), transparent 78%);
+  --v-dent-tap: radial-gradient(72% 62% at 50% 58%, rgba(0,0,0,0.14), transparent 78%);
+  --v-div-line: linear-gradient(180deg, transparent, rgba(0,0,0,0.18) 25%, rgba(0,0,0,0.18) 75%, transparent);
+  --v-div-edge: 0 1px 2px rgba(255,255,255,0.6), 1px 0 2px rgba(255,255,255,0.6);
+  --v-div-blur: 0.3px;
+  --v-well-pad: 7px;  --v-pill-drop: 2px;  --v-face-up: 2.5px;
+  --v-lift: 3px;  --v-dip: 1.5px;  --v-sink: 1px;
+  --v-font: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", "Varela Round", "Nunito", sans-serif;
+  /* press lands fast, release springs back — tuned, final, personality-proof */
+  --v-press-in: 0.09s ease-out;
+  --v-press-out: 0.32s cubic-bezier(0.34, 1.45, 0.6, 1);
+}
+
+/*
+   Theme · Velvet (dark). <html data-theme="velvet" data-mode="dark">.
+   Same material at night: deeper wells, wider casts, gold turns pale.
+*/
+[data-theme="velvet"][data-mode="dark"] {
+  --background: #1a1a1e;
+  --surface: #17171a;
+  --text: #ffffff;
+  --text-muted: #9c9ca1;
+  --border: #2e2e33;
+
+  --accent-1: #dcbe8e;
+  --accent-1-hover: #e6cc9f;
+  --accent-1-pressed: #d0b07c;
+  --on-accent-1: #160e00;
+
+  --accent-2: #353539;
+  --accent-2-hover: #3c3c41;
+  --accent-2-pressed: #454549;
+  --on-accent-2: #ffffff;
+
+  --accent-3: #dcbe8e;
+  --accent-3-hover: #e6cc9f;
+  --accent-3-pressed: #d0b07c;
+  --on-accent-3: #160e00;
+
+  /* ---- VELVET value block · dark (verbatim from the reference) ---- */
+  --v-bg: #1a1a1e;
+  --v-well-bg: #17171a;
+  --v-face:
+    radial-gradient(120% 110% at 50% 0%, rgba(255,255,255,0.08), transparent 68%),
+    linear-gradient(180deg, #353539, #17171a);
+  --v-face-accent:
+    radial-gradient(120% 110% at 50% 0%, rgba(255,255,255,0.26), transparent 68%),
+    linear-gradient(180deg, #423b2e, #160e00);
+  --v-ink: #ffffff;
+  --v-ink-strong: #ffffff;
+  --v-ink-accent: #ffffff;
+  --v-gold: #dcbe8e;
+  --v-weight: 650;
+  --v-text-shadow: 0 1px 1.5px rgba(0,0,0,0.5), 0 -1px 1.5px rgba(255,255,255,0.25);
+  --v-icon-filter: drop-shadow(0 1px 1.5px rgba(0,0,0,0.65)) drop-shadow(0 -1px 1.5px rgba(255,255,255,0.33));
+  --v-key: 0 -8px 32px rgba(255,255,255,0.11);
+  --v-cast: 0 9px 53px rgba(0,0,0,0.73);
+  --v-bevel:
+    inset 0 1.5px 4.5px rgba(255,255,255,0.08),
+    inset 0 -1.5px 4.5px rgba(255,255,255,0.08),
+    inset 0 -3px 16px rgba(0,0,0,0.71);
+  --v-raised: var(--v-key), var(--v-cast), var(--v-bevel);
+  --v-raised-pressed: var(--v-key), var(--v-cast), var(--v-bevel); /* pressElev 1 */
+  --v-pill: var(--v-cast), var(--v-bevel);
+  --v-raised-2nd: 0 -2.8px 11.2px rgba(255,255,255,0.11), 0 3.15px 18.55px rgba(0,0,0,0.73), var(--v-bevel);
+  --v-well-shadow:
+    var(--v-key), var(--v-cast),
+    inset 0 1.5px 3px rgba(255,255,255,0.1),
+    inset 0 7.2px 18px rgba(0,0,0,0.91),
+    inset 0 -9.6px 24px rgba(255,255,255,0.11);
+  --v-pit:
+    inset 0 5px 13px rgba(0,0,0,0.75),
+    inset 0 -5px 14px rgba(255,255,255,0.09);
+  --v-dent-btn: radial-gradient(65% 56% at 50% 40%, rgba(0,0,0,0.4), transparent 78%);
+  --v-dent-tap: radial-gradient(65% 56% at 50% 40%, rgba(0,0,0,1), transparent 78%);
+  --v-div-line: linear-gradient(180deg, rgba(0,0,0,1), rgba(0,0,0,1));
+  --v-div-edge: 0 1px 2px rgba(255,255,255,0.17), 1px 0 2px rgba(255,255,255,0.17);
+  --v-div-blur: 0.6px;
+  --v-well-pad: 7px;  --v-pill-drop: 3px;  --v-face-up: 0px;
+  --v-lift: 2.5px;  --v-dip: 1px;  --v-sink: 0px;
+}
+
+/*
+   Velvet recipes: how existing Facet components wear the material.
+   Scoped under the theme; recipes for the handoff's new components (tab
+   bar, sheet, gauge...) arrive with those components. Press language
+   everywhere: the dent is a fading ::after overlay, the face gradient
+   never changes; the tuned press physics are final in every motion
+   personality — only data-motion="off" and prefers-reduced-motion stop
+   them.
+*/
+
+/* Inputs are carved into the material. */
+[data-theme="velvet"] input:not(.slider),
+[data-theme="velvet"] textarea,
+[data-theme="velvet"] select {
+  background: var(--v-well-bg);
+  border-color: transparent;
+  box-shadow: var(--v-pit);
+}
+[data-theme="velvet"] input:not(.slider):hover,
+[data-theme="velvet"] textarea:hover,
+[data-theme="velvet"] select:hover { border-color: transparent; }
+
+/* Buttons: rounded voice, raised faces, cushion press. */
+[data-theme="velvet"] .btn {
+  position: relative;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--v-font);
+  font-weight: var(--v-weight);
+  color: var(--v-ink);
+  text-shadow: var(--v-text-shadow);
+  background: var(--v-face);
+  box-shadow: var(--v-raised-2nd);
+  transition: transform var(--v-press-out), box-shadow var(--v-press-out);
+}
+[data-theme="velvet"] .btn::after {
+  content: ""; position: absolute; inset: 0; border-radius: var(--radius-pill);
+  background: var(--v-dent-btn); opacity: 0; pointer-events: none;
+  transition: opacity var(--v-press-out);
+}
+[data-theme="velvet"] .btn:hover { background: var(--v-face); border: none; }
+[data-theme="velvet"] .btn:active {
+  transform: translateY(1px);
+  transition-duration: 0.09s, 0.09s;
+}
+[data-theme="velvet"] .btn:active::after { opacity: 1; transition: opacity var(--v-press-in); }
+
+/* The one raised face per screen: the primary CTA wears the gold. */
+[data-theme="velvet"] .btn-primary {
+  background: var(--v-face-accent);
+  color: var(--v-ink-accent);
+  box-shadow: var(--v-raised);
+  transform: translateY(calc(-1 * var(--v-face-up)));
+}
+[data-theme="velvet"] .btn-primary:hover { background: var(--v-face-accent); }
+[data-theme="velvet"] .btn-primary:active {
+  background: var(--v-face-accent);
+  box-shadow: var(--v-raised-pressed);
+  transform: translateY(calc(var(--v-sink) - var(--v-face-up)));
+}
+
+/* Tertiary stays flat: label never lifts, 1px fixed press sink. */
+[data-theme="velvet"] .btn-ghost {
+  background: transparent;
+  box-shadow: none;
+}
+[data-theme="velvet"] .btn-ghost:hover { background: transparent; border: none; }
+[data-theme="velvet"] .btn-ghost:active { transform: translateY(1px); }
+
+/* Sliders: carved groove, raised knob carrying the gold jewel; grabbing
+   deepens the gold — the face itself never changes. */
+[data-theme="velvet"] .slider::-webkit-slider-runnable-track {
+  height: 10px; background: var(--v-well-bg); box-shadow: var(--v-pit);
+}
+[data-theme="velvet"] .slider::-moz-range-track {
+  height: 10px; background: var(--v-well-bg); box-shadow: var(--v-pit);
+}
+[data-theme="velvet"] .slider::-moz-range-progress { background: transparent; }
+[data-theme="velvet"] .slider::-webkit-slider-thumb {
+  width: 32px; height: 32px; margin-top: -11px;
+  background:
+    radial-gradient(circle closest-side at 50% 42%,
+      color-mix(in srgb, var(--v-gold) 78%, #fff 30%) 0,
+      var(--v-gold) 55%,
+      color-mix(in srgb, var(--v-gold) 72%, #000 28%) 88%,
+      transparent 93%) no-repeat 50% 50% / 18px 18px,
+    var(--v-face);
+  border: none;
+  box-shadow: var(--v-pill);
+}
+[data-theme="velvet"] .slider::-moz-range-thumb {
+  width: 32px; height: 32px;
+  background:
+    radial-gradient(circle closest-side at 50% 42%,
+      color-mix(in srgb, var(--v-gold) 78%, #fff 30%) 0,
+      var(--v-gold) 55%,
+      color-mix(in srgb, var(--v-gold) 72%, #000 28%) 88%,
+      transparent 93%) no-repeat 50% 50% / 18px 18px,
+    var(--v-face);
+  border: none;
+  box-shadow: var(--v-pill);
+}
+[data-theme="velvet"] .slider:active::-webkit-slider-thumb {
+  background:
+    radial-gradient(circle closest-side at 50% 42%,
+      color-mix(in srgb, var(--v-gold) 88%, #000 8%) 0,
+      color-mix(in srgb, var(--v-gold) 74%, #000 26%) 55%,
+      color-mix(in srgb, var(--v-gold) 55%, #000 45%) 88%,
+      transparent 93%) no-repeat 50% 50% / 18px 18px,
+    var(--v-face);
+}
+[data-theme="velvet"] .slider:active::-moz-range-thumb {
+  background:
+    radial-gradient(circle closest-side at 50% 42%,
+      color-mix(in srgb, var(--v-gold) 88%, #000 8%) 0,
+      color-mix(in srgb, var(--v-gold) 74%, #000 26%) 55%,
+      color-mix(in srgb, var(--v-gold) 55%, #000 45%) 88%,
+      transparent 93%) no-repeat 50% 50% / 18px 18px,
+    var(--v-face);
+}
+
+/* Result blocks are wells; the numbers that matter glow gold. */
+[data-theme="velvet"] .result {
+  background: var(--v-well-bg);
+  border: none;
+  border-radius: var(--radius-large);
+  box-shadow: var(--v-pit);
+}
+[data-theme="velvet"] .result-number { color: var(--v-gold); }
+[data-theme="velvet"] .number-words { color: var(--v-gold); }
+[data-theme="velvet"] .field output { color: var(--v-gold); }
+
+/* Micro labels: the rounded voice, wide-tracked uppercase. */
+[data-theme="velvet"] .field-label {
+  font-family: var(--v-font);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+}
+
 /*
    Theme · Aero (stub). <html data-theme="aero">.
    Frutiger Aero era: sky aqua, glass gloss, translucent plastic, pill

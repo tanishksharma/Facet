@@ -119,8 +119,12 @@ included. Dark mode is a second attribute and composes with every theme.
 
 Themes: Default (white and black, the accent ranks are the ink itself)
 ships first. Sand (Minecraft desert beige, cactus accent-1) is parked and
-working.
-Aero (glass and sky) and Elegant (cream and gold) are stubbed; their
+working. Velvet (data-theme="velvet") is the neumorphic material
+extracted from the shipped inflation app: matte velvet surfaces, one
+light source from above, elements raised out of the fabric or carved
+into it, gold as the only accent ink, serif display headings, tuned
+cushion-press physics that hold in every motion personality. Aero
+(glass and sky) and Elegant (cream and gold) are stubbed; their
 palettes get locked when they are built.
 
 facet.js also reads ?theme= and ?mode= from the URL on load, so a shared
