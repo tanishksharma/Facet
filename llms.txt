@@ -16,7 +16,8 @@ Distribution: two files, one link + one script tag, public URL, no
 framework, no npm, no build step, never minified. Until v1 every project
 always gets the latest straight from the web; from v1, frozen /lib/v1/
 copies pin old projects and cached updates apply only at page
-boundaries.
+boundaries. /facet.json is the machine-readable manifest: every theme,
+token, class, data attribute, component and API call in one fetch.
 
 App-ready (PWA): a one-line sw.js stub — importScripts of
 /lib/facet-sw.js — gives any project the shared caching strategy:

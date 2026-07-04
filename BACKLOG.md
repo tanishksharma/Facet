@@ -228,9 +228,11 @@ Platform laws docs and the R11 chart item.
       site-owned restricted key later by adding data-maps-key to the
       script tag; nothing else changes.
 
-- [ ] facet.json: machine-readable manifest of every class, data
-      attribute, token and component, kept in sync by the three-places
-      rule.
+- [x] facet.json: machine-readable manifest at the repo root — files,
+      themes, modes, motion personalities, languages, every token by
+      group, global data attributes, every component with classes/
+      attributes/one-liner, the full facet.* API. Kept in sync by the
+      three-places rule (updates in the same commit as any capability).
 - [ ] "Copy as Markdown for LLM" button per wall entry.
 - [ ] Analytics bridge: the documented five-line snippet wiring any
       vendor to the data-event hooks.
