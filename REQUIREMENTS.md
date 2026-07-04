@@ -206,6 +206,25 @@ Using Facet in a project starts with a setup step, not with reading CSS:
   and everything it can do is also doable by setting the attributes and
   tokens directly.
 
+## R15 · Background patterns [backlogged]
+
+A set of subtle page and section backgrounds, applied with one class:
+
+- The signature one: a very light, faint grid that simulates a technical
+  drawing — thin grid lines with small plus marks at the intersections,
+  the kind of ground you could draft on. Whisper-faint: content always
+  wins, the pattern never competes.
+- More light repeating patterns in the same spirit: dot grid, ruled
+  lines, graph paper with minor/major lines — a small curated set, not a
+  pattern zoo.
+- Token-driven like everything else: patterns read the border/muted
+  tokens so they recolor with every theme and both modes automatically,
+  and they respect prefers-contrast (fade further or drop out rather
+  than fight readability).
+- One class on any section or page (e.g. bg-grid, bg-dots); combinable
+  with containers and snap sections; zero images to load — CSS
+  gradients/masks only, keeping the no-asset, no-build promise.
+
 ## Exclusions — decided, do not build
 
 - Right-to-left layout support. Translation yes (R4), RTL no.

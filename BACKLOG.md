@@ -163,6 +163,18 @@ DX (R9), site polish (R10), and the long component/blocks/templates road
       codepen.io/pen/define.
 - [ ] Edit-on-GitHub link per component section.
 
+### Backgrounds — R15
+
+- [ ] Technical-drawing grid background: faint grid lines with plus
+      marks at the intersections, one class (bg-grid) on any section or
+      page, drawn with CSS gradients only, colored by tokens so it works
+      in every theme, light and dark
+- [ ] Pattern set: dot grid, ruled lines, graph paper with minor/major
+      lines — same one-class mechanic, whisper-faint, fades out under
+      prefers-contrast
+- [ ] Backgrounds wall entry with pattern chips, plus the Features and
+      llms.txt lines
+
 ### Components — R11
 
 - [ ] Row: horizontal flow with wrap and themed gaps
