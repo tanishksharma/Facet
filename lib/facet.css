@@ -982,6 +982,88 @@
 .text-caption { font-size: var(--text-caption); line-height: 1.4; color: var(--text-muted); }
 
 
+/* ----- BACKGROUNDS: quiet patterns, one class, any theme -----
+   What it is: whisper-faint page and section backgrounds drawn with
+   CSS gradients only, colored by the tokens so every theme and mode
+   gets them for free. What it is for: giving big quiet surfaces a
+   material — a hero, a section divider zone, a whole page. When to
+   use it: one class on a section or body; content sits straight on
+   top. All patterns fade to nothing under prefers-contrast: more.
+   The set: .bg-grid (technical drawing: plus marks at the grid
+   intersections), .bg-dots (dot grid), .bg-ruled (writing lines),
+   .bg-graph (graph paper, minor and major lines). */
+
+.bg-grid,
+.bg-dots,
+.bg-ruled,
+.bg-graph {
+  --bg-ink: color-mix(in srgb, var(--text-muted) 28%, transparent);
+  --bg-ink-faint: color-mix(in srgb, var(--text-muted) 14%, transparent);
+  --bg-cell: 2.5rem;
+}
+
+/* Technical drawing: a plus mark at every grid intersection and
+   nothing else. Built from four gradient layers — two full gridline
+   layers underneath, two background-colored cover layers on top with
+   a transparent window at each intersection, so only plus-length
+   stubs of the lines show through. Gradients only, no images. */
+.bg-grid {
+  --bg-plus: 0.75rem;
+  background-color: var(--background);
+  background-image:
+    /* cover with vertical windows (bounds the horizontal arms) */
+    linear-gradient(90deg,
+      var(--background) 0 calc(50% - var(--bg-plus) / 2),
+      transparent 0 calc(50% + var(--bg-plus) / 2),
+      var(--background) 0),
+    /* cover with horizontal windows (bounds the vertical arms) */
+    linear-gradient(180deg,
+      var(--background) 0 calc(50% - var(--bg-plus) / 2),
+      transparent 0 calc(50% + var(--bg-plus) / 2),
+      var(--background) 0),
+    /* the gridlines themselves, crossing at every tile center */
+    linear-gradient(180deg,
+      transparent 0 calc(50% - 0.5px), var(--bg-ink) 0 calc(50% + 0.5px), transparent 0),
+    linear-gradient(90deg,
+      transparent 0 calc(50% - 0.5px), var(--bg-ink) 0 calc(50% + 0.5px), transparent 0);
+  background-size: var(--bg-cell) var(--bg-cell);
+}
+
+/* Dot grid: one soft dot per half cell. */
+.bg-dots {
+  background-color: var(--background);
+  background-image: radial-gradient(circle, var(--bg-ink) 1px, transparent 1.5px);
+  background-size: calc(var(--bg-cell) / 2) calc(var(--bg-cell) / 2);
+}
+
+/* Ruled: writing lines, generous leading. */
+.bg-ruled {
+  background-color: var(--background);
+  background-image: linear-gradient(var(--bg-ink) 1px, transparent 1px);
+  background-size: 100% 1.75rem;
+}
+
+/* Graph paper: faint minor squares, firmer major squares. */
+.bg-graph {
+  background-color: var(--background);
+  background-image:
+    linear-gradient(var(--bg-ink) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-ink) 1px, transparent 1px),
+    linear-gradient(var(--bg-ink-faint) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-ink-faint) 1px, transparent 1px);
+  background-size:
+    var(--bg-cell) var(--bg-cell),
+    var(--bg-cell) var(--bg-cell),
+    calc(var(--bg-cell) / 5) calc(var(--bg-cell) / 5),
+    calc(var(--bg-cell) / 5) calc(var(--bg-cell) / 5);
+}
+
+/* Contrast request: the whisper goes silent. */
+@media (prefers-contrast: more) {
+  .bg-grid, .bg-dots, .bg-ruled, .bg-graph { background-image: none; }
+}
+
+
 /*
    Motion personality · the spring, upgraded. Browsers that understand
    linear() get a real spring for --ease-spring: overshoot, then settle

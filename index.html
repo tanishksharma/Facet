@@ -271,6 +271,9 @@
       background: transparent;
     }
 
+    /* Backgrounds demo: a fixed-height canvas so the pattern reads. */
+    #backgrounds .demo > section { min-height: 11rem; border-radius: var(--radius-medium); }
+
     /* Docs-only frames for specific demos. */
     #snap-section .demo { padding: 0; overflow: hidden; }   /* clips the mini viewport */
     #snap-section .snap { height: 20rem; }
@@ -397,6 +400,7 @@
           <li><a href="#scroll-gauge">Scroll gauge</a></li>
           <li><a href="#choice-grid">Choice grid</a></li>
           <li><a href="#map">Themed map</a></li>
+          <li><a href="#backgrounds">Backgrounds</a></li>
         </ul>
         <strong>Tools</strong>
         <ul>
@@ -501,6 +505,7 @@
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
           <li>Speaks the visitor's numbers and language: grouping and the words helper follow the locale — lakh/crore where that is the norm, million/billion elsewhere — defaulting from <code>facet.location</code>, overridable with <code>data-numbers</code>. Every string the library ships comes from one translation table, switched with <code>data-language</code> and extendable in one line: <code>facet.strings.ta = {...}</code>. No right-to-left support, by design.</li>
           <li>Built-in context: <code>facet.now()</code> answers the date, time and timezone synchronously; <code>facet.location</code> resolves the visitor's rough place (city, region, country) from a configurable, disablable IP lookup, upgraded to GPS only where permission already exists. Null on failure, never a prompt, never a throw.</li>
+          <li>Backgrounds: <code>.bg-grid</code> (technical drawing with plus-marked intersections), <code>.bg-dots</code>, <code>.bg-ruled</code>, <code>.bg-graph</code> — one class, gradients only, token-colored in every theme and mode, silent under <code>prefers-contrast: more</code>.</li>
         </ul>
 
         <h3>Accessible by default</h3>
@@ -740,6 +745,36 @@
         </div>
         <pre id="code-map"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- BACKGROUNDS -->
+      <article class="element stack" id="backgrounds">
+        <h3>Backgrounds</h3>
+        <p>
+          What it is: whisper-faint page and section backgrounds drawn
+          with CSS gradients only, colored by the tokens so every theme
+          and mode gets them for free. What it is for: giving big quiet
+          surfaces a material — a hero, a section divider zone, a whole
+          page. When to use it: one class on a section or body; content
+          sits straight on top. The set: <code>.bg-grid</code>
+          (technical drawing: plus marks at the grid intersections),
+          <code>.bg-dots</code> (dot grid), <code>.bg-ruled</code>
+          (writing lines), <code>.bg-graph</code> (graph paper). All of
+          them fade to nothing under <code>prefers-contrast: more</code>.
+        </p>
+        <p class="chips" role="group" aria-label="Background patterns">
+          <button class="chip" aria-pressed="true" data-chip-group="pattern" data-chip-class="bg-grid">Technical grid</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-dots">Dot grid</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-ruled">Ruled</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-graph">Graph paper</button>
+        </p>
+        <div class="demo">
+          <section class="bg-grid" data-tip="The pattern is tokens: switch theme or mode and it follows">
+            <p style="padding: var(--space-5); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
+          </section>
+        </div>
+        <pre id="code-backgrounds"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-backgrounds" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- =============================================================

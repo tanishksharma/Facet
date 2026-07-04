@@ -73,6 +73,7 @@
     { "name": "Themed map", "attributes": ["data-map", "data-map-key", "data-lat", "data-lng", "data-zoom"], "summary": "Google Map wearing the active theme, restyled live on theme/mode switch; themed placeholder without a key." },
     { "name": "Skip link", "classes": [".skip-link"], "summary": "Keyboard-first jump to content on every page." },
     { "name": "Visually hidden", "classes": [".visually-hidden"], "summary": "Screen-reader-only text; the standard clip pattern." },
+    { "name": "Backgrounds", "classes": [".bg-grid", ".bg-dots", ".bg-ruled", ".bg-graph"], "summary": "Whisper-faint token-colored patterns — technical plus-grid, dots, ruled, graph paper; silent under prefers-contrast: more." },
     { "name": "Text roles", "classes": [".text-display", ".text-h1", ".text-h2", ".text-h3", ".text-h4", ".text-body", ".text-small", ".text-caption"], "summary": "The type scale as classes — a scale step on any element without inline styles." }
   ],
   "api": {

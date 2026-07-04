@@ -499,6 +499,18 @@ data-install, and the button appears exactly when installation is
 available. Until v1, the library itself is always the latest from the
 web; versioned freezes start at /lib/v1/.
 
+## Backgrounds
+
+Whisper-faint page and section backgrounds drawn with CSS gradients
+only, colored by the tokens so every theme and mode gets them for
+free. One class on a section or body; content sits straight on top.
+.bg-grid is the technical drawing (plus marks at grid intersections),
+.bg-dots the dot grid, .bg-ruled writing lines, .bg-graph graph paper
+with minor and major lines. All fade to nothing under
+prefers-contrast: more.
+
+    <section class="bg-grid"> ... </section>
+
 ## Themed map
 
 A Google Map wearing the active theme — ground, water, parks and roads

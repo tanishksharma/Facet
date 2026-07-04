@@ -268,15 +268,16 @@ Platform laws docs and the R11 chart item.
 
 ### Backgrounds — R15
 
-- [ ] Technical-drawing grid background: faint grid lines with plus
-      marks at the intersections, one class (bg-grid) on any section or
-      page, drawn with CSS gradients only, colored by tokens so it works
-      in every theme, light and dark
-- [ ] Pattern set: dot grid, ruled lines, graph paper with minor/major
-      lines — same one-class mechanic, whisper-faint, fades out under
-      prefers-contrast
-- [ ] Backgrounds wall entry with pattern chips, plus the Features and
-      llms.txt lines
+- [x] Technical-drawing grid background: .bg-grid — plus marks at the
+      intersections and nothing else, built from four gradient layers
+      (two gridline layers under two background-colored covers with
+      transparent windows at each crossing); tokens only, every theme
+      and mode.
+- [x] Pattern set: .bg-dots, .bg-ruled, .bg-graph (minor/major lines)
+      — same one-class mechanic, whisper-faint, background-image: none
+      under prefers-contrast: more.
+- [x] Backgrounds wall entry with pattern chips, Features line,
+      llms.txt section, facet.json entry.
 
 ### Safari/iOS capabilities and child safety — R7
 
