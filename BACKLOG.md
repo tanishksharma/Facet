@@ -1,18 +1,22 @@
 # Facet backlog
 
-The build list. One checkbox per item, each sized to land in one commit.
-Every session: read this file, work the top unchecked item unless told
-otherwise, tick what ships. Items carry the requirement they come from
-(R1–R14 in REQUIREMENTS.md). Shipped work is recorded at the bottom.
+The build list — the only planning file. One checkbox per item, each
+sized to land in one commit, written with enough detail to build from
+this file alone. The owner adds work by saying it; Claude writes it in
+here immediately, then works the queue top-down on every "continue".
+Shipped work is recorded at the bottom.
 
-Ordering logic: the accent-rank migration (R1) goes first because every
-component and theme sits on it. Then the config/theming spine (R14, R2),
-reader adaptation (R3), navigation and context (R13, R5), i18n (R4), the
-offline/update machinery (R6+R12), research (R7), the theming suite (R8),
-DX (R9), site polish (R10), and the long component/blocks/templates road
-(R11).
+Ordering rule: heavy systems first, lighter work after. The accent-rank
+retokenisation leads because every component sits on it; then the
+configuration spine, the JS context/i18n/offline systems, navigation
+transitions and the native-theme work; the theming suite and machine
+manifest; and only then the lighter CSS adds, site polish and the long
+component/blocks/templates road.
 
-## Queue · in working order
+Standing exclusion: no right-to-left layout support. Translation yes,
+RTL no — decided 4 Jul 2026.
+
+## Queue · heavy systems first
 
 ### Accent ranks — R1
 
@@ -40,37 +44,6 @@ DX (R9), site polish (R10), and the long component/blocks/templates road
       custom scripts keep working.
 - [ ] Document the setup step on the site: a "Set up your project"
       strip — pick theme and mode, copy the configured script tags.
-
-### System-native Default theme — R2
-
-- [ ] Support matrix first: test AccentColor, AccentColorText, Highlight,
-      SelectedItem system colors across Safari/Chrome/Firefox, macOS and
-      iOS; record findings as comments in the theme block.
-- [ ] Wire the Default theme to the OS accent where supported (links,
-      accent-3 affordances, selection, focus ring) behind @supports, ink
-      fallback everywhere else; verify light and dark.
-
-### Reader adaptation — R3
-
-- [ ] prefers-contrast: more — stronger borders and text tokens in every
-      theme.
-- [ ] Forced-colors mode: audit and fix the library under
-      forced-colors: active (Windows High Contrast).
-- [ ] data-density="compact": one attribute tightens the spacing scale
-      page-wide, same mechanic as themes.
-- [ ] .visually-hidden utility class for screen-reader-only text.
-- [ ] Text roles: one class per role, display down to caption, so the
-      scale is usable without inline styles (carried from Layer 1).
-
-### Seamless page transitions — R13
-
-- [ ] Cross-page transitions: @view-transition navigation rules so
-      moving between pages of a Facet product animates old-page-out /
-      new-page-in while the URL changes; instant fallback where
-      unsupported; off under prefers-reduced-motion.
-- [ ] Opt-in controls: one attribute enables transitions site-wide,
-      per-link opt-out, and a facet.js helper for programmatic
-      navigation with the same transition.
 
 ### Context in facet.js — R5
 
@@ -105,15 +78,24 @@ DX (R9), site polish (R10), and the long component/blocks/templates road
       exposed as a simple install-button wiring.
 - [ ] manifest.json template plus icon-set checklist in the starter.
 
-### Safari/iOS capabilities and child safety — R7
+### Seamless page transitions — R13
 
-- [ ] Research pass: catalogue what iOS Safari lets websites do
-      (theme-color light/dark, apple-touch-icon, standalone display,
-      status bar, web push, Screen Time interaction) and what child
-      safety mechanisms actually exist for websites; findings written up
-      in the repo.
-- [ ] Implement the applicable head-pack defaults in the base/starter;
-      document honestly what is OS-only and out of a website's hands.
+- [ ] Cross-page transitions: @view-transition navigation rules so
+      moving between pages of a Facet product animates old-page-out /
+      new-page-in while the URL changes; instant fallback where
+      unsupported; off under prefers-reduced-motion.
+- [ ] Opt-in controls: one attribute enables transitions site-wide,
+      per-link opt-out, and a facet.js helper for programmatic
+      navigation with the same transition.
+
+### System-native Default theme — R2
+
+- [ ] Support matrix first: test AccentColor, AccentColorText, Highlight,
+      SelectedItem system colors across Safari/Chrome/Firefox, macOS and
+      iOS; record findings as comments in the theme block.
+- [ ] Wire the Default theme to the OS accent where supported (links,
+      accent-3 affordances, selection, focus ring) behind @supports, ink
+      fallback everywhere else; verify light and dark.
 
 ### Theming suite — R8
 
@@ -142,6 +124,40 @@ DX (R9), site polish (R10), and the long component/blocks/templates road
 - [ ] Cheatsheet: every class on one dense, searchable screen.
 - [ ] Live size badge: "X KB gzipped, zero dependencies," computed.
 
+### Reader adaptation — R3
+
+- [ ] prefers-contrast: more — stronger borders and text tokens in every
+      theme.
+- [ ] Forced-colors mode: audit and fix the library under
+      forced-colors: active (Windows High Contrast).
+- [ ] data-density="compact": one attribute tightens the spacing scale
+      page-wide, same mechanic as themes.
+- [ ] .visually-hidden utility class for screen-reader-only text.
+- [ ] Text roles: one class per role, display down to caption, so the
+      scale is usable without inline styles (carried from Layer 1).
+
+### Backgrounds — R15
+
+- [ ] Technical-drawing grid background: faint grid lines with plus
+      marks at the intersections, one class (bg-grid) on any section or
+      page, drawn with CSS gradients only, colored by tokens so it works
+      in every theme, light and dark
+- [ ] Pattern set: dot grid, ruled lines, graph paper with minor/major
+      lines — same one-class mechanic, whisper-faint, fades out under
+      prefers-contrast
+- [ ] Backgrounds wall entry with pattern chips, plus the Features and
+      llms.txt lines
+
+### Safari/iOS capabilities and child safety — R7
+
+- [ ] Research pass: catalogue what iOS Safari lets websites do
+      (theme-color light/dark, apple-touch-icon, standalone display,
+      status bar, web push, Screen Time interaction) and what child
+      safety mechanisms actually exist for websites; findings written up
+      in the repo.
+- [ ] Implement the applicable head-pack defaults in the base/starter;
+      document honestly what is OS-only and out of a website's hands.
+
 ### Site polish — R10
 
 - [ ] Click-to-copy tokens: every swatch and token name copies its
@@ -162,18 +178,6 @@ DX (R9), site polish (R10), and the long component/blocks/templates road
 - [ ] Open in CodePen: posts the snippet plus the two tags to
       codepen.io/pen/define.
 - [ ] Edit-on-GitHub link per component section.
-
-### Backgrounds — R15
-
-- [ ] Technical-drawing grid background: faint grid lines with plus
-      marks at the intersections, one class (bg-grid) on any section or
-      page, drawn with CSS gradients only, colored by tokens so it works
-      in every theme, light and dark
-- [ ] Pattern set: dot grid, ruled lines, graph paper with minor/major
-      lines — same one-class mechanic, whisper-faint, fades out under
-      prefers-contrast
-- [ ] Backgrounds wall entry with pattern chips, plus the Features and
-      llms.txt lines
 
 ### Components — R11
 

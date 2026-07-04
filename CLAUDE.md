@@ -26,8 +26,7 @@ static site on every push to main.
   document.html    A4 document template (future)
 index.html         the library: docs, demo and element wall in one page
 llms.txt           the full usage guide as plain text for AI crawlers
-REQUIREMENTS.md    owner decisions, numbered, waiting to be backlogged
-BACKLOG.md         the build list: one checkbox per item
+BACKLOG.md         the build list and only planning file: one checkbox per item
 ```
 
 Projects consume the library by URL, never by copying files in:
@@ -39,8 +38,20 @@ Projects consume the library by URL, never by copying files in:
 
 ## Standing rules — every session
 
-- Read BACKLOG.md first. Work the top unchecked item unless told otherwise.
-  Tick items as they land.
+- The loop: the owner says "continue" — nothing more. Read BACKLOG.md,
+  take the top unchecked item, build it through the full pipeline
+  (compliance checklist, wall entry, Features + llms.txt lines, tick the
+  box, verify in a real browser, commit, push), then take the next item
+  until the turn is done. No re-asking what to work on.
+- New work arrives mid-stream in the owner's words. Write it into
+  BACKLOG.md immediately — detailed enough to build from that file alone,
+  decisions and exclusions included — slot it by the ordering rule, commit
+  it, then return to the top of the queue on the next "continue".
+- Ordering rule: heavy systems before lighter work. Retokenisations,
+  JS subsystems and cross-cutting machinery outrank single components,
+  CSS adds and site polish.
+- BACKLOG.md is the only planning file. No separate requirements doc, no
+  Notion in the loop; the repo is the whole system of record.
 - The feature inventory rule: every capability the library ships is listed
   in the Features section on index.html and mirrored in llms.txt. If a
   capability is not listed there, it does not exist. Every new feature adds
