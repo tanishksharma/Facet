@@ -20,7 +20,7 @@
     {
       "value": "",
       "name": "Default",
-      "summary": "White and black; accent ranks are the ink. Accent-3 takes the OS accent where AccentColor exists (Safari 16.4+, Firefox 103+)."
+      "summary": "White and black; accent ranks are the ink. The OS accent is a separate opt-in token (--os-accent): iOS blue everywhere, the real OS accent where AccentColor exists (Safari 16.4+, Firefox 103+)."
     },
     {
       "value": "sand",
@@ -76,7 +76,11 @@
       "--accent-3",
       "--accent-3-hover",
       "--accent-3-pressed",
-      "--on-accent-3"
+      "--on-accent-3",
+      "--os-accent",
+      "--os-accent-hover",
+      "--os-accent-pressed",
+      "--on-os-accent"
     ],
     "status": [
       "--success",

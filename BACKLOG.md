@@ -21,16 +21,12 @@ RTL no — decided 4 Jul 2026.
 
 ### Semantic color tokens — drop the accent ranks for role names (NEW · pending name sign-off)
 
-Rename the accent ranks and border widths by role (owner-decided names):
+Accents: KEPT as --accent-1/-2/-3 (owner decided not to rename — the ranks
+read fine once explained). DONE alongside: the OS accent is no longer wired
+into accent-3; it is its own dormant opt-in token --os-accent (iOS blue
+everywhere, real OS accent only where the browser exposes it).
 
-Accents (each keeps `-hover`, `-pressed`, `--on-*`):
-- `--accent-1` → `--primary`   (the one primary action; primary button fill,
-  checked controls, progress, chart line, active/selected states)
-- `--accent-2` → `--secondary` (secondary fill; the default button, quiet fills)
-- `--accent-3` → TBD (owner to name — links, labels, focus ring, tab underline,
-  slider, selection; the rank that takes the OS AccentColor in Default theme)
-
-Borders — expand from two width tokens to four role tokens:
+Borders — expand from two width tokens to four role tokens (still to build):
 - `--border-hairline` — a very slight look of separation (subtle dividers)
 - `--border-element`  — the standard border on elements (cards, inputs, chips)
 - `--border-focus`    — the focus ring width, focus only

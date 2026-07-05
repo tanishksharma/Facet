@@ -42,12 +42,12 @@ data-mode-toggle; setup by configuration — data attributes on the
 facet.js script tag boot a page into its look, and facet.set() changes
 theme, mode or any token live at runtime; native scrollbars and form
 controls follow via color-scheme and facet.js keeps the theme-color
-meta synced so the browser chrome wears the theme; system-native
-accent — in browsers
-that expose the OS accent (Safari 16.4+, Firefox 103+) the Default
-theme's accent-3 rank (links, labels, focus rings, selection) takes the
-user's own OS accent like a native app, light and dark, with the ink as
-the universal fallback; custom accent as a supported recipe — override
+meta synced so the browser chrome wears the theme; the OS accent as its
+own opt-in color — --os-accent is a dormant token (no component uses it):
+var(--os-accent) is the iOS system blue everywhere and the visitor's real
+OS accent only where the browser exposes it (Safari 16.4+, Firefox 103+),
+kept separate so the accent ranks stay the theme's own inks; custom accent
+as a supported recipe — override
 a rank's four tokens in one block, page-wide on :root or per-subtree on
 any element, and every component using that rank follows; Style Mixer
 on the homepage — a picker per semantic token restyles the page live
@@ -140,11 +140,10 @@ included. Dark mode is a second attribute and composes with every theme.
     <html data-theme="sand" data-mode="dark"> Sand theme, dark
 
 Themes: Default (white and black, the accent ranks are the ink itself)
-ships first. In browsers that expose the OS accent as a CSS system color
-(Safari 16.4+ and Firefox 103+ — Chrome does not support AccentColor),
-Default's accent-3 rank takes the user's own OS accent for links,
-labels, focus rings and selection, in both modes; everywhere else it
-stays the ink, and themed pages always keep their own inks. Sand
+ships first. The OS accent is a separate opt-in token, --os-accent
+(dormant, used by nothing): iOS system blue everywhere, upgrading to the
+visitor's real OS accent only where the browser exposes it (Safari 16.4+,
+Firefox 103+ — Chromium stays on the blue fallback). Sand
 (Minecraft desert beige, cactus accent-1) is parked and
 working. Velvet (data-theme="velvet") is the neumorphic material
 extracted from the shipped inflation app: matte velvet surfaces, one
