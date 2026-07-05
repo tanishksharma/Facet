@@ -2249,6 +2249,59 @@ input[type="checkbox"].switch:checked { background: var(--accent-1); }
 input[type="checkbox"].switch:checked::before { translate: 1.125rem 0; }
 input[type="checkbox"].switch:disabled { opacity: 0.5; cursor: not-allowed; }
 
+/* ----- MODAL, DRAWER, POPOVER: the native top layer, dressed -----
+   What it is: overlays built on the platform's own machinery — modal
+   and drawer are <dialog> (focus trap, Esc, inert page for free),
+   popover is the popover attribute (top layer, light dismiss, no JS).
+   What it is for: modal for a decision that blocks the page, drawer
+   for a side panel of details or filters, popover for small floating
+   bits — hints, mini menus. When to use it: open a dialog from any
+   button whose aria-controls names it (facet.js calls showModal);
+   close with a <form method="dialog"> button inside, Esc, or a
+   backdrop click. Popovers need only popovertarget on the button.
+   The app-kit .sheet stays the settings panel for app pages; the
+   drawer is the document-world sibling. */
+dialog.modal,
+dialog.drawer {
+  border: none;
+  padding: var(--space-6);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-overlay);
+}
+dialog.modal {
+  width: min(92vw, 34rem);
+  border-radius: var(--radius-large);
+}
+dialog.drawer {
+  margin: 0 0 0 auto;             /* pinned to the right edge */
+  width: min(92vw, 24rem);
+  height: 100dvh;
+  max-height: 100dvh;
+  border-radius: var(--radius-large) 0 0 var(--radius-large);
+}
+dialog.modal::backdrop,
+dialog.drawer::backdrop {
+  background: rgb(0 0 0 / 0.5);
+  backdrop-filter: blur(3px);
+}
+/* Arrive with the motion personality; leave instantly. */
+dialog.modal[open] { animation: facet-modal-in var(--duration-base) var(--ease-spring); }
+dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease-spring); }
+@keyframes facet-modal-in { from { opacity: 0; translate: 0 14px; } }
+@keyframes facet-drawer-in { from { translate: 100% 0; } }
+
+[popover] {
+  margin: auto;                   /* centered fallback where no anchor */
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-medium);
+  padding: var(--space-4);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-floating);
+}
+[popover]:popover-open { animation: facet-modal-in var(--duration-fast) var(--ease-out); }
+
 /* ----- CARD: default, outlined, clickable -----
    What it is: the grouped-surface primitive — a padded, rounded panel
    a breath above the page. What it is for: one thing per card: a

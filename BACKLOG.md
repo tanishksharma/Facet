@@ -349,7 +349,10 @@ Platform laws docs and the R11 chart item.
 - [x] Card: .card / .card-outlined / a.card.card-clickable (whole
       surface links, spring lift + press); velvet raises, elegant
       carves, aero glosses — material recipes per theme.
-- [ ] Modal, drawer, popover
+- [x] Modal, drawer, popover: dialog.modal / dialog.drawer opened by
+      aria-controls buttons (showModal; Esc, form method=dialog and
+      backdrop click close), [popover] styled with light dismiss and
+      zero JS; spring arrivals on the motion tokens.
 - [ ] Accordion, toast, dropdown menu
 - [ ] Tabs, breadcrumb, pagination
 - [ ] Nav link states: default, hover, active

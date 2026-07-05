@@ -419,6 +419,31 @@ in; Aero glosses them.
     </article>
     <a class="card card-clickable" href="/report">Open the report →</a>
 
+### Modal, drawer, popover
+
+What it is: overlays built on the platform's own machinery — modal and
+drawer are <dialog> (focus trap, Esc, inert page for free), popover is
+the popover attribute (top layer, light dismiss, no JS at all). What
+it is for: modal for a decision that blocks the page; drawer for a
+side panel of details or filters; popover for small floating bits.
+When to use it: open a dialog from any button whose aria-controls
+names it — facet.js calls showModal; close with a form method="dialog"
+button inside, Esc, or a backdrop click. Popovers need only
+popovertarget on the button. The app-kit .sheet stays the settings
+panel for app pages; the drawer is the document-world sibling.
+
+    <button class="btn" aria-controls="confirm">Delete…</button>
+    <dialog class="modal" id="confirm">
+      <p>Delete this report?</p>
+      <form method="dialog" class="row">
+        <button class="btn btn-primary">Delete</button>
+        <button class="btn">Keep it</button>
+      </form>
+    </dialog>
+
+    <button class="btn" popovertarget="note">Toggle popover</button>
+    <div popover id="note">Light-dismisses on any outside click.</div>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

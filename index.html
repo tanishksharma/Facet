@@ -458,6 +458,7 @@
           <li><a href="#fields">Fields</a></li>
           <li><a href="#file-date">File &amp; date</a></li>
           <li><a href="#card">Card</a></li>
+          <li><a href="#overlays">Modal, drawer, popover</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -576,6 +577,7 @@
           <li>The wired field family: one <code>label.field</code> pattern around text input, textarea, select (token-colored chevron, no image files) and a capsule search field — real labels, hints, and the <code>.field-invalid</code> error state.</li>
           <li>File upload and date input, themed but native: the file button dresses as a secondary action (drag-drop and form value stay the browser's), the date picker keeps its platform UI with the accent highlight.</li>
           <li>Cards in three voices — default, outlined, and clickable (the whole surface is an <code>&lt;a&gt;</code> that lifts and presses) — raised out of the velvet, carved into the cream, glossed in aero, automatically.</li>
+          <li>Modal, drawer and popover on the platform's own top layer: <code>&lt;dialog&gt;</code> opened by any <code>aria-controls</code> button (focus trap, Esc, backdrop close free), popovers on one attribute with light dismiss and zero JS.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -1762,6 +1764,54 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-card"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-card" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- MODAL + DRAWER + POPOVER -->
+      <article class="element stack" id="overlays">
+        <h3 data-status="stable">Modal, drawer, popover</h3>
+        <p>
+          What it is: overlays built on the platform's own machinery —
+          modal and drawer are <code>&lt;dialog&gt;</code> (focus
+          trap, Esc, inert page for free), popover is the
+          <code>popover</code> attribute (top layer, light dismiss, no
+          JS at all). What it is for: modal for a decision that blocks
+          the page; drawer for a side panel of details or filters;
+          popover for small floating bits — hints, mini menus. When to
+          use it: open a dialog from any button whose
+          <code>aria-controls</code> names it — facet.js calls
+          showModal; close with a <code>form method="dialog"</code>
+          button inside, Esc, or a backdrop click. Popovers need only
+          <code>popovertarget</code> on the button. The app-kit sheet
+          stays the settings panel for app pages; the drawer is the
+          document-world sibling.
+        </p>
+        <div class="demo">
+          <div class="row">
+            <button type="button" class="btn" aria-controls="demo-modal" data-tip="Opens the modal dialog" data-event="demo-modal-open">Open modal</button>
+            <button type="button" class="btn" aria-controls="demo-drawer" data-tip="Opens the side drawer" data-event="demo-drawer-open">Open drawer</button>
+            <button type="button" class="btn" popovertarget="demo-popover" data-tip="Toggles the popover — no JS involved">Toggle popover</button>
+          </div>
+          <dialog class="modal stack" id="demo-modal">
+            <h4>Delete this report?</h4>
+            <p class="text-small">This cannot be undone. The figures stay in your ledger.</p>
+            <form method="dialog" class="row">
+              <button class="btn btn-primary" data-event="demo-modal-confirm">Delete</button>
+              <button class="btn" data-tip="Closes without doing anything">Keep it</button>
+            </form>
+          </dialog>
+          <dialog class="drawer stack" id="demo-drawer">
+            <h4>Filters</h4>
+            <label class="check-row"><input type="checkbox" checked> Paid</label>
+            <label class="check-row"><input type="checkbox"> Pending</label>
+            <form method="dialog"><button class="btn">Done</button></form>
+          </dialog>
+          <div popover id="demo-popover" class="stack-tight">
+            <strong>Quick note</strong>
+            <p class="text-small">Popovers light-dismiss: click anywhere else.</p>
+          </div>
+        </div>
+        <pre id="code-overlays"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-overlays" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

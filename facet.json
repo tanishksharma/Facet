@@ -412,6 +412,34 @@
       "a11y": "Clickable cards are real <a> elements; the card's heading text is the accessible name."
     },
     {
+      "name": "Modal, drawer, popover",
+      "classes": [
+        "dialog.modal",
+        "dialog.drawer",
+        "[popover]"
+      ],
+      "summary": "Native top-layer overlays: dialogs opened by aria-controls buttons, popovers on one attribute.",
+      "classNotes": {
+        "dialog.modal": "centered decision box, min(92vw, 34rem)",
+        "dialog.drawer": "right-edge panel, full height",
+        "[popover]": "small floating panel, light dismiss"
+      },
+      "keys": [
+        [
+          "Esc",
+          "closes the dialog or popover"
+        ],
+        [
+          "Tab",
+          "cycles inside the open dialog (native focus trap)"
+        ]
+      ],
+      "do": "Close dialogs with a form method=dialog button inside.",
+      "dont": "Rebuild overlays on divs with z-index and a click-catcher.",
+      "why": "The top layer, focus trap and inert page are free in <dialog> — and bug-free.",
+      "a11y": "Native dialog semantics; give the dialog a heading; backdrop click and Esc both close."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",
