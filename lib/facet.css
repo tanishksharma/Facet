@@ -2302,6 +2302,107 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 }
 [popover]:popover-open { animation: facet-modal-in var(--duration-fast) var(--ease-out); }
 
+/* ----- TABS: in-page views under an underline -----
+   What it is: content tabs — real ARIA tabs (role=tablist/tab/
+   tabpanel) with an accent underline on the active one; facet.js
+   wires clicks, arrow keys and panel visibility. What it is for:
+   two-to-five views of the same subject inside a page: Overview /
+   Activity / Settings. When to use it: in-page view switching. Not
+   app navigation (the tab bar) and not a form value (the segmented
+   control). Point each tab's aria-controls at its panel's id; mark
+   one aria-selected="true". */
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: var(--border-width) solid var(--border);
+}
+.tabs [role="tab"] {
+  border: none;
+  background: none;
+  padding: var(--space-2) var(--space-4);
+  min-height: 2.75rem;
+  font: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: calc(-1 * var(--border-width));
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.tabs [role="tab"]:hover { color: var(--text); }
+.tabs [role="tab"][aria-selected="true"] {
+  color: var(--text);
+  font-weight: var(--weight-strong);
+  border-bottom-color: var(--accent-3);
+}
+
+/* ----- BREADCRUMB: where you are, as links -----
+   What it is: the path to here — an ordered list of links with quiet
+   separators, the current page unlinked and marked aria-current.
+   What it is for: deep hierarchies: catalogues, docs, file trees.
+   When to use it: three levels or more; two levels just need a back
+   link. */
+.breadcrumb ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.breadcrumb li {
+  display: flex;
+  align-items: center;
+  font-size: var(--text-small);
+}
+.breadcrumb li + li::before {
+  content: "/";
+  color: var(--text-muted);
+  margin-inline: var(--space-2);
+}
+.breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.breadcrumb a:hover { text-decoration: underline; color: var(--text); }
+.breadcrumb [aria-current="page"] {
+  color: var(--text);
+  font-weight: var(--weight-strong);
+}
+
+/* ----- PAGINATION: numbered pages as real links -----
+   What it is: page links in 44px squares — previous, numbers, next —
+   with the current page filled in accent-1 and marked aria-current.
+   What it is for: long lists split across URLs, so every page is
+   linkable and crawlable. When to use it: server-side or URL-driven
+   paging. For infinite content, prefer a "load more" button — honest
+   and keyboard-friendly. Disable an edge arrow with
+   aria-disabled="true" on a span, never a dead link. */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+.pagination a,
+.pagination span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-medium);
+  color: var(--text);
+  text-decoration: none;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.pagination a:hover { background: var(--accent-2-hover); }
+.pagination [aria-current="page"] {
+  background: var(--accent-1);
+  color: var(--on-accent-1);
+  font-weight: var(--weight-strong);
+}
+.pagination [aria-disabled="true"] { color: var(--text-muted); }
+
 /* ----- ACCORDION: native details, one open at a time if named -----
    What it is: expandable rows on <details class="accordion"> — the
    platform's own disclosure, dressed: hairline rows, a rotating

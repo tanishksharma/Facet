@@ -473,6 +473,34 @@
       "a11y": "Details/summary announce natively; the toast rack is aria-live polite; menu items are real buttons."
     },
     {
+      "name": "Tabs, breadcrumb, pagination",
+      "classes": [
+        ".tabs",
+        ".breadcrumb",
+        ".pagination"
+      ],
+      "summary": "Real ARIA tabs with arrow keys; breadcrumb links with aria-current; page links in 44px squares.",
+      "classNotes": {
+        ".tabs": "role=tablist of role=tab buttons; aria-controls names each panel",
+        ".breadcrumb": "nav > ol of links; current page unlinked, aria-current=page",
+        ".pagination": "nav of real page links; aria-disabled span for a dead edge"
+      },
+      "keys": [
+        [
+          "Arrow Left / Right",
+          "move between tabs (roving tabindex)"
+        ],
+        [
+          "Enter / Space",
+          "activate the focused tab or follow a page link"
+        ]
+      ],
+      "do": "Keep breadcrumb and pagination as real links — every page a URL.",
+      "dont": "Use tabs for app navigation or a form value.",
+      "why": "The tab bar navigates; the segmented control holds a value; tabs switch views in place.",
+      "a11y": "Native tab semantics with roving tabindex; aria-current marks place in both nav patterns."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",

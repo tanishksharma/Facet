@@ -472,6 +472,34 @@ question (dialog) and never a dropdown for navigation (links).
       </div>
     </details>
 
+### Tabs, breadcrumb, pagination
+
+What it is: the wayfinding trio. Tabs are real ARIA tabs (role=
+tablist/tab/tabpanel; click or arrow keys; accent underline; facet.js
+wires panels and roving tabindex) for two-to-five in-page views.
+Breadcrumb is the path to here — nav.breadcrumb > ol of links with
+quiet separators, current page unlinked with aria-current="page".
+Pagination is numbered page links in 44px squares, current page
+filled in accent-1, edges disabled with aria-disabled on a span.
+When to use which: tabs switch views in place; the tab bar navigates
+an app; the segmented control is a form value; breadcrumb and
+pagination are links, never buttons.
+
+    <div class="tabs" role="tablist" aria-label="Views">
+      <button role="tab" aria-selected="true" aria-controls="pane-a" id="tab-a">Overview</button>
+      <button role="tab" aria-selected="false" aria-controls="pane-b" id="tab-b">Activity</button>
+    </div>
+    <div role="tabpanel" id="pane-a" aria-labelledby="tab-a">…</div>
+    <div role="tabpanel" id="pane-b" aria-labelledby="tab-b" hidden>…</div>
+
+    <nav class="breadcrumb" aria-label="You are here">
+      <ol><li><a href="/">Library</a></li><li><span aria-current="page">Here</span></li></ol>
+    </nav>
+
+    <nav class="pagination" aria-label="Pages">
+      <a href="?page=1" aria-current="page">1</a> <a href="?page=2">2</a>
+    </nav>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

@@ -460,6 +460,7 @@
           <li><a href="#card">Card</a></li>
           <li><a href="#overlays">Modal, drawer, popover</a></li>
           <li><a href="#disclosure">Accordion, toast, dropdown</a></li>
+          <li><a href="#wayfinding">Tabs, breadcrumb, pagination</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -580,6 +581,7 @@
           <li>Cards in three voices — default, outlined, and clickable (the whole surface is an <code>&lt;a&gt;</code> that lifts and presses) — raised out of the velvet, carved into the cream, glossed in aero, automatically.</li>
           <li>Modal, drawer and popover on the platform's own top layer: <code>&lt;dialog&gt;</code> opened by any <code>aria-controls</code> button (focus trap, Esc, backdrop close free), popovers on one attribute with light dismiss and zero JS.</li>
           <li>Accordion on native <code>&lt;details&gt;</code> (same <code>name</code> = one open at a time, no JS); <code>facet.toast()</code> transient notices announced politely; dropdown menus of real buttons that close on outside click, Esc, or a pick.</li>
+          <li>Wayfinding: real ARIA tabs with arrow keys and an accent underline; breadcrumbs with <code>aria-current</code>; pagination as real links in 44px squares — every page a URL.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -1863,6 +1865,50 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-disclosure"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-disclosure" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- TABS + BREADCRUMB + PAGINATION -->
+      <article class="element stack" id="wayfinding">
+        <h3 data-status="stable">Tabs, breadcrumb, pagination</h3>
+        <p>
+          What it is: the wayfinding trio. Tabs are real ARIA tabs
+          (click or arrow keys; the accent underline marks the active
+          one; facet.js wires panels) for two-to-five in-page views of
+          the same subject. The breadcrumb is the path to here — links
+          with quiet separators, the current page unlinked and marked
+          <code>aria-current</code> — for hierarchies three levels
+          deep or more. Pagination is numbered page links in 44px
+          squares, current page filled in accent-1, every page a real
+          URL. When to use which: tabs switch views in place; the tab
+          bar navigates an app; the segmented control is a form value;
+          breadcrumb and pagination are links — never buttons.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <div class="tabs" role="tablist" aria-label="Report views">
+              <button type="button" role="tab" aria-selected="true" aria-controls="pane-overview" id="tab-overview" data-tip="Arrow keys work too">Overview</button>
+              <button type="button" role="tab" aria-selected="false" aria-controls="pane-activity" id="tab-activity" data-tip="Arrow keys work too">Activity</button>
+            </div>
+            <p role="tabpanel" id="pane-overview" aria-labelledby="tab-overview" class="text-small">The overview pane: totals and the verdict.</p>
+            <p role="tabpanel" id="pane-activity" aria-labelledby="tab-activity" class="text-small" hidden>The activity pane: every change, newest first.</p>
+            <nav class="breadcrumb" aria-label="You are here">
+              <ol>
+                <li><a href="#wayfinding">Library</a></li>
+                <li><a href="#wayfinding">Components</a></li>
+                <li><span aria-current="page">Wayfinding</span></li>
+              </ol>
+            </nav>
+            <nav class="pagination" aria-label="Pages">
+              <span aria-disabled="true">&larr;</span>
+              <a href="#wayfinding" aria-current="page">1</a>
+              <a href="#wayfinding">2</a>
+              <a href="#wayfinding">3</a>
+              <a href="#wayfinding" data-tip="Every page is a real URL">&rarr;</a>
+            </nav>
+          </div>
+        </div>
+        <pre id="code-wayfinding"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-wayfinding" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->
