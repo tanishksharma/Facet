@@ -20,15 +20,25 @@
        library — if one starts repeating in real projects, it gets
        promoted into facet.css per the growth-by-extraction rule. -->
   <style>
-    /* Site header: wordmark left, controls right. */
+    /* Sticky site header: full-bleed bar, wordmark left, controls right.
+       Stays pinned so the theme switcher, mode toggle and GitHub link are
+       always in reach as the page scrolls. */
+    :root { --header-h: 3.5rem; }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--background) 88%, transparent);
+      backdrop-filter: saturate(1.2) blur(8px);
+      border-bottom: var(--border-width) solid var(--border);
+    }
     .site-nav {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       gap: var(--space-2);
-      padding-block: var(--space-3);
-      border-bottom: var(--border-width) solid var(--border);
+      padding-block: var(--space-2);
     }
     .site-nav .wordmark {
       font-weight: var(--weight-heading);
@@ -42,6 +52,27 @@
       border-color: var(--text-muted);
     }
 
+    /* Centered landing hero — the first thing you see, before the split. */
+    .hero-landing {
+      display: grid;
+      justify-items: center;
+      text-align: center;
+      gap: var(--space-4);
+      max-width: 52rem;
+      margin-inline: auto;
+      padding: var(--space-8) var(--space-5) var(--space-7);
+    }
+    .hero-landing h1 { font-size: var(--text-display); line-height: 1.05; margin: 0; }
+    .hero-lede { color: var(--text-muted); max-width: 48ch; margin: 0; }
+    .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; }
+    .hero-size { font-size: var(--text-small); color: var(--text-muted); margin: 0; }
+
+    /* Get-started strip: the two tags + the setup chips, below the hero. */
+    .get-started {
+      border-top: var(--border-width) solid var(--border);
+      padding-block: var(--space-6);
+    }
+
     /* The sidebar + wall layout. The grid wrapper exists to put the index
        beside the content — a real layout job. */
     .docs-layout {
@@ -53,48 +84,81 @@
     }
     .docs-index {
       position: sticky;
-      top: var(--space-4);
-      max-height: calc(100dvh - var(--space-6));
+      top: calc(var(--header-h) + var(--space-3));
+      max-height: calc(100dvh - var(--header-h) - var(--space-4));
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: var(--space-3);
+      gap: var(--space-1);
     }
-    .docs-index ul { list-style: none; padding: 0; }
+    .docs-index ul { list-style: none; padding: 0; margin: 0 0 var(--space-2); }
     .docs-index a {
       display: block;
-      padding-block: 2px;
+      padding-block: 3px;
       text-decoration: none;
       color: var(--text-muted);
       font-size: var(--text-small);
       border-left: var(--border-width-strong) solid transparent;
-      padding-left: var(--space-2);
+      padding-left: var(--space-3);
     }
     .docs-index a:hover { color: var(--text); }
-    /* Scrollspy: the section currently on screen lights up in the index. */
+    /* Scrollspy: the component on screen lights up in the index. */
     .docs-index a.is-current {
       color: var(--text);
       font-weight: var(--weight-strong);
       border-left-color: var(--accent-3);
     }
-    .docs-index strong {
+
+    /* Collapsible layer groups: each stays contracted until clicked or
+       scrolled into; the current group opens and its label highlights, so
+       the sidebar always shows which layer you are in. */
+    .nav-group { border-top: var(--border-width) solid var(--border); }
+    .nav-group:first-of-type { border-top: none; }
+    .nav-group > summary {
+      list-style: none;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 2px var(--space-2);
+      padding: var(--space-2) 0;
+    }
+    .nav-group > summary::-webkit-details-marker { display: none; }
+    .nav-group-name {
+      grid-column: 1;
       font-size: var(--text-caption);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
+      font-weight: var(--weight-strong);
       color: var(--text-muted);
     }
+    .nav-group-desc { grid-column: 1; font-size: var(--text-caption); color: var(--text-muted); line-height: 1.3; }
+    .nav-caret {
+      grid-column: 2; grid-row: 1 / span 2;
+      align-self: center;
+      width: 0.45rem; height: 0.45rem;
+      border-right: 2px solid var(--text-muted);
+      border-bottom: 2px solid var(--text-muted);
+      rotate: 45deg;
+      transition: rotate var(--duration-base) var(--ease-spring);
+    }
+    .nav-group[open] > summary .nav-caret { rotate: 225deg; }
+    .nav-group.is-active-group > summary .nav-group-name { color: var(--accent-3); }
+    .nav-group > ul { padding-block: var(--space-1); }
+
     @media (max-width: 56rem) {
       .docs-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
       .docs-index { position: static; max-height: none; }
     }
 
-    /* Dividers: every top-level block in the main column starts with a
-       hairline, so sections and wall entries read as separate sheets. */
+    /* Dividers with generous breathing room above and below, so each
+       section and wall entry reads as its own calm sheet. */
+    #main.stack-loose { gap: var(--space-8); }
     #main > * + * {
       border-top: var(--border-width) solid var(--border);
-      padding-top: var(--space-6);
+      padding-top: var(--space-8);
     }
-    section[id], article[id] { scroll-margin-top: var(--space-6); }
+    section[id], article[id] { scroll-margin-top: calc(var(--header-h) + var(--space-4)); }
 
     /* Layer bands: the big dividers that split the page into its four
        layers (plus the Manual and Tools). Unmistakable — a strong rule,
@@ -415,8 +479,8 @@
 
   <!-- Header: wordmark, theme switcher, dark toggle, GitHub. The switcher
        re-renders the whole page live and carries the choice in the URL. -->
-  <header class="container-wide">
-    <nav class="site-nav" aria-label="Site">
+  <header class="site-header">
+    <nav class="site-nav container-wide" aria-label="Site">
       <a class="wordmark" href="/">facet</a>
       <div class="site-controls" role="group" aria-label="Theme">
         <button class="btn btn-ghost btn-small" data-theme-switch="" data-tip-below
@@ -437,17 +501,26 @@
     </nav>
   </header>
 
-  <!-- Get-started strip: the two tags, one copy button. -->
-  <section class="container-wide stack" style="padding-block: var(--space-6);">
+  <!-- Centered landing hero: the pitch, no code block. -->
+  <section class="hero-landing">
     <h1>A design library in plain HTML, CSS and JS</h1>
-    <p>
-      Facet styles everything I make: apps, websites, pitch decks, documents
-      and business cards. It is one CSS file and one JS file at a public URL.
-      No React, no build step, no npm install, never minified. This page is
-      the library: documentation, living demo and proof of distribution in
-      one — everything you see is built from the two files below.
+    <p class="hero-lede">
+      Facet styles everything I make — apps, websites, pitch decks, documents,
+      business cards — from one CSS file and one JS file at a public URL. No
+      React, no build step, no npm, never minified. This page <em>is</em> the
+      library: its documentation, living demo and proof of distribution in one.
     </p>
-    <p id="size-badge" hidden style="font-size: var(--text-small); color: var(--text-muted);"></p>
+    <p id="size-badge" class="hero-size" hidden></p>
+    <p class="hero-cta">
+      <button class="btn btn-primary" data-copy="#snippet-consume"
+              data-tip="Copies the two tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
+      <a class="btn btn-ghost" href="#components" data-tip="Jump to the element wall">Browse components</a>
+    </p>
+  </section>
+
+  <!-- Get-started strip: the two tags + the setup chips, out of the hero. -->
+  <section class="get-started container-wide stack" aria-label="Get started">
+    <h2 class="text-h3" style="margin:0;">Consume it</h2>
     <pre id="snippet-consume"><code>&lt;link rel="stylesheet" href="https://[domain]/lib/facet.css"&gt;
 &lt;script src="https://[domain]/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
     <!-- The site itself always knows its own domain: fill it in, so the
@@ -474,8 +547,8 @@
       <button class="chip" aria-pressed="false" data-setup="mode" data-setup-value="dark" data-tip="Always dark, whatever the system says">Dark</button>
     </p>
     <p>
-      <button class="btn btn-primary" data-copy="#snippet-consume"
-              data-tip="Copies the configured tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
+      <button class="btn btn-small" data-copy="#snippet-consume"
+              data-tip="Copies the configured tags to your clipboard">Copy the two tags</button>
     </p>
   </section>
 
@@ -487,12 +560,15 @@
       <input id="wall-search" type="search" placeholder="Filter components"
              data-tip="Type to filter the element wall below" data-tip-below>
       <nav aria-label="Sections">
-        <strong>Manual</strong>
+        <details class="nav-group" data-group="manual">
+          <summary><span class="nav-group-name">Manual</span><span class="nav-group-desc">Start here and learn how the library works.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#features">Features</a></li>
           <li><a href="#rules">Rules</a></li>
         </ul>
-        <strong>Layer 1 · Tokens</strong>
+        </details>
+        <details class="nav-group" data-group="layer1">
+          <summary><span class="nav-group-name">Layer 1 · Tokens</span><span class="nav-group-desc">The individual tokens that make up the basics.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#typography">Typography</a></li>
           <li><a href="#color">Color</a></li>
@@ -502,11 +578,15 @@
           <li><a href="#shape">Shape &amp; elevation</a></li>
           <li><a href="#motion">Motion</a></li>
         </ul>
-        <strong>Layer 2</strong>
+        </details>
+        <details class="nav-group" data-group="layer2">
+          <summary><span class="nav-group-name">Layer 2 · Base</span><span class="nav-group-desc">Raw semantic HTML, already designed.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#base">Base styles</a></li>
         </ul>
-        <strong>Layer 3 · Components</strong>
+        </details>
+        <details class="nav-group" data-group="layer3">
+          <summary><span class="nav-group-name">Layer 3 · Components</span><span class="nav-group-desc">Every component, live and copyable.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#container">Container</a></li>
           <li><a href="#stack">Stack</a></li>
@@ -543,7 +623,9 @@
           <li><a href="#map">Themed map</a></li>
           <li><a href="#backgrounds">Backgrounds</a></li>
         </ul>
-        <strong>Layer 4 · Blocks</strong>
+        </details>
+        <details class="nav-group" data-group="layer4">
+          <summary><span class="nav-group-name">Layer 4 · Blocks</span><span class="nav-group-desc">The components, assembled into page sections.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#block-card-grid">Card grid &amp; row</a></li>
           <li><a href="#block-filter-list">Filterable &amp; list cards</a></li>
@@ -557,16 +639,21 @@
           <li><a href="#block-settings">Settings &amp; form</a></li>
           <li><a href="#block-article">Article set</a></li>
         </ul>
-        <strong>Tools</strong>
+        </details>
+        <details class="nav-group" data-group="tools">
+          <summary><span class="nav-group-name">Tools</span><span class="nav-group-desc">Try it live and look things up.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#playground">Playground</a></li>
           <li><a href="#cheatsheet">Cheatsheet</a></li>
         </ul>
-        <strong>For machines</strong>
+        </details>
+        <details class="nav-group" data-group="machines">
+          <summary><span class="nav-group-name">For machines</span><span class="nav-group-desc">Plain-text and JSON to read the whole library.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="/llms.txt">llms.txt</a></li>
           <li><a href="/facet.json">facet.json</a></li>
         </ul>
+        </details>
       </nav>
     </aside>
 
@@ -3209,6 +3296,8 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       const links = [...document.querySelectorAll(".docs-index a[href^='#']")];
       const emptyNote = document.querySelector("#wall-empty");
 
+      const groups = [...document.querySelectorAll(".nav-group")];
+
       box.addEventListener("input", () => {
         const query = box.value.trim().toLowerCase();
         let shown = 0;
@@ -3225,11 +3314,40 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           }
         }
         emptyNote.hidden = !(query && shown === 0);
+        // A search reaches across every layer, so open them all while it
+        // runs; on clear, drop back to the single-open accordion by
+        // letting scrollspy pick the layer on screen.
+        if (query) {
+          for (const g of groups) { g.dataset.searchOpen = "true"; g.open = true; }
+        } else {
+          for (const g of groups) delete g.dataset.searchOpen;
+          dispatchEvent(new Event("scroll"));
+        }
       });
     }
 
+    /* The sidebar is a single-open accordion: only one layer's list is
+       ever expanded. setActiveGroup opens that layer, collapses the rest,
+       and marks it so its label lights up. Both scrollspy and summary
+       clicks call it, so scroll position and manual choice never disagree. */
+    const navGroups = [...document.querySelectorAll(".nav-group")];
+    function setActiveGroup(group) {
+      let searchOpen = false;
+      for (const g of navGroups) {
+        // While a search is running every group is force-opened (see
+        // initWallSearch); don't fight that here.
+        if (g.dataset.searchOpen === "true") { searchOpen = true; break; }
+      }
+      for (const g of navGroups) {
+        const on = g === group;
+        g.classList.toggle("is-active-group", on);
+        if (!searchOpen) g.open = on;
+      }
+    }
+
     /* Scrollspy: as the page scrolls, the sidebar link for the section on
-       screen lights up, so you always know where you are and what is left. */
+       screen lights up and its layer expands, so the nav always shows
+       where you are and what is left. */
     function initScrollSpy() {
       const links = [...document.querySelectorAll(".docs-index a[href^='#']")];
       const nav = document.querySelector(".docs-index");
@@ -3259,6 +3377,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           }
         }
         for (const [link] of pairs) link.classList.toggle("is-current", link === best);
+        // Expand the layer the current section lives in, collapse the rest.
+        const group = best && best.closest(".nav-group");
+        if (group) setActiveGroup(group);
         // Keep the active link visible inside the sticky sidebar — but
         // scroll only the nav, never the page.
         if (best && nav) {
@@ -3273,6 +3394,24 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       // Folds opening/closing changes section positions — re-spy after each.
       for (const fold of document.querySelectorAll(".fold")) fold.addEventListener("toggle", request);
       highlight();
+    }
+
+    /* Clicking a layer's label opens that layer alone and jumps to its
+       first section. We drive the accordion ourselves (preventDefault the
+       native toggle) so it stays single-open and the page scrolls the
+       scrollspy back into agreement. */
+    function initNavGroups() {
+      for (const group of navGroups) {
+        const summary = group.querySelector(":scope > summary");
+        if (!summary) continue;
+        summary.addEventListener("click", (event) => {
+          event.preventDefault();
+          setActiveGroup(group);
+          const first = group.querySelector("ul a[href^='#']");
+          const target = first && document.querySelector(first.getAttribute("href"));
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
     }
 
     /* The color panels follow the active theme: when the header switcher
@@ -4028,6 +4167,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initFoldLinks();
       initSearchKeys();
       initPermalinks();
+      initNavGroups();
       initScrollSpy();
     });
   </script>
