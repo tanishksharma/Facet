@@ -19,7 +19,21 @@ RTL no — decided 4 Jul 2026.
 
 ## Queue · heavy systems first
 
-### Semantic spacing & type tokens + global density — retokenisation (NEW · heaviest, leads the queue)
+### Semantic color tokens — drop the accent ranks for role names (NEW · pending name sign-off)
+
+The owner wants colors named by role like spacing/type/radius, not by rank.
+Replace `--accent-1/-2/-3` (each with `-hover`, `-pressed`, `--on-accent-N`)
+with purpose names. Proposed: `--action` (the one primary action, was
+accent-1), `--fill` (every secondary fill, was accent-2), `--link` (links,
+labels, focus, quiet interactive, was accent-3) — each keeping `-hover`,
+`-pressed`, `--on-*`. Sweep every component, all five themes light+dark, the
+custom-accent recipe, the theme builder pickers, docs, llms.txt, facet.json.
+Also rename `--border-width`/`--border-width-strong` → `--border-hairline`/
+`--border-strong` (border by role). Names to confirm with the owner first.
+Everything else is already role-named (base colors, status, shadows, motion,
+widths, fonts, weights, focus) — this is the last value/rank-named layer.
+
+### Semantic spacing & type tokens + global density — retokenisation (DONE — spacing/type/radius shipped)
 
 Replace the value-named scales — `--space-1..8` and
 `--text-display/-h1..-h4/-body/-small/-caption` — with ROLE-named tokens, so a
