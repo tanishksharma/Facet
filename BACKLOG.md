@@ -200,31 +200,33 @@ are a Layer 4 block — that "tab bar + menu sheet" pairing belongs in Layer 4.
 
 ### Six-layer taxonomy + grouped, filterable Components wall (DONE)
 
-Owner asked to reassess Layers 1–5 and decide what belongs where. Decided and
-implemented. The layers are now ONE composition ladder, contiguous per page:
+Owner asked to reassess and decide what belongs where. Decided and implemented.
+The layers are now ONE composition ladder, contiguous per page, with NO
+single-item layer (owner's standing rule: a layer/group with just one element
+belongs folded into tokens):
 
-- Layer 1 · Tokens — design decisions as named variables (color, type, spacing,
-  radius, border, motion, elevation + density/text-size). Components page.
-- Layer 2 · Base — raw semantic HTML already designed, zero classes. Components
-  page. (Split back out of the old merged "Tokens & base".)
-- Layer 3 · Components — every reusable piece, grouped into named categories
-  (Layout primitives / Forms & controls / Content & data / Overlays &
-  disclosure / Navigation / Status), each with a .wall-group heading, a
-  data-cat tag, a category filter chip row (initWallFilter, composes with the
-  text search) and a grouped sidebar nav. Components page.
-- Layer 4 · Blocks — components assembled into page sections. Layouts page.
-- Layer 5 · Templates — whole pages (with the device preview). Layouts page.
-- Layer 6 · App feel (NEW layer, owner's call) — the coat that makes a finished
-  page feel native: parallax & idle motion, sound & haptics, backgrounds, the
-  full-screen snap pager, and the app kit (tab bar, settings sheet, float
-  button, scroll gauge). Layouts page, after Templates. This replaced the stray
-  "Layer 2 · Motion & interaction" that had been sitting oddly on the layouts
-  page, and pulled the app-kit components out of Layer 3.
+- Layer 1 · Tokens & base — design decisions as named variables (color, type,
+  spacing, radius, border, motion, elevation + density/text-size) PLUS base
+  styles (raw semantic HTML already designed). Base is one item, so it lives
+  inside Layer 1, never its own layer. Components page.
+- Layer 2 · Components — every reusable piece, grouped into named categories
+  (Layout primitives [container, stack, row, grid, snap section] / Forms &
+  controls / Content & data / Overlays & disclosure / Navigation / Status),
+  each with a .wall-group heading, a data-cat tag, a category filter chip row
+  (initWallFilter, composes with the text search) and a grouped sidebar nav.
+  Components page. (Snap section is a layout primitive and lives here, not in
+  App feel.)
+- Layer 3 · Blocks — components assembled into page sections. Layouts page.
+- Layer 4 · Templates — whole pages (with the device preview). Layouts page.
+- Layer 5 · App feel — the coat that makes a finished page feel native: parallax
+  & idle motion, sound & haptics, backgrounds, and the app kit (tab bar,
+  settings sheet, float button, scroll gauge). Layouts page, after Templates.
 
 Rule going forward: a new component's layer is its composition level — a single
-reusable piece is Layer 3 (filed under one of the six categories); motion/sound/
-app-chrome is Layer 6; an assembly of pieces is a Layer 4 block; a whole page is
-a Layer 5 template.
+reusable piece is Layer 2 (filed under one of the six categories, snap/layout
+included); motion/sound/app-chrome is Layer 5; an assembly of pieces is a Layer
+3 block; a whole page is a Layer 4 template. Never create a layer that holds
+only one entry — fold it into the nearest layer.
 
 ### Semantic color & border tokens (DONE)
 

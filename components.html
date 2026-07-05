@@ -39,29 +39,25 @@
              data-tip="Type to filter the wall below" data-tip-below>
       <nav aria-label="Sections">
         <details class="nav-group" data-group="layer1" open>
-          <summary><span class="nav-group-name">Layer 1 · Tokens</span><span class="nav-group-desc">Every design decision as a named variable.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+          <summary><span class="nav-group-name">Layer 1 · Tokens &amp; base</span><span class="nav-group-desc">Every design decision as a named variable, plus raw semantic HTML already designed.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#typography">Typography</a></li>
           <li><a href="#color">Color</a></li>
           <li><a href="#spacing">Spacing</a></li>
           <li><a href="#shape">Shape &amp; elevation</a></li>
           <li><a href="#motion">Motion tokens</a></li>
-        </ul>
-        </details>
-        <details class="nav-group" data-group="layer2">
-          <summary><span class="nav-group-name">Layer 2 · Base</span><span class="nav-group-desc">Raw semantic HTML, already designed.</span><span class="nav-caret" aria-hidden="true"></span></summary>
-        <ul>
           <li><a href="#base">Base styles</a></li>
         </ul>
         </details>
         <details class="nav-group" data-group="layer3">
-          <summary><span class="nav-group-name">Layer 3 · Components</span><span class="nav-group-desc">Every piece, grouped and filterable.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+          <summary><span class="nav-group-name">Layer 2 · Components</span><span class="nav-group-desc">Every piece, grouped and filterable.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <p class="nav-sub">Layout primitives</p>
         <ul>
           <li><a href="#container">Container</a></li>
           <li><a href="#stack">Stack</a></li>
           <li><a href="#row">Row</a></li>
           <li><a href="#grid">Grid</a></li>
+          <li><a href="#snap-section">Snap section</a></li>
         </ul>
         <p class="nav-sub">Forms &amp; controls</p>
         <ul>
@@ -426,7 +422,7 @@
       </article>
 
       <!-- =============================================================
-           LAYER 2 · BASE STYLES
+           LAYER 1 · BASE STYLES
            ============================================================= -->
       <section id="base" class="stack">
         <h2>Base styles</h2>
@@ -457,7 +453,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </section>
 
       <!-- =============================================================
-           LAYER 3 · THE ELEMENT WALL
+           LAYER 2 · THE ELEMENT WALL
            Every component live. Each entry: the canonical description
            (same text as its facet.css header comment and llms.txt),
            chips that flip the live demo, and the exact HTML — the
@@ -603,6 +599,42 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-grid"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SNAP SECTION -->
+      <article class="element stack" id="snap-section" data-cat="layout">
+        <h3 data-status="stable">Snap section</h3>
+        <p>
+          What it is: full-viewport scroll-snap areas. The .snap wrapper
+          scrolls one full screen at a time and each .snap-section centers
+          its content at a readable width. What it is for: the calculator
+          page skeleton — intro screen, then inputs, then results — and any
+          page that tells one story one screen at a time. When to use it:
+          single-purpose pages with a clear screen-by-screen flow. Not for
+          ordinary documents; normal pages just scroll. The .snap wrapper
+          exists to enable scrolling, which is the one reason the wrapper law
+          allows a container inside a container. On a real page the wrapper
+          is <code>&lt;main class="snap"&gt;</code> and each section fills
+          the viewport; here it is shrunk into a frame — scroll inside it.
+        </p>
+        <div class="demo">
+          <div class="snap">
+            <section class="snap-section">
+              <h4 style="text-align: center;">Intro</h4>
+              <p style="text-align: center;">What this page tells you, in one line.</p>
+            </section>
+            <section class="snap-section">
+              <h4 style="text-align: center;">Inputs</h4>
+              <p style="text-align: center;">Number inputs and sliders, prefilled with examples.</p>
+            </section>
+            <section class="snap-section">
+              <h4 style="text-align: center;">Results</h4>
+              <p style="text-align: center;">A verdict-first result block, recalculating live.</p>
+            </section>
+          </div>
+        </div>
+        <pre id="code-snap-section"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-snap-section" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- ===== Forms &amp; controls ===== -->

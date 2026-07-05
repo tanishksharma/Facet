@@ -794,12 +794,11 @@ function initFeedbackDemo() {
    Tools instead of one endless scroll. */
 function insertLayerBands() {
   const bands = [
-    ["typography", "Layer 1", "Tokens",     "Every design decision as a named variable: type, color, space, shape, motion."],
-    ["base",       "Layer 2", "Base",       "Raw semantic HTML, already designed — no classes required."],
-    ["components", "Layer 3", "Components",  "Every piece of the library, live — grouped and filterable. Each folds to a heading and a line; open one to see it work."],
-    ["blocks",     "Layer 4", "Blocks",     "The components, assembled into ready page sections you copy whole."],
-    ["templates",  "Layer 5", "Templates",  "Whole pages — full app and site layouts you rename and fill in."],
-    ["appfeel",    "Layer 6", "App feel",   "The coat that makes a finished page feel native: parallax, sound, surfaces, the snap pager, and the app kit."],
+    ["typography", "Layer 1", "Tokens & base", "Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed."],
+    ["components", "Layer 2", "Components",  "Every piece of the library, live — grouped and filterable. Each folds to a heading and a line; open one to see it work."],
+    ["blocks",     "Layer 3", "Blocks",     "The components, assembled into ready page sections you copy whole."],
+    ["templates",  "Layer 4", "Templates",  "Whole pages — full app and site layouts you rename and fill in."],
+    ["appfeel",    "Layer 5", "App feel",   "The coat that makes a finished page feel native: parallax, sound, surfaces, and the app kit."],
     ["playground", "Tools",   "Playground & cheatsheet","An editable live playground, and the whole manifest as a filterable cheatsheet."],
   ];
   for (const [id, kicker, title, blurb] of bands) {

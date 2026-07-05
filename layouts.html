@@ -39,7 +39,7 @@
              data-tip="Type to filter the wall below" data-tip-below>
       <nav aria-label="Sections">
         <details class="nav-group" data-group="layer4">
-          <summary><span class="nav-group-name">Layer 4 · Blocks</span><span class="nav-group-desc">The components, assembled into page sections.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+          <summary><span class="nav-group-name">Layer 3 · Blocks</span><span class="nav-group-desc">The components, assembled into page sections.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#block-card-grid">Card grid &amp; row</a></li>
           <li><a href="#block-filter-list">Filterable &amp; list cards</a></li>
@@ -55,7 +55,7 @@
         </ul>
         </details>
         <details class="nav-group" data-group="templates">
-          <summary><span class="nav-group-name">Layer 5 · Templates</span><span class="nav-group-desc">Whole pages — full app and site layouts.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+          <summary><span class="nav-group-name">Layer 4 · Templates</span><span class="nav-group-desc">Whole pages — full app and site layouts.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#template-landing">Landing page</a></li>
           <li><a href="#template-saas">SaaS dashboard</a></li>
@@ -64,12 +64,11 @@
         </ul>
         </details>
         <details class="nav-group" data-group="appfeel">
-          <summary><span class="nav-group-name">Layer 6 · App feel</span><span class="nav-group-desc">Motion, sound, surfaces and the app kit.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+          <summary><span class="nav-group-name">Layer 5 · App feel</span><span class="nav-group-desc">Motion, sound, surfaces and the app kit.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#motion-pack">Parallax &amp; idle</a></li>
           <li><a href="#feedback">Sound &amp; haptics</a></li>
           <li><a href="#backgrounds">Backgrounds</a></li>
-          <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#tab-bar">Tab bar</a></li>
           <li><a href="#sheet">Sheet &amp; menu</a></li>
           <li><a href="#float-button">Float button</a></li>
@@ -81,7 +80,7 @@
 
     <main id="main" class="stack-loose">
       <!-- =============================================================
-           LAYER 4 · BLOCKS
+           LAYER 3 · BLOCKS
            Assemblies of the components above, documented as copyable
            patterns. Most add zero CSS: the primitives already carry
            the design; the block is the arrangement.
@@ -651,8 +650,8 @@
       <section id="templates" class="stack">
         <h2>Templates</h2>
         <p>
-          Layer 5 is the whole page. Where Layer 4 assembles components into
-          sections, Layer 5 assembles sections into a finished product — full
+          Layer 4 is the whole page. Where Layer 3 assembles components into
+          sections, Layer 4 assembles sections into a finished product — full
           layouts you rename and fill in. The three flagship shapes render live
           below in a real iframe: flip <strong>Desktop</strong>,
           <strong>Tablet</strong> and <strong>Phone</strong> to see each
@@ -731,23 +730,23 @@
         </div>
       </section>
       <!-- =============================================================
-           LAYER 6 · APP FEEL
+           LAYER 5 · APP FEEL
            The coat that makes a finished page feel like a native app:
            parallax and idle motion, sound and haptics, faint token
-           surfaces, the full-screen snap pager, and the app kit — tab
-           bar, settings sheet, float button, scroll gauge. Applied on
-           top of any template; Components stays the catalogue of pieces.
+           surfaces, and the app kit — tab bar, settings sheet, float
+           button, scroll gauge. Applied on top of any template;
+           Components stays the catalogue of pieces.
            ============================================================= -->
       <section id="appfeel" class="stack">
         <h2>App feel</h2>
         <p>
-          Layer 6 is the coat you brush over a finished page to make it feel
+          Layer 5 is the coat you brush over a finished page to make it feel
           like a native app: parallax and idle motion, synthesized sound and
-          haptics, whisper backgrounds, the full-screen snap pager, and the
-          app kit — the tab bar, the settings sheet, the float button and the
-          scroll gauge. Every control is live in the settings sheet at the
-          bottom-right of this page — open it and flip Motion or Sounds to
-          feel what the HTML below wires up.
+          haptics, whisper backgrounds, and the app kit — the tab bar, the
+          settings sheet, the float button and the scroll gauge. Every
+          control is live in the settings sheet at the bottom-right of this
+          page — open it and flip Motion or Sounds to feel what the HTML
+          below wires up.
         </p>
       </section>
 
@@ -791,42 +790,6 @@
         </div>
         <pre id="code-motion-pack"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-motion-pack" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- SNAP SECTION -->
-      <article class="element stack" id="snap-section">
-        <h3 data-status="stable">Snap section</h3>
-        <p>
-          What it is: full-viewport scroll-snap areas. The .snap wrapper
-          scrolls one full screen at a time and each .snap-section centers
-          its content at a readable width. What it is for: the calculator
-          page skeleton — intro screen, then inputs, then results — and any
-          page that tells one story one screen at a time. When to use it:
-          single-purpose pages with a clear screen-by-screen flow. Not for
-          ordinary documents; normal pages just scroll. The .snap wrapper
-          exists to enable scrolling, which is the one reason the wrapper law
-          allows a container inside a container. On a real page the wrapper
-          is <code>&lt;main class="snap"&gt;</code> and each section fills
-          the viewport; here it is shrunk into a frame — scroll inside it.
-        </p>
-        <div class="demo">
-          <div class="snap">
-            <section class="snap-section">
-              <h4 style="text-align: center;">Intro</h4>
-              <p style="text-align: center;">What this page tells you, in one line.</p>
-            </section>
-            <section class="snap-section">
-              <h4 style="text-align: center;">Inputs</h4>
-              <p style="text-align: center;">Number inputs and sliders, prefilled with examples.</p>
-            </section>
-            <section class="snap-section">
-              <h4 style="text-align: center;">Results</h4>
-              <p style="text-align: center;">A verdict-first result block, recalculating live.</p>
-            </section>
-          </div>
-        </div>
-        <pre id="code-snap-section"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-snap-section" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SOUND & HAPTICS -->
