@@ -2300,6 +2300,12 @@ input[type="checkbox"].switch:disabled { opacity: 0.5; cursor: not-allowed; }
    backdrop click. Popovers need only popovertarget on the button.
    The app-kit .sheet stays the settings panel for app pages; the
    drawer is the document-world sibling. */
+/* A closed dialog must stay hidden even when a layout class on it (e.g.
+   .stack, which sets display:flex) would otherwise beat the UA's
+   dialog:not([open]) { display:none }. Without this, a <dialog class="modal
+   stack"> renders in the flow while closed and its backdrop stacks up. */
+dialog:not([open]) { display: none; }
+
 dialog.modal,
 dialog.drawer {
   border: none;

@@ -20,16 +20,11 @@
        library — if one starts repeating in real projects, it gets
        promoted into facet.css per the growth-by-extraction rule. -->
   <style>
-    /* Sticky site header: full-bleed bar, wordmark left, controls right.
-       Stays pinned so the theme switcher, mode toggle and GitHub link are
-       always in reach as the page scrolls. */
-    :root { --header-h: 3.5rem; }
+    /* Site header: a plain page-nav bar, not sticky and with no theme
+       switcher — the theme picker lives in the hero. Just the wordmark and
+       the ways out of the home page: build a theme, the machine files,
+       the source. */
     .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: color-mix(in srgb, var(--background) 88%, transparent);
-      backdrop-filter: saturate(1.2) blur(8px);
       border-bottom: var(--border-width) solid var(--border);
     }
     .site-nav {
@@ -37,8 +32,8 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: var(--space-2);
-      padding-block: var(--space-2);
+      gap: var(--space-2) var(--space-4);
+      padding-block: var(--space-3);
     }
     .site-nav .wordmark {
       font-weight: var(--weight-heading);
@@ -46,11 +41,17 @@
       text-decoration: none;
       letter-spacing: -0.02em;
     }
-    .site-controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); }
-    [data-theme-switch][aria-pressed="true"] {
-      background: var(--surface);
-      border-color: var(--text-muted);
+    .site-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-4); }
+    .site-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: var(--text-small);
+      font-weight: var(--weight-strong);
+      padding-block: var(--space-1);
     }
+    .site-link:hover { color: var(--text); }
+    .site-link[aria-current="page"] { color: var(--text); }
+    .site-link.site-link-cta { color: var(--accent-3); }
 
     /* Landing — one calm centered column: heading, the two tags, a copy
        button and the theme chips. The code block is the star, so the
@@ -96,8 +97,8 @@
     }
     .docs-index {
       position: sticky;
-      top: calc(var(--header-h) + var(--space-3));
-      max-height: calc(100dvh - var(--header-h) - var(--space-4));
+      top: var(--space-4);
+      max-height: calc(100dvh - var(--space-6));
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -178,7 +179,7 @@
        calm space, not a stack of faint lines. The only rules on the page
        are the deliberate ones: the landing divider and the layer bands. */
     #main.stack-loose { gap: var(--space-8); }
-    section[id], article[id] { scroll-margin-top: calc(var(--header-h) + var(--space-4)); }
+    section[id], article[id] { scroll-margin-top: var(--space-5); }
 
     /* Layer bands: the deliberate dividers that split the page into Manual /
        Customizer / Layer 1–4 / Tools. A single hairline, wide space above,
@@ -278,9 +279,6 @@
     .fold[open] > summary .fold-note { display: none; }
     /* The body of an opened fold gets breathing room above it. */
     .fold[open] > :not(summary):first-of-type { margin-top: var(--space-4); }
-
-    /* Expand / collapse-all control that rides above the component wall. */
-    .wall-controls { display: flex; gap: var(--space-2); flex-wrap: wrap; }
 
     /* One wall entry. */
     .element .demo {
@@ -508,7 +506,21 @@
       padding: 1px var(--space-2);
       color: var(--text-muted);
     }
-    .demo-width-chips { margin-top: var(--space-2); }
+    .demo-width-chips { margin-top: 0; }
+    /* Part labels inside an opened wall entry: a small caption over each
+       region (a chip group, the preview, the code) so it is clear what it
+       is and what it does. */
+    .part-label {
+      display: block;
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: var(--weight-strong);
+      color: var(--text-muted);
+      margin-top: var(--space-4);
+      margin-bottom: var(--space-1);
+    }
+    .part-label + * { margin-top: 0; }
     .ref { font-size: var(--text-small); }
     .ref summary { cursor: pointer; color: var(--text-muted); }
     .ref table { width: 100%; border-collapse: collapse; margin-top: var(--space-2); }
@@ -540,25 +552,23 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Header: wordmark, theme switcher, dark toggle, GitHub. The switcher
-       re-renders the whole page live and carries the choice in the URL. -->
+  <!-- Header: a plain page nav. No theme switcher here — the theme picker
+       is in the hero. Home is the whole library in one scroll; the rest are
+       the ways out of it: the theme builder, the two machine files, the
+       source. -->
   <header class="site-header">
     <nav class="site-nav container-wide" aria-label="Site">
       <a class="wordmark" href="/">facet</a>
-      <div class="site-controls" role="group" aria-label="Theme">
-        <button class="btn btn-ghost btn-small" data-theme-switch="" data-tip-below
-                data-tip="Default theme: white and black, the accent ranks are the ink">Default</button>
-        <button class="btn btn-ghost btn-small" data-theme-switch="sand" data-tip-below
-                data-tip="Sand theme: Minecraft desert beige">Sand</button>
-        <button class="btn btn-ghost btn-small" data-theme-switch="velvet" data-tip-below
-                data-tip="Velvet: neumorphic matte fabric, gold ink">Velvet</button>
-        <button class="btn btn-ghost btn-small" data-theme-switch="aero" data-tip-below
-                data-tip="Aero: sky aqua, glass gloss, pill buttons">Aero</button>
-        <button class="btn btn-ghost btn-small" data-theme-switch="elegant" data-tip-below
-                data-tip="Elegant: cream and gold, serif display, carved panels">Elegant</button>
-        <button class="btn btn-ghost btn-small" data-mode-toggle data-tip-below
-                data-tip="Dark mode composes with every theme">Light / dark</button>
-        <a class="btn btn-ghost btn-small" href="https://github.com/tanishksharma/Facet" data-tip-below
+      <div class="site-links">
+        <a class="site-link" href="/" aria-current="page" data-tip-below
+           data-tip="The whole library in one scroll">Home</a>
+        <a class="site-link site-link-cta" href="#style-mixer" data-tip-below
+           data-tip="Build your own theme, live">Build a theme</a>
+        <a class="site-link" href="/llms.txt" data-tip-below
+           data-tip="The whole library as plain text, for LLMs">llms.txt</a>
+        <a class="site-link" href="/facet.json" data-tip-below
+           data-tip="The machine-readable manifest — every theme, token and component">facet.json</a>
+        <a class="site-link" href="https://github.com/tanishksharma/Facet" data-tip-below
            data-tip="The readable source, never minified">GitHub</a>
       </div>
     </nav>
@@ -4022,7 +4032,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         const widths = document.createElement("p");
         widths.className = "chips demo-width-chips";
         widths.setAttribute("role", "group");
-        widths.setAttribute("aria-label", "Preview width");
+        widths.setAttribute("aria-label", "Device width");
         for (const [label, w] of [["Phone", "375px"], ["Tablet", "640px"], ["Desktop", ""]]) {
           const chip = document.createElement("button");
           chip.type = "button";
@@ -4218,26 +4228,30 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       }
     }
 
-    /* Expand / collapse-all control above the component wall. */
-    function initWallControls() {
-      const components = document.querySelector("#components");
-      if (!components) return;
-      const bar = document.createElement("p");
-      bar.className = "wall-controls";
-      const mk = (label, open, tip) => {
-        const b = document.createElement("button");
-        b.className = "btn btn-small";
-        b.textContent = label;
-        b.dataset.tip = tip;
-        b.addEventListener("click", () => {
-          for (const f of document.querySelectorAll(".fold")) f.open = open;
-        });
-        return b;
+    /* Label the parts of an opened wall entry, so it is obvious what each
+       region is: every control chip group is captioned by what it changes
+       (its aria-label — "Stack gaps", "Device width"…), the live demo is
+       "Preview", and the snippet is "Code". Runs after foldWallEntries, so
+       it labels the moved-in children of each .fold. */
+    function labelWallParts() {
+      const mk = (text) => {
+        const s = document.createElement("span");
+        s.className = "part-label";
+        s.textContent = text;
+        return s;
       };
-      bar.append(
-        mk("Expand all", true, "Opens every element on the page"),
-        mk("Collapse all", false, "Folds every element back to its heading"));
-      components.appendChild(bar);
+      const labelled = (el) => el && el.previousElementSibling
+        && el.previousElementSibling.classList.contains("part-label");
+      for (const fold of document.querySelectorAll("article.element > .fold")) {
+        for (const chips of fold.querySelectorAll(":scope > p.chips")) {
+          if (labelled(chips)) continue;
+          chips.before(mk(chips.getAttribute("aria-label") || "Options"));
+        }
+        const demo = fold.querySelector(":scope > .demo");
+        if (demo && !labelled(demo)) demo.before(mk("Preview"));
+        const pre = fold.querySelector(":scope > pre");
+        if (pre && !labelled(pre)) pre.before(mk("Code"));
+      }
     }
 
     /* A sidebar link to a folded entry opens it before scrolling. */
@@ -4315,7 +4329,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       // Fold, control and spy — after all content and demo wiring, so the
       // injected snippets, demo tools and reference blocks fold in too.
       foldWallEntries();
-      initWallControls();
+      labelWallParts();
       initWallSearch();
       initFoldLinks();
       initSearchKeys();
