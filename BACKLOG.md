@@ -518,10 +518,16 @@ snippet and inventory line; new CSS kept to the real jobs (.card-row,
 - [x] PWA starter: app.html is installable out of the box — manifest
       link, apple metas, theme-color, the one-line sw stub wired
       (mechanics from R6).
-- [ ] v1 freeze: copy /lib/ to /lib/v1/, tag the release, start the
-      changelog, add the version switcher to the site. HELD FOR THE
-      OWNER'S GO — freezing pins URLs forever; say the word and it
-      ships in one commit.
+
+## Parked (not in the queue)
+
+- v1 freeze — copy /lib/ to /lib/v1/, tag v1, start the changelog, add
+  the version switcher. Deliberately NOT scheduled: the library is
+  moving fast and freezing now would pin a stale snapshot. Revisit only
+  once the rapid changes are done, all the owner's apps are built, and
+  the old website is redone — then it's one commit on request. Until
+  then everything stays on the moving /lib/ (always-latest, pre-v1
+  policy). Do not raise it unprompted.
 
 ## Shipped
 
