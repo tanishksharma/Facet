@@ -553,6 +553,23 @@ update(next) redraws with new data.
       });
     </script>
 
+### Badge, chip, avatar, progress
+
+What it is: four tiny signals. Badge: a status word in a tinted pill —
+.badge plus .badge-success / -warning / -error / -info. Chip: a small
+toggleable pill button; aria-pressed carries its state and facet.js
+toggles a bare chip on click (chips wired to data attributes keep
+their own handlers). Avatar: a round face — an image or initials on
+the quiet fill; .avatar-large for bigger. Progress: the native
+<progress> themed, accent-1 fill on a quiet track. Badges state, they
+never act; avatars carry the person's name in alt or aria-label;
+determinate progress needs value and max with words nearby.
+
+    <span class="badge badge-success">Paid</span>
+    <button class="chip" aria-pressed="false">Travel</button>
+    <span class="avatar" aria-label="Tanishk Sharma">TS</span>
+    <progress value="70" max="100"></progress>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

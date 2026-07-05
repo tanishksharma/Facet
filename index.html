@@ -104,26 +104,8 @@
       padding: var(--space-5);
     }
 
-    /* Variant and state chips: small pills that flip the live demo. */
-    .chips { display: flex; flex-wrap: wrap; gap: var(--space-1); max-width: none; }
-    .chip {
-      min-height: 36px;
-      padding: var(--space-1) var(--space-3);
-      background: var(--surface);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--radius-pill);
-      font-size: var(--text-small);
-      transition:
-        background var(--duration-fast) var(--ease-out),
-        border-color var(--duration-fast) var(--ease-out),
-        transform var(--duration-normal) var(--ease-spring);
-    }
-    .chip:active { transform: scale(0.92); }
-    .chip[aria-pressed="true"] {
-      background: var(--accent-3);
-      border-color: var(--accent-3);
-      color: var(--on-accent-3);
-    }
+    /* The variant/state chips are the library's own .chip now —
+       promoted by extraction. Nothing docs-only left to style. */
 
     /* Typography specimen: a real article, each block tagged with its token. */
     .type-label {
@@ -464,6 +446,7 @@
           <li><a href="#nav-link">Nav link</a></li>
           <li><a href="#table">Table</a></li>
           <li><a href="#chart">Chart</a></li>
+          <li><a href="#small-talkers">Badge, chip, avatar, progress</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -587,6 +570,7 @@
           <li>Wayfinding: real ARIA tabs with arrow keys and an accent underline; breadcrumbs with <code>aria-current</code>; pagination as real links in 44px squares — every page a URL; <code>.nav-link</code> with its three designed states for chrome navigation.</li>
           <li>Data table: muted header, zebra rows, row hover, tabular right-aligned numbers via <code>.num</code>, and a <code>.table-scroll</code> wrapper so wide tables scroll on phones.</li>
           <li>The themed line chart: <code>facet.chart(el, {points})</code> — accent-1 data line with dashed projections, event markers labelled above the plot, a drag crosshair that reads values, all colors tokens so a theme switch restyles a live chart.</li>
+          <li>The small talkers: tinted status badges, self-toggling filter chips (<code>aria-pressed</code>, promoted from this site's own controls), avatars for images or initials, and the native <code>&lt;progress&gt;</code> themed.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -2002,6 +1986,53 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-chart" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- BADGE + CHIP + AVATAR + PROGRESS -->
+      <article class="element stack" id="small-talkers">
+        <h3 data-status="stable">Badge, chip, avatar, progress</h3>
+        <p>
+          What it is: four tiny signals. The badge is a status word in
+          a tinted pill (kinds success / warning / error / info via a
+          class). The chip is a small toggleable pill button —
+          <code>aria-pressed</code> carries its state, the quiet
+          accent fills it when on; it is the exact chip this site's
+          own controls use, promoted by extraction. The avatar is a
+          round face: an image, or initials on the quiet fill.
+          Progress is the native <code>&lt;progress&gt;</code> themed
+          — accent-1 fill on a quiet track. What it is for: statuses
+          on rows and cards; filter picks; people; completeness. When
+          to use it: badges state, they never act; chips toggle; an
+          avatar always carries the person's name in alt or
+          aria-label; determinate progress needs value and max, with
+          words nearby for readers.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <p class="row-tight" style="max-width: none;">
+              <span class="badge">Draft</span>
+              <span class="badge badge-success">Paid</span>
+              <span class="badge badge-warning">Expiring</span>
+              <span class="badge badge-error">Failed</span>
+              <span class="badge badge-info">3 updates</span>
+            </p>
+            <p class="chips">
+              <button type="button" class="chip" aria-pressed="true" data-tip="A pressed filter chip" data-event="filter-food">Food</button>
+              <button type="button" class="chip" aria-pressed="false" data-tip="Click to press" data-event="filter-travel">Travel</button>
+              <button type="button" class="chip" aria-pressed="false" data-tip="Click to press" data-event="filter-rent">Rent</button>
+            </p>
+            <p class="row-tight" style="max-width: none;">
+              <span class="avatar" aria-label="Tanishk Sharma">TS</span>
+              <span class="avatar avatar-large" aria-label="Facet">F</span>
+            </p>
+            <label class="field">
+              <span class="field-label">Uploading — 70%</span>
+              <progress value="70" max="100"></progress>
+            </label>
+          </div>
+        </div>
+        <pre id="code-small-talkers"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-small-talkers" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
       <!-- SNAP SECTION -->
       <article class="element stack" id="snap-section">
         <h3 data-status="stable">Snap section</h3>
@@ -2892,6 +2923,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           chip.type = "button";
           chip.className = "chip";
           chip.textContent = label;
+          chip.dataset.chipWidth = w;   // owned: keeps the library's self-toggle off it
           chip.dataset.tip = w ? `Constrains the demo to ${w}` : "Full width again";
           chip.setAttribute("aria-pressed", String(!w));
           chip.addEventListener("click", () => {

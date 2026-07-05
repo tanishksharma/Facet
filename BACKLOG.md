@@ -375,7 +375,10 @@ Platform laws docs and the R11 chart item.
       in verification: [popover]:not(:popover-open) display none at
       author origin, so layout utilities can never beat the UA's
       closed-popover hiding.
-- [ ] Badge, chip, avatar, progress bar
+- [x] Badge (tinted status pills, four kinds), chip (promoted from
+      the docs' own controls; bare aria-pressed chips self-toggle,
+      wired chips keep their handlers), avatar (image or initials,
+      two sizes), progress (native element themed, accent-1 fill).
 - [ ] Skeleton, spinner, empty state block
 - [ ] Flagship link: the signature style for linking to another page
 - [ ] Icon set: thin 1.5px line glyphs, around 40 to start

@@ -555,6 +555,39 @@
       "a11y": "role=img on the SVG; give the host an aria-label naming the series; the table nearby is the accessible data."
     },
     {
+      "name": "Badge, chip, avatar, progress",
+      "classes": [
+        ".badge",
+        ".badge-success",
+        ".badge-warning",
+        ".badge-error",
+        ".badge-info",
+        ".chips",
+        ".chip",
+        ".avatar",
+        ".avatar-large",
+        "progress"
+      ],
+      "summary": "Tinted status badges; self-toggling aria-pressed chips; round avatars; the native progress themed.",
+      "classNotes": {
+        ".badge": "a status word in a tinted pill; kind classes tint it",
+        ".chip": "toggleable pill button; bare chips self-toggle aria-pressed",
+        ".chips": "the wrapping row for a chip set",
+        ".avatar": "round face: img inside, or initials",
+        "progress": "native element, accent-1 fill"
+      },
+      "keys": [
+        [
+          "Enter / Space",
+          "toggles a chip"
+        ]
+      ],
+      "do": "Let badges state and chips act — never the reverse.",
+      "dont": "Make a badge clickable; that is a chip or a button.",
+      "why": "Readers treat text and controls differently; mixing them lies to both.",
+      "a11y": "aria-pressed announces chip state; avatars carry the name; pair progress with visible words."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",
