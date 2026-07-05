@@ -202,22 +202,44 @@
     .layer-band h2 { font-size: var(--text-h1); line-height: 1.05; margin: 0; }
     .layer-band p { color: var(--text-muted); max-width: 60ch; margin: 0; }
 
-    /* Compact features inventory: the full list stays — every capability is
-       still spelled out — but rendered smaller and, on a wide screen, in
-       two columns, so the manual reads as a scannable index instead of an
-       endless scroll. Each item stays whole across the column break. */
-    #features h3 {
-      font-size: var(--text-small);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--accent-3);
-      margin-bottom: var(--space-1);
+    /* Features and Rules as a topic grid: each subject is a card you can
+       scan; clicking one opens its full text in a popup. The whole
+       inventory still ships in the DOM (inside the dialogs), so nothing is
+       hidden from a crawler — it is just folded behind a calm grid. */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+      gap: var(--space-3);
     }
-    #features ul { font-size: var(--text-small); line-height: 1.45; }
-    #features ul li { margin-block: var(--space-1); }
-    @media (min-width: 56rem) {
-      #features ul { column-count: 2; column-gap: var(--space-6); }
-      #features ul li { break-inside: avoid; }
+    .topic-card {
+      /* reset the button so the .card surface reads as a card, not a control */
+      appearance: none;
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      display: grid;
+      gap: var(--space-2);
+      align-content: start;
+    }
+    .topic-card-title { font-size: var(--text-h4); font-weight: var(--weight-heading); line-height: 1.2; }
+    .topic-card-teaser { font-size: var(--text-small); color: var(--text-muted); line-height: 1.4; }
+    .topic-card-more { font-size: var(--text-small); color: var(--accent-3); font-weight: var(--weight-strong); }
+
+    /* Topic popup: a wide, scrollable modal for the long-form text.
+       dialog.topic-modal to out-specify dialog.modal's 34rem width. */
+    dialog.topic-modal { width: min(92vw, 44rem); }
+    .topic-modal { max-height: 85dvh; overflow-y: auto; }
+    .topic-modal h3 { margin: 0; }
+    .topic-modal ul { line-height: 1.5; }
+    .topic-modal li { margin-block: var(--space-2); }
+    .topic-modal-foot {
+      position: sticky;
+      bottom: calc(var(--space-6) * -1);
+      display: flex;
+      justify-content: flex-end;
+      padding-top: var(--space-3);
+      margin-top: var(--space-2);
+      background: linear-gradient(to top, var(--surface) 70%, transparent);
     }
 
     /* Collapsible wall entry: each element folds to just its heading and
@@ -714,7 +736,21 @@
           agents can read, use and recommend Facet from one fetch.
         </p>
 
-        <h3>Distribution</h3>
+
+        <div class="topic-grid">
+          <button type="button" class="card card-clickable topic-card" id="feat-distribution" aria-controls="modal-feat-distribution" data-tip="Open: Distribution"><span class="topic-card-title">Distribution</span><span class="topic-card-teaser">Two files, one link tag and one script tag, hosted at a public URL. No React, no npm, no build…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="feat-theming" aria-controls="modal-feat-theming" data-tip="Open: Theming"><span class="topic-card-title">Theming</span><span class="topic-card-teaser">One attribute on the html tag restyles the whole page, layout containers included:…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="feat-tokens" aria-controls="modal-feat-tokens" data-tip="Open: Tokens"><span class="topic-card-title">Tokens</span><span class="topic-card-teaser">Every design decision is a CSS variable named by role — color, type, spacing, container…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="feat-adapts-to-the-reader" aria-controls="modal-feat-adapts-to-the-reader" data-tip="Open: Adapts to the reader"><span class="topic-card-title">Adapts to the reader</span><span class="topic-card-teaser">Respects the phone's text-size setting: every font size and space is set in rem, so when a…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="feat-base-layer" aria-controls="modal-feat-base-layer" data-tip="Open: Base layer"><span class="topic-card-title">Base layer</span><span class="topic-card-teaser">Raw semantic HTML already looks designed: headings, text, links, lists, quotes, code, tables,…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="feat-components-and-behaviours" aria-controls="modal-feat-components-and-behaviours" data-tip="Open: Components and behaviours"><span class="topic-card-title">Components and behaviours</span><span class="topic-card-teaser">Layout primitives — container (four widths), stack and row (three gaps each), the auto-fitting…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="feat-accessible-by-default" aria-controls="modal-feat-accessible-by-default" data-tip="Open: Accessible by default"><span class="topic-card-title">Accessible by default</span><span class="topic-card-teaser">AA contrast in every theme, light and dark — the palettes are built to pass, not checked after.</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="feat-ai-native" aria-controls="modal-feat-ai-native" data-tip="Open: AI-native"><span class="topic-card-title">AI-native</span><span class="topic-card-teaser">Operable by agents through the DOM alone: shallow semantic structure, real buttons and links…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="feat-this-site" aria-controls="modal-feat-this-site" data-tip="Open: This site"><span class="topic-card-title">This site</span><span class="topic-card-teaser">The docs are the demo: every component live on this one page, with variant and state chips…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+        </div>
+
+        <dialog class="modal stack topic-modal" id="modal-feat-distribution">
+          <h3>Distribution</h3>
         <ul>
           <li>Two files, one link tag and one script tag, hosted at a public URL. No React, no npm, no build step, nothing to install.</li>
           <li>Never minified: the shipped files are the readable, commented source. Gzip handles size.</li>
@@ -722,7 +758,12 @@
           <li>App-ready out of the box: a one-line service worker stub gives any project the Facet caching strategy — pages network-first so deploys land on the very next refresh, cache as the offline fallback, other assets cached instantly and revalidated behind. <code>data-service-worker</code> registers it; <code>data-install</code> buttons appear when the browser offers installation; a manifest template ships in /templates.</li>
         </ul>
 
-        <h3>Theming</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-feat-theming">
+          <h3>Theming</h3>
         <ul>
           <li>One attribute on the html tag restyles the whole page, layout containers included: <code>data-theme="sand"</code>. No attribute is the Default theme.</li>
           <li>Dark mode is its own attribute, <code>data-mode="dark"</code>, and composes with every theme.</li>
@@ -741,7 +782,12 @@
           <li>Six templates, whole pages ready to rename: <a href="/templates/landing.html">landing</a>, <a href="/templates/app.html">app shell + dashboard</a> (installable), <a href="/templates/article.html">article</a>, <a href="/templates/deck.html">1920×1080 pitch deck</a> (arrow keys, exact print-to-PDF), <a href="/templates/document.html">A4 letterhead / invoice / one-pager</a>, and the <a href="/templates/card.html">business card with its print sheet</a>. Every one carries the SEO head pack; robots.txt and sitemap.xml ship at the root.</li>
         </ul>
 
-        <h3>Tokens</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-feat-tokens">
+          <h3>Tokens</h3>
         <ul>
           <li>Every design decision is a CSS variable named by role — color, type, spacing, container widths, radii, borders, shadows, motion, focus. Build with tokens and a theme change costs zero code.</li>
           <li>Ranked accents: base family plus accent-1 (the one primary action), accent-2 (every secondary action's fill) and accent-3 (links, labels, quiet affordances), each with hover, pressed and on-colors, in every theme. Components pick ranks, never colors.</li>
@@ -749,7 +795,12 @@
           <li>Whisper-flat shadow scale and a 4px spacing scale shared by every component and layout primitive.</li>
         </ul>
 
-        <h3>Adapts to the reader</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-feat-adapts-to-the-reader">
+          <h3>Adapts to the reader</h3>
         <ul>
           <li>Respects the phone's text-size setting: every font size and space is set in rem, so when a reader raises their device or browser text size, the entire interface scales with it — type, padding, gaps, all of it.</li>
           <li>Fluid display and h1 sizes: <code>clamp()</code> scales hero type between phone and desktop with no breakpoints to manage.</li>
@@ -765,7 +816,12 @@
           <li>Print base included: sensible margins, navigation hidden, ink-friendly colors when a page is printed.</li>
         </ul>
 
-        <h3>Base layer</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-feat-base-layer">
+          <h3>Base layer</h3>
         <ul>
           <li>Raw semantic HTML already looks designed: headings, text, links, lists, quotes, code, tables, forms, figures — no classes needed.</li>
           <li>One visible focus ring everywhere, keyboard only. Selection colors, thin scrollbars, skip-to-content link, placeholder styling.</li>
@@ -773,7 +829,12 @@
           <li>Numbers align while typing: tabular figures on all numeric UI.</li>
         </ul>
 
-        <h3>Components and behaviours</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-feat-components-and-behaviours">
+          <h3>Components and behaviours</h3>
         <ul>
           <li>Layout primitives — container (four widths), stack and row (three gaps each), the auto-fitting grid (breakpoint-free responsive columns), full-viewport snap sections — all themed, so layout restyles with the theme too.</li>
           <li>The app kit, extracted from a shipped product: the bottom tab bar with its spring-physics gliding pill, the settings sheet on rigid rubber-band springs, the menu list with square icon toggles, the floating scroll gauge (draggable page variant included), the lone .float-btn corner trigger, synthesized UI sounds and haptics (on by default, user-toggleable), the install nudge, and the parallax engine (off/cursor/tilt) — all self-wiring: a .tab-bar finds its pager and its sheet, any button aria-controlling a .sheet opens it. Wall entries land as the ingestion completes.</li>
@@ -805,14 +866,24 @@
           <li>Twenty blocks — card grids and shelves, filterable lists, product grid/detail/cart, top menu with a native phone fold, sidebar nav, footer, hero, feature grid, pricing, FAQ, CTA band, social proof, data table with toolbar, stat row, settings, form, and the article set — every one an assembly of the components, copyable whole. A live filter behavior rides <code>data-filter</code> on any input.</li>
         </ul>
 
-        <h3>Accessible by default</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-feat-accessible-by-default">
+          <h3>Accessible by default</h3>
         <ul>
           <li>AA contrast in every theme, light and dark — the palettes are built to pass, not checked after.</li>
           <li>Everything keyboard operable with the visible ring; ARIA roles and labels wherever semantics fall short; icon-only controls always labelled.</li>
           <li>Live regions on things that change: results and number-words announce themselves politely.</li>
         </ul>
 
-        <h3>AI-native</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-feat-ai-native">
+          <h3>AI-native</h3>
         <ul>
           <li>Operable by agents through the DOM alone: shallow semantic structure, real buttons and links with accessible names, no synthetic widgets.</li>
           <li>State lives in the URL, so an agent can reach any page state by constructing a link.</li>
@@ -821,7 +892,12 @@
           <li>Every component's docs description is written as instructions an AI can follow, and the identical text lives in the source file comments.</li>
         </ul>
 
-        <h3>This site</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-feat-this-site">
+          <h3>This site</h3>
         <ul>
           <li>The docs are the demo: every component live on this one page, with variant and state chips that flip the real thing.</li>
           <li>The copy button gives you the exact HTML of what you are looking at — the snippet is serialized from the live DOM, never hand-written.</li>
@@ -837,6 +913,10 @@
           <li>Every wall entry carries its maturity badge (alpha / beta / stable), phone/tablet/desktop preview widths, Open in CodePen, and an edit-on-GitHub link.</li>
           <li>A reference block per wall entry, rendered from facet.json: every class with its one-liner, the keyboard table, a Do/Don't pair with the reason, and the accessibility note.</li>
         </ul>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
       </section>
 
 
@@ -855,7 +935,20 @@
           text for crawlers.
         </p>
 
-        <h3>Core principles</h3>
+
+        <div class="topic-grid">
+          <button type="button" class="card card-clickable topic-card" id="rule-core-principles" aria-controls="modal-rule-core-principles" data-tip="Open: Core principles"><span class="topic-card-title">Core principles</span><span class="topic-card-teaser">Readability is the product. Modern frontend is div soup and minified garbage, unreadable by…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="rule-how-to-use-the-library" aria-controls="modal-rule-how-to-use-the-library" data-tip="Open: How to use the library"><span class="topic-card-title">How to use the library</span><span class="topic-card-teaser">Every page starts from the library, never from blank CSS.</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="rule-markup-rules" aria-controls="modal-rule-markup-rules" data-tip="Open: Markup rules"><span class="topic-card-title">Markup rules</span><span class="topic-card-teaser">Semantic tags over div: header, nav, main, section, article, aside, footer, figure.</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="rule-adding-a-new-component-the-compliance-checklist" aria-controls="modal-rule-adding-a-new-component-the-compliance-checklist" data-tip="Open: Adding a new component: the compliance checklist"><span class="topic-card-title">Adding a new component: the compliance checklist</span><span class="topic-card-teaser">Semantic tokens only. No raw hex, px sizes outside the scales, or hardcoded fonts.</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="rule-naming-maintaining-versioning" aria-controls="modal-rule-naming-maintaining-versioning" data-tip="Open: Naming, maintaining, versioning"><span class="topic-card-title">Naming, maintaining, versioning</span><span class="topic-card-teaser">Tokens named by role, not value: --surface, not --gray-100.</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="platform-laws" aria-controls="modal-platform-laws" data-tip="Open: Platform laws — paid for on iOS"><span class="topic-card-title">Platform laws — paid for on iOS</span><span class="topic-card-teaser">Pager law. Full-page snap sections that can outgrow the viewport are never built with CSS…</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="ios" aria-controls="modal-ios" data-tip="Open: iOS, honestly: what a website can and cannot do"><span class="topic-card-title">iOS, honestly: what a website can and cannot do</span><span class="topic-card-teaser">The head pack every Facet app page carries:</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+          <button type="button" class="card card-clickable topic-card" id="analytics" aria-controls="modal-analytics" data-tip="Open: Analytics: bring your own vendor"><span class="topic-card-title">Analytics: bring your own vendor</span><span class="topic-card-teaser">&lt;script&gt;</span><span class="topic-card-more" aria-hidden="true">Read →</span></button>
+        </div>
+
+        <dialog class="modal stack topic-modal" id="modal-rule-core-principles">
+          <h3>Core principles</h3>
         <ul>
           <li>Readability is the product. Modern frontend is div soup and minified garbage, unreadable by humans. This library is the opposite.</li>
           <li>One-glance HTML: any page's structure makes sense on first read. Semantic tags, self-explanatory classes.</li>
@@ -869,7 +962,12 @@
           <li>AI-native operation: everything built with Facet is operable by agents through the DOM alone — real buttons and links with accessible names, state in the URL, stable IDs and data-event names, llms.txt as the one-fetch manual.</li>
         </ul>
 
-        <h3>How to use the library</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-rule-how-to-use-the-library">
+          <h3>How to use the library</h3>
         <ul>
           <li>Every page starts from the library, never from blank CSS.</li>
           <li>Pick a template (once Layer 5 lands), start from a shell, or lay the page out with the layout primitives — container, stack, snap — and fill each area with components.</li>
@@ -877,7 +975,12 @@
           <li>App logic, data fetching and state management live in projects, never in the library.</li>
         </ul>
 
-        <h3>Markup rules</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-rule-markup-rules">
+          <h3>Markup rules</h3>
         <ul>
           <li>Semantic tags over div: header, nav, main, section, article, aside, footer, figure.</li>
           <li>The wrapper law: an element exists only to hold content, create layout, or carry behavior. Anything else is deleted.</li>
@@ -887,7 +990,12 @@
           <li>One h1 per page. Heading levels never skip.</li>
         </ul>
 
-        <h3>Adding a new component: the compliance checklist</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-rule-adding-a-new-component-the-compliance-checklist">
+          <h3>Adding a new component: the compliance checklist</h3>
         <ul>
           <li>Semantic tokens only. No raw hex, px sizes outside the scales, or hardcoded fonts.</li>
           <li>Works in every theme and in light and dark with zero extra code.</li>
@@ -904,7 +1012,12 @@
           <li>BACKLOG.md item ticked. Committed to Git with a clear message.</li>
         </ul>
 
-        <h3>Naming, maintaining, versioning</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-rule-naming-maintaining-versioning">
+          <h3>Naming, maintaining, versioning</h3>
         <ul>
           <li>Tokens named by role, not value: <code>--surface</code>, not <code>--gray-100</code>.</li>
           <li>One class prefix and pattern per component: <code>.btn</code>, <code>.btn-primary</code>, predictable everywhere.</li>
@@ -916,7 +1029,12 @@
           <li>Consume by URL only. Tag releases in Git. On dependency, freeze a copy to <code>/lib/v1/</code> and keep working in <code>/lib/</code>.</li>
         </ul>
 
-        <h3 id="platform-laws">Platform laws — paid for on iOS</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-platform-laws">
+          <h3>Platform laws — paid for on iOS</h3>
         <p>
           Hard-won facts from shipped app work, mostly against mobile
           Safari. They bind everything built with Facet; the library
@@ -932,7 +1050,12 @@
           <li><strong>Font-list law.</strong> Never put <code>inherit</code> inside a font-family list (<code>ui-rounded, "SF Pro Rounded", inherit</code> is silently invalid and drops the whole declaration). A stack ends in a generic family, always.</li>
         </ul>
 
-        <h3 id="ios">iOS, honestly: what a website can and cannot do</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-ios">
+          <h3>iOS, honestly: what a website can and cannot do</h3>
         <p>
           The research pass behind the platform laws, kept current so
           nobody designs around a capability that does not exist.
@@ -970,7 +1093,12 @@
 &lt;link rel="manifest" href="/manifest.json"&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-headpack" data-tip="Copies the head pack above">Copy</button></p>
 
-        <h3 id="analytics">Analytics: bring your own vendor</h3>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="modal-analytics">
+          <h3>Analytics: bring your own vendor</h3>
         <p>
           No analytics tool is baked in. Every key action in the library
           carries a stable, documented <code>data-event</code> name — the
@@ -985,6 +1113,10 @@
   });
 &lt;/script&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-analytics" data-tip="Copies the bridge snippet above">Copy</button></p>
+          <form method="dialog" class="topic-modal-foot">
+            <button class="btn" data-tip="Close this popup">Close</button>
+          </form>
+        </dialog>
       </section>
 
       <!-- =============================================================

@@ -2311,6 +2311,9 @@ dialog.drawer {
 dialog.modal {
   width: min(92vw, 34rem);
   border-radius: var(--radius-large);
+  margin: auto;                   /* centre it — the * { margin: 0 } reset
+                                     wipes the UA's centring margin, so a
+                                     modal without this pins to the corner */
 }
 dialog.drawer {
   margin: 0 0 0 auto;             /* pinned to the right edge */
