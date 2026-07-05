@@ -451,6 +451,8 @@
         <ul>
           <li><a href="#container">Container</a></li>
           <li><a href="#stack">Stack</a></li>
+          <li><a href="#row">Row</a></li>
+          <li><a href="#grid">Grid</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -558,7 +560,7 @@
 
         <h3>Components and behaviours</h3>
         <ul>
-          <li>Layout primitives — container (four widths), stack (three gaps), full-viewport snap sections — all themed, so layout restyles with the theme too.</li>
+          <li>Layout primitives — container (four widths), stack and row (three gaps each), the auto-fitting grid (breakpoint-free responsive columns), full-viewport snap sections — all themed, so layout restyles with the theme too.</li>
           <li>The app kit, extracted from a shipped product: the bottom tab bar with its spring-physics gliding pill, the settings sheet on rigid rubber-band springs, the menu list with square icon toggles, the floating scroll gauge (draggable page variant included), the lone .float-btn corner trigger, synthesized UI sounds and haptics (on by default, user-toggleable), the install nudge, and the parallax engine (off/cursor/tilt) — all self-wiring: a .tab-bar finds its pager and its sheet, any button aria-controlling a .sheet opens it. Wall entries land as the ingestion completes.</li>
           <li>The snap pager: full-viewport snap pages auto-upgrade to the iOS-proven pager — spring transitions between section tops, native scrolling inside sections, gesture handoff with a rubber-band hint, wheel paging with cooldown — because CSS scroll-snap alone breaks on iOS. No-JS pages keep plain CSS snapping; data-pager="off" opts out.</li>
           <li>Buttons in three variants and three sizes that work identically on <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code>; square icon buttons to match.</li>
@@ -1506,6 +1508,65 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-stack"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-stack" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ROW -->
+      <article class="element stack" id="row">
+        <h3 data-status="stable">Row</h3>
+        <p>
+          What it is: things side by side that wrap when they run out
+          of room, with the gap owned by the row. What it is for:
+          button rows, chip sets, meta lines, any run of small pieces.
+          When to use it: whenever things sit beside each other — the
+          row owns the gap, so children stay margin-free, exactly like
+          the stack owns vertical rhythm. Variants:
+          <code>.row-tight</code> for close runs,
+          <code>.row-loose</code> for breathing room.
+        </p>
+        <p class="chips" role="group" aria-label="Row gaps">
+          <button class="chip" aria-pressed="false" data-chip-group="rowgap" data-chip-class="row-tight">Tight</button>
+          <button class="chip" aria-pressed="true" data-chip-group="rowgap" data-chip-class="row">Default</button>
+          <button class="chip" aria-pressed="false" data-chip-group="rowgap" data-chip-class="row-loose">Loose</button>
+        </p>
+        <div class="demo">
+          <div class="row">
+            <button class="btn btn-small">Save</button>
+            <button class="btn btn-small">Duplicate</button>
+            <button class="btn btn-ghost btn-small">Delete</button>
+            <span class="text-caption">Updated a minute ago</span>
+          </div>
+        </div>
+        <pre id="code-row"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-row" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- GRID -->
+      <article class="element stack" id="grid">
+        <h3 data-status="stable">Grid</h3>
+        <p>
+          What it is: an auto-fitting column grid — as many columns as
+          fit, each at least a card wide, collapsing to one on phones
+          with no breakpoints written. What it is for: card grids,
+          feature grids, galleries, dashboards. When to use it: any
+          set of same-shaped pieces; the grid decides the count, the
+          content decides the size. Variants: <code>.grid-wide</code>
+          for bigger cards, <code>.grid-tight</code> and
+          <code>.grid-loose</code> for gap.
+        </p>
+        <p class="chips" role="group" aria-label="Grid variants">
+          <button class="chip" aria-pressed="true" data-chip-group="gridvar" data-chip-class="grid">Default</button>
+          <button class="chip" aria-pressed="false" data-chip-group="gridvar" data-chip-class="grid-wide">Wide cards</button>
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <p class="demo-box">One</p>
+            <p class="demo-box">Two</p>
+            <p class="demo-box">Three</p>
+            <p class="demo-box">Four</p>
+          </div>
+        </div>
+        <pre id="code-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

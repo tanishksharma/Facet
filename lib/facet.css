@@ -2131,6 +2131,45 @@ figcaption {
 [data-tip].tip-on::after,
 [data-tip].tip-on::before { opacity: 1; translate: -50% 0; }
 
+/* ----- ROW: horizontal flow with wrap and themed gaps -----
+   What it is: things side by side that wrap when they run out of
+   room, with the gap owned by the row. What it is for: button rows,
+   chip sets, meta lines, any run of small pieces. When to use it:
+   whenever things sit beside each other — the row owns the gap, so
+   children stay margin-free, exactly like the stack owns vertical
+   rhythm. Variants: .row-tight for close runs, .row-loose for
+   breathing room. */
+.row,
+.row-tight,
+.row-loose {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+.row-tight { gap: var(--space-2); }
+.row-loose { gap: var(--space-6); }
+
+/* ----- GRID: responsive columns with themed gaps -----
+   What it is: an auto-fitting column grid — as many columns as fit,
+   each at least a card wide, collapsing to one on phones with no
+   breakpoints written. What it is for: card grids, feature grids,
+   galleries, dashboards. When to use it: any set of same-shaped
+   pieces; the grid decides the count, the content decides the size.
+   Variants: .grid-wide for bigger cards, .grid-tight and .grid-loose
+   for gap. */
+.grid,
+.grid-wide,
+.grid-tight,
+.grid-loose {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+}
+.grid-wide { grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr)); }
+.grid-tight { gap: var(--space-2); }
+.grid-loose { gap: var(--space-6); }
+
 /* --------------------------------------------------------------------------
    APP COMPONENTS — ingested verbatim from the shipped inflation app.
    Base recipes, tokens only; their velvet skins live in the velvet theme

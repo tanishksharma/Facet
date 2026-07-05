@@ -256,6 +256,44 @@
       "a11y": "Layout only: no roles, focus or announcements to manage."
     },
     {
+      "name": "Row",
+      "classes": [
+        ".row",
+        ".row-tight",
+        ".row-loose"
+      ],
+      "summary": "Horizontal flow with wrap and a themed gap the row owns.",
+      "classNotes": {
+        ".row": "default gap",
+        ".row-tight": "close runs: buttons, chips",
+        ".row-loose": "breathing room"
+      },
+      "do": "Let the row own the gap between its children.",
+      "dont": "Add side margins to children inside a row.",
+      "why": "One gap owner keeps horizontal rhythm identical everywhere.",
+      "a11y": "Layout only: no roles, focus or announcements to manage."
+    },
+    {
+      "name": "Grid",
+      "classes": [
+        ".grid",
+        ".grid-wide",
+        ".grid-tight",
+        ".grid-loose"
+      ],
+      "summary": "Auto-fitting responsive columns, breakpoint-free.",
+      "classNotes": {
+        ".grid": "columns at least 14rem wide",
+        ".grid-wide": "bigger cards, at least 20rem",
+        ".grid-tight": "dense gap",
+        ".grid-loose": "gallery gap"
+      },
+      "do": "Give the grid same-shaped children and let it pick the column count.",
+      "dont": "Write media queries to change its columns.",
+      "why": "auto-fit + minmax already answers every width.",
+      "a11y": "Layout only: reading order is source order."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",

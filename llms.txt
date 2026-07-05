@@ -295,6 +295,35 @@ between whole sections of a page.
       <p>Content flows down with themed gaps.</p>
     </section>
 
+### Row
+
+What it is: things side by side that wrap when they run out of room,
+with the gap owned by the row. What it is for: button rows, chip sets,
+meta lines, any run of small pieces. When to use it: whenever things
+sit beside each other — the row owns the gap, so children stay
+margin-free, exactly like the stack owns vertical rhythm. Variants:
+.row-tight for close runs, .row-loose for breathing room.
+
+    <div class="row">
+      <button class="btn btn-small">Save</button>
+      <button class="btn btn-ghost btn-small">Delete</button>
+    </div>
+
+### Grid
+
+What it is: an auto-fitting column grid — as many columns as fit, each
+at least a card wide, collapsing to one on phones with no breakpoints
+written. What it is for: card grids, feature grids, galleries,
+dashboards. When to use it: any set of same-shaped pieces; the grid
+decides the count, the content decides the size. Variants: .grid-wide
+for bigger cards, .grid-tight and .grid-loose for gap.
+
+    <div class="grid">
+      <article> card </article>
+      <article> card </article>
+      <article> card </article>
+    </div>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

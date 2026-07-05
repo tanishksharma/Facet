@@ -328,8 +328,10 @@ Platform laws docs and the R11 chart item.
 
 ### Components — R11
 
-- [ ] Row: horizontal flow with wrap and themed gaps
-- [ ] Grid: responsive columns with themed gaps
+- [x] Row: .row/.row-tight/.row-loose — horizontal flow with wrap,
+      the row owns the gap; wall entry with gap chips.
+- [x] Grid: .grid/.grid-wide/.grid-tight/.grid-loose — auto-fit
+      minmax columns, breakpoint-free; wall entry with variant chips.
 - [ ] Switch, checkbox, radio
 - [ ] Stepper, segmented control
 - [ ] Input, textarea, select, search field as wired field components
