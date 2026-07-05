@@ -353,7 +353,10 @@ Platform laws docs and the R11 chart item.
       aria-controls buttons (showModal; Esc, form method=dialog and
       backdrop click close), [popover] styled with light dismiss and
       zero JS; spring arrivals on the motion tokens.
-- [ ] Accordion, toast, dropdown menu
+- [x] Accordion (native details, name-grouped exclusivity, rotating
+      chevron), toast (facet.toast(message, kind), aria-live rack,
+      4s self-dismiss), dropdown menu (details.dropdown of real
+      buttons; outside click / Esc / pick closes).
 - [ ] Tabs, breadcrumb, pagination
 - [ ] Nav link states: default, hover, active
 - [ ] Table component: header, zebra rows, row hover

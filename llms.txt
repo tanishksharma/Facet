@@ -444,6 +444,34 @@ panel for app pages; the drawer is the document-world sibling.
     <button class="btn" popovertarget="note">Toggle popover</button>
     <div popover id="note">Light-dismisses on any outside click.</div>
 
+### Accordion, toast, dropdown menu
+
+What it is: the accordion is native <details class="accordion">
+dressed (hairline rows, rotating chevron; give siblings the same name
+attribute and the browser keeps exactly one open); the toast is
+facet.toast(message, kind) — a transient pill that says one thing and
+leaves after four seconds, announced politely (kinds success /
+warning / error / info color the dot); the dropdown is
+details.dropdown whose summary wears button clothes and whose
+.dropdown-menu holds real buttons and links, closed by outside
+clicks, Esc, or picking an item. When to use it: never a toast for a
+question (dialog) and never a dropdown for navigation (links).
+
+    <details class="accordion" name="faq">
+      <summary>How is the rate calculated?</summary>
+      <p>From the last twelve months.</p>
+    </details>
+
+    facet.toast("Report saved", "success")
+
+    <details class="dropdown">
+      <summary class="btn">More actions</summary>
+      <div class="dropdown-menu">
+        <button type="button">Export CSV</button>
+        <button type="button" class="dropdown-danger">Delete</button>
+      </div>
+    </details>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

@@ -2302,6 +2302,140 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 }
 [popover]:popover-open { animation: facet-modal-in var(--duration-fast) var(--ease-out); }
 
+/* ----- ACCORDION: native details, one open at a time if named -----
+   What it is: expandable rows on <details class="accordion"> — the
+   platform's own disclosure, dressed: hairline rows, a rotating
+   chevron, roomy 44px summaries. What it is for: FAQs, advanced
+   settings, anything long that most readers skip. When to use it:
+   give sibling accordions the same name attribute and the browser
+   keeps exactly one open — no JS anywhere. */
+details.accordion {
+  border-bottom: var(--border-width) solid var(--border);
+}
+.accordion summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 2.75rem;
+  padding-block: var(--space-2);
+  font-weight: var(--weight-strong);
+  cursor: pointer;
+  list-style: none;
+}
+.accordion summary::-webkit-details-marker { display: none; }
+.accordion summary::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  rotate: 45deg;
+  flex: none;
+  transition: rotate var(--duration-base) var(--ease-spring);
+}
+.accordion[open] summary::after { rotate: 225deg; }
+.accordion > :not(summary) { padding-bottom: var(--space-4); }
+
+/* ----- TOAST: a transient notice that names itself -----
+   What it is: a small pill that appears near the bottom, says one
+   thing, and leaves on its own — created by facet.toast(message,
+   kind). What it is for: confirmations and quiet failures: saved,
+   copied, offline. When to use it: outcomes that need no reply.
+   Never for questions — those are dialogs. The rack is aria-live
+   polite, so readers hear the message without losing their place.
+   Kinds color the leading dot: success, warning, error, info. */
+.toast-rack {
+  position: fixed;
+  bottom: calc(var(--space-5) + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 60;
+  pointer-events: none;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: min(92vw, 28rem);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--text);
+  color: var(--background);
+  font-size: var(--text-small);
+  box-shadow: var(--shadow-overlay);
+  pointer-events: auto;
+  animation: facet-toast-in var(--duration-base) var(--ease-spring);
+  transition: opacity var(--duration-base) var(--ease-out), translate var(--duration-base) var(--ease-out);
+}
+@keyframes facet-toast-in { from { opacity: 0; translate: 0 12px; } }
+.toast-out { opacity: 0; translate: 0 8px; }
+.toast[data-kind]::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-pill);
+  flex: none;
+}
+.toast[data-kind="success"]::before { background: var(--success); }
+.toast[data-kind="warning"]::before { background: var(--warning); }
+.toast[data-kind="error"]::before { background: var(--error); }
+.toast[data-kind="info"]::before { background: var(--info); }
+
+/* ----- DROPDOWN MENU: a details that opens under its button -----
+   What it is: a small action menu on <details class="dropdown"> — the
+   summary wears button clothes, the .dropdown-menu panel drops in
+   under it, outside clicks and Esc close it (facet.js), and every
+   item is a real button or link. What it is for: two-to-seven
+   secondary actions behind one trigger: export, duplicate, delete.
+   When to use it: actions, never navigation between pages (links
+   belong in nav) and never a form value (that is the select). */
+details.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown summary { list-style: none; }
+.dropdown summary::-webkit-details-marker { display: none; }
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + var(--space-1));
+  left: 0;
+  min-width: 12rem;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-1);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-floating);
+  z-index: 30;
+  animation: facet-toast-in var(--duration-fast) var(--ease-out);
+}
+.dropdown-menu button,
+.dropdown-menu a {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  border-radius: var(--radius-small);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+}
+.dropdown-menu button:hover,
+.dropdown-menu a:hover { background: var(--accent-2-hover); }
+.dropdown-menu .dropdown-danger { color: var(--error); }
+
 /* ----- CARD: default, outlined, clickable -----
    What it is: the grouped-surface primitive — a padded, rounded panel
    a breath above the page. What it is for: one thing per card: a

@@ -440,6 +440,39 @@
       "a11y": "Native dialog semantics; give the dialog a heading; backdrop click and Esc both close."
     },
     {
+      "name": "Accordion, toast, dropdown",
+      "classes": [
+        "details.accordion",
+        ".toast",
+        ".toast-rack",
+        "details.dropdown",
+        ".dropdown-menu",
+        ".dropdown-danger"
+      ],
+      "summary": "Native disclosure rows; transient facet.toast() pills; a details-based action menu.",
+      "classNotes": {
+        "details.accordion": "dressed native disclosure; same name = one open",
+        ".toast": "created by facet.toast(message, kind)",
+        "details.dropdown": "summary wears .btn; outside click / Esc / pick closes",
+        ".dropdown-menu": "the panel: real buttons and links",
+        ".dropdown-danger": "the red item"
+      },
+      "keys": [
+        [
+          "Enter / Space",
+          "toggles an accordion or dropdown summary"
+        ],
+        [
+          "Esc",
+          "closes an open dropdown and refocuses its trigger"
+        ]
+      ],
+      "do": "Give sibling accordions the same name for one-open-at-a-time.",
+      "dont": "Put a question in a toast.",
+      "why": "Toasts leave on their own; questions need an answer — that is a dialog.",
+      "a11y": "Details/summary announce natively; the toast rack is aria-live polite; menu items are real buttons."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",
@@ -882,6 +915,7 @@
     "facet.numberValue": "Parse a grouped input back to a number.",
     "facet.groupNumber": "Group digits per the active system.",
     "facet.groupIndian": "Indian 2-2-3 grouping.",
-    "facet.numberWords": "A number as localized words (lakh, crore, million…)."
+    "facet.numberWords": "A number as localized words (lakh, crore, million…).",
+    "facet.toast": "Show a transient notice: facet.toast(message, kind) with kinds success/warning/error/info."
   }
 }
