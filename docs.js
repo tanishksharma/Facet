@@ -703,17 +703,29 @@ function relocateTools() {
   }
 }
 
+/* The Sound & haptics wall entry: its buttons carry data-feedback-demo
+   naming a facet.feedback method (tap/tick/snap/success). Wired here in
+   docs.js — the library never ships demo handlers. Absent on other pages. */
+function initFeedbackDemo() {
+  for (const btn of document.querySelectorAll("[data-feedback-demo]")) {
+    const method = btn.dataset.feedbackDemo;
+    btn.addEventListener("click", () => {
+      if (window.facet && facet.feedback && facet.feedback[method]) facet.feedback[method]();
+    });
+  }
+}
+
 /* Big layer bands: a strong divider and display-sized heading before
    each layer, so the page reads as Manual / Layer 1 / 2 / 3 / 4 /
    Tools instead of one endless scroll. */
 function insertLayerBands() {
   const bands = [
-    ["typography", "Layer 1",    "Tokens",            "Every design decision as a named variable: type, color, space, shape, motion."],
-    ["base",       "Layer 2",    "Base styles",       "Raw semantic HTML, already designed — no classes required."],
-    ["components", "Layer 3",    "Components",        "Every piece of the library, live. Each folds to a heading and a line — open one to see it work."],
-    ["blocks",     "Layer 4",    "Blocks",            "The components, assembled into ready page sections you copy whole."],
-    ["templates",  "Layer 5",    "Templates",         "Whole pages — full app and site layouts you rename and fill in."],
-    ["playground", "Tools",      "Try it & look it up","An editable live playground, and the whole manifest as a filterable cheatsheet."],
+    ["typography",  "Layer 1", "Tokens & base",       "Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed."],
+    ["interaction", "Layer 2", "Motion & interaction","Parallax, idle life, snap pages, sound and haptics — the behaviours that make a page feel alive (they live in Layouts)."],
+    ["components",  "Layer 3", "Components",          "Every piece of the library, live. Each folds to a heading and a line — open one to see it work."],
+    ["blocks",      "Layer 4", "Blocks",              "The components, assembled into ready page sections you copy whole."],
+    ["templates",   "Layer 5", "Templates",           "Whole pages — full app and site layouts you rename and fill in."],
+    ["playground",  "Tools",   "Playground & cheatsheet","An editable live playground, and the whole manifest as a filterable cheatsheet."],
   ];
   for (const [id, kicker, title, blurb] of bands) {
     const anchor = document.querySelector("#" + id);
@@ -827,6 +839,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   relocateTools();                 // Playground + Cheatsheet to the end
   insertLayerBands();
   initPlayground();
+  initFeedbackDemo();              // the Sound & haptics wall buttons
   await initCheatsheet();
   const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
   if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);

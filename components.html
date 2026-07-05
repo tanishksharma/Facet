@@ -24,6 +24,7 @@
         <a class="site-link" href="/" data-tip-below data-tip="What Facet is and how to use it">Home</a>
         <a class="site-link" href="/components.html" aria-current="page" data-tip-below data-tip="Every component, live and copyable">Components</a>
         <a class="site-link" href="/layouts.html" data-tip-below data-tip="Blocks and whole-page templates">Layouts</a>
+        <a class="site-link" href="/playground.html" data-tip-below data-tip="Try a snippet live, and look any class up">Playground</a>
         <a class="site-link" href="/build.html" data-tip-below data-tip="Build your own theme, live — plus Skin Lab">Build a theme</a>
         <a class="site-link" href="/llms.txt" data-tip-below data-tip="The whole library as plain text, for LLMs">llms.txt</a>
         <a class="site-link" href="https://github.com/tanishksharma/Facet" data-tip-below data-tip="The readable source, never minified">GitHub</a>
@@ -38,18 +39,13 @@
              data-tip="Type to filter the wall below" data-tip-below>
       <nav aria-label="Sections">
         <details class="nav-group" data-group="layer1">
-          <summary><span class="nav-group-name">Layer 1 · Tokens</span><span class="nav-group-desc">The individual tokens that make up the basics.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+          <summary><span class="nav-group-name">Layer 1 · Tokens &amp; base</span><span class="nav-group-desc">The named tokens, and raw semantic HTML already designed.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#typography">Typography</a></li>
           <li><a href="#color">Color</a></li>
           <li><a href="#spacing">Spacing</a></li>
           <li><a href="#shape">Shape &amp; elevation</a></li>
-          <li><a href="#motion">Motion</a></li>
-        </ul>
-        </details>
-        <details class="nav-group" data-group="layer2">
-          <summary><span class="nav-group-name">Layer 2 · Base</span><span class="nav-group-desc">Raw semantic HTML, already designed.</span><span class="nav-caret" aria-hidden="true"></span></summary>
-        <ul>
+          <li><a href="#motion">Motion tokens</a></li>
           <li><a href="#base">Base styles</a></li>
         </ul>
         </details>
@@ -75,8 +71,6 @@
           <li><a href="#waiting">Skeleton, spinner, empty</a></li>
           <li><a href="#flagship-link">Flagship link</a></li>
           <li><a href="#icons">Icons</a></li>
-          <li><a href="#motion-pack">Parallax &amp; idle</a></li>
-          <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
           <li><a href="#number-input">Number input</a></li>
@@ -90,14 +84,6 @@
           <li><a href="#scroll-gauge">Scroll gauge</a></li>
           <li><a href="#choice-grid">Choice grid</a></li>
           <li><a href="#map">Themed map</a></li>
-          <li><a href="#backgrounds">Backgrounds</a></li>
-        </ul>
-        </details>
-        <details class="nav-group" data-group="tools">
-          <summary><span class="nav-group-name">Tools</span><span class="nav-group-desc">Try it live and look things up.</span><span class="nav-caret" aria-hidden="true"></span></summary>
-        <ul>
-          <li><a href="#playground">Playground</a></li>
-          <li><a href="#cheatsheet">Cheatsheet</a></li>
         </ul>
         </details>
       </nav>
@@ -1133,84 +1119,6 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-icons" data-tip="Copies the usage example above">Copy</button></p>
       </article>
 
-      <!-- MOTION PACK -->
-      <article class="element stack" id="motion-pack">
-        <h3 data-status="beta">Parallax &amp; idle motion</h3>
-        <p>
-          What it is: alive by default.
-          <code>data-parallax="depth"</code> lets an element drift up
-          to that many pixels behind the pointer on desktop, behind
-          the scroll's momentum everywhere, and behind the device's
-          tilt where no permission gate blocks it —
-          <code>facet.motion</code> is the engine
-          (register/setMode/cycle; off | cursor | tilt). The
-          <code>idle-*</code> classes give key elements a resting
-          pulse: a slow float, a faint sway, a soft breathing scale.
-          What it is for: heroes, illustrations, decorative cards —
-          life at the edges, never on the reading path. When to use
-          it: sparingly; one or two moving things per screen. The
-          idle classes animate translate/rotate/scale, so they
-          compose with the engine's transform instead of colliding —
-          the parallax exclusion, solved structurally. Calm stills
-          idle life; off and reduced motion still everything. Move
-          your pointer over this page and watch the cards below.
-        </p>
-        <div class="demo">
-          <div class="grid">
-            <article class="card stack-tight" data-parallax="10" data-tip="Drifts up to 10px behind the pointer">
-              <p class="text-caption">data-parallax="10"</p>
-              <strong>I follow the pointer</strong>
-            </article>
-            <article class="card stack-tight idle-float" data-tip="A slow resting float">
-              <p class="text-caption">.idle-float</p>
-              <strong>I breathe at rest</strong>
-            </article>
-            <article class="card stack-tight idle-sway" data-tip="A faint resting sway">
-              <p class="text-caption">.idle-sway</p>
-              <strong>I sway a little</strong>
-            </article>
-          </div>
-        </div>
-        <pre id="code-motion-pack"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-motion-pack" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- SNAP SECTION -->
-      <article class="element stack" id="snap-section">
-        <h3 data-status="stable">Snap section</h3>
-        <p>
-          What it is: full-viewport scroll-snap areas. The .snap wrapper
-          scrolls one full screen at a time and each .snap-section centers
-          its content at a readable width. What it is for: the calculator
-          page skeleton — intro screen, then inputs, then results — and any
-          page that tells one story one screen at a time. When to use it:
-          single-purpose pages with a clear screen-by-screen flow. Not for
-          ordinary documents; normal pages just scroll. The .snap wrapper
-          exists to enable scrolling, which is the one reason the wrapper law
-          allows a container inside a container. On a real page the wrapper
-          is <code>&lt;main class="snap"&gt;</code> and each section fills
-          the viewport; here it is shrunk into a frame — scroll inside it.
-        </p>
-        <div class="demo">
-          <div class="snap">
-            <section class="snap-section">
-              <h4 style="text-align: center;">Intro</h4>
-              <p style="text-align: center;">What this page tells you, in one line.</p>
-            </section>
-            <section class="snap-section">
-              <h4 style="text-align: center;">Inputs</h4>
-              <p style="text-align: center;">Number inputs and sliders, prefilled with examples.</p>
-            </section>
-            <section class="snap-section">
-              <h4 style="text-align: center;">Results</h4>
-              <p style="text-align: center;">A verdict-first result block, recalculating live.</p>
-            </section>
-          </div>
-        </div>
-        <pre id="code-snap-section"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-snap-section" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
       <!-- BUTTON -->
       <article class="element stack" id="button">
         <h3 data-status="stable">Button</h3>
@@ -1665,78 +1573,52 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- BACKGROUNDS -->
-      <article class="element stack" id="backgrounds">
-        <h3 data-status="beta">Backgrounds</h3>
-        <p>
-          What it is: whisper-faint page and section backgrounds drawn
-          with CSS gradients only, colored by the tokens so every theme
-          and mode gets them for free. What it is for: giving big quiet
-          surfaces a material — a hero, a section divider zone, a whole
-          page. When to use it: one class on a section or body; content
-          sits straight on top. The set: <code>.bg-grid</code>
-          (technical drawing: plus marks at the grid intersections),
-          <code>.bg-dots</code> (dot grid), <code>.bg-ruled</code>
-          (writing lines), <code>.bg-graph</code> (graph paper). All of
-          them fade to nothing under <code>prefers-contrast: more</code>.
-        </p>
-        <p class="chips" role="group" aria-label="Background patterns">
-          <button class="chip" aria-pressed="true" data-chip-group="pattern" data-chip-class="bg-grid">Technical grid</button>
-          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-dots">Dot grid</button>
-          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-ruled">Ruled</button>
-          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-graph">Graph paper</button>
-        </p>
-        <div class="demo">
-          <section class="bg-grid" data-tip="The pattern is tokens: switch theme or mode and it follows">
-            <p style="padding: var(--space-card); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
-          </section>
-        </div>
-        <pre id="code-backgrounds"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-backgrounds" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- =============================================================
-           TOOLS · PLAYGROUND
-           One editable box, rendered live through the real library.
-           ============================================================= -->
-      <section id="playground" class="stack">
-        <h2>Playground</h2>
-        <p>
-          What it is: one editable HTML box rendering live through the
-          real facet.css and facet.js — the frame below is a genuine
-          page with the two tags. What it is for: trying a snippet
-          before it goes in your file; paste anything off the wall,
-          bend it, watch it. When to use it: whenever "would this
-          work?" is faster typed than reasoned. The frame follows this
-          page's theme and mode.
-        </p>
-        <label for="playground-input">Your HTML</label>
-        <textarea id="playground-input" rows="8" spellcheck="false" data-tip="Renders below as you type"></textarea>
-        <iframe id="playground-frame" class="lab-frame" style="height: 16rem;" title="Playground preview"></iframe>
-      </section>
-
-      <!-- =============================================================
-           TOOLS · CHEATSHEET
-           Every class and attribute on one dense screen, straight from
-           facet.json so it can never drift from the manifest.
-           ============================================================= -->
-      <section id="cheatsheet" class="stack">
-        <h2>Cheatsheet</h2>
-        <p>
-          What it is: every class, data attribute and API call on one
-          dense screen, rendered from <a href="/facet.json">facet.json</a>
-          so it can never drift from the manifest. What it is for: the
-          lookup you keep open while writing HTML in another window.
-          When to use it: once you know the components and only need
-          their names.
-        </p>
-        <label for="cheat-filter">Filter the sheet</label>
-        <input id="cheat-filter" type="search" placeholder="btn, data-tip, mapStyle…" data-tip="Hides every row that does not match">
-        <div id="cheat-body" class="stack-tight"></div>
-      </section>
-
     </main>
   </div>
+
+    <!-- =============================================================
+         APP CONTROLS · the settings your users get, live on this page.
+         The bottom-right gear opens the standard sheet (facet.js wires
+         it: any button that aria-controls a .sheet). Every control is
+         self-wired by data-control — Appearance cycles light/dark/auto,
+         Motion cycles the parallax engine off/cursor/tilt, Sounds and
+         Haptics flip facet.feedback. This is the same panel every Facet
+         app ships; the HTML for motion and sound lives in Layouts.
+         ============================================================= -->
+    <button class="float-btn float-btn-right" aria-controls="app-settings" aria-expanded="false"
+            aria-label="Open settings" data-tip="The controls your users get: appearance, motion, sound" data-event="open-app-settings">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+    </button>
+    <div class="sheet-scrim" data-open="false"></div>
+    <aside class="sheet" id="app-settings" data-open="false" aria-hidden="true" aria-label="Settings">
+      <div class="sheet-scroll">
+        <span class="menu-label">Settings</span>
+        <p class="text-footnote" style="color: var(--text-muted); padding: 0 var(--space-inline);">
+          The exact controls a Facet app hands its users. Flip one and the
+          whole page answers — this panel is the same one your product ships.
+        </p>
+      </div>
+      <div class="sheet-foot">
+        <div class="sheet-group menu-icon-row">
+          <button type="button" class="menu-icon-btn" data-control="appearance" aria-label="Appearance: light, dark or auto" data-tip="Cycles facet.scheme — Light, Dark, Auto">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+            <span class="menu-value">Auto</span>
+          </button>
+          <button type="button" class="menu-icon-btn" data-control="motion" aria-label="Motion and parallax: off, cursor or tilt" data-tip="Cycles facet.motion — the parallax engine: Off, Cursor, Tilt">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="10" height="12" rx="2"/><path d="M16 8l4 4-4 4M11 12h9"/></svg>
+            <span class="menu-value">Cursor</span>
+          </button>
+          <button type="button" class="menu-icon-btn" data-control="sounds" aria-label="Sounds: on or off" data-tip="Flips facet.feedback.sound.enabled">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8 8 0 0 1 0 12"/></svg>
+            <span class="menu-value">On</span>
+          </button>
+          <button type="button" class="menu-icon-btn" data-control="haptics" aria-label="Haptics: on or off" data-tip="Flips facet.feedback.haptic.enabled">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="8" height="18" rx="2"/><path d="M4 9v6M20 9v6"/></svg>
+            <span class="menu-value">On</span>
+          </button>
+        </div>
+      </div>
+    </aside>
   <script src="/docs.js" defer></script>
 </body>
 </html>
