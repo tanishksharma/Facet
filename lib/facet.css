@@ -2302,6 +2302,39 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 }
 [popover]:popover-open { animation: facet-modal-in var(--duration-fast) var(--ease-out); }
 
+/* ----- TABLE: header, zebra rows, row hover -----
+   What it is: the data table — muted header row, zebra striping,
+   a hover that names the row you are reading, right-aligned tabular
+   numbers via .num. What it is for: real records: transactions,
+   users, line items. When to use it: data with columns; lists of
+   things with one field go in list markup instead. Wrap wide tables
+   in .table-scroll — a wrapper the wrapper law allows because it
+   enables horizontal scrolling on phones. */
+.table-scroll { overflow-x: auto; }
+table.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-small);
+}
+.table th {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  color: var(--text-muted);
+  font-weight: var(--weight-strong);
+  border-bottom: var(--border-width-strong) solid var(--border);
+  white-space: nowrap;
+}
+.table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-width) solid var(--border);
+}
+.table tbody tr:nth-child(even) { background: var(--surface); }
+.table tbody tr:hover { background: var(--accent-2-hover); }
+.table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ----- NAV LINK: the three states of site navigation -----
    What it is: the navigation link with its three states designed —
    quiet by default, named on hover, plainly marked when it is the

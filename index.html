@@ -462,6 +462,7 @@
           <li><a href="#disclosure">Accordion, toast, dropdown</a></li>
           <li><a href="#wayfinding">Tabs, breadcrumb, pagination</a></li>
           <li><a href="#nav-link">Nav link</a></li>
+          <li><a href="#table">Table</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -583,6 +584,7 @@
           <li>Modal, drawer and popover on the platform's own top layer: <code>&lt;dialog&gt;</code> opened by any <code>aria-controls</code> button (focus trap, Esc, backdrop close free), popovers on one attribute with light dismiss and zero JS.</li>
           <li>Accordion on native <code>&lt;details&gt;</code> (same <code>name</code> = one open at a time, no JS); <code>facet.toast()</code> transient notices announced politely; dropdown menus of real buttons that close on outside click, Esc, or a pick.</li>
           <li>Wayfinding: real ARIA tabs with arrow keys and an accent underline; breadcrumbs with <code>aria-current</code>; pagination as real links in 44px squares — every page a URL; <code>.nav-link</code> with its three designed states for chrome navigation.</li>
+          <li>Data table: muted header, zebra rows, row hover, tabular right-aligned numbers via <code>.num</code>, and a <code>.table-scroll</code> wrapper so wide tables scroll on phones.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -1935,6 +1937,38 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-nav-link"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-nav-link" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- TABLE -->
+      <article class="element stack" id="table">
+        <h3 data-status="stable">Table</h3>
+        <p>
+          What it is: the data table — muted header row, zebra
+          striping, a hover that names the row you are reading, and
+          right-aligned tabular numbers via <code>.num</code>. What it
+          is for: real records: transactions, users, line items. When
+          to use it: data with columns; lists of things with one field
+          go in list markup instead. Wrap wide tables in
+          <code>.table-scroll</code> — a wrapper the wrapper law
+          allows because it enables horizontal scrolling on phones.
+        </p>
+        <div class="demo">
+          <div class="table-scroll">
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Month</th><th scope="col">Category</th><th scope="col" class="num">Amount</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>April</td><td>Groceries</td><td class="num">12,480</td></tr>
+                <tr><td>May</td><td>Groceries</td><td class="num">11,975</td></tr>
+                <tr><td>June</td><td>Travel</td><td class="num">31,200</td></tr>
+                <tr><td>July</td><td>Rent</td><td class="num">48,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <pre id="code-table"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-table" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

@@ -363,7 +363,8 @@ Platform laws docs and the R11 chart item.
       accent-1 current, aria-disabled edges).
 - [x] Nav link states: .nav-link — muted default, hover names it,
       aria-current="page" fills it; 44px rows for chrome navigation.
-- [ ] Table component: header, zebra rows, row hover
+- [x] Table component: table.table — muted header, zebra rows, row
+      hover, .num tabular columns, .table-scroll phone wrapper.
 - [ ] Chart (SVG line chart, from the inflation app): theming rules
       carried from the handoff — the chart card is a carved well, the
       data line is accent-1 at 2.5px (dashed for projected spans), dots

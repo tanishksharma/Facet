@@ -515,6 +515,24 @@
       "a11y": "aria-current announces place; the hit target is 44px."
     },
     {
+      "name": "Table",
+      "classes": [
+        "table.table",
+        ".table-scroll",
+        ".num"
+      ],
+      "summary": "Data table: muted header, zebra rows, row hover, tabular numbers, phone scroll wrapper.",
+      "classNotes": {
+        "table.table": "the styled data table",
+        ".table-scroll": "wrapper that lets wide tables scroll on phones",
+        ".num": "right-aligned tabular-nums cell"
+      },
+      "do": "Use th scope=col in the header and .num on money columns.",
+      "dont": "Use a table for layout or for one-field lists.",
+      "why": "Tables announce as data grids; misuse confuses every reader.",
+      "a11y": "Real table semantics; scope on headers; the scroll wrapper keeps focus order intact."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",
