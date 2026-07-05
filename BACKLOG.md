@@ -19,6 +19,53 @@ RTL no — decided 4 Jul 2026.
 
 ## Queue · heavy systems first
 
+### Theme marketplace + community submissions (NEW · needs a backend)
+
+Let visitors build a theme (the Build-a-theme page already does this) and
+submit it for the owner to review and, if approved, ship as an official theme.
+Below the builder, a marketplace lists the built-in themes and, under a
+separate heading, approved community themes. This is the project's first
+social surface.
+
+Flow:
+- On /build.html, a "Submit this theme" button next to Copy/Reset. It captures
+  the current build (the token overrides + name + optional author handle).
+- Email + OTP gate: user enters an email; a one-time code is emailed; they
+  enter it to verify. On success the theme is saved to the DB with status
+  "review", the verified email, the token JSON, a name and a timestamp.
+- Owner reviews out of band; approving flips status to "approved".
+- Approved themes render in the marketplace (a card each: name, author,
+  swatch preview, "Apply" to load it into the builder / "Use" to copy its
+  config). Built-ins are one group; community themes another.
+
+Needs a backend — the site is static today, so this is the first server work:
+- Storage: a DB table `themes` (id, name, author, email, tokens JSON, status,
+  created_at). Supabase fits (Postgres + row-level security + edge functions).
+- OTP: two serverless endpoints (Vercel functions or Supabase edge functions)
+  — request-otp (generate a 6-digit code, store it with a short TTL keyed to
+  the email, send via an email provider like Resend/Postmark) and verify-otp
+  (check the code, then accept the theme insert). Rate-limit both.
+- Read path: a public endpoint (or RLS-scoped select) returns approved themes
+  for the marketplace; the builder fetches it.
+- Secrets (DB URL, service key, email API key) live in Vercel env vars, never
+  in the client. The submit/verify calls go to the functions, not the DB
+  directly.
+- Keep the static-first spirit: the marketplace degrades to just the built-in
+  themes if the backend is unreachable; no build step added to /lib.
+Decisions to confirm before building: email provider, whether Supabase or
+Vercel-Postgres, and the exact theme JSON shape (reuse the builder's ?mix=
+JSON — {tokens, scales} — plus name/author).
+
+### Layer 5 templates — more app shapes (NEW)
+
+Layer 5 is named (Templates = whole-page layouts). Grow the set beyond the six
+starters into real app shapes the owner named: a SaaS dashboard, a social-media
+feed/app, and similar. Each a full page assembled from Layer 4 blocks, carrying
+the head pack, listed on /layouts.html under the Layer 5 · Templates band.
+Note (owner's layering call, agreed): the bottom tab bar and the settings sheet
+are two separate Layer 3 components; assembled together into one nav unit they
+are a Layer 4 block — that "tab bar + menu sheet" pairing belongs in Layer 4.
+
 ### Semantic color & border tokens (DONE)
 
 Accents: KEPT as --accent-1/-2/-3 (owner decided not to rename — the ranks

@@ -668,6 +668,7 @@ function insertLayerBands() {
     ["base",       "Layer 2",    "Base styles",       "Raw semantic HTML, already designed — no classes required."],
     ["components", "Layer 3",    "Components",        "Every piece of the library, live. Each folds to a heading and a line — open one to see it work."],
     ["blocks",     "Layer 4",    "Blocks",            "The components, assembled into ready page sections you copy whole."],
+    ["templates",  "Layer 5",    "Templates",         "Whole pages — full app and site layouts you rename and fill in."],
     ["playground", "Tools",      "Try it & look it up","An editable live playground, and the whole manifest as a filterable cheatsheet."],
   ];
   for (const [id, kicker, title, blurb] of bands) {
