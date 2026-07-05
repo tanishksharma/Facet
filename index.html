@@ -52,25 +52,37 @@
       border-color: var(--text-muted);
     }
 
-    /* Centered landing hero — the first thing you see, before the split. */
-    .hero-landing {
+    /* Landing — one calm centered column: heading, the two tags, a copy
+       button and the theme chips. The code block is the star, so the
+       heading stays modest (not display-sized). */
+    .landing {
       display: grid;
       justify-items: center;
       text-align: center;
       gap: var(--space-4);
-      max-width: 52rem;
-      margin-inline: auto;
-      padding: var(--space-8) var(--space-5) var(--space-7);
+      max-width: 46rem;
+      padding-block: var(--space-8) var(--space-7);
     }
-    .hero-landing h1 { font-size: var(--text-display); line-height: 1.05; margin: 0; }
-    .hero-lede { color: var(--text-muted); max-width: 48ch; margin: 0; }
-    .hero-cta { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; }
-    .hero-size { font-size: var(--text-small); color: var(--text-muted); margin: 0; }
+    .landing-title { font-size: var(--text-h1); line-height: 1.1; margin: 0; max-width: 20ch; }
+    .landing-lede { color: var(--text-muted); max-width: 52ch; margin: 0; }
+    .landing-snippet {
+      width: 100%;
+      max-width: 40rem;
+      text-align: left;
+      margin: var(--space-2) auto 0;
+    }
+    .landing-actions { margin: 0; }
+    .landing-chips { justify-content: center; margin: 0; }
+    .landing-size { font-size: var(--text-small); color: var(--text-muted); margin: 0; }
 
-    /* Get-started strip: the two tags + the setup chips, below the hero. */
-    .get-started {
+    /* Deliberate full-width divider — the one clean rule between the
+       landing and the library, and reused wherever a real break is meant.
+       It rides the --border token, so it is a hairline in the ink theme
+       and tinted in every other theme (never a stray white line). */
+    .section-rule {
+      border: none;
       border-top: var(--border-width) solid var(--border);
-      padding-block: var(--space-6);
+      margin-block: var(--space-2) 0;
     }
 
     /* The sidebar + wall layout. The grid wrapper exists to put the index
@@ -109,21 +121,22 @@
       border-left-color: var(--accent-3);
     }
 
-    /* Collapsible layer groups: each stays contracted until clicked or
-       scrolled into; the current group opens and its label highlights, so
-       the sidebar always shows which layer you are in. */
-    .nav-group { border-top: var(--border-width) solid var(--border); }
-    .nav-group:first-of-type { border-top: none; }
+    /* Layer groups: each stays contracted until you click its label
+       (native <details> toggle). Scroll only marks the layer you are in —
+       it never opens or collapses one. Roomy spacing above and below every
+       layer so the labels read as distinct sections, not a dense list. */
     .nav-group > summary {
       list-style: none;
       cursor: pointer;
       display: grid;
       grid-template-columns: 1fr auto;
-      align-items: start;
-      gap: 2px var(--space-2);
-      padding: var(--space-2) 0;
+      align-items: center;
+      gap: 3px var(--space-2);
+      padding-block: var(--space-3);
+      border-radius: var(--radius-small);
     }
     .nav-group > summary::-webkit-details-marker { display: none; }
+    .nav-group > summary:hover .nav-group-name { color: var(--text); }
     .nav-group-name {
       grid-column: 1;
       font-size: var(--text-caption);
@@ -131,44 +144,54 @@
       letter-spacing: 0.06em;
       font-weight: var(--weight-strong);
       color: var(--text-muted);
+      transition: color var(--duration-fast) var(--ease-standard);
     }
-    .nav-group-desc { grid-column: 1; font-size: var(--text-caption); color: var(--text-muted); line-height: 1.3; }
+    .nav-group-desc {
+      grid-column: 1;
+      font-size: var(--text-caption);
+      color: var(--text-muted);
+      line-height: 1.3;
+      opacity: 0.85;
+    }
     .nav-caret {
       grid-column: 2; grid-row: 1 / span 2;
       align-self: center;
-      width: 0.45rem; height: 0.45rem;
+      width: 0.42rem; height: 0.42rem;
       border-right: 2px solid var(--text-muted);
       border-bottom: 2px solid var(--text-muted);
       rotate: 45deg;
       transition: rotate var(--duration-base) var(--ease-spring);
     }
     .nav-group[open] > summary .nav-caret { rotate: 225deg; }
+    /* The layer you are reading: its label goes accent and gains a marker. */
     .nav-group.is-active-group > summary .nav-group-name { color: var(--accent-3); }
-    .nav-group > ul { padding-block: var(--space-1); }
+    .nav-group.is-active-group > summary .nav-caret { border-color: var(--accent-3); }
+    .nav-group > ul { padding-block: var(--space-1) var(--space-2); }
 
     @media (max-width: 56rem) {
       .docs-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
       .docs-index { position: static; max-height: none; }
     }
 
-    /* Dividers with generous breathing room above and below, so each
-       section and wall entry reads as its own calm sheet. */
+    /* Generous, even breathing room between every section and wall entry,
+       carried by the gap alone — no per-entry rule, so the page reads as
+       calm space, not a stack of faint lines. The only rules on the page
+       are the deliberate ones: the landing divider and the layer bands. */
     #main.stack-loose { gap: var(--space-8); }
-    #main > * + * {
-      border-top: var(--border-width) solid var(--border);
-      padding-top: var(--space-8);
-    }
     section[id], article[id] { scroll-margin-top: calc(var(--header-h) + var(--space-4)); }
 
-    /* Layer bands: the big dividers that split the page into its four
-       layers (plus the Manual and Tools). Unmistakable — a strong rule,
-       an accent kicker, and display-sized title. */
+    /* Layer bands: the deliberate dividers that split the page into Manual /
+       Customizer / Layer 1–4 / Tools. A single hairline, wide space above,
+       an accent kicker over a display title — structure without a heavy
+       black rule. The kicker carries the emphasis, not the line. */
     #main > .layer-band {
-      border-top: var(--border-width-strong) solid var(--text);
+      border-top: var(--border-width) solid var(--border);
+      margin-top: var(--space-5);
       padding-top: var(--space-7);
       display: grid;
       gap: var(--space-2);
     }
+    #main > .layer-band:first-child { border-top: none; margin-top: 0; padding-top: 0; }
     .layer-band .layer-kicker {
       font-size: var(--text-caption);
       letter-spacing: 0.12em;
@@ -176,8 +199,26 @@
       font-weight: var(--weight-strong);
       color: var(--accent-3);
     }
-    .layer-band h2 { font-size: var(--text-display); line-height: 1.05; margin: 0; }
+    .layer-band h2 { font-size: var(--text-h1); line-height: 1.05; margin: 0; }
     .layer-band p { color: var(--text-muted); max-width: 60ch; margin: 0; }
+
+    /* Compact features inventory: the full list stays — every capability is
+       still spelled out — but rendered smaller and, on a wide screen, in
+       two columns, so the manual reads as a scannable index instead of an
+       endless scroll. Each item stays whole across the column break. */
+    #features h3 {
+      font-size: var(--text-small);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-3);
+      margin-bottom: var(--space-1);
+    }
+    #features ul { font-size: var(--text-small); line-height: 1.45; }
+    #features ul li { margin-block: var(--space-1); }
+    @media (min-width: 56rem) {
+      #features ul { column-count: 2; column-gap: var(--space-6); }
+      #features ul li { break-inside: avoid; }
+    }
 
     /* Collapsible wall entry: each element folds to just its heading and
        a one-line callout, so the wall is scannable at a glance. Opening
@@ -501,27 +542,18 @@
     </nav>
   </header>
 
-  <!-- Centered landing hero: the pitch, no code block. -->
-  <section class="hero-landing">
-    <h1>A design library in plain HTML, CSS and JS</h1>
-    <p class="hero-lede">
-      Facet styles everything I make — apps, websites, pitch decks, documents,
-      business cards — from one CSS file and one JS file at a public URL. No
-      React, no build step, no npm, never minified. This page <em>is</em> the
-      library: its documentation, living demo and proof of distribution in one.
+  <!-- Landing: one calm, centered block. The two tags are the hero — copy
+       them, pick a look, scroll on into the two-panel library below. Mode
+       stays automatic (each visitor's system preference); themes are the
+       only pick offered here. -->
+  <section class="landing container stack" aria-label="Get started">
+    <h1 class="landing-title">A design library in plain HTML, CSS &amp; JS</h1>
+    <p class="landing-lede">
+      One CSS file and one JS file at a public URL style everything I make.
+      No React, no build step, never minified — this page <em>is</em> the library.
     </p>
-    <p id="size-badge" class="hero-size" hidden></p>
-    <p class="hero-cta">
-      <button class="btn btn-primary" data-copy="#snippet-consume"
-              data-tip="Copies the two tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
-      <a class="btn btn-ghost" href="#components" data-tip="Jump to the element wall">Browse components</a>
-    </p>
-  </section>
 
-  <!-- Get-started strip: the two tags + the setup chips, out of the hero. -->
-  <section class="get-started container-wide stack" aria-label="Get started">
-    <h2 class="text-h3" style="margin:0;">Consume it</h2>
-    <pre id="snippet-consume"><code>&lt;link rel="stylesheet" href="https://[domain]/lib/facet.css"&gt;
+    <pre id="snippet-consume" class="landing-snippet"><code>&lt;link rel="stylesheet" href="https://[domain]/lib/facet.css"&gt;
 &lt;script src="https://[domain]/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
     <!-- The site itself always knows its own domain: fill it in, so the
          copied snippet points at wherever this page is actually hosted. -->
@@ -531,26 +563,27 @@
           .replaceAll("https://[domain]", location.origin);
     </script>
 
-    <!-- Set up your project: pick a look, and the script tag above
-         rewrites itself to carry it — data attributes on facet.js boot
-         any page straight into this configuration. The picks also apply
-         to this page live, through the same facet.set() API projects use. -->
-    <p style="margin-top: var(--space-2);"><strong>Set up your project</strong> — pick a look, the tags above update, this page follows:</p>
-    <p class="chips" id="setup-strip" role="group" aria-label="Project configuration">
-      <button class="chip" aria-pressed="true" data-setup="theme" data-setup-value="" data-tip="White and black, the quiet base">Default theme</button>
-      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="sand" data-tip="Minecraft desert beige">Sand theme</button>
-      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="velvet" data-tip="Neumorphic matte fabric, gold ink">Velvet theme</button>
-      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="aero" data-tip="Sky aqua, glass gloss, pill buttons">Aero theme</button>
-      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="elegant" data-tip="Cream and gold, serif display, carved panels">Elegant theme</button>
-      <button class="chip" aria-pressed="true" data-setup="mode" data-setup-value="" data-tip="Follow each visitor's system preference">Auto mode</button>
-      <button class="chip" aria-pressed="false" data-setup="mode" data-setup-value="light" data-tip="Always light, whatever the system says">Light</button>
-      <button class="chip" aria-pressed="false" data-setup="mode" data-setup-value="dark" data-tip="Always dark, whatever the system says">Dark</button>
+    <p class="landing-actions">
+      <button class="btn btn-primary" data-copy="#snippet-consume"
+              data-tip="Copies the two tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
     </p>
-    <p>
-      <button class="btn btn-small" data-copy="#snippet-consume"
-              data-tip="Copies the configured tags to your clipboard">Copy the two tags</button>
+
+    <!-- Pick a theme: the tags above rewrite themselves to carry it (data
+         attributes boot any page into it), and this page follows live
+         through the same facet.set() API projects use. Mode is left on
+         auto by design. -->
+    <p class="chips landing-chips" id="setup-strip" role="group" aria-label="Theme">
+      <button class="chip" aria-pressed="true" data-setup="theme" data-setup-value="" data-tip="White and black, the quiet base">Default</button>
+      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="sand" data-tip="Minecraft desert beige">Sand</button>
+      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="velvet" data-tip="Neumorphic matte fabric, gold ink">Velvet</button>
+      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="aero" data-tip="Sky aqua, glass gloss, pill buttons">Aero</button>
+      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="elegant" data-tip="Cream and gold, serif display, carved panels">Elegant</button>
     </p>
+    <p id="size-badge" class="landing-size" hidden></p>
   </section>
+
+  <!-- The divider between the landing and the two-panel library. -->
+  <hr class="section-rule container-wide" aria-hidden="true">
 
   <!-- Sidebar index + the content. -->
   <div class="docs-layout container-wide">
@@ -567,13 +600,18 @@
           <li><a href="#rules">Rules</a></li>
         </ul>
         </details>
+        <details class="nav-group" data-group="customizer">
+          <summary><span class="nav-group-name">Customizer</span><span class="nav-group-desc">Tune a theme live and copy your version.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        <ul>
+          <li><a href="#style-mixer">Style Mixer</a></li>
+          <li><a href="#skin-lab">Skin Lab</a></li>
+        </ul>
+        </details>
         <details class="nav-group" data-group="layer1">
           <summary><span class="nav-group-name">Layer 1 · Tokens</span><span class="nav-group-desc">The individual tokens that make up the basics.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#typography">Typography</a></li>
           <li><a href="#color">Color</a></li>
-          <li><a href="#style-mixer">Style Mixer</a></li>
-          <li><a href="#skin-lab">Skin Lab</a></li>
           <li><a href="#spacing">Spacing</a></li>
           <li><a href="#shape">Shape &amp; elevation</a></li>
           <li><a href="#motion">Motion</a></li>
@@ -790,7 +828,7 @@
           <li>Search that filters the wall and the index together; a scrollspy sidebar that shows where you are; the whole page re-renders in any theme from the header.</li>
           <li>Copy as Markdown on every wall entry: the description and exact snippet packaged for an LLM prompt in one click.</li>
           <li>The analytics bridge, documented in Rules: five lines wire any vendor to every <code>data-event</code> hook the library ships.</li>
-          <li>A live size badge in the get-started strip: the two files fetched and gzipped in your own browser — the real number, never a claim.</li>
+          <li>A live size badge in the landing: the two files fetched and gzipped in your own browser — the real number, never a claim.</li>
           <li>Playground: one editable HTML box rendering live through the real library files, following this page's theme and mode.</li>
           <li>Cheatsheet: every class, attribute and API call on one dense filterable screen, rendered from facet.json so it can never drift.</li>
           <li>Click any swatch or token name to copy its <code>var(--name)</code>; hover any heading for its permalink.</li>
@@ -801,245 +839,6 @@
         </ul>
       </section>
 
-
-      <!-- TAB BAR -->
-      <article class="element stack" id="tab-bar">
-        <h3 data-status="beta">Tab bar</h3>
-        <p>
-          What it is: the iOS-style bottom pill — text segments, a hairline
-          divider, a trailing gear — with one injected .tab-indicator pill
-          gliding behind the active segment on per-edge analytic springs:
-          the leading edge leads with momentum, the trailing edge lags so
-          the pill stretches, and both settle with a small fixed overshoot
-          whatever the jump length. What it is for: section navigation in
-          app-shaped pages; it wires itself to the page's snap pager
-          ([data-section] segments page there, and the pager's moves glide
-          the pill back behind a one-second nav lock so pass-through
-          sections stay quiet) and its gear opens the sheet it
-          aria-controls. When to use it: any snap-paged product. On a real
-          page it floats fixed above the bottom edge; here it sits in the
-          flow. Frosted and embossed in the base theme; a tuned translucent
-          well with a raised pill under Velvet.
-        </p>
-        <div class="demo">
-          <nav class="tab-bar" aria-label="Sections">
-            <button type="button" class="tab-seg" data-section="intro" aria-current="true">Intro</button>
-            <button type="button" class="tab-seg" data-section="inputs" aria-current="false">Inputs</button>
-            <button type="button" class="tab-seg" data-section="results" aria-current="false">Results</button>
-            <span class="tab-divider" aria-hidden="true"></span>
-            <button type="button" class="tab-settings" aria-expanded="false" aria-label="Open settings" data-tip="Opens the settings sheet">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
-            </button>
-          </nav>
-        </div>
-        <p>Tap the segments: the pill stretches and settles between them, live.</p>
-        <pre id="code-tab-bar"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- SHEET & MENU -->
-      <article class="element stack" id="sheet">
-        <h3 data-status="beta">Sheet &amp; menu</h3>
-        <p>
-          What it is: the settings panel — a right-edge slab floating clear
-          of the screen over a dark scrim, sliding in as one rigid block on
-          a rubber-band spring that overshoots a touch and eases back;
-          inside it, menu groups of thin rows (.menu-item under a
-          .menu-label) and a foot row of square icon toggles
-          (.menu-icon-btn) whose ON state stands raised while OFF sinks
-          into a darker well. What it is for: navigation, actions and
-          app-level controls behind one trigger — any button that
-          aria-controls the sheet opens it; scrim tap and Esc close; the
-          trigger's aria-expanded is managed. When to use it: every
-          app-shaped product's settings. Press a row: it sinks INTO the
-          panel with a true bevel, never a dark smear. State changes ease —
-          toggles must never jump.
-        </p>
-        <div class="demo">
-          <button type="button" class="btn" aria-controls="demo-sheet" aria-expanded="false"
-                  data-tip="Opens the real sheet over this page" data-event="open-demo-sheet">Open the sheet</button>
-          <div class="sheet-scrim" data-open="false"></div>
-          <aside class="sheet" id="demo-sheet" data-open="false" aria-hidden="true" aria-label="Demo settings">
-            <div class="sheet-scroll">
-              <div class="sheet-group">
-                <span class="menu-label">Navigation</span>
-                <button type="button" class="menu-item" data-event="sheet-nav-top">Back to the top</button>
-                <button type="button" class="menu-item" data-event="sheet-nav-rules">The rules</button>
-              </div>
-              <div class="sheet-group">
-                <span class="menu-label">Actions</span>
-                <button type="button" class="menu-item" data-event="sheet-copy">Copy a link here</button>
-              </div>
-            </div>
-            <div class="sheet-foot">
-              <div class="sheet-group menu-icon-row">
-                <button type="button" class="menu-icon-btn" aria-label="Sounds: on or off" data-tip="Flips facet.feedback.sound.enabled" data-event="toggle-sounds">
-                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6v4h2.6L9 13V3L5.1 6z"/></svg>
-                  <span class="menu-value">On</span>
-                </button>
-              </div>
-            </div>
-          </aside>
-        </div>
-        <pre id="code-sheet"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-sheet" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- FLOAT BUTTON -->
-      <article class="element stack" id="float-button">
-        <h3 data-status="beta">Float button</h3>
-        <p>
-          What it is: a lone floating round button pinned to the bottom-left
-          of the page — the tab bar's trailing icon without the bar. What
-          it is for: pages that need the settings sheet (or any panel) but
-          not section navigation: give it aria-controls pointing at a
-          .sheet and facet.js wires the open/close, the aria-expanded state
-          and the press feedback exactly like the tab bar's gear. When to
-          use it: whenever a page has one floating action; .float-btn-right
-          pins it bottom-right instead. Always an aria-label and a
-          data-tip: the icon alone says nothing. On a real page it floats
-          fixed; here it sits in the flow — this one opens the sheet from
-          the entry above.
-        </p>
-        <div class="demo">
-          <button class="float-btn" aria-controls="demo-sheet" aria-expanded="false"
-                  aria-label="Open settings" data-tip="Opens the demo sheet" data-event="open-settings">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
-          </button>
-        </div>
-        <pre id="code-float-button"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-float-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- SCROLL GAUGE -->
-      <article class="element stack" id="scroll-gauge">
-        <h3 data-status="beta">Scroll gauge</h3>
-        <p>
-          What it is: a pill thumb inset in an embossed groove beside a
-          scroller — thumb height is the visible share of the content,
-          position is progress, and overscroll momentum slides it out of
-          the groove where the clip swallows it. What it is for: a themed,
-          unobtrusive scrollbar look-alike for panels and whole pages;
-          facet.scrollGauge(scroller) injects it, a metric option reports
-          composite scrolls (the pager's sections laid end to end), and
-          onScrub makes the lane a drag handle. When to use it: sheets and
-          app pages where the native scrollbar is hidden. Auto-hides when
-          nothing overflows. Scroll the box:
-        </p>
-        <div class="demo">
-          <div class="demo-scroller stack" data-tip="Scroll me and watch the groove">
-            <p>The gauge beside this box is injected by facet.scrollGauge.</p>
-            <p>Its thumb is exactly the visible share of this content.</p>
-            <p>Scroll with momentum and the pill slides out of the groove.</p>
-            <p>That spill is deliberate: the groove clips it away.</p>
-            <p>When content fits, the gauge fades out entirely.</p>
-            <p>Panels use it beside .sheet-scroll; pages use the draggable lane variant.</p>
-            <p>The lane variant, .scroll-gauge-page, floats off the right edge.</p>
-            <p>Its onScrub option turns the whole groove into a drag handle.</p>
-            <p>Grab it and the thumb turns gold while you hold it.</p>
-          </div>
-        </div>
-        <pre id="code-scroll-gauge"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-scroll-gauge" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- CHOICE GRID -->
-      <article class="element stack" id="choice-grid">
-        <h3 data-status="beta">Choice grid</h3>
-        <p>
-          What it is: a grid of small square choice buttons — a symbol
-          above a tiny caption, five per row on phones. What it is for: one
-          exclusive pick from up to about ten options where the choices are
-          compact and symbolic — currencies, units, categories;
-          aria-pressed carries the state and facet.js keeps the pick
-          exclusive. When to use it: any single pick too wide for a
-          segmented control; shipped as the inflation app's ten-currency
-          picker. State changes ease — selection must never jump. Velvet:
-          unselected options sit flat in carved wells, the selected one
-          stands proud with its symbol in gold.
-        </p>
-        <div class="demo">
-          <div class="choice-grid" role="group" aria-label="Currency">
-            <button type="button" class="choice-btn" aria-pressed="true" data-tip="Indian rupee" data-event="cur-inr">
-              <span class="choice-sym" aria-hidden="true">&#8377;</span><span class="choice-cap">INR</span>
-            </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="US dollar" data-event="cur-usd">
-              <span class="choice-sym" aria-hidden="true">$</span><span class="choice-cap">USD</span>
-            </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Euro" data-event="cur-eur">
-              <span class="choice-sym" aria-hidden="true">&euro;</span><span class="choice-cap">EUR</span>
-            </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="British pound" data-event="cur-gbp">
-              <span class="choice-sym" aria-hidden="true">&pound;</span><span class="choice-cap">GBP</span>
-            </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Japanese yen" data-event="cur-jpy">
-              <span class="choice-sym" aria-hidden="true">&yen;</span><span class="choice-cap">JPY</span>
-            </button>
-          </div>
-        </div>
-        <pre id="code-choice-grid"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-choice-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- THEMED MAP -->
-      <article class="element stack" id="map">
-        <h3 data-status="alpha">Themed map</h3>
-        <p>
-          What it is: a Google Map wearing the active theme — ground,
-          water, parks and roads derived from the base family, labels
-          from the text family, boundaries from the quiet accent,
-          recomputed live when the theme or mode switches. What it is
-          for: maps that belong to the product instead of arriving in
-          Google's own colors. When to use it: any embedded map. Bring
-          your own key (like the analytics rule — the library never
-          ships one): put <code>data-map</code> on a div, the key in
-          <code>data-map-key</code> (or <code>data-maps-key</code> on
-          the facet.js script tag), optional <code>data-lat</code> /
-          <code>data-lng</code> / <code>data-zoom</code>. Without a
-          key, or offline, the div stays the quiet themed placeholder
-          you see below — never a broken embed.
-          <code>facet.mapStyle()</code> returns the styles array for
-          anything else. Styles derive from tokens by formula, never
-          hand-tuned per theme, so every future theme gets its map for
-          free. This page carries no key on purpose: the placeholder
-          IS the honest no-key state.
-        </p>
-        <div class="demo">
-          <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12" data-tip="Wears whatever theme this page is in"></div>
-        </div>
-        <pre id="code-map"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- BACKGROUNDS -->
-      <article class="element stack" id="backgrounds">
-        <h3 data-status="beta">Backgrounds</h3>
-        <p>
-          What it is: whisper-faint page and section backgrounds drawn
-          with CSS gradients only, colored by the tokens so every theme
-          and mode gets them for free. What it is for: giving big quiet
-          surfaces a material — a hero, a section divider zone, a whole
-          page. When to use it: one class on a section or body; content
-          sits straight on top. The set: <code>.bg-grid</code>
-          (technical drawing: plus marks at the grid intersections),
-          <code>.bg-dots</code> (dot grid), <code>.bg-ruled</code>
-          (writing lines), <code>.bg-graph</code> (graph paper). All of
-          them fade to nothing under <code>prefers-contrast: more</code>.
-        </p>
-        <p class="chips" role="group" aria-label="Background patterns">
-          <button class="chip" aria-pressed="true" data-chip-group="pattern" data-chip-class="bg-grid">Technical grid</button>
-          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-dots">Dot grid</button>
-          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-ruled">Ruled</button>
-          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-graph">Graph paper</button>
-        </p>
-        <div class="demo">
-          <section class="bg-grid" data-tip="The pattern is tokens: switch theme or mode and it follows">
-            <p style="padding: var(--space-5); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
-          </section>
-        </div>
-        <pre id="code-backgrounds"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-backgrounds" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
 
       <!-- =============================================================
            RULES · the manual, right after the features
@@ -1186,6 +985,64 @@
   });
 &lt;/script&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-analytics" data-tip="Copies the bridge snippet above">Copy</button></p>
+      </section>
+
+      <!-- =============================================================
+           LAYER 1 · STYLE MIXER
+           The theme generator: pickers over the semantic tokens restyle
+           this whole page live, the result exports as a paste-ready
+           config block and rides the URL. Docs-only logic, inline below.
+           ============================================================= -->
+      <section id="style-mixer" class="stack">
+        <h2>Style Mixer</h2>
+        <p>
+          What it is: the theme generator — a picker for each semantic
+          color token, applied to this whole page the moment you change
+          it. What it is for: mixing your own skin on top of any theme;
+          start from the active theme, pull the colors where you want
+          them, and the hover and pressed shades and on-colors derive
+          automatically. The mix rides this page's URL (share the link,
+          your mix opens with it) and exports below as a paste-ready
+          config block for your own project. When to use it: whenever
+          "which colors?" is the conversation — mix live, then copy.
+        </p>
+        <div class="mixer-grid" id="mixer-controls">
+          <label>Background <input type="color" data-mix="background" data-tip="The page itself"></label>
+          <label>Surface <input type="color" data-mix="surface" data-tip="Cards, inputs, panels"></label>
+          <label>Text <input type="color" data-mix="text" data-tip="The ink"></label>
+          <label>Muted text <input type="color" data-mix="text-muted" data-tip="Hints and captions"></label>
+          <label>Border <input type="color" data-mix="border" data-tip="Hairlines and edges"></label>
+          <label>Accent 1 <input type="color" data-mix="accent-1" data-tip="The one primary action"></label>
+          <label>Accent 2 <input type="color" data-mix="accent-2" data-tip="Every secondary fill"></label>
+          <label>Accent 3 <input type="color" data-mix="accent-3" data-tip="Links, labels, focus"></label>
+        </div>
+        <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
+          <button class="btn btn-small" id="mixer-reset" data-event="mixer-reset" data-tip="Clears the mix: back to the active theme's own colors">Reset to theme</button>
+          <button class="btn btn-small" data-copy="#code-style-mixer" data-tip="Copies the config block for your own page">Copy the config</button>
+        </p>
+        <pre id="code-style-mixer"><code></code></pre>
+      </section>
+
+      <!-- =============================================================
+           LAYER 1 · SKIN LAB
+           Every theme, light and dark, side by side across the same
+           real layout. Each panel is its own tiny document (an iframe
+           the docs script builds), because material themes must not
+           leak recipes into each other — true isolation is the point.
+           ============================================================= -->
+      <section id="skin-lab" class="stack">
+        <h2>Skin Lab</h2>
+        <p>
+          What it is: every theme in light and dark, side by side, all
+          rendering the same real slice of interface — heading, prose
+          with a link, both button ranks, a labelled field, a result
+          row. What it is for: choosing a skin by looking, and proving
+          the library's core promise in one glance — identical markup,
+          ten different products. When to use it: at the start of any
+          new project, before a line is written. Each panel is a real
+          page pulling the same facet.css this site uses.
+        </p>
+        <div class="lab-grid" id="lab-grid"></div>
       </section>
 
       <!-- =============================================================
@@ -1379,104 +1236,6 @@
   --on-accent-1: #FFFFFF;
 }</code></pre>
         <p><button class="btn btn-small" data-copy="#code-custom-accent" data-tip="Copies the CSS override block above">Copy</button></p>
-      </section>
-
-      <!-- =============================================================
-           LAYER 1 · STYLE MIXER
-           The theme generator: pickers over the semantic tokens restyle
-           this whole page live, the result exports as a paste-ready
-           config block and rides the URL. Docs-only logic, inline below.
-           ============================================================= -->
-      <section id="style-mixer" class="stack">
-        <h2>Style Mixer</h2>
-        <p>
-          What it is: the theme generator — a picker for each semantic
-          color token, applied to this whole page the moment you change
-          it. What it is for: mixing your own skin on top of any theme;
-          start from the active theme, pull the colors where you want
-          them, and the hover and pressed shades and on-colors derive
-          automatically. The mix rides this page's URL (share the link,
-          your mix opens with it) and exports below as a paste-ready
-          config block for your own project. When to use it: whenever
-          "which colors?" is the conversation — mix live, then copy.
-        </p>
-        <div class="mixer-grid" id="mixer-controls">
-          <label>Background <input type="color" data-mix="background" data-tip="The page itself"></label>
-          <label>Surface <input type="color" data-mix="surface" data-tip="Cards, inputs, panels"></label>
-          <label>Text <input type="color" data-mix="text" data-tip="The ink"></label>
-          <label>Muted text <input type="color" data-mix="text-muted" data-tip="Hints and captions"></label>
-          <label>Border <input type="color" data-mix="border" data-tip="Hairlines and edges"></label>
-          <label>Accent 1 <input type="color" data-mix="accent-1" data-tip="The one primary action"></label>
-          <label>Accent 2 <input type="color" data-mix="accent-2" data-tip="Every secondary fill"></label>
-          <label>Accent 3 <input type="color" data-mix="accent-3" data-tip="Links, labels, focus"></label>
-        </div>
-        <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
-          <button class="btn btn-small" id="mixer-reset" data-event="mixer-reset" data-tip="Clears the mix: back to the active theme's own colors">Reset to theme</button>
-          <button class="btn btn-small" data-copy="#code-style-mixer" data-tip="Copies the config block for your own page">Copy the config</button>
-        </p>
-        <pre id="code-style-mixer"><code></code></pre>
-      </section>
-
-      <!-- =============================================================
-           LAYER 1 · SKIN LAB
-           Every theme, light and dark, side by side across the same
-           real layout. Each panel is its own tiny document (an iframe
-           the docs script builds), because material themes must not
-           leak recipes into each other — true isolation is the point.
-           ============================================================= -->
-      <section id="skin-lab" class="stack">
-        <h2>Skin Lab</h2>
-        <p>
-          What it is: every theme in light and dark, side by side, all
-          rendering the same real slice of interface — heading, prose
-          with a link, both button ranks, a labelled field, a result
-          row. What it is for: choosing a skin by looking, and proving
-          the library's core promise in one glance — identical markup,
-          ten different products. When to use it: at the start of any
-          new project, before a line is written. Each panel is a real
-          page pulling the same facet.css this site uses.
-        </p>
-        <div class="lab-grid" id="lab-grid"></div>
-      </section>
-
-      <!-- =============================================================
-           TOOLS · PLAYGROUND
-           One editable box, rendered live through the real library.
-           ============================================================= -->
-      <section id="playground" class="stack">
-        <h2>Playground</h2>
-        <p>
-          What it is: one editable HTML box rendering live through the
-          real facet.css and facet.js — the frame below is a genuine
-          page with the two tags. What it is for: trying a snippet
-          before it goes in your file; paste anything off the wall,
-          bend it, watch it. When to use it: whenever "would this
-          work?" is faster typed than reasoned. The frame follows this
-          page's theme and mode.
-        </p>
-        <label for="playground-input">Your HTML</label>
-        <textarea id="playground-input" rows="8" spellcheck="false" data-tip="Renders below as you type"></textarea>
-        <iframe id="playground-frame" class="lab-frame" style="height: 16rem;" title="Playground preview"></iframe>
-      </section>
-
-      <!-- =============================================================
-           TOOLS · CHEATSHEET
-           Every class and attribute on one dense screen, straight from
-           facet.json so it can never drift from the manifest.
-           ============================================================= -->
-      <section id="cheatsheet" class="stack">
-        <h2>Cheatsheet</h2>
-        <p>
-          What it is: every class, data attribute and API call on one
-          dense screen, rendered from <a href="/facet.json">facet.json</a>
-          so it can never drift from the manifest. What it is for: the
-          lookup you keep open while writing HTML in another window.
-          When to use it: once you know the components and only need
-          their names.
-        </p>
-        <label for="cheat-filter">Filter the sheet</label>
-        <input id="cheat-filter" type="search" placeholder="btn, data-tip, mapStyle…" data-tip="Hides every row that does not match">
-        <div id="cheat-body" class="stack-tight"></div>
       </section>
 
       <!-- =============================================================
@@ -2596,6 +2355,245 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-tooltip" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- TAB BAR -->
+      <article class="element stack" id="tab-bar">
+        <h3 data-status="beta">Tab bar</h3>
+        <p>
+          What it is: the iOS-style bottom pill — text segments, a hairline
+          divider, a trailing gear — with one injected .tab-indicator pill
+          gliding behind the active segment on per-edge analytic springs:
+          the leading edge leads with momentum, the trailing edge lags so
+          the pill stretches, and both settle with a small fixed overshoot
+          whatever the jump length. What it is for: section navigation in
+          app-shaped pages; it wires itself to the page's snap pager
+          ([data-section] segments page there, and the pager's moves glide
+          the pill back behind a one-second nav lock so pass-through
+          sections stay quiet) and its gear opens the sheet it
+          aria-controls. When to use it: any snap-paged product. On a real
+          page it floats fixed above the bottom edge; here it sits in the
+          flow. Frosted and embossed in the base theme; a tuned translucent
+          well with a raised pill under Velvet.
+        </p>
+        <div class="demo">
+          <nav class="tab-bar" aria-label="Sections">
+            <button type="button" class="tab-seg" data-section="intro" aria-current="true">Intro</button>
+            <button type="button" class="tab-seg" data-section="inputs" aria-current="false">Inputs</button>
+            <button type="button" class="tab-seg" data-section="results" aria-current="false">Results</button>
+            <span class="tab-divider" aria-hidden="true"></span>
+            <button type="button" class="tab-settings" aria-expanded="false" aria-label="Open settings" data-tip="Opens the settings sheet">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+            </button>
+          </nav>
+        </div>
+        <p>Tap the segments: the pill stretches and settles between them, live.</p>
+        <pre id="code-tab-bar"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SHEET & MENU -->
+      <article class="element stack" id="sheet">
+        <h3 data-status="beta">Sheet &amp; menu</h3>
+        <p>
+          What it is: the settings panel — a right-edge slab floating clear
+          of the screen over a dark scrim, sliding in as one rigid block on
+          a rubber-band spring that overshoots a touch and eases back;
+          inside it, menu groups of thin rows (.menu-item under a
+          .menu-label) and a foot row of square icon toggles
+          (.menu-icon-btn) whose ON state stands raised while OFF sinks
+          into a darker well. What it is for: navigation, actions and
+          app-level controls behind one trigger — any button that
+          aria-controls the sheet opens it; scrim tap and Esc close; the
+          trigger's aria-expanded is managed. When to use it: every
+          app-shaped product's settings. Press a row: it sinks INTO the
+          panel with a true bevel, never a dark smear. State changes ease —
+          toggles must never jump.
+        </p>
+        <div class="demo">
+          <button type="button" class="btn" aria-controls="demo-sheet" aria-expanded="false"
+                  data-tip="Opens the real sheet over this page" data-event="open-demo-sheet">Open the sheet</button>
+          <div class="sheet-scrim" data-open="false"></div>
+          <aside class="sheet" id="demo-sheet" data-open="false" aria-hidden="true" aria-label="Demo settings">
+            <div class="sheet-scroll">
+              <div class="sheet-group">
+                <span class="menu-label">Navigation</span>
+                <button type="button" class="menu-item" data-event="sheet-nav-top">Back to the top</button>
+                <button type="button" class="menu-item" data-event="sheet-nav-rules">The rules</button>
+              </div>
+              <div class="sheet-group">
+                <span class="menu-label">Actions</span>
+                <button type="button" class="menu-item" data-event="sheet-copy">Copy a link here</button>
+              </div>
+            </div>
+            <div class="sheet-foot">
+              <div class="sheet-group menu-icon-row">
+                <button type="button" class="menu-icon-btn" aria-label="Sounds: on or off" data-tip="Flips facet.feedback.sound.enabled" data-event="toggle-sounds">
+                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6v4h2.6L9 13V3L5.1 6z"/></svg>
+                  <span class="menu-value">On</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <pre id="code-sheet"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-sheet" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FLOAT BUTTON -->
+      <article class="element stack" id="float-button">
+        <h3 data-status="beta">Float button</h3>
+        <p>
+          What it is: a lone floating round button pinned to the bottom-left
+          of the page — the tab bar's trailing icon without the bar. What
+          it is for: pages that need the settings sheet (or any panel) but
+          not section navigation: give it aria-controls pointing at a
+          .sheet and facet.js wires the open/close, the aria-expanded state
+          and the press feedback exactly like the tab bar's gear. When to
+          use it: whenever a page has one floating action; .float-btn-right
+          pins it bottom-right instead. Always an aria-label and a
+          data-tip: the icon alone says nothing. On a real page it floats
+          fixed; here it sits in the flow — this one opens the sheet from
+          the entry above.
+        </p>
+        <div class="demo">
+          <button class="float-btn" aria-controls="demo-sheet" aria-expanded="false"
+                  aria-label="Open settings" data-tip="Opens the demo sheet" data-event="open-settings">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+          </button>
+        </div>
+        <pre id="code-float-button"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-float-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SCROLL GAUGE -->
+      <article class="element stack" id="scroll-gauge">
+        <h3 data-status="beta">Scroll gauge</h3>
+        <p>
+          What it is: a pill thumb inset in an embossed groove beside a
+          scroller — thumb height is the visible share of the content,
+          position is progress, and overscroll momentum slides it out of
+          the groove where the clip swallows it. What it is for: a themed,
+          unobtrusive scrollbar look-alike for panels and whole pages;
+          facet.scrollGauge(scroller) injects it, a metric option reports
+          composite scrolls (the pager's sections laid end to end), and
+          onScrub makes the lane a drag handle. When to use it: sheets and
+          app pages where the native scrollbar is hidden. Auto-hides when
+          nothing overflows. Scroll the box:
+        </p>
+        <div class="demo">
+          <div class="demo-scroller stack" data-tip="Scroll me and watch the groove">
+            <p>The gauge beside this box is injected by facet.scrollGauge.</p>
+            <p>Its thumb is exactly the visible share of this content.</p>
+            <p>Scroll with momentum and the pill slides out of the groove.</p>
+            <p>That spill is deliberate: the groove clips it away.</p>
+            <p>When content fits, the gauge fades out entirely.</p>
+            <p>Panels use it beside .sheet-scroll; pages use the draggable lane variant.</p>
+            <p>The lane variant, .scroll-gauge-page, floats off the right edge.</p>
+            <p>Its onScrub option turns the whole groove into a drag handle.</p>
+            <p>Grab it and the thumb turns gold while you hold it.</p>
+          </div>
+        </div>
+        <pre id="code-scroll-gauge"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-scroll-gauge" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CHOICE GRID -->
+      <article class="element stack" id="choice-grid">
+        <h3 data-status="beta">Choice grid</h3>
+        <p>
+          What it is: a grid of small square choice buttons — a symbol
+          above a tiny caption, five per row on phones. What it is for: one
+          exclusive pick from up to about ten options where the choices are
+          compact and symbolic — currencies, units, categories;
+          aria-pressed carries the state and facet.js keeps the pick
+          exclusive. When to use it: any single pick too wide for a
+          segmented control; shipped as the inflation app's ten-currency
+          picker. State changes ease — selection must never jump. Velvet:
+          unselected options sit flat in carved wells, the selected one
+          stands proud with its symbol in gold.
+        </p>
+        <div class="demo">
+          <div class="choice-grid" role="group" aria-label="Currency">
+            <button type="button" class="choice-btn" aria-pressed="true" data-tip="Indian rupee" data-event="cur-inr">
+              <span class="choice-sym" aria-hidden="true">&#8377;</span><span class="choice-cap">INR</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="US dollar" data-event="cur-usd">
+              <span class="choice-sym" aria-hidden="true">$</span><span class="choice-cap">USD</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Euro" data-event="cur-eur">
+              <span class="choice-sym" aria-hidden="true">&euro;</span><span class="choice-cap">EUR</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="British pound" data-event="cur-gbp">
+              <span class="choice-sym" aria-hidden="true">&pound;</span><span class="choice-cap">GBP</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Japanese yen" data-event="cur-jpy">
+              <span class="choice-sym" aria-hidden="true">&yen;</span><span class="choice-cap">JPY</span>
+            </button>
+          </div>
+        </div>
+        <pre id="code-choice-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-choice-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- THEMED MAP -->
+      <article class="element stack" id="map">
+        <h3 data-status="alpha">Themed map</h3>
+        <p>
+          What it is: a Google Map wearing the active theme — ground,
+          water, parks and roads derived from the base family, labels
+          from the text family, boundaries from the quiet accent,
+          recomputed live when the theme or mode switches. What it is
+          for: maps that belong to the product instead of arriving in
+          Google's own colors. When to use it: any embedded map. Bring
+          your own key (like the analytics rule — the library never
+          ships one): put <code>data-map</code> on a div, the key in
+          <code>data-map-key</code> (or <code>data-maps-key</code> on
+          the facet.js script tag), optional <code>data-lat</code> /
+          <code>data-lng</code> / <code>data-zoom</code>. Without a
+          key, or offline, the div stays the quiet themed placeholder
+          you see below — never a broken embed.
+          <code>facet.mapStyle()</code> returns the styles array for
+          anything else. Styles derive from tokens by formula, never
+          hand-tuned per theme, so every future theme gets its map for
+          free. This page carries no key on purpose: the placeholder
+          IS the honest no-key state.
+        </p>
+        <div class="demo">
+          <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12" data-tip="Wears whatever theme this page is in"></div>
+        </div>
+        <pre id="code-map"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- BACKGROUNDS -->
+      <article class="element stack" id="backgrounds">
+        <h3 data-status="beta">Backgrounds</h3>
+        <p>
+          What it is: whisper-faint page and section backgrounds drawn
+          with CSS gradients only, colored by the tokens so every theme
+          and mode gets them for free. What it is for: giving big quiet
+          surfaces a material — a hero, a section divider zone, a whole
+          page. When to use it: one class on a section or body; content
+          sits straight on top. The set: <code>.bg-grid</code>
+          (technical drawing: plus marks at the grid intersections),
+          <code>.bg-dots</code> (dot grid), <code>.bg-ruled</code>
+          (writing lines), <code>.bg-graph</code> (graph paper). All of
+          them fade to nothing under <code>prefers-contrast: more</code>.
+        </p>
+        <p class="chips" role="group" aria-label="Background patterns">
+          <button class="chip" aria-pressed="true" data-chip-group="pattern" data-chip-class="bg-grid">Technical grid</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-dots">Dot grid</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-ruled">Ruled</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-graph">Graph paper</button>
+        </p>
+        <div class="demo">
+          <section class="bg-grid" data-tip="The pattern is tokens: switch theme or mode and it follows">
+            <p style="padding: var(--space-5); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
+          </section>
+        </div>
+        <pre id="code-backgrounds"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-backgrounds" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
       <!-- =============================================================
            LAYER 4 · BLOCKS
            Assemblies of the components above, documented as copyable
@@ -3161,6 +3159,46 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-block-article" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- =============================================================
+           TOOLS · PLAYGROUND
+           One editable box, rendered live through the real library.
+           ============================================================= -->
+      <section id="playground" class="stack">
+        <h2>Playground</h2>
+        <p>
+          What it is: one editable HTML box rendering live through the
+          real facet.css and facet.js — the frame below is a genuine
+          page with the two tags. What it is for: trying a snippet
+          before it goes in your file; paste anything off the wall,
+          bend it, watch it. When to use it: whenever "would this
+          work?" is faster typed than reasoned. The frame follows this
+          page's theme and mode.
+        </p>
+        <label for="playground-input">Your HTML</label>
+        <textarea id="playground-input" rows="8" spellcheck="false" data-tip="Renders below as you type"></textarea>
+        <iframe id="playground-frame" class="lab-frame" style="height: 16rem;" title="Playground preview"></iframe>
+      </section>
+
+      <!-- =============================================================
+           TOOLS · CHEATSHEET
+           Every class and attribute on one dense screen, straight from
+           facet.json so it can never drift from the manifest.
+           ============================================================= -->
+      <section id="cheatsheet" class="stack">
+        <h2>Cheatsheet</h2>
+        <p>
+          What it is: every class, data attribute and API call on one
+          dense screen, rendered from <a href="/facet.json">facet.json</a>
+          so it can never drift from the manifest. What it is for: the
+          lookup you keep open while writing HTML in another window.
+          When to use it: once you know the components and only need
+          their names.
+        </p>
+        <label for="cheat-filter">Filter the sheet</label>
+        <input id="cheat-filter" type="search" placeholder="btn, data-tip, mapStyle…" data-tip="Hides every row that does not match">
+        <div id="cheat-body" class="stack-tight"></div>
+      </section>
+
     </main>
   </div>
 
@@ -3297,6 +3335,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       const emptyNote = document.querySelector("#wall-empty");
 
       const groups = [...document.querySelectorAll(".nav-group")];
+      let priorOpen = null;                    // remembers fold state before a search
 
       box.addEventListener("input", () => {
         const query = box.value.trim().toLowerCase();
@@ -3315,39 +3354,30 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         }
         emptyNote.hidden = !(query && shown === 0);
         // A search reaches across every layer, so open them all while it
-        // runs; on clear, drop back to the single-open accordion by
-        // letting scrollspy pick the layer on screen.
+        // runs; remember the reader's fold state first and restore it the
+        // moment the box is cleared.
         if (query) {
-          for (const g of groups) { g.dataset.searchOpen = "true"; g.open = true; }
-        } else {
-          for (const g of groups) delete g.dataset.searchOpen;
-          dispatchEvent(new Event("scroll"));
+          if (!priorOpen) priorOpen = groups.map(g => g.open);
+          for (const g of groups) g.open = true;
+        } else if (priorOpen) {
+          groups.forEach((g, i) => { g.open = priorOpen[i]; });
+          priorOpen = null;
         }
       });
     }
 
-    /* The sidebar is a single-open accordion: only one layer's list is
-       ever expanded. setActiveGroup opens that layer, collapses the rest,
-       and marks it so its label lights up. Both scrollspy and summary
-       clicks call it, so scroll position and manual choice never disagree. */
+    /* Marking, not collapsing: setActiveGroup only highlights the layer the
+       reader is in — it never opens or closes a group. Expanding is the
+       reader's job (click a label to toggle it, native <details>), so the
+       nav never rearranges itself under the pointer while scrolling. */
     const navGroups = [...document.querySelectorAll(".nav-group")];
     function setActiveGroup(group) {
-      let searchOpen = false;
-      for (const g of navGroups) {
-        // While a search is running every group is force-opened (see
-        // initWallSearch); don't fight that here.
-        if (g.dataset.searchOpen === "true") { searchOpen = true; break; }
-      }
-      for (const g of navGroups) {
-        const on = g === group;
-        g.classList.toggle("is-active-group", on);
-        if (!searchOpen) g.open = on;
-      }
+      for (const g of navGroups) g.classList.toggle("is-active-group", g === group);
     }
 
     /* Scrollspy: as the page scrolls, the sidebar link for the section on
-       screen lights up and its layer expands, so the nav always shows
-       where you are and what is left. */
+       screen lights up and its layer label is marked, so the nav always
+       shows where you are — without opening or closing anything. */
     function initScrollSpy() {
       const links = [...document.querySelectorAll(".docs-index a[href^='#']")];
       const nav = document.querySelector(".docs-index");
@@ -3377,13 +3407,17 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           }
         }
         for (const [link] of pairs) link.classList.toggle("is-current", link === best);
-        // Expand the layer the current section lives in, collapse the rest.
+        // Mark the layer the current section lives in (highlight only).
         const group = best && best.closest(".nav-group");
         if (group) setActiveGroup(group);
-        // Keep the active link visible inside the sticky sidebar — but
-        // scroll only the nav, never the page.
-        if (best && nav) {
-          const nb = nav.getBoundingClientRect(), bb = best.getBoundingClientRect();
+        // Keep where-you-are visible in the sticky sidebar: the active link
+        // when its group is open, otherwise that group's own label. Scroll
+        // only the nav, never the page.
+        const keep = best && best.offsetParent !== null
+          ? best
+          : (group && group.querySelector(":scope > summary"));
+        if (keep && nav) {
+          const nb = nav.getBoundingClientRect(), bb = keep.getBoundingClientRect();
           if (bb.top < nb.top) nav.scrollTop += bb.top - nb.top - 8;
           else if (bb.bottom > nb.bottom) nav.scrollTop += bb.bottom - nb.bottom + 8;
         }
@@ -3396,23 +3430,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       highlight();
     }
 
-    /* Clicking a layer's label opens that layer alone and jumps to its
-       first section. We drive the accordion ourselves (preventDefault the
-       native toggle) so it stays single-open and the page scrolls the
-       scrollspy back into agreement. */
-    function initNavGroups() {
-      for (const group of navGroups) {
-        const summary = group.querySelector(":scope > summary");
-        if (!summary) continue;
-        summary.addEventListener("click", (event) => {
-          event.preventDefault();
-          setActiveGroup(group);
-          const first = group.querySelector("ul a[href^='#']");
-          const target = first && document.querySelector(first.getAttribute("href"));
-          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      }
-    }
+    /* Clicking a layer's label just expands or collapses that layer — the
+       native <details> toggle, no scroll, no rearranging its neighbours.
+       (Kept as a named no-op hook in case wiring is needed later.) */
 
     /* The color panels follow the active theme: when the header switcher
        changes data-theme on <html>, mirror it onto each panel so they show
@@ -4000,6 +4020,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
     function insertLayerBands() {
       const bands = [
         ["features",   "Start here", "The manual",        "How Facet is built, used and grown — and the full capability list."],
+        ["style-mixer","Make it yours","Customizer",       "Tune any theme live — move a token and the whole page follows — then copy your exact version."],
         ["typography", "Layer 1",    "Tokens",            "Every design decision as a named variable: type, color, space, shape, motion."],
         ["base",       "Layer 2",    "Base styles",       "Raw semantic HTML, already designed — no classes required."],
         ["components", "Layer 3",    "Components",        "Every piece of the library, live. Each folds to a heading and a line — open one to see it work."],
@@ -4167,7 +4188,6 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initFoldLinks();
       initSearchKeys();
       initPermalinks();
-      initNavGroups();
       initScrollSpy();
     });
   </script>
