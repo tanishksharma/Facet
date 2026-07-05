@@ -2313,6 +2313,35 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
    closed-popover hiding — re-assert it at author origin. */
 [popover]:not(:popover-open) { display: none; }
 
+/* ----- FLAGSHIP LINK: the signature way to another page -----
+   What it is: the big confident link — heading voice, a strong
+   accent underline, and an arrow that leans into the journey on
+   hover. What it is for: the one onward step at the end of a
+   section: "See the full report", "Start a project". When to use
+   it: at most one or two per screen; ordinary references stay plain
+   underlined links. It is always an <a> to a real URL — never a
+   button in costume. */
+.flagship-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-heading);
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: var(--border-width-strong) solid var(--accent-3);
+  padding-bottom: 2px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.flagship-link::after {
+  content: "\27F6";               /* the long arrow */
+  color: var(--accent-3);
+  transition: translate var(--duration-base) var(--ease-spring);
+}
+.flagship-link:hover { color: var(--accent-3); }
+.flagship-link:hover::after { translate: 0.35em 0; }
+
 /* ----- SKELETON, SPINNER, EMPTY STATE: the waiting family -----
    What it is: the three honest ways to show absence. The skeleton is
    a shimmering placeholder shaped like the content it stands in for

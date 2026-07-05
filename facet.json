@@ -606,6 +606,20 @@
       "a11y": "Skeleton groups are aria-hidden; the spinner row is role=status; the empty state is content, not an alert."
     },
     {
+      "name": "Flagship link",
+      "classes": [
+        ".flagship-link"
+      ],
+      "summary": "The signature onward step: heading voice, accent underline, an arrow that leans in.",
+      "classNotes": {
+        ".flagship-link": "an <a> in the heading voice with the leaning arrow"
+      },
+      "do": "Use it for the one onward step a section ends on.",
+      "dont": "Scatter several per screen or put it on a button.",
+      "why": "A signature loses its meaning the moment it is everywhere.",
+      "a11y": "A real link; the arrow is decorative content, the text is the name."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",

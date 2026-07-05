@@ -448,6 +448,7 @@
           <li><a href="#chart">Chart</a></li>
           <li><a href="#small-talkers">Badge, chip, avatar, progress</a></li>
           <li><a href="#waiting">Skeleton, spinner, empty</a></li>
+          <li><a href="#flagship-link">Flagship link</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -573,6 +574,7 @@
           <li>The themed line chart: <code>facet.chart(el, {points})</code> — accent-1 data line with dashed projections, event markers labelled above the plot, a drag crosshair that reads values, all colors tokens so a theme switch restyles a live chart.</li>
           <li>The small talkers: tinted status badges, self-toggling filter chips (<code>aria-pressed</code>, promoted from this site's own controls), avatars for images or initials, and the native <code>&lt;progress&gt;</code> themed.</li>
           <li>The waiting family: shimmering skeletons shaped like the content, an accent spinner ring for shapeless waits, and a dashed empty state that names what belongs there and offers the one action that fills it.</li>
+          <li>The flagship link: the signature onward step — heading voice, strong accent underline, an arrow that leans in on hover; always a real <code>&lt;a&gt;</code>.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -2070,6 +2072,26 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-waiting"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-waiting" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FLAGSHIP LINK -->
+      <article class="element stack" id="flagship-link">
+        <h3 data-status="stable">Flagship link</h3>
+        <p>
+          What it is: the big confident link — heading voice, a strong
+          accent underline, and an arrow that leans into the journey
+          on hover. What it is for: the one onward step at the end of
+          a section: "See the full report", "Start a project". When to
+          use it: at most one or two per screen; ordinary references
+          stay plain underlined links. It is always an
+          <code>&lt;a&gt;</code> to a real URL — never a button in
+          costume.
+        </p>
+        <div class="demo">
+          <a class="flagship-link" href="#flagship-link" data-tip="The arrow leans in on hover">See the full report</a>
+        </div>
+        <pre id="code-flagship-link"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-flagship-link" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

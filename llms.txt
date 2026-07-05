@@ -592,6 +592,16 @@ is content, not an error.
       <button class="btn btn-primary btn-small">New report</button>
     </div>
 
+### Flagship link
+
+What it is: the big confident link — heading voice, strong accent
+underline, an arrow that leans into the journey on hover. What it is
+for: the one onward step at the end of a section. When to use it: at
+most one or two per screen; ordinary references stay plain underlined
+links. Always an <a> to a real URL, never a button in costume.
+
+    <a class="flagship-link" href="/report">See the full report</a>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one
