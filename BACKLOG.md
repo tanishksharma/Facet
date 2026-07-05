@@ -335,7 +335,9 @@ Platform laws docs and the R11 chart item.
 - [x] Switch, checkbox, radio: native inputs themed via accent-color,
       label.check-row makes the whole line the 44px target, .switch
       upgrades a checkbox to track-and-thumb with semantics untouched.
-- [ ] Stepper, segmented control
+- [x] Stepper (real number input between step buttons; min/max/step
+      rule; feedback tick) and segmented control (hidden radios:
+      native arrows, form value, announcements; pressed-in pill).
 - [ ] Input, textarea, select, search field as wired field components
 - [ ] File upload, date input
 - [ ] Card: default, outlined, clickable

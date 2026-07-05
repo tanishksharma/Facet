@@ -320,6 +320,40 @@
       "a11y": "Real inputs inside real labels; the switch stays a checkbox to every reader."
     },
     {
+      "name": "Stepper & segmented",
+      "classes": [
+        ".stepper",
+        ".stepper-down",
+        ".stepper-up",
+        ".segmented"
+      ],
+      "summary": "Quantity pill on a real number input; one-of-few pill on hidden radios.",
+      "classNotes": {
+        ".stepper": "the pill: button, input, button",
+        ".stepper-down": "steps down (input.stepDown)",
+        ".stepper-up": "steps up (input.stepUp)",
+        ".segmented": "fieldset or div of label > hidden radio + span options"
+      },
+      "keys": [
+        [
+          "Type / Arrows in the stepper input",
+          "native number editing"
+        ],
+        [
+          "Arrows in the segmented group",
+          "move the pick"
+        ],
+        [
+          "Space",
+          "picks the focused segment"
+        ]
+      ],
+      "do": "Set min, max and step on the stepper input — the buttons obey them.",
+      "dont": "Use a segmented control for navigation between pages.",
+      "why": "It changes what is shown in place; navigation is links or the tab bar.",
+      "a11y": "Stepper buttons carry aria-labels; the segmented control announces as a radio group."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",

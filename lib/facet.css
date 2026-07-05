@@ -2187,6 +2187,97 @@ input[type="checkbox"].switch:checked { background: var(--accent-1); }
 input[type="checkbox"].switch:checked::before { translate: 1.125rem 0; }
 input[type="checkbox"].switch:disabled { opacity: 0.5; cursor: not-allowed; }
 
+/* ----- STEPPER: minus, value, plus -----
+   What it is: a quantity control — a real number input between two
+   step buttons, in one pill. What it is for: counts and small
+   adjustments where typing is overkill: guests, quantity, years.
+   When to use it: ranges of a few dozen at most; beyond that use the
+   number input. The input stays typeable; the buttons call the
+   input's own stepUp/stepDown so min, max and step attributes rule.
+   facet.js wires .stepper-down/.stepper-up and fires input+change. */
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+.stepper button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text);
+  font-size: var(--text-h4);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.stepper button:hover { background: var(--accent-2-hover); }
+.stepper button:active { background: var(--accent-2-pressed); }
+.stepper input {
+  width: 3.5rem;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font: inherit;
+  font-weight: var(--weight-strong);
+  color: var(--text);
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.stepper input::-webkit-outer-spin-button,
+.stepper input::-webkit-inner-spin-button { appearance: none; }
+
+/* ----- SEGMENTED CONTROL: one pick, all options visible -----
+   What it is: a pill of options where exactly one is pressed in —
+   radios underneath, so the form value, keyboard arrows and screen
+   reader behavior are all native. What it is for: switching between
+   2–5 views or ranges of the same thing: 1Y/5Y/Max, list/grid. When
+   to use it: choices that change what is shown, not settings that
+   act (that is the switch) and not navigation (that is the tab bar).
+   Markup: label > hidden radio + span per option. */
+.segmented {
+  display: inline-flex;
+  margin: 0;                     /* it is often a fieldset */
+  padding: 2px;
+  gap: 2px;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+.segmented label { position: relative; display: inline-flex; }
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.segmented span {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-small);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+.segmented input:checked + span {
+  background: var(--background);
+  color: var(--text);
+  font-weight: var(--weight-strong);
+  box-shadow: var(--shadow-raised);
+}
+.segmented input:focus-visible + span {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
 /* ----- ROW: horizontal flow with wrap and themed gaps -----
    What it is: things side by side that wrap when they run out of
    room, with the gap owned by the row. What it is for: button rows,

@@ -340,6 +340,31 @@ only changes the clothes.
     <label class="check-row"><input type="checkbox"> Email me a copy</label>
     <label class="check-row"><input type="radio" name="plan" checked> Monthly</label>
 
+### Stepper & segmented control
+
+What it is: a quantity control — a real number input between two step
+buttons in one pill — and a segmented control, a pill of options where
+exactly one is pressed in, radios underneath. What it is for: the
+stepper for counts and small adjustments where typing is overkill; the
+segmented control for switching between 2–5 views or ranges of the
+same thing. When to use it: stepper for ranges of a few dozen at most
+(beyond that, the number input); segmented for choices that change
+what is shown — not settings that act (the switch) and not navigation
+(the tab bar). The stepper buttons call the input's own
+stepUp/stepDown so min/max/step rule; the radios keep arrows, form
+value and announcements native.
+
+    <div class="stepper" role="group" aria-label="Guests">
+      <button type="button" class="stepper-down" aria-label="Fewer">−</button>
+      <input type="number" value="2" min="1" max="12" aria-label="Guests">
+      <button type="button" class="stepper-up" aria-label="More">+</button>
+    </div>
+
+    <fieldset class="segmented" aria-label="Range">
+      <label><input type="radio" name="range" checked><span>1Y</span></label>
+      <label><input type="radio" name="range"><span>5Y</span></label>
+    </fieldset>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

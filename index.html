@@ -454,6 +454,7 @@
           <li><a href="#row">Row</a></li>
           <li><a href="#grid">Grid</a></li>
           <li><a href="#choice-controls">Switch &amp; checks</a></li>
+          <li><a href="#stepper">Stepper &amp; segmented</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -568,6 +569,7 @@
           <li>The calculator-grade number input: prefilled example, one-tap clear on first touch, Indian digit grouping while typing (25,00,000), and a words helper that reads it back — "25 lakh".</li>
           <li>Fields with labels, hints and error states; themed sliders with live readouts; verdict-first result blocks that announce recalculations to screen readers.</li>
           <li>Choice controls: native checkbox and radio themed through <code>accent-color</code>, and a switch that is a checkbox upgraded with one class — form value, keyboard and screen-reader semantics untouched.</li>
+          <li>Stepper (a real number input between two step buttons — min, max and step rule) and segmented control (one-of-few on hidden radios: arrows, form value and announcements stay native).</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -1598,6 +1600,43 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-choice-controls"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-choice-controls" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- STEPPER + SEGMENTED -->
+      <article class="element stack" id="stepper">
+        <h3 data-status="stable">Stepper &amp; segmented control</h3>
+        <p>
+          What it is: a quantity control — a real number input between
+          two step buttons in one pill — and a segmented control, a
+          pill of options where exactly one is pressed in, radios
+          underneath. What it is for: the stepper for counts and small
+          adjustments (guests, quantity, years) where typing is
+          overkill; the segmented control for switching between 2–5
+          views or ranges of the same thing. When to use it: stepper
+          for ranges of a few dozen at most (beyond that, the number
+          input); segmented for choices that change what is shown —
+          not settings that act (the switch) and not navigation (the
+          tab bar). The stepper's buttons call the input's own
+          stepUp/stepDown, so min, max and step rule; the segmented
+          control's radios keep arrows, form value and announcements
+          native.
+        </p>
+        <div class="demo">
+          <div class="row">
+            <div class="stepper" role="group" aria-label="Guests">
+              <button type="button" class="stepper-down" aria-label="Fewer guests" data-tip="Steps down within min and max" data-event="guests-down">&minus;</button>
+              <input type="number" value="2" min="1" max="12" aria-label="Guests">
+              <button type="button" class="stepper-up" aria-label="More guests" data-tip="Steps up within min and max" data-event="guests-up">+</button>
+            </div>
+            <fieldset class="segmented" aria-label="Range">
+              <label><input type="radio" name="range" checked data-tip="One year"><span>1Y</span></label>
+              <label><input type="radio" name="range" data-tip="Five years"><span>5Y</span></label>
+              <label><input type="radio" name="range" data-tip="Everything"><span>Max</span></label>
+            </fieldset>
+          </div>
+        </div>
+        <pre id="code-stepper"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-stepper" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->
