@@ -324,6 +324,22 @@ for bigger cards, .grid-tight and .grid-loose for gap.
       <article> card </article>
     </div>
 
+### Switch, checkbox, radio
+
+What it is: the yes/no and pick-one controls — native checkbox and
+radio wearing the theme through accent-color, and a switch that is a
+checkbox upgraded with one class. What it is for: settings, consents,
+filters — checkbox for independent yes/nos, radio for one-of-few with
+all options visible, switch for a setting that takes effect
+immediately. When to use it: wrap control and text in a
+label.check-row so the whole line is the hit target. The switch keeps
+checkbox semantics — form value, keyboard, screen readers — the class
+only changes the clothes.
+
+    <label class="check-row"><input type="checkbox" class="switch" checked> Sound on</label>
+    <label class="check-row"><input type="checkbox"> Email me a copy</label>
+    <label class="check-row"><input type="radio" name="plan" checked> Monthly</label>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

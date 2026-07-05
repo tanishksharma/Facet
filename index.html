@@ -453,6 +453,7 @@
           <li><a href="#stack">Stack</a></li>
           <li><a href="#row">Row</a></li>
           <li><a href="#grid">Grid</a></li>
+          <li><a href="#choice-controls">Switch &amp; checks</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -566,6 +567,7 @@
           <li>Buttons in three variants and three sizes that work identically on <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code>; square icon buttons to match.</li>
           <li>The calculator-grade number input: prefilled example, one-tap clear on first touch, Indian digit grouping while typing (25,00,000), and a words helper that reads it back — "25 lakh".</li>
           <li>Fields with labels, hints and error states; themed sliders with live readouts; verdict-first result blocks that announce recalculations to screen readers.</li>
+          <li>Choice controls: native checkbox and radio themed through <code>accent-color</code>, and a switch that is a checkbox upgraded with one class — form value, keyboard and screen-reader semantics untouched.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -1567,6 +1569,35 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-grid"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CHOICE CONTROLS -->
+      <article class="element stack" id="choice-controls">
+        <h3 data-status="stable">Switch, checkbox, radio</h3>
+        <p>
+          What it is: the yes/no and pick-one controls — native
+          checkbox and radio wearing the theme through
+          <code>accent-color</code>, and a switch that is a checkbox
+          upgraded with one class. What it is for: settings, consents,
+          filters — checkbox for independent yes/nos, radio for
+          one-of-few with all options visible, switch for a setting
+          that takes effect immediately. When to use it: wrap control
+          and text in a <code>label.check-row</code> so the whole line
+          is the hit target. The switch keeps checkbox semantics —
+          form value, keyboard, screen readers — the class only
+          changes the clothes.
+        </p>
+        <div class="demo">
+          <div class="stack-tight">
+            <label class="check-row"><input type="checkbox" class="switch" checked data-event="setting-sound" data-tip="A checkbox in switch clothes"> Sound on</label>
+            <label class="check-row"><input type="checkbox" checked data-tip="Native checkbox, themed by accent-color"> Email me a copy</label>
+            <label class="check-row"><input type="checkbox" disabled data-tip="Disabled state"> Backups (soon)</label>
+            <label class="check-row"><input type="radio" name="plan" checked data-tip="Native radio, themed by accent-color"> Monthly</label>
+            <label class="check-row"><input type="radio" name="plan" data-tip="Native radio, themed by accent-color"> Yearly</label>
+          </div>
+        </div>
+        <pre id="code-choice-controls"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-choice-controls" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

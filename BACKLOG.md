@@ -332,7 +332,9 @@ Platform laws docs and the R11 chart item.
       the row owns the gap; wall entry with gap chips.
 - [x] Grid: .grid/.grid-wide/.grid-tight/.grid-loose — auto-fit
       minmax columns, breakpoint-free; wall entry with variant chips.
-- [ ] Switch, checkbox, radio
+- [x] Switch, checkbox, radio: native inputs themed via accent-color,
+      label.check-row makes the whole line the 44px target, .switch
+      upgrades a checkbox to track-and-thumb with semantics untouched.
 - [ ] Stepper, segmented control
 - [ ] Input, textarea, select, search field as wired field components
 - [ ] File upload, date input

@@ -2131,6 +2131,62 @@ figcaption {
 [data-tip].tip-on::after,
 [data-tip].tip-on::before { opacity: 1; translate: -50% 0; }
 
+/* ----- CHOICE CONTROLS: checkbox, radio, switch -----
+   What it is: the yes/no and pick-one controls — native checkbox and
+   radio wearing the theme through accent-color, and a switch that is
+   a checkbox upgraded with one class. What it is for: settings,
+   consents, filters — checkbox for independent yes/nos, radio for
+   one-of-few with all options visible, switch for a setting that
+   takes effect immediately. When to use it: wrap control and text in
+   a label.check-row so the whole line is the hit target. The switch
+   keeps checkbox semantics — form value, keyboard, screen readers —
+   the class only changes the clothes. */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--accent-1);
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: none;
+}
+
+/* The whole line is the target: 44px tall, gap from the scale. */
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 2.75rem;
+  cursor: pointer;
+}
+.check-row:has(input:disabled) { cursor: not-allowed; color: var(--text-muted); }
+
+/* The switch: a checkbox in track-and-thumb clothes. */
+input[type="checkbox"].switch {
+  appearance: none;
+  position: relative;
+  width: 2.75rem;
+  height: 1.625rem;
+  border-radius: var(--radius-pill);
+  background: var(--border);
+  transition: background var(--duration-fast) var(--ease-out);
+  touch-action: manipulation;
+  cursor: pointer;
+}
+input[type="checkbox"].switch::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(1.625rem - 4px);
+  height: calc(1.625rem - 4px);
+  border-radius: var(--radius-pill);
+  background: var(--background);
+  box-shadow: var(--shadow-raised);
+  transition: translate var(--duration-base) var(--ease-spring);
+}
+input[type="checkbox"].switch:checked { background: var(--accent-1); }
+input[type="checkbox"].switch:checked::before { translate: 1.125rem 0; }
+input[type="checkbox"].switch:disabled { opacity: 0.5; cursor: not-allowed; }
+
 /* ----- ROW: horizontal flow with wrap and themed gaps -----
    What it is: things side by side that wrap when they run out of
    room, with the gap owned by the row. What it is for: button rows,

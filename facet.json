@@ -294,6 +294,32 @@
       "a11y": "Layout only: reading order is source order."
     },
     {
+      "name": "Choice controls",
+      "classes": [
+        ".check-row",
+        ".switch"
+      ],
+      "summary": "Native checkbox and radio themed via accent-color; the switch is a checkbox upgraded with one class.",
+      "classNotes": {
+        ".check-row": "label wrapper: the whole 44px line is the hit target",
+        ".switch": "on a checkbox input: track-and-thumb clothes, semantics untouched"
+      },
+      "keys": [
+        [
+          "Space",
+          "toggles a checkbox or switch"
+        ],
+        [
+          "Arrows",
+          "move between radios in a group"
+        ]
+      ],
+      "do": "Use a switch only for settings that take effect immediately.",
+      "dont": "Rebuild these on divs — the inputs already carry the semantics.",
+      "why": "Native controls are free accessibility; clothes are cheap, behavior is not.",
+      "a11y": "Real inputs inside real labels; the switch stays a checkbox to every reader."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",
