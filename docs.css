@@ -32,7 +32,6 @@
 }
 .site-link:hover { color: var(--text); }
 .site-link[aria-current="page"] { color: var(--text); }
-.site-link.site-link-cta { color: var(--accent-3); }
 
 /* Landing — one calm centered column: heading, the two tags, a copy
    button and the theme chips. The code block is the star, so the

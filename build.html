@@ -41,7 +41,6 @@
     }
     .site-link:hover { color: var(--text); }
     .site-link[aria-current="page"] { color: var(--text); }
-    .site-link.site-link-cta { color: var(--accent-3); }
 
     .page-head { padding-block: var(--space-page) 0; }
     .page-head h1 { margin: 0; font-size: var(--text-h1); }
@@ -143,16 +142,12 @@
     <nav class="site-nav container-wide" aria-label="Site">
       <a class="wordmark" href="/">facet</a>
       <div class="site-links">
-        <a class="site-link" href="/" data-tip-below
-           data-tip="The whole library in one scroll">Home</a>
-        <a class="site-link site-link-cta" href="/build.html" aria-current="page" data-tip-below
-           data-tip="Build your own theme, live">Build a theme</a>
-        <a class="site-link" href="/llms.txt" data-tip-below
-           data-tip="The whole library as plain text, for LLMs">llms.txt</a>
-        <a class="site-link" href="/facet.json" data-tip-below
-           data-tip="The machine-readable manifest — every theme, token and component">facet.json</a>
-        <a class="site-link" href="https://github.com/tanishksharma/Facet" data-tip-below
-           data-tip="The readable source, never minified">GitHub</a>
+        <a class="site-link" href="/" data-tip-below data-tip="What Facet is and how to use it">Home</a>
+        <a class="site-link" href="/components.html" data-tip-below data-tip="Every component, live and copyable">Components</a>
+        <a class="site-link" href="/layouts.html" data-tip-below data-tip="Blocks and whole-page templates">Layouts</a>
+        <a class="site-link" href="/build.html" aria-current="page" data-tip-below data-tip="Build your own theme, live — plus Skin Lab">Build a theme</a>
+        <a class="site-link" href="/llms.txt" data-tip-below data-tip="The whole library as plain text, for LLMs">llms.txt</a>
+        <a class="site-link" href="https://github.com/tanishksharma/Facet" data-tip-below data-tip="The readable source, never minified">GitHub</a>
       </div>
     </nav>
   </header>
