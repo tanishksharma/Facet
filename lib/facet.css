@@ -590,6 +590,14 @@
   border: none;
   box-shadow: var(--v-raised-2nd);
 }
+
+/* The chart card is a well carved into the page; the gold line
+   arrives through accent-1 with no chart-specific rule at all. */
+[data-theme="velvet"] .chart-card {
+  background: var(--v-well-bg);
+  border: none;
+  box-shadow: var(--v-pit);
+}
 [data-theme="velvet"] .result-number { color: var(--v-gold); }
 [data-theme="velvet"] .number-words { color: var(--v-gold); }
 [data-theme="velvet"] .field output { color: var(--v-gold); }
@@ -2301,6 +2309,46 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   box-shadow: var(--shadow-floating);
 }
 [popover]:popover-open { animation: facet-modal-in var(--duration-fast) var(--ease-out); }
+/* Layout utilities (display: flex/grid) must never beat the UA's
+   closed-popover hiding — re-assert it at author origin. */
+[popover]:not(:popover-open) { display: none; }
+
+/* ----- CHART: the themed SVG line chart -----
+   What it is: a line chart drawn by facet.chart(el, {points}) — data
+   line in accent-1 (2.5px, dashed for projected spans), dots ringed
+   in the page background, grid on the border token, axis text muted,
+   event markers as faint dashed verticals labelled in a reserved
+   band ABOVE the plot, and a crosshair you drag to read values,
+   dropped on pointer lift. What it is for: one series over time:
+   prices, balances, rates. When to use it: whenever the shape of the
+   story matters more than the table of numbers — and keep the table
+   nearby for the numbers. The SVG draws at ~1 unit per rendered
+   pixel so type reads true; colors are all tokens, so every theme
+   (velvet's gold included) gets its chart for free. The surface is
+   touch-action: none — dragging reads values, never scrolls (the
+   gesture law). */
+.chart-card {
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-large);
+  padding: var(--space-4);
+}
+.chart svg { width: 100%; height: auto; touch-action: none; display: block; }
+.chart .grid { stroke: var(--border); stroke-width: 1; }
+.chart .line {
+  stroke: var(--accent-1);
+  stroke-width: 2.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.chart .line.proj { stroke-dasharray: 7 7; opacity: 0.85; }
+.chart .dot { fill: var(--accent-1); stroke: var(--background); stroke-width: 2; }
+.chart .lbl { fill: var(--text); font-weight: 600; }
+.chart .lbl-m { fill: var(--text-muted); }
+.chart .xhair { stroke: var(--text-muted); stroke-dasharray: 3 3; }
+.chart .evt { stroke: var(--border); stroke-dasharray: 2 5; }
+.chart .lbl-e { fill: var(--text-muted); }
 
 /* ----- TABLE: header, zebra rows, row hover -----
    What it is: the data table — muted header row, zebra striping,

@@ -365,16 +365,16 @@ Platform laws docs and the R11 chart item.
       aria-current="page" fills it; 44px rows for chrome navigation.
 - [x] Table component: table.table — muted header, zebra rows, row
       hover, .num tabular columns, .table-scroll phone wrapper.
-- [ ] Chart (SVG line chart, from the inflation app): theming rules
-      carried from the handoff — the chart card is a carved well, the
-      data line is accent-1 at 2.5px (dashed for projected spans), dots
-      accent-1 with a background ring, grid on --border, axis text
-      muted, event markers as faint dashed verticals labelled in a
-      reserved band ABOVE the plot, crosshair dashed muted, dropped on
-      pointer lift. Draw the SVG at ~1 unit per rendered pixel so type
-      reads true. The surface is touch-action: none — dragging reads
-      values, never scrolls (gesture law). Reference classes: .chart
-      .grid/.line/.dot/.lbl/.lbl-m/.xhair/.evt/.lbl-e/.line.proj.
+- [x] Chart: facet.chart(el, {points, projectFrom, events, format}) —
+      all the handoff's theming rules shipped: accent-1 line 2.5px
+      with dashed projections, background-ringed dots, border grid,
+      muted axis text, event verticals labelled in the reserved band
+      above, drag crosshair dropped on lift, ~1 unit/px SVG,
+      touch-action none. Velvet golds the line through accent-1 with
+      zero chart rules; .chart-card is a well there. Bonus fix found
+      in verification: [popover]:not(:popover-open) display none at
+      author origin, so layout utilities can never beat the UA's
+      closed-popover hiding.
 - [ ] Badge, chip, avatar, progress bar
 - [ ] Skeleton, spinner, empty state block
 - [ ] Flagship link: the signature style for linking to another page

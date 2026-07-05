@@ -533,6 +533,28 @@
       "a11y": "Real table semantics; scope on headers; the scroll wrapper keeps focus order intact."
     },
     {
+      "name": "Chart",
+      "classes": [
+        ".chart",
+        ".chart-card"
+      ],
+      "summary": "Themed SVG line chart via facet.chart(): accent-1 line, dashed projections, event band, drag crosshair.",
+      "classNotes": {
+        ".chart": "the host div facet.chart() draws into",
+        ".chart-card": "its panel: a well in velvet, quiet elsewhere"
+      },
+      "keys": [
+        [
+          "Drag / touch-drag",
+          "crosshair reads the nearest value; drops on lift"
+        ]
+      ],
+      "do": "Keep the data table near the chart for the exact numbers.",
+      "dont": "Register the chart with facetMotion or let it scroll the page.",
+      "why": "touch-action none is the gesture law: dragging reads values, never scrolls.",
+      "a11y": "role=img on the SVG; give the host an aria-label naming the series; the table nearby is the accessible data."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",
@@ -976,6 +998,7 @@
     "facet.groupNumber": "Group digits per the active system.",
     "facet.groupIndian": "Indian 2-2-3 grouping.",
     "facet.numberWords": "A number as localized words (lakh, crore, million…).",
-    "facet.toast": "Show a transient notice: facet.toast(message, kind) with kinds success/warning/error/info."
+    "facet.toast": "Show a transient notice: facet.toast(message, kind) with kinds success/warning/error/info.",
+    "facet.chart": "Draw the themed line chart: facet.chart(el, {points, projectFrom, events, format}) → {update}."
   }
 }

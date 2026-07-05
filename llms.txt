@@ -530,6 +530,29 @@ scrolling).
       </table>
     </div>
 
+### Chart
+
+What it is: a line chart drawn by facet.chart(el, {points, projectFrom,
+events, format}) into a .chart div — data line in accent-1 (2.5px,
+dashed from projectFrom on), dots ringed in the page background, grid
+on the border token, muted axis text, event markers as faint dashed
+verticals labelled in a band above the plot, and a drag crosshair that
+reads the nearest value, dropped on pointer lift. points is
+[{x, y, label?}]. Colors are all tokens, so theme and mode switches
+restyle a live chart with no redraw; velvet turns the line gold via
+accent-1 automatically. The SVG draws at ~1 unit per pixel so type
+reads true; the surface is touch-action: none (gesture law). Put the
+chart in a .chart-card — a well in velvet, a quiet panel elsewhere.
+update(next) redraws with new data.
+
+    <div class="chart-card"><div class="chart" id="prices"></div></div>
+    <script>
+      facet.chart(document.querySelector("#prices"), {
+        points: [{x: 2024, y: 100}, {x: 2025, y: 106}, {x: 2026, y: 112}],
+        events: [{x: 2025, label: "Rate cut"}],
+      });
+    </script>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one
