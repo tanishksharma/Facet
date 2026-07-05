@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" data-transition="page">
+<!--
+  Facet template · Article page
+  Header, prose, media figure, pull quote, footer — the base styles
+  are the design; the prose is just semantic tags on the narrow
+  container. JSON-LD article slot filled in the head.
+-->
+<head>
+  <meta charset="utf-8">
+  <title>What inflation does to a decade — Acme Guides</title>
+  <meta name="description" content="A lakh in 2014 does not buy what it used to — chart the gap with your own numbers.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="What inflation does to a decade">
+  <meta property="og:description" content="Chart the gap with your own numbers.">
+  <meta property="og:type" content="article">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="canonical" href="https://example.com/guides/decade">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+  <!-- JSON-LD slot: article. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What inflation does to a decade",
+    "author": { "@type": "Person", "name": "Tanishk Sharma" },
+    "datePublished": "2026-07-05",
+    "publisher": { "@type": "Organization", "name": "Acme" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="container-wide">
+    <div class="top-menu">
+      <span class="wordmark-slot">acme</span>
+      <nav class="top-menu-links" aria-label="Site">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/guides" aria-current="page">Guides</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container-narrow stack">
+    <article class="stack">
+      <header class="stack-tight">
+        <p class="text-caption">GUIDES · 6 MIN READ</p>
+        <h1>What inflation does to a decade</h1>
+        <p class="text-small" style="color: var(--text-muted);">Tanishk Sharma · 5 July 2026</p>
+      </header>
+
+      <p>A lakh in 2014 does not buy what it used to — and the gap is not a feeling, it is a number you can chart. This guide walks the same basket of groceries, fuel and rent across ten years of published rates.</p>
+
+      <h2>The quiet six percent</h2>
+      <p>Nobody feels six percent in a year. Everyone feels it in a decade, because it compounds while attention does not.</p>
+
+      <blockquote class="pullquote">Money you do not grow is money you quietly spend.<footer>from this guide</footer></blockquote>
+
+      <figure class="media-figure">
+        <span class="bg-ruled" style="display: block; aspect-ratio: 16/7; border-radius: var(--radius-medium);" aria-hidden="true"></span>
+        <figcaption>The same basket, priced across ten years.</figcaption>
+      </figure>
+
+      <h2>Run your own numbers</h2>
+      <p>The calculator takes what you have and shows what it becomes — privately, in your own browser.</p>
+
+      <p><a class="flagship-link" href="/">Try it with your numbers</a></p>
+    </article>
+  </main>
+
+  <footer class="container-narrow" style="padding-block: var(--space-6);">
+    <hr>
+    <p class="text-caption">© 2026 Acme. Built on Facet.</p>
+  </footer>
+</body>
+</html>

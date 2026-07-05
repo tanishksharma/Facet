@@ -1,0 +1,5 @@
+# Facet — everything here is meant to be read, by people and machines.
+User-agent: *
+Allow: /
+
+Sitemap: https://facet.example.com/sitemap.xml

@@ -21,9 +21,14 @@ static site on every push to main.
   facet.css        the whole design system
   facet.js         small vanilla JS behaviours
 /templates
-  deck.html        1920x1080 pitch deck template (future)
-  card.html        business card template (future)
-  document.html    A4 document template (future)
+  landing.html     marketing page assembled from the block layer
+  app.html         app shell + dashboard, installable (PWA + sw stub)
+  article.html     editorial page with the JSON-LD article slot
+  deck.html        1920x1080 pitch deck: five layouts, arrow keys,
+                   print-to-PDF at exact size
+  document.html    A4 pages: letterhead, invoice, one-pager
+  card.html        3.5x2in business card, front/back + print sheet
+  manifest.json    the PWA manifest template
 index.html         the library: docs, demo and element wall in one page
 llms.txt           the full usage guide as plain text for AI crawlers
 BACKLOG.md         the build list and only planning file: one checkbox per item

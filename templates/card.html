@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<!--
+  Facet template · Business card
+  3.5in x 2in, front and back, plus a print sheet: printing this page
+  lays five copies of each face on one A4 at exact size — cut on the
+  hairlines. Print with backgrounds ON at 100% scale.
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Acme — business card</title>
+  <meta name="description" content="3.5x2in business card, front and back, with a print sheet.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+  <style>
+    body { background: var(--surface); }
+    .bcard {
+      width: 3.5in;
+      height: 2in;
+      background: var(--background);
+      border: var(--border-width) solid var(--border);
+      padding: 0.22in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-raised);
+    }
+    .bcard-back {
+      background: var(--accent-1);
+      color: var(--on-accent-1);
+      align-items: center;
+      justify-content: center;
+    }
+    .bcard-sheet {
+      display: grid;
+      grid-template-columns: repeat(2, 3.5in);
+      gap: 0;
+      justify-content: center;
+      padding: var(--space-5);
+    }
+    .bcard-sheet .bcard { box-shadow: none; }
+    @media print {
+      body { background: none; }
+      .screen-note { display: none; }
+      .bcard-sheet { padding: 0; }
+    }
+    @page { size: A4; margin: 12mm; }
+  </style>
+</head>
+<body>
+  <p class="screen-note container text-small" style="padding-block: var(--space-4); color: var(--text-muted);">
+    Front and back below, then the print sheet: five of each per A4,
+    exact size, cut on the borders.
+  </p>
+
+  <div class="bcard-sheet" aria-label="Print sheet">
+    <!-- FRONT x5 / BACK x5, paired so a duplex flip lines up. -->
+    <div class="bcard">
+      <strong class="text-h4">Tanishk Sharma</strong>
+      <div class="text-caption" style="color: var(--text-muted);">
+        FOUNDER · ACME<br>
+        tanishk@example.com<br>
+        +91 98000 00000 · acme.example.com
+      </div>
+    </div>
+    <div class="bcard bcard-back"><strong class="text-h3">acme</strong></div>
+    <div class="bcard">
+      <strong class="text-h4">Tanishk Sharma</strong>
+      <div class="text-caption" style="color: var(--text-muted);">
+        FOUNDER · ACME<br>
+        tanishk@example.com<br>
+        +91 98000 00000 · acme.example.com
+      </div>
+    </div>
+    <div class="bcard bcard-back"><strong class="text-h3">acme</strong></div>
+    <div class="bcard">
+      <strong class="text-h4">Tanishk Sharma</strong>
+      <div class="text-caption" style="color: var(--text-muted);">
+        FOUNDER · ACME<br>
+        tanishk@example.com<br>
+        +91 98000 00000 · acme.example.com
+      </div>
+    </div>
+    <div class="bcard bcard-back"><strong class="text-h3">acme</strong></div>
+    <div class="bcard">
+      <strong class="text-h4">Tanishk Sharma</strong>
+      <div class="text-caption" style="color: var(--text-muted);">
+        FOUNDER · ACME<br>
+        tanishk@example.com<br>
+        +91 98000 00000 · acme.example.com
+      </div>
+    </div>
+    <div class="bcard bcard-back"><strong class="text-h3">acme</strong></div>
+    <div class="bcard">
+      <strong class="text-h4">Tanishk Sharma</strong>
+      <div class="text-caption" style="color: var(--text-muted);">
+        FOUNDER · ACME<br>
+        tanishk@example.com<br>
+        +91 98000 00000 · acme.example.com
+      </div>
+    </div>
+    <div class="bcard bcard-back"><strong class="text-h3">acme</strong></div>
+  </div>
+</body>
+</html>

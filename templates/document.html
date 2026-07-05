@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<!--
+  Facet template · A4 document
+  Three ready pages on one .page class with true print margins:
+  a letterhead, an invoice, a one-pager. Print with backgrounds ON
+  for the hairlines; each .page is exactly one sheet.
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Acme — document</title>
+  <meta name="description" content="A4 letterhead, invoice and one-pager on Facet.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+  <style>
+    /* Document chrome: A4 sheets centered on a quiet desk. */
+    body { background: var(--surface); }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: var(--space-5) auto;
+      padding: 22mm 20mm;
+      background: var(--background);
+      box-shadow: var(--shadow-floating);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: var(--border-width-strong) solid var(--text);
+      padding-bottom: var(--space-3);
+    }
+    .page-foot {
+      margin-top: auto;
+      border-top: var(--border-width) solid var(--border);
+      padding-top: var(--space-3);
+      font-size: var(--text-caption);
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+    @media print {
+      body { background: none; }
+      .page { margin: 0; box-shadow: none; page-break-after: always; }
+    }
+    @page { size: A4; margin: 0; }
+  </style>
+</head>
+<body>
+  <!-- 1 · LETTERHEAD -->
+  <section class="page">
+    <header class="page-head">
+      <strong class="text-h3">acme</strong>
+      <span class="text-caption">42 MG Road, Pune · acme.example.com</span>
+    </header>
+    <p class="text-caption">5 July 2026</p>
+    <p>Dear Ms Rao,</p>
+    <p>Write the letter here. The measure, leading and margins are already right; the header and footer hold their lines on every page.</p>
+    <p>Warm regards,<br><strong>Tanishk Sharma</strong></p>
+    <footer class="page-foot"><span>Acme Pvt Ltd · CIN U00000MH2026PTC000000</span><span>Page 1</span></footer>
+  </section>
+
+  <!-- 2 · INVOICE -->
+  <section class="page">
+    <header class="page-head">
+      <strong class="text-h3">acme</strong>
+      <span class="text-h4"><strong>Invoice #2026-041</strong></span>
+    </header>
+    <div class="row" style="justify-content: space-between;">
+      <span class="text-small"><strong>Billed to</strong><br>Asha Rao<br>Pune 411001</span>
+      <span class="text-small" style="text-align: right;"><strong>Issued</strong> 5 Jul 2026<br><strong>Due</strong> 19 Jul 2026</span>
+    </div>
+    <table class="table">
+      <thead><tr><th scope="col">Item</th><th scope="col" class="num">Qty</th><th scope="col" class="num">Rate</th><th scope="col" class="num">Amount</th></tr></thead>
+      <tbody>
+        <tr><td>Design retainer · June</td><td class="num">1</td><td class="num">40,000</td><td class="num">40,000</td></tr>
+        <tr><td>Print handling</td><td class="num">2</td><td class="num">1,500</td><td class="num">3,000</td></tr>
+      </tbody>
+    </table>
+    <div class="result"><span>Total due</span><strong>₹ 43,000</strong></div>
+    <p class="text-caption">UPI acme@okbank · NEFT HDFC0000042 / 50100200300400</p>
+    <footer class="page-foot"><span>Thank you.</span><span>Page 1 of 1</span></footer>
+  </section>
+
+  <!-- 3 · ONE-PAGER -->
+  <section class="page">
+    <header class="page-head">
+      <strong class="text-h3">acme</strong>
+      <span class="text-caption">ONE-PAGER · JULY 2026</span>
+    </header>
+    <h1 class="text-h1" style="margin: 0;">Know what your money will be worth.</h1>
+    <div class="grid">
+      <div class="stat"><strong>24k</strong><span>MONTHLY READERS</span></div>
+      <div class="stat"><strong>₹ 199</strong><span>PRO / MONTH</span></div>
+      <div class="stat"><strong>0</strong><span>DATA COLLECTED</span></div>
+    </div>
+    <p>Two paragraphs of what Acme is, for whom, and why now. Keep it honest and concrete; the numbers above carry the rest.</p>
+    <blockquote class="pullquote">The first calculator my parents actually understood.<footer>Asha R · Pune</footer></blockquote>
+    <footer class="page-foot"><span>tanishk@example.com</span><span>acme.example.com</span></footer>
+  </section>
+</body>
+</html>

@@ -6,7 +6,15 @@
     "js": "/lib/facet.js",
     "serviceWorker": "/lib/facet-sw.js",
     "manifestTemplate": "/templates/manifest.json",
-    "manual": "/llms.txt"
+    "manual": "/llms.txt",
+    "templates": {
+      "landing": "/templates/landing.html",
+      "app": "/templates/app.html",
+      "article": "/templates/article.html",
+      "deck": "/templates/deck.html",
+      "document": "/templates/document.html",
+      "card": "/templates/card.html"
+    }
   },
   "themes": [
     {

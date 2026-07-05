@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<!--
+  Facet template · Landing page
+  A complete marketing page assembled from the block layer: top menu,
+  hero, social proof, feature grid, pricing, FAQ, CTA band, footer.
+  Swap the words, keep the shape. Consume the library by URL — point
+  the two tags at your Facet domain.
+-->
+<head>
+  <meta charset="utf-8">
+  <!-- SEO starter: the head pack. Title under 60 chars, description under 155. -->
+  <title>Acme — know what your money will be worth</title>
+  <meta name="description" content="Inflation, explained with your own numbers. Private, instant, free to start.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta property="og:title" content="Acme — know what your money will be worth">
+  <meta property="og:description" content="Inflation, explained with your own numbers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/">
+  <meta property="og:image" content="https://example.com/og.png">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="canonical" href="https://example.com/">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+  <!-- JSON-LD slot: organization. Fill it or delete it. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Acme",
+    "url": "https://example.com",
+    "logo": "https://example.com/icons/icon-512.png"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="container-wide">
+    <div class="top-menu">
+      <span class="wordmark-slot">acme</span>
+      <nav class="top-menu-links" aria-label="Site">
+        <a class="nav-link" href="/" aria-current="page">Home</a>
+        <a class="nav-link" href="/pricing">Pricing</a>
+        <a class="nav-link" href="/guides">Guides</a>
+      </nav>
+      <button class="btn btn-primary btn-small" data-event="nav-signup" data-tip="Creates your account">Sign up</button>
+      <details class="top-menu-fold">
+        <summary class="btn btn-ghost btn-small"><svg data-icon="menu"></svg> Menu</summary>
+        <nav class="top-menu-links" aria-label="Site">
+          <a class="nav-link" href="/" aria-current="page">Home</a>
+          <a class="nav-link" href="/pricing">Pricing</a>
+          <a class="nav-link" href="/guides">Guides</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main" class="container stack-loose">
+    <section class="hero bg-grid" style="padding-inline: var(--space-5); border-radius: var(--radius-large);">
+      <h1 class="text-display">Know what your money will be worth.</h1>
+      <p>Inflation, explained with your own numbers. Private, instant.</p>
+      <p class="row">
+        <a class="btn btn-primary btn-large" href="/signup" data-event="hero-start">Start free</a>
+        <a class="flagship-link" href="#how" style="font-size: var(--text-body);">See how it works</a>
+      </p>
+    </section>
+
+    <section aria-label="As seen in">
+      <p class="row-loose text-small" style="color: var(--text-muted); max-width: none;">
+        <strong>THE HINDU</strong><strong>MINT</strong><strong>MONEYCONTROL</strong><strong>ET</strong>
+      </p>
+    </section>
+
+    <section id="how" class="stack">
+      <h2>What you get</h2>
+      <div class="grid">
+        <div class="stack-tight"><svg data-icon="clock"></svg><strong>Live rates</strong><p class="text-small">Updated the moment the data lands.</p></div>
+        <div class="stack-tight"><svg data-icon="lock"></svg><strong>Private</strong><p class="text-small">Your numbers never leave the page.</p></div>
+        <div class="stack-tight"><svg data-icon="download"></svg><strong>Yours</strong><p class="text-small">Export everything, any time.</p></div>
+      </div>
+    </section>
+
+    <section class="stack" aria-label="Pricing">
+      <h2>Pricing</h2>
+      <div class="grid">
+        <article class="card stack">
+          <p class="text-caption">FREE</p>
+          <p class="text-h2"><strong>₹ 0</strong></p>
+          <ul class="text-small"><li>3 reports</li><li>Every theme</li></ul>
+          <a class="btn" href="/signup" data-event="plan-free">Start</a>
+        </article>
+        <article class="card stack" style="border-color: var(--accent-3);">
+          <p class="text-caption">PRO · RECOMMENDED</p>
+          <p class="text-h2"><strong>₹ 199</strong><span class="text-caption">/mo</span></p>
+          <ul class="text-small"><li>Unlimited reports</li><li>Exports &amp; sharing</li></ul>
+          <a class="btn btn-primary" href="/signup?plan=pro" data-event="plan-pro">Go Pro</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="stack" aria-label="Questions">
+      <h2>Questions</h2>
+      <div>
+        <details class="accordion" name="faq"><summary>Is my data private?</summary><p class="text-small">Everything computes in your browser; nothing is sent anywhere.</p></details>
+        <details class="accordion" name="faq"><summary>Can I cancel any time?</summary><p class="text-small">Yes — one click, and exports stay available.</p></details>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <p class="text-h3"><strong>Ready when you are.</strong></p>
+      <a class="btn" style="background: var(--on-accent-1); color: var(--accent-1); border-color: transparent;" href="/signup" data-event="cta-start">Start free</a>
+    </section>
+  </main>
+
+  <footer class="container stack" style="padding-block: var(--space-7);">
+    <div class="grid">
+      <nav class="stack-tight" aria-label="Product"><p class="text-caption">PRODUCT</p><a class="nav-link" href="/pricing">Pricing</a><a class="nav-link" href="/changelog">Changelog</a></nav>
+      <nav class="stack-tight" aria-label="Company"><p class="text-caption">COMPANY</p><a class="nav-link" href="/about">About</a><a class="nav-link" href="/contact">Contact</a></nav>
+      <nav class="stack-tight" aria-label="Legal"><p class="text-caption">LEGAL</p><a class="nav-link" href="/privacy">Privacy</a><a class="nav-link" href="/terms">Terms</a></nav>
+    </div>
+    <hr>
+    <p class="text-caption">© 2026 Acme. Built on Facet.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" data-transition="page">
+<!--
+  Facet template · App shell + dashboard
+  Sidebar navigation beside a top bar and one working dashboard
+  screen: stat row, chart, data table with toolbar. Installable out
+  of the box: manifest + the one-line service worker stub
+  (create /sw.js containing importScripts of /lib/facet-sw.js, per
+  the caching law) + the apple metas from the app shell law.
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Ledger — dashboard</title>
+  <meta name="description" content="Your money, one screen.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/icons/icon-180.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" data-service-worker="/sw.js" defer></script>
+  <style>
+    /* Shell-only layout: sidebar beside content, folding on phones.
+       A real layout job, allowed — and it stays in the template. */
+    .shell { display: grid; grid-template-columns: 15rem 1fr; min-height: 100dvh; }
+    .shell > aside { border-right: var(--border-width) solid var(--border); padding: var(--space-4); }
+    .shell > .work { padding: var(--space-5); }
+    @media (max-width: 48rem) { .shell { grid-template-columns: 1fr; } .shell > aside { display: none; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="shell">
+    <aside>
+      <nav class="stack-tight" aria-label="Sections">
+        <p class="wordmark-slot" style="margin-bottom: var(--space-4);">ledger</p>
+        <p class="text-caption">LEDGER</p>
+        <a class="nav-link" href="/" aria-current="page">Overview</a>
+        <a class="nav-link" href="/entries">Entries</a>
+        <p class="text-caption">SETTINGS</p>
+        <a class="nav-link" href="/settings">Preferences</a>
+      </nav>
+    </aside>
+
+    <main id="main" class="work stack">
+      <header class="row" style="justify-content: space-between;">
+        <h1 class="text-h2" style="margin: 0;">Overview</h1>
+        <div class="row-tight">
+          <button class="btn btn-ghost btn-small" data-mode-toggle data-tip="Light or dark">Mode</button>
+          <button class="btn btn-primary btn-small" data-event="entry-new" data-tip="Adds an entry">New entry</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="stat"><strong>₹ 91,680</strong><span>SPENT · JUNE</span></div>
+        <div class="stat"><strong>₹ 10,400</strong><span>SAVED · JUNE</span></div>
+        <div class="stat"><strong>6.2%</strong><span>INFLATION · YOY</span></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart" id="spend-chart" aria-label="Monthly spend, last twelve months"></div>
+      </div>
+
+      <div class="stack-tight">
+        <div class="row">
+          <input type="search" data-filter="#entries" placeholder="Filter entries" aria-label="Filter entries" style="flex: 1; min-width: 10rem;">
+          <button class="btn btn-small" data-event="table-export">Export</button>
+        </div>
+        <div class="table-scroll">
+          <table class="table">
+            <thead><tr><th scope="col">Entry</th><th scope="col">Category</th><th scope="col" class="num">Amount</th></tr></thead>
+            <tbody id="entries">
+              <tr><td>Big Bazaar</td><td>Groceries</td><td class="num">2,480</td></tr>
+              <tr><td>IRCTC</td><td>Travel</td><td class="num">3,150</td></tr>
+              <tr><td>Rent · July</td><td>Rent</td><td class="num">48,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    /* App logic lives in the project — this is yours to replace. */
+    addEventListener("DOMContentLoaded", () => {
+      const el = document.querySelector("#spend-chart");
+      if (el && window.facet) {
+        facet.chart(el, {
+          points: [7, 8, 6, 9, 8, 10, 9, 11, 10, 12, 11, 9].map((v, i) => ({ x: i, y: v * 1000, label: "JFMAMJJASOND"[i] })),
+        });
+      }
+    });
+  </script>
+</body>
+</html>

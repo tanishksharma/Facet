@@ -434,25 +434,40 @@ snippet and inventory line; new CSS kept to the real jobs (.card-row,
 
 ### Templates and versioning — R11 + R12
 
-- [ ] Landing page assembled from marketing blocks
-- [ ] App shell: sidebar plus top bar frame with one dashboard screen
-- [ ] Pitch deck: 1920x1080 slide class, full-screen presenting,
-      arrow-key navigation
-- [ ] Pitch deck: slide layouts — title, content, two-column, chart,
-      closing
-- [ ] Pitch deck: print-to-PDF export at exact 1080p
-- [ ] A4 document: page class with print margins
-- [ ] A4 document: letterhead, invoice table, one-pager layout
-- [ ] Business card: 3.5x2 inch card class, front and back
-- [ ] Business card: print-sheet export at print resolution
-- [ ] Article page: header, prose, footer
-- [ ] SEO starter: head pack — title, meta description, OG tags, favicon
-- [ ] SEO starter: JSON-LD slots — article, product, organization
-- [ ] SEO starter: sitemap.xml and robots.txt
-- [ ] PWA starter: manifest plus icon set, installable out of the box
-      (mechanics land earlier under R6)
+- [x] Landing page assembled from marketing blocks
+      (/templates/landing.html: top menu, hero, proof, features,
+      pricing, FAQ, CTA, footer; org JSON-LD).
+- [x] App shell: sidebar + top bar with a working dashboard screen
+      (/templates/app.html: stats, live chart, table with toolbar).
+- [x] Pitch deck: 1920x1080 slides, fullscreen presenting (F),
+      arrow/space/page-key navigation, scale-to-fit any screen.
+- [x] Pitch deck: five layouts — title, content, two-column, chart,
+      closing.
+- [x] Pitch deck: print-to-PDF at exact 1080p (@page 1920x1080, one
+      slide per page).
+- [x] A4 document: .page class with true print margins, one sheet
+      per page.
+- [x] A4 document: letterhead, invoice (table + result total),
+      one-pager.
+- [x] Business card: 3.5x2in .bcard, front and back.
+- [x] Business card: print sheet — five duplex-aligned pairs per A4
+      at exact size.
+- [x] Article page: header, prose, media figure, pull quote, footer
+      (/templates/article.html; article JSON-LD).
+- [x] SEO starter: head pack in every template — title, description,
+      OG tags, canonical, favicon slot.
+- [x] SEO starter: JSON-LD slots — organization (landing), article
+      (article); product slot documented in llms.txt when commerce
+      pages arrive.
+- [x] SEO starter: robots.txt and sitemap.xml at the site root as
+      the copyable pattern.
+- [x] PWA starter: app.html is installable out of the box — manifest
+      link, apple metas, theme-color, the one-line sw stub wired
+      (mechanics from R6).
 - [ ] v1 freeze: copy /lib/ to /lib/v1/, tag the release, start the
-      changelog, add the version switcher to the site
+      changelog, add the version switcher to the site. HELD FOR THE
+      OWNER'S GO — freezing pins URLs forever; say the word and it
+      ships in one commit.
 
 ## Shipped
 

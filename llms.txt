@@ -942,6 +942,32 @@ off). Auto-wiring: .tab-bar finds the page's pager and its sheet; any
 button[aria-controls] on a .sheet opens it. Velvet law: elements with
 velvet lift/press transforms must not register with facet.motion.
 
+## Templates
+
+Whole pages ready to rename, all consuming the library by URL and all
+carrying the SEO head pack (title, description, OG tags, canonical,
+favicon slot):
+
+/templates/landing.html — marketing page assembled from the block
+layer: top menu, hero, social proof, features, pricing, FAQ, CTA
+band, footer; JSON-LD organization slot.
+/templates/app.html — app shell (sidebar + top bar) with a working
+dashboard: stat row, live chart, data table with toolbar;
+installable: manifest link, apple metas, the one-line sw stub wired.
+/templates/article.html — editorial page: header, prose on the
+narrow container, media figure, pull quote; JSON-LD article slot.
+/templates/deck.html — 1920x1080 pitch deck in five layouts (title,
+content, two-column, chart, closing); arrow keys / space to present,
+F for fullscreen, scales to any screen; print to PDF gives one slide
+per page at exact size.
+/templates/document.html — A4 pages: letterhead, invoice (table +
+result total), one-pager; true print margins, one .page per sheet.
+/templates/card.html — 3.5x2in business card, front and back, plus a
+print sheet: five duplex-aligned pairs per A4 at exact size.
+/templates/manifest.json — the PWA manifest template with the icon
+checklist. robots.txt and sitemap.xml ship at the site root as the
+copyable pattern.
+
 ## Rules for building on Facet
 
 Core principles: readability is the product. One-glance HTML. Not one

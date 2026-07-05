@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Facet's own sitemap; templates copy this shape. Update the domain
+     when the site gets its real one. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://facet.example.com/</loc></url>
+  <url><loc>https://facet.example.com/llms.txt</loc></url>
+  <url><loc>https://facet.example.com/facet.json</loc></url>
+</urlset>
