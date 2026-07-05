@@ -456,6 +456,7 @@
           <li><a href="#choice-controls">Switch &amp; checks</a></li>
           <li><a href="#stepper">Stepper &amp; segmented</a></li>
           <li><a href="#fields">Fields</a></li>
+          <li><a href="#file-date">File &amp; date</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -572,6 +573,7 @@
           <li>Choice controls: native checkbox and radio themed through <code>accent-color</code>, and a switch that is a checkbox upgraded with one class — form value, keyboard and screen-reader semantics untouched.</li>
           <li>Stepper (a real number input between two step buttons — min, max and step rule) and segmented control (one-of-few on hidden radios: arrows, form value and announcements stay native).</li>
           <li>The wired field family: one <code>label.field</code> pattern around text input, textarea, select (token-colored chevron, no image files) and a capsule search field — real labels, hints, and the <code>.field-invalid</code> error state.</li>
+          <li>File upload and date input, themed but native: the file button dresses as a secondary action (drag-drop and form value stay the browser's), the date picker keeps its platform UI with the accent highlight.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -1686,6 +1688,39 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-fields"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-fields" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FILE + DATE -->
+      <article class="element stack" id="file-date">
+        <h3 data-status="stable">File upload &amp; date input</h3>
+        <p>
+          What it is: the native file and date controls, themed and
+          kept native — the file input's button dresses as a secondary
+          action while drag-drop, keyboard and the form value stay the
+          browser's; the date input keeps its native picker with the
+          accent coloring its highlight and <code>color-scheme</code>
+          flipping it in dark mode. What it is for: uploads and date
+          entry without rebuilding what the platform already does
+          best. When to use it: always these before any custom
+          uploader or calendar — wrap them in the same
+          <code>label.field</code> pattern as every other control.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <label class="field">
+              <span class="field-label">Statement PDF</span>
+              <input type="file" accept=".pdf" data-tip="Native file input; only the button is dressed">
+              <span class="field-hint">Drag a file onto it, or browse</span>
+            </label>
+            <label class="field">
+              <span class="field-label">Start date</span>
+              <input type="date" value="2026-07-05" data-tip="Native picker, accent highlight">
+              <span class="field-hint">The picker is the platform's own</span>
+            </label>
+          </div>
+        </div>
+        <pre id="code-file-date"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-file-date" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

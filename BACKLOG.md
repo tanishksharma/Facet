@@ -343,7 +343,9 @@ Platform laws docs and the R11 chart item.
       two-gradient chevron (velvet keeps it — recipe moved to
       background-color); search is a capsule; .field-invalid error
       state on every control.
-- [ ] File upload, date input
+- [x] File upload (::file-selector-button dressed as the secondary
+      action, everything else native) and date/time inputs (native
+      pickers, accent-color highlight, color-scheme dark).
 - [ ] Card: default, outlined, clickable
 - [ ] Modal, drawer, popover
 - [ ] Accordion, toast, dropdown menu

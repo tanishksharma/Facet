@@ -376,6 +376,18 @@
       "a11y": "Real labels focus their control on click and announce; errors sit in the label so they read together."
     },
     {
+      "name": "File & date",
+      "summary": "Native file and date inputs, themed: dressed file button, accent-highlighted native picker.",
+      "attributes": [
+        "input[type=file]",
+        "input[type=date]"
+      ],
+      "do": "Reach for these before any custom uploader or calendar.",
+      "dont": "Rebuild drag-drop or a calendar grid the platform already ships.",
+      "why": "Native controls carry the hardest accessibility for free.",
+      "a11y": "Everything is the browser's own UI; the field label names it."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",

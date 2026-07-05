@@ -382,6 +382,25 @@ control needs a name — which is always.
       <span class="field-hint">Shown on the invoice header</span>
     </label>
 
+### File upload & date input
+
+What it is: the native file and date controls, themed and kept native
+— the file input's button dresses as a secondary action while
+drag-drop, keyboard and the form value stay the browser's; the date
+input keeps its native picker with the accent coloring its highlight
+and color-scheme flipping it in dark mode. When to use it: always
+these before any custom uploader or calendar, wrapped in the same
+label.field pattern as every other control.
+
+    <label class="field">
+      <span class="field-label">Statement PDF</span>
+      <input type="file" accept=".pdf">
+    </label>
+    <label class="field">
+      <span class="field-label">Start date</span>
+      <input type="date">
+    </label>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

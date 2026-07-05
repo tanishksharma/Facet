@@ -1856,6 +1856,41 @@ select {
 /* Search reads as search: a capsule, native clear button kept. */
 input[type="search"] { border-radius: var(--radius-pill); }
 
+/* File upload: the native input stays (drag-drop, keyboard, form
+   value all free); only its button dresses like a secondary action
+   and the filename text steps back. */
+input[type="file"] {
+  border: none;
+  background: none;
+  padding: var(--space-1) 0;
+  font-size: var(--text-small);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+input[type="file"]::file-selector-button {
+  margin-right: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-medium);
+  background: var(--accent-2);
+  color: var(--on-accent-2);
+  font: inherit;
+  font-weight: var(--weight-strong);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+input[type="file"]:hover::file-selector-button { background: var(--accent-2-hover); }
+
+/* Date and time: native pickers, themed — accent-color colors the
+   picker highlight, color-scheme already flips it in dark mode. */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"] {
+  accent-color: var(--accent-1);
+}
+
 /* The input + clear button overlay. */
 .number-input {
   position: relative;
