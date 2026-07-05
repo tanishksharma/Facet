@@ -98,6 +98,65 @@
       </section>
 
       <!-- =============================================================
+           MANUAL · HOW TO USE
+           The path from nothing to a shipped page, as numbered steps —
+           each one an attribute or a class, never a build step.
+           ============================================================= -->
+      <section id="how-to" class="stack home-section">
+        <h2>How to use the library</h2>
+        <p>
+          From an empty file to a shipped page in a few steps. Every one is an
+          attribute or a class — there is no build step, nothing to install.
+        </p>
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num" aria-hidden="true">1</span>
+            <div class="step-body">
+              <h3>Add the two tags</h3>
+              <p>One <code>&lt;link&gt;</code> and one <code>&lt;script&gt;</code> from a public URL — copy them from the top of this page. That is the whole install.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">2</span>
+            <div class="step-body">
+              <h3>Start from a layout</h3>
+              <p>Rename a ready page — landing, app shell, article, pitch deck, document or business card — or assemble one from the block layer. Fill in your words.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">3</span>
+            <div class="step-body">
+              <h3>Pick a theme</h3>
+              <p>One attribute on <code>&lt;html&gt;</code> restyles the whole page — <code>data-theme</code> and <code>data-mode</code>. Or build your own on the <a href="/build.html">Build a theme</a> page and paste the config.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">4</span>
+            <div class="step-body">
+              <h3>Assemble with components</h3>
+              <p>Write semantic HTML with the right classes — buttons, cards, fields, tabs. Every behaviour self-wires from data attributes on load; there is no JS to write.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">5</span>
+            <div class="step-body">
+              <h3>Tune the feel, globally</h3>
+              <p>Density (<code>data-density</code>), type size (<code>data-text-size</code>) and motion (<code>data-motion</code>) are one attribute each — page-wide or per subtree, no per-element work.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">6</span>
+            <div class="step-body">
+              <h3>Ship it</h3>
+              <p>Deploy the static files. A one-line service worker makes the page installable and offline-ready; the head pack and sitemap keep it SEO- and AI-readable.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <hr class="section-rule container-wide" aria-hidden="true">
+
+      <!-- =============================================================
            FEATURES · the complete capability inventory, one card each.
            ============================================================= -->
       <section id="features" class="stack home-section">
@@ -596,70 +655,14 @@
       </section>
 
       <!-- =============================================================
-           MANUAL · HOW TO USE
-           The path from nothing to a shipped page, as numbered steps —
-           each one an attribute or a class, never a build step.
-           ============================================================= -->
-      <section id="how-to" class="stack">
-        <h2>How to use the library</h2>
-        <p>
-          From an empty file to a shipped page in a few steps. Every one is an
-          attribute or a class — there is no build step, nothing to install.
-        </p>
-        <ol class="steps">
-          <li class="step">
-            <span class="step-num" aria-hidden="true">1</span>
-            <div class="step-body">
-              <h3>Add the two tags</h3>
-              <p>One <code>&lt;link&gt;</code> and one <code>&lt;script&gt;</code> from a public URL — copy them from the top of this page. That is the whole install.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">2</span>
-            <div class="step-body">
-              <h3>Start from a layout</h3>
-              <p>Rename a ready page — landing, app shell, article, pitch deck, document or business card — or assemble one from the block layer. Fill in your words.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">3</span>
-            <div class="step-body">
-              <h3>Pick a theme</h3>
-              <p>One attribute on <code>&lt;html&gt;</code> restyles the whole page — <code>data-theme</code> and <code>data-mode</code>. Or build your own on the <a href="/build.html">Build a theme</a> page and paste the config.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">4</span>
-            <div class="step-body">
-              <h3>Assemble with components</h3>
-              <p>Write semantic HTML with the right classes — buttons, cards, fields, tabs. Every behaviour self-wires from data attributes on load; there is no JS to write.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">5</span>
-            <div class="step-body">
-              <h3>Tune the feel, globally</h3>
-              <p>Density (<code>data-density</code>), type size (<code>data-text-size</code>) and motion (<code>data-motion</code>) are one attribute each — page-wide or per subtree, no per-element work.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">6</span>
-            <div class="step-body">
-              <h3>Ship it</h3>
-              <p>Deploy the static files. A one-line service worker makes the page installable and offline-ready; the head pack and sitemap keep it SEO- and AI-readable.</p>
-            </div>
-          </li>
-        </ol>
-      </section>
-
-      <!-- =============================================================
-           RULES · how the library is built, used and grown.
+           BEST PRACTICES · how the library is built, used and grown.
            ============================================================= -->
       <section id="rules" class="stack home-section">
-        <h2>Rules</h2>
+        <h2>Best practices</h2>
         <p>
-          The rules are the product as much as the components are. Every one,
-          on its own card. They live in the repo as
+          The guidelines the library holds itself to — good practices for
+          building on the open web, each on its own card. They live in the
+          repo as
           <a href="https://github.com/tanishksharma/Facet/blob/main/CLAUDE.md">CLAUDE.md</a>
           for AI builders and at <a href="/llms.txt">llms.txt</a> for crawlers.
         </p>

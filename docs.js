@@ -495,6 +495,7 @@ function initSearchKeys() {
    clickable summary, where a permalink would fight the toggle. */
 function initPermalinks() {
   for (const h of document.querySelectorAll("main h2")) {
+    if (h.closest(".home-section")) continue;   // the home manual is not a wall — no hash affordance
     const target = h.id || h.closest("[id]")?.id;
     if (!target) continue;
     const btn = document.createElement("button");

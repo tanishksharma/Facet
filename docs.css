@@ -543,8 +543,22 @@ h2:hover .permalink, h3:hover .permalink,
 .feat-card-name { font-size: var(--text-body); font-weight: var(--weight-strong); line-height: 1.25; }
 .feat-card-phrase { font-size: var(--text-footnote); color: var(--text-muted); line-height: 1.4; }
 
-/* How-to steps: centered block, steps stay left-aligned to read as a list. */
-.home-section .steps { margin-inline: auto; text-align: left; max-width: 46rem; }
+/* How-to on the home page: a centered 3×2 grid of borderless steps —
+   a numbered circle, a centered title and a centered line, no card. */
+#how-to .steps {
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  max-width: 62rem;
+  margin-inline: auto;
+  gap: var(--space-section) var(--space-stack);
+}
+#how-to .step {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  text-align: center;
+  gap: var(--space-inline);
+}
+#how-to .step-num { margin: 0; }
+#how-to .step-body p { margin-top: var(--space-tight); }
 
 /* Code-block action cluster: icons pinned to the snippet's bottom-right,
    instead of a row of buttons below it. */
