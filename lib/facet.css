@@ -2313,6 +2313,128 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
    closed-popover hiding — re-assert it at author origin. */
 [popover]:not(:popover-open) { display: none; }
 
+/* ----- BLOCK HELPERS: the few styles the block layer adds -----
+   Blocks are assemblies of existing components — cards in grids,
+   fields in forms, links in navs — documented as copyable patterns
+   on the homepage. Most need no CSS at all; these are the handful of
+   real jobs the assemblies add: a horizontal card scroller, the
+   collapsing top menu, hero and CTA voices, stat cards, and the two
+   editorial pieces (pull quote, media figure). */
+
+/* Horizontal scrolling card row: side-scrolls with momentum, cards
+   keep a readable width, gentle snap per card (proximity is safe
+   here — cards never outgrow the viewport; the pager law is about
+   full-page sections). */
+.card-row {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding-bottom: var(--space-2);   /* room for the scrollbar */
+  scroll-snap-type: x proximity;
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+.card-row > * {
+  flex: 0 0 min(16rem, 78vw);
+  scroll-snap-align: start;
+}
+
+/* Top menu: logo, links, actions; on phones the links fold behind a
+   native details disclosure — no JS, no hamburger framework. */
+.top-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding-block: var(--space-3);
+  border-bottom: var(--border-width) solid var(--border);
+}
+.top-menu .wordmark-slot {
+  font-weight: var(--weight-heading);
+  font-size: var(--text-h4);
+  margin-right: auto;
+}
+.top-menu-links { display: flex; gap: var(--space-1); flex-wrap: wrap; }
+.top-menu-fold { display: none; }
+@media (max-width: 40rem) {
+  .top-menu-links { display: none; }
+  .top-menu-fold { display: block; width: 100%; }
+  .top-menu-fold summary { list-style: none; cursor: pointer; }
+  .top-menu-fold summary::-webkit-details-marker { display: none; }
+  .top-menu-fold[open] .top-menu-links,
+  .top-menu-fold .top-menu-links { display: flex; flex-direction: column; padding-top: var(--space-2); }
+}
+
+/* Hero: the opening statement — display type, one line under it,
+   one primary action. */
+.hero {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+  padding-block: var(--space-7);
+}
+.hero h1, .hero .text-display { margin: 0; }
+
+/* CTA band: the closing ask — an ink-filled strip that flips the
+   tokens so everything inside just works. */
+.cta-band {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: center;
+  text-align: center;
+  padding: var(--space-7) var(--space-5);
+  border-radius: var(--radius-large);
+  background: var(--accent-1);
+  color: var(--on-accent-1);
+}
+
+/* Stat cards: one number that matters, its label under it. */
+.stat {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-large);
+}
+.stat strong {
+  font-size: var(--text-h2);
+  font-weight: var(--weight-heading);
+  font-variant-numeric: tabular-nums;
+}
+.stat span { font-size: var(--text-caption); color: var(--text-muted); }
+
+/* Pull quote: the sentence worth stealing, set large. */
+.pullquote {
+  border-left: var(--border-width-strong) solid var(--accent-3);
+  padding-left: var(--space-5);
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-heading);
+  font-style: normal;
+  color: var(--text);
+}
+.pullquote footer {
+  margin-top: var(--space-2);
+  font-size: var(--text-small);
+  font-weight: var(--weight-body);
+  color: var(--text-muted);
+}
+
+/* Media figure: an image that explains, with its caption attached. */
+.media-figure { margin: 0; }
+.media-figure img,
+.media-figure video {
+  width: 100%;
+  border-radius: var(--radius-medium);
+  border: var(--border-width) solid var(--border);
+}
+.media-figure figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+
 /* ----- MOTION PACK: parallax depths and idle life -----
    What it is: alive by default. data-parallax="depth" lets an
    element drift up to that many pixels behind the pointer (desktop),

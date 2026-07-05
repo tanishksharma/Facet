@@ -219,6 +219,11 @@
       "attribute": "data-parallax",
       "on": "any decorative element",
       "summary": "Max drift in px behind pointer / scroll momentum / tilt; registers with facet.motion."
+    },
+    {
+      "attribute": "data-filter",
+      "on": "input",
+      "summary": "Live-hides children of the targeted container that do not match the input's text."
     }
   ],
   "components": [
@@ -1104,5 +1109,181 @@
     "facet.chart": "Draw the themed line chart: facet.chart(el, {points, projectFrom, events, format}) → {update}.",
     "facet.icons": "The glyph table (name → svg markup); extend it, then call facet.icon().",
     "facet.icon": "(Re)fill every svg[data-icon] on the page."
-  }
+  },
+  "blocks": [
+    {
+      "name": "Grid of cards",
+      "uses": [
+        ".grid",
+        ".card"
+      ],
+      "summary": "Same-shaped things in the auto-fitting grid."
+    },
+    {
+      "name": "Horizontal card row",
+      "uses": [
+        ".card-row",
+        ".card"
+      ],
+      "summary": "Momentum side-scroll shelf with per-card proximity snap."
+    },
+    {
+      "name": "Filterable card list",
+      "uses": [
+        "input[data-filter]",
+        ".card-outlined"
+      ],
+      "summary": "A search input live-hides non-matching children; the markup is the data."
+    },
+    {
+      "name": "List cards",
+      "uses": [
+        ".card-outlined",
+        ".row",
+        ".avatar"
+      ],
+      "summary": "Stacked full-width record rows."
+    },
+    {
+      "name": "Product grid",
+      "uses": [
+        ".grid",
+        ".card-clickable",
+        ".badge"
+      ],
+      "summary": "Image, title, price, state — the whole card is the link."
+    },
+    {
+      "name": "Product detail",
+      "uses": [
+        ".grid-wide",
+        ".segmented",
+        ".btn-primary"
+      ],
+      "summary": "Gallery beside the info panel with the one primary action."
+    },
+    {
+      "name": "Cart line items",
+      "uses": [
+        ".stepper",
+        ".result"
+      ],
+      "summary": "Order rows with quantity steppers, closed by the result total."
+    },
+    {
+      "name": "Full top menu",
+      "uses": [
+        ".top-menu",
+        ".nav-link",
+        "details.top-menu-fold"
+      ],
+      "summary": "Wordmark, links, actions; native details fold on phones."
+    },
+    {
+      "name": "Sidebar navigation",
+      "uses": [
+        ".nav-link",
+        ".stack-tight"
+      ],
+      "summary": "Sectioned destination groups in an aside."
+    },
+    {
+      "name": "Footer",
+      "uses": [
+        ".grid",
+        ".nav-link"
+      ],
+      "summary": "Link columns over the legal row."
+    },
+    {
+      "name": "Hero",
+      "uses": [
+        ".hero",
+        ".text-display",
+        ".btn-primary"
+      ],
+      "summary": "The opening statement: display type, one line, one primary."
+    },
+    {
+      "name": "Feature grid",
+      "uses": [
+        ".grid",
+        "svg[data-icon]"
+      ],
+      "summary": "Icon, claim, one sentence — three to six times."
+    },
+    {
+      "name": "Pricing table",
+      "uses": [
+        ".grid",
+        ".card"
+      ],
+      "summary": "Plan cards; the recommended one carries the page's primary."
+    },
+    {
+      "name": "FAQ list",
+      "uses": [
+        "details.accordion"
+      ],
+      "summary": "Named accordions: one answer open, no JS."
+    },
+    {
+      "name": "CTA band",
+      "uses": [
+        ".cta-band"
+      ],
+      "summary": "The ink-filled closing ask."
+    },
+    {
+      "name": "Logo row & testimonial",
+      "uses": [
+        ".pullquote",
+        ".avatar"
+      ],
+      "summary": "Real names and one real quote."
+    },
+    {
+      "name": "Data table with toolbar",
+      "uses": [
+        "input[data-filter]",
+        ".chip",
+        ".table"
+      ],
+      "summary": "Search, filters and actions over the records."
+    },
+    {
+      "name": "Stat row",
+      "uses": [
+        ".stat",
+        ".grid"
+      ],
+      "summary": "KPI cards: one number that matters each."
+    },
+    {
+      "name": "Settings section",
+      "uses": [
+        ".check-row",
+        ".switch",
+        ".field"
+      ],
+      "summary": "Labelled rows with their controls."
+    },
+    {
+      "name": "Form section",
+      "uses": [
+        ".field",
+        ".btn-primary"
+      ],
+      "summary": "Grouped fields, one submit row."
+    },
+    {
+      "name": "Article set",
+      "uses": [
+        ".pullquote",
+        ".media-figure",
+        ".text-caption"
+      ],
+      "summary": "Header, prose, media figure, pull quote."
+    }
+  ]
 }

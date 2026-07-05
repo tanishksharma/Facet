@@ -857,6 +857,29 @@ prefers-contrast: more.
 
     <section class="bg-grid"> ... </section>
 
+## Blocks
+
+Assemblies of the components, documented as copyable patterns on the
+homepage's Blocks section — a block is the arrangement, not a new
+thing to learn. The set: grid of cards; horizontal card row
+(.card-row: momentum side-scroll, per-card proximity snap — safe, the
+pager law is about full pages); filterable card list (an input with
+data-filter="#target" live-hides non-matching children — the markup
+is the data); list cards; product grid; product detail; cart line
+items with a stepper and the result total; full top menu (.top-menu:
+wordmark, .top-menu-links, actions; on phones the links fold behind a
+native details.top-menu-fold); sidebar navigation (sectioned
+nav-links); footer (link columns + legal row); hero (.hero: display
+type, one line, one primary); feature grid; pricing table (the
+recommended plan carries the page's one primary); FAQ list (named
+accordions); CTA band (.cta-band: ink-filled closing ask); logo row +
+testimonial (.pullquote + .avatar); data table with toolbar (search
+data-filter + chips + actions over .table); stat row (.stat KPI
+cards, tabular digits); settings section (check-rows with switches +
+fields); form section (grouped fields, one submit row); article set
+(header, prose on the narrow container, .media-figure with caption,
+.pullquote).
+
 ## Themed map
 
 A Google Map wearing the active theme — ground, water, parks and roads

@@ -401,26 +401,36 @@ Platform laws docs and the R11 chart item.
 
 ### Blocks — R11
 
-- [ ] Grid of cards with responsive columns
-- [ ] Horizontal scrolling card row
-- [ ] Filterable card list: search and filter bar on top, cards below
-- [ ] List cards: stacked full-width rows
-- [ ] Product grid: image, title, price, action
-- [ ] Product detail block: gallery plus info panel
-- [ ] Cart line items with totals
-- [ ] Full top menu: logo, links, actions, mobile collapse
-- [ ] Sidebar navigation with sections
-- [ ] Footer: link columns plus legal row
-- [ ] Hero: headline, subtext, CTA
-- [ ] Feature grid, pricing table, FAQ list, CTA band
-- [ ] Logo row, testimonial block
-- [ ] Data table with toolbar: search, filters, actions
-- [ ] Stat row: KPI cards
-- [ ] Settings section: labelled rows with controls
-- [ ] Form section: grouped fields with a submit row
-- [ ] Article header: title, byline, meta
-- [ ] Prose block: styled long-form text
-- [ ] Media figure with caption, pull quote
+All twenty shipped as the Blocks layer on the homepage (5 Jul 2026):
+copyable assemblies of the components, each with its wall entry,
+snippet and inventory line; new CSS kept to the real jobs (.card-row,
+.top-menu + native phone fold, .hero, .cta-band, .stat, .pullquote,
+.media-figure) plus the generic data-filter input behavior.
+
+- [x] Grid of cards with responsive columns
+- [x] Horizontal scrolling card row (.card-row, proximity snap — safe:
+      the pager law is about full-page sections)
+- [x] Filterable card list: input[data-filter] live-hides children
+- [x] List cards: stacked full-width rows
+- [x] Product grid: image, title, price, state; whole card the link
+- [x] Product detail block: gallery plus info panel
+- [x] Cart line items with steppers and the result total
+- [x] Full top menu: logo, links, actions, native details fold on
+      phones
+- [x] Sidebar navigation with sections
+- [x] Footer: link columns plus legal row
+- [x] Hero: headline, subtext, CTA (.hero)
+- [x] Feature grid, pricing table, FAQ list, CTA band
+- [x] Logo row, testimonial block (.pullquote + .avatar)
+- [x] Data table with toolbar: search (data-filter), chips, actions
+- [x] Stat row: KPI cards (.stat)
+- [x] Settings section: labelled rows with controls
+- [x] Form section: grouped fields with a submit row
+- [x] Article header: title, byline, meta
+- [x] Prose block: semantic tags on the narrow container — the base
+      styles are the design
+- [x] Media figure with caption (.media-figure), pull quote
+      (.pullquote)
 
 ### Templates and versioning — R11 + R12
 

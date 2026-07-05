@@ -483,6 +483,20 @@
           <li><a href="#map">Themed map</a></li>
           <li><a href="#backgrounds">Backgrounds</a></li>
         </ul>
+        <strong>Layer 4 · Blocks</strong>
+        <ul>
+          <li><a href="#block-card-grid">Card grid &amp; row</a></li>
+          <li><a href="#block-filter-list">Filterable &amp; list cards</a></li>
+          <li><a href="#block-product-grid">Product grid &amp; detail</a></li>
+          <li><a href="#block-cart">Cart</a></li>
+          <li><a href="#block-top-menu">Top menu, sidebar, footer</a></li>
+          <li><a href="#block-hero">Hero &amp; feature grid</a></li>
+          <li><a href="#block-pricing">Pricing, FAQ, CTA</a></li>
+          <li><a href="#block-social-proof">Logos &amp; testimonial</a></li>
+          <li><a href="#block-data-table">Data table &amp; stats</a></li>
+          <li><a href="#block-settings">Settings &amp; form</a></li>
+          <li><a href="#block-article">Article set</a></li>
+        </ul>
         <strong>Tools</strong>
         <ul>
           <li><a href="#playground">Playground</a></li>
@@ -602,6 +616,7 @@
           <li>Speaks the visitor's numbers and language: grouping and the words helper follow the locale — lakh/crore where that is the norm, million/billion elsewhere — defaulting from <code>facet.location</code>, overridable with <code>data-numbers</code>. Every string the library ships comes from one translation table, switched with <code>data-language</code> and extendable in one line: <code>facet.strings.ta = {...}</code>. No right-to-left support, by design.</li>
           <li>Built-in context: <code>facet.now()</code> answers the date, time and timezone synchronously; <code>facet.location</code> resolves the visitor's rough place (city, region, country) from a configurable, disablable IP lookup, upgraded to GPS only where permission already exists. Null on failure, never a prompt, never a throw.</li>
           <li>Backgrounds: <code>.bg-grid</code> (technical drawing with plus-marked intersections), <code>.bg-dots</code>, <code>.bg-ruled</code>, <code>.bg-graph</code> — one class, gradients only, token-colored in every theme and mode, silent under <code>prefers-contrast: more</code>.</li>
+          <li>Twenty blocks — card grids and shelves, filterable lists, product grid/detail/cart, top menu with a native phone fold, sidebar nav, footer, hero, feature grid, pricing, FAQ, CTA band, social proof, data table with toolbar, stat row, settings, form, and the article set — every one an assembly of the components, copyable whole. A live filter behavior rides <code>data-filter</code> on any input.</li>
         </ul>
 
         <h3>Accessible by default</h3>
@@ -2431,6 +2446,571 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-tooltip"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-tooltip" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- =============================================================
+           LAYER 4 · BLOCKS
+           Assemblies of the components above, documented as copyable
+           patterns. Most add zero CSS: the primitives already carry
+           the design; the block is the arrangement.
+           ============================================================= -->
+      <section id="blocks" class="stack">
+        <h2>Blocks</h2>
+        <p>
+          Ready arrangements of the components above. A block is not a
+          new thing to learn — it is proof that the primitives
+          compose, shipped as markup you copy whole. Each one follows
+          the same rules as everything else: semantic tags, no extra
+          wrappers, states and hooks included.
+        </p>
+      </section>
+
+      <!-- CARD GRID -->
+      <article class="element stack" id="block-card-grid">
+        <h3 data-status="stable">Grid of cards</h3>
+        <p>
+          What it is: cards in the auto-fitting grid — as many columns
+          as fit, one on phones, no breakpoints. What it is for: any
+          set of same-shaped things. When to use it: the default way
+          to lay out more than two cards.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <article class="card stack-tight"><strong>Groceries</strong><p class="text-small">₹ 12,480 this month</p></article>
+            <article class="card stack-tight"><strong>Travel</strong><p class="text-small">₹ 31,200 this month</p></article>
+            <article class="card stack-tight"><strong>Rent</strong><p class="text-small">₹ 48,000 this month</p></article>
+          </div>
+        </div>
+        <pre id="code-block-card-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-card-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CARD ROW -->
+      <article class="element stack" id="block-card-row">
+        <h3 data-status="stable">Horizontal card row</h3>
+        <p>
+          What it is: cards that scroll sideways with momentum and a
+          gentle per-card snap — proximity snap is safe here; the
+          pager law is about full-page sections. What it is for:
+          browsable shelves: recents, suggestions, categories. When to
+          use it: when the list is long but the screen is not.
+        </p>
+        <div class="demo">
+          <div class="card-row" data-tip="Scroll me sideways">
+            <article class="card stack-tight"><strong>April</strong><p class="text-small">Saved ₹ 8,200</p></article>
+            <article class="card stack-tight"><strong>May</strong><p class="text-small">Saved ₹ 9,750</p></article>
+            <article class="card stack-tight"><strong>June</strong><p class="text-small">Saved ₹ 7,120</p></article>
+            <article class="card stack-tight"><strong>July</strong><p class="text-small">Saved ₹ 10,400</p></article>
+            <article class="card stack-tight"><strong>August</strong><p class="text-small">Saved ₹ 6,900</p></article>
+          </div>
+        </div>
+        <pre id="code-block-card-row"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-card-row" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FILTERABLE LIST -->
+      <article class="element stack" id="block-filter-list">
+        <h3 data-status="stable">Filterable card list</h3>
+        <p>
+          What it is: a search field over a list — the input carries
+          <code>data-filter</code> pointing at the container and
+          facet.js live-hides children that do not match. The markup
+          is the data. What it is for: lists a reader scans by name:
+          projects, contacts, settings. When to use it: from about ten
+          items up.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <label class="field">
+              <span class="field-label">Find a project</span>
+              <input type="search" data-filter="#demo-filter-list" placeholder="Type to filter" data-tip="Hides rows that do not match">
+            </label>
+            <div class="stack-tight" id="demo-filter-list">
+              <article class="card-outlined">Inflation calculator</article>
+              <article class="card-outlined">Wedding budget</article>
+              <article class="card-outlined">Retirement plan</article>
+            </div>
+          </div>
+        </div>
+        <pre id="code-block-filter-list"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-filter-list" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- LIST CARDS -->
+      <article class="element stack" id="block-list-cards">
+        <h3 data-status="stable">List cards</h3>
+        <p>
+          What it is: stacked full-width rows — an outlined card per
+          record with the fields in a row inside. What it is for:
+          records that read left to right: name, meta, amount, action.
+          When to use it: when each row carries more than a table cell
+          should, but less than a full card grid deserves.
+        </p>
+        <div class="demo">
+          <div class="stack-tight">
+            <article class="card-outlined row">
+              <span class="avatar" aria-hidden="true">GR</span>
+              <span><strong>Groceries</strong><br><span class="text-caption">14 entries · June</span></span>
+              <span class="num" style="margin-left: auto; font-variant-numeric: tabular-nums;"><strong>₹ 12,480</strong></span>
+            </article>
+            <article class="card-outlined row">
+              <span class="avatar" aria-hidden="true">TR</span>
+              <span><strong>Travel</strong><br><span class="text-caption">3 entries · June</span></span>
+              <span class="num" style="margin-left: auto; font-variant-numeric: tabular-nums;"><strong>₹ 31,200</strong></span>
+            </article>
+          </div>
+        </div>
+        <pre id="code-block-list-cards"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-list-cards" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- PRODUCT GRID -->
+      <article class="element stack" id="block-product-grid">
+        <h3 data-status="stable">Product grid</h3>
+        <p>
+          What it is: clickable cards of image, title, price, action —
+          the whole card is the link, the action is the one button.
+          What it is for: shop shelves and catalogues. When to use it:
+          anything bought or picked. The image slot is a quiet
+          background box until a real image fills it.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <a class="card card-clickable stack-tight" href="#block-product-grid">
+              <span class="bg-dots" style="display:block; aspect-ratio: 4/3; border-radius: var(--radius-medium);" aria-hidden="true"></span>
+              <strong>Field notebook</strong>
+              <span class="row" style="justify-content: space-between;"><span class="text-small">₹ 450</span><span class="badge badge-success">In stock</span></span>
+            </a>
+            <a class="card card-clickable stack-tight" href="#block-product-grid">
+              <span class="bg-dots" style="display:block; aspect-ratio: 4/3; border-radius: var(--radius-medium);" aria-hidden="true"></span>
+              <strong>Brass ruler</strong>
+              <span class="row" style="justify-content: space-between;"><span class="text-small">₹ 720</span><span class="badge">Few left</span></span>
+            </a>
+          </div>
+        </div>
+        <pre id="code-block-product-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-product-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- PRODUCT DETAIL -->
+      <article class="element stack" id="block-product-detail">
+        <h3 data-status="stable">Product detail</h3>
+        <p>
+          What it is: gallery beside the info panel — image column and
+          a stack of name, price, chooser and the one primary action.
+          What it is for: the page one product gets. When to use it:
+          after a product grid click. On phones the columns stack.
+        </p>
+        <div class="demo">
+          <div class="grid grid-wide">
+            <span class="bg-graph" style="display:block; aspect-ratio: 1; border-radius: var(--radius-medium);" aria-hidden="true"></span>
+            <div class="stack">
+              <h4 style="margin: 0;">Field notebook</h4>
+              <p class="text-small">Dot-gridded, 120 pages, lies flat.</p>
+              <p class="text-h3" style="margin: 0;"><strong>₹ 450</strong></p>
+              <fieldset class="segmented" aria-label="Size">
+                <label><input type="radio" name="size" checked><span>A6</span></label>
+                <label><input type="radio" name="size"><span>A5</span></label>
+              </fieldset>
+              <p class="row"><button class="btn btn-primary" data-event="cart-add" data-tip="The one primary action">Add to cart</button>
+              <button class="btn btn-icon" aria-label="Save for later" data-tip="Save for later"><svg data-icon="heart"></svg></button></p>
+            </div>
+          </div>
+        </div>
+        <pre id="code-block-product-detail"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-product-detail" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CART -->
+      <article class="element stack" id="block-cart">
+        <h3 data-status="stable">Cart line items</h3>
+        <p>
+          What it is: the order as honest rows — item, stepper for
+          quantity, line total — with the totals block closing it.
+          What it is for: carts and order summaries. When to use it:
+          any purchase review. The verdict line (the grand total) is
+          the biggest thing on it, per the result-block rule.
+        </p>
+        <div class="demo">
+          <div class="stack-tight">
+            <div class="row" style="justify-content: space-between;">
+              <span><strong>Field notebook</strong> <span class="text-caption">A6</span></span>
+              <span class="row-tight">
+                <span class="stepper" role="group" aria-label="Quantity">
+                  <button type="button" class="stepper-down" aria-label="Fewer">&minus;</button>
+                  <input type="number" value="2" min="1" max="9" aria-label="Quantity">
+                  <button type="button" class="stepper-up" aria-label="More">+</button>
+                </span>
+                <strong style="font-variant-numeric: tabular-nums;">₹ 900</strong>
+              </span>
+            </div>
+            <hr>
+            <div class="row" style="justify-content: space-between;"><span class="text-small">Delivery</span><span class="text-small">₹ 60</span></div>
+            <div class="result"><span>Total</span><strong>₹ 960</strong></div>
+          </div>
+        </div>
+        <pre id="code-block-cart"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-cart" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- TOP MENU -->
+      <article class="element stack" id="block-top-menu">
+        <h3 data-status="stable">Full top menu</h3>
+        <p>
+          What it is: the site header — wordmark, nav links, actions;
+          on phones the links fold behind a native details disclosure,
+          no hamburger framework. What it is for: every site's first
+          row. When to use it: pages, not installed apps (apps get the
+          tab bar). Resize this page to see the fold.
+        </p>
+        <div class="demo">
+          <header class="top-menu">
+            <span class="wordmark-slot">acme</span>
+            <nav class="top-menu-links" aria-label="Site">
+              <a class="nav-link" href="#block-top-menu" aria-current="page">Home</a>
+              <a class="nav-link" href="#block-top-menu">Pricing</a>
+              <a class="nav-link" href="#block-top-menu">Docs</a>
+            </nav>
+            <button class="btn btn-primary btn-small" data-event="signup" data-tip="The header's one action">Sign up</button>
+            <details class="top-menu-fold">
+              <summary class="btn btn-ghost btn-small" data-tip="The phone fold"><svg data-icon="menu"></svg> Menu</summary>
+              <nav class="top-menu-links" aria-label="Site">
+                <a class="nav-link" href="#block-top-menu" aria-current="page">Home</a>
+                <a class="nav-link" href="#block-top-menu">Pricing</a>
+                <a class="nav-link" href="#block-top-menu">Docs</a>
+              </nav>
+            </details>
+          </header>
+        </div>
+        <pre id="code-block-top-menu"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-top-menu" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SIDEBAR NAV -->
+      <article class="element stack" id="block-sidebar-nav">
+        <h3 data-status="stable">Sidebar navigation</h3>
+        <p>
+          What it is: sectioned nav-link groups in an aside — exactly
+          the pattern this page's own index uses. What it is for: app
+          and docs shells with more destinations than a top row holds.
+          When to use it: three sections or more; fewer fit the top
+          menu.
+        </p>
+        <div class="demo">
+          <aside style="max-width: 16rem;">
+            <nav class="stack-tight" aria-label="Example sections">
+              <p class="text-caption" style="margin: 0;">LEDGER</p>
+              <a class="nav-link" href="#block-sidebar-nav" aria-current="page">Overview</a>
+              <a class="nav-link" href="#block-sidebar-nav">Entries</a>
+              <p class="text-caption" style="margin: 0;">SETTINGS</p>
+              <a class="nav-link" href="#block-sidebar-nav">Categories</a>
+              <a class="nav-link" href="#block-sidebar-nav">Backups</a>
+            </nav>
+          </aside>
+        </div>
+        <pre id="code-block-sidebar-nav"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-sidebar-nav" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FOOTER -->
+      <article class="element stack" id="block-footer">
+        <h3 data-status="stable">Footer</h3>
+        <p>
+          What it is: link columns over a legal row. What it is for:
+          the bottom of every site page. When to use it: always —
+          a page that ends abruptly reads as broken.
+        </p>
+        <div class="demo">
+          <footer class="stack">
+            <div class="grid">
+              <nav class="stack-tight" aria-label="Product"><p class="text-caption" style="margin:0;">PRODUCT</p><a class="nav-link" href="#block-footer">Pricing</a><a class="nav-link" href="#block-footer">Changelog</a></nav>
+              <nav class="stack-tight" aria-label="Company"><p class="text-caption" style="margin:0;">COMPANY</p><a class="nav-link" href="#block-footer">About</a><a class="nav-link" href="#block-footer">Contact</a></nav>
+              <nav class="stack-tight" aria-label="Legal"><p class="text-caption" style="margin:0;">LEGAL</p><a class="nav-link" href="#block-footer">Privacy</a><a class="nav-link" href="#block-footer">Terms</a></nav>
+            </div>
+            <hr>
+            <p class="text-caption">© 2026 Acme. Built on Facet.</p>
+          </footer>
+        </div>
+        <pre id="code-block-footer"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-footer" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- HERO -->
+      <article class="element stack" id="block-hero">
+        <h3 data-status="stable">Hero</h3>
+        <p>
+          What it is: the opening statement — display type, one line
+          under it, one primary action (and at most one quiet second).
+          What it is for: the top of a landing page. When to use it:
+          once. A page has one hero the way a screen has one primary.
+        </p>
+        <div class="demo">
+          <div class="hero bg-grid" style="padding-inline: var(--space-5); border-radius: var(--radius-medium);">
+            <p class="text-display" style="margin: 0;">Know what your money will be worth.</p>
+            <p class="text-small" style="color: var(--text-muted);">Inflation, explained with your own numbers.</p>
+            <p class="row"><a class="btn btn-primary" href="#block-hero" data-event="hero-start">Start free</a>
+            <a class="flagship-link" href="#block-hero" style="font-size: var(--text-body);">See how it works</a></p>
+          </div>
+        </div>
+        <pre id="code-block-hero"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-hero" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FEATURE GRID -->
+      <article class="element stack" id="block-feature-grid">
+        <h3 data-status="stable">Feature grid</h3>
+        <p>
+          What it is: icon, claim, one sentence — repeated in the
+          auto-fitting grid. What it is for: the "what you get"
+          section of a landing page. When to use it: three to six
+          features; more belong in docs.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <div class="stack-tight"><svg data-icon="clock"></svg><strong>Live rates</strong><p class="text-small">Updated the moment the data lands.</p></div>
+            <div class="stack-tight"><svg data-icon="lock"></svg><strong>Private</strong><p class="text-small">Your numbers never leave the page.</p></div>
+            <div class="stack-tight"><svg data-icon="download"></svg><strong>Yours</strong><p class="text-small">Export everything, any time.</p></div>
+          </div>
+        </div>
+        <pre id="code-block-feature-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-feature-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- PRICING -->
+      <article class="element stack" id="block-pricing">
+        <h3 data-status="stable">Pricing table</h3>
+        <p>
+          What it is: plan cards side by side — name, price, the
+          differences as a short list, one action each; the
+          recommended plan carries the page's one primary. What it is
+          for: choosing a plan without a spreadsheet. When to use it:
+          two or three plans. More than three is a decision problem,
+          not a layout problem.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <article class="card stack">
+              <p class="text-caption" style="margin:0;">FREE</p>
+              <p class="text-h2" style="margin:0;"><strong>₹ 0</strong></p>
+              <ul class="text-small" style="margin:0;"><li>3 reports</li><li>Every theme</li></ul>
+              <button class="btn" data-event="plan-free">Start</button>
+            </article>
+            <article class="card stack" style="border-color: var(--accent-3);">
+              <p class="text-caption" style="margin:0;">PRO · RECOMMENDED</p>
+              <p class="text-h2" style="margin:0;"><strong>₹ 199</strong><span class="text-caption">/mo</span></p>
+              <ul class="text-small" style="margin:0;"><li>Unlimited reports</li><li>Exports &amp; sharing</li></ul>
+              <button class="btn btn-primary" data-event="plan-pro" data-tip="The page's one primary action">Go Pro</button>
+            </article>
+          </div>
+        </div>
+        <pre id="code-block-pricing"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-pricing" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FAQ -->
+      <article class="element stack" id="block-faq">
+        <h3 data-status="stable">FAQ list</h3>
+        <p>
+          What it is: accordions with a shared <code>name</code> — the
+          browser keeps one answer open, no JS. What it is for: the
+          questions people actually ask, at the bottom of a landing or
+          checkout page. When to use it: five to ten questions; more
+          means the page above failed to explain.
+        </p>
+        <div class="demo">
+          <div>
+            <details class="accordion" name="landing-faq"><summary>Is my data private?</summary><p class="text-small">Everything computes in your browser; nothing is sent anywhere.</p></details>
+            <details class="accordion" name="landing-faq"><summary>Can I cancel any time?</summary><p class="text-small">Yes — one click, and exports stay available.</p></details>
+          </div>
+        </div>
+        <pre id="code-block-faq"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-faq" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CTA BAND -->
+      <article class="element stack" id="block-cta">
+        <h3 data-status="stable">CTA band</h3>
+        <p>
+          What it is: the closing ask — an ink-filled strip that flips
+          to the on-accent voice, one line and one button. What it is
+          for: the end of a landing page, after the case is made. When
+          to use it: once, last.
+        </p>
+        <div class="demo">
+          <div class="cta-band">
+            <p class="text-h3" style="margin: 0;"><strong>Ready when you are.</strong></p>
+            <button class="btn" style="background: var(--on-accent-1); color: var(--accent-1); border-color: transparent;" data-event="cta-start" data-tip="The closing action">Start free</button>
+          </div>
+        </div>
+        <pre id="code-block-cta"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-cta" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- LOGO ROW + TESTIMONIAL -->
+      <article class="element stack" id="block-social-proof">
+        <h3 data-status="stable">Logo row &amp; testimonial</h3>
+        <p>
+          What it is: the proof pair — a muted row of names that trust
+          you, and one quote with a face and a name. What it is for:
+          landing pages between the hero and the features. When to use
+          it: only with real logos and real quotes; invented proof
+          reads as invented.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <p class="row-loose text-small" style="color: var(--text-muted); max-width: none;">
+              <strong>THE HINDU</strong><strong>MINT</strong><strong>MONEYCONTROL</strong><strong>ET</strong>
+            </p>
+            <figure class="media-figure row" style="align-items: flex-start;">
+              <span class="avatar" aria-hidden="true">AR</span>
+              <blockquote class="pullquote" style="border: none; padding-left: 0; font-size: var(--text-h4);">
+                The first calculator my parents actually understood.
+                <footer>Asha R · Pune</footer>
+              </blockquote>
+            </figure>
+          </div>
+        </div>
+        <pre id="code-block-social-proof"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-social-proof" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- DATA TABLE WITH TOOLBAR -->
+      <article class="element stack" id="block-data-table">
+        <h3 data-status="stable">Data table with toolbar</h3>
+        <p>
+          What it is: search, filter chips and actions in a row above
+          the data table — the search input filters rows live via
+          <code>data-filter</code>. What it is for: the working screen
+          of any records app. When to use it: whenever a table grows
+          past one screenful.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <div class="row">
+              <input type="search" data-filter="#demo-toolbar-rows" placeholder="Filter entries" aria-label="Filter entries" style="flex: 1; min-width: 10rem;" data-tip="Live-filters the rows below">
+              <button class="chip" aria-pressed="false" data-tip="A filter chip">June</button>
+              <button class="btn btn-small" data-event="table-export" data-tip="An action on the whole table">Export</button>
+            </div>
+            <div class="table-scroll">
+              <table class="table">
+                <thead><tr><th scope="col">Entry</th><th scope="col" class="num">Amount</th></tr></thead>
+                <tbody id="demo-toolbar-rows">
+                  <tr><td>Groceries</td><td class="num">12,480</td></tr>
+                  <tr><td>Travel</td><td class="num">31,200</td></tr>
+                  <tr><td>Rent</td><td class="num">48,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <pre id="code-block-data-table"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-data-table" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- STAT ROW -->
+      <article class="element stack" id="block-stat-row">
+        <h3 data-status="stable">Stat row</h3>
+        <p>
+          What it is: KPI cards — one number that matters with its
+          label under it, tabular digits, in the grid. What it is for:
+          the top of a dashboard. When to use it: three or four
+          numbers; a wall of KPIs is a report, not a dashboard.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <div class="stat"><strong>₹ 91,680</strong><span>SPENT · JUNE</span></div>
+            <div class="stat"><strong>₹ 10,400</strong><span>SAVED · JUNE</span></div>
+            <div class="stat"><strong>6.2%</strong><span>INFLATION · YOY</span></div>
+          </div>
+        </div>
+        <pre id="code-block-stat-row"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-stat-row" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SETTINGS SECTION -->
+      <article class="element stack" id="block-settings">
+        <h3 data-status="stable">Settings section</h3>
+        <p>
+          What it is: labelled rows with their controls — switches,
+          selects, steppers — in a quiet stack under a section
+          caption. What it is for: preference screens. When to use it:
+          every setting a product has, in one predictable shape.
+        </p>
+        <div class="demo">
+          <div class="stack-tight" style="max-width: 26rem;">
+            <p class="text-caption" style="margin: 0;">NOTIFICATIONS</p>
+            <label class="check-row" style="justify-content: space-between;">Monthly summary <input type="checkbox" class="switch" checked data-event="setting-summary"></label>
+            <label class="check-row" style="justify-content: space-between;">Rate alerts <input type="checkbox" class="switch" data-event="setting-alerts"></label>
+            <label class="field">
+              <span class="field-label">Currency</span>
+              <select><option>Rupee ₹</option><option>Dollar $</option></select>
+            </label>
+          </div>
+        </div>
+        <pre id="code-block-settings"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-settings" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FORM SECTION -->
+      <article class="element stack" id="block-form">
+        <h3 data-status="stable">Form section</h3>
+        <p>
+          What it is: grouped fields with one submit row — a fieldset
+          per group, the primary action last and alone. What it is
+          for: anything the reader fills in. When to use it: always
+          this shape; forms that scatter their buttons scatter their
+          completion rates.
+        </p>
+        <div class="demo">
+          <form class="stack" style="max-width: 26rem;" onsubmit="return false">
+            <label class="field">
+              <span class="field-label">Full name</span>
+              <input type="text" autocomplete="name" placeholder="Asha Rao">
+            </label>
+            <label class="field">
+              <span class="field-label">Email</span>
+              <input type="email" autocomplete="email" placeholder="asha@example.com">
+              <span class="field-hint">Receipts go here, nothing else</span>
+            </label>
+            <p class="row" style="margin-top: var(--space-2);">
+              <button class="btn btn-primary" data-event="form-save" data-tip="The one submit">Save details</button>
+              <button class="btn btn-ghost" type="reset">Clear</button>
+            </p>
+          </form>
+        </div>
+        <pre id="code-block-form"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-form" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ARTICLE HEADER + PROSE + MEDIA -->
+      <article class="element stack" id="block-article">
+        <h3 data-status="stable">Article header, prose, media</h3>
+        <p>
+          What it is: the editorial set — a header of title, byline
+          and meta; long-form prose that is just semantic tags on the
+          narrow container (the base styles are the design); a media
+          figure with its caption attached; and the pull quote for the
+          sentence worth stealing. What it is for: articles, guides,
+          changelogs. When to use it: any page someone reads top to
+          bottom.
+        </p>
+        <div class="demo">
+          <article class="stack" style="max-width: 44rem;">
+            <header class="stack-tight">
+              <p class="text-caption" style="margin: 0;">GUIDES · 6 MIN</p>
+              <h4 class="text-h2" style="margin: 0;">What inflation does to a decade</h4>
+              <p class="text-small" style="color: var(--text-muted);">Tanishk Sharma · 5 July 2026</p>
+            </header>
+            <p class="text-small">A lakh in 2014 does not buy what it used to — and the gap is not a feeling, it is a number you can chart…</p>
+            <blockquote class="pullquote">Money you do not grow is money you quietly spend.<footer>from the guide</footer></blockquote>
+            <figure class="media-figure">
+              <span class="bg-ruled" style="display:block; aspect-ratio: 16/7; border-radius: var(--radius-medium);" aria-hidden="true"></span>
+              <figcaption>The same basket, priced across ten years.</figcaption>
+            </figure>
+          </article>
+        </div>
+        <pre id="code-block-article"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-article" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
     </main>
