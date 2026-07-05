@@ -94,7 +94,66 @@
       border-top: var(--border-width) solid var(--border);
       padding-top: var(--space-6);
     }
-    section[id], article[id] { scroll-margin-top: var(--space-4); }
+    section[id], article[id] { scroll-margin-top: var(--space-6); }
+
+    /* Layer bands: the big dividers that split the page into its four
+       layers (plus the Manual and Tools). Unmistakable — a strong rule,
+       an accent kicker, and display-sized title. */
+    #main > .layer-band {
+      border-top: var(--border-width-strong) solid var(--text);
+      padding-top: var(--space-7);
+      display: grid;
+      gap: var(--space-2);
+    }
+    .layer-band .layer-kicker {
+      font-size: var(--text-caption);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: var(--weight-strong);
+      color: var(--accent-3);
+    }
+    .layer-band h2 { font-size: var(--text-display); line-height: 1.05; margin: 0; }
+    .layer-band p { color: var(--text-muted); max-width: 60ch; margin: 0; }
+
+    /* Collapsible wall entry: each element folds to just its heading and
+       a one-line callout, so the wall is scannable at a glance. Opening
+       reveals the full description, demo, snippet and reference. */
+    .fold > summary {
+      list-style: none;
+      cursor: pointer;
+      display: grid;
+      gap: var(--space-2);
+      padding-block: var(--space-2);
+    }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-title { display: flex; align-items: center; gap: var(--space-3); }
+    .fold-title h3 { margin: 0; }
+    .fold-chevron {
+      margin-left: auto;
+      width: 0.6rem; height: 0.6rem;
+      border-right: 2px solid var(--text-muted);
+      border-bottom: 2px solid var(--text-muted);
+      rotate: 45deg;
+      transition: rotate var(--duration-base) var(--ease-spring);
+      flex: none;
+    }
+    .fold[open] > summary .fold-chevron { rotate: 225deg; }
+    .fold > summary:hover .fold-chevron { border-color: var(--text); }
+    .fold-note {
+      border-left: var(--border-width-strong) solid var(--accent-3);
+      padding-left: var(--space-4);
+      color: var(--text-muted);
+      font-size: var(--text-small);
+      max-width: 68ch;
+      margin: 0;
+    }
+    /* Open: the callout gives way to the full description inside. */
+    .fold[open] > summary .fold-note { display: none; }
+    /* The body of an opened fold gets breathing room above it. */
+    .fold[open] > :not(summary):first-of-type { margin-top: var(--space-4); }
+
+    /* Expand / collapse-all control that rides above the component wall. */
+    .wall-controls { display: flex; gap: var(--space-2); flex-wrap: wrap; }
 
     /* One wall entry. */
     .element .demo {
@@ -3173,25 +3232,46 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
        screen lights up, so you always know where you are and what is left. */
     function initScrollSpy() {
       const links = [...document.querySelectorAll(".docs-index a[href^='#']")];
-      const targets = links
-        .map(link => document.querySelector(link.getAttribute("href")))
-        .filter(Boolean);
+      const nav = document.querySelector(".docs-index");
+      const pairs = [];
+      for (const link of links) {
+        const target = document.querySelector(link.getAttribute("href"));
+        if (target) pairs.push([link, target]);
+      }
 
       let ticking = false;
       const highlight = () => {
         ticking = false;
-        const line = window.scrollY + window.innerHeight / 4; // reading line
-        let current = targets[0];
-        for (const target of targets) {
-          if (!target.hidden && target.offsetTop <= line) current = target;
+        // The section whose top has most recently crossed the reading
+        // line (140px below the viewport top) is the one on screen.
+        // Viewport-relative rects, so it works whatever the offset
+        // parent is — the old offsetTop math read the wrong coordinate.
+        const line = 140;
+        let best = null, bestTop = -Infinity;
+        for (const [link, target] of pairs) {
+          if (target.hidden || target.offsetParent === null) continue;
+          const top = target.getBoundingClientRect().top;
+          if (top <= line && top > bestTop) { bestTop = top; best = link; }
         }
-        for (const link of links) {
-          link.classList.toggle("is-current", link.getAttribute("href") === "#" + current.id);
+        if (!best) {
+          for (const [link, target] of pairs) {
+            if (!target.hidden && target.offsetParent !== null) { best = link; break; }
+          }
+        }
+        for (const [link] of pairs) link.classList.toggle("is-current", link === best);
+        // Keep the active link visible inside the sticky sidebar — but
+        // scroll only the nav, never the page.
+        if (best && nav) {
+          const nb = nav.getBoundingClientRect(), bb = best.getBoundingClientRect();
+          if (bb.top < nb.top) nav.scrollTop += bb.top - nb.top - 8;
+          else if (bb.bottom > nb.bottom) nav.scrollTop += bb.bottom - nb.bottom + 8;
         }
       };
-      addEventListener("scroll", () => {
-        if (!ticking) { ticking = true; requestAnimationFrame(highlight); }
-      }, { passive: true });
+      const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(highlight); } };
+      addEventListener("scroll", request, { passive: true });
+      addEventListener("resize", request, { passive: true });
+      // Folds opening/closing changes section positions — re-spy after each.
+      for (const fold of document.querySelectorAll(".fold")) fold.addEventListener("toggle", request);
       highlight();
     }
 
@@ -3564,9 +3644,10 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
     }
 
     /* Heading permalinks: hover a titled section heading, copy the
-       deep link. The buttons are real buttons, keyboard reachable. */
+       deep link. On h2 section headings only — folded h3s live inside a
+       clickable summary, where a permalink would fight the toggle. */
     function initPermalinks() {
-      for (const h of document.querySelectorAll("main h2, main h3")) {
+      for (const h of document.querySelectorAll("main h2")) {
         const target = h.id || h.closest("[id]")?.id;
         if (!target) continue;
         const btn = document.createElement("button");
@@ -3762,26 +3843,140 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    /* Relocate the two developer tools (Playground, Cheatsheet) to the
+       end of the page, so DOM order matches the sidebar's Tools group.
+       They were wedged mid-Layer-1, which made clicks and the scrollspy
+       disagree — the section you scrolled into never matched the link. */
+    function relocateTools() {
+      const main = document.querySelector("#main");
+      for (const id of ["playground", "cheatsheet"]) {
+        const sec = document.querySelector("#" + id);
+        if (sec) main.appendChild(sec);
+      }
+    }
+
+    /* Big layer bands: a strong divider and display-sized heading before
+       each layer, so the page reads as Manual / Layer 1 / 2 / 3 / 4 /
+       Tools instead of one endless scroll. */
+    function insertLayerBands() {
+      const bands = [
+        ["features",   "Start here", "The manual",        "How Facet is built, used and grown — and the full capability list."],
+        ["typography", "Layer 1",    "Tokens",            "Every design decision as a named variable: type, color, space, shape, motion."],
+        ["base",       "Layer 2",    "Base styles",       "Raw semantic HTML, already designed — no classes required."],
+        ["components", "Layer 3",    "Components",        "Every piece of the library, live. Each folds to a heading and a line — open one to see it work."],
+        ["blocks",     "Layer 4",    "Blocks",            "The components, assembled into ready page sections you copy whole."],
+        ["playground", "Tools",      "Try it & look it up","An editable live playground, and the whole manifest as a filterable cheatsheet."],
+      ];
+      for (const [id, kicker, title, blurb] of bands) {
+        const anchor = document.querySelector("#" + id);
+        if (!anchor) continue;
+        const band = document.createElement("header");
+        band.className = "layer-band";
+        band.innerHTML = `<span class="layer-kicker"></span><h2></h2><p></p>`;
+        band.querySelector(".layer-kicker").textContent = kicker;
+        band.querySelector("h2").textContent = title;
+        band.querySelector("p").textContent = blurb;
+        anchor.parentNode.insertBefore(band, anchor);
+      }
+    }
+
+    /* Fold every wall entry: heading + a one-line callout when collapsed,
+       full description, demo, snippet and reference on open. The callout
+       is the entry's own "what it is / what it's for" text, trimmed — so
+       a glance down the page explains the whole library. */
+    function foldWallEntries() {
+      const calloutFrom = (text) => {
+        const t = text.replace(/\s+/g, " ").trim();
+        const isM = /What it is:\s*(.+?)(?:\s*What it is for:|\s*When to use it:|$)/.exec(t);
+        const forM = /What it is for:\s*(.+?)(?:\s*When to use it:|$)/.exec(t);
+        let out = isM ? isM[1].trim() : t.slice(0, 180);
+        if (forM) out += " " + forM[1].trim();
+        if (out.length > 240) {                       // keep it to a glance
+          const cut = out.slice(0, 240).lastIndexOf(". ");
+          out = cut > 80 ? out.slice(0, cut + 1) : out.slice(0, 240).trim() + "…";
+        }
+        return out.charAt(0).toUpperCase() + out.slice(1);   // the clause starts lowercase in source
+      };
+      for (const article of document.querySelectorAll("article.element")) {
+        if (article.querySelector(":scope > .fold")) continue;   // idempotent
+        const h3 = article.querySelector(":scope > h3");
+        const desc = article.querySelector(":scope > p");
+        if (!h3 || !desc) continue;
+        const details = document.createElement("details");
+        details.className = "fold";
+        while (article.firstChild) details.appendChild(article.firstChild);
+        const summary = document.createElement("summary");
+        const titleRow = document.createElement("div");
+        titleRow.className = "fold-title";
+        titleRow.appendChild(h3);                     // move the heading up
+        const chevron = document.createElement("span");
+        chevron.className = "fold-chevron";
+        chevron.setAttribute("aria-hidden", "true");
+        titleRow.appendChild(chevron);
+        const note = document.createElement("p");
+        note.className = "fold-note";
+        note.textContent = calloutFrom(desc.textContent);
+        summary.append(titleRow, note);
+        details.prepend(summary);
+        article.appendChild(details);
+        // Charts and gauges measured 0 while hidden — nudge a redraw on open.
+        details.addEventListener("toggle", () => {
+          if (details.open) requestAnimationFrame(() => dispatchEvent(new Event("resize")));
+        });
+      }
+    }
+
+    /* Expand / collapse-all control above the component wall. */
+    function initWallControls() {
+      const components = document.querySelector("#components");
+      if (!components) return;
+      const bar = document.createElement("p");
+      bar.className = "wall-controls";
+      const mk = (label, open, tip) => {
+        const b = document.createElement("button");
+        b.className = "btn btn-small";
+        b.textContent = label;
+        b.dataset.tip = tip;
+        b.addEventListener("click", () => {
+          for (const f of document.querySelectorAll(".fold")) f.open = open;
+        });
+        return b;
+      };
+      bar.append(
+        mk("Expand all", true, "Opens every element on the page"),
+        mk("Collapse all", false, "Folds every element back to its heading"));
+      components.appendChild(bar);
+    }
+
+    /* A sidebar link to a folded entry opens it before scrolling. */
+    function initFoldLinks() {
+      for (const a of document.querySelectorAll(".docs-index a[href^='#']")) {
+        a.addEventListener("click", () => {
+          const target = document.querySelector(a.getAttribute("href"));
+          const fold = target && target.querySelector && target.querySelector(":scope > .fold");
+          if (fold) fold.open = true;
+        });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
       for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
       initChips();
-      initWallSearch();
-      initScrollSpy();
+      initConfigChips();
       initModePanels();
       initSetupStrip();
-      initConfigChips();
       initStyleMixer();
       initSkinLab();
-      initMarkdownButtons();
       initSizeBadge();
-      initPlayground();
-      initCheatsheet();
       initTokenCopy();
-      initSearchKeys();
-      initPermalinks();
       initContrastBadges();
+      initMarkdownButtons();
       initDemoTools();
-      initReferenceBlocks();
+      await initReferenceBlocks();     // append the ref block INTO each article first
+      relocateTools();                 // Playground + Cheatsheet to the end
+      insertLayerBands();
+      initPlayground();
+      await initCheatsheet();
       const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
       if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
       document.querySelector("#demo-toast")?.addEventListener("click", () => {
@@ -3824,6 +4019,16 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           events: [{ x: 2016, label: "Notes ban" }, { x: 2020, label: "Covid" }],
         });
       }
+
+      // Fold, control and spy — after all content and demo wiring, so the
+      // injected snippets, demo tools and reference blocks fold in too.
+      foldWallEntries();
+      initWallControls();
+      initWallSearch();
+      initFoldLinks();
+      initSearchKeys();
+      initPermalinks();
+      initScrollSpy();
     });
   </script>
 </body>
