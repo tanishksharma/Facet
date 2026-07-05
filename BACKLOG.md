@@ -21,17 +21,28 @@ RTL no — decided 4 Jul 2026.
 
 ### Semantic color tokens — drop the accent ranks for role names (NEW · pending name sign-off)
 
-The owner wants colors named by role like spacing/type/radius, not by rank.
-Replace `--accent-1/-2/-3` (each with `-hover`, `-pressed`, `--on-accent-N`)
-with purpose names. Proposed: `--action` (the one primary action, was
-accent-1), `--fill` (every secondary fill, was accent-2), `--link` (links,
-labels, focus, quiet interactive, was accent-3) — each keeping `-hover`,
-`-pressed`, `--on-*`. Sweep every component, all five themes light+dark, the
-custom-accent recipe, the theme builder pickers, docs, llms.txt, facet.json.
-Also rename `--border-width`/`--border-width-strong` → `--border-hairline`/
-`--border-strong` (border by role). Names to confirm with the owner first.
-Everything else is already role-named (base colors, status, shadows, motion,
-widths, fonts, weights, focus) — this is the last value/rank-named layer.
+Rename the accent ranks and border widths by role (owner-decided names):
+
+Accents (each keeps `-hover`, `-pressed`, `--on-*`):
+- `--accent-1` → `--primary`   (the one primary action; primary button fill,
+  checked controls, progress, chart line, active/selected states)
+- `--accent-2` → `--secondary` (secondary fill; the default button, quiet fills)
+- `--accent-3` → TBD (owner to name — links, labels, focus ring, tab underline,
+  slider, selection; the rank that takes the OS AccentColor in Default theme)
+
+Borders — expand from two width tokens to four role tokens:
+- `--border-hairline` — a very slight look of separation (subtle dividers)
+- `--border-element`  — the standard border on elements (cards, inputs, chips)
+- `--border-focus`    — the focus ring width, focus only
+- `--border-highlight`— highlighting any element you want to draw attention to
+Map: current `--border-width` (1px) splits into hairline (separators: hr,
+dividers, table lines) + element (card/input/chip/button borders); current
+`--border-width-strong` (2px) splits into focus (the focus ring) + highlight
+(accent left-bars, active tab underline, avatar/thumb ring, header underline).
+
+Sweep every component, all five themes light+dark, the custom-accent recipe,
+the theme builder pickers, docs, llms.txt, facet.json. Everything else is
+already role-named — this is the last value/rank-named layer.
 
 ### Semantic spacing & type tokens + global density — retokenisation (DONE — spacing/type/radius shipped)
 
