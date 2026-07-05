@@ -794,20 +794,27 @@ for calculator apps:
                                density, language, or any --token override
     facet.now()                { date, iso, dateText, timeText, timezone,
                                year } — synchronous, fresh every call
+    facet.version              the library version string, e.g. "0.2.0"
+    facet.scheme               three-way appearance: .get() / .set("auto"
+                               |"light"|"dark") / .cycle(); auto follows the
+                               OS live, remembered in the URL + localStorage
     facet.location             null until resolved, then { city, region,
                                country, countryCode, latitude, longitude,
-                               source } from an IP lookup (default
-                               ipwho.is; override or disable with
-                               data-location-endpoint on the script tag),
-                               upgraded to GPS only where permission was
-                               already granted. facet.locate() is the
-                               promise behind it. Never throws.
+                               source } from an IP lookup. OFF by default —
+                               opt in with data-location on the script tag
+                               (or data-location-endpoint for a custom one),
+                               so a page that needs no geo makes no network
+                               call. Upgraded to GPS only where permission
+                               was already granted. facet.locate() is the
+                               promise. Silent on failure; never throws.
     facet.numberValue(input)   the plain number behind a grouped input
-    facet.groupNumber(n)       grouped for the active locale
+    facet.groupNumber(n, {system})  grouped for the active locale, or force
+                               {system:"indian"|"western"} per call
     facet.groupIndian(n)       74250000 -> "7,42,50,000", always Indian
-    facet.numberWords(n)       "7.43 crore" / "74.25 million" / "7.43
-                               करोड़" per locale and language
+    facet.numberWords(n, {system})  "7.43 crore" / "74.25 million" / "7.43
+                               करोड़" per locale, with a per-call override
     facet.numberSystem()       "indian" or "western", however resolved
+    facet.choiceSelect(grid, value)  set a .choice-grid pick; fires facet:choice
     facet.strings              the translation table; extend in place
     facet.install()            show the install prompt when available
     facet.go(url)              navigate with the page transition
@@ -897,7 +904,51 @@ every future theme gets its map for free.
     <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12"
          data-map-key="YOUR_KEY"></div>
 
-## The app kit (ingested from the shipped inflation app)
+## App-kit self-wiring (R19 — apps are markup + data only)
+
+The app kit wires the whole app shell from markup, so a calculator is
+markup + its own data/logic with no library-shaped glue:
+
+Settings icon-row: a .menu-icon-row of .menu-icon-btn[data-control]
+buttons self-wire — "sounds" and "haptics" flip facet.feedback.sound/
+haptic.enabled, "motion" cycles facet.motion (Off/Cursor/Tilt),
+"appearance" cycles facet.scheme (Light/Dark/Auto). Each writes its
+.menu-value word and dims via data-off. Zero app JS.
+
+Appearance is three-way (facet.scheme): auto follows the OS live,
+light/dark are held, remembered in the URL and localStorage.
+data-mode-toggle still flips light/dark for back-compat.
+
+Install nudge: put a .nudge-scrim (and optional .overlay-guide) on the
+page and the whole Add-to-Home-Screen flow self-wires — data-nudge-key,
+data-nudge-delay, and [data-nudge="add"|"later"|"never"] buttons; add
+runs addNow() and reveals the guide when iOS needs a how-to; an "Add to
+Home Screen" menu row ([data-nudge="add"]) opens the same guide. No app
+JS.
+
+Sheet menu rows navigate: a .menu-item[data-section] pages the snap
+pager (snap.facetPager.toEl) and closes its sheet. The sheet instance
+is exposed as sheetEl.facetSheet ({open,close,toggle,isOpen}), like
+snap.facetPager.
+
+Choice grid emits: on change a .choice-grid fires a bubbling
+CustomEvent "facet:choice" {value, button} (value = data-value ?? text);
+facet.choiceSelect(grid, value) sets a pick programmatically (URL
+restore, reset).
+
+Page gauge: a .snap[data-gauge] mounts a draggable whole-page
+.scroll-gauge-page whose thumb reflects true position across all
+sections; drag scrolls the page.
+
+Pager landing accounts for a section's top border, so paging lands
+exactly on the content top with a 1px divider present.
+
+Chart: facet.chart staggers colliding event labels across two rows in
+the top band and draws a faint "projection" divider where projectFrom
+begins.
+
+Icons added for app UIs: chart, grid, sliders, refresh, undo, volume,
+vibrate, motion, contrast, plus-square, download-cloud (48 -> 59).
 
 Tooltip on touch: the [data-tip] bubble gains a triangle tail, and on
 touch devices (where iOS makes :hover stick) a tap peeks the bubble for

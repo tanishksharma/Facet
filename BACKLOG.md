@@ -18,6 +18,60 @@ RTL no — decided 4 Jul 2026.
 
 ## Queue · heavy systems first
 
+### App-kit ergonomics — R19 (from building 13 apps on the library)
+
+Real workarounds found building 13 calculator apps strictly on Facet:
+places where the library ships a component's markup + CSS + a module
+but leaves each app to hand-write the same 15–25 lines of glue, or
+reach around a missing API. Fix so an app is markup + its own data/
+logic only. Conventions hold: self-wiring from markup at
+DOMContentLoaded, tokens-only CSS, one small named function per
+behaviour, additive public API (never break the existing surface),
+all five themes and light/dark, no build. Order = highest leverage
+first. Bump facet.version and drop the inline-script glue from the
+matching docs demos.
+
+- [x] 1. initAppControls(): wire .menu-icon-btn settings toggles by
+      data-control — "sounds" (facet.feedback.sound.enabled), "haptics"
+      (haptic.enabled), "motion" (facet.motion.cycle → Off/Cursor/Tilt),
+      "appearance" (the item-2 scheme cycle). Each writes its .menu-value
+      word, sets data-off, plays feedback.toggle(), and reflects current
+      state on load. Zero app JS for a four-button sheet foot.
+- [x] 2. Three-way appearance via facet.scheme (auto|light|dark),
+      persisted in the URL (and localStorage); auto clears data-mode and
+      a live prefers-color-scheme listener follows the OS. Wired to
+      data-control="appearance". data-mode-toggle kept for back-compat.
+- [x] 3. initInstallNudge(): opt-in by a .nudge-scrim present; reads
+      data-nudge-key / data-nudge-delay (default 30000); constructs the
+      nudge with a busy() (open .sheet or visible .overlay-guide) and
+      self-wires [data-nudge=add] → addNow() then reveal .overlay-guide
+      on "guide", [data-nudge=later] hide, [data-nudge=never] never()+
+      hide, click on .overlay-guide hides it, and a [data-nudge=add] menu
+      row in the sheet triggers the same guide. Full A2HS flow, no app JS.
+- [x] 4. Sheet menu rows navigate the pager: any .menu-item[data-section]
+      (or any non-.tab-seg [data-section]) pages snap.facetPager.toEl and
+      closes its sheet.
+- [x] 5. Expose sheetEl.facetSheet = the facetSheet instance (mirrors
+      snap.facetPager), so an app can .close() after an action.
+- [x] 6. Choice grid emits a bubbling CustomEvent "facet:choice"
+      {value, button} on change (value = data-value ?? text); add
+      facet.choiceSelect(grid, value) for URL-restore/reset.
+- [x] 7. facet.groupNumber(n, {system}) / numberWords(n, {system})
+      per-call override (default numberSystem()); the IP lookup goes
+      opt-in (data-location on the script tag) and fully silent — a page
+      without it makes no network call.
+- [x] 8. Pager page gauge: .snap[data-gauge] (or initPagers({gauge:true}))
+      mounts .scroll-gauge-page with the composite cross-section metric
+      and the drag inverse — a draggable whole-page scrollbar, no app code.
+- [x] 9. facet.chart: stagger colliding event labels across two rows in
+      the top band (edge-anchor near the sides); draw a faint "projection"
+      divider at projectFrom when set.
+- [x] 10. Icon-set gaps: chart, grid, sliders, refresh/undo, volume,
+      vibrate, motion, contrast, plus-square, download-cloud — house
+      style, 24×24 1.5px round.
+- [x] 11. Pager landing accounts for a section's top border, so paging
+      lands exactly on the top with a 1px border-top present.
+
 ### Accent ranks — R1
 
 - [x] Retokenise color: keep the base family (--background, --surface,

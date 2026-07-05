@@ -3555,8 +3555,10 @@ details.dropdown {
   border-color: var(--text-muted);
 }
 .menu-icon-btn:active { transform: translateY(1px); }
-/* OFF reads pressed into the glass: darker well, inset shadows */
-.menu-icon-btn:has(.menu-value[data-off="true"]) {
+/* OFF reads pressed into the glass: darker well, inset shadows. Keyed on
+   a .menu-value[data-off], or on the button itself when it has no value. */
+.menu-icon-btn:has(.menu-value[data-off="true"]),
+.menu-icon-btn[data-off="true"] {
   background: color-mix(in srgb, var(--text) 7%, transparent);
   border-color: color-mix(in srgb, var(--border) 50%, transparent);
   box-shadow:

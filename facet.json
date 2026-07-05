@@ -232,6 +232,41 @@
       "attribute": "data-filter",
       "on": "input",
       "summary": "Live-hides children of the targeted container that do not match the input's text."
+    },
+    {
+      "attribute": "data-control",
+      "on": "button.menu-icon-btn",
+      "summary": "Self-wires a settings toggle: sounds|haptics|motion|appearance — writes its .menu-value and dims via data-off, no app JS."
+    },
+    {
+      "attribute": "data-section",
+      "on": "any element (menu row)",
+      "summary": "On a .menu-item (or any non-.tab-seg) it pages the snap pager and closes its sheet; on a .tab-seg it drives the tab bar."
+    },
+    {
+      "attribute": "data-nudge",
+      "on": "button",
+      "summary": "add|later|never in the install nudge / A2HS guide; add runs addNow() and reveals .overlay-guide when iOS needs a how-to."
+    },
+    {
+      "attribute": "data-nudge-key",
+      "on": ".nudge-scrim",
+      "summary": "localStorage key for the Add-to-Home-Screen nudge (opt-in by the scrim's presence)."
+    },
+    {
+      "attribute": "data-nudge-delay",
+      "on": ".nudge-scrim",
+      "summary": "ms before the nudge may show (default 30000)."
+    },
+    {
+      "attribute": "data-gauge",
+      "on": ".snap",
+      "summary": "Mounts a draggable whole-page .scroll-gauge-page over the pager, no app code."
+    },
+    {
+      "attribute": "data-location",
+      "on": "facet.js script tag",
+      "summary": "Opt in to the IP location lookup; without it no geo network call is made."
     }
   ],
   "components": [
@@ -1110,14 +1145,17 @@
     "facet.mapStyle": "The active theme as a Google Maps styles array.",
     "facet.numberSystem": "indian or western, from override → location → browser region.",
     "facet.numberValue": "Parse a grouped input back to a number.",
-    "facet.groupNumber": "Group digits per the active system.",
+    "facet.groupNumber": "Group digits per the active system, or a per-call override: facet.groupNumber(n, {system:'indian'|'western'}).",
     "facet.groupIndian": "Indian 2-2-3 grouping.",
-    "facet.numberWords": "A number as localized words (lakh, crore, million…).",
+    "facet.numberWords": "A number as localized words; per-call override facet.numberWords(n, {system}).",
     "facet.toast": "Show a transient notice: facet.toast(message, kind) with kinds success/warning/error/info.",
     "facet.chart": "Draw the themed line chart: facet.chart(el, {points, projectFrom, events, format}) → {update}.",
     "facet.icons": "The glyph table (name → svg markup); extend it, then call facet.icon().",
     "facet.icon": "(Re)fill every svg[data-icon] on the page.",
-    "facet.location": "The cached location object once locate() resolves (null before, null on failure)."
+    "facet.location": "The cached location object once locate() resolves (null before, null on failure).",
+    "facet.version": "The library version string (\"0.2.0\").",
+    "facet.scheme": "Three-way appearance: facet.scheme.get()/set('auto'|'light'|'dark')/cycle(); auto follows the OS live, persisted in URL + localStorage.",
+    "facet.choiceSelect": "facet.choiceSelect(grid, value) sets a .choice-grid pick and fires facet:choice (for URL-restore/reset)."
   },
   "blocks": [
     {
@@ -1295,5 +1333,6 @@
       ],
       "summary": "Header, prose, media figure, pull quote."
     }
-  ]
+  ],
+  "version": "0.2.0"
 }
