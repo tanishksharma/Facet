@@ -583,6 +583,13 @@
   border-radius: var(--radius-large);
   box-shadow: var(--v-pit);
 }
+
+/* Cards are raised faces lifted out of the fabric. */
+[data-theme="velvet"] .card {
+  background: var(--v-face);
+  border: none;
+  box-shadow: var(--v-raised-2nd);
+}
 [data-theme="velvet"] .result-number { color: var(--v-gold); }
 [data-theme="velvet"] .number-words { color: var(--v-gold); }
 [data-theme="velvet"] .field output { color: var(--v-gold); }
@@ -731,7 +738,8 @@
 [data-theme="aero"] .result,
 [data-theme="aero"] .tab-bar,
 [data-theme="aero"] .sheet,
-[data-theme="aero"] .float-btn {
+[data-theme="aero"] .float-btn,
+[data-theme="aero"] .card {
   background-image: var(--a-gloss);
   border-color: var(--a-glass-border);
 }
@@ -836,7 +844,8 @@
 */
 [data-theme="elegant"] .result,
 [data-theme="elegant"] .sheet,
-[data-theme="elegant"] .menu-item {
+[data-theme="elegant"] .menu-item,
+[data-theme="elegant"] .card {
   box-shadow: var(--e-carve);
 }
 [data-theme="elegant"] input:not(.slider),
@@ -2239,6 +2248,45 @@ input[type="checkbox"].switch::before {
 input[type="checkbox"].switch:checked { background: var(--accent-1); }
 input[type="checkbox"].switch:checked::before { translate: 1.125rem 0; }
 input[type="checkbox"].switch:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ----- CARD: default, outlined, clickable -----
+   What it is: the grouped-surface primitive — a padded, rounded panel
+   a breath above the page. What it is for: one thing per card: a
+   product, a stat, a setting group, a summary. When to use it: .card
+   for most grouping; .card-outlined when many cards sit close and
+   shadows would pile up; a clickable card is an <a class="card
+   card-clickable"> — the whole surface is the link, it lifts on
+   hover and presses on click. Never put more than one primary action
+   inside a card that is itself clickable. */
+.card,
+.card-outlined {
+  display: block;
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-large);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-raised);
+  color: inherit;
+}
+.card-outlined {
+  background: var(--background);
+  box-shadow: none;
+}
+.card-clickable {
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    translate var(--duration-base) var(--ease-spring),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+.card-clickable:hover {
+  translate: 0 -2px;
+  box-shadow: var(--shadow-floating);
+}
+.card-clickable:active {
+  translate: 0 0;
+  box-shadow: var(--shadow-raised);
+}
 
 /* ----- STEPPER: minus, value, plus -----
    What it is: a quantity control — a real number input between two

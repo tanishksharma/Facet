@@ -401,6 +401,24 @@ label.field pattern as every other control.
       <input type="date">
     </label>
 
+### Card
+
+What it is: the grouped-surface primitive — a padded, rounded panel a
+breath above the page. What it is for: one thing per card: a product,
+a stat, a setting group, a summary. When to use it: .card for most
+grouping; .card-outlined when many cards sit close and shadows would
+pile up; a clickable card is an <a class="card card-clickable"> — the
+whole surface is the link, it lifts on hover and presses on click.
+Never put more than one primary action inside a card that is itself
+clickable. Velvet raises cards out of the fabric; Elegant carves them
+in; Aero glosses them.
+
+    <article class="card">
+      <strong>Monthly summary</strong>
+      <p>One thing per card.</p>
+    </article>
+    <a class="card card-clickable" href="/report">Open the report →</a>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

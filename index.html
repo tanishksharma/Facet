@@ -457,6 +457,7 @@
           <li><a href="#stepper">Stepper &amp; segmented</a></li>
           <li><a href="#fields">Fields</a></li>
           <li><a href="#file-date">File &amp; date</a></li>
+          <li><a href="#card">Card</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -574,6 +575,7 @@
           <li>Stepper (a real number input between two step buttons — min, max and step rule) and segmented control (one-of-few on hidden radios: arrows, form value and announcements stay native).</li>
           <li>The wired field family: one <code>label.field</code> pattern around text input, textarea, select (token-colored chevron, no image files) and a capsule search field — real labels, hints, and the <code>.field-invalid</code> error state.</li>
           <li>File upload and date input, themed but native: the file button dresses as a secondary action (drag-drop and form value stay the browser's), the date picker keeps its platform UI with the accent highlight.</li>
+          <li>Cards in three voices — default, outlined, and clickable (the whole surface is an <code>&lt;a&gt;</code> that lifts and presses) — raised out of the velvet, carved into the cream, glossed in aero, automatically.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -1721,6 +1723,45 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-file-date"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-file-date" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CARD -->
+      <article class="element stack" id="card">
+        <h3 data-status="stable">Card</h3>
+        <p>
+          What it is: the grouped-surface primitive — a padded,
+          rounded panel a breath above the page. What it is for: one
+          thing per card: a product, a stat, a setting group, a
+          summary. When to use it: <code>.card</code> for most
+          grouping; <code>.card-outlined</code> when many cards sit
+          close and shadows would pile up; a clickable card is an
+          <code>&lt;a class="card card-clickable"&gt;</code> — the
+          whole surface is the link, it lifts on hover and presses on
+          click. Never put more than one primary action inside a card
+          that is itself clickable. Velvet raises cards out of the
+          fabric; Elegant carves them in; Aero glosses them.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <article class="card stack-tight">
+              <p class="text-caption">Default</p>
+              <strong>Monthly summary</strong>
+              <p class="text-small" style="color: var(--text-muted);">A breath above the page.</p>
+            </article>
+            <article class="card-outlined stack-tight">
+              <p class="text-caption">Outlined</p>
+              <strong>Quiet neighbour</strong>
+              <p class="text-small" style="color: var(--text-muted);">No shadow pile-ups.</p>
+            </article>
+            <a class="card card-clickable stack-tight" href="#card" data-tip="The whole card is the link" data-event="card-open">
+              <p class="text-caption">Clickable</p>
+              <strong>Open the report &rarr;</strong>
+              <p class="text-small" style="color: var(--text-muted);">Lifts on hover, presses on click.</p>
+            </a>
+          </div>
+        </div>
+        <pre id="code-card"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-card" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

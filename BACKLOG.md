@@ -346,7 +346,9 @@ Platform laws docs and the R11 chart item.
 - [x] File upload (::file-selector-button dressed as the secondary
       action, everything else native) and date/time inputs (native
       pickers, accent-color highlight, color-scheme dark).
-- [ ] Card: default, outlined, clickable
+- [x] Card: .card / .card-outlined / a.card.card-clickable (whole
+      surface links, spring lift + press); velvet raises, elegant
+      carves, aero glosses — material recipes per theme.
 - [ ] Modal, drawer, popover
 - [ ] Accordion, toast, dropdown menu
 - [ ] Tabs, breadcrumb, pagination

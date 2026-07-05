@@ -388,6 +388,30 @@
       "a11y": "Everything is the browser's own UI; the field label names it."
     },
     {
+      "name": "Card",
+      "classes": [
+        ".card",
+        ".card-outlined",
+        ".card-clickable"
+      ],
+      "summary": "Padded rounded panel a breath above the page; clickable variant is a whole-surface link.",
+      "classNotes": {
+        ".card": "the default grouped surface",
+        ".card-outlined": "no shadow — for dense card fields",
+        ".card-clickable": "add to an <a class=card>: lifts on hover, presses on click"
+      },
+      "keys": [
+        [
+          "Enter",
+          "follows a clickable card (it is a real link)"
+        ]
+      ],
+      "do": "Put exactly one thing in each card.",
+      "dont": "Nest buttons with their own actions inside a clickable card.",
+      "why": "A link containing actions is a fight nobody wins on a touchscreen.",
+      "a11y": "Clickable cards are real <a> elements; the card's heading text is the accessible name."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",
