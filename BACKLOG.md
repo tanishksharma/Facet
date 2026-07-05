@@ -338,7 +338,11 @@ Platform laws docs and the R11 chart item.
 - [x] Stepper (real number input between step buttons; min/max/step
       rule; feedback tick) and segmented control (hidden radios:
       native arrows, form value, announcements; pressed-in pill).
-- [ ] Input, textarea, select, search field as wired field components
+- [x] Input, textarea, select, search as wired field components: one
+      label.field pattern for all; select grows a token-colored
+      two-gradient chevron (velvet keeps it — recipe moved to
+      background-color); search is a capsule; .field-invalid error
+      state on every control.
 - [ ] File upload, date input
 - [ ] Card: default, outlined, clickable
 - [ ] Modal, drawer, popover

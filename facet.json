@@ -354,6 +354,28 @@
       "a11y": "Stepper buttons carry aria-labels; the segmented control announces as a radio group."
     },
     {
+      "name": "Fields",
+      "classes": [
+        ".field",
+        ".field-label",
+        ".field-hint",
+        ".field-error",
+        ".field-invalid"
+      ],
+      "summary": "One labelled pattern around text input, textarea, select (token chevron) and capsule search.",
+      "classNotes": {
+        ".field": "label wrapper: label, control, hint stack",
+        ".field-label": "the name above the control",
+        ".field-hint": "quiet guidance under it",
+        ".field-error": "the error line (swap it for the hint)",
+        ".field-invalid": "on the field: error borders on the control"
+      },
+      "do": "Wrap every control in label.field so the name is real.",
+      "dont": "Point a bare placeholder at the user as the only label.",
+      "why": "Placeholders vanish on input; labels are the contract.",
+      "a11y": "Real labels focus their control on click and announce; errors sit in the label so they read together."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",

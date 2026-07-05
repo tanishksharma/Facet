@@ -455,6 +455,7 @@
           <li><a href="#grid">Grid</a></li>
           <li><a href="#choice-controls">Switch &amp; checks</a></li>
           <li><a href="#stepper">Stepper &amp; segmented</a></li>
+          <li><a href="#fields">Fields</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -570,6 +571,7 @@
           <li>Fields with labels, hints and error states; themed sliders with live readouts; verdict-first result blocks that announce recalculations to screen readers.</li>
           <li>Choice controls: native checkbox and radio themed through <code>accent-color</code>, and a switch that is a checkbox upgraded with one class — form value, keyboard and screen-reader semantics untouched.</li>
           <li>Stepper (a real number input between two step buttons — min, max and step rule) and segmented control (one-of-few on hidden radios: arrows, form value and announcements stay native).</li>
+          <li>The wired field family: one <code>label.field</code> pattern around text input, textarea, select (token-colored chevron, no image files) and a capsule search field — real labels, hints, and the <code>.field-invalid</code> error state.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -1637,6 +1639,53 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-stepper"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-stepper" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FIELDS -->
+      <article class="element stack" id="fields">
+        <h3 data-status="stable">Fields: input, textarea, select, search</h3>
+        <p>
+          What it is: the labelled field family — one pattern
+          (<code>label.field</code> &gt; <code>.field-label</code> +
+          control + <code>.field-hint</code>) wrapped around every kind
+          of control: text input, textarea, select (with a
+          token-colored chevron, no image files), and a capsule search
+          field. What it is for: every form. The label is real, so
+          clicking it focuses the control and readers announce it; the
+          hint sits under the control; for errors put
+          <code>.field-invalid</code> on the field and swap the hint
+          for a <code>.field-error</code> line. When to use it: any
+          time a control needs a name — which is always.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <label class="field">
+              <span class="field-label">Project name</span>
+              <input type="text" placeholder="Untitled" data-tip="A plain text field">
+              <span class="field-hint">Shown on the invoice header</span>
+            </label>
+            <label class="field">
+              <span class="field-label">Currency</span>
+              <select data-tip="A select with the token chevron">
+                <option>Rupee ₹</option>
+                <option>Dollar $</option>
+                <option>Euro €</option>
+              </select>
+              <span class="field-hint">Used for every figure</span>
+            </label>
+            <label class="field">
+              <span class="field-label">Search projects</span>
+              <input type="search" placeholder="Type to filter" data-tip="Search reads as a capsule">
+            </label>
+            <label class="field field-invalid">
+              <span class="field-label">Notes</span>
+              <textarea rows="2" data-tip="A textarea in the same pattern">Too long…</textarea>
+              <span class="field-error">Keep notes under 200 characters.</span>
+            </label>
+          </div>
+        </div>
+        <pre id="code-fields"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-fields" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

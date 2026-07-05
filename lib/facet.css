@@ -469,7 +469,7 @@
 [data-theme="velvet"] input:not(.slider),
 [data-theme="velvet"] textarea,
 [data-theme="velvet"] select {
-  background: var(--v-well-bg);
+  background-color: var(--v-well-bg);   /* -color: the select keeps its chevron */
   border-color: transparent;
   box-shadow: var(--v-pit);
 }
@@ -1837,6 +1837,24 @@ figcaption {
 .field-invalid select {
   border-color: var(--error);
 }
+
+/* Select wears a token-colored chevron (two tiny gradients — no
+   image files, ever) once the native arrow is dropped. */
+select {
+  appearance: none;
+  padding-right: var(--space-7);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+    linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.15rem) 50%,
+    calc(100% - 0.8rem) 50%;
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+
+/* Search reads as search: a capsule, native clear button kept. */
+input[type="search"] { border-radius: var(--radius-pill); }
 
 /* The input + clear button overlay. */
 .number-input {
