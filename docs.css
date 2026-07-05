@@ -413,6 +413,29 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   background: transparent;
 }
 
+/* Device preview: a real template page in an iframe, scaled to fit the
+   column, with Desktop / Tablet / Phone width chips. The frame is set to
+   each device's LOGICAL width and transform-scaled down, so what you see
+   is the template's genuine responsive layout at that breakpoint — not a
+   squashed desktop. JS (initDevicePreview) sets the size and scale. */
+.device-preview { display: flex; flex-direction: column; gap: var(--space-inline); }
+.device-stage {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: var(--border-element) solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+.device-frame {
+  position: absolute;
+  top: 0;
+  left: 50%;               /* centred; JS margin-left = -width/2 */
+  border: 0;
+  background: var(--background);
+  transform-origin: top center;
+}
+
 /* Site polish: status chips, permalinks, token copy, badges. */
 .element h3[data-status]::after {
   content: attr(data-status);

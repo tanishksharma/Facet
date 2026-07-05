@@ -22,6 +22,8 @@ static site on every push to main.
   facet.js         small vanilla JS behaviours
 /templates
   landing.html     marketing page assembled from the block layer
+  saas.html        SaaS analytics dashboard: sidebar, KPIs, chart, table
+  social.html      social app: three-column feed, tab bar, settings sheet
   app.html         app shell + dashboard, installable (PWA + sw stub)
   article.html     editorial page with the JSON-LD article slot
   deck.html        1920x1080 pitch deck: five layouts, arrow keys,

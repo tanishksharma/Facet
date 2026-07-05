@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" data-transition="page">
+<!--
+  Facet template · SaaS analytics dashboard
+  Northstar: a product-analytics/CRM shell. A left sidebar (nav + settings
+  groups) sits beside a working overview screen — top bar with search and a
+  primary action, a four-KPI stat row, a twelve-point revenue chart, and a
+  two-column region pairing a filterable "Recent signups" table with an
+  "Activity" side panel. One believable screen, folds to a single column on
+  phones. Distinct from app.html's simpler "Ledger" money view.
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Northstar — analytics overview</title>
+  <meta name="description" content="Product analytics and revenue, one screen.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/icons/icon-180.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+  <style>
+    /* Shell-only layout: sidebar beside content, folding on phones.
+       A real layout job, allowed — and it stays in the template. */
+    .shell { display: grid; grid-template-columns: 15rem 1fr; min-height: 100dvh; }
+    .shell > aside { border-right: var(--border-hairline) solid var(--border); padding: var(--space-stack); }
+    .shell > .work { padding: var(--space-card); }
+    @media (max-width: 48rem) { .shell { grid-template-columns: 1fr; } .shell > aside { display: none; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="shell">
+    <aside>
+      <nav class="stack-tight" aria-label="Sections">
+        <p class="wordmark-slot" style="margin-bottom: var(--space-stack);">northstar</p>
+        <p class="text-caption">ANALYTICS</p>
+        <a class="nav-link" href="/" aria-current="page" data-tip="Your key metrics at a glance">Overview</a>
+        <a class="nav-link" href="/customers" data-tip="Accounts and contacts">Customers</a>
+        <a class="nav-link" href="/revenue" data-tip="MRR, expansion and churn">Revenue</a>
+        <a class="nav-link" href="/reports" data-tip="Saved and scheduled reports">Reports</a>
+        <p class="text-caption">SETTINGS</p>
+        <a class="nav-link" href="/team" data-tip="Members and roles">Team</a>
+        <a class="nav-link" href="/preferences" data-tip="Workspace preferences">Preferences</a>
+      </nav>
+    </aside>
+
+    <main id="main" class="work stack">
+      <header class="row" style="justify-content: space-between;">
+        <h1 class="text-h2" style="margin: 0;">Overview</h1>
+        <div class="row-tight">
+          <input type="search" placeholder="Search" aria-label="Search the workspace" data-tip="Find customers, reports and events" style="min-width: 10rem;">
+          <button class="btn btn-ghost btn-small" data-mode-toggle data-tip="Light or dark">Mode</button>
+          <button class="btn btn-primary btn-small" data-event="report-new" data-tip="Starts a new report"><svg data-icon="plus"></svg> New report</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="stat"><strong>₹ 4.8L</strong><span>MRR</span><span class="badge badge-success">+8.2%</span></div>
+        <div class="stat"><strong>12,480</strong><span>ACTIVE USERS</span></div>
+        <div class="stat"><strong>2.1%</strong><span>CHURN</span><span class="badge badge-warning">+0.3%</span></div>
+        <div class="stat"><strong>61</strong><span>NPS</span></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart" id="mrr-chart" aria-label="Monthly recurring revenue, last twelve months"></div>
+      </div>
+
+      <div class="grid">
+        <section class="stack-tight" aria-labelledby="signups-title">
+          <div class="row" style="justify-content: space-between;">
+            <h2 class="text-h4" id="signups-title" style="margin: 0;">Recent signups</h2>
+            <input type="search" data-filter="#signups" placeholder="Filter signups" aria-label="Filter signups" data-tip="Filters the table below as you type" style="min-width: 10rem;">
+          </div>
+          <div class="table-scroll">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Plan</th>
+                  <th scope="col" class="num">MRR</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody id="signups">
+                <tr><td>Anita Rao</td><td>Growth</td><td class="num">4,800</td><td><span class="badge badge-success">Active</span></td></tr>
+                <tr><td>Kabir Mehta</td><td>Starter</td><td class="num">1,200</td><td><span class="badge badge-success">Active</span></td></tr>
+                <tr><td>Leela Nair</td><td>Scale</td><td class="num">12,000</td><td><span class="badge badge-warning">Trial</span></td></tr>
+                <tr><td>Devansh Roy</td><td>Growth</td><td class="num">4,800</td><td><span class="badge badge-success">Active</span></td></tr>
+                <tr><td>Priya Sen</td><td>Starter</td><td class="num">1,200</td><td><span class="badge badge-warning">Trial</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <aside class="card stack-tight" aria-labelledby="activity-title">
+          <h2 class="text-h4" id="activity-title" style="margin: 0;">Activity</h2>
+          <p class="row-tight"><svg data-icon="user" aria-hidden="true"></svg> Anita Rao upgraded to Growth <span class="text-caption">2m ago</span></p>
+          <p class="row-tight"><svg data-icon="check" aria-hidden="true"></svg> Reconnect Stripe finished <span class="text-caption">18m ago</span></p>
+          <p class="row-tight"><svg data-icon="bell" aria-hidden="true"></svg> Churn alert on Scale plan <span class="text-caption">1h ago</span></p>
+          <p class="row-tight"><svg data-icon="user" aria-hidden="true"></svg> Leela Nair started a trial <span class="text-caption">3h ago</span></p>
+          <p class="row-tight"><svg data-icon="chart" aria-hidden="true"></svg> Weekly report exported <span class="text-caption">Yesterday</span></p>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    /* App logic lives in the project — this is yours to replace. */
+    addEventListener("DOMContentLoaded", () => {
+      const el = document.querySelector("#mrr-chart");
+      if (el && window.facet) {
+        facet.chart(el, {
+          points: [7, 8, 6, 9, 8, 10, 9, 11, 10, 12, 11, 13].map((v, i) => ({ x: i, y: v * 1000, label: "JFMAMJJASOND"[i] })),
+        });
+      }
+    });
+  </script>
+</body>
+</html>

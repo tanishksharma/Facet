@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en" data-transition="page">
+<!--
+  Facet template · Social app
+  A three-column feed on desktop (left rail · center column · right rail)
+  that folds to a single scrolling column with a bottom tab bar on phones.
+  Showcases the app-kit tab bar (self-wiring sliding pill) and the settings
+  sheet (opened by the tab bar's gear). Everything is real semantic markup:
+  the feed is a <section> of <article> posts, every action is a <button>
+  or <a> with an accessible name, and every state is reachable by the DOM.
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Ripple — your feed</title>
+  <meta name="description" content="Ripple: a fast, quiet social feed. Post an update, follow the people building things, and read the room in one column.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/icons/icon-180.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+  <style>
+    /* Three-column shell: a real layout job, so it lives in the template
+       and never leaks into /lib. The center column is capped; the rails
+       drop away as the viewport narrows, and the bottom tab bar takes over.
+       All spacing rides the semantic density tokens. */
+    .shell {
+      display: grid;
+      grid-template-columns: 14rem minmax(0, 36rem) 16rem;
+      justify-content: center;
+      align-items: start;
+      gap: var(--space-section);
+      padding: var(--space-stack);
+    }
+    .rail {
+      position: sticky;
+      top: var(--space-stack);
+      align-self: start;
+    }
+    /* Icon + label sit inline in the rail's nav links and trend rows. */
+    .rail-left .nav-link { gap: var(--space-inline); }
+
+    /* The bottom tab bar is a phones-only affordance: hidden on desktop,
+       shown when the left rail folds away. (facet.css pins it fixed.) */
+    .tab-bar { display: none; }
+
+    @media (max-width: 75rem) {
+      .shell { grid-template-columns: 14rem minmax(0, 36rem); }
+      .rail-right { display: none; }
+    }
+    @media (max-width: 60rem) {
+      .shell { grid-template-columns: minmax(0, 1fr); gap: 0; }
+      .rail-left { display: none; }
+      /* clear the fixed tab bar so the last post is never trapped behind it */
+      main { padding-bottom: calc(var(--space-section) * 2); }
+      .tab-bar { display: flex; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="shell">
+
+    <!-- LEFT RAIL · wordmark, primary nav, compose shortcut. Sticky beside
+         the feed; hidden on phones where the tab bar carries navigation. -->
+    <aside class="rail rail-left stack">
+      <a class="wordmark-slot text-h4" href="/" data-tip="Ripple home" style="text-decoration: none;">ripple</a>
+      <nav class="stack-tight" aria-label="Primary">
+        <a class="nav-link" href="/" aria-current="page" data-tip="Your feed"><svg data-icon="home"></svg>Home</a>
+        <a class="nav-link" href="/explore" data-tip="Find topics and people"><svg data-icon="search"></svg>Explore</a>
+        <a class="nav-link" href="/notifications" data-tip="Replies, likes and reposts"><svg data-icon="bell"></svg>Notifications</a>
+        <a class="nav-link" href="/messages" data-tip="Your direct messages"><svg data-icon="mail"></svg>Messages</a>
+        <a class="nav-link" href="/you" data-tip="Your profile"><svg data-icon="user"></svg>Profile</a>
+      </nav>
+      <button class="btn btn-primary" data-event="post-compose-open" data-tip="Write a new post"><svg data-icon="plus"></svg>New post</button>
+    </aside>
+
+    <!-- CENTER · the one h1, the compose card, then the feed. -->
+    <main id="main" class="stack">
+      <header>
+        <h1 class="text-h3">Home</h1>
+      </header>
+
+      <!-- Compose: avatar beside a labelled textarea, then an action row. -->
+      <section class="card stack" aria-label="Compose a post">
+        <div class="row">
+          <span class="avatar">YO</span>
+          <label class="field" style="flex: 1;">
+            <span class="field-label">What's happening?</span>
+            <textarea name="post" rows="2" placeholder="What's happening?" data-tip="Draft your post"></textarea>
+          </label>
+        </div>
+        <div class="row" style="justify-content: space-between;">
+          <div class="row-tight">
+            <button class="btn btn-ghost btn-icon" aria-label="Add image" data-event="compose-image" data-tip="Attach an image"><svg data-icon="image"></svg></button>
+            <button class="btn btn-ghost btn-icon" aria-label="Add poll" data-event="compose-poll" data-tip="Attach a poll"><svg data-icon="chart"></svg></button>
+          </div>
+          <button class="btn btn-primary" data-event="post-publish" data-tip="Publish your post">Post</button>
+        </div>
+      </section>
+
+      <!-- FEED · a section of article posts. Each carries an author header,
+           the body, and a footer of reply / like / repost / save actions. -->
+      <section class="stack" aria-label="Feed">
+
+        <article class="card stack-tight">
+          <header class="row-tight">
+            <span class="avatar">MR</span>
+            <strong>Maya Rao</strong>
+            <span class="text-caption">@mayabuilds · 2h</span>
+          </header>
+          <p class="text-body">Shipped offline mode today. The whole feed now survives a dead tunnel. Turns out cache-first was the wrong call — network-first, cache as the fallback, and every deploy shows up on the first refresh.</p>
+          <footer class="row-tight">
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
+            <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">214</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
+          </footer>
+        </article>
+
+        <article class="card stack-tight">
+          <header class="row-tight">
+            <span class="avatar">DK</span>
+            <strong>Dev Kapoor</strong>
+            <span class="text-caption">@devk · 4h</span>
+          </header>
+          <p class="text-body">Hot take: most design systems die because nobody writes the docs next to the component. Keep the live demo and the exact snippet in the same file and the library documents itself.</p>
+          <footer class="row-tight">
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
+            <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">512</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
+          </footer>
+        </article>
+
+        <article class="card stack-tight">
+          <header class="row-tight">
+            <span class="avatar">PN</span>
+            <strong>Priya Nair</strong>
+            <span class="text-caption">@priyaships · 6h</span>
+          </header>
+          <p class="text-body">First 1,000 people on Ripple. No ads, no growth hacks — a fast feed and a bottom tab bar that actually feels native on iOS. Word of mouth is still undefeated.</p>
+          <footer class="row-tight">
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
+            <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">1,203</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
+          </footer>
+        </article>
+
+        <article class="card stack-tight">
+          <header class="row-tight">
+            <span class="avatar">LM</span>
+            <strong>Leo Martins</strong>
+            <span class="text-caption">@leobuilds · 9h</span>
+          </header>
+          <p class="text-body">Reminder that a button should be a &lt;button&gt;. Spent the morning making an agent operate our app through the DOM alone, and every div-with-onclick was a wall it couldn't climb.</p>
+          <footer class="row-tight">
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
+            <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">88</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
+          </footer>
+        </article>
+
+        <article class="card stack-tight">
+          <header class="row-tight">
+            <span class="avatar">SI</span>
+            <strong>Sana Iqbal</strong>
+            <span class="text-caption">@sanawrites · 12h</span>
+          </header>
+          <p class="text-body">The best onboarding is no onboarding. If your app needs a guided tour, the layout is doing too much. Make the first screen legible and let people poke it.</p>
+          <footer class="row-tight">
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
+            <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">340</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
+          </footer>
+        </article>
+
+      </section>
+    </main>
+
+    <!-- RIGHT RAIL · discovery. Sticky beside the feed; hidden below 75rem. -->
+    <aside class="rail rail-right stack">
+      <section class="card stack-tight" aria-label="Trends">
+        <h2 class="text-h4">Trends</h2>
+        <a class="stack-tight" href="/explore/buildinpublic" data-tip="See posts about building in public"><strong>#buildinpublic</strong><span class="text-caption">4,208 posts</span></a>
+        <a class="stack-tight" href="/explore/offline-first" data-tip="See posts about offline-first apps"><strong>Offline-first</strong><span class="text-caption">1,902 posts</span></a>
+        <a class="stack-tight" href="/explore/frutiger-aero" data-tip="See posts about Frutiger Aero"><strong>Frutiger Aero</strong><span class="text-caption">973 posts</span></a>
+        <a class="stack-tight" href="/explore/design-tokens" data-tip="See posts about design tokens"><strong>Design tokens</strong><span class="text-caption">512 posts</span></a>
+      </section>
+
+      <section class="card stack-tight" aria-label="Who to follow">
+        <h2 class="text-h4">Who to follow</h2>
+        <div class="row" style="justify-content: space-between;">
+          <span class="row-tight"><span class="avatar">AS</span>Aria Sen</span>
+          <button class="btn btn-small" data-event="follow" data-tip="Follow Aria Sen">Follow</button>
+        </div>
+        <div class="row" style="justify-content: space-between;">
+          <span class="row-tight"><span class="avatar">OB</span>Om Bhatt</span>
+          <button class="btn btn-small" data-event="follow" data-tip="Follow Om Bhatt">Follow</button>
+        </div>
+        <div class="row" style="justify-content: space-between;">
+          <span class="row-tight"><span class="avatar">NC</span>Nina Costa</span>
+          <button class="btn btn-small" data-event="follow" data-tip="Follow Nina Costa">Follow</button>
+        </div>
+      </section>
+    </aside>
+
+  </div>
+
+  <!-- BOTTOM TAB BAR · phones only. facet.js injects the sliding pill,
+       drives the active section, and the gear opens the settings sheet. -->
+  <nav class="tab-bar" aria-label="Primary">
+    <button class="tab-seg" aria-current="page" data-section="feed" data-tip="Your feed"><svg data-icon="home"></svg><span>Home</span></button>
+    <button class="tab-seg" data-section="search" data-tip="Search"><svg data-icon="search"></svg><span>Search</span></button>
+    <button class="tab-seg" data-section="alerts" data-tip="Notifications"><svg data-icon="bell"></svg><span>Alerts</span></button>
+    <button class="tab-seg" aria-controls="app-settings" aria-expanded="false" data-tip="Settings"><svg data-icon="settings"></svg><span>You</span></button>
+  </nav>
+
+  <!-- SETTINGS SHEET · right-edge panel over a darkening scrim. Self-wired
+       by facet.js off the tab bar's aria-controls trigger. -->
+  <div class="sheet-scrim" data-open="false"></div>
+  <aside class="sheet" id="app-settings" data-open="false" aria-hidden="true" aria-label="Settings">
+    <div class="sheet-scroll">
+      <span class="menu-label">Account</span>
+      <button type="button" class="menu-item" data-event="sheet-profile">Profile</button>
+      <button type="button" class="menu-item" data-event="sheet-saved">Saved</button>
+    </div>
+    <div class="sheet-foot">
+      <div class="sheet-group menu-icon-row">
+        <button type="button" class="menu-icon-btn" data-control="appearance" aria-label="Appearance" data-tip="Light, dark or auto"><svg data-icon="settings"></svg><span class="menu-value">Auto</span></button>
+        <button type="button" class="menu-icon-btn" data-control="sounds" aria-label="Sounds" data-tip="Toggle sounds"><svg data-icon="bell"></svg><span class="menu-value">On</span></button>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    /* App logic lives in the project — this is yours to replace.
+
+       The tab bar and the settings sheet wire themselves from facet.js:
+       the sliding pill, the active section and the gear-to-sheet open all
+       work with no code here. Everything below is just feed sugar. */
+    addEventListener("DOMContentLoaded", () => {
+      // Give the reply action a proper speech-bubble glyph, then re-render
+      // every icon on the page. facet.icons is the live glyph table.
+      if (window.facet) {
+        facet.icons.message = '<path d="M5 5h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H9l-4 3V6a1 1 0 0 1 1-1Z"/>';
+        facet.icon();
+      }
+
+      // Optimistic like: toggle the pressed state and nudge the count.
+      for (const btn of document.querySelectorAll(".like")) {
+        btn.addEventListener("click", () => {
+          const count = btn.querySelector(".like-count");
+          const liked = btn.getAttribute("aria-pressed") === "true";
+          const n = Number(count.textContent.replace(/,/g, ""));
+          btn.setAttribute("aria-pressed", liked ? "false" : "true");
+          count.textContent = (liked ? n - 1 : n + 1).toLocaleString();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

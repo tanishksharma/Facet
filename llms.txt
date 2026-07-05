@@ -1013,11 +1013,21 @@ velvet lift/press transforms must not register with facet.motion.
 
 Whole pages ready to rename, all consuming the library by URL and all
 carrying the SEO head pack (title, description, OG tags, canonical,
-favicon slot):
+favicon slot). On /layouts.html the three flagship shapes (landing,
+saas, social) render live in an iframe device preview you can flip
+between desktop, tablet and phone widths to see the genuine responsive
+layout at each breakpoint:
 
 /templates/landing.html — marketing page assembled from the block
 layer: top menu, hero, social proof, features, pricing, FAQ, CTA
 band, footer; JSON-LD organization slot.
+/templates/saas.html — SaaS analytics dashboard (Northstar): folding
+sidebar, top bar with search, four-KPI stat row, twelve-point revenue
+chart, filterable signups table beside an activity panel.
+/templates/social.html — social app (Ripple): three-column feed on
+desktop that folds to one column with the app-kit bottom tab bar on
+phones; compose box, feed of post cards, trends and who-to-follow, and
+the settings sheet behind the tab bar's gear.
 /templates/app.html — app shell (sidebar + top bar) with a working
 dashboard: stat row, live chart, data table with toolbar;
 installable: manifest link, apple metas, the one-line sw stub wired.

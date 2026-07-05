@@ -66,7 +66,10 @@
         <details class="nav-group" data-group="templates">
           <summary><span class="nav-group-name">Layer 5 · Templates</span><span class="nav-group-desc">Whole pages — full app and site layouts.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
-          <li><a href="#templates">All templates</a></li>
+          <li><a href="#template-landing">Landing page</a></li>
+          <li><a href="#template-saas">SaaS dashboard</a></li>
+          <li><a href="#template-social">Social app</a></li>
+          <li><a href="#templates">Every template</a></li>
         </ul>
         </details>
       </nav>
@@ -808,13 +811,76 @@
         <p>
           Layer 5 is the whole page. Where Layer 4 assembles components into
           sections, Layer 5 assembles sections into a finished product — full
-          layouts you rename and fill in: an app shell or SaaS dashboard, a
-          social feed, a marketing site, an article, a pitch deck. Each carries
-          the SEO head pack and links the same <code>/lib/facet.css</code> this
-          site does. The set grows as more app shapes are built.
+          layouts you rename and fill in. The three flagship shapes render live
+          below in a real iframe: flip <strong>Desktop</strong>,
+          <strong>Tablet</strong> and <strong>Phone</strong> to see each
+          template's genuine responsive layout at that width, or open the full
+          page. Every template links the same <code>/lib/facet.css</code> this
+          site does and ships the SEO head pack. The whole set is listed
+          underneath.
         </p>
+
+        <!-- Flagship previews: each iframe loads the real template page and
+             is transform-scaled to fit this column (initDevicePreview). -->
+        <article class="stack" id="template-landing" aria-labelledby="template-landing-h">
+          <h3 id="template-landing-h">Landing page</h3>
+          <p>
+            A marketing site from the block layer: top menu, hero, social
+            proof, feature grid, pricing, FAQ, CTA band and footer. Swap the
+            words, keep the shape.
+          </p>
+          <div class="device-preview" data-src="/templates/landing.html">
+            <p class="chips" role="group" aria-label="Landing preview width">
+              <button class="chip" data-chip-device="desktop" aria-pressed="true" data-tip="Full desktop width">Desktop</button>
+              <button class="chip" data-chip-device="tablet" aria-pressed="false" data-tip="Tablet width, 834px">Tablet</button>
+              <button class="chip" data-chip-device="phone" aria-pressed="false" data-tip="Phone width, 390px">Phone</button>
+              <a class="btn btn-small btn-ghost" href="/templates/landing.html" target="_blank" rel="noopener" data-tip="Open the full template in a new tab" data-event="template-open">Open ↗</a>
+            </p>
+            <div class="device-stage"><iframe class="device-frame" title="Landing page template preview" loading="lazy"></iframe></div>
+          </div>
+        </article>
+
+        <article class="stack" id="template-saas" aria-labelledby="template-saas-h">
+          <h3 id="template-saas-h">SaaS dashboard</h3>
+          <p>
+            An analytics product — Northstar — with a folding sidebar, a top
+            bar, a KPI stat row, a live chart, and a filterable table beside an
+            activity panel. The everyday shape of a web app.
+          </p>
+          <div class="device-preview" data-src="/templates/saas.html">
+            <p class="chips" role="group" aria-label="SaaS dashboard preview width">
+              <button class="chip" data-chip-device="desktop" aria-pressed="true" data-tip="Full desktop width">Desktop</button>
+              <button class="chip" data-chip-device="tablet" aria-pressed="false" data-tip="Tablet width, 834px">Tablet</button>
+              <button class="chip" data-chip-device="phone" aria-pressed="false" data-tip="Phone width, 390px">Phone</button>
+              <a class="btn btn-small btn-ghost" href="/templates/saas.html" target="_blank" rel="noopener" data-tip="Open the full template in a new tab" data-event="template-open">Open ↗</a>
+            </p>
+            <div class="device-stage"><iframe class="device-frame" title="SaaS dashboard template preview" loading="lazy"></iframe></div>
+          </div>
+        </article>
+
+        <article class="stack" id="template-social" aria-labelledby="template-social-h">
+          <h3 id="template-social-h">Social app</h3>
+          <p>
+            A three-column feed — Ripple — that folds to one column with a
+            bottom tab bar on phones, showing off the app-kit tab bar and the
+            settings sheet. Compose box, a live feed, trends and who-to-follow.
+          </p>
+          <div class="device-preview" data-src="/templates/social.html">
+            <p class="chips" role="group" aria-label="Social app preview width">
+              <button class="chip" data-chip-device="desktop" aria-pressed="true" data-tip="Full desktop width">Desktop</button>
+              <button class="chip" data-chip-device="tablet" aria-pressed="false" data-tip="Tablet width, 834px">Tablet</button>
+              <button class="chip" data-chip-device="phone" aria-pressed="false" data-tip="Phone width, 390px">Phone</button>
+              <a class="btn btn-small btn-ghost" href="/templates/social.html" target="_blank" rel="noopener" data-tip="Open the full template in a new tab" data-event="template-open">Open ↗</a>
+            </p>
+            <div class="device-stage"><iframe class="device-frame" title="Social app template preview" loading="lazy"></iframe></div>
+          </div>
+        </article>
+
+        <h3>Every template</h3>
         <div class="topic-grid">
           <a class="card card-clickable topic-card" href="/templates/landing.html"><span class="topic-card-title">Landing</span><span class="topic-card-teaser">A marketing page built from the block layer.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+          <a class="card card-clickable topic-card" href="/templates/saas.html"><span class="topic-card-title">SaaS dashboard</span><span class="topic-card-teaser">Analytics shell: sidebar, KPIs, chart, table.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+          <a class="card card-clickable topic-card" href="/templates/social.html"><span class="topic-card-title">Social app</span><span class="topic-card-teaser">Three-column feed, tab bar and settings sheet.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
           <a class="card card-clickable topic-card" href="/templates/app.html"><span class="topic-card-title">App shell</span><span class="topic-card-teaser">Installable dashboard — PWA plus a service-worker stub.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
           <a class="card card-clickable topic-card" href="/templates/article.html"><span class="topic-card-title">Article</span><span class="topic-card-teaser">Editorial page with the JSON-LD article slot.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
           <a class="card card-clickable topic-card" href="/templates/deck.html"><span class="topic-card-title">Pitch deck</span><span class="topic-card-teaser">1920×1080, arrow keys, print-to-PDF at exact size.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>

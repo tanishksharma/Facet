@@ -703,6 +703,46 @@ function relocateTools() {
   }
 }
 
+/* Device preview: each .device-preview[data-src] loads a real template
+   page into an iframe and scales it to fit the column. Desktop / Tablet /
+   Phone chips set the frame's logical width; the frame is transform-scaled
+   so the template's genuine responsive layout shows at that breakpoint.
+   Lazy: the iframe src is only set once the preview nears the viewport. */
+function initDevicePreview() {
+  const SIZES = { desktop: [1280, 800], tablet: [834, 1040], phone: [390, 780] };
+  for (const preview of document.querySelectorAll(".device-preview")) {
+    const stage = preview.querySelector(".device-stage");
+    const frame = preview.querySelector(".device-frame");
+    const src = preview.dataset.src;
+    if (!stage || !frame || !src) continue;
+    let device = "desktop";
+    const layout = () => {
+      const [w, h] = SIZES[device];
+      const avail = stage.clientWidth || preview.clientWidth || w;
+      const scale = Math.min(1, avail / w);
+      frame.style.width = w + "px";
+      frame.style.height = h + "px";
+      frame.style.marginLeft = -(w / 2) + "px";
+      frame.style.transform = `scale(${scale})`;
+      stage.style.height = h * scale + "px";
+    };
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { if (!frame.src) frame.src = src; io.disconnect(); }
+    }, { rootMargin: "300px" });
+    io.observe(preview);
+    for (const chip of preview.querySelectorAll("[data-chip-device]")) {
+      chip.addEventListener("click", () => {
+        device = chip.dataset.chipDevice;
+        for (const c of preview.querySelectorAll("[data-chip-device]")) c.setAttribute("aria-pressed", String(c === chip));
+        layout();
+        if (window.facet && facet.feedback) facet.feedback.tick();
+      });
+    }
+    layout();
+    addEventListener("resize", layout);
+  }
+}
+
 /* The Sound & haptics wall entry: its buttons carry data-feedback-demo
    naming a facet.feedback method (tap/tick/snap/success). Wired here in
    docs.js — the library never ships demo handlers. Absent on other pages. */
@@ -840,6 +880,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   insertLayerBands();
   initPlayground();
   initFeedbackDemo();              // the Sound & haptics wall buttons
+  initDevicePreview();             // Layer 5 templates in scaled device frames
   await initCheatsheet();
   const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
   if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
