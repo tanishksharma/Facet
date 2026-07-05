@@ -33,12 +33,12 @@
       display: none;
       flex-direction: column;
       justify-content: center;
-      gap: var(--space-5);
+      gap: var(--space-card);
     }
     .slide.is-current { display: flex; }
-    .slide-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: center; }
+    .slide-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-section); align-items: center; }
     .slide-count {
-      position: fixed; right: var(--space-4); bottom: var(--space-3);
+      position: fixed; right: var(--space-stack); bottom: var(--space-inline);
       color: var(--background); font-size: var(--text-caption); opacity: 0.7;
     }
     @media print {

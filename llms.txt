@@ -57,9 +57,10 @@ homepage — every theme in light and dark side by side, the same real
 layout from identical markup, one attribute apart.
 
 Tokens: every design decision is a role-named CSS variable — color with
-per-theme status colors, type scale, weights, spacing on a 4px base,
-container widths, radii, border widths, whisper-flat shadows, motion
-durations and easings, focus ring. Ranked accents: the base family plus
+per-theme status colors, type and spacing named by intent (not by number)
+and each scaled by a global small/medium/large control, weights, container
+widths, radii, border widths, whisper-flat shadows, motion durations and
+easings, focus ring. Ranked accents: the base family plus
 accent-1 (the one primary action), accent-2 (every secondary action's
 fill) and accent-3 (links, labels, quiet affordances), each with hover,
 pressed and on-colors in every theme — components pick ranks, never
@@ -207,15 +208,20 @@ the accent ranks — components pick ranks, never colors:
                                                  quiet affordances
 Status: --success, --warning, --error, --info
 
-Type: --font-heading, --font-body, --font-mono; --text-display, --text-h1,
---text-h2, --text-h3, --text-h4, --text-body, --text-small, --text-caption;
---weight-heading, --weight-body, --weight-strong; --leading-heading,
---leading-body
+Type (named by role, not size): --font-heading, --font-body, --font-mono;
+--text-display, --text-h1, --text-h2, --text-h3, --text-h4, --text-body,
+--text-quote, --text-footnote, --text-caption; --weight-heading, --weight-body,
+--weight-strong; --leading-heading, --leading-body. Global type size:
+data-text-size="small|medium|large" (theme-defined, independent of density).
 
-Spacing (4px base): --space-1 4px, --space-2 8px, --space-3 12px,
---space-4 16px, --space-5 24px, --space-6 32px, --space-7 48px,
---space-8 64px. Container widths: --width-narrow 40rem, --width-default
-64rem, --width-wide 80rem.
+Spacing (named by intent, not by number): --space-tight (bound pairs, 4px),
+--space-control (inside buttons/inputs, 8px), --space-inline (row gaps, 12px),
+--space-stack (default block gap, 16px), --space-card (card padding, 24px),
+--space-page (page margins, 32px), --space-section (between sections, 48px),
+--space-hero (biggest breaks, 64px). Global density:
+data-density="small|medium|large" scales the whole spacing system at once,
+theme-defined. Container widths: --width-narrow 40rem, --width-default 64rem,
+--width-wide 80rem.
 
 Shape: --radius-small, --radius-medium, --radius-large, --radius-pill;
 --border-width, --border-width-strong
@@ -244,11 +250,12 @@ component adapts with zero extra code. prefers-contrast: more — muted
 text gives up its gray, borders climb toward the ink, the focus ring
 thickens, in every theme and mode. Forced colors (Windows High
 Contrast) — audited; background-shaped elements keep a real border in
-the system palette. data-density="compact" on html or any subtree (or
-the density script-tag/config key) tightens the whole spacing scale.
+the system palette. data-density="small|medium|large" on html or any
+subtree (or the density script-tag/config key) scales the whole
+intent-named spacing system; data-text-size does the same for type.
 .visually-hidden is screen-reader-only text. Text roles .text-display,
-.text-h1, .text-h2, .text-h3, .text-h4, .text-body, .text-small,
-.text-caption put the type scale on any element without inline styles.
+.text-h1, .text-h2, .text-h3, .text-h4, .text-body, .text-quote,
+.text-footnote, .text-caption put the type scale on any element by role.
 And rem sizing everywhere means the phone's text-size setting scales
 the entire interface.
 

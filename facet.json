@@ -94,7 +94,8 @@
       "--text-h3",
       "--text-h4",
       "--text-body",
-      "--text-small",
+      "--text-quote",
+      "--text-footnote",
       "--text-caption",
       "--weight-heading",
       "--weight-body",
@@ -103,14 +104,14 @@
       "--leading-body"
     ],
     "space": [
-      "--space-1",
-      "--space-2",
-      "--space-3",
-      "--space-4",
-      "--space-5",
-      "--space-6",
-      "--space-7",
-      "--space-8"
+      "--space-tight",
+      "--space-control",
+      "--space-inline",
+      "--space-stack",
+      "--space-card",
+      "--space-page",
+      "--space-section",
+      "--space-hero"
     ],
     "shape": [
       "--radius-small",
@@ -171,7 +172,12 @@
     {
       "attribute": "data-density",
       "on": "html or any element",
-      "summary": "compact tightens the whole spacing scale; same mechanic as themes."
+      "summary": "small | medium | large scales the whole intent-named spacing system at once; theme-defined, same mechanic as themes."
+    },
+    {
+      "attribute": "data-text-size",
+      "on": "html or any element",
+      "summary": "small | medium | large scales the whole type scale at once, independent of density; theme-defined."
     },
     {
       "attribute": "data-tip",
@@ -1122,7 +1128,7 @@
         ".text-h3",
         ".text-h4",
         ".text-body",
-        ".text-small",
+        ".text-footnote",
         ".text-caption"
       ],
       "summary": "The type scale as classes — a scale step on any element without inline styles."

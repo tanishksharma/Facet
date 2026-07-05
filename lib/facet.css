@@ -109,15 +109,19 @@
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
 
-  /* ----- Typography: type scale ----- */
-  --text-display: clamp(2.5rem, 6vw, 3.5rem);  /* hero numbers and statements */
-  --text-h1: clamp(1.875rem, 4vw, 2.25rem);
-  --text-h2: 1.5rem;
-  --text-h3: 1.25rem;
-  --text-h4: 1.125rem;
-  --text-body: 1rem;
-  --text-small: 0.875rem;
-  --text-caption: 0.75rem;
+  /* ----- Typography: type scale, named by role, scaled by size -----
+     --text-scale (data-text-size small/medium/large) shifts type globally;
+     medium is the default. A theme may override any of these. */
+  --text-scale: 1;
+  --text-display:  calc(clamp(2.5rem, 6vw, 3.5rem) * var(--text-scale));   /* hero numbers and statements */
+  --text-h1:       calc(clamp(1.875rem, 4vw, 2.25rem) * var(--text-scale));
+  --text-h2:       calc(1.5rem   * var(--text-scale));
+  --text-h3:       calc(1.25rem  * var(--text-scale));
+  --text-h4:       calc(1.125rem * var(--text-scale));
+  --text-body:     calc(1rem     * var(--text-scale));
+  --text-quote:    calc(1.125rem * var(--text-scale));   /* pull-quotes and lead-ins */
+  --text-footnote: calc(0.875rem * var(--text-scale));   /* the fine print (was --text-footnote) */
+  --text-caption:  calc(0.75rem  * var(--text-scale));   /* labels, badges, meta */
 
   /* ----- Typography: weights and line heights ----- */
   --weight-heading: 650;      /* variable-font friendly; falls back to bold */
@@ -126,15 +130,20 @@
   --leading-heading: 1.2;
   --leading-body: 1.6;
 
-  /* ----- Spacing: 4px base scale ----- */
-  --space-1: 0.25rem;   /*  4px */
-  --space-2: 0.5rem;    /*  8px */
-  --space-3: 0.75rem;   /* 12px */
-  --space-4: 1rem;      /* 16px */
-  --space-5: 1.5rem;    /* 24px */
-  --space-6: 2rem;      /* 32px */
-  --space-7: 3rem;      /* 48px */
-  --space-8: 4rem;      /* 64px */
+  /* ----- Spacing: named by intent, scaled by density -----
+     Pick spacing by role, never by a bare number. Each token says where it
+     belongs. --density-scale (data-density small/medium/large) shifts the
+     whole system at once; medium is the default. A theme may override any
+     of these to set its own rhythm. */
+  --density-scale: 1;
+  --space-tight:   calc(0.25rem * var(--density-scale));  /*  4px · bound pairs: a label and its field */
+  --space-control: calc(0.5rem  * var(--density-scale));  /*  8px · padding inside buttons, inputs, chips */
+  --space-inline:  calc(0.75rem * var(--density-scale));  /* 12px · gaps between items in a row */
+  --space-stack:   calc(1rem    * var(--density-scale));  /* 16px · default gap between stacked blocks */
+  --space-card:    calc(1.5rem  * var(--density-scale));  /* 24px · padding inside cards and panels */
+  --space-page:    calc(2rem    * var(--density-scale));  /* 32px · container side padding, page margins */
+  --space-section: calc(3rem    * var(--density-scale));  /* 48px · between whole page sections */
+  --space-hero:    calc(4rem    * var(--density-scale));  /* 64px · the biggest breaks: hero bands */
 
   /* ----- Spacing: container widths ----- */
   --width-narrow: 40rem;      /* prose, forms, calculators */
@@ -970,19 +979,17 @@
   [data-tip]::after { border: 1px solid CanvasText; }
 }
 
-/* Compact density: one attribute tightens the whole spacing scale —
-   the same mechanic as themes, works on html or any subtree.
-   <html data-density="compact">, or facet.set({density: "compact"}). */
-[data-density="compact"] {
-  --space-1: 0.125rem;  /*  2px */
-  --space-2: 0.375rem;  /*  6px */
-  --space-3: 0.5rem;    /*  8px */
-  --space-4: 0.75rem;   /* 12px */
-  --space-5: 1rem;      /* 16px */
-  --space-6: 1.5rem;    /* 24px */
-  --space-7: 2rem;      /* 32px */
-  --space-8: 3rem;      /* 48px */
-}
+/* Density: one attribute scales the whole spacing system at once. Small
+   tightens, large opens up; medium is the default (no attribute). Works on
+   html or any subtree — <html data-density="small">, a script-tag config
+   key, or facet.set({density:"small"}). */
+[data-density="small"] { --density-scale: 0.75; }
+[data-density="large"] { --density-scale: 1.3; }
+
+/* Type size: the same three-step control for type alone, independent of
+   density. <html data-text-size="large">, or facet.set({textSize:"large"}). */
+[data-text-size="small"] { --text-scale: 0.92; }
+[data-text-size="large"] { --text-scale: 1.12; }
 
 /* Screen-reader-only text: visually gone, fully read. The standard
    clip pattern; undo by removing the class, never by overriding. */
@@ -1002,14 +1009,15 @@
    can take a scale step without an inline style. Display and the
    heading steps carry the heading voice; the rest stay in the body
    voice. Same names as the tokens: .text-display, .text-h1 … .text-h4,
-   .text-body, .text-small, .text-caption. */
+   .text-body, .text-quote, .text-footnote, .text-caption. */
 .text-display { font-family: var(--font-heading); font-size: var(--text-display); font-weight: var(--weight-heading); line-height: 1.1; }
 .text-h1      { font-family: var(--font-heading); font-size: var(--text-h1); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
 .text-h2      { font-family: var(--font-heading); font-size: var(--text-h2); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
 .text-h3      { font-family: var(--font-heading); font-size: var(--text-h3); font-weight: var(--weight-strong); line-height: var(--leading-heading); }
 .text-h4      { font-family: var(--font-heading); font-size: var(--text-h4); font-weight: var(--weight-strong); line-height: var(--leading-heading); }
 .text-body    { font-size: var(--text-body);    line-height: var(--leading-body); }
-.text-small   { font-size: var(--text-small);   line-height: 1.5; }
+.text-quote   { font-size: var(--text-quote);   line-height: var(--leading-body); font-style: italic; }
+.text-footnote   { font-size: var(--text-footnote);   line-height: 1.5; }
 .text-caption { font-size: var(--text-caption); line-height: 1.4; color: var(--text-muted); }
 
 
@@ -1177,11 +1185,11 @@
 }
 
 @keyframes facet-page-out {
-  to { opacity: 0; translate: 0 calc(-1 * var(--space-4)); }
+  to { opacity: 0; translate: 0 calc(-1 * var(--space-stack)); }
 }
 
 @keyframes facet-page-in {
-  from { opacity: 0; translate: 0 var(--space-5); }
+  from { opacity: 0; translate: 0 var(--space-card); }
 }
 
 /* Motion off — by attribute or by OS preference — means pages snap. */
@@ -1295,7 +1303,7 @@ p {
   text-wrap: pretty;
 }
 
-small { font-size: var(--text-small); }
+small { font-size: var(--text-footnote); }
 
 strong, b { font-weight: var(--weight-strong); }
 
@@ -1310,13 +1318,13 @@ a {
 a:hover { text-decoration-color: currentColor; }
 
 ul, ol {
-  padding-left: var(--space-5);
+  padding-left: var(--space-card);
 }
 
-li + li { margin-top: var(--space-1); }
+li + li { margin-top: var(--space-tight); }
 
 blockquote {
-  padding-left: var(--space-4);
+  padding-left: var(--space-stack);
   border-left: var(--border-width-strong) solid var(--accent-3);
   color: var(--text-muted);
   font-style: italic;
@@ -1346,7 +1354,7 @@ pre {
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-medium);
-  padding: var(--space-4);
+  padding: var(--space-stack);
   overflow-x: auto;             /* wrapper law: this container exists to scroll */
 }
 
@@ -1361,7 +1369,7 @@ pre code {
 
 label {
   display: block;
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   font-weight: var(--weight-strong);
 }
 
@@ -1370,7 +1378,7 @@ textarea,
 select {
   width: 100%;
   min-height: 44px;             /* touch target */
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-control) var(--space-inline);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-small);
@@ -1397,20 +1405,20 @@ button:disabled {
 }
 
 textarea {
-  min-height: calc(var(--space-8) * 2);
+  min-height: calc(var(--space-hero) * 2);
   resize: vertical;
 }
 
 fieldset {
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-medium);
-  padding: var(--space-4);
+  padding: var(--space-stack);
 }
 
 legend {
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   font-weight: var(--weight-strong);
-  padding-inline: var(--space-2);
+  padding-inline: var(--space-control);
 }
 
 /* Bare buttons pick up the secondary button look; see COMPONENTS for .btn. */
@@ -1423,12 +1431,12 @@ button {
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
 }
 
 th, td {
   text-align: left;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-control) var(--space-inline);
   border-bottom: var(--border-width) solid var(--border);
 }
 
@@ -1452,7 +1460,7 @@ figure video {
 }
 
 figcaption {
-  margin-top: var(--space-2);
+  margin-top: var(--space-control);
   font-size: var(--text-caption);
   color: var(--text-muted);
 }
@@ -1486,10 +1494,10 @@ figcaption {
 
 .skip-link {
   position: absolute;
-  top: var(--space-2);
-  left: var(--space-2);
+  top: var(--space-control);
+  left: var(--space-control);
   z-index: 100;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-control) var(--space-stack);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-small);
@@ -1562,7 +1570,7 @@ figcaption {
 .container-full {
   width: 100%;
   margin-inline: auto;
-  padding-inline: var(--space-4);
+  padding-inline: var(--space-stack);
 }
 
 .container { max-width: var(--width-default); }
@@ -1574,7 +1582,7 @@ figcaption {
   .container-narrow,
   .container-wide,
   .container-full {
-    padding-inline: var(--space-6);
+    padding-inline: var(--space-page);
   }
 }
 
@@ -1591,8 +1599,8 @@ figcaption {
    field. Use .stack-loose between whole sections of a page.
 
    Usage:  <section class="stack"> ... </section>
-   Options: .stack-tight  --space-2    .stack  --space-4
-            .stack-loose  --space-7
+   Options: .stack-tight  --space-control    .stack  --space-stack
+            .stack-loose  --space-section
    -------------------------------------------------------------------------- */
 
 .stack,
@@ -1600,11 +1608,11 @@ figcaption {
 .stack-loose {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-stack);
 }
 
-.stack-tight { gap: var(--space-2); }
-.stack-loose { gap: var(--space-7); }
+.stack-tight { gap: var(--space-control); }
+.stack-loose { gap: var(--space-section); }
 
 /* --------------------------------------------------------------------------
    SNAP SECTION
@@ -1639,8 +1647,8 @@ figcaption {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--space-5);
-  padding: var(--space-6) var(--space-4);
+  gap: var(--space-card);
+  padding: var(--space-page) var(--space-stack);
 }
 
 /* Keep content inside a snap section at a readable width, like a container. */
@@ -1706,9 +1714,9 @@ figcaption {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
+  gap: var(--space-control);
   min-height: 44px;                       /* touch target */
-  padding: var(--space-2) var(--space-5);
+  padding: var(--space-control) var(--space-card);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-small);
   background: var(--accent-2);
@@ -1764,13 +1772,13 @@ figcaption {
 
 /* Sizes. Small keeps the 44px touch target via min-height on mobile. */
 .btn-small {
-  padding: var(--space-1) var(--space-3);
-  font-size: var(--text-small);
+  padding: var(--space-tight) var(--space-inline);
+  font-size: var(--text-footnote);
   min-height: 36px;
 }
 
 .btn-large {
-  padding: var(--space-3) var(--space-6);
+  padding: var(--space-inline) var(--space-page);
   font-size: var(--text-h4);
 }
 
@@ -1843,11 +1851,11 @@ figcaption {
 .field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-tight);
 }
 
 .field-label {
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   font-weight: var(--weight-strong);
 }
 
@@ -1873,7 +1881,7 @@ figcaption {
    image files, ever) once the native arrow is dropped. */
 select {
   appearance: none;
-  padding-right: var(--space-7);
+  padding-right: var(--space-section);
   background-image:
     linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
     linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
@@ -1893,14 +1901,14 @@ input[type="search"] { border-radius: var(--radius-pill); }
 input[type="file"] {
   border: none;
   background: none;
-  padding: var(--space-1) 0;
-  font-size: var(--text-small);
+  padding: var(--space-tight) 0;
+  font-size: var(--text-footnote);
   color: var(--text-muted);
   cursor: pointer;
 }
 input[type="file"]::file-selector-button {
-  margin-right: var(--space-3);
-  padding: var(--space-2) var(--space-4);
+  margin-right: var(--space-inline);
+  padding: var(--space-control) var(--space-stack);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-medium);
   background: var(--accent-2);
@@ -1929,7 +1937,7 @@ input[type="week"] {
 }
 
 .number-input input {
-  padding-right: var(--space-8);          /* room for the clear button */
+  padding-right: var(--space-hero);          /* room for the clear button */
   font-size: var(--text-h4);              /* numbers deserve to be legible */
   font-variant-numeric: tabular-nums;     /* digits align while typing */
 }
@@ -1937,7 +1945,7 @@ input[type="week"] {
 .number-input .number-clear {
   position: absolute;
   top: 50%;
-  right: var(--space-1);
+  right: var(--space-tight);
   transform: translateY(-50%);
   color: var(--text-muted);
 }
@@ -2073,10 +2081,10 @@ input[type="week"] {
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-medium);
   box-shadow: var(--shadow-raised);
-  padding: var(--space-6);
+  padding: var(--space-page);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-stack);
   text-align: center;
 }
 
@@ -2100,9 +2108,9 @@ input[type="week"] {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-2) var(--space-6);
+  gap: var(--space-control) var(--space-page);
   border-top: var(--border-width) solid var(--border);
-  padding-top: var(--space-4);
+  padding-top: var(--space-stack);
 }
 
 .result-figures dt {
@@ -2145,13 +2153,13 @@ input[type="week"] {
 [data-tip]::after {
   content: attr(data-tip);
   position: absolute;
-  bottom: calc(100% + var(--space-2));
+  bottom: calc(100% + var(--space-control));
   left: 50%;
   translate: -50% 2px;
   z-index: 10;
   width: max-content;
   max-width: 16rem;
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-tight) var(--space-inline);
   background: var(--text);
   color: var(--background);
   font-size: var(--text-caption);
@@ -2188,7 +2196,7 @@ input[type="week"] {
    drops under them instead of clipping off the screen. */
 [data-tip][data-tip-below]::after {
   bottom: auto;
-  top: calc(100% + var(--space-2));
+  top: calc(100% + var(--space-control));
 }
 
 /* The tail: a small triangle under the bubble, flipping with
@@ -2196,7 +2204,7 @@ input[type="week"] {
 [data-tip]::before {
   content: "";
   position: absolute;
-  bottom: calc(100% + var(--space-2) - 5px);
+  bottom: calc(100% + var(--space-control) - 5px);
   left: 50%;
   translate: -50% 2px;
   z-index: 10;
@@ -2211,7 +2219,7 @@ input[type="week"] {
 }
 [data-tip][data-tip-below]::before {
   bottom: auto;
-  top: calc(100% + var(--space-2) - 5px);
+  top: calc(100% + var(--space-control) - 5px);
   border-top-color: transparent;
   border-bottom-color: var(--text);
 }
@@ -2254,7 +2262,7 @@ input[type="radio"] {
 .check-row {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-inline);
   min-height: 2.75rem;
   cursor: pointer;
 }
@@ -2309,7 +2317,7 @@ dialog:not([open]) { display: none; }
 dialog.modal,
 dialog.drawer {
   border: none;
-  padding: var(--space-6);
+  padding: var(--space-page);
   background: var(--surface);
   color: var(--text);
   box-shadow: var(--shadow-overlay);
@@ -2343,7 +2351,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   margin: auto;                   /* centered fallback where no anchor */
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-medium);
-  padding: var(--space-4);
+  padding: var(--space-stack);
   background: var(--surface);
   color: var(--text);
   box-shadow: var(--shadow-floating);
@@ -2367,9 +2375,9 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
    full-page sections). */
 .card-row {
   display: flex;
-  gap: var(--space-4);
+  gap: var(--space-stack);
   overflow-x: auto;
-  padding-bottom: var(--space-2);   /* room for the scrollbar */
+  padding-bottom: var(--space-control);   /* room for the scrollbar */
   scroll-snap-type: x proximity;
   touch-action: pan-x pan-y;
   -webkit-overflow-scrolling: touch;
@@ -2384,9 +2392,9 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 .top-menu {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-stack);
   flex-wrap: wrap;
-  padding-block: var(--space-3);
+  padding-block: var(--space-inline);
   border-bottom: var(--border-width) solid var(--border);
 }
 .top-menu .wordmark-slot {
@@ -2394,7 +2402,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   font-size: var(--text-h4);
   margin-right: auto;
 }
-.top-menu-links { display: flex; gap: var(--space-1); flex-wrap: wrap; }
+.top-menu-links { display: flex; gap: var(--space-tight); flex-wrap: wrap; }
 .top-menu-fold { display: none; }
 @media (max-width: 40rem) {
   .top-menu-links { display: none; }
@@ -2402,16 +2410,16 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   .top-menu-fold summary { list-style: none; cursor: pointer; }
   .top-menu-fold summary::-webkit-details-marker { display: none; }
   .top-menu-fold[open] .top-menu-links,
-  .top-menu-fold .top-menu-links { display: flex; flex-direction: column; padding-top: var(--space-2); }
+  .top-menu-fold .top-menu-links { display: flex; flex-direction: column; padding-top: var(--space-control); }
 }
 
 /* Hero: the opening statement — display type, one line under it,
    one primary action. */
 .hero {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-stack);
   justify-items: start;
-  padding-block: var(--space-7);
+  padding-block: var(--space-section);
 }
 .hero h1, .hero .text-display { margin: 0; }
 
@@ -2419,10 +2427,10 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
    tokens so everything inside just works. */
 .cta-band {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-inline);
   justify-items: center;
   text-align: center;
-  padding: var(--space-7) var(--space-5);
+  padding: var(--space-section) var(--space-card);
   border-radius: var(--radius-large);
   background: var(--accent-1);
   color: var(--on-accent-1);
@@ -2431,8 +2439,8 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 /* Stat cards: one number that matters, its label under it. */
 .stat {
   display: grid;
-  gap: var(--space-1);
-  padding: var(--space-4) var(--space-5);
+  gap: var(--space-tight);
+  padding: var(--space-stack) var(--space-card);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-large);
@@ -2447,7 +2455,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 /* Pull quote: the sentence worth stealing, set large. */
 .pullquote {
   border-left: var(--border-width-strong) solid var(--accent-3);
-  padding-left: var(--space-5);
+  padding-left: var(--space-card);
   font-family: var(--font-heading);
   font-size: var(--text-h3);
   font-weight: var(--weight-heading);
@@ -2455,8 +2463,8 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   color: var(--text);
 }
 .pullquote footer {
-  margin-top: var(--space-2);
-  font-size: var(--text-small);
+  margin-top: var(--space-control);
+  font-size: var(--text-footnote);
   font-weight: var(--weight-body);
   color: var(--text-muted);
 }
@@ -2470,7 +2478,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   border: var(--border-width) solid var(--border);
 }
 .media-figure figcaption {
-  margin-top: var(--space-2);
+  margin-top: var(--space-control);
   font-size: var(--text-caption);
   color: var(--text-muted);
 }
@@ -2532,7 +2540,7 @@ svg[data-icon] {
 .flagship-link {
   display: inline-flex;
   align-items: baseline;
-  gap: var(--space-2);
+  gap: var(--space-control);
   font-family: var(--font-heading);
   font-size: var(--text-h3);
   font-weight: var(--weight-heading);
@@ -2592,8 +2600,8 @@ svg[data-icon] {
 .empty {
   display: grid;
   place-items: center;
-  gap: var(--space-2);
-  padding: var(--space-7) var(--space-5);
+  gap: var(--space-control);
+  padding: var(--space-section) var(--space-card);
   border: var(--border-width) dashed var(--border);
   border-radius: var(--radius-large);
   text-align: center;
@@ -2618,7 +2626,7 @@ svg[data-icon] {
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 1px var(--space-2);
+  padding: 1px var(--space-control);
   border-radius: var(--radius-pill);
   font-size: var(--text-caption);
   font-weight: var(--weight-strong);
@@ -2631,15 +2639,15 @@ svg[data-icon] {
 .badge-error   { background: color-mix(in srgb, var(--error) 14%, var(--background));   color: var(--error);   border-color: color-mix(in srgb, var(--error) 38%, var(--background)); }
 .badge-info    { background: color-mix(in srgb, var(--info) 14%, var(--background));    color: var(--info);    border-color: color-mix(in srgb, var(--info) 38%, var(--background)); }
 
-.chips { display: flex; flex-wrap: wrap; gap: var(--space-1); max-width: none; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-tight); max-width: none; }
 .chip {
   min-height: 36px;
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-tight) var(--space-inline);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-pill);
   font: inherit;
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   color: var(--text);
   cursor: pointer;
   touch-action: manipulation;
@@ -2665,7 +2673,7 @@ svg[data-icon] {
   border-radius: var(--radius-pill);
   background: var(--accent-2-pressed);
   color: var(--on-accent-2);
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   font-weight: var(--weight-strong);
   overflow: hidden;
   flex: none;
@@ -2704,7 +2712,7 @@ progress::-moz-progress-bar { background: var(--accent-1); border-radius: var(--
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-large);
-  padding: var(--space-4);
+  padding: var(--space-stack);
 }
 .chart svg { width: 100%; height: auto; touch-action: none; display: block; }
 .chart .grid { stroke: var(--border); stroke-width: 1; }
@@ -2735,18 +2743,18 @@ progress::-moz-progress-bar { background: var(--accent-1); border-radius: var(--
 table.table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
 }
 .table th {
   text-align: left;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-control) var(--space-inline);
   color: var(--text-muted);
   font-weight: var(--weight-strong);
   border-bottom: var(--border-width-strong) solid var(--border);
   white-space: nowrap;
 }
 .table td {
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-control) var(--space-inline);
   border-bottom: var(--border-width) solid var(--border);
 }
 .table tbody tr:nth-child(even) { background: var(--surface); }
@@ -2768,7 +2776,7 @@ table.table {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-tight) var(--space-inline);
   border-radius: var(--radius-small);
   color: var(--text-muted);
   text-decoration: none;
@@ -2797,13 +2805,13 @@ table.table {
    one aria-selected="true". */
 .tabs {
   display: flex;
-  gap: var(--space-1);
+  gap: var(--space-tight);
   border-bottom: var(--border-width) solid var(--border);
 }
 .tabs [role="tab"] {
   border: none;
   background: none;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-control) var(--space-stack);
   min-height: 2.75rem;
   font: inherit;
   color: var(--text-muted);
@@ -2836,12 +2844,12 @@ table.table {
 .breadcrumb li {
   display: flex;
   align-items: center;
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
 }
 .breadcrumb li + li::before {
   content: "/";
   color: var(--text-muted);
-  margin-inline: var(--space-2);
+  margin-inline: var(--space-control);
 }
 .breadcrumb a {
   color: var(--text-muted);
@@ -2864,7 +2872,7 @@ table.table {
 .pagination {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1);
+  gap: var(--space-tight);
 }
 .pagination a,
 .pagination span {
@@ -2873,7 +2881,7 @@ table.table {
   justify-content: center;
   min-width: 2.75rem;
   min-height: 2.75rem;
-  padding-inline: var(--space-2);
+  padding-inline: var(--space-control);
   border-radius: var(--radius-medium);
   color: var(--text);
   text-decoration: none;
@@ -2901,9 +2909,9 @@ details.accordion {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-3);
+  gap: var(--space-inline);
   min-height: 2.75rem;
-  padding-block: var(--space-2);
+  padding-block: var(--space-control);
   font-weight: var(--weight-strong);
   cursor: pointer;
   list-style: none;
@@ -2920,7 +2928,7 @@ details.accordion {
   transition: rotate var(--duration-base) var(--ease-spring);
 }
 .accordion[open] summary::after { rotate: 225deg; }
-.accordion > :not(summary) { padding-bottom: var(--space-4); }
+.accordion > :not(summary) { padding-bottom: var(--space-stack); }
 
 /* ----- TOAST: a transient notice that names itself -----
    What it is: a small pill that appears near the bottom, says one
@@ -2932,26 +2940,26 @@ details.accordion {
    Kinds color the leading dot: success, warning, error, info. */
 .toast-rack {
   position: fixed;
-  bottom: calc(var(--space-5) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--space-card) + env(safe-area-inset-bottom, 0px));
   left: 50%;
   translate: -50% 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-control);
   z-index: 60;
   pointer-events: none;
 }
 .toast {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-control);
   max-width: min(92vw, 28rem);
-  padding: var(--space-2) var(--space-5);
+  padding: var(--space-control) var(--space-card);
   border-radius: var(--radius-pill);
   background: var(--text);
   color: var(--background);
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   box-shadow: var(--shadow-overlay);
   pointer-events: auto;
   animation: facet-toast-in var(--duration-base) var(--ease-spring);
@@ -2987,12 +2995,12 @@ details.dropdown {
 .dropdown summary::-webkit-details-marker { display: none; }
 .dropdown-menu {
   position: absolute;
-  top: calc(100% + var(--space-1));
+  top: calc(100% + var(--space-tight));
   left: 0;
   min-width: 12rem;
   display: flex;
   flex-direction: column;
-  padding: var(--space-1);
+  padding: var(--space-tight);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-medium);
@@ -3004,7 +3012,7 @@ details.dropdown {
 .dropdown-menu a {
   display: block;
   width: 100%;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-control) var(--space-inline);
   border: none;
   border-radius: var(--radius-small);
   background: none;
@@ -3036,7 +3044,7 @@ details.dropdown {
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-large);
-  padding: var(--space-5);
+  padding: var(--space-card);
   box-shadow: var(--shadow-raised);
   color: inherit;
 }
@@ -3131,9 +3139,9 @@ details.dropdown {
 .segmented span {
   display: inline-flex;
   align-items: center;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-control) var(--space-stack);
   border-radius: var(--radius-pill);
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   color: var(--text-muted);
   cursor: pointer;
   transition:
@@ -3165,10 +3173,10 @@ details.dropdown {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-stack);
 }
-.row-tight { gap: var(--space-2); }
-.row-loose { gap: var(--space-6); }
+.row-tight { gap: var(--space-control); }
+.row-loose { gap: var(--space-page); }
 
 /* ----- GRID: responsive columns with themed gaps -----
    What it is: an auto-fitting column grid — as many columns as fit,
@@ -3183,12 +3191,12 @@ details.dropdown {
 .grid-tight,
 .grid-loose {
   display: grid;
-  gap: var(--space-4);
+  gap: var(--space-stack);
   grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
 }
 .grid-wide { grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr)); }
-.grid-tight { gap: var(--space-2); }
-.grid-loose { gap: var(--space-6); }
+.grid-tight { gap: var(--space-control); }
+.grid-loose { gap: var(--space-page); }
 
 /* --------------------------------------------------------------------------
    APP COMPONENTS — ingested verbatim from the shipped inflation app.
@@ -3209,13 +3217,13 @@ details.dropdown {
    facetTabIndicator) that glides between segments like iOS. */
 .tab-bar {
   position: fixed;
-  bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--space-inline) + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
   z-index: 30;
   display: flex;
   align-items: center;
-  padding: var(--space-1);
+  padding: var(--space-tight);
   /* Light blur only: content should visibly move behind the glass. */
   background: color-mix(in srgb, var(--surface) 32%, transparent);
   -webkit-backdrop-filter: blur(5px) saturate(1.4);
@@ -3230,9 +3238,9 @@ details.dropdown {
 }
 .tab-indicator {
   position: absolute;
-  top: var(--space-1);
+  top: var(--space-tight);
   left: 0;
-  height: calc(100% - var(--space-1) * 2);
+  height: calc(100% - var(--space-tight) * 2);
   width: 0;
   border-radius: var(--radius-pill);
   /* raised pill gliding inside the inset bar; facetTabIndicator
@@ -3248,12 +3256,12 @@ details.dropdown {
   position: relative;
   z-index: 1;
   min-height: 40px;
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-stack);
   border: none;
   border-radius: var(--radius-pill);
   background: transparent;
   color: var(--text-muted);
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   font-weight: var(--weight-strong);
   /* letterpress: inactive labels sit pressed into the inset bar */
   text-shadow: 0 1px 0 color-mix(in srgb, var(--background) 65%, transparent);
@@ -3266,9 +3274,9 @@ details.dropdown {
 }
 .tab-divider {
   width: var(--border-width);
-  height: var(--space-5);
+  height: var(--space-card);
   background: var(--border);
-  margin-inline: var(--space-1);
+  margin-inline: var(--space-tight);
 }
 .tab-settings {
   position: relative;
@@ -3317,7 +3325,7 @@ details.dropdown {
 .sheet {
   position: fixed;
   top: 50%;
-  right: var(--space-3);
+  right: var(--space-inline);
   z-index: 41;
   width: min(80vw, 20rem);
   height: 80dvh;
@@ -3332,7 +3340,7 @@ details.dropdown {
   /* facetSheet drives entry/exit with the tab pill's per-edge springs
      (frame stretches, right edge never crosses its resting line) —
      no CSS transform transition here, JS owns transform + width. */
-  transform: translate(calc(100% + var(--space-4)), -50%);
+  transform: translate(calc(100% + var(--space-stack)), -50%);
   visibility: hidden;
 }
 /* Nav + actions scroll in the top region; the icon row lives in a foot
@@ -3349,24 +3357,24 @@ details.dropdown {
   margin-left: auto;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: var(--space-5) var(--space-3) var(--space-2);
+  padding: var(--space-card) var(--space-inline) var(--space-control);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;        /* groups stack close, no spread */
-  gap: var(--space-4);
+  gap: var(--space-stack);
 }
 /* the foot keeps the RESTING width too: its buttons stay a fixed size
    while the frame overshoots around them */
 .sheet-foot {
   width: min(80vw, 20rem);
   margin-left: auto;
-  padding: var(--space-2) var(--space-3) var(--space-3);
+  padding: var(--space-control) var(--space-inline) var(--space-inline);
 }
 .sheet-group {
   display: flex;
   flex-direction: column;
 }
-.sheet-scroll .sheet-group { gap: var(--space-1); }
+.sheet-scroll .sheet-group { gap: var(--space-tight); }
 /* SCROLL GAUGE: a pill thumb inset in an embossed groove, top right —
    thumb height shows how much of the content is visible, position
    shows where you are. Spans only the top quarter; its left edge
@@ -3377,8 +3385,8 @@ details.dropdown {
 .sheet-scroll::-webkit-scrollbar { display: none; }
 .scroll-gauge {
   position: absolute;
-  top: var(--space-4);          /* clears the corner curve */
-  right: var(--space-2);
+  top: var(--space-stack);          /* clears the corner curve */
+  right: var(--space-control);
   height: 25%;
   width: 8px;                   /* left edge lands at the radius line */
   padding: 2px;                 /* breathing room around the pill */
@@ -3408,7 +3416,7 @@ details.dropdown {
 .scroll-gauge-page {
   position: fixed;
   top: 50%;
-  right: var(--space-2);
+  right: var(--space-control);
   transform: translateY(-50%);
   height: 50dvh;
   width: 10px;
@@ -3421,7 +3429,7 @@ details.dropdown {
 /* grab: the lane widens and the pill lights up in the theme colour */
 .scroll-gauge-page.grabbing {
   width: 18px;
-  right: calc(var(--space-2) - 4px);
+  right: calc(var(--space-control) - 4px);
   cursor: grabbing;
 }
 .scroll-gauge-page .scroll-gauge-thumb { transition: background 0.16s ease; }
@@ -3453,9 +3461,9 @@ details.dropdown {
   background-size: 2rem 2rem, 2rem 2rem, auto;
   display: grid;
   place-items: center;
-  padding: var(--space-4);
+  padding: var(--space-stack);
   color: var(--text-muted);
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   text-align: center;
 }
 [data-map="live"] {
@@ -3485,15 +3493,15 @@ details.dropdown {
 .menu-item {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-inline);
   width: 100%;
   min-height: 40px;
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-control) var(--space-inline);
   border: none;
   border-radius: var(--radius-medium);
   background: transparent;
   color: var(--text);
-  font-size: var(--text-small);
+  font-size: var(--text-footnote);
   font-weight: var(--weight-strong);
   text-align: left;
   text-decoration: none;
@@ -3509,8 +3517,8 @@ details.dropdown {
 }
 .menu-value[data-off="true"] { color: var(--text-muted); }
 .menu-label {
-  padding: var(--space-2) var(--space-3) 0;
-  margin-bottom: var(--space-2);
+  padding: var(--space-control) var(--space-inline) 0;
+  margin-bottom: var(--space-control);
   font-size: var(--text-caption);
   color: var(--text-muted);
   text-transform: uppercase;
@@ -3519,13 +3527,13 @@ details.dropdown {
 .menu-divider {
   border: none;
   border-top: var(--border-width) solid var(--border);
-  margin: var(--space-1) var(--space-2);
+  margin: var(--space-tight) var(--space-control);
 }
 /* Inset divider: a short centred hairline, not edge to edge. */
 .menu-divider-inset {
   width: 55%;
   align-self: flex-start;
-  margin-left: var(--space-3);
+  margin-left: var(--space-inline);
   margin-right: auto;
 }
 /* A horizontal row of icon controls: equal widths, proper button faces,
@@ -3533,7 +3541,7 @@ details.dropdown {
 .menu-icon-row {
   flex-direction: row;
   align-items: stretch;
-  gap: var(--space-2);
+  gap: var(--space-control);
 }
 .menu-icon-btn {
   flex: 1 1 0;
@@ -3542,9 +3550,9 @@ details.dropdown {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-1);
+  gap: var(--space-tight);
   min-height: 56px;
-  padding: var(--space-2) var(--space-1);
+  padding: var(--space-control) var(--space-tight);
   border: var(--border-width) solid color-mix(in srgb, var(--border) 70%, transparent);
   border-radius: var(--radius-medium);
   /* ON reads raised: light face, soft drop shadow, lit top lip */
@@ -3614,8 +3622,8 @@ details.dropdown {
 
 .float-btn {
   position: fixed;
-  left: calc(var(--space-4) + env(safe-area-inset-left, 0px));
-  bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  left: calc(var(--space-stack) + env(safe-area-inset-left, 0px));
+  bottom: calc(var(--space-stack) + env(safe-area-inset-bottom, 0px));
   z-index: 30;
   display: inline-flex;
   align-items: center;
@@ -3643,7 +3651,7 @@ details.dropdown {
 .float-btn[aria-expanded="true"] { background: color-mix(in srgb, var(--surface) 92%, transparent); }
 .float-btn-right {
   left: auto;
-  right: calc(var(--space-4) + env(safe-area-inset-right, 0px));
+  right: calc(var(--space-stack) + env(safe-area-inset-right, 0px));
 }
 
 /* Velvet: the floating trigger is a raised face; open, it wears the
@@ -3697,7 +3705,7 @@ details.dropdown {
 .choice-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-2);
+  gap: var(--space-control);
 }
 .choice-btn {
   display: flex;
@@ -3706,7 +3714,7 @@ details.dropdown {
   justify-content: center;
   gap: 2px;
   min-height: 56px;
-  padding: var(--space-2) 0;
+  padding: var(--space-control) 0;
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-medium);
   background: var(--surface);
@@ -3844,8 +3852,8 @@ details.dropdown {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: var(--space-5);
-  padding-bottom: calc(var(--space-3) + 48px + env(safe-area-inset-bottom, 0px) + var(--space-6));
+  padding: var(--space-card);
+  padding-bottom: calc(var(--space-inline) + 48px + env(safe-area-inset-bottom, 0px) + var(--space-page));
   background: rgb(0 0 0 / 0.5);
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
@@ -3855,16 +3863,16 @@ details.dropdown {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-6) var(--space-5) var(--space-4);
+  gap: var(--space-inline);
+  padding: var(--space-page) var(--space-card) var(--space-stack);
   border-radius: calc(var(--radius-large) + 12px);
   background: var(--background);
   box-shadow: var(--shadow-overlay);
   text-align: center;
 }
 .nudge-card h2 { font-size: var(--text-h3); }
-.nudge-card p { color: var(--text-muted); font-size: var(--text-small); max-width: 30ch; }
-.nudge-add { width: 100%; min-height: 52px; margin-top: var(--space-2); }
+.nudge-card p { color: var(--text-muted); font-size: var(--text-footnote); max-width: 30ch; }
+.nudge-add { width: 100%; min-height: 52px; margin-top: var(--space-control); }
 .nudge-later {
   width: 100%;
   border: none;
@@ -3876,7 +3884,7 @@ details.dropdown {
 .nudge-never {
   border: none;
   background: transparent;
-  padding: var(--space-2);
+  padding: var(--space-control);
   font-size: var(--text-caption);
   color: var(--text-muted);
   opacity: 0.6;
@@ -3920,8 +3928,8 @@ details.dropdown {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--space-4);
-  padding: calc(env(safe-area-inset-top, 0px) + var(--space-8)) var(--space-5) var(--space-8);
+  gap: var(--space-stack);
+  padding: calc(env(safe-area-inset-top, 0px) + var(--space-hero)) var(--space-card) var(--space-hero);
 }
 .overlay-guide .eyebrow { color: #dcbe8e; }   /* pale gold on black, fixed */
 .overlay-title {
@@ -3938,6 +3946,6 @@ details.dropdown {
 /* Velvet capsule number input: the amount reads as one soft capsule. */
 [data-theme="velvet"] .number-input input {
   border-radius: var(--radius-pill);
-  padding-inline: var(--space-5);
+  padding-inline: var(--space-card);
   min-height: 54px;
 }

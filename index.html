@@ -32,8 +32,8 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: var(--space-2) var(--space-4);
-      padding-block: var(--space-3);
+      gap: var(--space-control) var(--space-stack);
+      padding-block: var(--space-inline);
     }
     .site-nav .wordmark {
       font-weight: var(--weight-heading);
@@ -41,13 +41,13 @@
       text-decoration: none;
       letter-spacing: -0.02em;
     }
-    .site-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-4); }
+    .site-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-tight) var(--space-stack); }
     .site-link {
       text-decoration: none;
       color: var(--text-muted);
-      font-size: var(--text-small);
+      font-size: var(--text-footnote);
       font-weight: var(--weight-strong);
-      padding-block: var(--space-1);
+      padding-block: var(--space-tight);
     }
     .site-link:hover { color: var(--text); }
     .site-link[aria-current="page"] { color: var(--text); }
@@ -60,9 +60,9 @@
       display: grid;
       justify-items: center;
       text-align: center;
-      gap: var(--space-4);
+      gap: var(--space-stack);
       max-width: 46rem;
-      padding-block: var(--space-8) var(--space-7);
+      padding-block: var(--space-hero) var(--space-section);
     }
     .landing-title { font-size: var(--text-h1); line-height: 1.1; margin: 0; max-width: 20ch; }
     .landing-lede { color: var(--text-muted); max-width: 52ch; margin: 0; }
@@ -70,11 +70,11 @@
       width: 100%;
       max-width: 40rem;
       text-align: left;
-      margin: var(--space-2) auto 0;
+      margin: var(--space-control) auto 0;
     }
     .landing-actions { margin: 0; }
     .landing-chips { justify-content: center; margin: 0; }
-    .landing-size { font-size: var(--text-small); color: var(--text-muted); margin: 0; }
+    .landing-size { font-size: var(--text-footnote); color: var(--text-muted); margin: 0; }
 
     /* Deliberate full-width divider — the one clean rule between the
        landing and the library, and reused wherever a real break is meant.
@@ -83,7 +83,7 @@
     .section-rule {
       border: none;
       border-top: var(--border-width) solid var(--border);
-      margin-block: var(--space-2) 0;
+      margin-block: var(--space-control) 0;
     }
 
     /* The sidebar + wall layout. The grid wrapper exists to put the index
@@ -91,28 +91,28 @@
     .docs-layout {
       display: grid;
       grid-template-columns: 14rem minmax(0, 1fr);
-      gap: var(--space-7);
+      gap: var(--space-section);
       align-items: start;
-      padding-block: var(--space-6);
+      padding-block: var(--space-page);
     }
     .docs-index {
       position: sticky;
-      top: var(--space-4);
-      max-height: calc(100dvh - var(--space-6));
+      top: var(--space-stack);
+      max-height: calc(100dvh - var(--space-page));
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: var(--space-1);
+      gap: var(--space-tight);
     }
-    .docs-index ul { list-style: none; padding: 0; margin: 0 0 var(--space-2); }
+    .docs-index ul { list-style: none; padding: 0; margin: 0 0 var(--space-control); }
     .docs-index a {
       display: block;
       padding-block: 3px;
       text-decoration: none;
       color: var(--text-muted);
-      font-size: var(--text-small);
+      font-size: var(--text-footnote);
       border-left: var(--border-width-strong) solid transparent;
-      padding-left: var(--space-3);
+      padding-left: var(--space-inline);
     }
     .docs-index a:hover { color: var(--text); }
     /* Scrollspy: the component on screen lights up in the index. */
@@ -132,8 +132,8 @@
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: center;
-      gap: 3px var(--space-2);
-      padding-block: var(--space-3);
+      gap: 3px var(--space-control);
+      padding-block: var(--space-inline);
       border-radius: var(--radius-small);
     }
     .nav-group > summary::-webkit-details-marker { display: none; }
@@ -167,10 +167,10 @@
     /* The layer you are reading: its label goes accent and gains a marker. */
     .nav-group.is-active-group > summary .nav-group-name { color: var(--accent-3); }
     .nav-group.is-active-group > summary .nav-caret { border-color: var(--accent-3); }
-    .nav-group > ul { padding-block: var(--space-1) var(--space-2); }
+    .nav-group > ul { padding-block: var(--space-tight) var(--space-control); }
 
     @media (max-width: 56rem) {
-      .docs-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
+      .docs-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-card); }
       .docs-index { position: static; max-height: none; }
     }
 
@@ -178,8 +178,8 @@
        carried by the gap alone — no per-entry rule, so the page reads as
        calm space, not a stack of faint lines. The only rules on the page
        are the deliberate ones: the landing divider and the layer bands. */
-    #main.stack-loose { gap: var(--space-8); }
-    section[id], article[id] { scroll-margin-top: var(--space-5); }
+    #main.stack-loose { gap: var(--space-hero); }
+    section[id], article[id] { scroll-margin-top: var(--space-card); }
 
     /* Layer bands: the deliberate dividers that split the page into Manual /
        Customizer / Layer 1–4 / Tools. A single hairline, wide space above,
@@ -187,10 +187,10 @@
        black rule. The kicker carries the emphasis, not the line. */
     #main > .layer-band {
       border-top: var(--border-width) solid var(--border);
-      margin-top: var(--space-5);
-      padding-top: var(--space-7);
+      margin-top: var(--space-card);
+      padding-top: var(--space-section);
       display: grid;
-      gap: var(--space-2);
+      gap: var(--space-control);
     }
     #main > .layer-band:first-child { border-top: none; margin-top: 0; padding-top: 0; }
     .layer-band .layer-kicker {
@@ -210,7 +210,7 @@
     .topic-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-      gap: var(--space-3);
+      gap: var(--space-inline);
     }
     .topic-card {
       /* reset the button so the .card surface reads as a card, not a control */
@@ -219,12 +219,12 @@
       text-align: left;
       font: inherit;
       display: grid;
-      gap: var(--space-2);
+      gap: var(--space-control);
       align-content: start;
     }
     .topic-card-title { font-size: var(--text-h4); font-weight: var(--weight-heading); line-height: 1.2; }
-    .topic-card-teaser { font-size: var(--text-small); color: var(--text-muted); line-height: 1.4; }
-    .topic-card-more { font-size: var(--text-small); color: var(--accent-3); font-weight: var(--weight-strong); }
+    .topic-card-teaser { font-size: var(--text-footnote); color: var(--text-muted); line-height: 1.4; }
+    .topic-card-more { font-size: var(--text-footnote); color: var(--accent-3); font-weight: var(--weight-strong); }
 
     /* Topic popup: a wide, scrollable modal for the long-form text.
        dialog.topic-modal to out-specify dialog.modal's 34rem width. */
@@ -232,14 +232,14 @@
     .topic-modal { max-height: 85dvh; overflow-y: auto; }
     .topic-modal h3 { margin: 0; }
     .topic-modal ul { line-height: 1.5; }
-    .topic-modal li { margin-block: var(--space-2); }
+    .topic-modal li { margin-block: var(--space-control); }
     .topic-modal-foot {
       position: sticky;
-      bottom: calc(var(--space-6) * -1);
+      bottom: calc(var(--space-page) * -1);
       display: flex;
       justify-content: flex-end;
-      padding-top: var(--space-3);
-      margin-top: var(--space-2);
+      padding-top: var(--space-inline);
+      margin-top: var(--space-control);
       background: linear-gradient(to top, var(--surface) 70%, transparent);
     }
 
@@ -250,11 +250,11 @@
       list-style: none;
       cursor: pointer;
       display: grid;
-      gap: var(--space-2);
-      padding-block: var(--space-2);
+      gap: var(--space-control);
+      padding-block: var(--space-control);
     }
     .fold > summary::-webkit-details-marker { display: none; }
-    .fold-title { display: flex; align-items: center; gap: var(--space-3); }
+    .fold-title { display: flex; align-items: center; gap: var(--space-inline); }
     .fold-title h3 { margin: 0; }
     .fold-chevron {
       margin-left: auto;
@@ -269,23 +269,23 @@
     .fold > summary:hover .fold-chevron { border-color: var(--text); }
     .fold-note {
       border-left: var(--border-width-strong) solid var(--accent-3);
-      padding-left: var(--space-4);
+      padding-left: var(--space-stack);
       color: var(--text-muted);
-      font-size: var(--text-small);
+      font-size: var(--text-footnote);
       max-width: 68ch;
       margin: 0;
     }
     /* Open: the callout gives way to the full description inside. */
     .fold[open] > summary .fold-note { display: none; }
     /* The body of an opened fold gets breathing room above it. */
-    .fold[open] > :not(summary):first-of-type { margin-top: var(--space-4); }
+    .fold[open] > :not(summary):first-of-type { margin-top: var(--space-stack); }
 
     /* One wall entry. */
     .element .demo {
       background: var(--background);
       border: var(--border-width) dashed var(--border);
       border-radius: var(--radius-medium);
-      padding: var(--space-5);
+      padding: var(--space-card);
     }
 
     /* The variant/state chips are the library's own .chip now —
@@ -295,8 +295,8 @@
     .icon-cell {
       display: grid;
       place-items: center;
-      gap: var(--space-1);
-      padding: var(--space-3);
+      gap: var(--space-tight);
+      padding: var(--space-inline);
       border: var(--border-width) solid var(--border);
       border-radius: var(--radius-medium);
       background: var(--surface);
@@ -314,37 +314,37 @@
       color: var(--text-muted);
       font-size: var(--text-caption);
       font-family: var(--font-mono);
-      margin-top: var(--space-1);
+      margin-top: var(--space-tight);
     }
     .callout {
       background: var(--surface);
       border: var(--border-width) solid var(--border);
       border-left: var(--border-width-strong) solid var(--accent-3);
       border-radius: var(--radius-small);
-      padding: var(--space-3) var(--space-4);
+      padding: var(--space-inline) var(--space-stack);
       max-width: 65ch;
     }
 
     /* Color: the same mini-interface twice, light and dark side by side.
        The panels carry data-mode, which facet.css applies to any subtree. */
-    .mode-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    .mode-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-stack); }
     @media (max-width: 56rem) { .mode-pair { grid-template-columns: 1fr; } }
     .mode-panel {
       border: var(--border-width) solid var(--border);
       border-radius: var(--radius-medium);
-      padding: var(--space-5);
+      padding: var(--space-card);
       display: flex;
       flex-direction: column;
-      gap: var(--space-3);
+      gap: var(--space-inline);
     }
-    .swatch-row { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: 0; list-style: none; }
+    .swatch-row { display: flex; flex-wrap: wrap; gap: var(--space-control); padding: 0; list-style: none; }
     .swatch-row li { font-size: var(--text-caption); font-family: var(--font-mono); }
     .swatch-row .swatch {
-      height: var(--space-6);
-      width: var(--space-8);
+      height: var(--space-page);
+      width: var(--space-hero);
       border: var(--border-width) solid var(--border);
       border-radius: var(--radius-small);
-      margin-bottom: var(--space-1);
+      margin-bottom: var(--space-tight);
     }
 
     /* Spacing: real components on a tinted ground, so padding and gaps
@@ -359,20 +359,20 @@
       background: var(--surface);
       border: var(--border-width) solid var(--border);
       border-radius: var(--radius-small);
-      padding: var(--space-2) var(--space-3);
-      font-size: var(--text-small);
+      padding: var(--space-control) var(--space-inline);
+      font-size: var(--text-footnote);
       color: var(--text-muted);
     }
 
     /* Shape and elevation tiles. */
-    .shape-row { display: flex; flex-wrap: wrap; gap: var(--space-4); padding: 0; list-style: none; }
+    .shape-row { display: flex; flex-wrap: wrap; gap: var(--space-stack); padding: 0; list-style: none; }
     .shape-row li { font-size: var(--text-caption); text-align: center; }
     .shape-row .tile {
-      width: var(--space-8);
-      height: var(--space-8);
+      width: var(--space-hero);
+      height: var(--space-hero);
       background: var(--surface);
       border: var(--border-width) solid var(--border);
-      margin-bottom: var(--space-1);
+      margin-bottom: var(--space-tight);
     }
 
     /* App chrome shown statically inside wall demos: the real things
@@ -382,25 +382,25 @@
     #tab-bar .demo { overflow-x: auto; }   /* the pill outgrows tiny phones */
     .element .demo .nudge-scrim,
     .element .demo .overlay-guide { position: static; border-radius: var(--radius-medium); }
-    .element .demo .overlay-guide { padding: var(--space-6); gap: var(--space-3); }
+    .element .demo .overlay-guide { padding: var(--space-page); gap: var(--space-inline); }
     #scroll-gauge .demo { position: relative; }
     #scroll-gauge .demo-scroller {
-      height: 12rem; overflow-y: auto; padding-right: var(--space-5);
+      height: 12rem; overflow-y: auto; padding-right: var(--space-card);
     }
 
     /* Cheatsheet rows: dense definition rows, filterable. */
     .cheat-row {
       display: grid;
       grid-template-columns: minmax(min(12rem, 40vw), 1fr) minmax(0, 2fr);
-      gap: var(--space-3);
-      padding-block: var(--space-2);
+      gap: var(--space-inline);
+      padding-block: var(--space-control);
       border-bottom: var(--border-width) solid var(--border);
-      font-size: var(--text-small);
+      font-size: var(--text-footnote);
     }
     .cheat-row code { overflow-wrap: anywhere; }
     .cheat-row span { color: var(--text-muted); overflow-wrap: anywhere; }
     .cheat-head {
-      margin-top: var(--space-4);
+      margin-top: var(--space-stack);
       font-size: var(--text-caption);
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -408,7 +408,7 @@
     }
 
     /* Rows of copy buttons under snippets sit side by side. */
-    .element p:has(> [data-copy]) { display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none; }
+    .element p:has(> [data-copy]) { display: flex; gap: var(--space-control); flex-wrap: wrap; max-width: none; }
 
     /* Framed mini page (also the playground preview). */
     .lab-frame {
@@ -422,7 +422,7 @@
     /* Site polish: status chips, permalinks, token copy, badges. */
     .element h3[data-status]::after {
       content: attr(data-status);
-      margin-left: var(--space-2);
+      margin-left: var(--space-control);
       font-size: var(--text-caption);
       font-weight: var(--weight-body);
       letter-spacing: 0.06em;
@@ -430,11 +430,11 @@
       color: var(--text-muted);
       border: var(--border-width) solid var(--border);
       border-radius: var(--radius-pill);
-      padding: 1px var(--space-2);
+      padding: 1px var(--space-control);
       vertical-align: middle;
     }
     .permalink {
-      margin-left: var(--space-2);
+      margin-left: var(--space-control);
       border: none;
       background: none;
       color: var(--text-muted);
@@ -448,7 +448,7 @@
     .token-copy {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-2);
+      gap: var(--space-control);
       border: none;
       background: none;
       padding: 0;
@@ -460,14 +460,14 @@
     .contrast-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--space-2);
+      gap: var(--space-control);
       font-size: var(--text-caption);
       max-width: none;
     }
     .contrast-badges span {
       border: var(--border-width) solid var(--border);
       border-radius: var(--radius-pill);
-      padding: 1px var(--space-2);
+      padding: 1px var(--space-control);
       color: var(--text-muted);
     }
     .demo-width-chips { margin-top: 0; }
@@ -481,21 +481,21 @@
       letter-spacing: 0.06em;
       font-weight: var(--weight-strong);
       color: var(--text-muted);
-      margin-top: var(--space-4);
-      margin-bottom: var(--space-1);
+      margin-top: var(--space-stack);
+      margin-bottom: var(--space-tight);
     }
     .part-label + * { margin-top: 0; }
-    .ref { font-size: var(--text-small); }
+    .ref { font-size: var(--text-footnote); }
     .ref summary { cursor: pointer; color: var(--text-muted); }
-    .ref table { width: 100%; border-collapse: collapse; margin-top: var(--space-2); }
+    .ref table { width: 100%; border-collapse: collapse; margin-top: var(--space-control); }
     .ref td, .ref th {
       text-align: left;
-      padding: var(--space-1) var(--space-3) var(--space-1) 0;
+      padding: var(--space-tight) var(--space-inline) var(--space-tight) 0;
       border-bottom: var(--border-width) solid var(--border);
       vertical-align: top;
     }
     .ref th { color: var(--text-muted); font-weight: var(--weight-strong); }
-    .ref .ref-note { color: var(--text-muted); margin-top: var(--space-2); max-width: none; }
+    .ref .ref-note { color: var(--text-muted); margin-top: var(--space-control); max-width: none; }
 
     /* Backgrounds demo: a fixed-height canvas so the pattern reads. */
     #backgrounds .demo > section { min-height: 11rem; border-radius: var(--radius-medium); }
@@ -507,8 +507,8 @@
     #snap-section .snap-section:nth-child(even) { background: var(--surface); }
     #container .demo > * {
       outline: var(--border-width) dashed var(--text-muted);
-      padding-block: var(--space-2);
-      font-size: var(--text-small);
+      padding-block: var(--space-control);
+      font-size: var(--text-footnote);
       color: var(--text-muted);
     }
   </style>
@@ -777,9 +777,9 @@
           <li><code>prefers-reduced-motion</code> honoured above any page choice: every transition and animation in the library collapses to nothing.</li>
           <li><code>prefers-contrast: more</code> honoured at the token layer: muted text gives up its gray, borders climb toward the ink, the focus ring thickens — in every theme, light and dark, zero extra code.</li>
           <li>Forced colors (Windows High Contrast) audited: elements whose shape was carried by a background alone keep a real border in the system palette.</li>
-          <li>Compact density: <code>data-density="compact"</code> tightens the whole spacing scale — the same one-attribute mechanic as themes, page-wide or per subtree, and a script-tag config key.</li>
+          <li>Global density: <code>data-density="small|medium|large"</code> scales the whole spacing system at once — spacing is named by intent (<code>--space-card</code>, <code>--space-section</code>), never by number, so one attribute re-densifies a page. Type has the same three-step control, <code>data-text-size</code>. Both are theme-defined, page-wide or per subtree, and script-tag config keys.</li>
           <li><code>.visually-hidden</code>: screen-reader-only text with the standard clip pattern.</li>
-          <li>Text roles: <code>.text-display</code>, <code>.text-h1</code>…<code>.text-h4</code>, <code>.text-body</code>, <code>.text-small</code>, <code>.text-caption</code> — the type scale as classes, so any element takes a scale step without an inline style.</li>
+          <li>Text roles named by intent: <code>.text-display</code>, <code>.text-h1</code>…<code>.text-h4</code>, <code>.text-body</code>, <code>.text-quote</code>, <code>.text-footnote</code>, <code>.text-caption</code> — the type scale as classes, so any element takes a role without an inline style. Global type size rides <code>data-text-size="small|medium|large"</code>.</li>
           <li>Print base included: sensible margins, navigation hidden, ink-friendly colors when a page is printed.</li>
         </ul>
 
@@ -1157,7 +1157,7 @@
           <p><small>
             Small text handles secondary lines: bylines, helper notes, legal
             asides that still deserve reading.
-            <small class="type-label">--text-small</small>
+            <small class="type-label">--text-footnote</small>
           </small></p>
 
           <hr>
@@ -1201,13 +1201,13 @@
               <li><div class="swatch" style="background: var(--accent-2)"></div>--accent-2</li>
               <li><div class="swatch" style="background: var(--accent-3)"></div>--accent-3</li>
             </ul>
-            <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
+            <p style="display: flex; gap: var(--space-control); flex-wrap: wrap; max-width: none;">
               <button class="btn btn-primary btn-small">Primary</button>
               <button class="btn btn-small">Secondary</button>
             </p>
             <label for="color-input-light">A field on this ground</label>
             <input id="color-input-light" type="text" placeholder="Type here">
-            <p style="font-size: var(--text-small); max-width: none;">
+            <p style="font-size: var(--text-footnote); max-width: none;">
               <span style="color: var(--success);">Saved ✓</span> ·
               <span style="color: var(--warning);">Expiring soon</span> ·
               <span style="color: var(--error);">Failed</span> ·
@@ -1228,13 +1228,13 @@
               <li><div class="swatch" style="background: var(--accent-2)"></div>--accent-2</li>
               <li><div class="swatch" style="background: var(--accent-3)"></div>--accent-3</li>
             </ul>
-            <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
+            <p style="display: flex; gap: var(--space-control); flex-wrap: wrap; max-width: none;">
               <button class="btn btn-primary btn-small">Primary</button>
               <button class="btn btn-small">Secondary</button>
             </p>
             <label for="color-input-dark">A field on this ground</label>
             <input id="color-input-dark" type="text" placeholder="Type here">
-            <p style="font-size: var(--text-small); max-width: none;">
+            <p style="font-size: var(--text-footnote); max-width: none;">
               <span style="color: var(--success);">Saved ✓</span> ·
               <span style="color: var(--warning);">Expiring soon</span> ·
               <span style="color: var(--error);">Failed</span> ·
@@ -1265,7 +1265,7 @@
           components never pick raw colors, so this block is the whole
           theme surface you need.
         </p>
-        <div class="accent-demo" style="--accent-1: #0F6FDE; --accent-1-hover: #0B5FC2; --accent-1-pressed: #0850A6; --on-accent-1: #FFFFFF; display: flex; gap: var(--space-2); flex-wrap: wrap;">
+        <div class="accent-demo" style="--accent-1: #0F6FDE; --accent-1-hover: #0B5FC2; --accent-1-pressed: #0850A6; --on-accent-1: #FFFFFF; display: flex; gap: var(--space-control); flex-wrap: wrap;">
           <button class="btn btn-primary" data-tip="A primary action wearing the overridden accent-1">Brand primary</button>
           <button class="btn" data-tip="Secondary actions keep accent-2, untouched by the override">Secondary</button>
         </div>
@@ -1287,46 +1287,56 @@
       <section id="spacing" class="stack">
         <h2>Spacing</h2>
         <p>
-          A 4px base scale, <code>--space-1</code> (4px) to
-          <code>--space-8</code> (64px). Below, real pieces sit on a tinted
-          ground — the tint showing through is exactly the spacing token at
-          work.
+          Spacing is named by intent, not by number: reach for
+          <code>--space-card</code> or <code>--space-section</code>, never a
+          step on a scale. One global control —
+          <code>data-density="small|medium|large"</code> — tightens or opens
+          the whole system at once, and a theme sets its own rhythm. Below,
+          real pieces sit on a tinted ground; the tint showing through is the
+          token at work.
         </p>
 
-        <h3>Gaps inside a control row · --space-2</h3>
-        <div class="space-viz" style="display: inline-flex; gap: var(--space-2); padding: var(--space-2); flex-wrap: wrap;">
+        <h3>Gaps inside a control row · --space-control</h3>
+        <div class="space-viz" style="display: inline-flex; gap: var(--space-control); padding: var(--space-control); flex-wrap: wrap;">
           <button class="btn btn-primary">Calculate</button>
           <button class="btn">Start over</button>
           <button class="btn btn-ghost" style="background: var(--surface);">Skip</button>
         </div>
 
-        <h3>Card padding · --space-6</h3>
+        <h3>Card padding · --space-card</h3>
         <div class="space-viz" style="max-width: var(--width-narrow);">
-          <section style="padding: var(--space-6);">
+          <section style="padding: var(--space-card);">
             <div class="demo-box" style="background: var(--background);">
               The card's content box. Everything between this edge and the
-              tinted edge is <code>--space-6</code> of padding.
+              tinted edge is <code>--space-card</code> of padding.
             </div>
           </section>
         </div>
 
-        <h3>Stack gap between fields · --space-4</h3>
-        <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-4); max-width: var(--width-narrow);">
+        <h3>Stack gap between fields · --space-stack</h3>
+        <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-stack); padding: var(--space-stack); max-width: var(--width-narrow);">
           <div class="demo-box" style="background: var(--background);">Field one</div>
           <div class="demo-box" style="background: var(--background);">Field two</div>
           <div class="demo-box" style="background: var(--background);">Field three</div>
         </div>
 
-        <h3>Between page sections · --space-7</h3>
-        <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-7); padding: var(--space-4); max-width: var(--width-narrow);">
+        <h3>Between page sections · --space-section</h3>
+        <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-section); padding: var(--space-stack); max-width: var(--width-narrow);">
           <div class="demo-box" style="background: var(--background);">The end of one section</div>
           <div class="demo-box" style="background: var(--background);">The start of the next</div>
         </div>
 
         <p>
-          Container widths cap the horizontal rhythm the same way:
-          <code>--width-narrow</code> 40rem for prose and calculators,
-          <code>--width-default</code> 64rem for most pages,
+          The full set, each named for where it belongs:
+          <code>--space-tight</code> (bound pairs like a label and its field),
+          <code>--space-control</code> (inside buttons and inputs),
+          <code>--space-inline</code> (row gaps), <code>--space-stack</code>
+          (default gap between blocks), <code>--space-card</code> (card
+          padding), <code>--space-page</code> (page margins),
+          <code>--space-section</code> (between sections) and
+          <code>--space-hero</code> (the biggest breaks). Container widths cap
+          the horizontal rhythm: <code>--width-narrow</code> 40rem for prose
+          and calculators, <code>--width-default</code> 64rem for most pages,
           <code>--width-wide</code> 80rem for dashboards.
         </p>
       </section>
@@ -1385,7 +1395,7 @@
           <button class="chip" aria-pressed="false" data-config-key="motion" data-config-value="calm" data-tip="Short, near-linear, slight">Calm</button>
           <button class="chip" aria-pressed="false" data-config-key="motion" data-config-value="off" data-tip="No animation at all">Off</button>
         </p>
-        <div class="demo" style="display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center;">
+        <div class="demo" style="display: flex; flex-wrap: wrap; gap: var(--space-inline); align-items: center;">
           <button class="btn btn-primary" data-tip="Press and hold, then release">Press me</button>
           <button class="btn" data-tip="The spring is in the release">And me</button>
           <button class="btn btn-icon" aria-label="Feel the press" data-tip="Weight, then bounce">&times;</button>
@@ -1412,9 +1422,9 @@
             <tr><th>Scale step</th><th>Size</th><th>Used for</th></tr>
           </thead>
           <tbody>
-            <tr><td>--space-2</td><td>8px</td><td>Gaps inside controls</td></tr>
-            <tr><td>--space-4</td><td>16px</td><td>Default stack gap</td></tr>
-            <tr><td>--space-7</td><td>48px</td><td>Between page sections</td></tr>
+            <tr><td>--space-control</td><td>8px</td><td>Gaps inside controls</td></tr>
+            <tr><td>--space-stack</td><td>16px</td><td>Default stack gap</td></tr>
+            <tr><td>--space-section</td><td>48px</td><td>Between page sections</td></tr>
           </tbody>
         </table>
 
@@ -1729,17 +1739,17 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <article class="card stack-tight">
               <p class="text-caption">Default</p>
               <strong>Monthly summary</strong>
-              <p class="text-small" style="color: var(--text-muted);">A breath above the page.</p>
+              <p class="text-footnote" style="color: var(--text-muted);">A breath above the page.</p>
             </article>
             <article class="card-outlined stack-tight">
               <p class="text-caption">Outlined</p>
               <strong>Quiet neighbour</strong>
-              <p class="text-small" style="color: var(--text-muted);">No shadow pile-ups.</p>
+              <p class="text-footnote" style="color: var(--text-muted);">No shadow pile-ups.</p>
             </article>
             <a class="card card-clickable stack-tight" href="#card" data-tip="The whole card is the link" data-event="card-open">
               <p class="text-caption">Clickable</p>
               <strong>Open the report &rarr;</strong>
-              <p class="text-small" style="color: var(--text-muted);">Lifts on hover, presses on click.</p>
+              <p class="text-footnote" style="color: var(--text-muted);">Lifts on hover, presses on click.</p>
             </a>
           </div>
         </div>
@@ -1774,7 +1784,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           </div>
           <dialog class="modal stack" id="demo-modal">
             <h4>Delete this report?</h4>
-            <p class="text-small">This cannot be undone. The figures stay in your ledger.</p>
+            <p class="text-footnote">This cannot be undone. The figures stay in your ledger.</p>
             <form method="dialog" class="row">
               <button class="btn btn-primary" data-event="demo-modal-confirm">Delete</button>
               <button class="btn" data-tip="Closes without doing anything">Keep it</button>
@@ -1788,7 +1798,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           </dialog>
           <div popover id="demo-popover" class="stack-tight">
             <strong>Quick note</strong>
-            <p class="text-small">Popovers light-dismiss: click anywhere else.</p>
+            <p class="text-footnote">Popovers light-dismiss: click anywhere else.</p>
           </div>
         </div>
         <pre id="code-overlays"><code></code></pre>
@@ -1820,11 +1830,11 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <div>
               <details class="accordion" name="faq">
                 <summary>How is the rate calculated?</summary>
-                <p class="text-small">From the average of the last twelve months, weighted toward recent ones.</p>
+                <p class="text-footnote">From the average of the last twelve months, weighted toward recent ones.</p>
               </details>
               <details class="accordion" name="faq">
                 <summary>Can I export everything?</summary>
-                <p class="text-small">Yes — every table has an export in its dropdown menu.</p>
+                <p class="text-footnote">Yes — every table has an export in its dropdown menu.</p>
               </details>
             </div>
             <div class="row">
@@ -1866,8 +1876,8 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
               <button type="button" role="tab" aria-selected="true" aria-controls="pane-overview" id="tab-overview" data-tip="Arrow keys work too">Overview</button>
               <button type="button" role="tab" aria-selected="false" aria-controls="pane-activity" id="tab-activity" data-tip="Arrow keys work too">Activity</button>
             </div>
-            <p role="tabpanel" id="pane-overview" aria-labelledby="tab-overview" class="text-small">The overview pane: totals and the verdict.</p>
-            <p role="tabpanel" id="pane-activity" aria-labelledby="tab-activity" class="text-small" hidden>The activity pane: every change, newest first.</p>
+            <p role="tabpanel" id="pane-overview" aria-labelledby="tab-overview" class="text-footnote">The overview pane: totals and the verdict.</p>
+            <p role="tabpanel" id="pane-activity" aria-labelledby="tab-activity" class="text-footnote" hidden>The activity pane: every change, newest first.</p>
             <nav class="breadcrumb" aria-label="You are here">
               <ol>
                 <li><a href="#wayfinding">Library</a></li>
@@ -2049,7 +2059,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             </p>
             <div class="empty">
               <strong>No reports yet</strong>
-              <p class="text-small" style="max-width: none;">The first one appears here the moment you save it.</p>
+              <p class="text-footnote" style="max-width: none;">The first one appears here the moment you save it.</p>
               <button class="btn btn-primary btn-small" data-event="empty-new-report" data-tip="The one action that fills this screen">New report</button>
             </div>
           </div>
@@ -2317,7 +2327,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <span class="field-hint">How long the money stays invested</span>
           </label>
 
-          <label class="field" style="margin-top: var(--space-5);">
+          <label class="field" style="margin-top: var(--space-card);">
             <span class="field-label">From year <output>2000</output></span>
             <span class="slider-wrap">
               <input type="range" class="slider" min="1960" max="2056" step="1" value="2000"
@@ -2389,7 +2399,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p class="chips" role="group" aria-label="Tooltip position">
           <button class="chip" aria-pressed="false" data-chip-attr="data-tip-below">Flip below</button>
         </p>
-        <div class="demo" style="padding-block: var(--space-8);">
+        <div class="demo" style="padding-block: var(--space-hero);">
           <button class="btn" data-tip="This text is the data-tip attribute">Hover or tab to me</button>
         </div>
         <pre id="code-tooltip"><code></code></pre>
@@ -2628,7 +2638,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </p>
         <div class="demo">
           <section class="bg-grid" data-tip="The pattern is tokens: switch theme or mode and it follows">
-            <p style="padding: var(--space-5); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
+            <p style="padding: var(--space-card); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
           </section>
         </div>
         <pre id="code-backgrounds"><code></code></pre>
@@ -2663,9 +2673,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </p>
         <div class="demo">
           <div class="grid">
-            <article class="card stack-tight"><strong>Groceries</strong><p class="text-small">₹ 12,480 this month</p></article>
-            <article class="card stack-tight"><strong>Travel</strong><p class="text-small">₹ 31,200 this month</p></article>
-            <article class="card stack-tight"><strong>Rent</strong><p class="text-small">₹ 48,000 this month</p></article>
+            <article class="card stack-tight"><strong>Groceries</strong><p class="text-footnote">₹ 12,480 this month</p></article>
+            <article class="card stack-tight"><strong>Travel</strong><p class="text-footnote">₹ 31,200 this month</p></article>
+            <article class="card stack-tight"><strong>Rent</strong><p class="text-footnote">₹ 48,000 this month</p></article>
           </div>
         </div>
         <pre id="code-block-card-grid"><code></code></pre>
@@ -2684,11 +2694,11 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </p>
         <div class="demo">
           <div class="card-row" data-tip="Scroll me sideways">
-            <article class="card stack-tight"><strong>April</strong><p class="text-small">Saved ₹ 8,200</p></article>
-            <article class="card stack-tight"><strong>May</strong><p class="text-small">Saved ₹ 9,750</p></article>
-            <article class="card stack-tight"><strong>June</strong><p class="text-small">Saved ₹ 7,120</p></article>
-            <article class="card stack-tight"><strong>July</strong><p class="text-small">Saved ₹ 10,400</p></article>
-            <article class="card stack-tight"><strong>August</strong><p class="text-small">Saved ₹ 6,900</p></article>
+            <article class="card stack-tight"><strong>April</strong><p class="text-footnote">Saved ₹ 8,200</p></article>
+            <article class="card stack-tight"><strong>May</strong><p class="text-footnote">Saved ₹ 9,750</p></article>
+            <article class="card stack-tight"><strong>June</strong><p class="text-footnote">Saved ₹ 7,120</p></article>
+            <article class="card stack-tight"><strong>July</strong><p class="text-footnote">Saved ₹ 10,400</p></article>
+            <article class="card stack-tight"><strong>August</strong><p class="text-footnote">Saved ₹ 6,900</p></article>
           </div>
         </div>
         <pre id="code-block-card-row"><code></code></pre>
@@ -2766,12 +2776,12 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <a class="card card-clickable stack-tight" href="#block-product-grid">
               <span class="bg-dots" style="display:block; aspect-ratio: 4/3; border-radius: var(--radius-medium);" aria-hidden="true"></span>
               <strong>Field notebook</strong>
-              <span class="row" style="justify-content: space-between;"><span class="text-small">₹ 450</span><span class="badge badge-success">In stock</span></span>
+              <span class="row" style="justify-content: space-between;"><span class="text-footnote">₹ 450</span><span class="badge badge-success">In stock</span></span>
             </a>
             <a class="card card-clickable stack-tight" href="#block-product-grid">
               <span class="bg-dots" style="display:block; aspect-ratio: 4/3; border-radius: var(--radius-medium);" aria-hidden="true"></span>
               <strong>Brass ruler</strong>
-              <span class="row" style="justify-content: space-between;"><span class="text-small">₹ 720</span><span class="badge">Few left</span></span>
+              <span class="row" style="justify-content: space-between;"><span class="text-footnote">₹ 720</span><span class="badge">Few left</span></span>
             </a>
           </div>
         </div>
@@ -2793,7 +2803,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <span class="bg-graph" style="display:block; aspect-ratio: 1; border-radius: var(--radius-medium);" aria-hidden="true"></span>
             <div class="stack">
               <h4 style="margin: 0;">Field notebook</h4>
-              <p class="text-small">Dot-gridded, 120 pages, lies flat.</p>
+              <p class="text-footnote">Dot-gridded, 120 pages, lies flat.</p>
               <p class="text-h3" style="margin: 0;"><strong>₹ 450</strong></p>
               <fieldset class="segmented" aria-label="Size">
                 <label><input type="radio" name="size" checked><span>A6</span></label>
@@ -2832,7 +2842,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
               </span>
             </div>
             <hr>
-            <div class="row" style="justify-content: space-between;"><span class="text-small">Delivery</span><span class="text-small">₹ 60</span></div>
+            <div class="row" style="justify-content: space-between;"><span class="text-footnote">Delivery</span><span class="text-footnote">₹ 60</span></div>
             <div class="result"><span>Total</span><strong>₹ 960</strong></div>
           </div>
         </div>
@@ -2932,9 +2942,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           once. A page has one hero the way a screen has one primary.
         </p>
         <div class="demo">
-          <div class="hero bg-grid" style="padding-inline: var(--space-5); border-radius: var(--radius-medium);">
+          <div class="hero bg-grid" style="padding-inline: var(--space-card); border-radius: var(--radius-medium);">
             <p class="text-display" style="margin: 0;">Know what your money will be worth.</p>
-            <p class="text-small" style="color: var(--text-muted);">Inflation, explained with your own numbers.</p>
+            <p class="text-footnote" style="color: var(--text-muted);">Inflation, explained with your own numbers.</p>
             <p class="row"><a class="btn btn-primary" href="#block-hero" data-event="hero-start">Start free</a>
             <a class="flagship-link" href="#block-hero" style="font-size: var(--text-body);">See how it works</a></p>
           </div>
@@ -2954,9 +2964,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </p>
         <div class="demo">
           <div class="grid">
-            <div class="stack-tight"><svg data-icon="clock"></svg><strong>Live rates</strong><p class="text-small">Updated the moment the data lands.</p></div>
-            <div class="stack-tight"><svg data-icon="lock"></svg><strong>Private</strong><p class="text-small">Your numbers never leave the page.</p></div>
-            <div class="stack-tight"><svg data-icon="download"></svg><strong>Yours</strong><p class="text-small">Export everything, any time.</p></div>
+            <div class="stack-tight"><svg data-icon="clock"></svg><strong>Live rates</strong><p class="text-footnote">Updated the moment the data lands.</p></div>
+            <div class="stack-tight"><svg data-icon="lock"></svg><strong>Private</strong><p class="text-footnote">Your numbers never leave the page.</p></div>
+            <div class="stack-tight"><svg data-icon="download"></svg><strong>Yours</strong><p class="text-footnote">Export everything, any time.</p></div>
           </div>
         </div>
         <pre id="code-block-feature-grid"><code></code></pre>
@@ -2979,13 +2989,13 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <article class="card stack">
               <p class="text-caption" style="margin:0;">FREE</p>
               <p class="text-h2" style="margin:0;"><strong>₹ 0</strong></p>
-              <ul class="text-small" style="margin:0;"><li>3 reports</li><li>Every theme</li></ul>
+              <ul class="text-footnote" style="margin:0;"><li>3 reports</li><li>Every theme</li></ul>
               <button class="btn" data-event="plan-free">Start</button>
             </article>
             <article class="card stack" style="border-color: var(--accent-3);">
               <p class="text-caption" style="margin:0;">PRO · RECOMMENDED</p>
               <p class="text-h2" style="margin:0;"><strong>₹ 199</strong><span class="text-caption">/mo</span></p>
-              <ul class="text-small" style="margin:0;"><li>Unlimited reports</li><li>Exports &amp; sharing</li></ul>
+              <ul class="text-footnote" style="margin:0;"><li>Unlimited reports</li><li>Exports &amp; sharing</li></ul>
               <button class="btn btn-primary" data-event="plan-pro" data-tip="The page's one primary action">Go Pro</button>
             </article>
           </div>
@@ -3006,8 +3016,8 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </p>
         <div class="demo">
           <div>
-            <details class="accordion" name="landing-faq"><summary>Is my data private?</summary><p class="text-small">Everything computes in your browser; nothing is sent anywhere.</p></details>
-            <details class="accordion" name="landing-faq"><summary>Can I cancel any time?</summary><p class="text-small">Yes — one click, and exports stay available.</p></details>
+            <details class="accordion" name="landing-faq"><summary>Is my data private?</summary><p class="text-footnote">Everything computes in your browser; nothing is sent anywhere.</p></details>
+            <details class="accordion" name="landing-faq"><summary>Can I cancel any time?</summary><p class="text-footnote">Yes — one click, and exports stay available.</p></details>
           </div>
         </div>
         <pre id="code-block-faq"><code></code></pre>
@@ -3045,7 +3055,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </p>
         <div class="demo">
           <div class="stack">
-            <p class="row-loose text-small" style="color: var(--text-muted); max-width: none;">
+            <p class="row-loose text-footnote" style="color: var(--text-muted); max-width: none;">
               <strong>THE HINDU</strong><strong>MINT</strong><strong>MONEYCONTROL</strong><strong>ET</strong>
             </p>
             <figure class="media-figure row" style="align-items: flex-start;">
@@ -3159,7 +3169,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
               <input type="email" autocomplete="email" placeholder="asha@example.com">
               <span class="field-hint">Receipts go here, nothing else</span>
             </label>
-            <p class="row" style="margin-top: var(--space-2);">
+            <p class="row" style="margin-top: var(--space-control);">
               <button class="btn btn-primary" data-event="form-save" data-tip="The one submit">Save details</button>
               <button class="btn btn-ghost" type="reset">Clear</button>
             </p>
@@ -3186,9 +3196,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <header class="stack-tight">
               <p class="text-caption" style="margin: 0;">GUIDES · 6 MIN</p>
               <h4 class="text-h2" style="margin: 0;">What inflation does to a decade</h4>
-              <p class="text-small" style="color: var(--text-muted);">Tanishk Sharma · 5 July 2026</p>
+              <p class="text-footnote" style="color: var(--text-muted);">Tanishk Sharma · 5 July 2026</p>
             </header>
-            <p class="text-small">A lakh in 2014 does not buy what it used to — and the gap is not a feeling, it is a number you can chart…</p>
+            <p class="text-footnote">A lakh in 2014 does not buy what it used to — and the gap is not a feeling, it is a number you can chart…</p>
             <blockquote class="pullquote">Money you do not grow is money you quietly spend.<footer>from the guide</footer></blockquote>
             <figure class="media-figure">
               <span class="bg-ruled" style="display:block; aspect-ratio: 16/7; border-radius: var(--radius-medium);" aria-hidden="true"></span>
@@ -3243,7 +3253,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
     </main>
   </div>
 
-  <footer class="container-wide" style="padding-block: var(--space-6); border-top: var(--border-width) solid var(--border);">
+  <footer class="container-wide" style="padding-block: var(--space-page); border-top: var(--border-width) solid var(--border);">
     <small>Facet · plain HTML, CSS and JS · <a href="https://github.com/tanishksharma/Facet">source on GitHub</a> · <a href="/llms.txt">llms.txt</a></small>
   </footer>
 

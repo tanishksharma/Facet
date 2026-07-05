@@ -20,25 +20,25 @@
     .page {
       width: 210mm;
       min-height: 297mm;
-      margin: var(--space-5) auto;
+      margin: var(--space-card) auto;
       padding: 22mm 20mm;
       background: var(--background);
       box-shadow: var(--shadow-floating);
       display: flex;
       flex-direction: column;
-      gap: var(--space-5);
+      gap: var(--space-card);
     }
     .page-head {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       border-bottom: var(--border-width-strong) solid var(--text);
-      padding-bottom: var(--space-3);
+      padding-bottom: var(--space-inline);
     }
     .page-foot {
       margin-top: auto;
       border-top: var(--border-width) solid var(--border);
-      padding-top: var(--space-3);
+      padding-top: var(--space-inline);
       font-size: var(--text-caption);
       color: var(--text-muted);
       display: flex;
@@ -72,8 +72,8 @@
       <span class="text-h4"><strong>Invoice #2026-041</strong></span>
     </header>
     <div class="row" style="justify-content: space-between;">
-      <span class="text-small"><strong>Billed to</strong><br>Asha Rao<br>Pune 411001</span>
-      <span class="text-small" style="text-align: right;"><strong>Issued</strong> 5 Jul 2026<br><strong>Due</strong> 19 Jul 2026</span>
+      <span class="text-footnote"><strong>Billed to</strong><br>Asha Rao<br>Pune 411001</span>
+      <span class="text-footnote" style="text-align: right;"><strong>Issued</strong> 5 Jul 2026<br><strong>Due</strong> 19 Jul 2026</span>
     </div>
     <table class="table">
       <thead><tr><th scope="col">Item</th><th scope="col" class="num">Qty</th><th scope="col" class="num">Rate</th><th scope="col" class="num">Amount</th></tr></thead>

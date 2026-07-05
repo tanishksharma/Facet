@@ -52,7 +52,29 @@ spacing separately. Density/type-size compose like `data-mode`.
       themes light+dark, no build. Update the tokens docs on index.html,
       Features, llms.txt and facet.json together. Heaviest system → leads.
 
-### Manual redesign: granular feature/rule cards + How-to-use steps (NEW)
+### Site architecture: split the one page into a real multi-page site (NEW)
+
+The home page is over-loaded. Split into top-level pages, each in the header:
+- Home `/`: ABOUT + philosophy + the granular Features + Rules + How-to-use.
+  Philosophy: modern frontend is a div-soup, minified mess; Facet is the
+  opposite — simple, readable, easy to use (that ease is itself a feature).
+  This is the only content on home; it talks about the library and why.
+- Components `/components.html` (or dir): the element wall, moved off home.
+- Layouts `/layouts.html`: the blocks + templates, shown as layouts.
+- Build a theme `/build.html`: exists (theme builder + Skin Lab).
+- llms.txt PAGE (not only the file): a visible AI-instructions page — an
+  extremely condensed, all-text version of every page's content. Top note:
+  "these are the instructions your AI sees when it searches for this library."
+  The `/llms.txt` file still exists for crawlers that fetch it, but the page
+  is the human-visible, crawlable instruction surface (SEO + AI land on a
+  page, not a raw file).
+
+Header nav becomes: Home · Components · Layouts · Build a theme · llms.txt ·
+GitHub. This RESHAPES the manual-redesign item below — its Features/Rules/
+How-to content becomes the home page. Do the manual redesign as part of
+building the home page. Update sitemap, robots, facet.json, and cross-links.
+
+### Manual redesign: granular feature/rule cards + How-to-use steps (NEW · folds into the home page above)
 
 Features (9) and Rules (8) were condensed too far. Break them into MANY
 individual marketable points — 20–30+ features (playing sound, parallax,
