@@ -710,13 +710,19 @@ function relocateTools() {
 function initWallFilter() {
   const chips = [...document.querySelectorAll(".wall-filter [data-chip-cat]")];
   if (!chips.length) return;
-  const articles = [...document.querySelectorAll("article.element[data-cat]")];
+  // Only the six Layer-2 categories are filtered; app-kit (Layer 5) and any
+  // uncategorised article are untouched, so the filter can't reach past its
+  // own layer on the merged page.
+  const catset = new Set(chips.map(c => c.dataset.chipCat).filter(c => c !== "all"));
+  const articles = [...document.querySelectorAll("article.element[data-cat]")].filter(a => catset.has(a.dataset.cat));
   const groups = [...document.querySelectorAll(".wall-group")];
 
   const updateGroups = () => {
     for (const g of groups) {
+      // stop at the next category heading OR the next layer (section / band),
+      // so a category's visibility never depends on another layer's articles.
       let visible = false, el = g.nextElementSibling;
-      while (el && !el.classList.contains("wall-group")) {
+      while (el && !el.classList.contains("wall-group") && !el.matches("section, .layer-band")) {
         if (el.matches("article.element") && !el.classList.contains("cat-hidden") && !el.hidden) { visible = true; break; }
         el = el.nextElementSibling;
       }

@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Components — Facet</title>
-  <meta name="description" content="Every Facet component, live and copyable: tokens, base styles and the full element wall, each with its variants, states and exact snippet.">
-  <meta property="og:title" content="Components — Facet">
-  <meta property="og:description" content="Every Facet component, live and copyable: tokens, base styles and the full element wall, each with its variants, states and exact snippet.">
+  <title>Library — Facet</title>
+  <meta name="description" content="The whole Facet library on one page: tokens and base styles, every component grouped and filterable, the block layer, whole-page templates with live device previews, and the app-feel layer — motion, sound and the app kit.">
+  <meta property="og:title" content="Library — Facet">
+  <meta property="og:description" content="The whole Facet library on one page: tokens and base styles, every component grouped and filterable, the block layer, whole-page templates with live device previews, and the app-feel layer — motion, sound and the app kit.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23FFFFFF'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%2317171B'/></svg>">
   <link rel="stylesheet" href="/lib/facet.css">
@@ -22,8 +22,7 @@
       <a class="wordmark" href="/">facet</a>
       <div class="site-links">
         <a class="site-link" href="/" data-tip-below data-tip="What Facet is and how to use it">Home</a>
-        <a class="site-link" href="/components.html" aria-current="page" data-tip-below data-tip="Every component, live and copyable">Components</a>
-        <a class="site-link" href="/layouts.html" data-tip-below data-tip="Blocks and whole-page templates">Layouts</a>
+        <a class="site-link" href="/library.html" aria-current="page" data-tip-below data-tip="The whole library: tokens, components, blocks, templates, app feel">Library</a>
         <a class="site-link" href="/playground.html" data-tip-below data-tip="Try a snippet live, and look any class up">Playground</a>
         <a class="site-link" href="/build.html" data-tip-below data-tip="Build your own theme, live — plus Skin Lab">Build a theme</a>
         <a class="site-link" href="/llms.txt" data-tip-below data-tip="The whole library as plain text, for LLMs">llms.txt</a>
@@ -97,6 +96,43 @@
         <p class="nav-sub">Status</p>
         <ul>
           <li><a href="#waiting">Skeleton, spinner, empty</a></li>
+        </ul>
+        </details>
+        <details class="nav-group" data-group="layer4">
+          <summary><span class="nav-group-name">Layer 3 · Blocks</span><span class="nav-group-desc">The components, assembled into page sections.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        <ul>
+          <li><a href="#block-card-grid">Card grid &amp; row</a></li>
+          <li><a href="#block-filter-list">Filterable &amp; list cards</a></li>
+          <li><a href="#block-product-grid">Product grid &amp; detail</a></li>
+          <li><a href="#block-cart">Cart</a></li>
+          <li><a href="#block-top-menu">Top menu, sidebar, footer</a></li>
+          <li><a href="#block-hero">Hero &amp; feature grid</a></li>
+          <li><a href="#block-pricing">Pricing, FAQ, CTA</a></li>
+          <li><a href="#block-social-proof">Logos &amp; testimonial</a></li>
+          <li><a href="#block-data-table">Data table &amp; stats</a></li>
+          <li><a href="#block-settings">Settings &amp; form</a></li>
+          <li><a href="#block-article">Article set</a></li>
+        </ul>
+        </details>
+        <details class="nav-group" data-group="templates">
+          <summary><span class="nav-group-name">Layer 4 · Templates</span><span class="nav-group-desc">Whole pages — full app and site layouts.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        <ul>
+          <li><a href="#template-landing">Landing page</a></li>
+          <li><a href="#template-saas">SaaS dashboard</a></li>
+          <li><a href="#template-social">Social app</a></li>
+          <li><a href="#templates">Every template</a></li>
+        </ul>
+        </details>
+        <details class="nav-group" data-group="appfeel">
+          <summary><span class="nav-group-name">Layer 5 · App feel</span><span class="nav-group-desc">Motion, sound, surfaces and the app kit.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        <ul>
+          <li><a href="#motion-pack">Parallax &amp; idle</a></li>
+          <li><a href="#feedback">Sound &amp; haptics</a></li>
+          <li><a href="#backgrounds">Backgrounds</a></li>
+          <li><a href="#tab-bar">Tab bar</a></li>
+          <li><a href="#sheet">Sheet &amp; menu</a></li>
+          <li><a href="#float-button">Float button</a></li>
+          <li><a href="#scroll-gauge">Scroll gauge</a></li>
         </ul>
         </details>
       </nav>
@@ -1506,6 +1542,927 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-waiting"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-waiting" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- =============================================================
+           LAYER 3 · BLOCKS
+           Assemblies of the components above, documented as copyable
+           patterns. Most add zero CSS: the primitives already carry
+           the design; the block is the arrangement.
+           ============================================================= -->
+      <section id="blocks" class="stack">
+        <h2>Blocks</h2>
+        <p>
+          Ready arrangements of the components above. A block is not a
+          new thing to learn — it is proof that the primitives
+          compose, shipped as markup you copy whole. Each one follows
+          the same rules as everything else: semantic tags, no extra
+          wrappers, states and hooks included.
+        </p>
+      </section>
+
+      <!-- CARD GRID -->
+      <article class="element stack" id="block-card-grid">
+        <h3 data-status="stable">Grid of cards</h3>
+        <p>
+          What it is: cards in the auto-fitting grid — as many columns
+          as fit, one on phones, no breakpoints. What it is for: any
+          set of same-shaped things. When to use it: the default way
+          to lay out more than two cards.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <article class="card stack-tight"><strong>Groceries</strong><p class="text-footnote">₹ 12,480 this month</p></article>
+            <article class="card stack-tight"><strong>Travel</strong><p class="text-footnote">₹ 31,200 this month</p></article>
+            <article class="card stack-tight"><strong>Rent</strong><p class="text-footnote">₹ 48,000 this month</p></article>
+          </div>
+        </div>
+        <pre id="code-block-card-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-card-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CARD ROW -->
+      <article class="element stack" id="block-card-row">
+        <h3 data-status="stable">Horizontal card row</h3>
+        <p>
+          What it is: cards that scroll sideways with momentum and a
+          gentle per-card snap — proximity snap is safe here; the
+          pager law is about full-page sections. What it is for:
+          browsable shelves: recents, suggestions, categories. When to
+          use it: when the list is long but the screen is not.
+        </p>
+        <div class="demo">
+          <div class="card-row" data-tip="Scroll me sideways">
+            <article class="card stack-tight"><strong>April</strong><p class="text-footnote">Saved ₹ 8,200</p></article>
+            <article class="card stack-tight"><strong>May</strong><p class="text-footnote">Saved ₹ 9,750</p></article>
+            <article class="card stack-tight"><strong>June</strong><p class="text-footnote">Saved ₹ 7,120</p></article>
+            <article class="card stack-tight"><strong>July</strong><p class="text-footnote">Saved ₹ 10,400</p></article>
+            <article class="card stack-tight"><strong>August</strong><p class="text-footnote">Saved ₹ 6,900</p></article>
+          </div>
+        </div>
+        <pre id="code-block-card-row"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-card-row" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FILTERABLE LIST -->
+      <article class="element stack" id="block-filter-list">
+        <h3 data-status="stable">Filterable card list</h3>
+        <p>
+          What it is: a search field over a list — the input carries
+          <code>data-filter</code> pointing at the container and
+          facet.js live-hides children that do not match. The markup
+          is the data. What it is for: lists a reader scans by name:
+          projects, contacts, settings. When to use it: from about ten
+          items up.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <label class="field">
+              <span class="field-label">Find a project</span>
+              <input type="search" data-filter="#demo-filter-list" placeholder="Type to filter" data-tip="Hides rows that do not match">
+            </label>
+            <div class="stack-tight" id="demo-filter-list">
+              <article class="card-outlined">Inflation calculator</article>
+              <article class="card-outlined">Wedding budget</article>
+              <article class="card-outlined">Retirement plan</article>
+            </div>
+          </div>
+        </div>
+        <pre id="code-block-filter-list"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-filter-list" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- LIST CARDS -->
+      <article class="element stack" id="block-list-cards">
+        <h3 data-status="stable">List cards</h3>
+        <p>
+          What it is: stacked full-width rows — an outlined card per
+          record with the fields in a row inside. What it is for:
+          records that read left to right: name, meta, amount, action.
+          When to use it: when each row carries more than a table cell
+          should, but less than a full card grid deserves.
+        </p>
+        <div class="demo">
+          <div class="stack-tight">
+            <article class="card-outlined row">
+              <span class="avatar" aria-hidden="true">GR</span>
+              <span><strong>Groceries</strong><br><span class="text-caption">14 entries · June</span></span>
+              <span class="num" style="margin-left: auto; font-variant-numeric: tabular-nums;"><strong>₹ 12,480</strong></span>
+            </article>
+            <article class="card-outlined row">
+              <span class="avatar" aria-hidden="true">TR</span>
+              <span><strong>Travel</strong><br><span class="text-caption">3 entries · June</span></span>
+              <span class="num" style="margin-left: auto; font-variant-numeric: tabular-nums;"><strong>₹ 31,200</strong></span>
+            </article>
+          </div>
+        </div>
+        <pre id="code-block-list-cards"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-list-cards" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- PRODUCT GRID -->
+      <article class="element stack" id="block-product-grid">
+        <h3 data-status="stable">Product grid</h3>
+        <p>
+          What it is: clickable cards of image, title, price, action —
+          the whole card is the link, the action is the one button.
+          What it is for: shop shelves and catalogues. When to use it:
+          anything bought or picked. The image slot is a quiet
+          background box until a real image fills it.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <a class="card card-clickable stack-tight" href="#block-product-grid">
+              <span class="bg-dots" style="display:block; aspect-ratio: 4/3; border-radius: var(--radius-panel);" aria-hidden="true"></span>
+              <strong>Field notebook</strong>
+              <span class="row" style="justify-content: space-between;"><span class="text-footnote">₹ 450</span><span class="badge badge-success">In stock</span></span>
+            </a>
+            <a class="card card-clickable stack-tight" href="#block-product-grid">
+              <span class="bg-dots" style="display:block; aspect-ratio: 4/3; border-radius: var(--radius-panel);" aria-hidden="true"></span>
+              <strong>Brass ruler</strong>
+              <span class="row" style="justify-content: space-between;"><span class="text-footnote">₹ 720</span><span class="badge">Few left</span></span>
+            </a>
+          </div>
+        </div>
+        <pre id="code-block-product-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-product-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- PRODUCT DETAIL -->
+      <article class="element stack" id="block-product-detail">
+        <h3 data-status="stable">Product detail</h3>
+        <p>
+          What it is: gallery beside the info panel — image column and
+          a stack of name, price, chooser and the one primary action.
+          What it is for: the page one product gets. When to use it:
+          after a product grid click. On phones the columns stack.
+        </p>
+        <div class="demo">
+          <div class="grid grid-wide">
+            <span class="bg-graph" style="display:block; aspect-ratio: 1; border-radius: var(--radius-panel);" aria-hidden="true"></span>
+            <div class="stack">
+              <h4 style="margin: 0;">Field notebook</h4>
+              <p class="text-footnote">Dot-gridded, 120 pages, lies flat.</p>
+              <p class="text-h3" style="margin: 0;"><strong>₹ 450</strong></p>
+              <fieldset class="segmented" aria-label="Size">
+                <label><input type="radio" name="size" checked><span>A6</span></label>
+                <label><input type="radio" name="size"><span>A5</span></label>
+              </fieldset>
+              <p class="row"><button class="btn btn-primary" data-event="cart-add" data-tip="The one primary action">Add to cart</button>
+              <button class="btn btn-icon" aria-label="Save for later" data-tip="Save for later"><svg data-icon="heart"></svg></button></p>
+            </div>
+          </div>
+        </div>
+        <pre id="code-block-product-detail"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-product-detail" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CART -->
+      <article class="element stack" id="block-cart">
+        <h3 data-status="stable">Cart line items</h3>
+        <p>
+          What it is: the order as honest rows — item, stepper for
+          quantity, line total — with the totals block closing it.
+          What it is for: carts and order summaries. When to use it:
+          any purchase review. The verdict line (the grand total) is
+          the biggest thing on it, per the result-block rule.
+        </p>
+        <div class="demo">
+          <div class="stack-tight">
+            <div class="row" style="justify-content: space-between;">
+              <span><strong>Field notebook</strong> <span class="text-caption">A6</span></span>
+              <span class="row-tight">
+                <span class="stepper" role="group" aria-label="Quantity">
+                  <button type="button" class="stepper-down" aria-label="Fewer">&minus;</button>
+                  <input type="number" value="2" min="1" max="9" aria-label="Quantity">
+                  <button type="button" class="stepper-up" aria-label="More">+</button>
+                </span>
+                <strong style="font-variant-numeric: tabular-nums;">₹ 900</strong>
+              </span>
+            </div>
+            <hr>
+            <div class="row" style="justify-content: space-between;"><span class="text-footnote">Delivery</span><span class="text-footnote">₹ 60</span></div>
+            <div class="result"><span>Total</span><strong>₹ 960</strong></div>
+          </div>
+        </div>
+        <pre id="code-block-cart"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-cart" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- TOP MENU -->
+      <article class="element stack" id="block-top-menu">
+        <h3 data-status="stable">Full top menu</h3>
+        <p>
+          What it is: the site header — wordmark, nav links, actions;
+          on phones the links fold behind a native details disclosure,
+          no hamburger framework. What it is for: every site's first
+          row. When to use it: pages, not installed apps (apps get the
+          tab bar). Resize this page to see the fold.
+        </p>
+        <div class="demo">
+          <header class="top-menu">
+            <span class="wordmark-slot">acme</span>
+            <nav class="top-menu-links" aria-label="Site">
+              <a class="nav-link" href="#block-top-menu" aria-current="page">Home</a>
+              <a class="nav-link" href="#block-top-menu">Pricing</a>
+              <a class="nav-link" href="#block-top-menu">Docs</a>
+            </nav>
+            <button class="btn btn-primary btn-small" data-event="signup" data-tip="The header's one action">Sign up</button>
+            <details class="top-menu-fold">
+              <summary class="btn btn-ghost btn-small" data-tip="The phone fold"><svg data-icon="menu"></svg> Menu</summary>
+              <nav class="top-menu-links" aria-label="Site">
+                <a class="nav-link" href="#block-top-menu" aria-current="page">Home</a>
+                <a class="nav-link" href="#block-top-menu">Pricing</a>
+                <a class="nav-link" href="#block-top-menu">Docs</a>
+              </nav>
+            </details>
+          </header>
+        </div>
+        <pre id="code-block-top-menu"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-top-menu" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SIDEBAR NAV -->
+      <article class="element stack" id="block-sidebar-nav">
+        <h3 data-status="stable">Sidebar navigation</h3>
+        <p>
+          What it is: sectioned nav-link groups in an aside — exactly
+          the pattern this page's own index uses. What it is for: app
+          and docs shells with more destinations than a top row holds.
+          When to use it: three sections or more; fewer fit the top
+          menu.
+        </p>
+        <div class="demo">
+          <aside style="max-width: 16rem;">
+            <nav class="stack-tight" aria-label="Example sections">
+              <p class="text-caption" style="margin: 0;">LEDGER</p>
+              <a class="nav-link" href="#block-sidebar-nav" aria-current="page">Overview</a>
+              <a class="nav-link" href="#block-sidebar-nav">Entries</a>
+              <p class="text-caption" style="margin: 0;">SETTINGS</p>
+              <a class="nav-link" href="#block-sidebar-nav">Categories</a>
+              <a class="nav-link" href="#block-sidebar-nav">Backups</a>
+            </nav>
+          </aside>
+        </div>
+        <pre id="code-block-sidebar-nav"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-sidebar-nav" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FOOTER -->
+      <article class="element stack" id="block-footer">
+        <h3 data-status="stable">Footer</h3>
+        <p>
+          What it is: link columns over a legal row. What it is for:
+          the bottom of every site page. When to use it: always —
+          a page that ends abruptly reads as broken.
+        </p>
+        <div class="demo">
+          <footer class="stack">
+            <div class="grid">
+              <nav class="stack-tight" aria-label="Product"><p class="text-caption" style="margin:0;">PRODUCT</p><a class="nav-link" href="#block-footer">Pricing</a><a class="nav-link" href="#block-footer">Changelog</a></nav>
+              <nav class="stack-tight" aria-label="Company"><p class="text-caption" style="margin:0;">COMPANY</p><a class="nav-link" href="#block-footer">About</a><a class="nav-link" href="#block-footer">Contact</a></nav>
+              <nav class="stack-tight" aria-label="Legal"><p class="text-caption" style="margin:0;">LEGAL</p><a class="nav-link" href="#block-footer">Privacy</a><a class="nav-link" href="#block-footer">Terms</a></nav>
+            </div>
+            <hr>
+            <p class="text-caption">© 2026 Acme. Built on Facet.</p>
+          </footer>
+        </div>
+        <pre id="code-block-footer"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-footer" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- HERO -->
+      <article class="element stack" id="block-hero">
+        <h3 data-status="stable">Hero</h3>
+        <p>
+          What it is: the opening statement — display type, one line
+          under it, one primary action (and at most one quiet second).
+          What it is for: the top of a landing page. When to use it:
+          once. A page has one hero the way a screen has one primary.
+        </p>
+        <div class="demo">
+          <div class="hero bg-grid" style="padding-inline: var(--space-card); border-radius: var(--radius-panel);">
+            <p class="text-display" style="margin: 0;">Know what your money will be worth.</p>
+            <p class="text-footnote" style="color: var(--text-muted);">Inflation, explained with your own numbers.</p>
+            <p class="row"><a class="btn btn-primary" href="#block-hero" data-event="hero-start">Start free</a>
+            <a class="flagship-link" href="#block-hero" style="font-size: var(--text-body);">See how it works</a></p>
+          </div>
+        </div>
+        <pre id="code-block-hero"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-hero" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FEATURE GRID -->
+      <article class="element stack" id="block-feature-grid">
+        <h3 data-status="stable">Feature grid</h3>
+        <p>
+          What it is: icon, claim, one sentence — repeated in the
+          auto-fitting grid. What it is for: the "what you get"
+          section of a landing page. When to use it: three to six
+          features; more belong in docs.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <div class="stack-tight"><svg data-icon="clock"></svg><strong>Live rates</strong><p class="text-footnote">Updated the moment the data lands.</p></div>
+            <div class="stack-tight"><svg data-icon="lock"></svg><strong>Private</strong><p class="text-footnote">Your numbers never leave the page.</p></div>
+            <div class="stack-tight"><svg data-icon="download"></svg><strong>Yours</strong><p class="text-footnote">Export everything, any time.</p></div>
+          </div>
+        </div>
+        <pre id="code-block-feature-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-feature-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- PRICING -->
+      <article class="element stack" id="block-pricing">
+        <h3 data-status="stable">Pricing table</h3>
+        <p>
+          What it is: plan cards side by side — name, price, the
+          differences as a short list, one action each; the
+          recommended plan carries the page's one primary. What it is
+          for: choosing a plan without a spreadsheet. When to use it:
+          two or three plans. More than three is a decision problem,
+          not a layout problem.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <article class="card stack">
+              <p class="text-caption" style="margin:0;">FREE</p>
+              <p class="text-h2" style="margin:0;"><strong>₹ 0</strong></p>
+              <ul class="text-footnote" style="margin:0;"><li>3 reports</li><li>Every theme</li></ul>
+              <button class="btn" data-event="plan-free">Start</button>
+            </article>
+            <article class="card stack" style="border-color: var(--accent-3);">
+              <p class="text-caption" style="margin:0;">PRO · RECOMMENDED</p>
+              <p class="text-h2" style="margin:0;"><strong>₹ 199</strong><span class="text-caption">/mo</span></p>
+              <ul class="text-footnote" style="margin:0;"><li>Unlimited reports</li><li>Exports &amp; sharing</li></ul>
+              <button class="btn btn-primary" data-event="plan-pro" data-tip="The page's one primary action">Go Pro</button>
+            </article>
+          </div>
+        </div>
+        <pre id="code-block-pricing"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-pricing" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FAQ -->
+      <article class="element stack" id="block-faq">
+        <h3 data-status="stable">FAQ list</h3>
+        <p>
+          What it is: accordions with a shared <code>name</code> — the
+          browser keeps one answer open, no JS. What it is for: the
+          questions people actually ask, at the bottom of a landing or
+          checkout page. When to use it: five to ten questions; more
+          means the page above failed to explain.
+        </p>
+        <div class="demo">
+          <div>
+            <details class="accordion" name="landing-faq"><summary>Is my data private?</summary><p class="text-footnote">Everything computes in your browser; nothing is sent anywhere.</p></details>
+            <details class="accordion" name="landing-faq"><summary>Can I cancel any time?</summary><p class="text-footnote">Yes — one click, and exports stay available.</p></details>
+          </div>
+        </div>
+        <pre id="code-block-faq"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-faq" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CTA BAND -->
+      <article class="element stack" id="block-cta">
+        <h3 data-status="stable">CTA band</h3>
+        <p>
+          What it is: the closing ask — an ink-filled strip that flips
+          to the on-accent voice, one line and one button. What it is
+          for: the end of a landing page, after the case is made. When
+          to use it: once, last.
+        </p>
+        <div class="demo">
+          <div class="cta-band">
+            <p class="text-h3" style="margin: 0;"><strong>Ready when you are.</strong></p>
+            <button class="btn" style="background: var(--on-accent-1); color: var(--accent-1); border-color: transparent;" data-event="cta-start" data-tip="The closing action">Start free</button>
+          </div>
+        </div>
+        <pre id="code-block-cta"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-cta" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- LOGO ROW + TESTIMONIAL -->
+      <article class="element stack" id="block-social-proof">
+        <h3 data-status="stable">Logo row &amp; testimonial</h3>
+        <p>
+          What it is: the proof pair — a muted row of names that trust
+          you, and one quote with a face and a name. What it is for:
+          landing pages between the hero and the features. When to use
+          it: only with real logos and real quotes; invented proof
+          reads as invented.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <p class="row-loose text-footnote" style="color: var(--text-muted); max-width: none;">
+              <strong>THE HINDU</strong><strong>MINT</strong><strong>MONEYCONTROL</strong><strong>ET</strong>
+            </p>
+            <figure class="media-figure row" style="align-items: flex-start;">
+              <span class="avatar" aria-hidden="true">AR</span>
+              <blockquote class="pullquote" style="border: none; padding-left: 0; font-size: var(--text-h4);">
+                The first calculator my parents actually understood.
+                <footer>Asha R · Pune</footer>
+              </blockquote>
+            </figure>
+          </div>
+        </div>
+        <pre id="code-block-social-proof"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-social-proof" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- DATA TABLE WITH TOOLBAR -->
+      <article class="element stack" id="block-data-table">
+        <h3 data-status="stable">Data table with toolbar</h3>
+        <p>
+          What it is: search, filter chips and actions in a row above
+          the data table — the search input filters rows live via
+          <code>data-filter</code>. What it is for: the working screen
+          of any records app. When to use it: whenever a table grows
+          past one screenful.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <div class="row">
+              <input type="search" data-filter="#demo-toolbar-rows" placeholder="Filter entries" aria-label="Filter entries" style="flex: 1; min-width: 10rem;" data-tip="Live-filters the rows below">
+              <button class="chip" aria-pressed="false" data-tip="A filter chip">June</button>
+              <button class="btn btn-small" data-event="table-export" data-tip="An action on the whole table">Export</button>
+            </div>
+            <div class="table-scroll">
+              <table class="table">
+                <thead><tr><th scope="col">Entry</th><th scope="col" class="num">Amount</th></tr></thead>
+                <tbody id="demo-toolbar-rows">
+                  <tr><td>Groceries</td><td class="num">12,480</td></tr>
+                  <tr><td>Travel</td><td class="num">31,200</td></tr>
+                  <tr><td>Rent</td><td class="num">48,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <pre id="code-block-data-table"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-data-table" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- STAT ROW -->
+      <article class="element stack" id="block-stat-row">
+        <h3 data-status="stable">Stat row</h3>
+        <p>
+          What it is: KPI cards — one number that matters with its
+          label under it, tabular digits, in the grid. What it is for:
+          the top of a dashboard. When to use it: three or four
+          numbers; a wall of KPIs is a report, not a dashboard.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <div class="stat"><strong>₹ 91,680</strong><span>SPENT · JUNE</span></div>
+            <div class="stat"><strong>₹ 10,400</strong><span>SAVED · JUNE</span></div>
+            <div class="stat"><strong>6.2%</strong><span>INFLATION · YOY</span></div>
+          </div>
+        </div>
+        <pre id="code-block-stat-row"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-stat-row" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SETTINGS SECTION -->
+      <article class="element stack" id="block-settings">
+        <h3 data-status="stable">Settings section</h3>
+        <p>
+          What it is: labelled rows with their controls — switches,
+          selects, steppers — in a quiet stack under a section
+          caption. What it is for: preference screens. When to use it:
+          every setting a product has, in one predictable shape.
+        </p>
+        <div class="demo">
+          <div class="stack-tight" style="max-width: 26rem;">
+            <p class="text-caption" style="margin: 0;">NOTIFICATIONS</p>
+            <label class="check-row" style="justify-content: space-between;">Monthly summary <input type="checkbox" class="switch" checked data-event="setting-summary"></label>
+            <label class="check-row" style="justify-content: space-between;">Rate alerts <input type="checkbox" class="switch" data-event="setting-alerts"></label>
+            <label class="field">
+              <span class="field-label">Currency</span>
+              <select><option>Rupee ₹</option><option>Dollar $</option></select>
+            </label>
+          </div>
+        </div>
+        <pre id="code-block-settings"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-settings" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FORM SECTION -->
+      <article class="element stack" id="block-form">
+        <h3 data-status="stable">Form section</h3>
+        <p>
+          What it is: grouped fields with one submit row — a fieldset
+          per group, the primary action last and alone. What it is
+          for: anything the reader fills in. When to use it: always
+          this shape; forms that scatter their buttons scatter their
+          completion rates.
+        </p>
+        <div class="demo">
+          <form class="stack" style="max-width: 26rem;" onsubmit="return false">
+            <label class="field">
+              <span class="field-label">Full name</span>
+              <input type="text" autocomplete="name" placeholder="Asha Rao">
+            </label>
+            <label class="field">
+              <span class="field-label">Email</span>
+              <input type="email" autocomplete="email" placeholder="asha@example.com">
+              <span class="field-hint">Receipts go here, nothing else</span>
+            </label>
+            <p class="row" style="margin-top: var(--space-control);">
+              <button class="btn btn-primary" data-event="form-save" data-tip="The one submit">Save details</button>
+              <button class="btn btn-ghost" type="reset">Clear</button>
+            </p>
+          </form>
+        </div>
+        <pre id="code-block-form"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-form" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ARTICLE HEADER + PROSE + MEDIA -->
+      <article class="element stack" id="block-article">
+        <h3 data-status="stable">Article header, prose, media</h3>
+        <p>
+          What it is: the editorial set — a header of title, byline
+          and meta; long-form prose that is just semantic tags on the
+          narrow container (the base styles are the design); a media
+          figure with its caption attached; and the pull quote for the
+          sentence worth stealing. What it is for: articles, guides,
+          changelogs. When to use it: any page someone reads top to
+          bottom.
+        </p>
+        <div class="demo">
+          <article class="stack" style="max-width: 44rem;">
+            <header class="stack-tight">
+              <p class="text-caption" style="margin: 0;">GUIDES · 6 MIN</p>
+              <h4 class="text-h2" style="margin: 0;">What inflation does to a decade</h4>
+              <p class="text-footnote" style="color: var(--text-muted);">Tanishk Sharma · 5 July 2026</p>
+            </header>
+            <p class="text-footnote">A lakh in 2014 does not buy what it used to — and the gap is not a feeling, it is a number you can chart…</p>
+            <blockquote class="pullquote">Money you do not grow is money you quietly spend.<footer>from the guide</footer></blockquote>
+            <figure class="media-figure">
+              <span class="bg-ruled" style="display:block; aspect-ratio: 16/7; border-radius: var(--radius-panel);" aria-hidden="true"></span>
+              <figcaption>The same basket, priced across ten years.</figcaption>
+            </figure>
+          </article>
+        </div>
+        <pre id="code-block-article"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-article" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- =============================================================
+           TEMPLATES · whole pages, ready to rename
+           ============================================================= -->
+      <section id="templates" class="stack">
+        <h2>Templates</h2>
+        <p>
+          Layer 4 is the whole page. Where Layer 3 assembles components into
+          sections, Layer 4 assembles sections into a finished product — full
+          layouts you rename and fill in. The three flagship shapes render live
+          below in a real iframe: flip <strong>Desktop</strong>,
+          <strong>Tablet</strong> and <strong>Phone</strong> to see each
+          template's genuine responsive layout at that width, or open the full
+          page. Every template links the same <code>/lib/facet.css</code> this
+          site does and ships the SEO head pack. The whole set is listed
+          underneath.
+        </p>
+
+        <!-- Flagship previews: each iframe loads the real template page and
+             is transform-scaled to fit this column (initDevicePreview). -->
+        <article class="stack" id="template-landing" aria-labelledby="template-landing-h">
+          <h3 id="template-landing-h">Landing page</h3>
+          <p>
+            A marketing site from the block layer: top menu, hero, social
+            proof, feature grid, pricing, FAQ, CTA band and footer. Swap the
+            words, keep the shape.
+          </p>
+          <div class="device-preview" data-src="/templates/landing.html">
+            <p class="chips" role="group" aria-label="Landing preview width">
+              <button class="chip" data-chip-device="desktop" aria-pressed="true" data-tip="Full desktop width">Desktop</button>
+              <button class="chip" data-chip-device="tablet" aria-pressed="false" data-tip="Tablet width, 834px">Tablet</button>
+              <button class="chip" data-chip-device="phone" aria-pressed="false" data-tip="Phone width, 390px">Phone</button>
+              <a class="btn btn-small btn-ghost" href="/templates/landing.html" target="_blank" rel="noopener" data-tip="Open the full template in a new tab" data-event="template-open">Open ↗</a>
+            </p>
+            <div class="device-stage"><iframe class="device-frame" title="Landing page template preview" loading="lazy"></iframe></div>
+          </div>
+        </article>
+
+        <article class="stack" id="template-saas" aria-labelledby="template-saas-h">
+          <h3 id="template-saas-h">SaaS dashboard</h3>
+          <p>
+            An analytics product — Northstar — with a folding sidebar, a top
+            bar, a KPI stat row, a live chart, and a filterable table beside an
+            activity panel. The everyday shape of a web app.
+          </p>
+          <div class="device-preview" data-src="/templates/saas.html">
+            <p class="chips" role="group" aria-label="SaaS dashboard preview width">
+              <button class="chip" data-chip-device="desktop" aria-pressed="true" data-tip="Full desktop width">Desktop</button>
+              <button class="chip" data-chip-device="tablet" aria-pressed="false" data-tip="Tablet width, 834px">Tablet</button>
+              <button class="chip" data-chip-device="phone" aria-pressed="false" data-tip="Phone width, 390px">Phone</button>
+              <a class="btn btn-small btn-ghost" href="/templates/saas.html" target="_blank" rel="noopener" data-tip="Open the full template in a new tab" data-event="template-open">Open ↗</a>
+            </p>
+            <div class="device-stage"><iframe class="device-frame" title="SaaS dashboard template preview" loading="lazy"></iframe></div>
+          </div>
+        </article>
+
+        <article class="stack" id="template-social" aria-labelledby="template-social-h">
+          <h3 id="template-social-h">Social app</h3>
+          <p>
+            A three-column feed — Ripple — that folds to one column with a
+            bottom tab bar on phones, showing off the app-kit tab bar and the
+            settings sheet. Compose box, a live feed, trends and who-to-follow.
+          </p>
+          <div class="device-preview" data-src="/templates/social.html">
+            <p class="chips" role="group" aria-label="Social app preview width">
+              <button class="chip" data-chip-device="desktop" aria-pressed="true" data-tip="Full desktop width">Desktop</button>
+              <button class="chip" data-chip-device="tablet" aria-pressed="false" data-tip="Tablet width, 834px">Tablet</button>
+              <button class="chip" data-chip-device="phone" aria-pressed="false" data-tip="Phone width, 390px">Phone</button>
+              <a class="btn btn-small btn-ghost" href="/templates/social.html" target="_blank" rel="noopener" data-tip="Open the full template in a new tab" data-event="template-open">Open ↗</a>
+            </p>
+            <div class="device-stage"><iframe class="device-frame" title="Social app template preview" loading="lazy"></iframe></div>
+          </div>
+        </article>
+
+        <h3>Every template</h3>
+        <div class="topic-grid">
+          <a class="card card-clickable topic-card" href="/templates/landing.html"><span class="topic-card-title">Landing</span><span class="topic-card-teaser">A marketing page built from the block layer.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+          <a class="card card-clickable topic-card" href="/templates/saas.html"><span class="topic-card-title">SaaS dashboard</span><span class="topic-card-teaser">Analytics shell: sidebar, KPIs, chart, table.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+          <a class="card card-clickable topic-card" href="/templates/social.html"><span class="topic-card-title">Social app</span><span class="topic-card-teaser">Three-column feed, tab bar and settings sheet.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+          <a class="card card-clickable topic-card" href="/templates/app.html"><span class="topic-card-title">App shell</span><span class="topic-card-teaser">Installable dashboard — PWA plus a service-worker stub.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+          <a class="card card-clickable topic-card" href="/templates/article.html"><span class="topic-card-title">Article</span><span class="topic-card-teaser">Editorial page with the JSON-LD article slot.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+          <a class="card card-clickable topic-card" href="/templates/deck.html"><span class="topic-card-title">Pitch deck</span><span class="topic-card-teaser">1920×1080, arrow keys, print-to-PDF at exact size.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+          <a class="card card-clickable topic-card" href="/templates/document.html"><span class="topic-card-title">Document</span><span class="topic-card-teaser">A4 pages: letterhead, invoice, one-pager.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+          <a class="card card-clickable topic-card" href="/templates/card.html"><span class="topic-card-title">Business card</span><span class="topic-card-teaser">3.5×2in, front and back, with a print sheet.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
+        </div>
+      </section>
+      <!-- =============================================================
+           LAYER 5 · APP FEEL
+           The coat that makes a finished page feel like a native app:
+           parallax and idle motion, sound and haptics, faint token
+           surfaces, and the app kit — tab bar, settings sheet, float
+           button, scroll gauge. Applied on top of any template;
+           Components stays the catalogue of pieces.
+           ============================================================= -->
+      <section id="appfeel" class="stack">
+        <h2>App feel</h2>
+        <p>
+          Layer 5 is the coat you brush over a finished page to make it feel
+          like a native app: parallax and idle motion, synthesized sound and
+          haptics, whisper backgrounds, and the app kit — the tab bar, the
+          settings sheet, the float button and the scroll gauge. Every
+          control is live in the settings sheet at the bottom-right of this
+          page — open it and flip Motion or Sounds to feel what the HTML
+          below wires up.
+        </p>
+      </section>
+
+      <!-- MOTION PACK -->
+      <article class="element stack" id="motion-pack">
+        <h3 data-status="beta">Parallax &amp; idle motion</h3>
+        <p>
+          What it is: alive by default.
+          <code>data-parallax="depth"</code> lets an element drift up
+          to that many pixels behind the pointer on desktop, behind
+          the scroll's momentum everywhere, and behind the device's
+          tilt where no permission gate blocks it —
+          <code>facet.motion</code> is the engine
+          (register/setMode/cycle; off | cursor | tilt). The
+          <code>idle-*</code> classes give key elements a resting
+          pulse: a slow float, a faint sway, a soft breathing scale.
+          What it is for: heroes, illustrations, decorative cards —
+          life at the edges, never on the reading path. When to use
+          it: sparingly; one or two moving things per screen. The
+          idle classes animate translate/rotate/scale, so they
+          compose with the engine's transform instead of colliding —
+          the parallax exclusion, solved structurally. Calm stills
+          idle life; off and reduced motion still everything. Move
+          your pointer over this page and watch the cards below.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <article class="card stack-tight" data-parallax="10" data-tip="Drifts up to 10px behind the pointer">
+              <p class="text-caption">data-parallax="10"</p>
+              <strong>I follow the pointer</strong>
+            </article>
+            <article class="card stack-tight idle-float" data-tip="A slow resting float">
+              <p class="text-caption">.idle-float</p>
+              <strong>I breathe at rest</strong>
+            </article>
+            <article class="card stack-tight idle-sway" data-tip="A faint resting sway">
+              <p class="text-caption">.idle-sway</p>
+              <strong>I sway a little</strong>
+            </article>
+          </div>
+        </div>
+        <pre id="code-motion-pack"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-motion-pack" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SOUND & HAPTICS -->
+      <article class="element stack" id="feedback">
+        <h3 data-status="stable">Sound &amp; haptics</h3>
+        <p>
+          What it is: synthesized UI sound and vibration with no audio
+          files — <code>facet.feedback</code> plays short Web Audio blips
+          (tap, tick, snap, toggle, success) and fires
+          <code>navigator.vibrate</code> haptics, both ON by default. What
+          it is for: the physical feel of an app — a tick as a stepper
+          bumps, a soft snap as a pager settles, a tap under every control.
+          When to use it: any app-shaped product; leave it on and it wires
+          itself to the components. There is almost no HTML to write: the
+          user's switches are the settings sheet's Sounds and Haptics
+          toggles (<code>data-control="sounds"</code> /
+          <code>"haptics"</code>, self-wired), and the components already
+          call it. To fire it yourself:
+          <code>facet.feedback.tap()</code> / <code>.tick()</code> /
+          <code>.snap()</code> / <code>.success()</code>; mute a channel
+          with <code>facet.feedback.sound.enabled = false</code> or
+          <code>.haptic.enabled = false</code>. Reduced-motion and a muted
+          switch silence it.
+        </p>
+        <div class="demo">
+          <p class="row">
+            <button class="btn" data-feedback-demo="tap" data-tip="A soft tap — every control plays this">Tap</button>
+            <button class="btn" data-feedback-demo="tick" data-tip="A tick — steppers and sliders bump with it">Tick</button>
+            <button class="btn" data-feedback-demo="snap" data-tip="A snap — the pager settles with it">Snap</button>
+            <button class="btn btn-primary" data-feedback-demo="success" data-tip="A rising two-note chime for a completed action">Success</button>
+          </p>
+        </div>
+        <pre id="code-feedback"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-feedback" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- BACKGROUNDS -->
+      <article class="element stack" id="backgrounds">
+        <h3 data-status="beta">Backgrounds</h3>
+        <p>
+          What it is: whisper-faint page and section backgrounds drawn
+          with CSS gradients only, colored by the tokens so every theme
+          and mode gets them for free. What it is for: giving big quiet
+          surfaces a material — a hero, a section divider zone, a whole
+          page. When to use it: one class on a section or body; content
+          sits straight on top. The set: <code>.bg-grid</code>
+          (technical drawing: plus marks at the grid intersections),
+          <code>.bg-dots</code> (dot grid), <code>.bg-ruled</code>
+          (writing lines), <code>.bg-graph</code> (graph paper). All of
+          them fade to nothing under <code>prefers-contrast: more</code>.
+        </p>
+        <p class="chips" role="group" aria-label="Background patterns">
+          <button class="chip" aria-pressed="true" data-chip-group="pattern" data-chip-class="bg-grid">Technical grid</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-dots">Dot grid</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-ruled">Ruled</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-graph">Graph paper</button>
+        </p>
+        <div class="demo">
+          <section class="bg-grid" data-tip="The pattern is tokens: switch theme or mode and it follows">
+            <p style="padding: var(--space-card); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
+          </section>
+        </div>
+        <pre id="code-backgrounds"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-backgrounds" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ===== App kit ===== -->
+      <h3 class="wall-group" id="cat-appkit">App kit</h3>
+
+      <!-- TAB BAR -->
+      <article class="element stack" id="tab-bar" data-cat="appkit">
+        <h3 data-status="beta">Tab bar</h3>
+        <p>
+          What it is: the iOS-style bottom pill — text segments, a hairline
+          divider, a trailing gear — with one injected .tab-indicator pill
+          gliding behind the active segment on per-edge analytic springs:
+          the leading edge leads with momentum, the trailing edge lags so
+          the pill stretches, and both settle with a small fixed overshoot
+          whatever the jump length. What it is for: section navigation in
+          app-shaped pages; it wires itself to the page's snap pager
+          ([data-section] segments page there, and the pager's moves glide
+          the pill back behind a one-second nav lock so pass-through
+          sections stay quiet) and its gear opens the sheet it
+          aria-controls. When to use it: any snap-paged product. On a real
+          page it floats fixed above the bottom edge; here it sits in the
+          flow. Frosted and embossed in the base theme; a tuned translucent
+          well with a raised pill under Velvet.
+        </p>
+        <div class="demo">
+          <nav class="tab-bar" aria-label="Sections">
+            <button type="button" class="tab-seg" data-section="intro" aria-current="true">Intro</button>
+            <button type="button" class="tab-seg" data-section="inputs" aria-current="false">Inputs</button>
+            <button type="button" class="tab-seg" data-section="results" aria-current="false">Results</button>
+            <span class="tab-divider" aria-hidden="true"></span>
+            <button type="button" class="tab-settings" aria-expanded="false" aria-label="Open settings" data-tip="Opens the settings sheet">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+            </button>
+          </nav>
+        </div>
+        <p>Tap the segments: the pill stretches and settles between them, live.</p>
+        <pre id="code-tab-bar"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SHEET & MENU -->
+      <article class="element stack" id="sheet" data-cat="appkit">
+        <h3 data-status="beta">Sheet &amp; menu</h3>
+        <p>
+          What it is: the settings panel — a right-edge slab floating clear
+          of the screen over a dark scrim, sliding in as one rigid block on
+          a rubber-band spring that overshoots a touch and eases back;
+          inside it, menu groups of thin rows (.menu-item under a
+          .menu-label) and a foot row of square icon toggles
+          (.menu-icon-btn) whose ON state stands raised while OFF sinks
+          into a darker well. What it is for: navigation, actions and
+          app-level controls behind one trigger — any button that
+          aria-controls the sheet opens it; scrim tap and Esc close; the
+          trigger's aria-expanded is managed. When to use it: every
+          app-shaped product's settings. Press a row: it sinks INTO the
+          panel with a true bevel, never a dark smear. State changes ease —
+          toggles must never jump.
+        </p>
+        <div class="demo">
+          <button type="button" class="btn" aria-controls="demo-sheet" aria-expanded="false"
+                  data-tip="Opens the real sheet over this page" data-event="open-demo-sheet">Open the sheet</button>
+          <div class="sheet-scrim" data-open="false"></div>
+          <aside class="sheet" id="demo-sheet" data-open="false" aria-hidden="true" aria-label="Demo settings">
+            <div class="sheet-scroll">
+              <div class="sheet-group">
+                <span class="menu-label">Navigation</span>
+                <button type="button" class="menu-item" data-event="sheet-nav-top">Back to the top</button>
+                <button type="button" class="menu-item" data-event="sheet-nav-rules">The rules</button>
+              </div>
+              <div class="sheet-group">
+                <span class="menu-label">Actions</span>
+                <button type="button" class="menu-item" data-event="sheet-copy">Copy a link here</button>
+              </div>
+            </div>
+            <div class="sheet-foot">
+              <div class="sheet-group menu-icon-row">
+                <button type="button" class="menu-icon-btn" aria-label="Sounds: on or off" data-tip="Flips facet.feedback.sound.enabled" data-event="toggle-sounds">
+                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6v4h2.6L9 13V3L5.1 6z"/></svg>
+                  <span class="menu-value">On</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <pre id="code-sheet"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-sheet" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FLOAT BUTTON -->
+      <article class="element stack" id="float-button" data-cat="appkit">
+        <h3 data-status="beta">Float button</h3>
+        <p>
+          What it is: a lone floating round button pinned to the bottom-left
+          of the page — the tab bar's trailing icon without the bar. What
+          it is for: pages that need the settings sheet (or any panel) but
+          not section navigation: give it aria-controls pointing at a
+          .sheet and facet.js wires the open/close, the aria-expanded state
+          and the press feedback exactly like the tab bar's gear. When to
+          use it: whenever a page has one floating action; .float-btn-right
+          pins it bottom-right instead. Always an aria-label and a
+          data-tip: the icon alone says nothing. On a real page it floats
+          fixed; here it sits in the flow — this one opens the sheet from
+          the entry above.
+        </p>
+        <div class="demo">
+          <button class="float-btn" aria-controls="demo-sheet" aria-expanded="false"
+                  aria-label="Open settings" data-tip="Opens the demo sheet" data-event="open-settings">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+          </button>
+        </div>
+        <pre id="code-float-button"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-float-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SCROLL GAUGE -->
+      <article class="element stack" id="scroll-gauge" data-cat="appkit">
+        <h3 data-status="beta">Scroll gauge</h3>
+        <p>
+          What it is: a pill thumb inset in an embossed groove beside a
+          scroller — thumb height is the visible share of the content,
+          position is progress, and overscroll momentum slides it out of
+          the groove where the clip swallows it. What it is for: a themed,
+          unobtrusive scrollbar look-alike for panels and whole pages;
+          facet.scrollGauge(scroller) injects it, a metric option reports
+          composite scrolls (the pager's sections laid end to end), and
+          onScrub makes the lane a drag handle. When to use it: sheets and
+          app pages where the native scrollbar is hidden. Auto-hides when
+          nothing overflows. Scroll the box:
+        </p>
+        <div class="demo">
+          <div class="demo-scroller stack" data-tip="Scroll me and watch the groove">
+            <p>The gauge beside this box is injected by facet.scrollGauge.</p>
+            <p>Its thumb is exactly the visible share of this content.</p>
+            <p>Scroll with momentum and the pill slides out of the groove.</p>
+            <p>That spill is deliberate: the groove clips it away.</p>
+            <p>When content fits, the gauge fades out entirely.</p>
+            <p>Panels use it beside .sheet-scroll; pages use the draggable lane variant.</p>
+            <p>The lane variant, .scroll-gauge-page, floats off the right edge.</p>
+            <p>Its onScrub option turns the whole groove into a drag handle.</p>
+            <p>Grab it and the thumb turns gold while you hold it.</p>
+          </div>
+        </div>
+        <pre id="code-scroll-gauge"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-scroll-gauge" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
     </main>

@@ -186,14 +186,14 @@ JSON — {tokens, scales} — plus name/author).
 Layer 5 is named (Templates = whole-page layouts). Grow the set beyond the six
 starters into real app shapes the owner named: a SaaS dashboard, a social-media
 feed/app, and similar. Each a full page assembled from Layer 4 blocks, carrying
-the head pack, listed on /layouts.html under the Layer 5 · Templates band.
+the head pack, listed on /library.html under the Templates band.
 Note (owner's layering call, agreed): the bottom tab bar and the settings sheet
 are two separate Layer 3 components; assembled together into one nav unit they
 are a Layer 4 block — that "tab bar + menu sheet" pairing belongs in Layer 4.
 
 - [x] SaaS dashboard (templates/saas.html — Northstar analytics) and social
       app (templates/social.html — Ripple feed) shipped, plus an iframe device
-      preview on /layouts.html that renders landing/saas/social live at
+      preview on /library.html that renders landing/saas/social live at
       desktop/tablet/phone widths (docs-only .device-preview + initDevicePreview).
 - [ ] More app shapes as the owner names them (e.g. chat/messaging, kanban
       board, settings/account, e-commerce storefront checkout flow).
@@ -699,7 +699,7 @@ Platform laws docs and the R11 chart item.
       per-field JS. Each action fires feedback (tap/tick) and a `data-event`
       analytics hook; the menu is a real `button` + `[popover]`/details, the
       × is a real `button` with an aria-label. Works in every theme, keyboard
-      operable, description tooltips on each. Wall entry on components.html
+      operable, description tooltips on each. Wall entry on library.html
       (Fields group) + Features/llms.txt line when built.
 - [x] Row: .row/.row-tight/.row-loose — horizontal flow with wrap,
       the row owns the gap; wall entry with gap chips.

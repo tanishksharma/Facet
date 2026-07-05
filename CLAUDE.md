@@ -31,7 +31,14 @@ static site on every push to main.
   document.html    A4 pages: letterhead, invoice, one-pager
   card.html        3.5x2in business card, front/back + print sheet
   manifest.json    the PWA manifest template
-index.html         the library: docs, demo and element wall in one page
+index.html         home: philosophy, granular features, how-to, best practices
+library.html       the whole library on one page — one growing ladder:
+                   Layer 1 Tokens & base, 2 Components (grouped + filterable),
+                   3 Blocks, 4 Templates (with live device previews), 5 App feel
+playground.html    live playground + facet.json cheatsheet
+build.html         theme builder + Skin Lab
+docs.css           docs-site styles (NOT part of /lib)
+docs.js            docs-site behaviour (NOT part of /lib)
 llms.txt           the full usage guide as plain text for AI crawlers
 BACKLOG.md         the build list and only planning file: one checkbox per item
 ```

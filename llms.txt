@@ -1013,7 +1013,7 @@ velvet lift/press transforms must not register with facet.motion.
 
 Whole pages ready to rename, all consuming the library by URL and all
 carrying the SEO head pack (title, description, OG tags, canonical,
-favicon slot). On /layouts.html the three flagship shapes (landing,
+favicon slot). On /library.html the three flagship shapes (landing,
 saas, social) render live in an iframe device preview you can flip
 between desktop, tablet and phone widths to see the genuine responsive
 layout at each breakpoint:
