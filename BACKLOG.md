@@ -651,6 +651,19 @@ Platform laws docs and the R11 chart item.
 
 ### Components — R11
 
+- [ ] Field actions (NEW · owner asked, not yet built): inside every text
+      field, an actions affordance on the right edge. Owner's decision: a
+      single three-dot menu button (icon, in-field, 44px target) that opens
+      a small popover with Copy (the field value to clipboard), Paste (from
+      clipboard into the field), and Undo (revert the last change — keep a
+      per-field value history); PLUS a standalone Clear (×) icon in the
+      field that wipes the value in one tap (distinct from the menu). All
+      self-wiring via facet.js on a `data-field-actions` field wrapper: no
+      per-field JS. Each action fires feedback (tap/tick) and a `data-event`
+      analytics hook; the menu is a real `button` + `[popover]`/details, the
+      × is a real `button` with an aria-label. Works in every theme, keyboard
+      operable, description tooltips on each. Wall entry on components.html
+      (Fields group) + Features/llms.txt line when built.
 - [x] Row: .row/.row-tight/.row-loose — horizontal flow with wrap,
       the row owns the gap; wall entry with gap chips.
 - [x] Grid: .grid/.grid-wide/.grid-tight/.grid-loose — auto-fit
