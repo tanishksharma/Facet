@@ -388,32 +388,6 @@
       height: 12rem; overflow-y: auto; padding-right: var(--space-5);
     }
 
-    /* Style Mixer: a grid of labelled color pickers. */
-    .mixer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-      gap: var(--space-3);
-    }
-    .mixer-grid label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-2);
-      font-size: var(--text-small);
-      background: var(--surface);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--radius-medium);
-      padding: var(--space-2) var(--space-3);
-    }
-    .mixer-grid input[type="color"] {
-      inline-size: 2.6rem;
-      block-size: 1.9rem;
-      border: none;
-      background: none;
-      padding: 0;
-      cursor: pointer;
-    }
-
     /* Cheatsheet rows: dense definition rows, filterable. */
     .cheat-row {
       display: grid;
@@ -436,17 +410,7 @@
     /* Rows of copy buttons under snippets sit side by side. */
     .element p:has(> [data-copy]) { display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none; }
 
-    /* Skin Lab: the theme-by-mode gallery of framed mini pages. */
-    .lab-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-      gap: var(--space-4);
-    }
-    .lab-cell { display: grid; gap: var(--space-1); }
-    .lab-cell figcaption {
-      font-size: var(--text-caption);
-      color: var(--text-muted);
-    }
+    /* Framed mini page (also the playground preview). */
     .lab-frame {
       width: 100%;
       height: 21rem;
@@ -562,8 +526,8 @@
       <div class="site-links">
         <a class="site-link" href="/" aria-current="page" data-tip-below
            data-tip="The whole library in one scroll">Home</a>
-        <a class="site-link site-link-cta" href="#style-mixer" data-tip-below
-           data-tip="Build your own theme, live">Build a theme</a>
+        <a class="site-link site-link-cta" href="/build.html" data-tip-below
+           data-tip="Build your own theme, live — plus Skin Lab">Build a theme</a>
         <a class="site-link" href="/llms.txt" data-tip-below
            data-tip="The whole library as plain text, for LLMs">llms.txt</a>
         <a class="site-link" href="/facet.json" data-tip-below
@@ -630,13 +594,6 @@
         <ul>
           <li><a href="#features">Features</a></li>
           <li><a href="#rules">Rules</a></li>
-        </ul>
-        </details>
-        <details class="nav-group" data-group="customizer">
-          <summary><span class="nav-group-name">Customizer</span><span class="nav-group-desc">Tune a theme live and copy your version.</span><span class="nav-caret" aria-hidden="true"></span></summary>
-        <ul>
-          <li><a href="#style-mixer">Style Mixer</a></li>
-          <li><a href="#skin-lab">Skin Lab</a></li>
         </ul>
         </details>
         <details class="nav-group" data-group="layer1">
@@ -1127,64 +1084,6 @@
             <button class="btn" data-tip="Close this popup">Close</button>
           </form>
         </dialog>
-      </section>
-
-      <!-- =============================================================
-           LAYER 1 · STYLE MIXER
-           The theme generator: pickers over the semantic tokens restyle
-           this whole page live, the result exports as a paste-ready
-           config block and rides the URL. Docs-only logic, inline below.
-           ============================================================= -->
-      <section id="style-mixer" class="stack">
-        <h2>Style Mixer</h2>
-        <p>
-          What it is: the theme generator — a picker for each semantic
-          color token, applied to this whole page the moment you change
-          it. What it is for: mixing your own skin on top of any theme;
-          start from the active theme, pull the colors where you want
-          them, and the hover and pressed shades and on-colors derive
-          automatically. The mix rides this page's URL (share the link,
-          your mix opens with it) and exports below as a paste-ready
-          config block for your own project. When to use it: whenever
-          "which colors?" is the conversation — mix live, then copy.
-        </p>
-        <div class="mixer-grid" id="mixer-controls">
-          <label>Background <input type="color" data-mix="background" data-tip="The page itself"></label>
-          <label>Surface <input type="color" data-mix="surface" data-tip="Cards, inputs, panels"></label>
-          <label>Text <input type="color" data-mix="text" data-tip="The ink"></label>
-          <label>Muted text <input type="color" data-mix="text-muted" data-tip="Hints and captions"></label>
-          <label>Border <input type="color" data-mix="border" data-tip="Hairlines and edges"></label>
-          <label>Accent 1 <input type="color" data-mix="accent-1" data-tip="The one primary action"></label>
-          <label>Accent 2 <input type="color" data-mix="accent-2" data-tip="Every secondary fill"></label>
-          <label>Accent 3 <input type="color" data-mix="accent-3" data-tip="Links, labels, focus"></label>
-        </div>
-        <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
-          <button class="btn btn-small" id="mixer-reset" data-event="mixer-reset" data-tip="Clears the mix: back to the active theme's own colors">Reset to theme</button>
-          <button class="btn btn-small" data-copy="#code-style-mixer" data-tip="Copies the config block for your own page">Copy the config</button>
-        </p>
-        <pre id="code-style-mixer"><code></code></pre>
-      </section>
-
-      <!-- =============================================================
-           LAYER 1 · SKIN LAB
-           Every theme, light and dark, side by side across the same
-           real layout. Each panel is its own tiny document (an iframe
-           the docs script builds), because material themes must not
-           leak recipes into each other — true isolation is the point.
-           ============================================================= -->
-      <section id="skin-lab" class="stack">
-        <h2>Skin Lab</h2>
-        <p>
-          What it is: every theme in light and dark, side by side, all
-          rendering the same real slice of interface — heading, prose
-          with a link, both button ranks, a labelled field, a result
-          row. What it is for: choosing a skin by looking, and proving
-          the library's core promise in one glance — identical markup,
-          ten different products. When to use it: at the start of any
-          new project, before a line is written. Each panel is a real
-          page pulling the same facet.css this site uses.
-        </p>
-        <div class="lab-grid" id="lab-grid"></div>
       </section>
 
       <!-- =============================================================
@@ -3594,155 +3493,6 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       sync();
     }
 
-    /* Style Mixer: a picker per semantic token, applied live through
-       facet.set (inline custom properties layered over the active
-       theme). Hover/pressed shades and on-colors derive automatically;
-       the mix rides ?mix= so a link reproduces it; the export block
-       below the pickers is always the paste-ready config for the
-       current mix. Docs-only logic — the library ships facet.set, this
-       is a UI over it. */
-    function initStyleMixer() {
-      const box = document.querySelector("#mixer-controls");
-      if (!box || !window.facet) return;
-      const pickers = [...box.querySelectorAll("[data-mix]")];
-      const exportCode = document.querySelector("#code-style-mixer code");
-      const root = document.documentElement;
-      const mixed = {};                       // token -> hex, only what the user changed
-
-      // Resolve any token value (hex, color-mix, AccentColor…) to #rrggbb
-      // by letting the browser compute it on a probe element.
-      const probe = document.createElement("span");
-      probe.hidden = true;
-      document.body.appendChild(probe);
-      const tokenHex = (token) => {
-        probe.style.color = `var(--${token})`;
-        const m = getComputedStyle(probe).color.match(/\d+/g) || [0, 0, 0];
-        return "#" + m.slice(0, 3).map(n => (+n).toString(16).padStart(2, "0")).join("");
-      };
-      const luma = (hex) => {
-        const n = parseInt(hex.slice(1), 16);
-        return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
-      };
-
-      // One picked color fans out to its derived tokens.
-      const derive = (token, hex) => {
-        const set = { ["--" + token]: hex };
-        if (token.startsWith("accent")) {
-          const toward = root.dataset.mode === "dark" ? "white" : "black";
-          set[`--${token}-hover`] = `color-mix(in srgb, ${hex} 86%, ${toward})`;
-          set[`--${token}-pressed`] = `color-mix(in srgb, ${hex} 74%, ${toward})`;
-          set[`--on-${token}`] = luma(hex) > 0.55 ? "#17171B" : "#FFFFFF";
-        }
-        return set;
-      };
-
-      const renderExport = () => {
-        const entries = Object.entries(mixed).flatMap(([t, hex]) => Object.entries(derive(t, hex)));
-        exportCode.textContent = entries.length
-          ? "<script>\n  addEventListener(\"DOMContentLoaded\", () => facet.set({\n"
-            + entries.map(([k, v]) => `    ${JSON.stringify(k)}: ${JSON.stringify(v)},`).join("\n")
-            + "\n  }));\n<\/script>"
-          : "<!-- Mix a color above and the paste-ready config appears here. -->";
-      };
-
-      const writeUrl = () => {
-        const url = new URL(location);
-        const packed = Object.entries(mixed).map(([t, hex]) => `${t}:${hex.slice(1)}`).join(",");
-        if (packed) url.searchParams.set("mix", packed);
-        else url.searchParams.delete("mix");
-        history.replaceState(null, "", url);
-      };
-
-      const syncPickers = () => {
-        for (const p of pickers) p.value = mixed[p.dataset.mix] || tokenHex(p.dataset.mix);
-      };
-
-      const apply = (token, hex) => {
-        mixed[token] = hex;
-        facet.set(derive(token, hex));
-        writeUrl();
-        renderExport();
-      };
-
-      for (const p of pickers) {
-        p.addEventListener("input", () => apply(p.dataset.mix, p.value));
-      }
-
-      document.querySelector("#mixer-reset").addEventListener("click", () => {
-        for (const [t, hex] of Object.entries(mixed)) {
-          for (const k of Object.keys(derive(t, hex))) root.style.removeProperty(k);
-          delete mixed[t];
-        }
-        writeUrl();
-        renderExport();
-        syncPickers();
-      });
-
-      // A shared link opens with the mix already applied.
-      const packed = new URLSearchParams(location.search).get("mix");
-      if (packed) {
-        for (const pair of packed.split(",")) {
-          const [t, hex] = pair.split(":");
-          if (/^[0-9a-f]{6}$/i.test(hex) && pickers.some(p => p.dataset.mix === t)) {
-            mixed[t] = "#" + hex.toLowerCase();
-            facet.set(derive(t, mixed[t]));
-          }
-        }
-      }
-
-      // Theme or mode switch under a mix: un-mixed pickers re-read the
-      // new theme; mixed tokens persist by design (a mix rides on top).
-      new MutationObserver(() => { syncPickers(); renderExport(); })
-        .observe(root, { attributes: true, attributeFilter: ["data-theme", "data-mode"] });
-
-      renderExport();
-      syncPickers();
-    }
-
-    /* Skin Lab: builds one framed mini page per theme × mode. Frames,
-       not subtrees, on purpose — material themes (velvet, aero) scope
-       component recipes under [data-theme], and inside one document an
-       ancestor's recipes would leak into a differently-themed panel.
-       Each frame is a genuine document with the two real tags, so it
-       is also living proof of the one-attribute promise. */
-    function initSkinLab() {
-      const grid = document.querySelector("#lab-grid");
-      if (!grid) return;
-      const THEMES = [["", "Default"], ["sand", "Sand"], ["velvet", "Velvet"], ["aero", "Aero"], ["elegant", "Elegant"]];
-      const LAYOUT = `
-        <main class="container stack" style="padding: 1rem;">
-          <h2 style="margin: 0;">Ledger</h2>
-          <p>The same markup as every other panel — <a href="#">one attribute</a> apart.</p>
-          <p style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <button class="btn btn-primary btn-small">Save</button>
-            <button class="btn btn-small">Preview</button>
-          </p>
-          <label for="lab-amount">Amount</label>
-          <input id="lab-amount" type="text" value="12,500">
-          <div class="result"><span>Total</span><strong>₹ 12,500</strong></div>
-        </main>`;
-      for (const [theme, themeName] of THEMES) {
-        for (const mode of ["light", "dark"]) {
-          const cell = document.createElement("figure");
-          cell.className = "lab-cell";
-          const frame = document.createElement("iframe");
-          frame.className = "lab-frame";
-          frame.loading = "lazy";
-          frame.title = `${themeName}, ${mode}`;
-          frame.setAttribute("tabindex", "-1");
-          frame.srcdoc = `<!doctype html>
-            <html${theme ? ` data-theme="${theme}"` : ""} data-mode="${mode}">
-            <head><meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="${location.origin}/lib/facet.css"></head>
-            <body>${LAYOUT}</body></html>`;
-          const cap = document.createElement("figcaption");
-          cap.textContent = `${themeName} · ${mode}`;
-          cell.append(frame, cap);
-          grid.appendChild(cell);
-        }
-      }
-    }
-
     /* Copy as Markdown: every wall entry gains a second copy button
        that packages the component's description and exact snippet as
        Markdown — one paste puts a whole component in an LLM prompt. */
@@ -4162,7 +3912,6 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
     function insertLayerBands() {
       const bands = [
         ["features",   "Start here", "The manual",        "How Facet is built, used and grown — and the full capability list."],
-        ["style-mixer","Make it yours","Customizer",       "Tune any theme live — move a token and the whole page follows — then copy your exact version."],
         ["typography", "Layer 1",    "Tokens",            "Every design decision as a named variable: type, color, space, shape, motion."],
         ["base",       "Layer 2",    "Base styles",       "Raw semantic HTML, already designed — no classes required."],
         ["components", "Layer 3",    "Components",        "Every piece of the library, live. Each folds to a heading and a line — open one to see it work."],
@@ -4271,8 +4020,6 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       initConfigChips();
       initModePanels();
       initSetupStrip();
-      initStyleMixer();
-      initSkinLab();
       initSizeBadge();
       initTokenCopy();
       initContrastBadges();

@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build a theme — Facet</title>
+  <meta name="description" content="Build your own Facet theme: tune the semantic color tokens with a live preview of real layouts, then copy the config into your project. Plus Skin Lab — every theme in light and dark, side by side.">
+  <meta property="og:title" content="Build a theme — Facet">
+  <meta property="og:description" content="Tune the semantic tokens with a live preview, then copy the config. Plus Skin Lab.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23FFFFFF'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%2317171B'/></svg>">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+
+  <!-- Docs-only styles for this page: the header nav, the token pickers,
+       the builder canvas, and the Skin Lab gallery. Nothing here belongs in
+       /lib — it is the presentation of this one page. -->
+  <style>
+    .site-header { border-bottom: var(--border-width) solid var(--border); }
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-2) var(--space-4);
+      padding-block: var(--space-3);
+    }
+    .site-nav .wordmark {
+      font-weight: var(--weight-heading);
+      font-size: var(--text-h3);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .site-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-4); }
+    .site-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: var(--text-small);
+      font-weight: var(--weight-strong);
+      padding-block: var(--space-1);
+    }
+    .site-link:hover { color: var(--text); }
+    .site-link[aria-current="page"] { color: var(--text); }
+    .site-link.site-link-cta { color: var(--accent-3); }
+
+    .page-head { padding-block: var(--space-6) 0; }
+    .page-head h1 { margin: 0; font-size: var(--text-h1); }
+    .page-head p { color: var(--text-muted); max-width: 60ch; margin: 0; }
+
+    /* Token pickers. */
+    .mixer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+      gap: var(--space-3);
+    }
+    .mixer-grid label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      font-size: var(--text-small);
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-medium);
+      padding: var(--space-2) var(--space-3);
+    }
+    .mixer-grid input[type="color"] {
+      inline-size: 2.6rem;
+      block-size: 1.9rem;
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    /* Theme builder: controls on the left, a live preview canvas on the
+       right. The build applies its tokens to the canvas alone, so it is a
+       real, contained workspace. */
+    .builder {
+      display: grid;
+      grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+      gap: var(--space-5);
+      align-items: start;
+    }
+    .builder-canvas {
+      background: var(--background);
+      color: var(--text);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-large);
+      padding: var(--space-5);
+      display: grid;
+      gap: var(--space-5);
+      position: sticky;
+      top: var(--space-4);
+    }
+    .bc-panel + .bc-panel { border-top: var(--border-width) solid var(--border); padding-top: var(--space-4); }
+    .bc-panel .part-label { margin-top: 0; }
+    @media (max-width: 52rem) {
+      .builder { grid-template-columns: minmax(0, 1fr); }
+      .builder-canvas { position: static; }
+    }
+
+    /* Region captions (Landing / Form / Cards). */
+    .part-label {
+      display: block;
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: var(--weight-strong);
+      color: var(--text-muted);
+      margin-bottom: var(--space-1);
+    }
+    .part-label + * { margin-top: 0; }
+
+    /* Skin Lab: the theme-by-mode gallery of framed mini pages. */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+      gap: var(--space-4);
+    }
+    .lab-cell { display: grid; gap: var(--space-1); }
+    .lab-cell figcaption {
+      font-size: var(--text-caption);
+      color: var(--text-muted);
+    }
+    .lab-frame {
+      width: 100%;
+      height: 21rem;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-medium);
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#build-main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="site-nav container-wide" aria-label="Site">
+      <a class="wordmark" href="/">facet</a>
+      <div class="site-links">
+        <a class="site-link" href="/" data-tip-below
+           data-tip="The whole library in one scroll">Home</a>
+        <a class="site-link site-link-cta" href="/build.html" aria-current="page" data-tip-below
+           data-tip="Build your own theme, live">Build a theme</a>
+        <a class="site-link" href="/llms.txt" data-tip-below
+           data-tip="The whole library as plain text, for LLMs">llms.txt</a>
+        <a class="site-link" href="/facet.json" data-tip-below
+           data-tip="The machine-readable manifest — every theme, token and component">facet.json</a>
+        <a class="site-link" href="https://github.com/tanishksharma/Facet" data-tip-below
+           data-tip="The readable source, never minified">GitHub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="build-main" class="container-wide stack-loose" style="padding-block: var(--space-6) var(--space-8);">
+    <header class="page-head stack">
+      <h1>Build a theme</h1>
+      <p>
+        Tune the semantic tokens and watch a few real layouts restyle, then
+        copy the config into your project's <code>:root</code>. Below, Skin
+        Lab shows every theme in light and dark, side by side.
+      </p>
+    </header>
+
+    <section id="style-mixer" class="stack">
+      <h2>Pick your colors</h2>
+      <p>
+        A picker for each semantic color token, previewed live on a canvas of
+        real layouts beside the controls. Start from the active theme or a
+        blank canvas, pull the colors where you want them, and the hover and
+        pressed shades and on-colors derive automatically. The build rides
+        this page's URL, so a shared link opens on your exact colors.
+      </p>
+      <div class="builder">
+        <div class="builder-controls stack">
+          <p class="chips" role="group" aria-label="Start from">
+            <button type="button" class="chip" aria-pressed="true" data-start="theme" data-tip="Build on top of the active theme's colors">Active theme</button>
+            <button type="button" class="chip" aria-pressed="false" data-start="blank" data-tip="Start from a neutral blank canvas and build up">Blank canvas</button>
+          </p>
+          <div class="mixer-grid" id="mixer-controls">
+            <label>Background <input type="color" data-mix="background" data-tip="The page itself"></label>
+            <label>Surface <input type="color" data-mix="surface" data-tip="Cards, inputs, panels"></label>
+            <label>Text <input type="color" data-mix="text" data-tip="The ink"></label>
+            <label>Muted text <input type="color" data-mix="text-muted" data-tip="Hints and captions"></label>
+            <label>Border <input type="color" data-mix="border" data-tip="Hairlines and edges"></label>
+            <label>Accent 1 <input type="color" data-mix="accent-1" data-tip="The one primary action"></label>
+            <label>Accent 2 <input type="color" data-mix="accent-2" data-tip="Every secondary fill"></label>
+            <label>Accent 3 <input type="color" data-mix="accent-3" data-tip="Links, labels, focus"></label>
+          </div>
+          <p style="display: flex; gap: var(--space-2); flex-wrap: wrap; max-width: none;">
+            <button class="btn btn-small" id="mixer-reset" data-event="mixer-reset" data-tip="Clears the build: back to the active theme's own colors">Reset</button>
+            <button class="btn btn-small" data-copy="#code-style-mixer" data-tip="Copies the config block for your own page">Copy the config</button>
+          </p>
+          <pre id="code-style-mixer"><code></code></pre>
+        </div>
+
+        <!-- Live preview: three real layouts. The build sets the token
+             custom properties on this canvas only, so everything inside
+             restyles while the rest of the page stays put. -->
+        <div class="builder-canvas" id="builder-canvas" aria-label="Live preview">
+          <div class="bc-panel">
+            <span class="part-label">Landing</span>
+            <div class="stack">
+              <h3 style="margin:0;">Your product, in a sentence</h3>
+              <p style="margin:0; color: var(--text-muted);">A calm subheading that explains the promise in one breath.</p>
+              <p class="row" style="margin:0;">
+                <button class="btn btn-primary">Get started</button>
+                <button class="btn">Learn more</button>
+                <a href="#style-mixer" data-tip="Accent-3 links">See how →</a>
+              </p>
+            </div>
+          </div>
+          <div class="bc-panel">
+            <span class="part-label">Form</span>
+            <div class="stack">
+              <label class="field"><span class="field-label">Email</span><input type="email" placeholder="you@studio.com"></label>
+              <label class="check-row"><input type="checkbox" checked> Send me product updates</label>
+              <p style="margin:0;"><button class="btn btn-primary">Save changes</button></p>
+            </div>
+          </div>
+          <div class="bc-panel">
+            <span class="part-label">Cards</span>
+            <div class="grid">
+              <div class="card stack-tight">
+                <strong>Reports</strong>
+                <p style="margin:0; font-size: var(--text-small); color: var(--text-muted);">12 this month</p>
+                <span class="badge badge-success">Live</span>
+              </div>
+              <div class="card stack-tight">
+                <strong>Ledger</strong>
+                <p style="margin:0; font-size: var(--text-small); color: var(--text-muted);">Up to date</p>
+                <span class="badge badge-info">Synced</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skin-lab" class="stack">
+      <h2>Skin Lab</h2>
+      <p>
+        Every theme in light and dark, side by side, all rendering the same
+        real slice of interface — heading, prose with a link, both button
+        ranks, a labelled field, a result row. Choose a skin by looking, and
+        see the library's core promise in one glance: identical markup, ten
+        different products. Each panel is a real page pulling the same
+        <code>facet.css</code> this site uses.
+      </p>
+      <div class="lab-grid" id="lab-grid"></div>
+    </section>
+  </main>
+
+  <!-- Docs-only script for this page: the theme builder and Skin Lab. Both
+       were lifted verbatim from the library's docs so the build page is
+       self-contained; the library files (/lib) are untouched. -->
+  <script>
+    /* Theme builder (Style Mixer): a picker per semantic token, previewed
+       live on a scoped canvas — the tokens are written as custom properties
+       on #builder-canvas alone, so the sample layouts restyle while the rest
+       of the page holds still. Start from the active theme or a blank canvas.
+       Hover/pressed shades and on-colors derive automatically; the build
+       rides ?mix= so a link reproduces it; the export block is always the
+       paste-ready :root config. Docs-only logic — the library ships
+       facet.set for the whole-page version; this is a contained workspace. */
+    function initStyleMixer() {
+      const box = document.querySelector("#mixer-controls");
+      const canvas = document.querySelector("#builder-canvas");
+      if (!box || !canvas || !window.facet) return;
+      const pickers = [...box.querySelectorAll("[data-mix]")];
+      const startChips = [...document.querySelectorAll("[data-start]")];
+      const exportCode = document.querySelector("#code-style-mixer code");
+      const root = document.documentElement;
+      const mixed = {};                       // token -> hex, only what the user changed
+      // A neutral slate to build up from when you start blank.
+      const BLANK = {
+        "background": "#ffffff", "surface": "#f4f4f5", "text": "#18181b",
+        "text-muted": "#71717a", "border": "#e4e4e7",
+        "accent-1": "#18181b", "accent-2": "#f4f4f5", "accent-3": "#3b6fe0",
+      };
+
+      // Resolve any token value (hex, color-mix, AccentColor…) to #rrggbb
+      // by letting the browser compute it on a probe element.
+      const probe = document.createElement("span");
+      probe.hidden = true;
+      document.body.appendChild(probe);
+      const tokenHex = (token) => {
+        probe.style.color = `var(--${token})`;
+        const m = getComputedStyle(probe).color.match(/\d+/g) || [0, 0, 0];
+        return "#" + m.slice(0, 3).map(n => (+n).toString(16).padStart(2, "0")).join("");
+      };
+      const luma = (hex) => {
+        const n = parseInt(hex.slice(1), 16);
+        return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
+      };
+
+      // One picked color fans out to its derived tokens.
+      const derive = (token, hex) => {
+        const set = { ["--" + token]: hex };
+        if (token.startsWith("accent")) {
+          const toward = root.dataset.mode === "dark" ? "white" : "black";
+          set[`--${token}-hover`] = `color-mix(in srgb, ${hex} 86%, ${toward})`;
+          set[`--${token}-pressed`] = `color-mix(in srgb, ${hex} 74%, ${toward})`;
+          set[`--on-${token}`] = luma(hex) > 0.55 ? "#17171B" : "#FFFFFF";
+        }
+        return set;
+      };
+
+      const renderExport = () => {
+        const entries = Object.entries(mixed).flatMap(([t, hex]) => Object.entries(derive(t, hex)));
+        exportCode.textContent = entries.length
+          ? "<script>\n  addEventListener(\"DOMContentLoaded\", () => facet.set({\n"
+            + entries.map(([k, v]) => `    ${JSON.stringify(k)}: ${JSON.stringify(v)},`).join("\n")
+            + "\n  }));\n<\/script>"
+          : "<!-- Mix a color above and the paste-ready config appears here. -->";
+      };
+
+      const writeUrl = () => {
+        const url = new URL(location);
+        const packed = Object.entries(mixed).map(([t, hex]) => `${t}:${hex.slice(1)}`).join(",");
+        if (packed) url.searchParams.set("mix", packed);
+        else url.searchParams.delete("mix");
+        history.replaceState(null, "", url);
+      };
+
+      const syncPickers = () => {
+        for (const p of pickers) p.value = mixed[p.dataset.mix] || tokenHex(p.dataset.mix);
+      };
+
+      // Application is scoped to the canvas: set (or clear) the derived
+      // custom properties on #builder-canvas, never on the page root.
+      const applyToken = (token, hex) => {
+        mixed[token] = hex;
+        for (const [k, v] of Object.entries(derive(token, hex))) canvas.style.setProperty(k, v);
+      };
+      const clearAll = () => {
+        for (const [t, hex] of Object.entries(mixed)) {
+          for (const k of Object.keys(derive(t, hex))) canvas.style.removeProperty(k);
+          delete mixed[t];
+        }
+      };
+      const apply = (token, hex) => { applyToken(token, hex); writeUrl(); renderExport(); };
+
+      for (const p of pickers) {
+        p.addEventListener("input", () => apply(p.dataset.mix, p.value));
+      }
+
+      // Start from the active theme (clear the build) or a blank canvas
+      // (load the neutral slate, ready to build up).
+      const startFrom = (mode) => {
+        clearAll();
+        if (mode === "blank") for (const [t, hex] of Object.entries(BLANK)) applyToken(t, hex);
+        for (const c of startChips) c.setAttribute("aria-pressed", String(c.dataset.start === mode));
+        writeUrl();
+        renderExport();
+        syncPickers();
+      };
+      // These are a radio pair, not the library's multi-select filter chips.
+      // Our listener runs first (inline script vs deferred facet.js), so
+      // stopImmediatePropagation keeps the library's chip-toggle off them —
+      // otherwise it would flip the aria-pressed we just set.
+      for (const c of startChips) {
+        c.addEventListener("click", (e) => { e.stopImmediatePropagation(); startFrom(c.dataset.start); });
+      }
+      document.querySelector("#mixer-reset").addEventListener("click", () => startFrom("theme"));
+
+      // A shared link opens with the build already applied.
+      const packed = new URLSearchParams(location.search).get("mix");
+      if (packed) {
+        for (const pair of packed.split(",")) {
+          const [t, hex] = pair.split(":");
+          if (/^[0-9a-f]{6}$/i.test(hex) && pickers.some(p => p.dataset.mix === t)) {
+            applyToken(t, "#" + hex.toLowerCase());
+          }
+        }
+      }
+
+      // Theme or mode switch under a build: un-mixed pickers re-read the
+      // new theme; built tokens persist by design (a build rides on top).
+      new MutationObserver(() => { syncPickers(); renderExport(); })
+        .observe(root, { attributes: true, attributeFilter: ["data-theme", "data-mode"] });
+
+      renderExport();
+      syncPickers();
+    }
+
+    /* Skin Lab: builds one framed mini page per theme × mode. Frames,
+       not subtrees, on purpose — material themes (velvet, aero) scope
+       component recipes under [data-theme], and inside one document an
+       ancestor's recipes would leak into a differently-themed panel.
+       Each frame is a genuine document with the two real tags, so it
+       is also living proof of the one-attribute promise. */
+    function initSkinLab() {
+      const grid = document.querySelector("#lab-grid");
+      if (!grid) return;
+      const THEMES = [["", "Default"], ["sand", "Sand"], ["velvet", "Velvet"], ["aero", "Aero"], ["elegant", "Elegant"]];
+      const LAYOUT = `
+        <main class="container stack" style="padding: 1rem;">
+          <h2 style="margin: 0;">Ledger</h2>
+          <p>The same markup as every other panel — <a href="#">one attribute</a> apart.</p>
+          <p style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-small">Save</button>
+            <button class="btn btn-small">Preview</button>
+          </p>
+          <label for="lab-amount">Amount</label>
+          <input id="lab-amount" type="text" value="12,500">
+          <div class="result"><span>Total</span><strong>₹ 12,500</strong></div>
+        </main>`;
+      for (const [theme, themeName] of THEMES) {
+        for (const mode of ["light", "dark"]) {
+          const cell = document.createElement("figure");
+          cell.className = "lab-cell";
+          const frame = document.createElement("iframe");
+          frame.className = "lab-frame";
+          frame.loading = "lazy";
+          frame.title = `${themeName}, ${mode}`;
+          frame.setAttribute("tabindex", "-1");
+          frame.srcdoc = `<!doctype html>
+            <html${theme ? ` data-theme="${theme}"` : ""} data-mode="${mode}">
+            <head><meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="${location.origin}/lib/facet.css"></head>
+            <body>${LAYOUT}</body></html>`;
+          const cap = document.createElement("figcaption");
+          cap.textContent = `${themeName} · ${mode}`;
+          cell.append(frame, cap);
+          grid.appendChild(cell);
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initStyleMixer();
+      initSkinLab();
+    });
+  </script>
+</body>
+</html>
