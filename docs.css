@@ -545,3 +545,29 @@ h2:hover .permalink, h3:hover .permalink,
 
 /* How-to steps: centered block, steps stay left-aligned to read as a list. */
 .home-section .steps { margin-inline: auto; text-align: left; max-width: 46rem; }
+
+/* Code-block action cluster: icons pinned to the snippet's bottom-right,
+   instead of a row of buttons below it. */
+.code-wrap { position: relative; }
+.code-tools {
+  position: absolute;
+  bottom: var(--space-tight);
+  right: var(--space-tight);
+  display: flex;
+  gap: var(--space-tight);
+}
+.code-tools .btn {
+  min-height: 0;
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  background: var(--surface);
+  border: var(--border-element) solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-strong);
+}
+.code-tools .btn:hover { color: var(--text); background: var(--background); }
+.code-tools .btn svg { width: 1.1rem; height: 1.1rem; }

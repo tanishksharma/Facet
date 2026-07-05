@@ -258,6 +258,7 @@ function initMarkdownButtons() {
     if (!copyBtn || !code || !title || !desc) continue;
     const btn = document.createElement("button");
     btn.className = "btn btn-small";
+    btn.dataset.codeTool = "markdown";
     btn.textContent = "Copy as Markdown";
     btn.dataset.event = "copy-markdown";
     btn.dataset.tip = "The description and snippet as Markdown, ready for an LLM prompt";
@@ -266,11 +267,53 @@ function initMarkdownButtons() {
         + desc.textContent.replace(/\s+/g, " ").trim() + "\n\n"
         + "```html\n" + code.textContent.trim() + "\n```\n";
       try { await navigator.clipboard.writeText(md); } catch { /* clipboard denied */ }
-      btn.textContent = "Copied";
-      setTimeout(() => { btn.textContent = "Copy as Markdown"; }, 1400);
+      if (window.facet) facet.toast("Copied as Markdown", "success");
     });
     copyBtn.parentElement.appendChild(btn);
   }
+}
+
+/* Overlay the code-block actions as an icon cluster at the bottom-right of
+   each snippet, instead of a row of buttons below it. The primary Copy is a
+   copy icon; Copy-as-Markdown, CodePen and Edit-on-GitHub become small icon
+   buttons in the same corner. Runs after the buttons are created. */
+function overlayCodeTools() {
+  const ICON = { copy: "copy", codepen: "download-cloud", github: "link" };
+  for (const pre of document.querySelectorAll("article.element pre")) {
+    if (pre.parentElement.classList.contains("code-wrap")) continue;   // idempotent
+    // the actions row is the <p> holding the [data-copy] button, right after the pre
+    const row = pre.nextElementSibling && pre.nextElementSibling.querySelector?.("[data-copy]")
+      ? pre.nextElementSibling
+      : [...pre.parentElement.children].find(el => el.tagName === "P" && el.querySelector("[data-copy]"));
+    if (!row) continue;
+
+    const wrap = document.createElement("div");
+    wrap.className = "code-wrap";
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    const tools = document.createElement("div");
+    tools.className = "code-tools";
+    for (const btn of [...row.children]) {
+      const label = btn.textContent.trim();
+      const kind = btn.hasAttribute("data-copy") ? "copy"
+        : btn.dataset.codeTool === "markdown" ? "markdown"
+        : /codepen/i.test(label) ? "codepen"
+        : /github/i.test(label) ? "github" : "other";
+      btn.classList.add("btn-icon", "btn-small");
+      btn.classList.remove("btn");
+      btn.classList.add("btn");
+      if (!btn.dataset.tip) btn.dataset.tip = label;
+      btn.setAttribute("aria-label", label);
+      btn.innerHTML = kind === "markdown"
+        ? '<span aria-hidden="true">MD</span>'
+        : `<svg data-icon="${ICON[kind] || "copy"}" aria-hidden="true"></svg>`;
+      tools.appendChild(btn);
+    }
+    wrap.appendChild(tools);
+    row.remove();
+  }
+  if (window.facet) facet.icon();     // fill the new svg[data-icon]
 }
 
 /* Size badge: fetches the two shipped files, gzips them right here
@@ -778,6 +821,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initContrastBadges();
   initMarkdownButtons();
   initDemoTools();
+  overlayCodeTools();              // code actions become a corner icon cluster
   await initReferenceBlocks();     // append the ref block INTO each article first
   relocateTools();                 // Playground + Cheatsheet to the end
   insertLayerBands();
