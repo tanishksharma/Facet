@@ -268,10 +268,11 @@ accent-1 action per screen.
 ### Theme · Sand (`data-theme="sand"`, parked but working)
 
 Modern beige, boring on purpose, quietly elegant. Palette pulled from
-Minecraft desert biome blocks, with the ink darkened so text passes AA
-contrast. Background `#EDE5C0`, surface `#F6F0D8`, text `#33291A`, muted
-`#86794F`, borders `#D9CD9E`. Accent-1 `#5F9E44` cactus, accent-2 the
-sandstone fill, accent-3 `#48802F` deep cactus.
+Minecraft desert biome blocks, with the inks darkened so every text
+role passes AA contrast on the sand. Background `#EDE5C0`, surface
+`#F6F0D8`, text `#33291A`, muted `#665A38`, borders `#D9CD9E`.
+Accent-1 `#487D31` cactus (deep enough for white labels), accent-2 the
+sandstone fill, accent-3 `#3A6824` deep cactus.
 
 ### Theme · Velvet (`data-theme="velvet"`)
 
@@ -288,8 +289,9 @@ reference implementation.
 
 Frutiger Aero era: sky aqua, glass gloss, translucent plastic, pill
 buttons. Light: pale sky `#EAF6FD`, white glass surface, deep sea ink
-`#0C3049`; accent-1 glossy sky blue `#0E82D6`, accent-2 the translucent
-plastic fill, accent-3 aero grass green `#0A7D5F`. Dark is ocean glass:
+`#0C3049`; accent-1 glossy sky blue `#0B6FB8` (deep enough for white
+labels), accent-2 the translucent plastic fill, accent-3 aero grass
+green `#0A7D5F`. Dark is ocean glass:
 deep water `#062A40`, lifted sky blue, sea-glass green. The `--a-*`
 material tokens carry the glass (gloss gradient with the hard 50% line,
 translucent border, blue glow on the primary); recipes make buttons and

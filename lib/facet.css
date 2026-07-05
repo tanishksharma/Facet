@@ -223,12 +223,12 @@
   --background: #EDE5C0;      /* sand */
   --surface: #F6F0D8;         /* smooth sandstone */
   --text: #33291A;            /* dark earth */
-  --text-muted: #86794F;      /* dead bush */
+  --text-muted: #665A38;      /* dead bush, deepened for AA on sand */
   --border: #D9CD9E;          /* sandstone shadow */
 
-  --accent-1: #5F9E44;        /* cactus */
-  --accent-1-hover: #549038;
-  --accent-1-pressed: #48802F;
+  --accent-1: #487D31;        /* cactus, deep enough for white labels (AA) */
+  --accent-1-hover: #3E6E27;
+  --accent-1-pressed: #356020;
   --on-accent-1: #FFFFFF;
 
   --accent-2: #F6F0D8;        /* smooth sandstone, the quiet action fill */
@@ -236,15 +236,15 @@
   --accent-2-pressed: #E5DBB4;
   --on-accent-2: #33291A;
 
-  --accent-3: #48802F;        /* deep cactus: AA as text on sand */
-  --accent-3-hover: #3E7027;
-  --accent-3-pressed: #345F20;
+  --accent-3: #3A6824;        /* deep cactus: AA as text on sand */
+  --accent-3-hover: #356020;
+  --accent-3-pressed: #2F551C;
   --on-accent-3: #FFFFFF;
 
-  --success: #57923F;
-  --warning: #A97B24;
-  --error: #A6503A;
-  --info: #58788C;
+  --success: #3A6B25;
+  --warning: #7A5711;
+  --error: #93452F;
+  --info: #456073;
 
   --shadow-raised: 0 1px 2px rgb(51 41 26 / 0.08);
   --shadow-floating: 0 4px 12px rgb(51 41 26 / 0.10);
@@ -316,7 +316,7 @@
   --background: #e4e4e9;
   --surface: #d6d6db;         /* the well: carved things sit on this */
   --text: #636367;
-  --text-muted: #8c8c90;
+  --text-muted: #56565C;      /* deepened: AA even on the carved wells */
   --border: #cfcfd4;
 
   --accent-1: #8a6c26;        /* the gold */
@@ -329,10 +329,17 @@
   --accent-2-pressed: #d6d6db;
   --on-accent-2: #636367;
 
-  --accent-3: #8a6c26;        /* gold ink: links, focus, live values */
-  --accent-3-hover: #7a5f20;
-  --accent-3-pressed: #6b531c;
+  --accent-3: #6B531C;        /* gold ink deepened: AA as link text on the wells */
+  --accent-3-hover: #5F4A19;
+  --accent-3-pressed: #544117;
   --on-accent-3: #FFFFFF;
+
+  /* Status inks deepened too: the wells (--surface) are darker than
+     the fabric, and status words must stay AA inside them. */
+  --success: #0F5A30;
+  --warning: #664300;
+  --error: #9A2019;
+  --info: #1B457A;
 
   /* Two type voices: an elegant serif display for statements, the
      rounded stack for controls and micro labels. */
@@ -411,6 +418,13 @@
   --accent-3-hover: #e6cc9f;
   --accent-3-pressed: #d0b07c;
   --on-accent-3: #160e00;
+
+  /* Status inks lifted back up: the light block deepened them for its
+     wells, and this block must answer with dark-ground values. */
+  --success: #56B87A;
+  --warning: #D8A23E;
+  --error: #E5766A;
+  --info: #7AA7DC;
 
   /* ---- VELVET value block · dark (verbatim from the reference) ---- */
   --v-bg: #1a1a1e;
@@ -629,9 +643,9 @@
   --text-muted: #4E7189;      /* haze over water */
   --border: #BCDCEF;          /* sky hairline */
 
-  --accent-1: #0E82D6;        /* glossy sky blue: the one primary action */
-  --accent-1-hover: #0B71BC;
-  --accent-1-pressed: #0961A2;
+  --accent-1: #0B6FB8;        /* glossy sky blue, deep enough for white labels */
+  --accent-1-hover: #0A64A6;
+  --accent-1-pressed: #095996;
   --on-accent-1: #FFFFFF;
 
   --accent-2: #DCEFFA;        /* translucent plastic fill */
@@ -644,8 +658,8 @@
   --accent-3-pressed: #075C46;
   --on-accent-3: #FFFFFF;
 
-  --success: #128A50;
-  --warning: #96700A;
+  --success: #0D7042;
+  --warning: #7F5D08;
   --error: #C03A2E;
   --info: #1273B8;
 
@@ -663,7 +677,7 @@
     rgb(255 255 255 / 0.00) 52%, rgb(255 255 255 / 0.16));
   --a-glass-border: rgb(255 255 255 / 0.65);
   --a-glass-bg: rgb(255 255 255 / 0.55);
-  --a-glow: 0 2px 12px rgb(14 130 214 / 0.35);
+  --a-glow: 0 2px 12px rgb(11 111 184 / 0.35);
 }
 
 /*
@@ -766,7 +780,7 @@
   --background: #F7F2E9;      /* cream */
   --surface: #FDFAF3;         /* ivory panel */
   --text: #2B2417;            /* umber ink */
-  --text-muted: #7A6F58;
+  --text-muted: #6F654E;      /* deepened for AA on cream */
   --border: #D6C08D;          /* the gold hairline */
 
   --accent-1: #8C6D1F;        /* antique gold: the one primary action */
@@ -784,8 +798,8 @@
   --accent-3-pressed: #584512;
   --on-accent-3: #FFF8E7;
 
-  --success: #5E7C3A;         /* olive */
-  --warning: #A2701D;
+  --success: #516B31;         /* olive, AA on cream */
+  --warning: #885D14;
   --error: #A44A35;           /* terracotta */
   --info: #5B6E8C;            /* slate */
 
@@ -2145,6 +2159,9 @@ input[type="week"] {
   text-align: center;
   border-radius: var(--radius-small);
   box-shadow: var(--shadow-floating);
+  /* Hidden bubbles leave layout entirely — an opacity-0 box hanging
+     off a right-edge control would widen the whole page on phones. */
+  display: none;
   opacity: 0;
   pointer-events: none;
   transition:
@@ -2154,8 +2171,17 @@ input[type="week"] {
 
 [data-tip]:hover::after,
 [data-tip]:focus-visible::after {
+  display: block;
   opacity: 1;
   translate: -50% 0;
+}
+/* The frame the bubble transitions FROM on the display flip. */
+@starting-style {
+  [data-tip]:hover::after,
+  [data-tip]:focus-visible::after {
+    opacity: 0;
+    translate: -50% 2px;
+  }
 }
 
 /* Elements near the top of the viewport add data-tip-below, so the tip
@@ -2176,6 +2202,7 @@ input[type="week"] {
   z-index: 10;
   border: 5px solid transparent;
   border-top-color: var(--text);
+  display: none;
   opacity: 0;
   pointer-events: none;
   transition:
@@ -2189,17 +2216,21 @@ input[type="week"] {
   border-bottom-color: var(--text);
 }
 [data-tip]:hover::before,
-[data-tip]:focus-visible::before { opacity: 1; translate: -50% 0; }
+[data-tip]:focus-visible::before { display: block; opacity: 1; translate: -50% 0; }
+@starting-style {
+  [data-tip]:hover::before,
+  [data-tip]:focus-visible::before { opacity: 0; translate: -50% 2px; }
+}
 
 /* Touch: iOS applies a STICKY :hover on tap that never clears, so on
    touch devices the hover bubble is forced off and facet.js peeks the
    tip via .tip-on for a few seconds instead (initTouchPolish). */
 @media (hover: none) {
   [data-tip]:hover::after,
-  [data-tip]:hover::before { opacity: 0; }
+  [data-tip]:hover::before { display: none; opacity: 0; }
 }
 [data-tip].tip-on::after,
-[data-tip].tip-on::before { opacity: 1; translate: -50% 0; }
+[data-tip].tip-on::before { display: block; opacity: 1; translate: -50% 0; }
 
 /* ----- CHOICE CONTROLS: checkbox, radio, switch -----
    What it is: the yes/no and pick-one controls — native checkbox and
@@ -2460,8 +2491,8 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 [data-motion="calm"] .idle-pulse { animation: none; }
 
 /* ----- ICONS: forty thin line glyphs on one attribute -----
-   What it is: the icon set — 24x24 glyphs at a 1.5px stroke with
-   round caps, carried as markup in facet.js (no image files, no
+   What it is: the icon set — forty-eight 24x24 glyphs at a 1.5px
+   stroke with round caps, carried as markup in facet.js (no image files, no
    sprite fetch). What it is for: every small symbol a product needs:
    navigation, actions, states. When to use it: write
    <svg data-icon="search"></svg> and facet.js fills it; icons ride

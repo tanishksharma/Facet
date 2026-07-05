@@ -1116,7 +1116,8 @@
     "facet.toast": "Show a transient notice: facet.toast(message, kind) with kinds success/warning/error/info.",
     "facet.chart": "Draw the themed line chart: facet.chart(el, {points, projectFrom, events, format}) → {update}.",
     "facet.icons": "The glyph table (name → svg markup); extend it, then call facet.icon().",
-    "facet.icon": "(Re)fill every svg[data-icon] on the page."
+    "facet.icon": "(Re)fill every svg[data-icon] on the page.",
+    "facet.location": "The cached location object once locate() resolves (null before, null on failure)."
   },
   "blocks": [
     {
@@ -1182,6 +1183,7 @@
       "name": "Full top menu",
       "uses": [
         ".top-menu",
+        ".top-menu-links",
         ".nav-link",
         "details.top-menu-fold"
       ],

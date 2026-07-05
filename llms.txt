@@ -604,7 +604,7 @@ links. Always an <a> to a real URL, never a button in costume.
 
 ### Icons
 
-What it is: forty 24x24 line glyphs at a 1.5px stroke with round
+What it is: forty-eight 24x24 line glyphs at a 1.5px stroke with round
 caps, carried as markup inside facet.js — no image files, no sprite
 fetch. Write <svg data-icon="search"></svg> and facet.js fills it;
 icons ride currentColor and scale with the surrounding text.
@@ -903,10 +903,12 @@ touch devices (where iOS makes :hover stick) a tap peeks the bubble for
 five seconds instead — automatic, nothing to wire. Pinch zoom is
 blocked at the gesture level.
 
-Choice grid: .choice-grid of .choice-btn (a .choice-sym above a
-.choice-cap), five per row; aria-pressed carries the pick and facet.js
-keeps it exclusive with a tick of feedback. For any single pick from up
-to ~10 symbolic options.
+Choice grid: a grid of small square choice buttons (.choice-grid of
+.choice-btn — a .choice-sym above a .choice-cap), five per row on
+phones. For one exclusive pick from up to about ten options where the
+choices are compact and symbolic — currencies, units, categories;
+aria-pressed carries the state and facet.js keeps the pick exclusive.
+Use it for any single pick too wide for a segmented control.
 
 Slider tick scale: wrap a .slider and a .slider-scale in a
 .slider-wrap; facet.js builds minor ticks (data-minor, default 10),

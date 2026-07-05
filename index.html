@@ -84,7 +84,7 @@
       color: var(--text-muted);
     }
     @media (max-width: 56rem) {
-      .docs-layout { grid-template-columns: 1fr; gap: var(--space-5); }
+      .docs-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-5); }
       .docs-index { position: static; max-height: none; }
     }
 
@@ -195,6 +195,7 @@
        are position:fixed; here they sit in the flow so the page reads. */
     .element .demo .tab-bar,
     .element .demo .float-btn { position: static; transform: none; }
+    #tab-bar .demo { overflow-x: auto; }   /* the pill outgrows tiny phones */
     .element .demo .nudge-scrim,
     .element .demo .overlay-guide { position: static; border-radius: var(--radius-medium); }
     .element .demo .overlay-guide { padding: var(--space-6); gap: var(--space-3); }
@@ -232,14 +233,14 @@
     /* Cheatsheet rows: dense definition rows, filterable. */
     .cheat-row {
       display: grid;
-      grid-template-columns: minmax(12rem, 1fr) 2fr;
+      grid-template-columns: minmax(min(12rem, 40vw), 1fr) minmax(0, 2fr);
       gap: var(--space-3);
       padding-block: var(--space-2);
       border-bottom: var(--border-width) solid var(--border);
       font-size: var(--text-small);
     }
-    .cheat-row code { word-break: break-word; }
-    .cheat-row span { color: var(--text-muted); }
+    .cheat-row code { overflow-wrap: anywhere; }
+    .cheat-row span { color: var(--text-muted); overflow-wrap: anywhere; }
     .cheat-head {
       margin-top: var(--space-4);
       font-size: var(--text-caption);
@@ -609,7 +610,7 @@
           <li>The small talkers: tinted status badges, self-toggling filter chips (<code>aria-pressed</code>, promoted from this site's own controls), avatars for images or initials, and the native <code>&lt;progress&gt;</code> themed.</li>
           <li>The waiting family: shimmering skeletons shaped like the content, an accent spinner ring for shapeless waits, and a dashed empty state that names what belongs there and offers the one action that fills it.</li>
           <li>The flagship link: the signature onward step — heading voice, strong accent underline, an arrow that leans in on hover; always a real <code>&lt;a&gt;</code>.</li>
-          <li>Forty thin line icons on one attribute — <code>&lt;svg data-icon="search"&gt;</code> — carried inside facet.js (no files, no sprite), riding <code>currentColor</code>, extendable in one line.</li>
+          <li>Forty-eight thin line icons on one attribute — <code>&lt;svg data-icon="search"&gt;</code> — carried inside facet.js (no files, no sprite), riding <code>currentColor</code>, extendable in one line.</li>
           <li>Alive by default: <code>data-parallax="depth"</code> drifts elements behind the pointer, the scroll's momentum, or the device's tilt (permission-gated on iOS, honestly handled); <code>idle-*</code> classes give resting elements a slow float, sway or pulse on the composable translate/rotate/scale properties. Calm stills idle life; off and reduced motion still everything.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
@@ -2135,7 +2136,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       <article class="element stack" id="icons">
         <h3 data-status="stable">Icons</h3>
         <p>
-          What it is: the icon set — forty 24×24 glyphs at a 1.5px
+          What it is: the icon set — forty-eight 24×24 glyphs at a 1.5px
           stroke with round caps, carried as markup inside facet.js:
           no image files, no sprite fetch, nothing to host. What it is
           for: every small symbol a product needs. When to use it:

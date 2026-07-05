@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- The Facet mark: an ink facet on paper. Templates point here;
+       the homepage inlines the same shape as a data URI. -->
+  <rect width="100" height="100" rx="18" fill="#FFFFFF"/>
+  <path d="M50 14 86 41 72 86 28 86 14 41Z" fill="#17171B"/>
+</svg>
