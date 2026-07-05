@@ -114,7 +114,7 @@
   align-items: center;
   gap: 3px var(--space-control);
   padding-block: var(--space-inline);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
 }
 .nav-group > summary::-webkit-details-marker { display: none; }
 .nav-group > summary:hover .nav-group-name { color: var(--text); }
@@ -278,7 +278,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .element .demo {
   background: var(--background);
   border: var(--border-width) dashed var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   padding: var(--space-card);
 }
 
@@ -292,7 +292,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   gap: var(--space-tight);
   padding: var(--space-inline);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   background: var(--surface);
   font: inherit;
   color: inherit;
@@ -314,7 +314,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-left: var(--border-width-strong) solid var(--accent-3);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   padding: var(--space-inline) var(--space-stack);
   max-width: 65ch;
 }
@@ -325,7 +325,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 @media (max-width: 56rem) { .mode-pair { grid-template-columns: 1fr; } }
 .mode-panel {
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   padding: var(--space-card);
   display: flex;
   flex-direction: column;
@@ -337,7 +337,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   height: var(--space-page);
   width: var(--space-hero);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   margin-bottom: var(--space-tight);
 }
 
@@ -345,14 +345,14 @@ dialog.topic-modal { width: min(92vw, 44rem); }
    show up as the tint between solid pieces. */
 .space-viz {
   background: color-mix(in srgb, var(--accent-3) 10%, var(--surface));
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
 }
 .space-viz .demo-box { color: var(--text); }
 
 .demo-box {
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   padding: var(--space-control) var(--space-inline);
   font-size: var(--text-footnote);
   color: var(--text-muted);
@@ -375,7 +375,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .element .demo .float-btn { position: static; transform: none; }
 #tab-bar .demo { overflow-x: auto; }   /* the pill outgrows tiny phones */
 .element .demo .nudge-scrim,
-.element .demo .overlay-guide { position: static; border-radius: var(--radius-medium); }
+.element .demo .overlay-guide { position: static; border-radius: var(--radius-panel); }
 .element .demo .overlay-guide { padding: var(--space-page); gap: var(--space-inline); }
 #scroll-gauge .demo { position: relative; }
 #scroll-gauge .demo-scroller {
@@ -409,7 +409,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   width: 100%;
   height: 21rem;
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   background: transparent;
 }
 
@@ -492,7 +492,7 @@ h2:hover .permalink, h3:hover .permalink,
 .ref .ref-note { color: var(--text-muted); margin-top: var(--space-control); max-width: none; }
 
 /* Backgrounds demo: a fixed-height canvas so the pattern reads. */
-#backgrounds .demo > section { min-height: 11rem; border-radius: var(--radius-medium); }
+#backgrounds .demo > section { min-height: 11rem; border-radius: var(--radius-panel); }
 
 /* Docs-only frames for specific demos. */
 #snap-section .demo { padding: 0; overflow: hidden; }   /* clips the mini viewport */

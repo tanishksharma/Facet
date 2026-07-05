@@ -150,13 +150,13 @@
   --width-default: 64rem;     /* most pages */
   --width-wide: 80rem;        /* dashboards, galleries */
 
-  /* ----- Shape ----- */
-  --radius-small: 6px;        /* buttons, inputs, chips */
-  --radius-medium: 10px;      /* cards, result blocks */
-  --radius-large: 16px;       /* modals, hero surfaces */
+  /* ----- Shape: radii named for what they round ----- */
+  --radius-control: 6px;      /* buttons, inputs, chips — the small controls */
+  --radius-panel: 10px;       /* fields, result blocks, mid-size panels */
+  --radius-card: 16px;        /* cards, modals, hero — the large surfaces */
   --radius-pill: 999px;       /* pills, sliders, avatars */
-  --border-width: 1px;
-  --border-width-strong: 2px;
+  --border-width: 1px;        /* the hairline: every default border */
+  --border-width-strong: 2px; /* emphasis: focus rings, active accents */
 
   /* ----- Elevation: whisper-flat shadows ----- */
   --shadow-flat: none;
@@ -603,7 +603,7 @@
 [data-theme="velvet"] .result {
   background: var(--v-well-bg);
   border: none;
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-card);
   box-shadow: var(--v-pit);
 }
 
@@ -1346,14 +1346,14 @@ code, kbd, samp, pre {
 code {
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   padding: 0.1em 0.35em;
 }
 
 pre {
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   padding: var(--space-stack);
   overflow-x: auto;             /* wrapper law: this container exists to scroll */
 }
@@ -1381,7 +1381,7 @@ select {
   padding: var(--space-control) var(--space-inline);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   transition: border-color var(--duration-fast) var(--ease-out);
 }
 
@@ -1411,7 +1411,7 @@ textarea {
 
 fieldset {
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   padding: var(--space-stack);
 }
 
@@ -1456,7 +1456,7 @@ tbody tr:hover {
 
 figure img,
 figure video {
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
 }
 
 figcaption {
@@ -1471,7 +1471,7 @@ figcaption {
 :focus-visible {
   outline: var(--focus-ring);
   outline-offset: var(--focus-offset);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
 }
 
 /* ----- Text selection ----- */
@@ -1500,7 +1500,7 @@ figcaption {
   padding: var(--space-control) var(--space-stack);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   box-shadow: var(--shadow-floating);
   transform: translateY(-200%);   /* parked offscreen until focused */
   transition: transform var(--duration-normal) var(--ease-spring);
@@ -1718,7 +1718,7 @@ figcaption {
   min-height: 44px;                       /* touch target */
   padding: var(--space-control) var(--space-card);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   background: var(--accent-2);
   color: var(--on-accent-2);
   font-weight: var(--weight-strong);
@@ -1910,7 +1910,7 @@ input[type="file"]::file-selector-button {
   margin-right: var(--space-inline);
   padding: var(--space-control) var(--space-stack);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   background: var(--accent-2);
   color: var(--on-accent-2);
   font: inherit;
@@ -2130,7 +2130,7 @@ input[type="week"] {
 .result {
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   box-shadow: var(--shadow-raised);
   padding: var(--space-page);
   display: flex;
@@ -2216,7 +2216,7 @@ input[type="week"] {
   font-size: var(--text-caption);
   font-weight: var(--weight-body);
   text-align: center;
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   box-shadow: var(--shadow-floating);
   /* Hidden bubbles leave layout entirely — an opacity-0 box hanging
      off a right-edge control would widen the whole page on phones. */
@@ -2375,7 +2375,7 @@ dialog.drawer {
 }
 dialog.modal {
   width: min(92vw, 34rem);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-card);
   margin: auto;                   /* centre it — the * { margin: 0 } reset
                                      wipes the UA's centring margin, so a
                                      modal without this pins to the corner */
@@ -2385,7 +2385,7 @@ dialog.drawer {
   width: min(92vw, 24rem);
   height: 100dvh;
   max-height: 100dvh;
-  border-radius: var(--radius-large) 0 0 var(--radius-large);
+  border-radius: var(--radius-card) 0 0 var(--radius-card);
 }
 dialog.modal::backdrop,
 dialog.drawer::backdrop {
@@ -2401,7 +2401,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 [popover] {
   margin: auto;                   /* centered fallback where no anchor */
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   padding: var(--space-stack);
   background: var(--surface);
   color: var(--text);
@@ -2482,7 +2482,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   justify-items: center;
   text-align: center;
   padding: var(--space-section) var(--space-card);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-card);
   background: var(--accent-1);
   color: var(--on-accent-1);
 }
@@ -2494,7 +2494,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   padding: var(--space-stack) var(--space-card);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-card);
 }
 .stat strong {
   font-size: var(--text-h2);
@@ -2525,7 +2525,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 .media-figure img,
 .media-figure video {
   width: 100%;
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   border: var(--border-width) solid var(--border);
 }
 .media-figure figcaption {
@@ -2623,7 +2623,7 @@ svg[data-icon] {
 .skeleton {
   display: block;
   min-height: 1em;
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   background: linear-gradient(90deg,
     var(--accent-2-pressed) 25%, var(--accent-2) 42%, var(--accent-2-pressed) 60%);
   background-size: 200% 100%;
@@ -2654,7 +2654,7 @@ svg[data-icon] {
   gap: var(--space-control);
   padding: var(--space-section) var(--space-card);
   border: var(--border-width) dashed var(--border);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-card);
   text-align: center;
   color: var(--text-muted);
 }
@@ -2762,7 +2762,7 @@ progress::-moz-progress-bar { background: var(--accent-1); border-radius: var(--
 .chart-card {
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-card);
   padding: var(--space-stack);
 }
 .chart svg { width: 100%; height: auto; touch-action: none; display: block; }
@@ -2828,7 +2828,7 @@ table.table {
   align-items: center;
   min-height: 2.75rem;
   padding: var(--space-tight) var(--space-inline);
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   color: var(--text-muted);
   text-decoration: none;
   transition:
@@ -2933,7 +2933,7 @@ table.table {
   min-width: 2.75rem;
   min-height: 2.75rem;
   padding-inline: var(--space-control);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   color: var(--text);
   text-decoration: none;
   transition: background var(--duration-fast) var(--ease-out);
@@ -3054,7 +3054,7 @@ details.dropdown {
   padding: var(--space-tight);
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   box-shadow: var(--shadow-floating);
   z-index: 30;
   animation: facet-toast-in var(--duration-fast) var(--ease-out);
@@ -3065,7 +3065,7 @@ details.dropdown {
   width: 100%;
   padding: var(--space-control) var(--space-inline);
   border: none;
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-control);
   background: none;
   color: var(--text);
   font: inherit;
@@ -3094,7 +3094,7 @@ details.dropdown {
   display: block;
   background: var(--surface);
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-card);
   padding: var(--space-card);
   box-shadow: var(--shadow-raised);
   color: inherit;
@@ -3386,7 +3386,7 @@ details.dropdown {
   -webkit-backdrop-filter: blur(24px) saturate(1.5);
   backdrop-filter: blur(24px) saturate(1.5);
   border: var(--border-width) solid color-mix(in srgb, var(--border) 65%, transparent);
-  border-radius: var(--radius-large);
+  border-radius: var(--radius-card);
   box-shadow: var(--shadow-overlay);
   /* facetSheet drives entry/exit with the tab pill's per-edge springs
      (frame stretches, right edge never crosses its resting line) —
@@ -3503,7 +3503,7 @@ details.dropdown {
 [data-map] {
   aspect-ratio: 16 / 10;
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   overflow: hidden;              /* the live canvas honours the radius */
   background:
     linear-gradient(var(--border) 1px, transparent 1px),
@@ -3549,7 +3549,7 @@ details.dropdown {
   min-height: 40px;
   padding: var(--space-control) var(--space-inline);
   border: none;
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   background: transparent;
   color: var(--text);
   font-size: var(--text-footnote);
@@ -3605,7 +3605,7 @@ details.dropdown {
   min-height: 56px;
   padding: var(--space-control) var(--space-tight);
   border: var(--border-width) solid color-mix(in srgb, var(--border) 70%, transparent);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   /* ON reads raised: light face, soft drop shadow, lit top lip */
   background: color-mix(in srgb, var(--surface) 82%, transparent);
   box-shadow:
@@ -3767,7 +3767,7 @@ details.dropdown {
   min-height: 56px;
   padding: var(--space-control) 0;
   border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   background: var(--surface);
   color: var(--text-muted);
   transition:
@@ -3789,7 +3789,7 @@ details.dropdown {
 /* Velvet: wells for the field, a raised face for the pick, gold symbol. */
 [data-theme="velvet"] .choice-btn {
   border: none;
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-panel);
   background: var(--v-well-bg);
   box-shadow: var(--v-pit);
   color: var(--text-muted);
@@ -3916,7 +3916,7 @@ details.dropdown {
   align-items: center;
   gap: var(--space-inline);
   padding: var(--space-page) var(--space-card) var(--space-stack);
-  border-radius: calc(var(--radius-large) + 12px);
+  border-radius: calc(var(--radius-card) + 12px);
   background: var(--background);
   box-shadow: var(--shadow-overlay);
   text-align: center;

@@ -114,9 +114,9 @@
       "--space-hero"
     ],
     "shape": [
-      "--radius-small",
-      "--radius-medium",
-      "--radius-large",
+      "--radius-control",
+      "--radius-panel",
+      "--radius-card",
       "--radius-pill",
       "--border-width",
       "--border-width-strong"

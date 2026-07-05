@@ -34,6 +34,7 @@ function tidySnippet(html) {
 function initSetupStrip() {
   const strip = document.querySelector("#setup-strip");
   const snippet = document.querySelector("#snippet-consume");
+  if (!strip || !snippet) return;         // pages without the landing hero
   const picks = { theme: "", mode: "" };
 
   const renderSnippet = () => {
@@ -122,6 +123,7 @@ function initConfigChips() {
 /* The search box filters the wall and the sidebar together. */
 function initWallSearch() {
   const box = document.querySelector("#wall-search");
+  if (!box) return;                       // pages without the wall (home)
   const articles = [...document.querySelectorAll("article.element")];
   const links = [...document.querySelectorAll(".docs-index a[href^='#']")];
   const emptyNote = document.querySelector("#wall-empty");

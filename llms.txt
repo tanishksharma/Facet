@@ -225,7 +225,7 @@ data-density="small|medium|large" scales the whole spacing system at once,
 theme-defined. Container widths: --width-narrow 40rem, --width-default 64rem,
 --width-wide 80rem.
 
-Shape: --radius-small, --radius-medium, --radius-large, --radius-pill;
+Shape: --radius-control, --radius-panel, --radius-card, --radius-pill;
 --border-width, --border-width-strong
 
 Elevation: --shadow-flat, --shadow-raised, --shadow-floating,
