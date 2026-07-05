@@ -59,8 +59,10 @@ layout from identical markup, one attribute apart.
 Tokens: every design decision is a role-named CSS variable — color with
 per-theme status colors, type and spacing named by intent (not by number)
 and each scaled by a global small/medium/large control, weights, container
-widths, radii, border widths, whisper-flat shadows, motion durations and
-easings, focus ring. Ranked accents: the base family plus
+widths, radii by role (--radius-control/-panel/-card/-pill), borders by role
+(--border-hairline for separators, --border-element for outlines,
+--border-focus for the focus ring, --border-highlight for emphasis),
+whisper-flat shadows, motion durations and easings, focus ring. Ranked accents: the base family plus
 accent-1 (the one primary action), accent-2 (every secondary action's
 fill) and accent-3 (links, labels, quiet affordances), each with hover,
 pressed and on-colors in every theme — components pick ranks, never
@@ -224,8 +226,11 @@ data-density="small|medium|large" scales the whole spacing system at once,
 theme-defined. Container widths: --width-narrow 40rem, --width-default 64rem,
 --width-wide 80rem.
 
-Shape: --radius-control, --radius-panel, --radius-card, --radius-pill;
---border-width, --border-width-strong
+Shape: --radius-control (buttons, inputs, chips), --radius-panel (fields,
+mid panels), --radius-card (cards, modals, hero), --radius-pill; borders by
+role — --border-hairline (faint separators, dividers, row lines),
+--border-element (the outline of an element), --border-focus (the focus ring),
+--border-highlight (active bars, selected emphasis)
 
 Elevation: --shadow-flat, --shadow-raised, --shadow-floating,
 --shadow-overlay (whisper-flat, all of them)

@@ -19,14 +19,14 @@ RTL no — decided 4 Jul 2026.
 
 ## Queue · heavy systems first
 
-### Semantic color tokens — drop the accent ranks for role names (NEW · pending name sign-off)
+### Semantic color & border tokens (DONE)
 
 Accents: KEPT as --accent-1/-2/-3 (owner decided not to rename — the ranks
 read fine once explained). DONE alongside: the OS accent is no longer wired
 into accent-3; it is its own dormant opt-in token --os-accent (iOS blue
 everywhere, real OS accent only where the browser exposes it).
 
-Borders — expand from two width tokens to four role tokens (still to build):
+Borders — DONE: expanded from two width tokens to four role tokens:
 - `--border-hairline` — a very slight look of separation (subtle dividers)
 - `--border-element`  — the standard border on elements (cards, inputs, chips)
 - `--border-focus`    — the focus ring width, focus only

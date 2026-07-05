@@ -122,8 +122,10 @@
       "--radius-panel",
       "--radius-card",
       "--radius-pill",
-      "--border-width",
-      "--border-width-strong"
+      "--border-hairline",
+      "--border-element",
+      "--border-focus",
+      "--border-highlight"
     ],
     "elevation": [
       "--shadow-raised",

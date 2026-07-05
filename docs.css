@@ -6,7 +6,7 @@
    the ways out of the home page: build a theme, the machine files,
    the source. */
 .site-header {
-  border-bottom: var(--border-width) solid var(--border);
+  border-bottom: var(--border-hairline) solid var(--border);
 }
 .site-nav {
   display: flex;
@@ -62,7 +62,7 @@
    and tinted in every other theme (never a stray white line). */
 .section-rule {
   border: none;
-  border-top: var(--border-width) solid var(--border);
+  border-top: var(--border-hairline) solid var(--border);
   margin-block: var(--space-control) 0;
 }
 
@@ -91,7 +91,7 @@
   text-decoration: none;
   color: var(--text-muted);
   font-size: var(--text-footnote);
-  border-left: var(--border-width-strong) solid transparent;
+  border-left: var(--border-highlight) solid transparent;
   padding-left: var(--space-inline);
 }
 .docs-index a:hover { color: var(--text); }
@@ -166,7 +166,7 @@ section[id], article[id] { scroll-margin-top: var(--space-card); }
    an accent kicker over a display title — structure without a heavy
    black rule. The kicker carries the emphasis, not the line. */
 #main > .layer-band {
-  border-top: var(--border-width) solid var(--border);
+  border-top: var(--border-hairline) solid var(--border);
   margin-top: var(--space-card);
   padding-top: var(--space-section);
   display: grid;
@@ -262,7 +262,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .fold[open] > summary .fold-chevron { rotate: 225deg; }
 .fold > summary:hover .fold-chevron { border-color: var(--text); }
 .fold-note {
-  border-left: var(--border-width-strong) solid var(--accent-3);
+  border-left: var(--border-highlight) solid var(--accent-3);
   padding-left: var(--space-stack);
   color: var(--text-muted);
   font-size: var(--text-footnote);
@@ -277,7 +277,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 /* One wall entry. */
 .element .demo {
   background: var(--background);
-  border: var(--border-width) dashed var(--border);
+  border: var(--border-element) dashed var(--border);
   border-radius: var(--radius-panel);
   padding: var(--space-card);
 }
@@ -291,7 +291,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   place-items: center;
   gap: var(--space-tight);
   padding: var(--space-inline);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   background: var(--surface);
   font: inherit;
@@ -312,8 +312,8 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 }
 .callout {
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
-  border-left: var(--border-width-strong) solid var(--accent-3);
+  border: var(--border-element) solid var(--border);
+  border-left: var(--border-highlight) solid var(--accent-3);
   border-radius: var(--radius-control);
   padding: var(--space-inline) var(--space-stack);
   max-width: 65ch;
@@ -324,7 +324,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .mode-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-stack); }
 @media (max-width: 56rem) { .mode-pair { grid-template-columns: 1fr; } }
 .mode-panel {
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   padding: var(--space-card);
   display: flex;
@@ -336,7 +336,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .swatch-row .swatch {
   height: var(--space-page);
   width: var(--space-hero);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-control);
   margin-bottom: var(--space-tight);
 }
@@ -351,7 +351,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 
 .demo-box {
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-control);
   padding: var(--space-control) var(--space-inline);
   font-size: var(--text-footnote);
@@ -365,7 +365,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   width: var(--space-hero);
   height: var(--space-hero);
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   margin-bottom: var(--space-tight);
 }
 
@@ -388,7 +388,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   grid-template-columns: minmax(min(12rem, 40vw), 1fr) minmax(0, 2fr);
   gap: var(--space-inline);
   padding-block: var(--space-control);
-  border-bottom: var(--border-width) solid var(--border);
+  border-bottom: var(--border-hairline) solid var(--border);
   font-size: var(--text-footnote);
 }
 .cheat-row code { overflow-wrap: anywhere; }
@@ -408,7 +408,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .lab-frame {
   width: 100%;
   height: 21rem;
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   background: transparent;
 }
@@ -422,7 +422,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-muted);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-pill);
   padding: 1px var(--space-control);
   vertical-align: middle;
@@ -459,7 +459,7 @@ h2:hover .permalink, h3:hover .permalink,
   max-width: none;
 }
 .contrast-badges span {
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-pill);
   padding: 1px var(--space-control);
   color: var(--text-muted);
@@ -485,7 +485,7 @@ h2:hover .permalink, h3:hover .permalink,
 .ref td, .ref th {
   text-align: left;
   padding: var(--space-tight) var(--space-inline) var(--space-tight) 0;
-  border-bottom: var(--border-width) solid var(--border);
+  border-bottom: var(--border-hairline) solid var(--border);
   vertical-align: top;
 }
 .ref th { color: var(--text-muted); font-weight: var(--weight-strong); }
@@ -500,7 +500,7 @@ h2:hover .permalink, h3:hover .permalink,
 #snap-section .snap-section { min-height: 20rem; }
 #snap-section .snap-section:nth-child(even) { background: var(--surface); }
 #container .demo > * {
-  outline: var(--border-width) dashed var(--text-muted);
+  outline: var(--border-element) dashed var(--text-muted);
   padding-block: var(--space-control);
   font-size: var(--text-footnote);
   color: var(--text-muted);

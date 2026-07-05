@@ -16,7 +16,7 @@
        the builder canvas, and the Skin Lab gallery. Nothing here belongs in
        /lib — it is the presentation of this one page. -->
   <style>
-    .site-header { border-bottom: var(--border-width) solid var(--border); }
+    .site-header { border-bottom: var(--border-hairline) solid var(--border); }
     .site-nav {
       display: flex;
       flex-wrap: wrap;
@@ -59,7 +59,7 @@
       gap: var(--space-control);
       font-size: var(--text-footnote);
       background: var(--surface);
-      border: var(--border-width) solid var(--border);
+      border: var(--border-element) solid var(--border);
       border-radius: var(--radius-panel);
       padding: var(--space-control) var(--space-inline);
     }
@@ -88,7 +88,7 @@
     .builder-canvas {
       background: var(--background);
       color: var(--text);
-      border: var(--border-width) solid var(--border);
+      border: var(--border-element) solid var(--border);
       border-radius: var(--radius-card);
       /* padding rides --space-page and the panel gap rides --space-section,
          so those sliders visibly move the preview too. */
@@ -98,7 +98,7 @@
       position: sticky;
       top: var(--space-stack);
     }
-    .bc-panel + .bc-panel { border-top: var(--border-width) solid var(--border); padding-top: var(--space-section); }
+    .bc-panel + .bc-panel { border-top: var(--border-hairline) solid var(--border); padding-top: var(--space-section); }
     .bc-panel .part-label { margin-top: 0; }
     @media (max-width: 52rem) {
       .builder { grid-template-columns: minmax(0, 1fr); }
@@ -131,7 +131,7 @@
     .lab-frame {
       width: 100%;
       height: 21rem;
-      border: var(--border-width) solid var(--border);
+      border: var(--border-element) solid var(--border);
       border-radius: var(--radius-panel);
       background: transparent;
     }
@@ -237,8 +237,10 @@
               <label class="field"><span class="field-label">Control radius · <code>--radius-control</code></span><div class="slider-detail" data-token="--radius-control" data-unit="px" data-min="0" data-max="24" data-coarse="1" data-fine="1"><input type="range" class="slider" min="0" max="24" step="1" value="6" aria-label="Control radius"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Control radius">&minus;</button><input type="number" class="slider-detail-number" min="0" max="24" value="6" aria-label="Control radius px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Control radius">+</button></span></div></label>
               <label class="field"><span class="field-label">Panel radius · <code>--radius-panel</code></span><div class="slider-detail" data-token="--radius-panel" data-unit="px" data-min="0" data-max="32" data-coarse="2" data-fine="1"><input type="range" class="slider" min="0" max="32" step="1" value="10" aria-label="Panel radius"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Panel radius">&minus;</button><input type="number" class="slider-detail-number" min="0" max="32" value="10" aria-label="Panel radius px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Panel radius">+</button></span></div></label>
               <label class="field"><span class="field-label">Card radius · <code>--radius-card</code></span><div class="slider-detail" data-token="--radius-card" data-unit="px" data-min="0" data-max="48" data-coarse="2" data-fine="1"><input type="range" class="slider" min="0" max="48" step="1" value="16" aria-label="Card radius"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Card radius">&minus;</button><input type="number" class="slider-detail-number" min="0" max="48" value="16" aria-label="Card radius px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Card radius">+</button></span></div></label>
-              <label class="field"><span class="field-label">Border width · <code>--border-width</code></span><div class="slider-detail" data-token="--border-width" data-unit="px" data-min="0" data-max="6" data-coarse="1" data-fine="1"><input type="range" class="slider" min="0" max="6" step="1" value="1" aria-label="Border width"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Border width">&minus;</button><input type="number" class="slider-detail-number" min="0" max="6" value="1" aria-label="Border width px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Border width">+</button></span></div></label>
-              <label class="field"><span class="field-label">Strong border · <code>--border-width-strong</code></span><div class="slider-detail" data-token="--border-width-strong" data-unit="px" data-min="0" data-max="8" data-coarse="1" data-fine="1"><input type="range" class="slider" min="0" max="8" step="1" value="2" aria-label="Strong border"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Strong border">&minus;</button><input type="number" class="slider-detail-number" min="0" max="8" value="2" aria-label="Strong border px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Strong border">+</button></span></div></label>
+              <label class="field"><span class="field-label">Hairline · <code>--border-hairline</code></span><div class="slider-detail" data-token="--border-hairline" data-unit="px" data-min="0" data-max="6" data-coarse="1" data-fine="1"><input type="range" class="slider" min="0" max="6" step="1" value="1" aria-label="Hairline"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Hairline">&minus;</button><input type="number" class="slider-detail-number" min="0" max="6" value="1" aria-label="Hairline px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Hairline">+</button></span></div></label>
+              <label class="field"><span class="field-label">Element border · <code>--border-element</code></span><div class="slider-detail" data-token="--border-element" data-unit="px" data-min="0" data-max="6" data-coarse="1" data-fine="1"><input type="range" class="slider" min="0" max="6" step="1" value="1" aria-label="Element border"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Element border">&minus;</button><input type="number" class="slider-detail-number" min="0" max="6" value="1" aria-label="Element border px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Element border">+</button></span></div></label>
+              <label class="field"><span class="field-label">Focus ring · <code>--border-focus</code></span><div class="slider-detail" data-token="--border-focus" data-unit="px" data-min="0" data-max="8" data-coarse="1" data-fine="1"><input type="range" class="slider" min="0" max="8" step="1" value="2" aria-label="Focus ring"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Focus ring">&minus;</button><input type="number" class="slider-detail-number" min="0" max="8" value="2" aria-label="Focus ring px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Focus ring">+</button></span></div></label>
+              <label class="field"><span class="field-label">Highlight · <code>--border-highlight</code></span><div class="slider-detail" data-token="--border-highlight" data-unit="px" data-min="0" data-max="8" data-coarse="1" data-fine="1"><input type="range" class="slider" min="0" max="8" step="1" value="2" aria-label="Highlight"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Highlight">&minus;</button><input type="number" class="slider-detail-number" min="0" max="8" value="2" aria-label="Highlight px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Highlight">+</button></span></div></label>
             </div>
           </div>
 

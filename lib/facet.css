@@ -164,8 +164,14 @@
   --radius-panel: 10px;       /* fields, result blocks, mid-size panels */
   --radius-card: 16px;        /* cards, modals, hero — the large surfaces */
   --radius-pill: 999px;       /* pills, sliders, avatars */
-  --border-width: 1px;        /* the hairline: every default border */
-  --border-width-strong: 2px; /* emphasis: focus rings, active accents */
+  /* Borders named by role. Hairline and element are both 1px — the name
+     says the job: a faint separator vs the outline of an element. Focus and
+     highlight are the 2px emphasis pair: the focus ring vs drawing attention
+     to an element (active bars, selected rows). */
+  --border-hairline: 1px;     /* a faint separator: dividers, rules, row lines */
+  --border-element: 1px;      /* the outline of an element: cards, inputs, chips */
+  --border-focus: 2px;        /* the focus ring width — focus only */
+  --border-highlight: 2px;    /* draw attention to an element: active bars, selected */
 
   /* ----- Elevation: whisper-flat shadows ----- */
   --shadow-flat: none;
@@ -189,7 +195,7 @@
                                 upgraded to a true spring curve below */
 
   /* ----- Focus ----- */
-  --focus-ring: 2px solid var(--accent-3);
+  --focus-ring: var(--border-focus) solid var(--accent-3);
   --focus-offset: 2px;
 }
 
@@ -944,7 +950,7 @@
   [data-theme][data-mode] {
     --text-muted: var(--text);
     --border: color-mix(in srgb, var(--text) 55%, var(--background));
-    --focus-ring: 3px solid var(--accent-3);
+    --focus-ring: calc(var(--border-focus) + 1px) solid var(--accent-3);
   }
 }
 
@@ -1309,14 +1315,14 @@ li + li { margin-top: var(--space-tight); }
 
 blockquote {
   padding-left: var(--space-stack);
-  border-left: var(--border-width-strong) solid var(--accent-3);
+  border-left: var(--border-highlight) solid var(--accent-3);
   color: var(--text-muted);
   font-style: italic;
 }
 
 hr {
   border: none;
-  border-top: var(--border-width) solid var(--border);
+  border-top: var(--border-hairline) solid var(--border);
 }
 
 /* ----- Code ----- */
@@ -1329,14 +1335,14 @@ code, kbd, samp, pre {
 /* Inline code gets a quiet chip; code inside pre stays bare. */
 code {
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-control);
   padding: 0.1em 0.35em;
 }
 
 pre {
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   padding: var(--space-stack);
   overflow-x: auto;             /* wrapper law: this container exists to scroll */
@@ -1364,7 +1370,7 @@ select {
   min-height: 44px;             /* touch target */
   padding: var(--space-control) var(--space-inline);
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-control);
   transition: border-color var(--duration-fast) var(--ease-out);
 }
@@ -1394,7 +1400,7 @@ textarea {
 }
 
 fieldset {
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   padding: var(--space-stack);
 }
@@ -1421,7 +1427,7 @@ table {
 th, td {
   text-align: left;
   padding: var(--space-control) var(--space-inline);
-  border-bottom: var(--border-width) solid var(--border);
+  border-bottom: var(--border-hairline) solid var(--border);
 }
 
 th {
@@ -1483,7 +1489,7 @@ figcaption {
   z-index: 100;
   padding: var(--space-control) var(--space-stack);
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-control);
   box-shadow: var(--shadow-floating);
   transform: translateY(-200%);   /* parked offscreen until focused */
@@ -1701,7 +1707,7 @@ figcaption {
   gap: var(--space-control);
   min-height: 44px;                       /* touch target */
   padding: var(--space-control) var(--space-card);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-control);
   background: var(--accent-2);
   color: var(--on-accent-2);
@@ -1893,7 +1899,7 @@ input[type="file"] {
 input[type="file"]::file-selector-button {
   margin-right: var(--space-inline);
   padding: var(--space-control) var(--space-stack);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   background: var(--accent-2);
   color: var(--on-accent-2);
@@ -2006,7 +2012,7 @@ input[type="week"] {
   height: 24px;
   margin-top: -10px;                      /* centers on the 4px track */
   background: var(--accent-3);
-  border: var(--border-width-strong) solid var(--surface);
+  border: var(--border-highlight) solid var(--surface);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-raised);
   transition: transform var(--duration-normal) var(--ease-spring);
@@ -2016,7 +2022,7 @@ input[type="week"] {
   width: 24px;
   height: 24px;
   background: var(--accent-3);
-  border: var(--border-width-strong) solid var(--surface);
+  border: var(--border-highlight) solid var(--surface);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-raised);
   transition: transform var(--duration-normal) var(--ease-spring);
@@ -2113,7 +2119,7 @@ input[type="week"] {
 
 .result {
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   box-shadow: var(--shadow-raised);
   padding: var(--space-page);
@@ -2144,7 +2150,7 @@ input[type="week"] {
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-control) var(--space-page);
-  border-top: var(--border-width) solid var(--border);
+  border-top: var(--border-hairline) solid var(--border);
   padding-top: var(--space-stack);
 }
 
@@ -2384,7 +2390,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 
 [popover] {
   margin: auto;                   /* centered fallback where no anchor */
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   padding: var(--space-stack);
   background: var(--surface);
@@ -2430,7 +2436,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   gap: var(--space-stack);
   flex-wrap: wrap;
   padding-block: var(--space-inline);
-  border-bottom: var(--border-width) solid var(--border);
+  border-bottom: var(--border-hairline) solid var(--border);
 }
 .top-menu .wordmark-slot {
   font-weight: var(--weight-heading);
@@ -2477,7 +2483,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   gap: var(--space-tight);
   padding: var(--space-stack) var(--space-card);
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-card);
 }
 .stat strong {
@@ -2489,7 +2495,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 
 /* Pull quote: the sentence worth stealing, set large. */
 .pullquote {
-  border-left: var(--border-width-strong) solid var(--accent-3);
+  border-left: var(--border-highlight) solid var(--accent-3);
   padding-left: var(--space-card);
   font-family: var(--font-heading);
   font-size: var(--text-h3);
@@ -2510,7 +2516,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 .media-figure video {
   width: 100%;
   border-radius: var(--radius-panel);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
 }
 .media-figure figcaption {
   margin-top: var(--space-control);
@@ -2581,7 +2587,7 @@ svg[data-icon] {
   font-weight: var(--weight-heading);
   color: var(--text);
   text-decoration: none;
-  border-bottom: var(--border-width-strong) solid var(--accent-3);
+  border-bottom: var(--border-highlight) solid var(--accent-3);
   padding-bottom: 2px;
   transition: color var(--duration-fast) var(--ease-out);
 }
@@ -2637,7 +2643,7 @@ svg[data-icon] {
   place-items: center;
   gap: var(--space-control);
   padding: var(--space-section) var(--space-card);
-  border: var(--border-width) dashed var(--border);
+  border: var(--border-element) dashed var(--border);
   border-radius: var(--radius-card);
   text-align: center;
   color: var(--text-muted);
@@ -2667,7 +2673,7 @@ svg[data-icon] {
   font-weight: var(--weight-strong);
   background: var(--accent-2);
   color: var(--on-accent-2);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
 }
 .badge-success { background: color-mix(in srgb, var(--success) 14%, var(--background)); color: var(--success); border-color: color-mix(in srgb, var(--success) 38%, var(--background)); }
 .badge-warning { background: color-mix(in srgb, var(--warning) 14%, var(--background)); color: var(--warning); border-color: color-mix(in srgb, var(--warning) 38%, var(--background)); }
@@ -2679,7 +2685,7 @@ svg[data-icon] {
   min-height: 36px;
   padding: var(--space-tight) var(--space-inline);
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-pill);
   font: inherit;
   font-size: var(--text-footnote);
@@ -2745,7 +2751,7 @@ progress::-moz-progress-bar { background: var(--accent-1); border-radius: var(--
    gesture law). */
 .chart-card {
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-card);
   padding: var(--space-stack);
 }
@@ -2785,12 +2791,12 @@ table.table {
   padding: var(--space-control) var(--space-inline);
   color: var(--text-muted);
   font-weight: var(--weight-strong);
-  border-bottom: var(--border-width-strong) solid var(--border);
+  border-bottom: var(--border-highlight) solid var(--border);
   white-space: nowrap;
 }
 .table td {
   padding: var(--space-control) var(--space-inline);
-  border-bottom: var(--border-width) solid var(--border);
+  border-bottom: var(--border-hairline) solid var(--border);
 }
 .table tbody tr:nth-child(even) { background: var(--surface); }
 .table tbody tr:hover { background: var(--accent-2-hover); }
@@ -2841,7 +2847,7 @@ table.table {
 .tabs {
   display: flex;
   gap: var(--space-tight);
-  border-bottom: var(--border-width) solid var(--border);
+  border-bottom: var(--border-hairline) solid var(--border);
 }
 .tabs [role="tab"] {
   border: none;
@@ -2852,7 +2858,7 @@ table.table {
   color: var(--text-muted);
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  margin-bottom: calc(-1 * var(--border-width));
+  margin-bottom: calc(-1 * var(--border-element));
   transition: color var(--duration-fast) var(--ease-out);
 }
 .tabs [role="tab"]:hover { color: var(--text); }
@@ -2938,7 +2944,7 @@ table.table {
    give sibling accordions the same name attribute and the browser
    keeps exactly one open — no JS anywhere. */
 details.accordion {
-  border-bottom: var(--border-width) solid var(--border);
+  border-bottom: var(--border-hairline) solid var(--border);
 }
 .accordion summary {
   display: flex;
@@ -3037,7 +3043,7 @@ details.dropdown {
   flex-direction: column;
   padding: var(--space-tight);
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   box-shadow: var(--shadow-floating);
   z-index: 30;
@@ -3077,7 +3083,7 @@ details.dropdown {
 .card-outlined {
   display: block;
   background: var(--surface);
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-card);
   padding: var(--space-card);
   box-shadow: var(--shadow-raised);
@@ -3115,7 +3121,7 @@ details.dropdown {
   display: inline-flex;
   align-items: center;
   padding: 2px;
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-pill);
   background: var(--surface);
 }
@@ -3160,7 +3166,7 @@ details.dropdown {
   margin: 0;                     /* it is often a fieldset */
   padding: 2px;
   gap: 2px;
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-pill);
   background: var(--surface);
 }
@@ -3263,7 +3269,7 @@ details.dropdown {
   background: color-mix(in srgb, var(--surface) 32%, transparent);
   -webkit-backdrop-filter: blur(5px) saturate(1.4);
   backdrop-filter: blur(5px) saturate(1.4);
-  border: var(--border-width) solid color-mix(in srgb, var(--border) 65%, transparent);
+  border: var(--border-element) solid color-mix(in srgb, var(--border) 65%, transparent);
   border-radius: var(--radius-pill);
   box-shadow:
     inset 0 2px 5px color-mix(in srgb, var(--text) 22%, transparent),
@@ -3308,7 +3314,7 @@ details.dropdown {
   text-shadow: 0 1px 0 color-mix(in srgb, var(--background) 40%, transparent);
 }
 .tab-divider {
-  width: var(--border-width);
+  width: var(--border-element);
   height: var(--space-card);
   background: var(--border);
   margin-inline: var(--space-tight);
@@ -3369,7 +3375,7 @@ details.dropdown {
   background: color-mix(in srgb, var(--surface) 40%, transparent);
   -webkit-backdrop-filter: blur(24px) saturate(1.5);
   backdrop-filter: blur(24px) saturate(1.5);
-  border: var(--border-width) solid color-mix(in srgb, var(--border) 65%, transparent);
+  border: var(--border-element) solid color-mix(in srgb, var(--border) 65%, transparent);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-overlay);
   /* facetSheet drives entry/exit with the tab pill's per-edge springs
@@ -3486,7 +3492,7 @@ details.dropdown {
    line of type, never a broken embed. */
 [data-map] {
   aspect-ratio: 16 / 10;
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   overflow: hidden;              /* the live canvas honours the radius */
   background:
@@ -3561,7 +3567,7 @@ details.dropdown {
 }
 .menu-divider {
   border: none;
-  border-top: var(--border-width) solid var(--border);
+  border-top: var(--border-hairline) solid var(--border);
   margin: var(--space-tight) var(--space-control);
 }
 /* Inset divider: a short centred hairline, not edge to edge. */
@@ -3588,7 +3594,7 @@ details.dropdown {
   gap: var(--space-tight);
   min-height: 56px;
   padding: var(--space-control) var(--space-tight);
-  border: var(--border-width) solid color-mix(in srgb, var(--border) 70%, transparent);
+  border: var(--border-element) solid color-mix(in srgb, var(--border) 70%, transparent);
   border-radius: var(--radius-panel);
   /* ON reads raised: light face, soft drop shadow, lit top lip */
   background: color-mix(in srgb, var(--surface) 82%, transparent);
@@ -3666,7 +3672,7 @@ details.dropdown {
   width: 52px;
   height: 52px;
   padding: 0;
-  border: var(--border-width) solid color-mix(in srgb, var(--border) 65%, transparent);
+  border: var(--border-element) solid color-mix(in srgb, var(--border) 65%, transparent);
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--surface) 32%, transparent);
   -webkit-backdrop-filter: blur(5px) saturate(1.4);
@@ -3750,7 +3756,7 @@ details.dropdown {
   gap: 2px;
   min-height: 56px;
   padding: var(--space-control) 0;
-  border: var(--border-width) solid var(--border);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
   background: var(--surface);
   color: var(--text-muted);
