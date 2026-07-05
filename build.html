@@ -73,6 +73,10 @@
       cursor: pointer;
     }
 
+    /* Stacked token sliders inside a tab panel. */
+    .build-sliders { display: grid; gap: var(--space-stack); }
+    .build-sliders .field { gap: var(--space-tight); }
+
     /* Theme builder: controls on the left, a live preview canvas on the
        right. The build applies its tokens to the canvas alone, so it is a
        real, contained workspace. */
@@ -164,21 +168,26 @@
     </header>
 
     <section id="style-mixer" class="stack">
-      <h2>Pick your colors</h2>
+      <h2>Pick your tokens</h2>
       <p>
-        A picker for each semantic color token, previewed live on a canvas of
-        real layouts beside the controls. Start from the active theme or a
-        blank canvas, pull the colors where you want them, and the hover and
-        pressed shades and on-colors derive automatically. The build rides
-        this page's URL, so a shared link opens on your exact colors.
+        Build on top of the active theme, one token category at a time —
+        colors, spacing, type and shape — previewed live on a canvas of real
+        layouts beside the controls. Colors derive their hover, pressed and
+        on-shades automatically; the numeric tokens use a detailed slider
+        (drag coarse, then fine-tune with the −/+ or by typing). The build
+        rides this page's URL, so a shared link opens on your exact tokens.
       </p>
       <div class="builder">
         <div class="builder-controls stack">
-          <p class="chips" role="group" aria-label="Start from">
-            <button type="button" class="chip" aria-pressed="true" data-start="theme" data-tip="Build on top of the active theme's colors">Active theme</button>
-            <button type="button" class="chip" aria-pressed="false" data-start="blank" data-tip="Start from a neutral blank canvas and build up">Blank canvas</button>
-          </p>
-          <div class="mixer-grid" id="mixer-controls">
+          <div class="tabs" role="tablist" aria-label="Token category">
+            <button type="button" role="tab" aria-selected="true" aria-controls="tab-colors" id="t-colors" data-tip="The palette">Colors</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="tab-spacing" id="t-spacing" data-tip="Density and the spacing scale">Spacing</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="tab-type" id="t-type" data-tip="Type size and the scale">Type</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="tab-shape" id="t-shape" data-tip="Radii and borders">Shape</button>
+          </div>
+
+          <!-- COLORS -->
+          <div role="tabpanel" id="tab-colors" aria-labelledby="t-colors" class="mixer-grid">
             <label>Background <input type="color" data-mix="background" data-tip="The page itself"></label>
             <label>Surface <input type="color" data-mix="surface" data-tip="Cards, inputs, panels"></label>
             <label>Text <input type="color" data-mix="text" data-tip="The ink"></label>
@@ -188,8 +197,50 @@
             <label>Accent 2 <input type="color" data-mix="accent-2" data-tip="Every secondary fill"></label>
             <label>Accent 3 <input type="color" data-mix="accent-3" data-tip="Links, labels, focus"></label>
           </div>
+
+          <!-- SPACING -->
+          <div role="tabpanel" id="tab-spacing" aria-labelledby="t-spacing" class="stack" hidden>
+            <p class="chips" role="group" aria-label="Density">
+              <button type="button" class="chip" data-scale-pick="density" data-scale-value="small" data-tip="Tighten everything">Small</button>
+              <button type="button" class="chip" aria-pressed="true" data-scale-pick="density" data-scale-value="" data-tip="The theme's own density">Medium</button>
+              <button type="button" class="chip" data-scale-pick="density" data-scale-value="large" data-tip="Open everything up">Large</button>
+            </p>
+            <div class="build-sliders">
+              <label class="field"><span class="field-label">Control padding · --space-control</span><div class="slider-detail" data-token="--space-control" data-unit="px" data-min="0" data-max="24" data-coarse="2" data-fine="1"><input type="range" class="slider" min="0" max="24" step="1" value="8" aria-label="Control padding"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="24" value="8" aria-label="Control padding px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Row gap · --space-inline</span><div class="slider-detail" data-token="--space-inline" data-unit="px" data-min="0" data-max="32" data-coarse="2" data-fine="1"><input type="range" class="slider" min="0" max="32" step="1" value="12" aria-label="Row gap"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="32" value="12" aria-label="Row gap px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Block gap · --space-stack</span><div class="slider-detail" data-token="--space-stack" data-unit="px" data-min="0" data-max="48" data-coarse="4" data-fine="1"><input type="range" class="slider" min="0" max="48" step="1" value="16" aria-label="Block gap"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="48" value="16" aria-label="Block gap px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Card padding · --space-card</span><div class="slider-detail" data-token="--space-card" data-unit="px" data-min="0" data-max="64" data-coarse="4" data-fine="1"><input type="range" class="slider" min="0" max="64" step="1" value="24" aria-label="Card padding"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="64" value="24" aria-label="Card padding px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Page margin · --space-page</span><div class="slider-detail" data-token="--space-page" data-unit="px" data-min="0" data-max="96" data-coarse="8" data-fine="1"><input type="range" class="slider" min="0" max="96" step="1" value="32" aria-label="Page margin"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="96" value="32" aria-label="Page margin px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Section gap · --space-section</span><div class="slider-detail" data-token="--space-section" data-unit="px" data-min="0" data-max="128" data-coarse="8" data-fine="1"><input type="range" class="slider" min="0" max="128" step="1" value="48" aria-label="Section gap"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="128" value="48" aria-label="Section gap px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+            </div>
+          </div>
+
+          <!-- TYPE -->
+          <div role="tabpanel" id="tab-type" aria-labelledby="t-type" class="stack" hidden>
+            <p class="chips" role="group" aria-label="Type size">
+              <button type="button" class="chip" data-scale-pick="textSize" data-scale-value="small" data-tip="Smaller type everywhere">Small</button>
+              <button type="button" class="chip" aria-pressed="true" data-scale-pick="textSize" data-scale-value="" data-tip="The theme's own size">Medium</button>
+              <button type="button" class="chip" data-scale-pick="textSize" data-scale-value="large" data-tip="Larger type everywhere">Large</button>
+            </p>
+            <div class="build-sliders">
+              <label class="field"><span class="field-label">Heading 1 · --text-h1</span><div class="slider-detail" data-token="--text-h1" data-unit="px" data-min="20" data-max="64" data-coarse="4" data-fine="1"><input type="range" class="slider" min="20" max="64" step="1" value="36" aria-label="Heading 1"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="20" max="64" value="36" aria-label="Heading 1 px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Heading 2 · --text-h2</span><div class="slider-detail" data-token="--text-h2" data-unit="px" data-min="16" data-max="40" data-coarse="2" data-fine="1"><input type="range" class="slider" min="16" max="40" step="1" value="24" aria-label="Heading 2"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="16" max="40" value="24" aria-label="Heading 2 px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Body · --text-body</span><div class="slider-detail" data-token="--text-body" data-unit="px" data-min="12" data-max="24" data-coarse="1" data-fine="1"><input type="range" class="slider" min="12" max="24" step="1" value="16" aria-label="Body"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="12" max="24" value="16" aria-label="Body px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+            </div>
+          </div>
+
+          <!-- SHAPE -->
+          <div role="tabpanel" id="tab-shape" aria-labelledby="t-shape" class="stack" hidden>
+            <div class="build-sliders">
+              <label class="field"><span class="field-label">Small radius · --radius-small</span><div class="slider-detail" data-token="--radius-small" data-unit="px" data-min="0" data-max="20" data-coarse="1" data-fine="1"><input type="range" class="slider" min="0" max="20" step="1" value="6" aria-label="Small radius"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="20" value="6" aria-label="Small radius px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Medium radius · --radius-medium</span><div class="slider-detail" data-token="--radius-medium" data-unit="px" data-min="0" data-max="28" data-coarse="2" data-fine="1"><input type="range" class="slider" min="0" max="28" step="1" value="10" aria-label="Medium radius"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="28" value="10" aria-label="Medium radius px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Large radius · --radius-large</span><div class="slider-detail" data-token="--radius-large" data-unit="px" data-min="0" data-max="40" data-coarse="2" data-fine="1"><input type="range" class="slider" min="0" max="40" step="1" value="16" aria-label="Large radius"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="40" value="16" aria-label="Large radius px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+              <label class="field"><span class="field-label">Border width · --border-width</span><div class="slider-detail" data-token="--border-width" data-unit="px" data-min="0" data-max="6" data-coarse="1" data-fine="1"><input type="range" class="slider" min="0" max="6" step="1" value="1" aria-label="Border width"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease">&minus;</button><input type="number" class="slider-detail-number" min="0" max="6" value="1" aria-label="Border width px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase">+</button></span></div></label>
+            </div>
+          </div>
+
           <p style="display: flex; gap: var(--space-control); flex-wrap: wrap; max-width: none;">
-            <button class="btn btn-small" id="mixer-reset" data-event="mixer-reset" data-tip="Clears the build: back to the active theme's own colors">Reset</button>
+            <button class="btn btn-small" id="mixer-reset" data-event="mixer-reset" data-tip="Clears the build: back to the active theme's own tokens">Reset</button>
             <button class="btn btn-small" data-copy="#code-style-mixer" data-tip="Copies the config block for your own page">Copy the config</button>
           </p>
           <pre id="code-style-mixer"><code></code></pre>
@@ -256,133 +307,155 @@
        were lifted verbatim from the library's docs so the build page is
        self-contained; the library files (/lib) are untouched. -->
   <script>
-    /* Theme builder (Style Mixer): a picker per semantic token, previewed
-       live on a scoped canvas — the tokens are written as custom properties
-       on #builder-canvas alone, so the sample layouts restyle while the rest
-       of the page holds still. Start from the active theme or a blank canvas.
-       Hover/pressed shades and on-colors derive automatically; the build
-       rides ?mix= so a link reproduces it; the export block is always the
-       paste-ready :root config. Docs-only logic — the library ships
-       facet.set for the whole-page version; this is a contained workspace. */
+    /* Theme builder: build on the active theme, one token category at a time
+       (colors, spacing, type, shape), previewed live on a scoped canvas —
+       every token is written as a custom property on #builder-canvas alone,
+       so the sample layouts restyle while the rest of the page holds still.
+       Colors fan out to their hover/pressed/on shades; numeric tokens ride
+       the detailed slider. Density and type size are the two global scales,
+       set as data attributes on the canvas. The whole build rides ?mix= so a
+       link reproduces it, and the export block is the paste-ready :root
+       config. Docs-only logic — the library ships facet.set for the
+       whole-page version; this is a contained workspace. */
     function initStyleMixer() {
-      const box = document.querySelector("#mixer-controls");
       const canvas = document.querySelector("#builder-canvas");
-      if (!box || !canvas || !window.facet) return;
-      const pickers = [...box.querySelectorAll("[data-mix]")];
-      const startChips = [...document.querySelectorAll("[data-start]")];
       const exportCode = document.querySelector("#code-style-mixer code");
+      if (!canvas || !exportCode || !window.facet) return;
       const root = document.documentElement;
-      const mixed = {};                       // token -> hex, only what the user changed
-      // A neutral slate to build up from when you start blank.
-      const BLANK = {
-        "background": "#ffffff", "surface": "#f4f4f5", "text": "#18181b",
-        "text-muted": "#71717a", "border": "#e4e4e7",
-        "accent-1": "#18181b", "accent-2": "#f4f4f5", "accent-3": "#3b6fe0",
-      };
+      const pickers = [...document.querySelectorAll("#tab-colors [data-mix]")];
+      const sliders = [...document.querySelectorAll(".slider-detail[data-token]")];
+      const scaleChips = [...document.querySelectorAll("[data-scale-pick]")];
 
-      // Resolve any token value (hex, color-mix, AccentColor…) to #rrggbb
-      // by letting the browser compute it on a probe element.
-      const probe = document.createElement("span");
-      probe.hidden = true;
-      document.body.appendChild(probe);
-      const tokenHex = (token) => {
-        probe.style.color = `var(--${token})`;
-        const m = getComputedStyle(probe).color.match(/\d+/g) || [0, 0, 0];
-        return "#" + m.slice(0, 3).map(n => (+n).toString(16).padStart(2, "0")).join("");
-      };
+      const tokens = {};                // "--cssvar" -> raw value the user set
+      const scales = { density: "", textSize: "" };   // the two global scales
+      const isColor = (v) => /^#|^rgb|color-mix|Color$/.test(v) || v.startsWith("#");
+      const sliderInit = new Map(sliders.map((s) => [s, s.querySelector(".slider-detail-number").value]));
+
+      // A picked color fans out to its derived tokens; anything else is literal.
       const luma = (hex) => {
         const n = parseInt(hex.slice(1), 16);
         return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
       };
-
-      // One picked color fans out to its derived tokens.
-      const derive = (token, hex) => {
-        const set = { ["--" + token]: hex };
-        if (token.startsWith("accent")) {
+      const derive = (cssVar, val) => {
+        const set = { [cssVar]: val };
+        if (cssVar.startsWith("--accent") && val.startsWith("#")) {
           const toward = root.dataset.mode === "dark" ? "white" : "black";
-          set[`--${token}-hover`] = `color-mix(in srgb, ${hex} 86%, ${toward})`;
-          set[`--${token}-pressed`] = `color-mix(in srgb, ${hex} 74%, ${toward})`;
-          set[`--on-${token}`] = luma(hex) > 0.55 ? "#17171B" : "#FFFFFF";
+          set[`${cssVar}-hover`] = `color-mix(in srgb, ${val} 86%, ${toward})`;
+          set[`${cssVar}-pressed`] = `color-mix(in srgb, ${val} 74%, ${toward})`;
+          set[`--on-${cssVar.slice(2)}`] = luma(val) > 0.55 ? "#17171B" : "#FFFFFF";
         }
         return set;
       };
 
+      // Colours resolve their live theme value so an untouched picker shows it.
+      const probe = document.createElement("span");
+      probe.hidden = true;
+      canvas.appendChild(probe);
+      const tokenHex = (cssVar) => {
+        probe.style.color = `var(${cssVar})`;
+        const m = getComputedStyle(probe).color.match(/\d+/g) || [0, 0, 0];
+        return "#" + m.slice(0, 3).map((n) => (+n).toString(16).padStart(2, "0")).join("");
+      };
+
       const renderExport = () => {
-        const entries = Object.entries(mixed).flatMap(([t, hex]) => Object.entries(derive(t, hex)));
-        exportCode.textContent = entries.length
+        const entries = Object.entries(tokens).flatMap(([k, v]) => Object.entries(derive(k, v)));
+        const attrs = [scales.density && `data-density="${scales.density}"`,
+                       scales.textSize && `data-text-size="${scales.textSize}"`].filter(Boolean);
+        if (!entries.length && !attrs.length) {
+          exportCode.textContent = "<!-- Move a control and the paste-ready config appears here. -->";
+          return;
+        }
+        const note = attrs.length ? `<!-- on your <html>: ${attrs.join(" ")} -->\n` : "";
+        const call = entries.length
           ? "<script>\n  addEventListener(\"DOMContentLoaded\", () => facet.set({\n"
             + entries.map(([k, v]) => `    ${JSON.stringify(k)}: ${JSON.stringify(v)},`).join("\n")
             + "\n  }));\n<\/script>"
-          : "<!-- Mix a color above and the paste-ready config appears here. -->";
+          : "";
+        exportCode.textContent = note + call;
       };
 
       const writeUrl = () => {
         const url = new URL(location);
-        const packed = Object.entries(mixed).map(([t, hex]) => `${t}:${hex.slice(1)}`).join(",");
-        if (packed) url.searchParams.set("mix", packed);
-        else url.searchParams.delete("mix");
+        if (Object.keys(tokens).length || scales.density || scales.textSize) {
+          url.searchParams.set("mix", JSON.stringify({ tokens, scales }));
+        } else url.searchParams.delete("mix");
         history.replaceState(null, "", url);
       };
 
-      const syncPickers = () => {
-        for (const p of pickers) p.value = mixed[p.dataset.mix] || tokenHex(p.dataset.mix);
+      const setToken = (cssVar, val) => {
+        tokens[cssVar] = val;
+        for (const [k, v] of Object.entries(derive(cssVar, val))) canvas.style.setProperty(k, v);
       };
-
-      // Application is scoped to the canvas: set (or clear) the derived
-      // custom properties on #builder-canvas, never on the page root.
-      const applyToken = (token, hex) => {
-        mixed[token] = hex;
-        for (const [k, v] of Object.entries(derive(token, hex))) canvas.style.setProperty(k, v);
-      };
-      const clearAll = () => {
-        for (const [t, hex] of Object.entries(mixed)) {
-          for (const k of Object.keys(derive(t, hex))) canvas.style.removeProperty(k);
-          delete mixed[t];
+      const setScale = (which, value) => {
+        scales[which] = value;
+        const attr = which === "textSize" ? "text-size" : "density";
+        if (value) canvas.setAttribute(`data-${attr}`, value);
+        else canvas.removeAttribute(`data-${attr}`);
+        for (const c of scaleChips) {
+          if (c.dataset.scalePick === which) c.setAttribute("aria-pressed", String((c.dataset.scaleValue || "") === value));
         }
       };
-      const apply = (token, hex) => { applyToken(token, hex); writeUrl(); renderExport(); };
-
-      for (const p of pickers) {
-        p.addEventListener("input", () => apply(p.dataset.mix, p.value));
-      }
-
-      // Start from the active theme (clear the build) or a blank canvas
-      // (load the neutral slate, ready to build up).
-      const startFrom = (mode) => {
-        clearAll();
-        if (mode === "blank") for (const [t, hex] of Object.entries(BLANK)) applyToken(t, hex);
-        for (const c of startChips) c.setAttribute("aria-pressed", String(c.dataset.start === mode));
-        writeUrl();
-        renderExport();
-        syncPickers();
+      const syncColorPickers = () => {
+        for (const p of pickers) p.value = tokens["--" + p.dataset.mix] || tokenHex("--" + p.dataset.mix);
       };
-      // These are a radio pair, not the library's multi-select filter chips.
-      // Our listener runs first (inline script vs deferred facet.js), so
-      // stopImmediatePropagation keeps the library's chip-toggle off them —
-      // otherwise it would flip the aria-pressed we just set.
-      for (const c of startChips) {
-        c.addEventListener("click", (e) => { e.stopImmediatePropagation(); startFrom(c.dataset.start); });
+
+      // Colour pickers.
+      for (const p of pickers) {
+        p.addEventListener("input", () => { setToken("--" + p.dataset.mix, p.value); writeUrl(); renderExport(); });
       }
-      document.querySelector("#mixer-reset").addEventListener("click", () => startFrom("theme"));
+      // Numeric detail sliders: the library wires the slider and fires
+      // facet:slide; we just read the value and paint the token.
+      for (const s of sliders) {
+        s.addEventListener("facet:slide", (e) => {
+          setToken(s.dataset.token, e.detail.value + (s.dataset.unit || ""));
+          writeUrl(); renderExport();
+        });
+      }
+      // Density / type-size scale chips (radio per group). Our listener runs
+      // before the deferred library, so stopImmediatePropagation keeps the
+      // library's chip-toggle from flipping the aria-pressed we set.
+      for (const c of scaleChips) {
+        c.addEventListener("click", (e) => {
+          e.stopImmediatePropagation();
+          setScale(c.dataset.scalePick, c.dataset.scaleValue || "");
+          writeUrl(); renderExport();
+        });
+      }
+
+      const reset = () => {
+        for (const k of Object.keys(tokens)) {
+          for (const dk of Object.keys(derive(k, tokens[k]))) canvas.style.removeProperty(dk);
+          delete tokens[k];
+        }
+        setScale("density", ""); setScale("textSize", "");
+        for (const [s, val] of sliderInit) {
+          s.querySelector('input[type="range"]').value = val;
+          s.querySelector(".slider-detail-number").value = val;
+        }
+        writeUrl(); renderExport(); syncColorPickers();
+      };
+      document.querySelector("#mixer-reset").addEventListener("click", reset);
 
       // A shared link opens with the build already applied.
-      const packed = new URLSearchParams(location.search).get("mix");
-      if (packed) {
-        for (const pair of packed.split(",")) {
-          const [t, hex] = pair.split(":");
-          if (/^[0-9a-f]{6}$/i.test(hex) && pickers.some(p => p.dataset.mix === t)) {
-            applyToken(t, "#" + hex.toLowerCase());
+      try {
+        const saved = JSON.parse(new URLSearchParams(location.search).get("mix") || "null");
+        if (saved && saved.tokens) {
+          for (const [k, v] of Object.entries(saved.tokens)) {
+            setToken(k, v);
+            const s = sliders.find((x) => x.dataset.token === k);
+            if (s) { const n = parseFloat(v); s.querySelector('input[type="range"]').value = n; s.querySelector(".slider-detail-number").value = n; }
           }
+          if (saved.scales) { setScale("density", saved.scales.density || ""); setScale("textSize", saved.scales.textSize || ""); }
         }
-      }
+      } catch { /* malformed ?mix= — ignore */ }
 
-      // Theme or mode switch under a build: un-mixed pickers re-read the
-      // new theme; built tokens persist by design (a build rides on top).
-      new MutationObserver(() => { syncPickers(); renderExport(); })
+      // Theme or mode switch under a build: untouched pickers re-read the new
+      // theme; built tokens persist by design (a build rides on top).
+      new MutationObserver(() => { syncColorPickers(); renderExport(); })
         .observe(root, { attributes: true, attributeFilter: ["data-theme", "data-mode"] });
 
       renderExport();
-      syncPickers();
+      syncColorPickers();
     }
 
     /* Skin Lab: builds one framed mini page per theme × mode. Frames,

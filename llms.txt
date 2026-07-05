@@ -88,8 +88,10 @@ three variants and three sizes working on <button> and <a>; icon buttons;
 the calculator-grade number input (prefilled example, one-tap clear,
 locale-aware grouping, words helper in the active language); labelled
 fields with hints and
-error states; themed sliders with live readouts; verdict-first result
-blocks with aria-live; the data-tip description tooltip on one attribute;
+error states; themed sliders with live readouts; the detailed slider
+(.slider-detail) for wide ranges — coarse drag by data-coarse, −/+ steppers
+and a number box for the fine values between, fires facet:slide; verdict-first
+result blocks with aria-live; the data-tip description tooltip on one attribute;
 all behaviour self-wires to data attributes; built-in context —
 facet.now() for date/time/timezone and facet.location for the visitor's
 rough place (configurable, disablable, GPS-upgraded only with existing

@@ -2051,6 +2051,57 @@ input[type="week"] {
 }
 
 /* --------------------------------------------------------------------------
+   DETAILED SLIDER
+
+   What it is: a slider for a wide range, paired with a precise entry. The
+   track drags fast in coarse jumps (data-coarse) so you cross a big span in
+   one swipe; the −/+ steppers and the number box reach the exact value
+   between the jumps (data-fine). All three stay in sync.
+   What it is for: values with many gradations where you want both speed and
+   precision — a price, a duration in seconds, a token in pixels.
+   When to use it: ranges too wide for a plain slider to land precisely. For
+   a small bounded range, the plain .slider is enough.
+
+   Usage:
+     <div class="slider-detail" data-min="0" data-max="1000"
+          data-coarse="20" data-fine="1">
+       <input type="range" class="slider" min="0" max="1000" step="1"
+              value="200" aria-label="Price">
+       <div class="slider-detail-entry">
+         <button type="button" class="btn btn-icon slider-detail-step"
+                 data-step="-1" aria-label="Decrease">&minus;</button>
+         <input type="number" class="slider-detail-number" min="0" max="1000"
+                value="200" aria-label="Exact price">
+         <button type="button" class="btn btn-icon slider-detail-step"
+                 data-step="1" aria-label="Increase">+</button>
+       </div>
+     </div>
+   facet.js wires it and fires a bubbling facet:slide {value} on any change.
+   -------------------------------------------------------------------------- */
+.slider-detail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-inline);
+  flex-wrap: wrap;
+}
+.slider-detail .slider { flex: 1 1 8rem; min-width: 6rem; }
+.slider-detail-entry {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-tight);
+}
+.slider-detail-number {
+  width: 4.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  /* the −/+ buttons replace the native spinner */
+  -moz-appearance: textfield;
+}
+.slider-detail-number::-webkit-inner-spin-button,
+.slider-detail-number::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.slider-detail-step { font-size: var(--text-h4); line-height: 1; }
+
+/* --------------------------------------------------------------------------
    RESULT BLOCK
 
    What it is: a verdict-first result card: one plain-language sentence a

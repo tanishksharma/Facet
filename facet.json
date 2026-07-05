@@ -862,6 +862,39 @@
       "a11y": "Native range semantics; tick marks are aria-hidden decoration."
     },
     {
+      "name": "Detailed slider",
+      "classes": [
+        ".slider-detail",
+        ".slider-detail-entry",
+        ".slider-detail-step",
+        ".slider-detail-number"
+      ],
+      "attributes": [
+        "data-min",
+        "data-max",
+        "data-coarse",
+        "data-fine",
+        "data-token"
+      ],
+      "summary": "Wide-range slider: drag coarse by data-coarse, fine-tune with the -/+ steppers or the number box; fires facet:slide.",
+      "classNotes": {
+        ".slider-detail": "the wrapper; data-min/max/coarse/fine set the range and steps",
+        ".slider-detail-entry": "the -/+ steppers around the number box",
+        ".slider-detail-step": "a nudge button (data-step -1 or 1, by the fine step)",
+        ".slider-detail-number": "the exact-value number box"
+      },
+      "keys": [
+        [
+          "Arrows",
+          "step the range by its native step"
+        ]
+      ],
+      "do": "Use it when a range is too wide for a plain slider to land precisely.",
+      "dont": "Reach for it on a small bounded range — the plain slider is enough.",
+      "why": "Coarse dragging crosses the span fast; the steppers and number box catch the values between.",
+      "a11y": "Native range plus labelled number input and labelled -/+ buttons; all keyboard operable."
+    },
+    {
       "name": "Result block",
       "classes": [
         ".result",

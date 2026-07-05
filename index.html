@@ -640,6 +640,7 @@
           <li><a href="#icon-button">Icon button</a></li>
           <li><a href="#number-input">Number input</a></li>
           <li><a href="#slider">Slider</a></li>
+          <li><a href="#slider-detail">Detailed slider</a></li>
           <li><a href="#result-block">Result block</a></li>
           <li><a href="#tooltip">Tooltip</a></li>
           <li><a href="#tab-bar">Tab bar</a></li>
@@ -808,7 +809,7 @@
           <li>The snap pager: full-viewport snap pages auto-upgrade to the iOS-proven pager — spring transitions between section tops, native scrolling inside sections, gesture handoff with a rubber-band hint, wheel paging with cooldown — because CSS scroll-snap alone breaks on iOS. No-JS pages keep plain CSS snapping; data-pager="off" opts out.</li>
           <li>Buttons in three variants and three sizes that work identically on <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code>; square icon buttons to match.</li>
           <li>The calculator-grade number input: prefilled example, one-tap clear on first touch, Indian digit grouping while typing (25,00,000), and a words helper that reads it back — "25 lakh".</li>
-          <li>Fields with labels, hints and error states; themed sliders with live readouts; verdict-first result blocks that announce recalculations to screen readers.</li>
+          <li>Fields with labels, hints and error states; themed sliders with live readouts; the detailed slider for wide ranges — coarse drag plus −/+ steppers and a number box for the exact value between; verdict-first result blocks that announce recalculations to screen readers.</li>
           <li>Choice controls: native checkbox and radio themed through <code>accent-color</code>, and a switch that is a checkbox upgraded with one class — form value, keyboard and screen-reader semantics untouched.</li>
           <li>Stepper (a real number input between two step buttons — min, max and step rule) and segmented control (one-of-few on hidden radios: arrows, form value and announcements stay native).</li>
           <li>The wired field family: one <code>label.field</code> pattern around text input, textarea, select (token-colored chevron, no image files) and a capsule search field — real labels, hints, and the <code>.field-invalid</code> error state.</li>
@@ -2341,6 +2342,38 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-slider" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- DETAILED SLIDER -->
+      <article class="element stack" id="slider-detail">
+        <h3 data-status="stable">Detailed slider</h3>
+        <p>
+          What it is: a slider for a wide range, paired with a precise entry.
+          The track drags fast in coarse jumps (<code>data-coarse</code>) so
+          you cross a big span in one swipe; the −/+ steppers and the number
+          box reach the exact value between the jumps (<code>data-fine</code>).
+          All three stay in sync. What it is for: values with many gradations
+          where you want both speed and precision — a price, a duration, a
+          token in pixels. When to use it: ranges too wide for a plain slider
+          to land precisely; for a small bounded range the plain slider is
+          enough. facet.js wires it and fires a bubbling
+          <code>facet:slide</code> with the value.
+        </p>
+        <div class="demo">
+          <label class="field">
+            <span class="field-label">Price</span>
+            <div class="slider-detail" data-min="0" data-max="1000" data-coarse="20" data-fine="1" data-tip="Drag by twenties; −/+ or type for the values between">
+              <input type="range" class="slider" min="0" max="1000" step="1" value="200" aria-label="Price">
+              <span class="slider-detail-entry">
+                <button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease price">&minus;</button>
+                <input type="number" class="slider-detail-number" min="0" max="1000" value="200" aria-label="Exact price">
+                <button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase price">+</button>
+              </span>
+            </div>
+          </label>
+        </div>
+        <pre id="code-slider-detail"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-slider-detail" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
       <!-- RESULT BLOCK -->
       <article class="element stack" id="result-block">
         <h3 data-status="stable">Result block</h3>
@@ -3857,7 +3890,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       const byId = {};
       const slug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
       for (const c of manifest.components) byId[slug(c.name)] = c;
-      const ALIAS = { "sheet": "sheet-menu", "map": "themed-map", "snap-section": "snap-section" };
+      const ALIAS = { "sheet": "sheet-menu", "map": "themed-map", "snap-section": "snap-section", "slider-detail": "detailed-slider" };
 
       for (const article of document.querySelectorAll("article.element")) {
         const c = byId[ALIAS[article.id] || article.id];
