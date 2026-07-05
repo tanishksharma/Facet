@@ -447,6 +447,7 @@
           <li><a href="#table">Table</a></li>
           <li><a href="#chart">Chart</a></li>
           <li><a href="#small-talkers">Badge, chip, avatar, progress</a></li>
+          <li><a href="#waiting">Skeleton, spinner, empty</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -571,6 +572,7 @@
           <li>Data table: muted header, zebra rows, row hover, tabular right-aligned numbers via <code>.num</code>, and a <code>.table-scroll</code> wrapper so wide tables scroll on phones.</li>
           <li>The themed line chart: <code>facet.chart(el, {points})</code> — accent-1 data line with dashed projections, event markers labelled above the plot, a drag crosshair that reads values, all colors tokens so a theme switch restyles a live chart.</li>
           <li>The small talkers: tinted status badges, self-toggling filter chips (<code>aria-pressed</code>, promoted from this site's own controls), avatars for images or initials, and the native <code>&lt;progress&gt;</code> themed.</li>
+          <li>The waiting family: shimmering skeletons shaped like the content, an accent spinner ring for shapeless waits, and a dashed empty state that names what belongs there and offers the one action that fills it.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -2031,6 +2033,43 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-small-talkers"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-small-talkers" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SKELETON + SPINNER + EMPTY -->
+      <article class="element stack" id="waiting">
+        <h3 data-status="stable">Skeleton, spinner, empty state</h3>
+        <p>
+          What it is: the three honest ways to show absence. The
+          skeleton is a shimmering placeholder shaped like the content
+          it stands in for — put <code>.skeleton</code> on sized
+          blocks. The spinner is a small accent ring for work with no
+          known shape or length; give it <code>role="status"</code>
+          and words. The empty state is a dashed quiet zone that says
+          what would be here and offers the one action that fills it.
+          When to use it: skeletons over spinners whenever the shape
+          is known; always pair a spinner with text — under reduced
+          motion the ring stands still and the words do the talking;
+          an empty state is content, not an error.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <div class="stack-tight" aria-hidden="true">
+              <span class="skeleton" style="width: 60%;">&nbsp;</span>
+              <span class="skeleton" style="width: 90%;">&nbsp;</span>
+              <span class="skeleton" style="width: 75%; height: 5rem;">&nbsp;</span>
+            </div>
+            <p class="row" role="status">
+              <span class="spinner" aria-hidden="true"></span> Crunching the numbers…
+            </p>
+            <div class="empty">
+              <strong>No reports yet</strong>
+              <p class="text-small" style="max-width: none;">The first one appears here the moment you save it.</p>
+              <button class="btn btn-primary btn-small" data-event="empty-new-report" data-tip="The one action that fills this screen">New report</button>
+            </div>
+          </div>
+        </div>
+        <pre id="code-waiting"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-waiting" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

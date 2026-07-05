@@ -570,6 +570,28 @@ determinate progress needs value and max with words nearby.
     <span class="avatar" aria-label="Tanishk Sharma">TS</span>
     <progress value="70" max="100"></progress>
 
+### Skeleton, spinner, empty state
+
+What it is: the three honest ways to show absence. Skeleton: a
+shimmering placeholder — put .skeleton on blocks sized like the
+content it stands in for; mark the group aria-hidden. Spinner: a
+small accent ring for indeterminate waits — give the row role=status
+and words; under reduced motion the ring stands still and the words
+do the talking. Empty state: .empty — a dashed quiet zone that names
+what would be here and offers the one action that fills it. Prefer
+skeletons over spinners whenever the shape is known; an empty state
+is content, not an error.
+
+    <div class="stack-tight" aria-hidden="true">
+      <span class="skeleton" style="width: 60%;">&nbsp;</span>
+      <span class="skeleton" style="width: 90%; height: 5rem;">&nbsp;</span>
+    </div>
+    <p class="row" role="status"><span class="spinner" aria-hidden="true"></span> Loading…</p>
+    <div class="empty">
+      <strong>No reports yet</strong>
+      <button class="btn btn-primary btn-small">New report</button>
+    </div>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

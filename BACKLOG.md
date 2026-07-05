@@ -379,7 +379,9 @@ Platform laws docs and the R11 chart item.
       the docs' own controls; bare aria-pressed chips self-toggle,
       wired chips keep their handlers), avatar (image or initials,
       two sizes), progress (native element themed, accent-1 fill).
-- [ ] Skeleton, spinner, empty state block
+- [x] Skeleton (shimmer placeholder, aria-hidden groups), spinner
+      (accent ring, role=status words carry it under reduced motion),
+      empty state (dashed zone + the one filling action).
 - [ ] Flagship link: the signature style for linking to another page
 - [ ] Icon set: thin 1.5px line glyphs, around 40 to start
 - [ ] Motion: desktop parallax driven by pointer position

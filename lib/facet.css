@@ -2313,6 +2313,57 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
    closed-popover hiding — re-assert it at author origin. */
 [popover]:not(:popover-open) { display: none; }
 
+/* ----- SKELETON, SPINNER, EMPTY STATE: the waiting family -----
+   What it is: the three honest ways to show absence. The skeleton is
+   a shimmering placeholder shaped like the content it stands in for
+   (put .skeleton on sized blocks). The spinner is a small accent
+   ring for work with no known shape or length. The empty state is a
+   dashed quiet zone that says what would be here and offers the one
+   action that fills it. What it is for: loading lists (skeleton),
+   indeterminate waits (spinner), and genuinely nothing-yet screens
+   (empty). When to use it: skeletons over spinners whenever the
+   shape is known; always pair a spinner with words — under reduced
+   motion the ring stands still and the words do the talking. */
+.skeleton {
+  display: block;
+  min-height: 1em;
+  border-radius: var(--radius-small);
+  background: linear-gradient(90deg,
+    var(--accent-2-pressed) 25%, var(--accent-2) 42%, var(--accent-2-pressed) 60%);
+  background-size: 200% 100%;
+  animation: facet-shimmer 1.4s linear infinite;
+  color: transparent;
+  user-select: none;
+}
+@keyframes facet-shimmer {
+  from { background-position: 120% 0; }
+  to { background-position: -80% 0; }
+}
+
+.spinner {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid var(--accent-2-pressed);
+  border-top-color: var(--accent-1);
+  border-radius: var(--radius-pill);
+  animation: facet-spin 0.8s linear infinite;
+  flex: none;
+}
+@keyframes facet-spin { to { rotate: 360deg; } }
+
+.empty {
+  display: grid;
+  place-items: center;
+  gap: var(--space-2);
+  padding: var(--space-7) var(--space-5);
+  border: var(--border-width) dashed var(--border);
+  border-radius: var(--radius-large);
+  text-align: center;
+  color: var(--text-muted);
+}
+.empty strong { color: var(--text); }
+
 /* ----- BADGE, CHIP, AVATAR, PROGRESS: the small talkers -----
    What it is: four tiny signals. The badge is a status word in a
    tinted pill (kinds success / warning / error / info via a class).

@@ -588,6 +588,24 @@
       "a11y": "aria-pressed announces chip state; avatars carry the name; pair progress with visible words."
     },
     {
+      "name": "Skeleton, spinner, empty",
+      "classes": [
+        ".skeleton",
+        ".spinner",
+        ".empty"
+      ],
+      "summary": "Shimmer placeholders, an accent wait ring, and the dashed nothing-here-yet zone.",
+      "classNotes": {
+        ".skeleton": "shimmering block; size it like the content it stands in for",
+        ".spinner": "accent ring for shapeless waits; pair with role=status text",
+        ".empty": "dashed quiet zone: what belongs here + the one filling action"
+      },
+      "do": "Prefer skeletons whenever the coming content's shape is known.",
+      "dont": "Leave a spinner as the only signal — words carry it under reduced motion.",
+      "why": "Reduced motion stills every library animation, spinner included.",
+      "a11y": "Skeleton groups are aria-hidden; the spinner row is role=status; the empty state is content, not an alert."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",
