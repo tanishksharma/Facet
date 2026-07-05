@@ -203,6 +203,20 @@
     .layer-band h2 { font-size: var(--text-h1); line-height: 1.05; margin: 0; }
     .layer-band p { color: var(--text-muted); max-width: 60ch; margin: 0; }
 
+    /* How-to steps: a numbered flow, each step a badge and a short block. */
+    .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-stack); max-width: 60ch; }
+    .step { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-inline); align-items: start; }
+    .step-num {
+      display: grid; place-items: center;
+      width: 2rem; height: 2rem;
+      border-radius: var(--radius-pill);
+      background: var(--accent-1); color: var(--on-accent-1);
+      font-weight: var(--weight-strong);
+      font-variant-numeric: tabular-nums;
+    }
+    .step-body h3 { margin: 0; }
+    .step-body p { margin: var(--space-tight) 0 0; color: var(--text-muted); }
+
     /* Features and Rules as a topic grid: each subject is a card you can
        scan; clicking one opens its full text in a popup. The whole
        inventory still ships in the DOM (inside the dialogs), so nothing is
@@ -594,6 +608,7 @@
         <ul>
           <li><a href="#features">Features</a></li>
           <li><a href="#rules">Rules</a></li>
+          <li><a href="#how-to">How to use</a></li>
         </ul>
         </details>
         <details class="nav-group" data-group="layer1">
@@ -1085,6 +1100,63 @@
             <button class="btn" data-tip="Close this popup">Close</button>
           </form>
         </dialog>
+      </section>
+
+      <!-- =============================================================
+           MANUAL · HOW TO USE
+           The path from nothing to a shipped page, as numbered steps —
+           each one an attribute or a class, never a build step.
+           ============================================================= -->
+      <section id="how-to" class="stack">
+        <h2>How to use the library</h2>
+        <p>
+          From an empty file to a shipped page in a few steps. Every one is an
+          attribute or a class — there is no build step, nothing to install.
+        </p>
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num" aria-hidden="true">1</span>
+            <div class="step-body">
+              <h3>Add the two tags</h3>
+              <p>One <code>&lt;link&gt;</code> and one <code>&lt;script&gt;</code> from a public URL — copy them from the top of this page. That is the whole install.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">2</span>
+            <div class="step-body">
+              <h3>Start from a layout</h3>
+              <p>Rename a ready page — landing, app shell, article, pitch deck, document or business card — or assemble one from the block layer. Fill in your words.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">3</span>
+            <div class="step-body">
+              <h3>Pick a theme</h3>
+              <p>One attribute on <code>&lt;html&gt;</code> restyles the whole page — <code>data-theme</code> and <code>data-mode</code>. Or build your own on the <a href="/build.html">Build a theme</a> page and paste the config.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">4</span>
+            <div class="step-body">
+              <h3>Assemble with components</h3>
+              <p>Write semantic HTML with the right classes — buttons, cards, fields, tabs. Every behaviour self-wires from data attributes on load; there is no JS to write.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">5</span>
+            <div class="step-body">
+              <h3>Tune the feel, globally</h3>
+              <p>Density (<code>data-density</code>), type size (<code>data-text-size</code>) and motion (<code>data-motion</code>) are one attribute each — page-wide or per subtree, no per-element work.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">6</span>
+            <div class="step-body">
+              <h3>Ship it</h3>
+              <p>Deploy the static files. A one-line service worker makes the page installable and offline-ready; the head pack and sitemap keep it SEO- and AI-readable.</p>
+            </div>
+          </li>
+        </ol>
       </section>
 
       <!-- =============================================================
