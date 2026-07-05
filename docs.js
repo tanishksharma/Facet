@@ -703,6 +703,40 @@ function relocateTools() {
   }
 }
 
+/* Component wall category filter: the chip row (.wall-filter) flips which
+   data-cat entries show. Composes with the search box — an article hides
+   when EITHER the category chip or the text search excludes it — and the
+   .wall-group category headings hide when nothing under them is visible. */
+function initWallFilter() {
+  const chips = [...document.querySelectorAll(".wall-filter [data-chip-cat]")];
+  if (!chips.length) return;
+  const articles = [...document.querySelectorAll("article.element[data-cat]")];
+  const groups = [...document.querySelectorAll(".wall-group")];
+
+  const updateGroups = () => {
+    for (const g of groups) {
+      let visible = false, el = g.nextElementSibling;
+      while (el && !el.classList.contains("wall-group")) {
+        if (el.matches("article.element") && !el.classList.contains("cat-hidden") && !el.hidden) { visible = true; break; }
+        el = el.nextElementSibling;
+      }
+      g.hidden = !visible;
+    }
+  };
+  for (const chip of chips) {
+    chip.addEventListener("click", () => {
+      const cat = chip.dataset.chipCat;
+      for (const c of chips) c.setAttribute("aria-pressed", String(c === chip));
+      for (const a of articles) a.classList.toggle("cat-hidden", cat !== "all" && a.dataset.cat !== cat);
+      updateGroups();
+      if (window.facet && facet.feedback) facet.feedback.tick();
+    });
+  }
+  const search = document.querySelector("#wall-search");
+  if (search) search.addEventListener("input", () => setTimeout(updateGroups, 0));
+  updateGroups();
+}
+
 /* Device preview: each .device-preview[data-src] loads a real template
    page into an iframe and scales it to fit the column. Desktop / Tablet /
    Phone chips set the frame's logical width; the frame is transform-scaled
@@ -760,12 +794,13 @@ function initFeedbackDemo() {
    Tools instead of one endless scroll. */
 function insertLayerBands() {
   const bands = [
-    ["typography",  "Layer 1", "Tokens & base",       "Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed."],
-    ["interaction", "Layer 2", "Motion & interaction","Parallax, idle life, snap pages, sound and haptics — the behaviours that make a page feel alive (they live in Layouts)."],
-    ["components",  "Layer 3", "Components",          "Every piece of the library, live. Each folds to a heading and a line — open one to see it work."],
-    ["blocks",      "Layer 4", "Blocks",              "The components, assembled into ready page sections you copy whole."],
-    ["templates",   "Layer 5", "Templates",           "Whole pages — full app and site layouts you rename and fill in."],
-    ["playground",  "Tools",   "Playground & cheatsheet","An editable live playground, and the whole manifest as a filterable cheatsheet."],
+    ["typography", "Layer 1", "Tokens",     "Every design decision as a named variable: type, color, space, shape, motion."],
+    ["base",       "Layer 2", "Base",       "Raw semantic HTML, already designed — no classes required."],
+    ["components", "Layer 3", "Components",  "Every piece of the library, live — grouped and filterable. Each folds to a heading and a line; open one to see it work."],
+    ["blocks",     "Layer 4", "Blocks",     "The components, assembled into ready page sections you copy whole."],
+    ["templates",  "Layer 5", "Templates",  "Whole pages — full app and site layouts you rename and fill in."],
+    ["appfeel",    "Layer 6", "App feel",   "The coat that makes a finished page feel native: parallax, sound, surfaces, the snap pager, and the app kit."],
+    ["playground", "Tools",   "Playground & cheatsheet","An editable live playground, and the whole manifest as a filterable cheatsheet."],
   ];
   for (const [id, kicker, title, blurb] of bands) {
     const anchor = document.querySelector("#" + id);
@@ -880,6 +915,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   insertLayerBands();
   initPlayground();
   initFeedbackDemo();              // the Sound & haptics wall buttons
+  initWallFilter();                // Layer 3 category filter chips
   initDevicePreview();             // Layer 5 templates in scaled device frames
   await initCheatsheet();
   const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");

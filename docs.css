@@ -413,6 +413,31 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   background: transparent;
 }
 
+/* Wall category headings: a strong label before each component group,
+   lighter than a layer band. Hidden by JS when its group is filtered out. */
+.wall-group {
+  margin-top: var(--space-section);
+  padding-bottom: var(--space-tight);
+  border-bottom: var(--border-element) solid var(--border);
+  font-size: var(--text-h4);
+  color: var(--text);
+}
+/* Category filter chip row sits above the wall; wraps on narrow screens. */
+.wall-filter { flex-wrap: wrap; }
+/* An article the category filter has excluded (composes with [hidden]). */
+.cat-hidden { display: none !important; }
+/* Sidebar sub-group labels inside a layer's nav group. */
+.nav-sub {
+  margin: var(--space-inline) 0 var(--space-tight);
+  padding-inline: var(--space-inline);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-strong);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.nav-sub:first-of-type { margin-top: var(--space-tight); }
+
 /* Device preview: a real template page in an iframe, scaled to fit the
    column, with Desktop / Tablet / Phone width chips. The frame is set to
    each device's LOGICAL width and transform-scaled down, so what you see

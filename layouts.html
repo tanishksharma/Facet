@@ -38,15 +38,6 @@
       <input id="wall-search" type="search" placeholder="Filter the wall"
              data-tip="Type to filter the wall below" data-tip-below>
       <nav aria-label="Sections">
-        <details class="nav-group" data-group="interaction">
-          <summary><span class="nav-group-name">Layer 2 · Motion &amp; interaction</span><span class="nav-group-desc">Parallax, sound, snap pages and surfaces.</span><span class="nav-caret" aria-hidden="true"></span></summary>
-        <ul>
-          <li><a href="#motion-pack">Parallax &amp; idle</a></li>
-          <li><a href="#snap-section">Snap section</a></li>
-          <li><a href="#feedback">Sound &amp; haptics</a></li>
-          <li><a href="#backgrounds">Backgrounds</a></li>
-        </ul>
-        </details>
         <details class="nav-group" data-group="layer4">
           <summary><span class="nav-group-name">Layer 4 · Blocks</span><span class="nav-group-desc">The components, assembled into page sections.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
@@ -72,172 +63,23 @@
           <li><a href="#templates">Every template</a></li>
         </ul>
         </details>
+        <details class="nav-group" data-group="appfeel">
+          <summary><span class="nav-group-name">Layer 6 · App feel</span><span class="nav-group-desc">Motion, sound, surfaces and the app kit.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        <ul>
+          <li><a href="#motion-pack">Parallax &amp; idle</a></li>
+          <li><a href="#feedback">Sound &amp; haptics</a></li>
+          <li><a href="#backgrounds">Backgrounds</a></li>
+          <li><a href="#snap-section">Snap section</a></li>
+          <li><a href="#tab-bar">Tab bar</a></li>
+          <li><a href="#sheet">Sheet &amp; menu</a></li>
+          <li><a href="#float-button">Float button</a></li>
+          <li><a href="#scroll-gauge">Scroll gauge</a></li>
+        </ul>
+        </details>
       </nav>
     </aside>
 
     <main id="main" class="stack-loose">
-      <!-- =============================================================
-           LAYER 2 · MOTION & INTERACTION
-           The behaviours that make a page feel like an app — parallax,
-           idle life, snap pages, sound, and the faint token surfaces.
-           The HTML is here, in Layouts, next to the whole-page work it
-           belongs to; Components stays the catalogue of single pieces.
-           ============================================================= -->
-      <section id="interaction" class="stack">
-        <h2>Motion, sound &amp; surfaces</h2>
-        <p>
-          The app-level behaviours: parallax and idle motion, snap pages,
-          synthesized sound and haptics, and the whisper backgrounds. Every
-          one is on the settings sheet in the bottom-right corner of this
-          page — open it and flip Motion or Sounds to feel what the HTML
-          below wires up. These are page-shaping behaviours, so they live in
-          Layouts beside the blocks and templates, not in the component
-          catalogue.
-        </p>
-      </section>
-
-      <!-- MOTION PACK -->
-      <article class="element stack" id="motion-pack">
-        <h3 data-status="beta">Parallax &amp; idle motion</h3>
-        <p>
-          What it is: alive by default.
-          <code>data-parallax="depth"</code> lets an element drift up
-          to that many pixels behind the pointer on desktop, behind
-          the scroll's momentum everywhere, and behind the device's
-          tilt where no permission gate blocks it —
-          <code>facet.motion</code> is the engine
-          (register/setMode/cycle; off | cursor | tilt). The
-          <code>idle-*</code> classes give key elements a resting
-          pulse: a slow float, a faint sway, a soft breathing scale.
-          What it is for: heroes, illustrations, decorative cards —
-          life at the edges, never on the reading path. When to use
-          it: sparingly; one or two moving things per screen. The
-          idle classes animate translate/rotate/scale, so they
-          compose with the engine's transform instead of colliding —
-          the parallax exclusion, solved structurally. Calm stills
-          idle life; off and reduced motion still everything. Move
-          your pointer over this page and watch the cards below.
-        </p>
-        <div class="demo">
-          <div class="grid">
-            <article class="card stack-tight" data-parallax="10" data-tip="Drifts up to 10px behind the pointer">
-              <p class="text-caption">data-parallax="10"</p>
-              <strong>I follow the pointer</strong>
-            </article>
-            <article class="card stack-tight idle-float" data-tip="A slow resting float">
-              <p class="text-caption">.idle-float</p>
-              <strong>I breathe at rest</strong>
-            </article>
-            <article class="card stack-tight idle-sway" data-tip="A faint resting sway">
-              <p class="text-caption">.idle-sway</p>
-              <strong>I sway a little</strong>
-            </article>
-          </div>
-        </div>
-        <pre id="code-motion-pack"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-motion-pack" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- SNAP SECTION -->
-      <article class="element stack" id="snap-section">
-        <h3 data-status="stable">Snap section</h3>
-        <p>
-          What it is: full-viewport scroll-snap areas. The .snap wrapper
-          scrolls one full screen at a time and each .snap-section centers
-          its content at a readable width. What it is for: the calculator
-          page skeleton — intro screen, then inputs, then results — and any
-          page that tells one story one screen at a time. When to use it:
-          single-purpose pages with a clear screen-by-screen flow. Not for
-          ordinary documents; normal pages just scroll. The .snap wrapper
-          exists to enable scrolling, which is the one reason the wrapper law
-          allows a container inside a container. On a real page the wrapper
-          is <code>&lt;main class="snap"&gt;</code> and each section fills
-          the viewport; here it is shrunk into a frame — scroll inside it.
-        </p>
-        <div class="demo">
-          <div class="snap">
-            <section class="snap-section">
-              <h4 style="text-align: center;">Intro</h4>
-              <p style="text-align: center;">What this page tells you, in one line.</p>
-            </section>
-            <section class="snap-section">
-              <h4 style="text-align: center;">Inputs</h4>
-              <p style="text-align: center;">Number inputs and sliders, prefilled with examples.</p>
-            </section>
-            <section class="snap-section">
-              <h4 style="text-align: center;">Results</h4>
-              <p style="text-align: center;">A verdict-first result block, recalculating live.</p>
-            </section>
-          </div>
-        </div>
-        <pre id="code-snap-section"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-snap-section" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- SOUND & HAPTICS -->
-      <article class="element stack" id="feedback">
-        <h3 data-status="stable">Sound &amp; haptics</h3>
-        <p>
-          What it is: synthesized UI sound and vibration with no audio
-          files — <code>facet.feedback</code> plays short Web Audio blips
-          (tap, tick, snap, toggle, success) and fires
-          <code>navigator.vibrate</code> haptics, both ON by default. What
-          it is for: the physical feel of an app — a tick as a stepper
-          bumps, a soft snap as a pager settles, a tap under every control.
-          When to use it: any app-shaped product; leave it on and it wires
-          itself to the components. There is almost no HTML to write: the
-          user's switches are the settings sheet's Sounds and Haptics
-          toggles (<code>data-control="sounds"</code> /
-          <code>"haptics"</code>, self-wired), and the components already
-          call it. To fire it yourself:
-          <code>facet.feedback.tap()</code> / <code>.tick()</code> /
-          <code>.snap()</code> / <code>.success()</code>; mute a channel
-          with <code>facet.feedback.sound.enabled = false</code> or
-          <code>.haptic.enabled = false</code>. Reduced-motion and a muted
-          switch silence it.
-        </p>
-        <div class="demo">
-          <p class="row">
-            <button class="btn" data-feedback-demo="tap" data-tip="A soft tap — every control plays this">Tap</button>
-            <button class="btn" data-feedback-demo="tick" data-tip="A tick — steppers and sliders bump with it">Tick</button>
-            <button class="btn" data-feedback-demo="snap" data-tip="A snap — the pager settles with it">Snap</button>
-            <button class="btn btn-primary" data-feedback-demo="success" data-tip="A rising two-note chime for a completed action">Success</button>
-          </p>
-        </div>
-        <pre id="code-feedback"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-feedback" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- BACKGROUNDS -->
-      <article class="element stack" id="backgrounds">
-        <h3 data-status="beta">Backgrounds</h3>
-        <p>
-          What it is: whisper-faint page and section backgrounds drawn
-          with CSS gradients only, colored by the tokens so every theme
-          and mode gets them for free. What it is for: giving big quiet
-          surfaces a material — a hero, a section divider zone, a whole
-          page. When to use it: one class on a section or body; content
-          sits straight on top. The set: <code>.bg-grid</code>
-          (technical drawing: plus marks at the grid intersections),
-          <code>.bg-dots</code> (dot grid), <code>.bg-ruled</code>
-          (writing lines), <code>.bg-graph</code> (graph paper). All of
-          them fade to nothing under <code>prefers-contrast: more</code>.
-        </p>
-        <p class="chips" role="group" aria-label="Background patterns">
-          <button class="chip" aria-pressed="true" data-chip-group="pattern" data-chip-class="bg-grid">Technical grid</button>
-          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-dots">Dot grid</button>
-          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-ruled">Ruled</button>
-          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-graph">Graph paper</button>
-        </p>
-        <div class="demo">
-          <section class="bg-grid" data-tip="The pattern is tokens: switch theme or mode and it follows">
-            <p style="padding: var(--space-card); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
-          </section>
-        </div>
-        <pre id="code-backgrounds"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-backgrounds" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
       <!-- =============================================================
            LAYER 4 · BLOCKS
            Assemblies of the components above, documented as copyable
@@ -888,6 +730,313 @@
           <a class="card card-clickable topic-card" href="/templates/card.html"><span class="topic-card-title">Business card</span><span class="topic-card-teaser">3.5×2in, front and back, with a print sheet.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
         </div>
       </section>
+      <!-- =============================================================
+           LAYER 6 · APP FEEL
+           The coat that makes a finished page feel like a native app:
+           parallax and idle motion, sound and haptics, faint token
+           surfaces, the full-screen snap pager, and the app kit — tab
+           bar, settings sheet, float button, scroll gauge. Applied on
+           top of any template; Components stays the catalogue of pieces.
+           ============================================================= -->
+      <section id="appfeel" class="stack">
+        <h2>App feel</h2>
+        <p>
+          Layer 6 is the coat you brush over a finished page to make it feel
+          like a native app: parallax and idle motion, synthesized sound and
+          haptics, whisper backgrounds, the full-screen snap pager, and the
+          app kit — the tab bar, the settings sheet, the float button and the
+          scroll gauge. Every control is live in the settings sheet at the
+          bottom-right of this page — open it and flip Motion or Sounds to
+          feel what the HTML below wires up.
+        </p>
+      </section>
+
+      <!-- MOTION PACK -->
+      <article class="element stack" id="motion-pack">
+        <h3 data-status="beta">Parallax &amp; idle motion</h3>
+        <p>
+          What it is: alive by default.
+          <code>data-parallax="depth"</code> lets an element drift up
+          to that many pixels behind the pointer on desktop, behind
+          the scroll's momentum everywhere, and behind the device's
+          tilt where no permission gate blocks it —
+          <code>facet.motion</code> is the engine
+          (register/setMode/cycle; off | cursor | tilt). The
+          <code>idle-*</code> classes give key elements a resting
+          pulse: a slow float, a faint sway, a soft breathing scale.
+          What it is for: heroes, illustrations, decorative cards —
+          life at the edges, never on the reading path. When to use
+          it: sparingly; one or two moving things per screen. The
+          idle classes animate translate/rotate/scale, so they
+          compose with the engine's transform instead of colliding —
+          the parallax exclusion, solved structurally. Calm stills
+          idle life; off and reduced motion still everything. Move
+          your pointer over this page and watch the cards below.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <article class="card stack-tight" data-parallax="10" data-tip="Drifts up to 10px behind the pointer">
+              <p class="text-caption">data-parallax="10"</p>
+              <strong>I follow the pointer</strong>
+            </article>
+            <article class="card stack-tight idle-float" data-tip="A slow resting float">
+              <p class="text-caption">.idle-float</p>
+              <strong>I breathe at rest</strong>
+            </article>
+            <article class="card stack-tight idle-sway" data-tip="A faint resting sway">
+              <p class="text-caption">.idle-sway</p>
+              <strong>I sway a little</strong>
+            </article>
+          </div>
+        </div>
+        <pre id="code-motion-pack"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-motion-pack" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SNAP SECTION -->
+      <article class="element stack" id="snap-section">
+        <h3 data-status="stable">Snap section</h3>
+        <p>
+          What it is: full-viewport scroll-snap areas. The .snap wrapper
+          scrolls one full screen at a time and each .snap-section centers
+          its content at a readable width. What it is for: the calculator
+          page skeleton — intro screen, then inputs, then results — and any
+          page that tells one story one screen at a time. When to use it:
+          single-purpose pages with a clear screen-by-screen flow. Not for
+          ordinary documents; normal pages just scroll. The .snap wrapper
+          exists to enable scrolling, which is the one reason the wrapper law
+          allows a container inside a container. On a real page the wrapper
+          is <code>&lt;main class="snap"&gt;</code> and each section fills
+          the viewport; here it is shrunk into a frame — scroll inside it.
+        </p>
+        <div class="demo">
+          <div class="snap">
+            <section class="snap-section">
+              <h4 style="text-align: center;">Intro</h4>
+              <p style="text-align: center;">What this page tells you, in one line.</p>
+            </section>
+            <section class="snap-section">
+              <h4 style="text-align: center;">Inputs</h4>
+              <p style="text-align: center;">Number inputs and sliders, prefilled with examples.</p>
+            </section>
+            <section class="snap-section">
+              <h4 style="text-align: center;">Results</h4>
+              <p style="text-align: center;">A verdict-first result block, recalculating live.</p>
+            </section>
+          </div>
+        </div>
+        <pre id="code-snap-section"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-snap-section" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SOUND & HAPTICS -->
+      <article class="element stack" id="feedback">
+        <h3 data-status="stable">Sound &amp; haptics</h3>
+        <p>
+          What it is: synthesized UI sound and vibration with no audio
+          files — <code>facet.feedback</code> plays short Web Audio blips
+          (tap, tick, snap, toggle, success) and fires
+          <code>navigator.vibrate</code> haptics, both ON by default. What
+          it is for: the physical feel of an app — a tick as a stepper
+          bumps, a soft snap as a pager settles, a tap under every control.
+          When to use it: any app-shaped product; leave it on and it wires
+          itself to the components. There is almost no HTML to write: the
+          user's switches are the settings sheet's Sounds and Haptics
+          toggles (<code>data-control="sounds"</code> /
+          <code>"haptics"</code>, self-wired), and the components already
+          call it. To fire it yourself:
+          <code>facet.feedback.tap()</code> / <code>.tick()</code> /
+          <code>.snap()</code> / <code>.success()</code>; mute a channel
+          with <code>facet.feedback.sound.enabled = false</code> or
+          <code>.haptic.enabled = false</code>. Reduced-motion and a muted
+          switch silence it.
+        </p>
+        <div class="demo">
+          <p class="row">
+            <button class="btn" data-feedback-demo="tap" data-tip="A soft tap — every control plays this">Tap</button>
+            <button class="btn" data-feedback-demo="tick" data-tip="A tick — steppers and sliders bump with it">Tick</button>
+            <button class="btn" data-feedback-demo="snap" data-tip="A snap — the pager settles with it">Snap</button>
+            <button class="btn btn-primary" data-feedback-demo="success" data-tip="A rising two-note chime for a completed action">Success</button>
+          </p>
+        </div>
+        <pre id="code-feedback"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-feedback" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- BACKGROUNDS -->
+      <article class="element stack" id="backgrounds">
+        <h3 data-status="beta">Backgrounds</h3>
+        <p>
+          What it is: whisper-faint page and section backgrounds drawn
+          with CSS gradients only, colored by the tokens so every theme
+          and mode gets them for free. What it is for: giving big quiet
+          surfaces a material — a hero, a section divider zone, a whole
+          page. When to use it: one class on a section or body; content
+          sits straight on top. The set: <code>.bg-grid</code>
+          (technical drawing: plus marks at the grid intersections),
+          <code>.bg-dots</code> (dot grid), <code>.bg-ruled</code>
+          (writing lines), <code>.bg-graph</code> (graph paper). All of
+          them fade to nothing under <code>prefers-contrast: more</code>.
+        </p>
+        <p class="chips" role="group" aria-label="Background patterns">
+          <button class="chip" aria-pressed="true" data-chip-group="pattern" data-chip-class="bg-grid">Technical grid</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-dots">Dot grid</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-ruled">Ruled</button>
+          <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-graph">Graph paper</button>
+        </p>
+        <div class="demo">
+          <section class="bg-grid" data-tip="The pattern is tokens: switch theme or mode and it follows">
+            <p style="padding: var(--space-card); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
+          </section>
+        </div>
+        <pre id="code-backgrounds"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-backgrounds" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ===== App kit ===== -->
+      <h3 class="wall-group" id="cat-appkit">App kit</h3>
+
+      <!-- TAB BAR -->
+      <article class="element stack" id="tab-bar" data-cat="appkit">
+        <h3 data-status="beta">Tab bar</h3>
+        <p>
+          What it is: the iOS-style bottom pill — text segments, a hairline
+          divider, a trailing gear — with one injected .tab-indicator pill
+          gliding behind the active segment on per-edge analytic springs:
+          the leading edge leads with momentum, the trailing edge lags so
+          the pill stretches, and both settle with a small fixed overshoot
+          whatever the jump length. What it is for: section navigation in
+          app-shaped pages; it wires itself to the page's snap pager
+          ([data-section] segments page there, and the pager's moves glide
+          the pill back behind a one-second nav lock so pass-through
+          sections stay quiet) and its gear opens the sheet it
+          aria-controls. When to use it: any snap-paged product. On a real
+          page it floats fixed above the bottom edge; here it sits in the
+          flow. Frosted and embossed in the base theme; a tuned translucent
+          well with a raised pill under Velvet.
+        </p>
+        <div class="demo">
+          <nav class="tab-bar" aria-label="Sections">
+            <button type="button" class="tab-seg" data-section="intro" aria-current="true">Intro</button>
+            <button type="button" class="tab-seg" data-section="inputs" aria-current="false">Inputs</button>
+            <button type="button" class="tab-seg" data-section="results" aria-current="false">Results</button>
+            <span class="tab-divider" aria-hidden="true"></span>
+            <button type="button" class="tab-settings" aria-expanded="false" aria-label="Open settings" data-tip="Opens the settings sheet">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+            </button>
+          </nav>
+        </div>
+        <p>Tap the segments: the pill stretches and settles between them, live.</p>
+        <pre id="code-tab-bar"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SHEET & MENU -->
+      <article class="element stack" id="sheet" data-cat="appkit">
+        <h3 data-status="beta">Sheet &amp; menu</h3>
+        <p>
+          What it is: the settings panel — a right-edge slab floating clear
+          of the screen over a dark scrim, sliding in as one rigid block on
+          a rubber-band spring that overshoots a touch and eases back;
+          inside it, menu groups of thin rows (.menu-item under a
+          .menu-label) and a foot row of square icon toggles
+          (.menu-icon-btn) whose ON state stands raised while OFF sinks
+          into a darker well. What it is for: navigation, actions and
+          app-level controls behind one trigger — any button that
+          aria-controls the sheet opens it; scrim tap and Esc close; the
+          trigger's aria-expanded is managed. When to use it: every
+          app-shaped product's settings. Press a row: it sinks INTO the
+          panel with a true bevel, never a dark smear. State changes ease —
+          toggles must never jump.
+        </p>
+        <div class="demo">
+          <button type="button" class="btn" aria-controls="demo-sheet" aria-expanded="false"
+                  data-tip="Opens the real sheet over this page" data-event="open-demo-sheet">Open the sheet</button>
+          <div class="sheet-scrim" data-open="false"></div>
+          <aside class="sheet" id="demo-sheet" data-open="false" aria-hidden="true" aria-label="Demo settings">
+            <div class="sheet-scroll">
+              <div class="sheet-group">
+                <span class="menu-label">Navigation</span>
+                <button type="button" class="menu-item" data-event="sheet-nav-top">Back to the top</button>
+                <button type="button" class="menu-item" data-event="sheet-nav-rules">The rules</button>
+              </div>
+              <div class="sheet-group">
+                <span class="menu-label">Actions</span>
+                <button type="button" class="menu-item" data-event="sheet-copy">Copy a link here</button>
+              </div>
+            </div>
+            <div class="sheet-foot">
+              <div class="sheet-group menu-icon-row">
+                <button type="button" class="menu-icon-btn" aria-label="Sounds: on or off" data-tip="Flips facet.feedback.sound.enabled" data-event="toggle-sounds">
+                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6v4h2.6L9 13V3L5.1 6z"/></svg>
+                  <span class="menu-value">On</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <pre id="code-sheet"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-sheet" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FLOAT BUTTON -->
+      <article class="element stack" id="float-button" data-cat="appkit">
+        <h3 data-status="beta">Float button</h3>
+        <p>
+          What it is: a lone floating round button pinned to the bottom-left
+          of the page — the tab bar's trailing icon without the bar. What
+          it is for: pages that need the settings sheet (or any panel) but
+          not section navigation: give it aria-controls pointing at a
+          .sheet and facet.js wires the open/close, the aria-expanded state
+          and the press feedback exactly like the tab bar's gear. When to
+          use it: whenever a page has one floating action; .float-btn-right
+          pins it bottom-right instead. Always an aria-label and a
+          data-tip: the icon alone says nothing. On a real page it floats
+          fixed; here it sits in the flow — this one opens the sheet from
+          the entry above.
+        </p>
+        <div class="demo">
+          <button class="float-btn" aria-controls="demo-sheet" aria-expanded="false"
+                  aria-label="Open settings" data-tip="Opens the demo sheet" data-event="open-settings">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+          </button>
+        </div>
+        <pre id="code-float-button"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-float-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SCROLL GAUGE -->
+      <article class="element stack" id="scroll-gauge" data-cat="appkit">
+        <h3 data-status="beta">Scroll gauge</h3>
+        <p>
+          What it is: a pill thumb inset in an embossed groove beside a
+          scroller — thumb height is the visible share of the content,
+          position is progress, and overscroll momentum slides it out of
+          the groove where the clip swallows it. What it is for: a themed,
+          unobtrusive scrollbar look-alike for panels and whole pages;
+          facet.scrollGauge(scroller) injects it, a metric option reports
+          composite scrolls (the pager's sections laid end to end), and
+          onScrub makes the lane a drag handle. When to use it: sheets and
+          app pages where the native scrollbar is hidden. Auto-hides when
+          nothing overflows. Scroll the box:
+        </p>
+        <div class="demo">
+          <div class="demo-scroller stack" data-tip="Scroll me and watch the groove">
+            <p>The gauge beside this box is injected by facet.scrollGauge.</p>
+            <p>Its thumb is exactly the visible share of this content.</p>
+            <p>Scroll with momentum and the pill slides out of the groove.</p>
+            <p>That spill is deliberate: the groove clips it away.</p>
+            <p>When content fits, the gauge fades out entirely.</p>
+            <p>Panels use it beside .sheet-scroll; pages use the draggable lane variant.</p>
+            <p>The lane variant, .scroll-gauge-page, floats off the right edge.</p>
+            <p>Its onScrub option turns the whole groove into a drag handle.</p>
+            <p>Grab it and the thumb turns gold while you hold it.</p>
+          </div>
+        </div>
+        <pre id="code-scroll-gauge"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-scroll-gauge" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
     </main>
   </div>
 

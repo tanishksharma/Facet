@@ -38,52 +38,69 @@
       <input id="wall-search" type="search" placeholder="Filter the wall"
              data-tip="Type to filter the wall below" data-tip-below>
       <nav aria-label="Sections">
-        <details class="nav-group" data-group="layer1">
-          <summary><span class="nav-group-name">Layer 1 · Tokens &amp; base</span><span class="nav-group-desc">The named tokens, and raw semantic HTML already designed.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        <details class="nav-group" data-group="layer1" open>
+          <summary><span class="nav-group-name">Layer 1 · Tokens</span><span class="nav-group-desc">Every design decision as a named variable.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#typography">Typography</a></li>
           <li><a href="#color">Color</a></li>
           <li><a href="#spacing">Spacing</a></li>
           <li><a href="#shape">Shape &amp; elevation</a></li>
           <li><a href="#motion">Motion tokens</a></li>
+        </ul>
+        </details>
+        <details class="nav-group" data-group="layer2">
+          <summary><span class="nav-group-name">Layer 2 · Base</span><span class="nav-group-desc">Raw semantic HTML, already designed.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        <ul>
           <li><a href="#base">Base styles</a></li>
         </ul>
         </details>
         <details class="nav-group" data-group="layer3">
-          <summary><span class="nav-group-name">Layer 3 · Components</span><span class="nav-group-desc">Every component, live and copyable.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+          <summary><span class="nav-group-name">Layer 3 · Components</span><span class="nav-group-desc">Every piece, grouped and filterable.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        <p class="nav-sub">Layout primitives</p>
         <ul>
           <li><a href="#container">Container</a></li>
           <li><a href="#stack">Stack</a></li>
           <li><a href="#row">Row</a></li>
           <li><a href="#grid">Grid</a></li>
+        </ul>
+        <p class="nav-sub">Forms &amp; controls</p>
+        <ul>
+          <li><a href="#button">Button</a></li>
+          <li><a href="#icon-button">Icon button</a></li>
           <li><a href="#choice-controls">Switch &amp; checks</a></li>
           <li><a href="#stepper">Stepper &amp; segmented</a></li>
           <li><a href="#fields">Fields</a></li>
           <li><a href="#file-date">File &amp; date</a></li>
-          <li><a href="#card">Card</a></li>
-          <li><a href="#overlays">Modal, drawer, popover</a></li>
-          <li><a href="#disclosure">Accordion, toast, dropdown</a></li>
-          <li><a href="#wayfinding">Tabs, breadcrumb, pagination</a></li>
-          <li><a href="#nav-link">Nav link</a></li>
-          <li><a href="#table">Table</a></li>
-          <li><a href="#chart">Chart</a></li>
-          <li><a href="#small-talkers">Badge, chip, avatar, progress</a></li>
-          <li><a href="#waiting">Skeleton, spinner, empty</a></li>
-          <li><a href="#flagship-link">Flagship link</a></li>
-          <li><a href="#icons">Icons</a></li>
-          <li><a href="#button">Button</a></li>
-          <li><a href="#icon-button">Icon button</a></li>
           <li><a href="#number-input">Number input</a></li>
           <li><a href="#slider">Slider</a></li>
           <li><a href="#slider-detail">Detailed slider</a></li>
-          <li><a href="#result-block">Result block</a></li>
-          <li><a href="#tooltip">Tooltip</a></li>
-          <li><a href="#tab-bar">Tab bar</a></li>
-          <li><a href="#sheet">Sheet &amp; menu</a></li>
-          <li><a href="#float-button">Float button</a></li>
-          <li><a href="#scroll-gauge">Scroll gauge</a></li>
           <li><a href="#choice-grid">Choice grid</a></li>
+        </ul>
+        <p class="nav-sub">Content &amp; data</p>
+        <ul>
+          <li><a href="#card">Card</a></li>
+          <li><a href="#table">Table</a></li>
+          <li><a href="#chart">Chart</a></li>
+          <li><a href="#small-talkers">Badge, chip, avatar, progress</a></li>
+          <li><a href="#result-block">Result block</a></li>
+          <li><a href="#icons">Icons</a></li>
           <li><a href="#map">Themed map</a></li>
+        </ul>
+        <p class="nav-sub">Overlays &amp; disclosure</p>
+        <ul>
+          <li><a href="#overlays">Modal, drawer, popover</a></li>
+          <li><a href="#disclosure">Accordion, toast, dropdown</a></li>
+          <li><a href="#tooltip">Tooltip</a></li>
+        </ul>
+        <p class="nav-sub">Navigation</p>
+        <ul>
+          <li><a href="#wayfinding">Tabs, breadcrumb, pagination</a></li>
+          <li><a href="#nav-link">Nav link</a></li>
+          <li><a href="#flagship-link">Flagship link</a></li>
+        </ul>
+        <p class="nav-sub">Status</p>
+        <ul>
+          <li><a href="#waiting">Skeleton, spinner, empty</a></li>
         </ul>
         </details>
       </nav>
@@ -457,11 +474,23 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           Hover any control for its description; states like hover and focus
           are real: point at things, tab to them.
         </p>
+        <p class="chips wall-filter" role="group" aria-label="Filter components by category">
+          <button class="chip" data-chip-cat="all" aria-pressed="true" data-tip="Show every component">All</button>
+          <button class="chip" data-chip-cat="layout" aria-pressed="false" data-tip="Container, stack, row, grid">Layout</button>
+          <button class="chip" data-chip-cat="forms" aria-pressed="false" data-tip="Buttons, fields, sliders, steppers">Forms</button>
+          <button class="chip" data-chip-cat="content" aria-pressed="false" data-tip="Cards, tables, charts, badges, map">Content</button>
+          <button class="chip" data-chip-cat="overlays" aria-pressed="false" data-tip="Modal, drawer, popover, toast, tooltip">Overlays</button>
+          <button class="chip" data-chip-cat="nav" aria-pressed="false" data-tip="Tabs, breadcrumb, pagination, links">Navigation</button>
+          <button class="chip" data-chip-cat="status" aria-pressed="false" data-tip="Skeleton, spinner, empty">Status</button>
+        </p>
         <p id="wall-empty" hidden>Nothing matches that search. The wall grows one component at a time — check the <a href="#rules">rules</a> for how new ones get added.</p>
       </section>
 
+      <!-- ===== Layout primitives ===== -->
+      <h3 class="wall-group" id="cat-layout">Layout primitives</h3>
+
       <!-- CONTAINER -->
-      <article class="element stack" id="container">
+      <article class="element stack" id="container" data-cat="layout">
         <h3 data-status="stable">Container</h3>
         <p>
           What it is: a page-width wrapper with themed padding. It centers
@@ -489,7 +518,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- STACK -->
-      <article class="element stack" id="stack">
+      <article class="element stack" id="stack" data-cat="layout">
         <h3 data-status="stable">Stack</h3>
         <p>
           What it is: vertical flow with themed gaps. A stack says one thing:
@@ -518,7 +547,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- ROW -->
-      <article class="element stack" id="row">
+      <article class="element stack" id="row" data-cat="layout">
         <h3 data-status="stable">Row</h3>
         <p>
           What it is: things side by side that wrap when they run out
@@ -548,7 +577,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- GRID -->
-      <article class="element stack" id="grid">
+      <article class="element stack" id="grid" data-cat="layout">
         <h3 data-status="stable">Grid</h3>
         <p>
           What it is: an auto-fitting column grid — as many columns as
@@ -576,8 +605,73 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- ===== Forms &amp; controls ===== -->
+      <h3 class="wall-group" id="cat-forms">Forms &amp; controls</h3>
+
+      <!-- BUTTON -->
+      <article class="element stack" id="button" data-cat="forms">
+        <h3 data-status="stable">Button</h3>
+        <p>
+          What it is: the action element, in three variants and three sizes,
+          working identically on <code>&lt;button&gt;</code> and on
+          <code>&lt;a&gt;</code>. What it is for: .btn-primary carries the
+          screen's one main action in the accent color. .btn-secondary is
+          every other action. .btn-ghost is for quiet actions inside busy
+          areas, invisible until hovered. When to use it: any click that does
+          something. One primary per screen at most. Navigation dressed as a
+          button is an <code>&lt;a class="btn"&gt;</code>. Put the button's
+          key action name in a data-event attribute as the analytics hook.
+        </p>
+        <p class="chips" role="group" aria-label="Button variants, sizes and states">
+          <button class="chip" aria-pressed="true" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
+          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-secondary">Secondary</button>
+          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-ghost">Ghost</button>
+          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-small">Small</button>
+          <button class="chip" aria-pressed="true" data-chip-group="size" data-chip-class="">Default size</button>
+          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-large">Large</button>
+          <button class="chip" aria-pressed="false" data-chip-attr="disabled">Disabled</button>
+        </p>
+        <div class="demo">
+          <button class="btn btn-primary" data-event="calc-run" data-tip="Runs the calculation">Calculate</button>
+        </div>
+        <pre id="code-button"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ICON BUTTON -->
+      <article class="element stack" id="icon-button" data-cat="forms">
+        <h3 data-status="stable">Icon button</h3>
+        <p>
+          What it is: a square button holding a single icon. What it is for:
+          compact actions whose meaning the icon plus its tooltip carries —
+          the clear cross in a number field, a close button, a share arrow.
+          When to use it: when space is tight and the action is secondary.
+          The icon alone says nothing, so every icon button carries an
+          aria-label for screen readers and a data-tip tooltip for everyone
+          else. Combines with any button variant and size. Icons are inline
+          SVG with stroke="currentColor" so they take the button's text color
+          in every theme.
+        </p>
+        <p class="chips" role="group" aria-label="Icon button variants, sizes and states">
+          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
+          <button class="chip" aria-pressed="true" data-chip-group="variant" data-chip-class="">Secondary</button>
+          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-ghost">Ghost</button>
+          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-small">Small</button>
+          <button class="chip" aria-pressed="true" data-chip-group="size" data-chip-class="">Default size</button>
+          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-large">Large</button>
+          <button class="chip" aria-pressed="false" data-chip-attr="disabled">Disabled</button>
+        </p>
+        <div class="demo">
+          <button class="btn btn-icon" aria-label="Close" data-tip="Close this panel">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg>
+          </button>
+        </div>
+        <pre id="code-icon-button"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-icon-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
       <!-- CHOICE CONTROLS -->
-      <article class="element stack" id="choice-controls">
+      <article class="element stack" id="choice-controls" data-cat="forms">
         <h3 data-status="stable">Switch, checkbox, radio</h3>
         <p>
           What it is: the yes/no and pick-one controls — native
@@ -606,7 +700,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- STEPPER + SEGMENTED -->
-      <article class="element stack" id="stepper">
+      <article class="element stack" id="stepper" data-cat="forms">
         <h3 data-status="stable">Stepper &amp; segmented control</h3>
         <p>
           What it is: a quantity control — a real number input between
@@ -643,7 +737,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- FIELDS -->
-      <article class="element stack" id="fields">
+      <article class="element stack" id="fields" data-cat="forms">
         <h3 data-status="stable">Fields: input, textarea, select, search</h3>
         <p>
           What it is: the labelled field family — one pattern
@@ -690,7 +784,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- FILE + DATE -->
-      <article class="element stack" id="file-date">
+      <article class="element stack" id="file-date" data-cat="forms">
         <h3 data-status="stable">File upload &amp; date input</h3>
         <p>
           What it is: the native file and date controls, themed and
@@ -722,8 +816,167 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-file-date" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- NUMBER INPUT -->
+      <article class="element stack" id="number-input" data-cat="forms">
+        <h3 data-status="stable">Number input</h3>
+        <p>
+          What it is: a labelled field wrapping the calculator-grade number
+          input, with a clear button inside the field and a words helper
+          under it. What it is for: money and other large numbers, entered
+          the way the visitor says them. The input ships prefilled with an
+          example value, clears fully on the first tap — and never again
+          once the visitor has typed — groups digits for the locale as they
+          are typed (25,00,000 where lakh and crore are the norm, 2,500,000
+          elsewhere), and reads the number back in words underneath, in the
+          active language: 25 lakh, 2.5 million, 25 लाख. The locale follows
+          facet.location and the browser, overridable with
+          data-numbers="indian|western"; the language with data-language.
+          All behaviours come from facet.js the moment the input carries
+          data-number. When to use it: every numeric entry in a calculator.
+          Read the plain number in app code with facet.numberValue(input).
+          For the error state, put .field-invalid on the field and swap the
+          hint for a .field-error line.
+        </p>
+        <p class="chips" role="group" aria-label="Number input states and locale">
+          <button class="chip" aria-pressed="true" data-chip-class="" data-chip-group="state">Normal</button>
+          <button class="chip" aria-pressed="false" data-chip-class="field-invalid" data-chip-group="state">Error</button>
+          <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="input">Disabled</button>
+          <button class="chip" aria-pressed="false" data-config-key="numbers" data-config-value="indian" data-tip="Lakh and crore, page-wide">Indian numbers</button>
+          <button class="chip" aria-pressed="false" data-config-key="numbers" data-config-value="western" data-tip="Million and billion, page-wide">Western numbers</button>
+          <button class="chip" aria-pressed="false" data-config-key="language" data-config-value="" data-tip="Library strings in English">English words</button>
+          <button class="chip" aria-pressed="false" data-config-key="language" data-config-value="hi" data-tip="Library strings in Hindi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368; words</button>
+        </p>
+        <div class="demo">
+          <label class="field">
+            <span class="field-label">Monthly investment</span>
+            <span class="number-input">
+              <input type="text" inputmode="numeric" value="25000" data-number
+                     data-tip="Amount in rupees. First tap clears the example.">
+              <button type="button" class="btn btn-ghost btn-icon btn-small number-clear"
+                      aria-label="Clear" data-tip="Clear this field">&times;</button>
+            </span>
+            <span class="number-words" aria-live="polite"></span>
+            <span class="field-hint">What you invest every month</span>
+          </label>
+        </div>
+        <pre id="code-number-input"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-number-input" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SLIDER -->
+      <article class="element stack" id="slider" data-cat="forms">
+        <h3 data-status="stable">Slider</h3>
+        <p>
+          What it is: a real range input wearing the theme — hairline track,
+          accent-3 thumb — paired with a live value readout. What it is for:
+          picking a number inside a known range where the feel of
+          more-and-less matters more than exact digits: years, percentages,
+          counts. When to use it: bounded inputs with sensible ends. When the
+          exact number matters, pair it with or swap it for the number input.
+          Put an <code>&lt;output&gt;</code> in the field label and facet.js
+          keeps it showing the live value. Full keyboard support comes free
+          with the native element.
+        </p>
+        <p class="chips" role="group" aria-label="Slider states">
+          <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="input">Disabled</button>
+        </p>
+        <div class="demo">
+          <label class="field">
+            <span class="field-label">Years <output>10</output></span>
+            <input type="range" class="slider" min="1" max="40" value="10"
+                   data-tip="Drag, or use the arrow keys">
+            <span class="field-hint">How long the money stays invested</span>
+          </label>
+
+          <label class="field" style="margin-top: var(--space-card);">
+            <span class="field-label">From year <output>2000</output></span>
+            <span class="slider-wrap">
+              <input type="range" class="slider" min="1960" max="2056" step="1" value="2000"
+                     data-tip="A long range grows a tick scale with landmarks">
+              <span class="slider-scale" data-minor="10" data-label="40" data-now="2026" aria-hidden="true"></span>
+            </span>
+            <span class="field-hint">The tick scale marks decades; the highlighted tick is now</span>
+          </label>
+        </div>
+        <pre id="code-slider"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-slider" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- DETAILED SLIDER -->
+      <article class="element stack" id="slider-detail" data-cat="forms">
+        <h3 data-status="stable">Detailed slider</h3>
+        <p>
+          What it is: a slider for a wide range, paired with a precise entry.
+          The track drags fast in coarse jumps (<code>data-coarse</code>) so
+          you cross a big span in one swipe; the −/+ steppers and the number
+          box reach the exact value between the jumps (<code>data-fine</code>).
+          All three stay in sync. What it is for: values with many gradations
+          where you want both speed and precision — a price, a duration, a
+          token in pixels. When to use it: ranges too wide for a plain slider
+          to land precisely; for a small bounded range the plain slider is
+          enough. facet.js wires it and fires a bubbling
+          <code>facet:slide</code> with the value.
+        </p>
+        <div class="demo">
+          <label class="field">
+            <span class="field-label">Price</span>
+            <div class="slider-detail" data-min="0" data-max="1000" data-coarse="20" data-fine="1" data-tip="Drag by twenties; −/+ or type for the values between">
+              <input type="range" class="slider" min="0" max="1000" step="1" value="200" aria-label="Price">
+              <span class="slider-detail-entry">
+                <button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease price">&minus;</button>
+                <input type="number" class="slider-detail-number" min="0" max="1000" value="200" aria-label="Exact price">
+                <button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase price">+</button>
+              </span>
+            </div>
+          </label>
+        </div>
+        <pre id="code-slider-detail"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-slider-detail" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CHOICE GRID -->
+      <article class="element stack" id="choice-grid" data-cat="forms">
+        <h3 data-status="beta">Choice grid</h3>
+        <p>
+          What it is: a grid of small square choice buttons — a symbol
+          above a tiny caption, five per row on phones. What it is for: one
+          exclusive pick from up to about ten options where the choices are
+          compact and symbolic — currencies, units, categories;
+          aria-pressed carries the state and facet.js keeps the pick
+          exclusive. When to use it: any single pick too wide for a
+          segmented control; shipped as the inflation app's ten-currency
+          picker. State changes ease — selection must never jump. Velvet:
+          unselected options sit flat in carved wells, the selected one
+          stands proud with its symbol in gold.
+        </p>
+        <div class="demo">
+          <div class="choice-grid" role="group" aria-label="Currency">
+            <button type="button" class="choice-btn" aria-pressed="true" data-tip="Indian rupee" data-event="cur-inr">
+              <span class="choice-sym" aria-hidden="true">&#8377;</span><span class="choice-cap">INR</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="US dollar" data-event="cur-usd">
+              <span class="choice-sym" aria-hidden="true">$</span><span class="choice-cap">USD</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Euro" data-event="cur-eur">
+              <span class="choice-sym" aria-hidden="true">&euro;</span><span class="choice-cap">EUR</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="British pound" data-event="cur-gbp">
+              <span class="choice-sym" aria-hidden="true">&pound;</span><span class="choice-cap">GBP</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Japanese yen" data-event="cur-jpy">
+              <span class="choice-sym" aria-hidden="true">&yen;</span><span class="choice-cap">JPY</span>
+            </button>
+          </div>
+        </div>
+        <pre id="code-choice-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-choice-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ===== Content &amp; data ===== -->
+      <h3 class="wall-group" id="cat-content">Content &amp; data</h3>
+
       <!-- CARD -->
-      <article class="element stack" id="card">
+      <article class="element stack" id="card" data-cat="content">
         <h3 data-status="stable">Card</h3>
         <p>
           What it is: the grouped-surface primitive — a padded,
@@ -761,8 +1014,217 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-card" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- TABLE -->
+      <article class="element stack" id="table" data-cat="content">
+        <h3 data-status="stable">Table</h3>
+        <p>
+          What it is: the data table — muted header row, zebra
+          striping, a hover that names the row you are reading, and
+          right-aligned tabular numbers via <code>.num</code>. What it
+          is for: real records: transactions, users, line items. When
+          to use it: data with columns; lists of things with one field
+          go in list markup instead. Wrap wide tables in
+          <code>.table-scroll</code> — a wrapper the wrapper law
+          allows because it enables horizontal scrolling on phones.
+        </p>
+        <div class="demo">
+          <div class="table-scroll">
+            <table class="table">
+              <thead>
+                <tr><th scope="col">Month</th><th scope="col">Category</th><th scope="col" class="num">Amount</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>April</td><td>Groceries</td><td class="num">12,480</td></tr>
+                <tr><td>May</td><td>Groceries</td><td class="num">11,975</td></tr>
+                <tr><td>June</td><td>Travel</td><td class="num">31,200</td></tr>
+                <tr><td>July</td><td>Rent</td><td class="num">48,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <pre id="code-table"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-table" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CHART -->
+      <article class="element stack" id="chart" data-cat="content">
+        <h3 data-status="beta">Chart</h3>
+        <p>
+          What it is: a line chart drawn by
+          <code>facet.chart(el, {points})</code> — data line in
+          accent-1 (2.5px, dashed for projected spans), dots ringed in
+          the page background, grid on the border token, axis text
+          muted, event markers as faint dashed verticals labelled in a
+          reserved band above the plot, and a crosshair you drag to
+          read values, dropped on pointer lift. What it is for: one
+          series over time: prices, balances, rates. When to use it:
+          whenever the shape of the story matters more than the table
+          of numbers — keep the table nearby for the numbers. The SVG
+          draws at about one unit per rendered pixel so type reads
+          true; every color is a token, so themes — velvet's gold
+          included — restyle a live chart with no redraw. The surface
+          is <code>touch-action: none</code>: dragging reads values,
+          never scrolls.
+        </p>
+        <div class="demo">
+          <div class="chart-card">
+            <div class="chart" id="demo-chart" data-tip="Drag across the plot to read values"></div>
+          </div>
+        </div>
+        <pre id="code-chart"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-chart" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- BADGE + CHIP + AVATAR + PROGRESS -->
+      <article class="element stack" id="small-talkers" data-cat="content">
+        <h3 data-status="stable">Badge, chip, avatar, progress</h3>
+        <p>
+          What it is: four tiny signals. The badge is a status word in
+          a tinted pill (kinds success / warning / error / info via a
+          class). The chip is a small toggleable pill button —
+          <code>aria-pressed</code> carries its state, the quiet
+          accent fills it when on; it is the exact chip this site's
+          own controls use, promoted by extraction. The avatar is a
+          round face: an image, or initials on the quiet fill.
+          Progress is the native <code>&lt;progress&gt;</code> themed
+          — accent-1 fill on a quiet track. What it is for: statuses
+          on rows and cards; filter picks; people; completeness. When
+          to use it: badges state, they never act; chips toggle; an
+          avatar always carries the person's name in alt or
+          aria-label; determinate progress needs value and max, with
+          words nearby for readers.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <p class="row-tight" style="max-width: none;">
+              <span class="badge">Draft</span>
+              <span class="badge badge-success">Paid</span>
+              <span class="badge badge-warning">Expiring</span>
+              <span class="badge badge-error">Failed</span>
+              <span class="badge badge-info">3 updates</span>
+            </p>
+            <p class="chips">
+              <button type="button" class="chip" aria-pressed="true" data-tip="A pressed filter chip" data-event="filter-food">Food</button>
+              <button type="button" class="chip" aria-pressed="false" data-tip="Click to press" data-event="filter-travel">Travel</button>
+              <button type="button" class="chip" aria-pressed="false" data-tip="Click to press" data-event="filter-rent">Rent</button>
+            </p>
+            <p class="row-tight" style="max-width: none;">
+              <span class="avatar" aria-label="Tanishk Sharma">TS</span>
+              <span class="avatar avatar-large" aria-label="Facet">F</span>
+            </p>
+            <label class="field">
+              <span class="field-label">Uploading — 70%</span>
+              <progress value="70" max="100"></progress>
+            </label>
+          </div>
+        </div>
+        <pre id="code-small-talkers"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-small-talkers" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- RESULT BLOCK -->
+      <article class="element stack" id="result-block" data-cat="content">
+        <h3 data-status="stable">Result block</h3>
+        <p>
+          What it is: a verdict-first result card: one plain-language
+          sentence a person can repeat at dinner, one big number, then the
+          supporting figures. What it is for: the centrepiece of a results
+          screen — readable at a glance, and announced by screen readers on
+          every recalculation when the block carries aria-live="polite".
+          When to use it: whenever a calculation produces one headline
+          answer. Leave out the figures list when there is nothing to support
+          the verdict. For the empty state before any input, show a muted
+          verdict line alone.
+        </p>
+        <p class="chips" role="group" aria-label="Result block variants">
+          <button class="chip" aria-pressed="true" data-chip-show="#result-full">Full</button>
+          <button class="chip" aria-pressed="false" data-chip-show="#result-plain">Verdict and number</button>
+          <button class="chip" aria-pressed="false" data-chip-show="#result-empty">Empty state</button>
+        </p>
+        <div class="demo">
+          <section class="result" id="result-full" aria-live="polite">
+            <p class="result-verdict">At 6% inflation, today's &#8377;1&nbsp;lakh buys this much in 2036</p>
+            <p class="result-number">&#8377;55,839</p>
+            <dl class="result-figures">
+              <div><dt>Value lost</dt><dd>&#8377;44,161</dd></div>
+              <div><dt>Buying power kept</dt><dd>56%</dd></div>
+              <div><dt>Halves every</dt><dd>12 years</dd></div>
+            </dl>
+          </section>
+          <section class="result" id="result-plain" aria-live="polite" hidden>
+            <p class="result-verdict">Your retirement number</p>
+            <p class="result-number">&#8377;4.6 crore</p>
+          </section>
+          <section class="result" id="result-empty" hidden>
+            <p class="result-verdict" style="color: var(--text-muted);">Fill in the numbers above to see your result</p>
+          </section>
+        </div>
+        <pre id="code-result-block"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-result-block" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ICONS -->
+      <article class="element stack" id="icons" data-cat="content">
+        <h3 data-status="stable">Icons</h3>
+        <p>
+          What it is: the icon set — forty-eight 24×24 glyphs at a 1.5px
+          stroke with round caps, carried as markup inside facet.js:
+          no image files, no sprite fetch, nothing to host. What it is
+          for: every small symbol a product needs. When to use it:
+          write <code>&lt;svg data-icon="search"&gt;&lt;/svg&gt;</code>
+          and facet.js fills it; icons ride <code>currentColor</code>
+          and scale with the text around them. Decorative by default
+          (<code>aria-hidden</code>); give the svg an
+          <code>aria-label</code> to make it meaningful. Extend the
+          set in one line: <code>facet.icons.rocket = '&lt;path
+          d="..."/&gt;'</code> then <code>facet.icon()</code>. Click
+          any glyph below to copy its markup.
+        </p>
+        <div class="demo">
+          <div class="grid" id="icon-gallery" style="--bg-cell: 0;"></div>
+        </div>
+        <pre id="code-icons"><code>&lt;button class="btn btn-icon" aria-label="Search" data-tip="Search everything"&gt;
+  &lt;svg data-icon="search"&gt;&lt;/svg&gt;
+&lt;/button&gt;
+&lt;p&gt;&lt;svg data-icon="clock"&gt;&lt;/svg&gt; Updated an hour ago&lt;/p&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-icons" data-tip="Copies the usage example above">Copy</button></p>
+      </article>
+
+      <!-- THEMED MAP -->
+      <article class="element stack" id="map" data-cat="content">
+        <h3 data-status="alpha">Themed map</h3>
+        <p>
+          What it is: a Google Map wearing the active theme — ground,
+          water, parks and roads derived from the base family, labels
+          from the text family, boundaries from the quiet accent,
+          recomputed live when the theme or mode switches. What it is
+          for: maps that belong to the product instead of arriving in
+          Google's own colors. When to use it: any embedded map. Bring
+          your own key (like the analytics rule — the library never
+          ships one): put <code>data-map</code> on a div, the key in
+          <code>data-map-key</code> (or <code>data-maps-key</code> on
+          the facet.js script tag), optional <code>data-lat</code> /
+          <code>data-lng</code> / <code>data-zoom</code>. Without a
+          key, or offline, the div stays the quiet themed placeholder
+          you see below — never a broken embed.
+          <code>facet.mapStyle()</code> returns the styles array for
+          anything else. Styles derive from tokens by formula, never
+          hand-tuned per theme, so every future theme gets its map for
+          free. This page carries no key on purpose: the placeholder
+          IS the honest no-key state.
+        </p>
+        <div class="demo">
+          <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12" data-tip="Wears whatever theme this page is in"></div>
+        </div>
+        <pre id="code-map"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ===== Overlays &amp; disclosure ===== -->
+      <h3 class="wall-group" id="cat-overlays">Overlays &amp; disclosure</h3>
+
       <!-- MODAL + DRAWER + POPOVER -->
-      <article class="element stack" id="overlays">
+      <article class="element stack" id="overlays" data-cat="overlays">
         <h3 data-status="stable">Modal, drawer, popover</h3>
         <p>
           What it is: overlays built on the platform's own machinery —
@@ -810,7 +1272,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- ACCORDION + TOAST + DROPDOWN -->
-      <article class="element stack" id="disclosure">
+      <article class="element stack" id="disclosure" data-cat="overlays">
         <h3 data-status="stable">Accordion, toast, dropdown menu</h3>
         <p>
           What it is: three small talkers — the accordion is native
@@ -858,8 +1320,35 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-disclosure" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- DESCRIPTION TOOLTIP -->
+      <article class="element stack" id="tooltip" data-cat="overlays">
+        <h3 data-status="stable">Description tooltip</h3>
+        <p>
+          What it is: a one-attribute explanation bubble: put data-tip on any
+          element and the text appears above it on hover and on keyboard
+          focus. Pure CSS, no JS involved. What it is for: explaining every
+          interactive element in place — one of the library's core
+          principles. The description doubles as documentation anyone can
+          read by pointing at the thing. When to use it: every interactive
+          element ships with one. Add data-tip-below on elements near the top
+          of the viewport so the bubble drops under them instead of clipping
+          off the screen.
+        </p>
+        <p class="chips" role="group" aria-label="Tooltip position">
+          <button class="chip" aria-pressed="false" data-chip-attr="data-tip-below">Flip below</button>
+        </p>
+        <div class="demo" style="padding-block: var(--space-hero);">
+          <button class="btn" data-tip="This text is the data-tip attribute">Hover or tab to me</button>
+        </div>
+        <pre id="code-tooltip"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-tooltip" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ===== Navigation ===== -->
+      <h3 class="wall-group" id="cat-nav">Navigation</h3>
+
       <!-- TABS + BREADCRUMB + PAGINATION -->
-      <article class="element stack" id="wayfinding">
+      <article class="element stack" id="wayfinding" data-cat="nav">
         <h3 data-status="stable">Tabs, breadcrumb, pagination</h3>
         <p>
           What it is: the wayfinding trio. Tabs are real ARIA tabs
@@ -903,7 +1392,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- NAV LINK -->
-      <article class="element stack" id="nav-link">
+      <article class="element stack" id="nav-link" data-cat="nav">
         <h3 data-status="stable">Nav link</h3>
         <p>
           What it is: the navigation link with its three states
@@ -927,116 +1416,31 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-nav-link" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- TABLE -->
-      <article class="element stack" id="table">
-        <h3 data-status="stable">Table</h3>
+      <!-- FLAGSHIP LINK -->
+      <article class="element stack" id="flagship-link" data-cat="nav">
+        <h3 data-status="stable">Flagship link</h3>
         <p>
-          What it is: the data table — muted header row, zebra
-          striping, a hover that names the row you are reading, and
-          right-aligned tabular numbers via <code>.num</code>. What it
-          is for: real records: transactions, users, line items. When
-          to use it: data with columns; lists of things with one field
-          go in list markup instead. Wrap wide tables in
-          <code>.table-scroll</code> — a wrapper the wrapper law
-          allows because it enables horizontal scrolling on phones.
+          What it is: the big confident link — heading voice, a strong
+          accent underline, and an arrow that leans into the journey
+          on hover. What it is for: the one onward step at the end of
+          a section: "See the full report", "Start a project". When to
+          use it: at most one or two per screen; ordinary references
+          stay plain underlined links. It is always an
+          <code>&lt;a&gt;</code> to a real URL — never a button in
+          costume.
         </p>
         <div class="demo">
-          <div class="table-scroll">
-            <table class="table">
-              <thead>
-                <tr><th scope="col">Month</th><th scope="col">Category</th><th scope="col" class="num">Amount</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>April</td><td>Groceries</td><td class="num">12,480</td></tr>
-                <tr><td>May</td><td>Groceries</td><td class="num">11,975</td></tr>
-                <tr><td>June</td><td>Travel</td><td class="num">31,200</td></tr>
-                <tr><td>July</td><td>Rent</td><td class="num">48,000</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <a class="flagship-link" href="#flagship-link" data-tip="The arrow leans in on hover">See the full report</a>
         </div>
-        <pre id="code-table"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-table" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+        <pre id="code-flagship-link"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-flagship-link" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- CHART -->
-      <article class="element stack" id="chart">
-        <h3 data-status="beta">Chart</h3>
-        <p>
-          What it is: a line chart drawn by
-          <code>facet.chart(el, {points})</code> — data line in
-          accent-1 (2.5px, dashed for projected spans), dots ringed in
-          the page background, grid on the border token, axis text
-          muted, event markers as faint dashed verticals labelled in a
-          reserved band above the plot, and a crosshair you drag to
-          read values, dropped on pointer lift. What it is for: one
-          series over time: prices, balances, rates. When to use it:
-          whenever the shape of the story matters more than the table
-          of numbers — keep the table nearby for the numbers. The SVG
-          draws at about one unit per rendered pixel so type reads
-          true; every color is a token, so themes — velvet's gold
-          included — restyle a live chart with no redraw. The surface
-          is <code>touch-action: none</code>: dragging reads values,
-          never scrolls.
-        </p>
-        <div class="demo">
-          <div class="chart-card">
-            <div class="chart" id="demo-chart" data-tip="Drag across the plot to read values"></div>
-          </div>
-        </div>
-        <pre id="code-chart"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-chart" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- BADGE + CHIP + AVATAR + PROGRESS -->
-      <article class="element stack" id="small-talkers">
-        <h3 data-status="stable">Badge, chip, avatar, progress</h3>
-        <p>
-          What it is: four tiny signals. The badge is a status word in
-          a tinted pill (kinds success / warning / error / info via a
-          class). The chip is a small toggleable pill button —
-          <code>aria-pressed</code> carries its state, the quiet
-          accent fills it when on; it is the exact chip this site's
-          own controls use, promoted by extraction. The avatar is a
-          round face: an image, or initials on the quiet fill.
-          Progress is the native <code>&lt;progress&gt;</code> themed
-          — accent-1 fill on a quiet track. What it is for: statuses
-          on rows and cards; filter picks; people; completeness. When
-          to use it: badges state, they never act; chips toggle; an
-          avatar always carries the person's name in alt or
-          aria-label; determinate progress needs value and max, with
-          words nearby for readers.
-        </p>
-        <div class="demo">
-          <div class="stack">
-            <p class="row-tight" style="max-width: none;">
-              <span class="badge">Draft</span>
-              <span class="badge badge-success">Paid</span>
-              <span class="badge badge-warning">Expiring</span>
-              <span class="badge badge-error">Failed</span>
-              <span class="badge badge-info">3 updates</span>
-            </p>
-            <p class="chips">
-              <button type="button" class="chip" aria-pressed="true" data-tip="A pressed filter chip" data-event="filter-food">Food</button>
-              <button type="button" class="chip" aria-pressed="false" data-tip="Click to press" data-event="filter-travel">Travel</button>
-              <button type="button" class="chip" aria-pressed="false" data-tip="Click to press" data-event="filter-rent">Rent</button>
-            </p>
-            <p class="row-tight" style="max-width: none;">
-              <span class="avatar" aria-label="Tanishk Sharma">TS</span>
-              <span class="avatar avatar-large" aria-label="Facet">F</span>
-            </p>
-            <label class="field">
-              <span class="field-label">Uploading — 70%</span>
-              <progress value="70" max="100"></progress>
-            </label>
-          </div>
-        </div>
-        <pre id="code-small-talkers"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-small-talkers" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
+      <!-- ===== Status ===== -->
+      <h3 class="wall-group" id="cat-status">Status</h3>
 
       <!-- SKELETON + SPINNER + EMPTY -->
-      <article class="element stack" id="waiting">
+      <article class="element stack" id="waiting" data-cat="status">
         <h3 data-status="stable">Skeleton, spinner, empty state</h3>
         <p>
           What it is: the three honest ways to show absence. The
@@ -1070,507 +1474,6 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-waiting"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-waiting" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- FLAGSHIP LINK -->
-      <article class="element stack" id="flagship-link">
-        <h3 data-status="stable">Flagship link</h3>
-        <p>
-          What it is: the big confident link — heading voice, a strong
-          accent underline, and an arrow that leans into the journey
-          on hover. What it is for: the one onward step at the end of
-          a section: "See the full report", "Start a project". When to
-          use it: at most one or two per screen; ordinary references
-          stay plain underlined links. It is always an
-          <code>&lt;a&gt;</code> to a real URL — never a button in
-          costume.
-        </p>
-        <div class="demo">
-          <a class="flagship-link" href="#flagship-link" data-tip="The arrow leans in on hover">See the full report</a>
-        </div>
-        <pre id="code-flagship-link"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-flagship-link" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- ICONS -->
-      <article class="element stack" id="icons">
-        <h3 data-status="stable">Icons</h3>
-        <p>
-          What it is: the icon set — forty-eight 24×24 glyphs at a 1.5px
-          stroke with round caps, carried as markup inside facet.js:
-          no image files, no sprite fetch, nothing to host. What it is
-          for: every small symbol a product needs. When to use it:
-          write <code>&lt;svg data-icon="search"&gt;&lt;/svg&gt;</code>
-          and facet.js fills it; icons ride <code>currentColor</code>
-          and scale with the text around them. Decorative by default
-          (<code>aria-hidden</code>); give the svg an
-          <code>aria-label</code> to make it meaningful. Extend the
-          set in one line: <code>facet.icons.rocket = '&lt;path
-          d="..."/&gt;'</code> then <code>facet.icon()</code>. Click
-          any glyph below to copy its markup.
-        </p>
-        <div class="demo">
-          <div class="grid" id="icon-gallery" style="--bg-cell: 0;"></div>
-        </div>
-        <pre id="code-icons"><code>&lt;button class="btn btn-icon" aria-label="Search" data-tip="Search everything"&gt;
-  &lt;svg data-icon="search"&gt;&lt;/svg&gt;
-&lt;/button&gt;
-&lt;p&gt;&lt;svg data-icon="clock"&gt;&lt;/svg&gt; Updated an hour ago&lt;/p&gt;</code></pre>
-        <p><button class="btn btn-small" data-copy="#code-icons" data-tip="Copies the usage example above">Copy</button></p>
-      </article>
-
-      <!-- BUTTON -->
-      <article class="element stack" id="button">
-        <h3 data-status="stable">Button</h3>
-        <p>
-          What it is: the action element, in three variants and three sizes,
-          working identically on <code>&lt;button&gt;</code> and on
-          <code>&lt;a&gt;</code>. What it is for: .btn-primary carries the
-          screen's one main action in the accent color. .btn-secondary is
-          every other action. .btn-ghost is for quiet actions inside busy
-          areas, invisible until hovered. When to use it: any click that does
-          something. One primary per screen at most. Navigation dressed as a
-          button is an <code>&lt;a class="btn"&gt;</code>. Put the button's
-          key action name in a data-event attribute as the analytics hook.
-        </p>
-        <p class="chips" role="group" aria-label="Button variants, sizes and states">
-          <button class="chip" aria-pressed="true" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
-          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-secondary">Secondary</button>
-          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-ghost">Ghost</button>
-          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-small">Small</button>
-          <button class="chip" aria-pressed="true" data-chip-group="size" data-chip-class="">Default size</button>
-          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-large">Large</button>
-          <button class="chip" aria-pressed="false" data-chip-attr="disabled">Disabled</button>
-        </p>
-        <div class="demo">
-          <button class="btn btn-primary" data-event="calc-run" data-tip="Runs the calculation">Calculate</button>
-        </div>
-        <pre id="code-button"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- ICON BUTTON -->
-      <article class="element stack" id="icon-button">
-        <h3 data-status="stable">Icon button</h3>
-        <p>
-          What it is: a square button holding a single icon. What it is for:
-          compact actions whose meaning the icon plus its tooltip carries —
-          the clear cross in a number field, a close button, a share arrow.
-          When to use it: when space is tight and the action is secondary.
-          The icon alone says nothing, so every icon button carries an
-          aria-label for screen readers and a data-tip tooltip for everyone
-          else. Combines with any button variant and size. Icons are inline
-          SVG with stroke="currentColor" so they take the button's text color
-          in every theme.
-        </p>
-        <p class="chips" role="group" aria-label="Icon button variants, sizes and states">
-          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
-          <button class="chip" aria-pressed="true" data-chip-group="variant" data-chip-class="">Secondary</button>
-          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-ghost">Ghost</button>
-          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-small">Small</button>
-          <button class="chip" aria-pressed="true" data-chip-group="size" data-chip-class="">Default size</button>
-          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-large">Large</button>
-          <button class="chip" aria-pressed="false" data-chip-attr="disabled">Disabled</button>
-        </p>
-        <div class="demo">
-          <button class="btn btn-icon" aria-label="Close" data-tip="Close this panel">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg>
-          </button>
-        </div>
-        <pre id="code-icon-button"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-icon-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- NUMBER INPUT -->
-      <article class="element stack" id="number-input">
-        <h3 data-status="stable">Number input</h3>
-        <p>
-          What it is: a labelled field wrapping the calculator-grade number
-          input, with a clear button inside the field and a words helper
-          under it. What it is for: money and other large numbers, entered
-          the way the visitor says them. The input ships prefilled with an
-          example value, clears fully on the first tap — and never again
-          once the visitor has typed — groups digits for the locale as they
-          are typed (25,00,000 where lakh and crore are the norm, 2,500,000
-          elsewhere), and reads the number back in words underneath, in the
-          active language: 25 lakh, 2.5 million, 25 लाख. The locale follows
-          facet.location and the browser, overridable with
-          data-numbers="indian|western"; the language with data-language.
-          All behaviours come from facet.js the moment the input carries
-          data-number. When to use it: every numeric entry in a calculator.
-          Read the plain number in app code with facet.numberValue(input).
-          For the error state, put .field-invalid on the field and swap the
-          hint for a .field-error line.
-        </p>
-        <p class="chips" role="group" aria-label="Number input states and locale">
-          <button class="chip" aria-pressed="true" data-chip-class="" data-chip-group="state">Normal</button>
-          <button class="chip" aria-pressed="false" data-chip-class="field-invalid" data-chip-group="state">Error</button>
-          <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="input">Disabled</button>
-          <button class="chip" aria-pressed="false" data-config-key="numbers" data-config-value="indian" data-tip="Lakh and crore, page-wide">Indian numbers</button>
-          <button class="chip" aria-pressed="false" data-config-key="numbers" data-config-value="western" data-tip="Million and billion, page-wide">Western numbers</button>
-          <button class="chip" aria-pressed="false" data-config-key="language" data-config-value="" data-tip="Library strings in English">English words</button>
-          <button class="chip" aria-pressed="false" data-config-key="language" data-config-value="hi" data-tip="Library strings in Hindi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368; words</button>
-        </p>
-        <div class="demo">
-          <label class="field">
-            <span class="field-label">Monthly investment</span>
-            <span class="number-input">
-              <input type="text" inputmode="numeric" value="25000" data-number
-                     data-tip="Amount in rupees. First tap clears the example.">
-              <button type="button" class="btn btn-ghost btn-icon btn-small number-clear"
-                      aria-label="Clear" data-tip="Clear this field">&times;</button>
-            </span>
-            <span class="number-words" aria-live="polite"></span>
-            <span class="field-hint">What you invest every month</span>
-          </label>
-        </div>
-        <pre id="code-number-input"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-number-input" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- SLIDER -->
-      <article class="element stack" id="slider">
-        <h3 data-status="stable">Slider</h3>
-        <p>
-          What it is: a real range input wearing the theme — hairline track,
-          accent-3 thumb — paired with a live value readout. What it is for:
-          picking a number inside a known range where the feel of
-          more-and-less matters more than exact digits: years, percentages,
-          counts. When to use it: bounded inputs with sensible ends. When the
-          exact number matters, pair it with or swap it for the number input.
-          Put an <code>&lt;output&gt;</code> in the field label and facet.js
-          keeps it showing the live value. Full keyboard support comes free
-          with the native element.
-        </p>
-        <p class="chips" role="group" aria-label="Slider states">
-          <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="input">Disabled</button>
-        </p>
-        <div class="demo">
-          <label class="field">
-            <span class="field-label">Years <output>10</output></span>
-            <input type="range" class="slider" min="1" max="40" value="10"
-                   data-tip="Drag, or use the arrow keys">
-            <span class="field-hint">How long the money stays invested</span>
-          </label>
-
-          <label class="field" style="margin-top: var(--space-card);">
-            <span class="field-label">From year <output>2000</output></span>
-            <span class="slider-wrap">
-              <input type="range" class="slider" min="1960" max="2056" step="1" value="2000"
-                     data-tip="A long range grows a tick scale with landmarks">
-              <span class="slider-scale" data-minor="10" data-label="40" data-now="2026" aria-hidden="true"></span>
-            </span>
-            <span class="field-hint">The tick scale marks decades; the highlighted tick is now</span>
-          </label>
-        </div>
-        <pre id="code-slider"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-slider" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- DETAILED SLIDER -->
-      <article class="element stack" id="slider-detail">
-        <h3 data-status="stable">Detailed slider</h3>
-        <p>
-          What it is: a slider for a wide range, paired with a precise entry.
-          The track drags fast in coarse jumps (<code>data-coarse</code>) so
-          you cross a big span in one swipe; the −/+ steppers and the number
-          box reach the exact value between the jumps (<code>data-fine</code>).
-          All three stay in sync. What it is for: values with many gradations
-          where you want both speed and precision — a price, a duration, a
-          token in pixels. When to use it: ranges too wide for a plain slider
-          to land precisely; for a small bounded range the plain slider is
-          enough. facet.js wires it and fires a bubbling
-          <code>facet:slide</code> with the value.
-        </p>
-        <div class="demo">
-          <label class="field">
-            <span class="field-label">Price</span>
-            <div class="slider-detail" data-min="0" data-max="1000" data-coarse="20" data-fine="1" data-tip="Drag by twenties; −/+ or type for the values between">
-              <input type="range" class="slider" min="0" max="1000" step="1" value="200" aria-label="Price">
-              <span class="slider-detail-entry">
-                <button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease price">&minus;</button>
-                <input type="number" class="slider-detail-number" min="0" max="1000" value="200" aria-label="Exact price">
-                <button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase price">+</button>
-              </span>
-            </div>
-          </label>
-        </div>
-        <pre id="code-slider-detail"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-slider-detail" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- RESULT BLOCK -->
-      <article class="element stack" id="result-block">
-        <h3 data-status="stable">Result block</h3>
-        <p>
-          What it is: a verdict-first result card: one plain-language
-          sentence a person can repeat at dinner, one big number, then the
-          supporting figures. What it is for: the centrepiece of a results
-          screen — readable at a glance, and announced by screen readers on
-          every recalculation when the block carries aria-live="polite".
-          When to use it: whenever a calculation produces one headline
-          answer. Leave out the figures list when there is nothing to support
-          the verdict. For the empty state before any input, show a muted
-          verdict line alone.
-        </p>
-        <p class="chips" role="group" aria-label="Result block variants">
-          <button class="chip" aria-pressed="true" data-chip-show="#result-full">Full</button>
-          <button class="chip" aria-pressed="false" data-chip-show="#result-plain">Verdict and number</button>
-          <button class="chip" aria-pressed="false" data-chip-show="#result-empty">Empty state</button>
-        </p>
-        <div class="demo">
-          <section class="result" id="result-full" aria-live="polite">
-            <p class="result-verdict">At 6% inflation, today's &#8377;1&nbsp;lakh buys this much in 2036</p>
-            <p class="result-number">&#8377;55,839</p>
-            <dl class="result-figures">
-              <div><dt>Value lost</dt><dd>&#8377;44,161</dd></div>
-              <div><dt>Buying power kept</dt><dd>56%</dd></div>
-              <div><dt>Halves every</dt><dd>12 years</dd></div>
-            </dl>
-          </section>
-          <section class="result" id="result-plain" aria-live="polite" hidden>
-            <p class="result-verdict">Your retirement number</p>
-            <p class="result-number">&#8377;4.6 crore</p>
-          </section>
-          <section class="result" id="result-empty" hidden>
-            <p class="result-verdict" style="color: var(--text-muted);">Fill in the numbers above to see your result</p>
-          </section>
-        </div>
-        <pre id="code-result-block"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-result-block" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- DESCRIPTION TOOLTIP -->
-      <article class="element stack" id="tooltip">
-        <h3 data-status="stable">Description tooltip</h3>
-        <p>
-          What it is: a one-attribute explanation bubble: put data-tip on any
-          element and the text appears above it on hover and on keyboard
-          focus. Pure CSS, no JS involved. What it is for: explaining every
-          interactive element in place — one of the library's core
-          principles. The description doubles as documentation anyone can
-          read by pointing at the thing. When to use it: every interactive
-          element ships with one. Add data-tip-below on elements near the top
-          of the viewport so the bubble drops under them instead of clipping
-          off the screen.
-        </p>
-        <p class="chips" role="group" aria-label="Tooltip position">
-          <button class="chip" aria-pressed="false" data-chip-attr="data-tip-below">Flip below</button>
-        </p>
-        <div class="demo" style="padding-block: var(--space-hero);">
-          <button class="btn" data-tip="This text is the data-tip attribute">Hover or tab to me</button>
-        </div>
-        <pre id="code-tooltip"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-tooltip" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- TAB BAR -->
-      <article class="element stack" id="tab-bar">
-        <h3 data-status="beta">Tab bar</h3>
-        <p>
-          What it is: the iOS-style bottom pill — text segments, a hairline
-          divider, a trailing gear — with one injected .tab-indicator pill
-          gliding behind the active segment on per-edge analytic springs:
-          the leading edge leads with momentum, the trailing edge lags so
-          the pill stretches, and both settle with a small fixed overshoot
-          whatever the jump length. What it is for: section navigation in
-          app-shaped pages; it wires itself to the page's snap pager
-          ([data-section] segments page there, and the pager's moves glide
-          the pill back behind a one-second nav lock so pass-through
-          sections stay quiet) and its gear opens the sheet it
-          aria-controls. When to use it: any snap-paged product. On a real
-          page it floats fixed above the bottom edge; here it sits in the
-          flow. Frosted and embossed in the base theme; a tuned translucent
-          well with a raised pill under Velvet.
-        </p>
-        <div class="demo">
-          <nav class="tab-bar" aria-label="Sections">
-            <button type="button" class="tab-seg" data-section="intro" aria-current="true">Intro</button>
-            <button type="button" class="tab-seg" data-section="inputs" aria-current="false">Inputs</button>
-            <button type="button" class="tab-seg" data-section="results" aria-current="false">Results</button>
-            <span class="tab-divider" aria-hidden="true"></span>
-            <button type="button" class="tab-settings" aria-expanded="false" aria-label="Open settings" data-tip="Opens the settings sheet">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
-            </button>
-          </nav>
-        </div>
-        <p>Tap the segments: the pill stretches and settles between them, live.</p>
-        <pre id="code-tab-bar"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- SHEET & MENU -->
-      <article class="element stack" id="sheet">
-        <h3 data-status="beta">Sheet &amp; menu</h3>
-        <p>
-          What it is: the settings panel — a right-edge slab floating clear
-          of the screen over a dark scrim, sliding in as one rigid block on
-          a rubber-band spring that overshoots a touch and eases back;
-          inside it, menu groups of thin rows (.menu-item under a
-          .menu-label) and a foot row of square icon toggles
-          (.menu-icon-btn) whose ON state stands raised while OFF sinks
-          into a darker well. What it is for: navigation, actions and
-          app-level controls behind one trigger — any button that
-          aria-controls the sheet opens it; scrim tap and Esc close; the
-          trigger's aria-expanded is managed. When to use it: every
-          app-shaped product's settings. Press a row: it sinks INTO the
-          panel with a true bevel, never a dark smear. State changes ease —
-          toggles must never jump.
-        </p>
-        <div class="demo">
-          <button type="button" class="btn" aria-controls="demo-sheet" aria-expanded="false"
-                  data-tip="Opens the real sheet over this page" data-event="open-demo-sheet">Open the sheet</button>
-          <div class="sheet-scrim" data-open="false"></div>
-          <aside class="sheet" id="demo-sheet" data-open="false" aria-hidden="true" aria-label="Demo settings">
-            <div class="sheet-scroll">
-              <div class="sheet-group">
-                <span class="menu-label">Navigation</span>
-                <button type="button" class="menu-item" data-event="sheet-nav-top">Back to the top</button>
-                <button type="button" class="menu-item" data-event="sheet-nav-rules">The rules</button>
-              </div>
-              <div class="sheet-group">
-                <span class="menu-label">Actions</span>
-                <button type="button" class="menu-item" data-event="sheet-copy">Copy a link here</button>
-              </div>
-            </div>
-            <div class="sheet-foot">
-              <div class="sheet-group menu-icon-row">
-                <button type="button" class="menu-icon-btn" aria-label="Sounds: on or off" data-tip="Flips facet.feedback.sound.enabled" data-event="toggle-sounds">
-                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6v4h2.6L9 13V3L5.1 6z"/></svg>
-                  <span class="menu-value">On</span>
-                </button>
-              </div>
-            </div>
-          </aside>
-        </div>
-        <pre id="code-sheet"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-sheet" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- FLOAT BUTTON -->
-      <article class="element stack" id="float-button">
-        <h3 data-status="beta">Float button</h3>
-        <p>
-          What it is: a lone floating round button pinned to the bottom-left
-          of the page — the tab bar's trailing icon without the bar. What
-          it is for: pages that need the settings sheet (or any panel) but
-          not section navigation: give it aria-controls pointing at a
-          .sheet and facet.js wires the open/close, the aria-expanded state
-          and the press feedback exactly like the tab bar's gear. When to
-          use it: whenever a page has one floating action; .float-btn-right
-          pins it bottom-right instead. Always an aria-label and a
-          data-tip: the icon alone says nothing. On a real page it floats
-          fixed; here it sits in the flow — this one opens the sheet from
-          the entry above.
-        </p>
-        <div class="demo">
-          <button class="float-btn" aria-controls="demo-sheet" aria-expanded="false"
-                  aria-label="Open settings" data-tip="Opens the demo sheet" data-event="open-settings">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
-          </button>
-        </div>
-        <pre id="code-float-button"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-float-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- SCROLL GAUGE -->
-      <article class="element stack" id="scroll-gauge">
-        <h3 data-status="beta">Scroll gauge</h3>
-        <p>
-          What it is: a pill thumb inset in an embossed groove beside a
-          scroller — thumb height is the visible share of the content,
-          position is progress, and overscroll momentum slides it out of
-          the groove where the clip swallows it. What it is for: a themed,
-          unobtrusive scrollbar look-alike for panels and whole pages;
-          facet.scrollGauge(scroller) injects it, a metric option reports
-          composite scrolls (the pager's sections laid end to end), and
-          onScrub makes the lane a drag handle. When to use it: sheets and
-          app pages where the native scrollbar is hidden. Auto-hides when
-          nothing overflows. Scroll the box:
-        </p>
-        <div class="demo">
-          <div class="demo-scroller stack" data-tip="Scroll me and watch the groove">
-            <p>The gauge beside this box is injected by facet.scrollGauge.</p>
-            <p>Its thumb is exactly the visible share of this content.</p>
-            <p>Scroll with momentum and the pill slides out of the groove.</p>
-            <p>That spill is deliberate: the groove clips it away.</p>
-            <p>When content fits, the gauge fades out entirely.</p>
-            <p>Panels use it beside .sheet-scroll; pages use the draggable lane variant.</p>
-            <p>The lane variant, .scroll-gauge-page, floats off the right edge.</p>
-            <p>Its onScrub option turns the whole groove into a drag handle.</p>
-            <p>Grab it and the thumb turns gold while you hold it.</p>
-          </div>
-        </div>
-        <pre id="code-scroll-gauge"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-scroll-gauge" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- CHOICE GRID -->
-      <article class="element stack" id="choice-grid">
-        <h3 data-status="beta">Choice grid</h3>
-        <p>
-          What it is: a grid of small square choice buttons — a symbol
-          above a tiny caption, five per row on phones. What it is for: one
-          exclusive pick from up to about ten options where the choices are
-          compact and symbolic — currencies, units, categories;
-          aria-pressed carries the state and facet.js keeps the pick
-          exclusive. When to use it: any single pick too wide for a
-          segmented control; shipped as the inflation app's ten-currency
-          picker. State changes ease — selection must never jump. Velvet:
-          unselected options sit flat in carved wells, the selected one
-          stands proud with its symbol in gold.
-        </p>
-        <div class="demo">
-          <div class="choice-grid" role="group" aria-label="Currency">
-            <button type="button" class="choice-btn" aria-pressed="true" data-tip="Indian rupee" data-event="cur-inr">
-              <span class="choice-sym" aria-hidden="true">&#8377;</span><span class="choice-cap">INR</span>
-            </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="US dollar" data-event="cur-usd">
-              <span class="choice-sym" aria-hidden="true">$</span><span class="choice-cap">USD</span>
-            </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Euro" data-event="cur-eur">
-              <span class="choice-sym" aria-hidden="true">&euro;</span><span class="choice-cap">EUR</span>
-            </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="British pound" data-event="cur-gbp">
-              <span class="choice-sym" aria-hidden="true">&pound;</span><span class="choice-cap">GBP</span>
-            </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Japanese yen" data-event="cur-jpy">
-              <span class="choice-sym" aria-hidden="true">&yen;</span><span class="choice-cap">JPY</span>
-            </button>
-          </div>
-        </div>
-        <pre id="code-choice-grid"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-choice-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- THEMED MAP -->
-      <article class="element stack" id="map">
-        <h3 data-status="alpha">Themed map</h3>
-        <p>
-          What it is: a Google Map wearing the active theme — ground,
-          water, parks and roads derived from the base family, labels
-          from the text family, boundaries from the quiet accent,
-          recomputed live when the theme or mode switches. What it is
-          for: maps that belong to the product instead of arriving in
-          Google's own colors. When to use it: any embedded map. Bring
-          your own key (like the analytics rule — the library never
-          ships one): put <code>data-map</code> on a div, the key in
-          <code>data-map-key</code> (or <code>data-maps-key</code> on
-          the facet.js script tag), optional <code>data-lat</code> /
-          <code>data-lng</code> / <code>data-zoom</code>. Without a
-          key, or offline, the div stays the quiet themed placeholder
-          you see below — never a broken embed.
-          <code>facet.mapStyle()</code> returns the styles array for
-          anything else. Styles derive from tokens by formula, never
-          hand-tuned per theme, so every future theme gets its map for
-          free. This page carries no key on purpose: the placeholder
-          IS the honest no-key state.
-        </p>
-        <div class="demo">
-          <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12" data-tip="Wears whatever theme this page is in"></div>
-        </div>
-        <pre id="code-map"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
     </main>
