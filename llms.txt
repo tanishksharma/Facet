@@ -500,6 +500,19 @@ pagination are links, never buttons.
       <a href="?page=1" aria-current="page">1</a> <a href="?page=2">2</a>
     </nav>
 
+### Nav link
+
+What it is: the navigation link with its three states designed —
+quiet by default, named on hover, plainly marked when it is the page
+you are on (aria-current="page"). What it is for: headers, sidebars,
+footers. When to use it: every navigational link in chrome; in
+content, plain underlined links stay the rule.
+
+    <nav aria-label="Main">
+      <a class="nav-link" href="/" aria-current="page">Dashboard</a>
+      <a class="nav-link" href="/reports">Reports</a>
+    </nav>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

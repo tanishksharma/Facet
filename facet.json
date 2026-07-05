@@ -501,6 +501,20 @@
       "a11y": "Native tab semantics with roving tabindex; aria-current marks place in both nav patterns."
     },
     {
+      "name": "Nav link",
+      "classes": [
+        ".nav-link"
+      ],
+      "summary": "Chrome navigation link: quiet, hover-named, aria-current marked.",
+      "classNotes": {
+        ".nav-link": "44px row, radius, muted until hovered; aria-current=page fills it"
+      },
+      "do": "Mark the current page with aria-current=\"page\".",
+      "dont": "Use .nav-link inside prose — content links stay underlined.",
+      "why": "Chrome wayfinding and reading links have different jobs.",
+      "a11y": "aria-current announces place; the hit target is 44px."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",

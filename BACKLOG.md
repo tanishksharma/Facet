@@ -361,7 +361,8 @@ Platform laws docs and the R11 chart item.
       underline, facet.js panel wiring), breadcrumb (ol of links,
       aria-current page), pagination (real links, 44px squares,
       accent-1 current, aria-disabled edges).
-- [ ] Nav link states: default, hover, active
+- [x] Nav link states: .nav-link — muted default, hover names it,
+      aria-current="page" fills it; 44px rows for chrome navigation.
 - [ ] Table component: header, zebra rows, row hover
 - [ ] Chart (SVG line chart, from the inflation app): theming rules
       carried from the handoff — the chart card is a carved well, the

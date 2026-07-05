@@ -461,6 +461,7 @@
           <li><a href="#overlays">Modal, drawer, popover</a></li>
           <li><a href="#disclosure">Accordion, toast, dropdown</a></li>
           <li><a href="#wayfinding">Tabs, breadcrumb, pagination</a></li>
+          <li><a href="#nav-link">Nav link</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -581,7 +582,7 @@
           <li>Cards in three voices — default, outlined, and clickable (the whole surface is an <code>&lt;a&gt;</code> that lifts and presses) — raised out of the velvet, carved into the cream, glossed in aero, automatically.</li>
           <li>Modal, drawer and popover on the platform's own top layer: <code>&lt;dialog&gt;</code> opened by any <code>aria-controls</code> button (focus trap, Esc, backdrop close free), popovers on one attribute with light dismiss and zero JS.</li>
           <li>Accordion on native <code>&lt;details&gt;</code> (same <code>name</code> = one open at a time, no JS); <code>facet.toast()</code> transient notices announced politely; dropdown menus of real buttons that close on outside click, Esc, or a pick.</li>
-          <li>Wayfinding: real ARIA tabs with arrow keys and an accent underline; breadcrumbs with <code>aria-current</code>; pagination as real links in 44px squares — every page a URL.</li>
+          <li>Wayfinding: real ARIA tabs with arrow keys and an accent underline; breadcrumbs with <code>aria-current</code>; pagination as real links in 44px squares — every page a URL; <code>.nav-link</code> with its three designed states for chrome navigation.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -1909,6 +1910,31 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-wayfinding"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-wayfinding" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- NAV LINK -->
+      <article class="element stack" id="nav-link">
+        <h3 data-status="stable">Nav link</h3>
+        <p>
+          What it is: the navigation link with its three states
+          designed — quiet by default, named on hover, plainly marked
+          when it is the page you are on
+          (<code>aria-current="page"</code>). What it is for: headers,
+          sidebars, footers — anywhere a set of destinations lives.
+          When to use it: every navigational link in chrome. In
+          content, plain underlined links stay the rule;
+          <code>.nav-link</code> is for wayfinding surfaces where
+          underlines would pile up.
+        </p>
+        <div class="demo">
+          <nav class="row-tight" aria-label="Example">
+            <a class="nav-link" href="#nav-link" aria-current="page" data-tip="The page you are on">Dashboard</a>
+            <a class="nav-link" href="#nav-link" data-tip="Hover me">Reports</a>
+            <a class="nav-link" href="#nav-link" data-tip="Hover me">Settings</a>
+          </nav>
+        </div>
+        <pre id="code-nav-link"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-nav-link" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->
