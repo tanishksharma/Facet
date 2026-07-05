@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://facet.example.com/sitemap.xml
+Sitemap: https://facet-kappa.vercel.app/sitemap.xml

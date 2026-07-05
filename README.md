@@ -16,8 +16,8 @@ The library itself is two files in [`/lib`](lib):
 Two tags, pointed at the hosted files. Projects never copy the files in.
 
 ```html
-<link rel="stylesheet" href="https://[domain]/lib/facet.css">
-<script src="https://[domain]/lib/facet.js" defer></script>
+<link rel="stylesheet" href="https://facet-kappa.vercel.app/lib/facet.css">
+<script src="https://facet-kappa.vercel.app/lib/facet.js" defer></script>
 ```
 
 Then write plain semantic HTML with Facet's classes. The docs site shows

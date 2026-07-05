@@ -118,12 +118,13 @@ search, scrollspy sidebar, live theme switching.
 
 ## Consume it
 
-    <link rel="stylesheet" href="https://[domain]/lib/facet.css">
-    <script src="https://[domain]/lib/facet.js" defer></script>
+    <link rel="stylesheet" href="https://facet-kappa.vercel.app/lib/facet.css">
+    <script src="https://facet-kappa.vercel.app/lib/facet.js" defer></script>
 
-Replace [domain] with the domain this file is served from. Projects never
-copy the files in; they point at the hosted URL and update when the library
-does.
+facet-kappa.vercel.app is the library's live home — point at it directly.
+Projects never copy the files in; they point at the hosted URL and update
+when the library does. (If the library moves to another domain, swap the
+host; everything is served from /lib on whatever domain hosts it.)
 
 ## Theming
 
@@ -826,13 +827,13 @@ navigate. data-motion="off" and prefers-reduced-motion make pages snap.
 
 Create sw.js at your project root with exactly one line:
 
-    importScripts("https://[domain]/lib/facet-sw.js");
+    importScripts("https://facet-kappa.vercel.app/lib/facet-sw.js");
 
 (The browser requires the registered file to be same-origin; the line is
 a pointer, not a copy — the strategy lives in the library and updates
 centrally.) Then opt in on the script tag:
 
-    <script src="https://[domain]/lib/facet.js"
+    <script src="https://facet-kappa.vercel.app/lib/facet.js"
             data-service-worker="/sw.js" defer></script>
 
 Pages and the /lib/ files are then network-first (per the caching law:
