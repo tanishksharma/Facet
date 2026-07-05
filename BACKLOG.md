@@ -19,6 +19,131 @@ RTL no — decided 4 Jul 2026.
 
 ## Queue · heavy systems first
 
+### Print, reader-view, copy-paste & export system (NEW · cross-cutting)
+
+The owner's ask, in full: every Facet page must print beautifully, read
+cleanly in browser Reader view, copy in the right order, and export well —
+and printing must be a first-class, declarative feature where the author
+says what shows on paper and what does not. This is heavy, cross-cutting
+machinery: it touches every component, block and template, plus the base
+layer and the compliance checklist. It ranks near the top of the queue for
+that reach. Build it as a small number of commits (the CSS system first,
+then the DOM-order/selection law, then per-template polish), each landing
+its wall/inventory lines.
+
+**1 · Declarative print roles (the headline feature).**
+One attribute names whether an element belongs on paper:
+- `data-print="off"` — never prints (and is hidden from Reader view where
+  we can influence it). For page chrome.
+- `data-print="on"` — always prints, even inside an `off` ancestor (an
+  explicit opt back in).
+- `data-print="only"` — prints ONLY, invisible on screen. For print-only
+  content: a letterhead, a page footer with a URL, a "printed from …" line,
+  crop marks.
+Provide readable class aliases too, matching the naming rules:
+`.print-hide`, `.print-show`, `.print-only`. Attribute and class are
+equivalent; components ship the attribute, authors reach for whichever.
+
+**Defaults, baked in so authors get it right for free (owner's calls):**
+- OFF by default in print: `header.site-header`, `nav` chrome, `.tab-bar`,
+  `.float-btn` / `.float-btn-right`, `.sheet` + `.sheet-scrim`,
+  `.scroll-gauge`, `.docs-index`, tooltips, skip links, the settings sheet,
+  the theme/mode switchers, any purely navigational footer, and decorative
+  backgrounds (`.bg-grid` etc. flatten to nothing).
+- ON by default in print: `main`, `article`, `.card` and card grids/rows,
+  content sections, tables, figures, headings and body copy — the
+  predetermined content areas of the layouts. Cards and content are the
+  paper.
+- These are DEFAULTS on the component's own selector; an author overrides
+  any single element with the attribute above.
+
+**2 · The `@media print` stylesheet in `/lib/facet.css`.** One clearly
+commented block:
+- Neutralise to ink-on-paper: force `--background`/`--surface` to white and
+  text to near-black regardless of theme/mode (paper has no dark mode);
+  strip every shadow, glow, blur and translucency; borders become thin gray
+  hairlines. Themes must not bleed onto paper.
+- Open the folds: every collapsed `<details>` / `.fold` / accordion prints
+  expanded (`details` open state can't be forced from CSS alone — a tiny
+  `beforeprint` handler opens all `<details>` and restores after
+  `afterprint`; note it in facet.js).
+- Page-break control: `break-inside: avoid` on `.card`, table rows, figures,
+  result blocks; `break-after: avoid` on headings so a heading never orphans
+  at a page foot; major `<section>`s may `break-before: page` via a
+  `.page-break` helper the author can add.
+- `@page { margin: … }` for sane paper margins; a `.print-landscape` /
+  size hook for wide tables and the deck (the deck already prints exact
+  1920×1080 — keep that path, generalise the rest).
+- Optional link-URL expansion: `a[href]::after { content: " (" attr(href) ")" }`
+  behind a `.print-urls` opt-in on `<body>` (off by default — noisy).
+- Lazy images: ensure `loading="lazy"` images are forced to load for print.
+
+**3 · Copy-paste & selection stability (the DOM-order law).** The owner's
+real complaint: selecting mid-page and having the selection jump to a
+footer/corner component while content above is skipped — the PDF-selection
+annoyance. Root cause is always visual order diverging from DOM order
+(fixed/absolute chrome mid-DOM, CSS `order`, grid line placement,
+`direction`/float reordering). The fix is a law, enforced in the library
+and documented for authors:
+- **Reading-order law:** DOM order IS reading order. Fixed and absolutely
+  positioned chrome (float button, settings sheet, scrim, tab bar, toasts,
+  tooltips, scroll gauge) is authored at the END of `<body>`, after the
+  content, so a top-to-bottom selection sweeps all content first and chrome
+  last. (The settings sheet already sits at end of body — make this the
+  rule everywhere, and move any offender.)
+- Chrome is not selectable and not copied: `user-select: none` on all
+  navigation/control chrome, tooltips, gauges, the wordmark, icon-only
+  buttons — so a full-page copy yields the content, in order, without
+  "Open settings" and stray glyph noise landing in the paste.
+- Never use CSS `order`, `grid-row/column` line placement, or float-based
+  reordering to move *content* out of source order; layout that reorders is
+  allowed only for chrome that is already `user-select: none` and
+  print-hidden. Add this to the markup rules and the compliance checklist.
+- Icon buttons that use a glyph font/ligature must carry the accessible
+  name as `aria-label`, not as copyable text, and mark decorative SVGs
+  `aria-hidden` — so they don't dump into a copy.
+
+**4 · Reader view.** Reader mode keys off clean semantics, which Facet
+already targets — make it a guarantee, not luck:
+- One `<h1>`, no skipped heading levels, main content in a single `<main>` /
+  `<article>`, real `<p>`/`<figure>`/`<blockquote>`; no content living in
+  `::before`, `background-image`, or a value attribute.
+- Decorative and chrome nodes carry `aria-hidden` / `role="presentation"`
+  so Reader drops them.
+- `article.html` template: ensure its body is one `<article>` with h1,
+  `<time>`, author, and the existing JSON-LD — the canonical Reader target.
+- Add a note: nothing requires JS to render (already a rule) — Reader and
+  crawlers get everything.
+
+**5 · Export.** "Good exportability":
+- A documented "Save as PDF" / "Print" affordance component
+  (`data-event="export-pdf"`, calls `window.print()`), so any page can offer
+  a real export button that produces the designed print layout above.
+- Keep/extend the existing per-code-block "download" and "copy as Markdown"
+  affordances as the content-export primitives.
+- Consider a page-level "Copy page as Markdown" for content-first pages
+  (serialise `main` content, skipping `data-print="off"` chrome) — nice to
+  have, note as a sub-item.
+
+**Compliance-checklist additions (every new component, once built):**
+- Declares its print role — on paper by default if it is content, off if it
+  is chrome; overridable via `data-print`.
+- Prints cleanly: no shadows/translucency on paper, folds open, no bad
+  page-breaks through it.
+- Authored in reading order; any reordering/positioning applies only to
+  `user-select: none`, print-hidden chrome.
+- Icon-only/chrome nodes are `user-select: none` and don't pollute a copy.
+
+**Feature inventory (add when built):** one line in the index.html Features
+section and llms.txt — "Print, Reader-view and export: declarative
+`data-print` roles (chrome off, content on by default), a themed
+`@media print` stylesheet, folds auto-open for paper, reading-order-stable
+selection and copy, and a Save-as-PDF affordance."
+
+Open decisions to confirm at build time: whether link-URL expansion is
+opt-in (proposed yes), the exact `@page` margins, and whether the
+"Copy page as Markdown" export lands in this system or its own later item.
+
 ### Theme marketplace + community submissions (NEW · needs a backend)
 
 Let visitors build a theme (the Build-a-theme page already does this) and
