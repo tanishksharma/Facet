@@ -664,7 +664,6 @@ function relocateTools() {
    Tools instead of one endless scroll. */
 function insertLayerBands() {
   const bands = [
-    ["features",   "Start here", "The manual",        "How Facet is built, used and grown — and the full capability list."],
     ["typography", "Layer 1",    "Tokens",            "Every design decision as a named variable: type, color, space, shape, motion."],
     ["base",       "Layer 2",    "Base styles",       "Raw semantic HTML, already designed — no classes required."],
     ["components", "Layer 3",    "Components",        "Every piece of the library, live. Each folds to a heading and a line — open one to see it work."],

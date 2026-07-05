@@ -505,3 +505,43 @@ h2:hover .permalink, h3:hover .permalink,
   font-size: var(--text-footnote);
   color: var(--text-muted);
 }
+
+/* -------------------------------------------------------------------------
+   HOME PAGE — the centered manual: philosophy, features, how-to, rules.
+   Everything after the landing hero is centered; features and rules are
+   grouped grids of one-tap cards, each opening its detail in a popup.
+   ------------------------------------------------------------------------- */
+#main.container { padding-block: var(--space-section) var(--space-hero); }
+.home-section { text-align: center; }
+.home-section > h2 { font-size: var(--text-h1); margin: 0; }
+.home-section > p { max-width: 62ch; margin-inline: auto; }
+.home-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-strong);
+  color: var(--accent-3);
+  margin: 0;
+}
+
+.feat-group { display: grid; gap: var(--space-stack); margin-top: var(--space-section); }
+.feat-group-name { font-size: var(--text-h4); margin: 0; }
+.feat-grid {
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 17rem));
+  justify-content: center;
+}
+/* Feature/rule card: a button that reads as a small card, centered content. */
+.feat-card {
+  appearance: none;
+  font: inherit;
+  text-align: center;
+  display: grid;
+  gap: var(--space-tight);
+  align-content: start;
+  padding: var(--space-inline);
+}
+.feat-card-name { font-size: var(--text-body); font-weight: var(--weight-strong); line-height: 1.25; }
+.feat-card-phrase { font-size: var(--text-footnote); color: var(--text-muted); line-height: 1.4; }
+
+/* How-to steps: centered block, steps stay left-aligned to read as a list. */
+.home-section .steps { margin-inline: auto; text-align: left; max-width: 46rem; }
