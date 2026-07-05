@@ -467,6 +467,7 @@
           <li><a href="#waiting">Skeleton, spinner, empty</a></li>
           <li><a href="#flagship-link">Flagship link</a></li>
           <li><a href="#icons">Icons</a></li>
+          <li><a href="#motion-pack">Parallax &amp; idle</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -594,6 +595,7 @@
           <li>The waiting family: shimmering skeletons shaped like the content, an accent spinner ring for shapeless waits, and a dashed empty state that names what belongs there and offers the one action that fills it.</li>
           <li>The flagship link: the signature onward step — heading voice, strong accent underline, an arrow that leans in on hover; always a real <code>&lt;a&gt;</code>.</li>
           <li>Forty thin line icons on one attribute — <code>&lt;svg data-icon="search"&gt;</code> — carried inside facet.js (no files, no sprite), riding <code>currentColor</code>, extendable in one line.</li>
+          <li>Alive by default: <code>data-parallax="depth"</code> drifts elements behind the pointer, the scroll's momentum, or the device's tilt (permission-gated on iOS, honestly handled); <code>idle-*</code> classes give resting elements a slow float, sway or pulse on the composable translate/rotate/scale properties. Calm stills idle life; off and reduced motion still everything.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -2138,6 +2140,48 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
 &lt;/button&gt;
 &lt;p&gt;&lt;svg data-icon="clock"&gt;&lt;/svg&gt; Updated an hour ago&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-icons" data-tip="Copies the usage example above">Copy</button></p>
+      </article>
+
+      <!-- MOTION PACK -->
+      <article class="element stack" id="motion-pack">
+        <h3 data-status="beta">Parallax &amp; idle motion</h3>
+        <p>
+          What it is: alive by default.
+          <code>data-parallax="depth"</code> lets an element drift up
+          to that many pixels behind the pointer on desktop, behind
+          the scroll's momentum everywhere, and behind the device's
+          tilt where no permission gate blocks it —
+          <code>facet.motion</code> is the engine
+          (register/setMode/cycle; off | cursor | tilt). The
+          <code>idle-*</code> classes give key elements a resting
+          pulse: a slow float, a faint sway, a soft breathing scale.
+          What it is for: heroes, illustrations, decorative cards —
+          life at the edges, never on the reading path. When to use
+          it: sparingly; one or two moving things per screen. The
+          idle classes animate translate/rotate/scale, so they
+          compose with the engine's transform instead of colliding —
+          the parallax exclusion, solved structurally. Calm stills
+          idle life; off and reduced motion still everything. Move
+          your pointer over this page and watch the cards below.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <article class="card stack-tight" data-parallax="10" data-tip="Drifts up to 10px behind the pointer">
+              <p class="text-caption">data-parallax="10"</p>
+              <strong>I follow the pointer</strong>
+            </article>
+            <article class="card stack-tight idle-float" data-tip="A slow resting float">
+              <p class="text-caption">.idle-float</p>
+              <strong>I breathe at rest</strong>
+            </article>
+            <article class="card stack-tight idle-sway" data-tip="A faint resting sway">
+              <p class="text-caption">.idle-sway</p>
+              <strong>I sway a little</strong>
+            </article>
+          </div>
+        </div>
+        <pre id="code-motion-pack"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-motion-pack" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SNAP SECTION -->

@@ -385,11 +385,19 @@ Platform laws docs and the R11 chart item.
 - [x] Flagship link: .flagship-link — heading voice, strong accent
       underline, leaning arrow on hover; one or two per screen.
 - [ ] Icon set: thin 1.5px line glyphs, around 40 to start
-- [ ] Motion: desktop parallax driven by pointer position
-- [ ] Motion: mobile parallax driven by scroll — velocity, weight,
-      inertia
-- [ ] Motion: gyroscope upgrade where permission is granted
-- [ ] Motion: idle animations on key elements at rest
+- [x] Motion: desktop parallax driven by pointer position — one
+      attribute, data-parallax="depth", registers with facet.motion
+      (cursor mode; spring physics STIFF 0.10 / DAMP 0.80).
+- [x] Motion: mobile parallax driven by scroll — the engine's
+      velocity kick term (weight and inertia through the same
+      spring), fed by the page or pager scroller.
+- [x] Motion: gyroscope upgrade — tilt mode auto-picked on ungated
+      gyro devices; on iOS facet.motion.setMode("tilt") asks
+      DeviceOrientation permission and falls back to cursor honestly.
+- [x] Motion: idle animations — .idle-float/.idle-sway/.idle-pulse on
+      the composable translate/rotate/scale properties (the parallax
+      exclusion solved structurally); calm stills them, off and
+      reduced-motion still everything.
 
 ### Blocks — R11
 

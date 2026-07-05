@@ -621,6 +621,24 @@ warning help play pause.
       <svg data-icon="search"></svg>
     </button>
 
+### Parallax & idle motion
+
+What it is: alive by default. data-parallax="depth" registers an
+element with facet.motion — it drifts up to depth pixels behind the
+desktop pointer, the scroll's momentum (a velocity kick), or the
+device tilt where no permission gate blocks it (iOS gates it;
+facet.motion.setMode("tilt") asks). The idle-* classes (.idle-float,
+.idle-sway, .idle-pulse) give resting elements a slow pulse; they
+animate the separate translate/rotate/scale properties so they
+compose with the engine's transform instead of colliding — the
+parallax exclusion, solved structurally. Never put data-parallax on
+elements with their own transform physics (velvet lift/press, the
+pager). Calm stills idle life; data-motion="off" and
+prefers-reduced-motion still everything.
+
+    <article class="card" data-parallax="10">Drifts gently</article>
+    <img class="idle-float" src="hero.png" alt="…">
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

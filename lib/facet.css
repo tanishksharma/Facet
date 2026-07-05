@@ -2313,6 +2313,30 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
    closed-popover hiding — re-assert it at author origin. */
 [popover]:not(:popover-open) { display: none; }
 
+/* ----- MOTION PACK: parallax depths and idle life -----
+   What it is: alive by default. data-parallax="depth" lets an
+   element drift up to that many pixels behind the pointer (desktop),
+   the scroll's momentum (everywhere) or the device's tilt (where no
+   permission gate blocks it) — facet.motion is the engine. The
+   idle-* classes give key elements a resting pulse: a slow float, a
+   faint sway, a soft breathing scale. What it is for: heroes,
+   illustrations, decorative cards — life at the edges, never on the
+   reading path. When to use it: sparingly; one or two moving things
+   per screen. Idle classes animate the translate/rotate/scale
+   properties, so they compose with the engine's transform instead of
+   colliding (the parallax exclusion, solved structurally). Calm
+   personality stills idle life; off and prefers-reduced-motion still
+   everything. */
+.idle-float { animation: facet-idle-float 5s ease-in-out infinite alternate; }
+.idle-sway  { animation: facet-idle-sway 7s ease-in-out infinite alternate; }
+.idle-pulse { animation: facet-idle-pulse 4s ease-in-out infinite alternate; }
+@keyframes facet-idle-float { from { translate: 0 2px; } to { translate: 0 -4px; } }
+@keyframes facet-idle-sway  { from { rotate: -1.2deg; } to { rotate: 1.2deg; } }
+@keyframes facet-idle-pulse { from { scale: 1; } to { scale: 1.02; } }
+[data-motion="calm"] .idle-float,
+[data-motion="calm"] .idle-sway,
+[data-motion="calm"] .idle-pulse { animation: none; }
+
 /* ----- ICONS: forty thin line glyphs on one attribute -----
    What it is: the icon set — 24x24 glyphs at a 1.5px stroke with
    round caps, carried as markup in facet.js (no image files, no

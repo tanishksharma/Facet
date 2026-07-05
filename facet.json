@@ -214,6 +214,11 @@
       "attribute": "data-maps-key",
       "on": "facet.js script tag",
       "summary": "Your Google Maps key for every data-map on the page."
+    },
+    {
+      "attribute": "data-parallax",
+      "on": "any decorative element",
+      "summary": "Max drift in px behind pointer / scroll momentum / tilt; registers with facet.motion."
     }
   ],
   "components": [
@@ -629,6 +634,27 @@
       "dont": "Fetch icon fonts or sprite files — the set travels inside facet.js.",
       "why": "One request, no CORS sprite trap, and the glyphs stay readable source.",
       "a11y": "aria-hidden by default; aria-label promotes an icon to role=img."
+    },
+    {
+      "name": "Parallax & idle",
+      "classes": [
+        ".idle-float",
+        ".idle-sway",
+        ".idle-pulse"
+      ],
+      "attributes": [
+        "data-parallax"
+      ],
+      "summary": "Pointer/scroll/tilt parallax on one attribute; resting float/sway/pulse classes on composable properties.",
+      "classNotes": {
+        ".idle-float": "slow vertical breath (translate)",
+        ".idle-sway": "faint rotation sway (rotate)",
+        ".idle-pulse": "soft breathing scale (scale)"
+      },
+      "do": "Give one or two edge elements life; keep the reading path still.",
+      "dont": "Put data-parallax on anything with its own transform physics.",
+      "why": "Two writers on one transform collide — the parallax exclusion law.",
+      "a11y": "Calm stills idle life; off and prefers-reduced-motion still everything, engine included."
     },
     {
       "name": "Snap section",
