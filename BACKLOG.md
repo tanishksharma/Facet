@@ -181,7 +181,7 @@ Decisions to confirm before building: email provider, whether Supabase or
 Vercel-Postgres, and the exact theme JSON shape (reuse the builder's ?mix=
 JSON — {tokens, scales} — plus name/author).
 
-### Layer 5 templates — more app shapes (NEW)
+### Layer 5 templates — more app shapes (partly SHIPPED)
 
 Layer 5 is named (Templates = whole-page layouts). Grow the set beyond the six
 starters into real app shapes the owner named: a SaaS dashboard, a social-media
@@ -190,6 +190,41 @@ the head pack, listed on /layouts.html under the Layer 5 · Templates band.
 Note (owner's layering call, agreed): the bottom tab bar and the settings sheet
 are two separate Layer 3 components; assembled together into one nav unit they
 are a Layer 4 block — that "tab bar + menu sheet" pairing belongs in Layer 4.
+
+- [x] SaaS dashboard (templates/saas.html — Northstar analytics) and social
+      app (templates/social.html — Ripple feed) shipped, plus an iframe device
+      preview on /layouts.html that renders landing/saas/social live at
+      desktop/tablet/phone widths (docs-only .device-preview + initDevicePreview).
+- [ ] More app shapes as the owner names them (e.g. chat/messaging, kanban
+      board, settings/account, e-commerce storefront checkout flow).
+
+### Six-layer taxonomy + grouped, filterable Components wall (DONE)
+
+Owner asked to reassess Layers 1–5 and decide what belongs where. Decided and
+implemented. The layers are now ONE composition ladder, contiguous per page:
+
+- Layer 1 · Tokens — design decisions as named variables (color, type, spacing,
+  radius, border, motion, elevation + density/text-size). Components page.
+- Layer 2 · Base — raw semantic HTML already designed, zero classes. Components
+  page. (Split back out of the old merged "Tokens & base".)
+- Layer 3 · Components — every reusable piece, grouped into named categories
+  (Layout primitives / Forms & controls / Content & data / Overlays &
+  disclosure / Navigation / Status), each with a .wall-group heading, a
+  data-cat tag, a category filter chip row (initWallFilter, composes with the
+  text search) and a grouped sidebar nav. Components page.
+- Layer 4 · Blocks — components assembled into page sections. Layouts page.
+- Layer 5 · Templates — whole pages (with the device preview). Layouts page.
+- Layer 6 · App feel (NEW layer, owner's call) — the coat that makes a finished
+  page feel native: parallax & idle motion, sound & haptics, backgrounds, the
+  full-screen snap pager, and the app kit (tab bar, settings sheet, float
+  button, scroll gauge). Layouts page, after Templates. This replaced the stray
+  "Layer 2 · Motion & interaction" that had been sitting oddly on the layouts
+  page, and pulled the app-kit components out of Layer 3.
+
+Rule going forward: a new component's layer is its composition level — a single
+reusable piece is Layer 3 (filed under one of the six categories); motion/sound/
+app-chrome is Layer 6; an assembly of pieces is a Layer 4 block; a whole page is
+a Layer 5 template.
 
 ### Semantic color & border tokens (DONE)
 
