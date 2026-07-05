@@ -1,0 +1,18 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "$comment": "Facet deploys as a plain static site — no build. This file only pins the caching law at the edge: the unversioned library files and every HTML page revalidate on each load, so a push to main is live on the very next refresh (never stale behind a CDN cache). Frozen /lib/vN/ copies, when they exist, can be made immutable here.",
+  "headers": [
+    {
+      "source": "/lib/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
+  ]
+}
