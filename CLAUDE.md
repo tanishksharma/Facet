@@ -216,7 +216,13 @@ index.html and in llms.txt — same text in all three places.
 
 ## Naming and code quality
 
-- Tokens named by role, not value: `--surface`, not `--gray-100`.
+- Tokens named by role, not value: `--surface`, not `--gray-100`. This
+  extends to spacing and type: name them by intent (card spacing, section
+  spacing, heading, body, caption) — never by a bare number a builder has to
+  memorise (`--space-2`, `--text-h3` are the old value-named scale, being
+  retired). Density and type size are one global three-step control
+  (small/medium/large), and both are set BY THE THEME — you never pick a
+  theme and its spacing separately. Full spec + naming in BACKLOG.md.
 - One class prefix and pattern for components: `.btn`, `.btn-primary`,
   predictable everywhere.
 - JS: one small named function per behavior. The name says what it does.

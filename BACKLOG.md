@@ -6,9 +6,10 @@ this file alone. The owner adds work by saying it; Claude writes it in
 here immediately, then works the queue top-down on every "continue".
 Shipped work is recorded at the bottom.
 
-Ordering rule: heavy systems first, lighter work after. The accent-rank
-retokenisation leads because every component sits on it; then the
-configuration spine, the JS context/i18n/offline systems, navigation
+Ordering rule: heavy systems first, lighter work after. The semantic
+spacing/type retokenisation now leads — every component and layout sits on
+those tokens, so it is the widest-reaching change. Then the manual redesign,
+the configuration spine, the JS context/i18n/offline systems, navigation
 transitions and the native-theme work; the theming suite and machine
 manifest; and only then the lighter CSS adds, site polish and the long
 component/blocks/templates road.
@@ -17,6 +18,59 @@ Standing exclusion: no right-to-left layout support. Translation yes,
 RTL no — decided 4 Jul 2026.
 
 ## Queue · heavy systems first
+
+### Semantic spacing & type tokens + global density — retokenisation (NEW · heaviest, leads the queue)
+
+Replace the value-named scales — `--space-1..8` and
+`--text-display/-h1..-h4/-body/-small/-caption` — with ROLE-named tokens, so a
+builder picks spacing and type by intent ("card spacing", "section spacing")
+not by number, and the right choice is self-evident from the name. Then one
+global density control scales the whole spacing system at once, and type size
+gets the same three-step control. Both scales are defined BY THE THEME: picking
+a theme sets its spacing rhythm and type feel — you never choose theme and
+spacing separately. Density/type-size compose like `data-mode`.
+
+- [ ] Spacing role tokens (names pending owner sign-off). Two families:
+      gaps between elements and padding inside them. Proposed element-named
+      set: `--space-tight` (bound pairs, label+field), `--space-stack`
+      (default vertical gap), `--space-inline` (row gaps), `--space-section`
+      (between page sections), `--space-control` (padding inside
+      buttons/inputs/chips), `--space-card` (padding inside cards/panels),
+      `--space-page` (container side padding), `--space-heading` (space around
+      headings). Map current usage: space-2→control/tight, space-4→stack,
+      space-5→card, space-7→section, etc.
+- [ ] Global density `data-density="small|medium|large"` on html (medium =
+      no attr), each theme defining the three values per role token. Replaces
+      today's single `data-density="compact"`. Same three-step control for
+      type size (own attribute or folded into density — decide).
+- [ ] Type role tokens: `--text-h1..-h4`, `--text-body`, `--text-caption`,
+      `--text-footnote`, `--text-quote` (add footnote + quote; retire
+      `--text-small`/`--text-display` or alias). Defined per theme.
+- [ ] The sweep: EVERY component and layout moves to the new names in the
+      same change — 187 `--space-*` and 131 `--text-*` uses in facet.css,
+      ~144 more across index.html/build.html/templates. Keep AA, all five
+      themes light+dark, no build. Update the tokens docs on index.html,
+      Features, llms.txt and facet.json together. Heaviest system → leads.
+
+### Manual redesign: granular feature/rule cards + How-to-use steps (NEW)
+
+Features (9) and Rules (8) were condensed too far. Break them into MANY
+individual marketable points — 20–30+ features (playing sound, parallax,
+layouts, components, tokens, theming, and each token/base/theming sub-point
+its own feature) and rules split out of the condensed groups (core principles
+shown as its 5–6 individual rules, how-to-use its own, markup its own, …).
+
+- [ ] New card type (not the current text card): an ICON + a NAME + a one-line
+      half-sentence phrase, self-explanatory, no visible "read" affordance.
+      Hover or click opens a popup with the full detail. New Layer-3 component.
+- [ ] Dual human/AI content: the visible card text is short and condensed;
+      each card ALSO carries a hidden, richer AI-instruction block (more
+      sentences, more descriptive) so an AI crawler learns the feature/rule/
+      component/how-to in depth. Static HTML, visually hidden, still in DOM.
+- [ ] Manual = three sections: (1) Features — granular icon cards; (2) Rules,
+      exceptions and points-to-note — granular icon cards; (3) How to use the
+      library — its own section, a numbered step flow (1 pick a layout, 2 pick
+      a theme, 3 …). Update Features/llms.txt/facet.json.
 
 ### App-kit ergonomics — R19 (from building 13 apps on the library)
 
