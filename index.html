@@ -107,6 +107,23 @@
     /* The variant/state chips are the library's own .chip now —
        promoted by extraction. Nothing docs-only left to style. */
 
+    /* Icon gallery: one bordered cell per glyph, click to copy. */
+    .icon-cell {
+      display: grid;
+      place-items: center;
+      gap: var(--space-1);
+      padding: var(--space-3);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius-medium);
+      background: var(--surface);
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+    .icon-cell:hover { border-color: var(--text-muted); }
+    .icon-cell svg { width: 1.5rem; height: 1.5rem; }
+    #icon-gallery { grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); }
+
     /* Typography specimen: a real article, each block tagged with its token. */
     .type-label {
       display: block;
@@ -449,6 +466,7 @@
           <li><a href="#small-talkers">Badge, chip, avatar, progress</a></li>
           <li><a href="#waiting">Skeleton, spinner, empty</a></li>
           <li><a href="#flagship-link">Flagship link</a></li>
+          <li><a href="#icons">Icons</a></li>
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -575,6 +593,7 @@
           <li>The small talkers: tinted status badges, self-toggling filter chips (<code>aria-pressed</code>, promoted from this site's own controls), avatars for images or initials, and the native <code>&lt;progress&gt;</code> themed.</li>
           <li>The waiting family: shimmering skeletons shaped like the content, an accent spinner ring for shapeless waits, and a dashed empty state that names what belongs there and offers the one action that fills it.</li>
           <li>The flagship link: the signature onward step — heading voice, strong accent underline, an arrow that leans in on hover; always a real <code>&lt;a&gt;</code>.</li>
+          <li>Forty thin line icons on one attribute — <code>&lt;svg data-icon="search"&gt;</code> — carried inside facet.js (no files, no sprite), riding <code>currentColor</code>, extendable in one line.</li>
           <li>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</li>
           <li>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</li>
           <li>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</li>
@@ -2094,6 +2113,33 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-flagship-link" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- ICONS -->
+      <article class="element stack" id="icons">
+        <h3 data-status="stable">Icons</h3>
+        <p>
+          What it is: the icon set — forty 24×24 glyphs at a 1.5px
+          stroke with round caps, carried as markup inside facet.js:
+          no image files, no sprite fetch, nothing to host. What it is
+          for: every small symbol a product needs. When to use it:
+          write <code>&lt;svg data-icon="search"&gt;&lt;/svg&gt;</code>
+          and facet.js fills it; icons ride <code>currentColor</code>
+          and scale with the text around them. Decorative by default
+          (<code>aria-hidden</code>); give the svg an
+          <code>aria-label</code> to make it meaningful. Extend the
+          set in one line: <code>facet.icons.rocket = '&lt;path
+          d="..."/&gt;'</code> then <code>facet.icon()</code>. Click
+          any glyph below to copy its markup.
+        </p>
+        <div class="demo">
+          <div class="grid" id="icon-gallery" style="--bg-cell: 0;"></div>
+        </div>
+        <pre id="code-icons"><code>&lt;button class="btn btn-icon" aria-label="Search" data-tip="Search everything"&gt;
+  &lt;svg data-icon="search"&gt;&lt;/svg&gt;
+&lt;/button&gt;
+&lt;p&gt;&lt;svg data-icon="clock"&gt;&lt;/svg&gt; Updated an hour ago&lt;/p&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-icons" data-tip="Copies the usage example above">Copy</button></p>
+      </article>
+
       <!-- SNAP SECTION -->
       <article class="element stack" id="snap-section">
         <h3 data-status="stable">Snap section</h3>
@@ -3115,6 +3161,28 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       document.querySelector("#demo-toast")?.addEventListener("click", () => {
         facet.toast("Report saved", "success");
       });
+      // Icon gallery: every glyph in facet.icons, click to copy its markup.
+      const gallery = document.querySelector("#icon-gallery");
+      if (gallery && window.facet) {
+        for (const name of Object.keys(facet.icons)) {
+          const cell = document.createElement("button");
+          cell.type = "button";
+          cell.className = "icon-cell";
+          cell.dataset.tip = `Copies <svg data-icon="${name}">`;
+          const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          svg.dataset.icon = name;
+          const cap = document.createElement("span");
+          cap.className = "text-caption";
+          cap.textContent = name;
+          cell.append(svg, cap);
+          cell.addEventListener("click", async () => {
+            try { await navigator.clipboard.writeText(`<svg data-icon="${name}"></svg>`); } catch { /* denied */ }
+            facet.toast(`Copied the ${name} icon`);
+          });
+          gallery.appendChild(cell);
+        }
+        facet.icon();   // fill the gallery svgs just created
+      }
       const chartEl = document.querySelector("#demo-chart");
       if (chartEl && window.facet) {
         // ₹1,00,000 of 2014 money, inflated year by year, projected on.

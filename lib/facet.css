@@ -2313,6 +2313,28 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
    closed-popover hiding — re-assert it at author origin. */
 [popover]:not(:popover-open) { display: none; }
 
+/* ----- ICONS: forty thin line glyphs on one attribute -----
+   What it is: the icon set — 24x24 glyphs at a 1.5px stroke with
+   round caps, carried as markup in facet.js (no image files, no
+   sprite fetch). What it is for: every small symbol a product needs:
+   navigation, actions, states. When to use it: write
+   <svg data-icon="search"></svg> and facet.js fills it; icons ride
+   currentColor and scale with the text around them. Decorative by
+   default (aria-hidden); give the svg an aria-label to make it
+   meaningful. Extend the set in one line: facet.icons.rocket =
+   '<path d="..."/>' then facet.icon(). */
+svg[data-icon] {
+  width: 1.25em;
+  height: 1.25em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.25em;
+  flex: none;
+}
+
 /* ----- FLAGSHIP LINK: the signature way to another page -----
    What it is: the big confident link — heading voice, a strong
    accent underline, and an arrow that leans into the journey on

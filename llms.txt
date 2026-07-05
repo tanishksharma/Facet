@@ -602,6 +602,25 @@ links. Always an <a> to a real URL, never a button in costume.
 
     <a class="flagship-link" href="/report">See the full report</a>
 
+### Icons
+
+What it is: forty 24x24 line glyphs at a 1.5px stroke with round
+caps, carried as markup inside facet.js — no image files, no sprite
+fetch. Write <svg data-icon="search"></svg> and facet.js fills it;
+icons ride currentColor and scale with the surrounding text.
+Decorative by default (aria-hidden); an aria-label on the svg makes
+it meaningful. Extend: facet.icons.rocket = '<path d="..."/>' then
+facet.icon(). The set: search close check plus minus arrow-right
+arrow-left arrow-up arrow-down chevron-right chevron-left chevron-up
+chevron-down menu more settings home user users heart star bookmark
+bell calendar clock download upload share external link copy edit
+trash filter eye lock mail globe image file folder sun moon info
+warning help play pause.
+
+    <button class="btn btn-icon" aria-label="Search">
+      <svg data-icon="search"></svg>
+    </button>
+
 ### Snap section
 
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one

@@ -620,6 +620,17 @@
       "a11y": "A real link; the arrow is decorative content, the text is the name."
     },
     {
+      "name": "Icons",
+      "attributes": [
+        "svg[data-icon]"
+      ],
+      "summary": "Forty 24x24 line glyphs at 1.5px stroke, carried in facet.js, filled on one attribute, riding currentColor.",
+      "do": "Give a meaningful icon's svg an aria-label; leave decorative ones alone.",
+      "dont": "Fetch icon fonts or sprite files — the set travels inside facet.js.",
+      "why": "One request, no CORS sprite trap, and the glyphs stay readable source.",
+      "a11y": "aria-hidden by default; aria-label promotes an icon to role=img."
+    },
+    {
       "name": "Snap section",
       "classes": [
         ".snap",
@@ -1064,6 +1075,8 @@
     "facet.groupIndian": "Indian 2-2-3 grouping.",
     "facet.numberWords": "A number as localized words (lakh, crore, million…).",
     "facet.toast": "Show a transient notice: facet.toast(message, kind) with kinds success/warning/error/info.",
-    "facet.chart": "Draw the themed line chart: facet.chart(el, {points, projectFrom, events, format}) → {update}."
+    "facet.chart": "Draw the themed line chart: facet.chart(el, {points, projectFrom, events, format}) → {update}.",
+    "facet.icons": "The glyph table (name → svg markup); extend it, then call facet.icon().",
+    "facet.icon": "(Re)fill every svg[data-icon] on the page."
   }
 }
