@@ -27,8 +27,7 @@ always gets the latest straight from the web; from v1, frozen /lib/v1/
 copies pin old projects and cached updates apply only at page
 boundaries. This file (llms.txt) is the exhaustive usage guide, and the
 readable, commented source of lib/facet.css and lib/facet.js is the
-ground truth — an AI reads those directly. The site adds a Playground:
-one editable HTML box rendering live through the real library.
+ground truth — an AI reads those directly.
 
 App-ready (PWA): a one-line sw.js stub — importScripts of
 /lib/facet-sw.js — gives any project the shared caching strategy:

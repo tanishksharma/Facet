@@ -33,7 +33,6 @@ index.html         home: philosophy, curated features, how-to (people vs AI), pr
 library.html       the whole library on one page — one growing ladder:
                    Layer 1 Tokens & base, 2 Components (grouped + filterable),
                    3 Blocks, 4 Templates (with live device previews), 5 App feel
-playground.html    live playground (renders through the real library files)
 build.html         theme builder + Skin Lab
 docs.css           docs-site styles (NOT part of /lib)
 docs.js            docs-site behaviour (NOT part of /lib)
@@ -78,11 +77,6 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     What:      the catalogue — Layers 1-5 live, with exact snippets + reference blocks
     Read by:   people
     Truth for: the live component wall (demos + copy-paste HTML)
-
-`playground.html`
-    What:      live playground (renders through the real library files)
-    Read by:   people
-    Truth for: -
 
 `build.html`
     What:      visual theme builder + Skin Lab
@@ -434,6 +428,6 @@ The full shipped history is in git and in the live files (facet.css / facet.js /
 
 - No right-to-left layout — translation yes, RTL no.
 - Layer = composition level: a single reusable piece is Layer 2 · Components (in one of the six categories, snap/layout included); motion, sound and app interface are Layer 5 · App feel; an assembly of pieces is a Layer 3 · Block; a whole page is a Layer 4 · Template. Never create a layer that holds only one entry.
-- The site is multi-page: Home · Library · Playground · Build a theme · llms.txt · CLAUDE.md · GitHub. (The old Components and Layouts pages merged into Library.)
+- The site is multi-page: Home · Library · Build a theme · llms.txt · CLAUDE.md · GitHub. (The old Components and Layouts pages merged into Library.)
 - App logic, data and state live in projects, never in the library.
 - (Token, accent, border, spacing/type and theme decisions live in the Naming and Themes sections above — not repeated here.)

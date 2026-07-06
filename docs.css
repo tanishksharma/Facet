@@ -394,7 +394,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 /* Rows of copy buttons under snippets sit side by side. */
 .element p:has(> [data-copy]) { display: flex; gap: var(--space-control); flex-wrap: wrap; max-width: none; }
 
-/* Framed mini page (also the playground preview). */
+/* Framed mini page (the Skin Lab preview cells). */
 .lab-frame {
   width: 100%;
   height: 21rem;

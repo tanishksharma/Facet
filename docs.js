@@ -1,7 +1,14 @@
 /* Facet docs site behaviour — wires whatever docs elements a page has
-   (the wall, folds, chips, search, scrollspy, playground…). Every init
-   guards for absent elements, so one file serves every page. Not part of
-   the library; never in /lib. */
+   (the wall, folds, chips, search, scrollspy…). Every init guards for
+   absent elements, so one file serves every page. Not part of the
+   library; never in /lib. */
+
+/* Open at the top on every reload. Browsers default to "auto" scroll
+   restoration, which reopens a long page at the previous scroll position
+   — on the docs site that reads as the page loading half-scrolled. Set
+   it to manual so a plain reload starts at the top; an explicit #anchor
+   in the URL still scrolls to its target on load. */
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
 /* The snippet under each wall entry is not hand-written: it is the
    demo's actual DOM, serialized. Flip a chip and the snippet follows,
@@ -337,31 +344,6 @@ async function initSizeBadge() {
   } catch { /* offline: show no badge rather than a wrong one */ }
 }
 
-/* Playground: the textarea renders into a real framed page built
-   on the two shipped files, re-rendered as you type (debounced).
-   The frame mirrors this page's theme and mode attributes. */
-function initPlayground() {
-  const input = document.querySelector("#playground-input");
-  const frame = document.querySelector("#playground-frame");
-  if (!input || !frame) return;
-  input.value = '<main class="container stack" style="padding: 1rem;">\n  <h2>Hello, Facet</h2>\n  <button class="btn btn-primary" data-tip="A real button">Try me</button>\n</main>';
-  let timer;
-  const render = () => {
-    const html = document.documentElement;
-    frame.srcdoc = `<!doctype html>
-      <html${html.dataset.theme ? ` data-theme="${html.dataset.theme}"` : ""}${html.dataset.mode ? ` data-mode="${html.dataset.mode}"` : ""}>
-      <head><meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="${location.origin}/lib/facet.css">
-      <script src="${location.origin}/lib/facet.js" defer><\/script></head>
-      <body>${input.value}</body></html>`;
-  };
-  input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(render, 350); });
-  new MutationObserver(render).observe(document.documentElement, {
-    attributes: true, attributeFilter: ["data-theme", "data-mode"],
-  });
-  render();
-}
-
 /* Click-to-copy tokens: every swatch and every token name in a
    type label becomes a real button copying its var(--name). */
 function initTokenCopy() {
@@ -571,18 +553,6 @@ function initDemoTools() {
   }
 }
 
-/* Relocate the Playground to the end of the page, so DOM order matches
-   the sidebar's Tools group. It was wedged mid-Layer-1, which made clicks
-   and the scrollspy disagree — the section you scrolled into never
-   matched the link. */
-function relocateTools() {
-  const main = document.querySelector("#main");
-  for (const id of ["playground"]) {
-    const sec = document.querySelector("#" + id);
-    if (sec) main.appendChild(sec);
-  }
-}
-
 /* Component wall category filter: the chip row (.wall-filter) flips which
    data-cat entries show. Composes with the search box — an article hides
    when EITHER the category chip or the text search excludes it — and the
@@ -685,7 +655,6 @@ function insertLayerBands() {
     ["blocks",     "Layer 3", "Blocks",     "The components, assembled into ready page sections you copy whole."],
     ["templates",  "Layer 4", "Templates",  "Whole pages — full app and site layouts you rename and fill in."],
     ["appfeel",    "Layer 5", "App feel",   "The layer that makes a finished page feel native: parallax, sound, surfaces, and the app kit."],
-    ["playground", "Tools",   "Playground","An editable live playground that renders whatever you type through the real library files."],
   ];
   for (const [id, kicker, title, blurb] of bands) {
     const anchor = document.querySelector("#" + id);
@@ -795,9 +764,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initMarkdownButtons();
   initDemoTools();
   overlayCodeTools();              // code actions become a corner icon cluster
-  relocateTools();                 // Playground to the end
   insertLayerBands();
-  initPlayground();
   initFeedbackDemo();              // the Sound & haptics wall buttons
   initWallFilter();                // Layer 3 category filter chips
   initDevicePreview();             // Layer 5 templates in scaled device frames
