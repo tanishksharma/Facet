@@ -148,7 +148,7 @@ When a page is added, renamed or removed, update three places together: this pro
 
 -------------------------------------------------------------------------------
 
-## Core principles
+## Manifesto
 ===============================================================================
 
 
@@ -161,8 +161,7 @@ When a page is added, renamed or removed, update three places together: this pro
 - Everything explained in place: every interactive element carries a description tooltip.
 - Alive by default: gyroscope parallax and idle animations, with reduced motion honoured. (Shipped as the App-feel layer: parallax, idle motion, sound and haptics.)
 - Fully commented: every file self-describes with intros, usage notes and to-dos, so any AI can build products with it.
-- Progressive enhancement: the page works with JavaScript off — content, layout, links and forms all function; JS only ever enhances, never gates access.
-- Respects the reader: every device and browser preference (colour scheme, reduced motion, contrast, text size) is honoured over anything the page chooses. No dark patterns.
+- Works without JavaScript. Content, layout, links and forms all work with JS switched off — JavaScript only adds enhancements on top.
 - Accessible, SEO-ready and AI-crawlable by default. Enforced through the compliance checklist, not optional.
 
 
@@ -183,19 +182,6 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 
 -------------------------------------------------------------------------------
 
-## Progressive enhancement & resilience
-===============================================================================
-
-
-- The page works without JavaScript. Content, layout, navigation and form submission all function with JS disabled; JS only enhances (animation, live updates, self-wiring). Never gate content or core navigation behind a script.
-- Feature-detect, never assume. Gate newer CSS/JS behind `@supports` or a capability check with a graceful fallback — the `AccentColor` upgrade behind `@supports` is the model.
-- No layout shift. Images and embeds reserve their space (width/height attributes or `aspect-ratio`) so nothing jumps as the page loads.
-- Idempotent by construction. Every self-wiring initialiser can run twice without double-binding, so a page can safely re-run `facet.*` after inserting new markup.
-- Degrade, don't break. Where a capability is missing (view transitions, service workers, gyroscope), the page still works — the feature just goes quiet.
-
-
--------------------------------------------------------------------------------
-
 ## Markup rules
 ===============================================================================
 
@@ -205,8 +191,6 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 - Structural elements contain content or other structural elements. Never decorative nesting.
 - Buttons are `button`, links are `a`, form fields have real `label` elements.
 - One h1 per page. Heading levels never skip.
-- Forms use the right input `type` (`email`, `tel`, `url`, `number`, `date`) and `inputmode` so mobile keyboards and native validation just work; every field has an associated `label`; hints and errors are tied with `aria-describedby` and errors announced in a live region; common fields carry `autocomplete`.
-- Logical properties over physical: `margin-inline` / `padding-block`, never `left`/`right` — cleaner and writing-mode independent.
 
 
 -------------------------------------------------------------------------------
@@ -248,42 +232,6 @@ These are build requirements, not a feature pitch: every page and component must
 
 -------------------------------------------------------------------------------
 
-## Performance & footprint
-===============================================================================
-
-
-- Zero third-party requests. No external fonts, scripts, trackers or CDNs — the two files are the entire network footprint (also a privacy win).
-- System font stacks by default: no web-font download, no flash of invisible or unstyled text. If a custom font is ever added, `font-display: swap` and preload it; a family list never ends in anything but a generic family.
-- Animate only compositor-friendly properties (`transform`, `opacity`). Never animate layout (`width`, `top`, `height`) — it stutters.
-- Offscreen images lazy-load (`loading="lazy"`, `decoding="async"`); nothing heavy loads before it is needed.
-- Non-blocking by construction: CSS is one file, JavaScript is `defer`red — nothing blocks first paint. Gzip keeps the readable source small on the wire.
-
-
--------------------------------------------------------------------------------
-
-## Privacy & security
-===============================================================================
-
-
-- No tracking, no cookies, no fingerprinting. Nothing about the visitor leaves their browser unless the project itself sends it. Analytics are bring-your-own (a documented `data-event` hook), never baked in.
-- CSP-friendly: no inline event handlers (`onclick=`), no `eval`, no inline styles required — the library runs under a strict Content-Security-Policy.
-- No injection surface: any value the JavaScript inserts uses `textContent`, never `innerHTML` on untrusted data — a page cannot be XSS'd through the library.
-- Safe links: `rel="noopener"` on every `target="_blank"`.
-
-
--------------------------------------------------------------------------------
-
-## Humane defaults
-===============================================================================
-
-
-- No dark patterns: no fake urgency, no manipulative defaults, no roadblocks, nothing that autoplays with sound. The reader stays in control.
-- Everything intrusive is opt-in or toggleable — motion, sound, haptics, install prompts. An install prompt appears only when the browser genuinely offers one.
-- The reader's preferences win: colour scheme, reduced motion, contrast, reduced data and text size all override whatever the page chose.
-
-
--------------------------------------------------------------------------------
-
 ## iOS rules — fixes for real iPhone bugs
 ===============================================================================
 
@@ -318,10 +266,6 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 - One class prefix and pattern for components: `.btn`, `.btn-primary`, predictable everywhere.
 - JS: one small named function per behavior. The name says what it does.
 - Never minify. The shipped files are the readable, commented source.
-- The public `facet.*` API is additive-only: never remove or change a signature — deprecate in place and keep it working, so old pages never break on an update.
-- Namespaced by construction: `facet.*` on the global, `--*` design tokens, `data-*` hooks — the library never collides with a project's own JS or CSS. (Component class names like `.btn` are deliberately un-prefixed: they ARE the project's vocabulary.)
-- Low, flat specificity: a component is a single class, so a project's own styles win without `!important`. The library uses `!important` only to honour `hidden` and reduced-motion.
-- All sizing in relative units (`rem`) so the whole interface scales with the reader's text-size setting.
 
 
 -------------------------------------------------------------------------------
