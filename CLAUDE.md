@@ -146,14 +146,14 @@ When a page is added, renamed or removed, update three places together: this pro
 ===============================================================================
 
 
-- Readability is the product. Modern frontend is div soup and minified garbage, unreadable by humans. This library is the opposite.
+- Readability is the product. Modern frontend is deeply nested markup and minified output, unreadable by humans. This library is the opposite.
 - One-glance HTML: any page's structure makes sense on first read. Semantic tags, self-explanatory classes.
 - The wrapper law: not one extra wrapper. A container inside a container exists only to enable a real feature — scroll areas, sticky regions, overflow clipping. No other reason is acceptable.
 - Least code that stays readable: entire products are assembled by writing HTML files with the right classes. Nothing else to touch.
 - Pure HTML, CSS and JS. No build step, no framework, never minified. Gzip handles size.
 - One-step theme change: one attribute on the html tag restyles the whole page, layout containers included.
 - Everything explained in place: every interactive element carries a description tooltip.
-- Alive by default: gyroscope parallax and idle animations, with reduced motion honoured. (Shipped as the App-feel layer: parallax, idle motion, sound and haptics.)
+- Motion by default: gyroscope parallax and idle animations, with reduced motion honoured. (Shipped as the App-feel layer: parallax, idle motion, sound and haptics.)
 - Fully commented: every file self-describes with intros, usage notes and to-dos, so any AI can build products with it.
 - Works without JavaScript. Content, layout, links and forms all work with JS switched off — JavaScript only adds enhancements on top.
 - Accessible, SEO-ready and AI-crawlable by default. Enforced through the compliance checklist, not optional.
@@ -233,10 +233,10 @@ These are build requirements, not a feature pitch: every page and component must
 iOS breaks in ways desktop browsers don't. Each rule below exists because we shipped a real app, hit that exact bug, and this is the fix — ignore one and the bug comes back. They bind anything built in or added to the library. (These are builder rules; the user-facing version is not on the homepage.)
 
 - Pager law: full-page snap sections that can outgrow the viewport are never built with CSS scroll-snap; the pager model (.snap upgraded by facet.js) is the only thing that survives iOS.
-- Gesture law: `touch-action: pan-y` on scrollers, `manipulation` on fixed chrome, `none` on drag surfaces; `gesturestart` preventDefault covers older iOS pinch; never rely on viewport `user-scalable=no`.
+- Gesture law: `touch-action: pan-y` on scrollers, `manipulation` on fixed navigation and controls, `none` on drag surfaces; `gesturestart` preventDefault covers older iOS pinch; never rely on viewport `user-scalable=no`.
 - App shell law: standalone PWAs need `viewport-fit=cover` PLUS the apple-mobile-web-app metas (capable + black-translucent status bar), safe-area env() insets in section padding, and manifest colors that match the shipped theme.
 - Caching law: HTML and unversioned /lib/ files are never cache-first — network first, cache only offline. Cache-first pages hide every deploy until a second refresh; that bug shipped once and is now law.
-- Parallax exclusion: elements carrying their own transform physics (velvet lift/press, the pager's rubber-band) never register with facetMotion — two writers on one inline transform collide.
+- Parallax exclusion: elements carrying their own transform physics (velvet lift/press, the pager's elastic overscroll) never register with facetMotion — two writers on one inline transform collide.
 - Font-list law: never put `inherit` inside a font-family list; it silently invalidates the whole declaration. Stacks end in a generic family.
 
 
@@ -292,7 +292,7 @@ One attribute (`data-theme`) switches the theme, layout containers included; `da
 
 The shipped set, by design intent:
 
-- **Default** (no attribute) — paper white, near-black ink, whisper shadows; the quiet base, where the accent ranks are the ink itself. (The OS accent is a separate dormant token, `--os-accent`, kept out of the ranks on purpose.)
+- **Default** (no attribute) — paper white, near-black ink, faint shadows; the neutral base, where the accent ranks are the ink itself. (The OS accent is a separate dormant token, `--os-accent`, kept out of the ranks on purpose.)
 - **Sand** (`data-theme="sand"`) — modern desert beige, quietly elegant; parked but working.
 - **Velvet** (`data-theme="velvet"`) — neumorphic matte material, gold ink, serif display, one light source from above.
 - **Aero** (`data-theme="aero"`) — Frutiger Aero glass gloss, sky aqua, pill buttons; dark is ocean glass.
@@ -334,15 +334,15 @@ Standing exclusion: no right-to-left layout. Translation yes, RTL no (decided 4 
 
 ### Print, reader-view, copy-paste & export system (cross-cutting)
 
-The owner's ask, in full: every Facet page must print beautifully, read cleanly in browser Reader view, copy in the right order, and export well — and printing must be a first-class, declarative feature where the author says what shows on paper and what does not. This is heavy, cross-cutting machinery: it touches every component, block and template, plus the base layer and the compliance checklist. It ranks near the top of the queue for that reach. Build it as a small number of commits (the CSS system first, then the DOM-order/selection law, then per-template polish), each landing its wall/inventory lines.
+The requirement, in full: every Facet page must print cleanly, read well in browser Reader view, copy in the right order, and export well — and printing must be a first-class, declarative feature where the author says what shows on paper and what does not. This is heavy, cross-cutting machinery: it touches every component, block and template, plus the base layer and the compliance checklist. It ranks near the top of the queue for that reach. Build it as a small number of commits (the CSS system first, then the DOM-order/selection law, then per-template polish), each landing its wall/inventory lines.
 
 **1 · Declarative print roles (the headline feature).** One attribute names whether an element belongs on paper:
-- `data-print="off"` — never prints (and is hidden from Reader view where we can influence it). For page chrome.
+- `data-print="off"` — never prints (and is hidden from Reader view where we can influence it). For page furniture (navigation and controls).
 - `data-print="on"` — always prints, even inside an `off` ancestor (an explicit opt back in).
 - `data-print="only"` — prints ONLY, invisible on screen. For print-only content: a letterhead, a page footer with a URL, a "printed from …" line, crop marks. Provide readable class aliases too, matching the naming rules: `.print-hide`, `.print-show`, `.print-only`. Attribute and class are equivalent; components ship the attribute, authors reach for whichever.
 
-**Defaults, baked in so authors get it right for free (owner's calls):**
-- OFF by default in print: `header.site-header`, `nav` chrome, `.tab-bar`, `.float-btn` / `.float-btn-right`, `.sheet` + `.sheet-scrim`, `.scroll-gauge`, `.docs-index`, tooltips, skip links, the settings sheet, the theme/mode switchers, any purely navigational footer, and decorative backgrounds (`.bg-grid` etc. flatten to nothing).
+**Defaults, baked in so authors get it right for free (project decisions):**
+- OFF by default in print: `header.site-header`, `nav` navigation, `.tab-bar`, `.float-btn` / `.float-btn-right`, `.sheet` + `.sheet-scrim`, `.scroll-gauge`, `.docs-index`, tooltips, skip links, the settings sheet, the theme/mode switchers, any purely navigational footer, and decorative backgrounds (`.bg-grid` etc. flatten to nothing).
 - ON by default in print: `main`, `article`, `.card` and card grids/rows, content sections, tables, figures, headings and body copy — the predetermined content areas of the layouts. Cards and content are the paper.
 - These are DEFAULTS on the component's own selector; an author overrides any single element with the attribute above.
 
@@ -354,41 +354,41 @@ The owner's ask, in full: every Facet page must print beautifully, read cleanly 
 - Optional link-URL expansion: `a[href]::after { content: " (" attr(href) ")" }` behind a `.print-urls` opt-in on `<body>` (off by default — noisy).
 - Lazy images: ensure `loading="lazy"` images are forced to load for print.
 
-**3 · Copy-paste & selection stability (the DOM-order law).** The owner's real complaint: selecting mid-page and having the selection jump to a footer/corner component while content above is skipped — the PDF-selection annoyance. Root cause is always visual order diverging from DOM order (fixed/absolute chrome mid-DOM, CSS `order`, grid line placement, `direction`/float reordering). The fix is a law, enforced in the library and documented for authors:
-- **Reading-order law:** DOM order IS reading order. Fixed and absolutely positioned chrome (float button, settings sheet, scrim, tab bar, toasts, tooltips, scroll gauge) is authored at the END of `<body>`, after the content, so a top-to-bottom selection sweeps all content first and chrome last. (The settings sheet already sits at end of body — make this the rule everywhere, and move any offender.)
-- Chrome is not selectable and not copied: `user-select: none` on all navigation/control chrome, tooltips, gauges, the wordmark, icon-only buttons — so a full-page copy yields the content, in order, without "Open settings" and stray glyph noise landing in the paste.
-- Never use CSS `order`, `grid-row/column` line placement, or float-based reordering to move *content* out of source order; layout that reorders is allowed only for chrome that is already `user-select: none` and print-hidden. Add this to the markup rules and the compliance checklist.
+**3 · Copy-paste & selection stability (the DOM-order law).** The problem it solves: selecting mid-page and having the selection jump to a footer/corner component while content above is skipped — the PDF-selection problem. Root cause is always visual order diverging from DOM order (fixed/absolute interface controls mid-DOM, CSS `order`, grid line placement, `direction`/float reordering). The fix is a law, enforced in the library and documented for authors:
+- **Reading-order law:** DOM order IS reading order. Fixed and absolutely positioned interface controls (float button, settings sheet, scrim, tab bar, toasts, tooltips, scroll gauge) is authored at the END of `<body>`, after the content, so a top-to-bottom selection sweeps all content first and the controls last. (The settings sheet already sits at end of body — make this the rule everywhere, and move any offender.)
+- The interface controls are not selectable and not copied: `user-select: none` on all navigation and control elements, tooltips, gauges, the wordmark, icon-only buttons — so a full-page copy yields the content, in order, without "Open settings" and stray glyph noise landing in the paste.
+- Never use CSS `order`, `grid-row/column` line placement, or float-based reordering to move *content* out of source order; layout that reorders is allowed only for interface controls that are already `user-select: none` and print-hidden. Add this to the markup rules and the compliance checklist.
 - Icon buttons that use a glyph font/ligature must carry the accessible name as `aria-label`, not as copyable text, and mark decorative SVGs `aria-hidden` — so they don't dump into a copy.
 
 **4 · Reader view.** Reader mode keys off clean semantics, which Facet already targets — make it a guarantee, not luck:
 - One `<h1>`, no skipped heading levels, main content in a single `<main>` / `<article>`, real `<p>`/`<figure>`/`<blockquote>`; no content living in `::before`, `background-image`, or a value attribute.
-- Decorative and chrome nodes carry `aria-hidden` / `role="presentation"` so Reader drops them.
+- Decorative and interface-control nodes carry `aria-hidden` / `role="presentation"` so Reader drops them.
 - `article.html` template: ensure its body is one `<article>` with h1, `<time>`, author, and the existing JSON-LD — the canonical Reader target.
 - Add a note: nothing requires JS to render (already a rule) — Reader and crawlers get everything.
 
 **5 · Export.** "Good exportability":
 - A documented "Save as PDF" / "Print" affordance component (`data-event="export-pdf"`, calls `window.print()`), so any page can offer a real export button that produces the designed print layout above.
 - Keep/extend the existing per-code-block "download" and "copy as Markdown" affordances as the content-export primitives.
-- Consider a page-level "Copy page as Markdown" for content-first pages (serialise `main` content, skipping `data-print="off"` chrome) — nice to have, note as a sub-item.
+- Consider a page-level "Copy page as Markdown" for content-first pages (serialise `main` content, skipping `data-print="off"` interface controls) — nice to have, note as a sub-item.
 
 **Compliance-checklist additions (every new component, once built):**
-- Declares its print role — on paper by default if it is content, off if it is chrome; overridable via `data-print`.
+- Declares its print role — on paper by default if it is content, off if it is an interface control; overridable via `data-print`.
 - Prints cleanly: no shadows/translucency on paper, folds open, no bad page-breaks through it.
-- Authored in reading order; any reordering/positioning applies only to `user-select: none`, print-hidden chrome.
-- Icon-only/chrome nodes are `user-select: none` and don't pollute a copy.
+- Authored in reading order; any reordering/positioning applies only to `user-select: none`, print-hidden interface controls.
+- Icon-only and interface-control nodes are `user-select: none` and don't pollute a copy.
 
-**Feature inventory (add when built):** one line in the index.html Features section and llms.txt — "Print, Reader-view and export: declarative `data-print` roles (chrome off, content on by default), a themed `@media print` stylesheet, folds auto-open for paper, reading-order-stable selection and copy, and a Save-as-PDF affordance."
+**Feature inventory (add when built):** one line in the index.html Features section and llms.txt — "Print, Reader-view and export: declarative `data-print` roles (interface controls off, content on by default), a themed `@media print` stylesheet, folds auto-open for paper, reading-order-stable selection and copy, and a Save-as-PDF affordance."
 
 Open decisions to confirm at build time: whether link-URL expansion is opt-in (proposed yes), the exact `@page` margins, and whether the "Copy page as Markdown" export lands in this system or its own later item.
 
 ### Theme marketplace + community submissions 
 
-Let visitors build a theme (the Build-a-theme page already does this) and submit it for the owner to review and, if approved, ship as an official theme. Below the builder, a marketplace lists the built-in themes and, under a separate heading, approved community themes. This is the project's first social surface.
+Let visitors build a theme (the Build-a-theme page already does this) and submit it for review and, if approved, shipping as an official theme. Below the builder, a marketplace lists the built-in themes and, under a separate heading, approved community themes. This is the project's first social surface.
 
 Flow:
 - On /build.html, a "Submit this theme" button next to Copy/Reset. It captures the current build (the token overrides + name + optional author handle).
 - Email + OTP gate: user enters an email; a one-time code is emailed; they enter it to verify. On success the theme is saved to the DB with status "review", the verified email, the token JSON, a name and a timestamp.
-- Owner reviews out of band; approving flips status to "approved".
+- A maintainer reviews out of band; approving flips status to "approved".
 - Approved themes render in the marketplace (a card each: name, author, swatch preview, "Apply" to load it into the builder / "Use" to copy its config). Built-ins are one group; community themes another.
 
 Needs a backend — the site is static today, so this is the first server work:
@@ -402,13 +402,13 @@ Needs a backend — the site is static today, so this is the first server work:
 
 ### More Layer 5 app-shape templates
 
-SaaS dashboard (templates/saas.html) and social app (templates/social.html) already shipped, with the iframe device preview on library.html. Grow the set with the shapes the owner names.
+SaaS dashboard (templates/saas.html) and social app (templates/social.html) already shipped, with the iframe device preview on library.html. Grow the set with the shapes listed below.
 
 - [ ] More app shapes: chat/messaging, kanban board, settings/account, e-commerce storefront checkout flow.
 
 ### Field actions component (in-field menu)
 
-- [ ] Field actions (owner asked, not yet built): inside every text field, an actions affordance on the right edge. Owner's decision: a single three-dot menu button (icon, in-field, 44px target) that opens a small popover with Copy (the field value to clipboard), Paste (from clipboard into the field), and Undo (revert the last change — keep a per-field value history); PLUS a standalone Clear (×) icon in the field that wipes the value in one tap (distinct from the menu). All self-wiring via facet.js on a `data-field-actions` field wrapper: no per-field JS. Each action fires feedback (tap/tick) and a `data-event` analytics hook; the menu is a real `button` + `[popover]`/details, the × is a real `button` with an aria-label. Works in every theme, keyboard operable, description tooltips on each. Wall entry on library.html (Fields group) + Features/llms.txt line when built.
+- [ ] Field actions (requested, not yet built): inside every text field, an actions affordance on the right edge. Decision: a single three-dot menu button (icon, in-field, 44px target) that opens a small popover with Copy (the field value to clipboard), Paste (from clipboard into the field), and Undo (revert the last change — keep a per-field value history); PLUS a standalone Clear (×) icon in the field that wipes the value in one tap (distinct from the menu). All self-wiring via facet.js on a `data-field-actions` field wrapper: no per-field JS. Each action fires feedback (tap/tick) and a `data-event` analytics hook; the menu is a real `button` + `[popover]`/details, the × is a real `button` with an aria-label. Works in every theme, keyboard operable, description tooltips on each. Wall entry on library.html (Fields group) + Features/llms.txt line when built.
 
 ### Icon set — grow as needed
 
@@ -421,7 +421,7 @@ SaaS dashboard (templates/saas.html) and social app (templates/social.html) alre
 ===============================================================================
 
 
-- v1 freeze — copy /lib/ to /lib/v1/, tag v1, start a changelog, add a version switcher. Deliberately NOT scheduled while the library moves fast: freezing now would pin a stale snapshot. Revisit once the rapid changes are done and the owner's apps are built. Everything stays on the moving /lib/ until then (always-latest, pre-v1). Do not raise it unprompted.
+- v1 freeze — copy /lib/ to /lib/v1/, tag v1, start a changelog, add a version switcher. Deliberately NOT scheduled while the library moves fast: freezing now would pin a stale snapshot. Revisit once the rapid changes are done and the consuming apps are built. Everything stays on the moving /lib/ until then (always-latest, pre-v1). Do not raise it unprompted.
 
 
 -------------------------------------------------------------------------------
@@ -433,7 +433,7 @@ SaaS dashboard (templates/saas.html) and social app (templates/social.html) alre
 The full shipped history is in git and in the live files (facet.css / facet.js / library.html / llms.txt). These are the durable calls that still constrain new work:
 
 - No right-to-left layout — translation yes, RTL no.
-- Layer = composition level: a single reusable piece is Layer 2 · Components (in one of the six categories, snap/layout included); motion, sound and app-chrome are Layer 5 · App feel; an assembly of pieces is a Layer 3 · Block; a whole page is a Layer 4 · Template. Never create a layer that holds only one entry.
+- Layer = composition level: a single reusable piece is Layer 2 · Components (in one of the six categories, snap/layout included); motion, sound and app interface are Layer 5 · App feel; an assembly of pieces is a Layer 3 · Block; a whole page is a Layer 4 · Template. Never create a layer that holds only one entry.
 - The site is multi-page: Home · Library · Playground · Build a theme · llms.txt · CLAUDE.md · GitHub. (The old Components and Layouts pages merged into Library.)
 - App logic, data and state live in projects, never in the library.
 - (Token, accent, border, spacing/type and theme decisions live in the Naming and Themes sections above — not repeated here.)

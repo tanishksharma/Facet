@@ -1,7 +1,7 @@
 # Facet
 
 A plain HTML, CSS and JS design library. One stylesheet, one script, no build
-step, never minified. Facet styles everything I make: apps, websites, pitch
+step, never minified. Facet styles a wide range of work: apps, websites, pitch
 decks, documents and business cards.
 
 The repo root is the library's website — its documentation and living demo.

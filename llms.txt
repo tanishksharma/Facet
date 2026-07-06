@@ -50,7 +50,7 @@ data-mode-toggle; setup by configuration — data attributes on the
 facet.js script tag boot a page into its look, and facet.set() changes
 theme, mode or any token live at runtime; native scrollbars and form
 controls follow via color-scheme and facet.js keeps the theme-color
-meta synced so the browser chrome wears the theme; the OS accent as its
+meta synced so the browser's UI follows the theme; the OS accent as its
 own opt-in color — --os-accent is a dormant token (no component uses it):
 var(--os-accent) is the iOS system blue everywhere and the visitor's real
 OS accent only where the browser exposes it (Safari 16.4+, Firefox 103+),
@@ -70,7 +70,7 @@ and each scaled by a global small/medium/large control, weights, container
 widths, radii by role (--radius-control/-panel/-card/-pill), borders by role
 (--border-hairline for separators, --border-element for outlines,
 --border-focus for the focus ring, --border-highlight for emphasis),
-whisper-flat shadows, motion durations and easings, focus ring. Ranked accents: the base family plus
+very light shadows, motion durations and easings, focus ring. Ranked accents: the base family plus
 accent-1 (the one primary action), accent-2 (every secondary action's
 fill) and accent-3 (links, labels, quiet affordances), each with hover,
 pressed and on-colors in every theme — components pick ranks, never
@@ -78,9 +78,9 @@ colors.
 
 Adapts to the reader: all sizes in rem, so device/browser text-size
 settings scale the whole interface; fluid hero type via clamp(); 44px
-touch targets; no hover-only interactions; motion with personality —
+touch targets; no hover-only interactions; configurable motion —
 Lively springs by default, data-motion="calm" for quiet, "off" for
-none, prefers-reduced-motion above all of it; seamless page
+none, prefers-reduced-motion above all of it; smooth page
 transitions — data-transition="page" animates cross-page navigation
 (old page eases away, new one springs in, URL changes normally), with
 a[data-no-transition] per-link opt-out and facet.go(url) for
@@ -97,7 +97,7 @@ widths, stack in three gaps, full-viewport snap sections); buttons in
 three variants and three sizes working on <button> and <a>, plus .btn-pill
 capsule shape (an icon-and-label pill with no extra markup); icon buttons;
 the app-kit floating controls — tab bar, settings sheet, float button, scroll
-gauge, and the nav menu (a floating Menu-pill + Settings-gear cluster, built
+gauge, and the nav menu (a floating Menu-pill + Settings-button cluster, built
 from .btn.btn-pill, a no-JS <details> of real links upgraded to an overlay);
 the calculator-grade number input (prefilled example, one-tap clear,
 locale-aware grouping, words helper in the active language); labelled
@@ -168,7 +168,7 @@ working. Velvet (data-theme="velvet") is the neumorphic material
 extracted from the shipped inflation app: matte velvet surfaces, one
 light source from above, elements raised out of the fabric or carved
 into it, gold as the only accent ink, serif display headings, tuned
-cushion-press physics that hold in every motion personality. Aero
+press physics that hold in every motion mode. Aero
 (data-theme="aero") is the Frutiger Aero era: pale sky ground, glass
 controls with the hard gloss line, translucent plastic fills, pill
 buttons and inputs, a blue glow on the one primary action; dark is
@@ -250,10 +250,10 @@ role — --border-hairline (faint separators, dividers, row lines),
 --border-highlight (active bars, selected emphasis)
 
 Elevation: --shadow-flat, --shadow-raised, --shadow-floating,
---shadow-overlay (whisper-flat, all of them)
+--shadow-overlay (very light, all of them)
 
-Motion: the personality system. Lively, the default — momentum, weight,
-playful spring (--ease-spring is a true linear() spring curve where
+Motion: the motion system. Lively, the default — momentum, weight,
+spring (--ease-spring is a true linear() spring curve where
 supported): --duration-fast 150ms, --duration-normal 280ms,
 --duration-slow 450ms, --ease-out, --ease-in-out, --ease-spring.
 data-motion="calm" swaps the whole set for short, near-linear, slight
@@ -359,7 +359,7 @@ with the gap owned by the row. What it is for: button rows, chip sets,
 meta lines, any run of small pieces. When to use it: whenever things
 sit beside each other — the row owns the gap, so children stay
 margin-free, exactly like the stack owns vertical rhythm. Variants:
-.row-tight for close runs, .row-loose for breathing room.
+.row-tight for close runs, .row-loose for more spacing.
 
     <div class="row">
       <button class="btn btn-small">Save</button>
@@ -384,14 +384,14 @@ for bigger cards, .grid-tight and .grid-loose for gap.
 ### Switch, checkbox, radio
 
 What it is: the yes/no and pick-one controls — native checkbox and
-radio wearing the theme through accent-color, and a switch that is a
+radio themed through accent-color, and a switch that is a
 checkbox upgraded with one class. What it is for: settings, consents,
 filters — checkbox for independent yes/nos, radio for one-of-few with
 all options visible, switch for a setting that takes effect
 immediately. When to use it: wrap control and text in a
 label.check-row so the whole line is the hit target. The switch keeps
 checkbox semantics — form value, keyboard, screen readers — the class
-only changes the clothes.
+only changes the appearance.
 
     <label class="check-row"><input type="checkbox" class="switch" checked> Sound on</label>
     <label class="check-row"><input type="checkbox"> Email me a copy</label>
@@ -442,7 +442,7 @@ control needs a name — which is always.
 ### File upload & date input
 
 What it is: the native file and date controls, themed and kept native
-— the file input's button dresses as a secondary action while
+— the file input's button is styled as a secondary action while
 drag-drop, keyboard and the form value stay the browser's; the date
 input keeps its native picker with the accent coloring its highlight
 and color-scheme flipping it in dark mode. When to use it: always
@@ -460,8 +460,8 @@ label.field pattern as every other control.
 
 ### Card
 
-What it is: the grouped-surface primitive — a padded, rounded panel a
-breath above the page. What it is for: one thing per card: a product,
+What it is: the grouped-surface primitive — a padded, rounded panel
+slightly raised above the page. What it is for: one thing per card: a product,
 a stat, a setting group, a summary. When to use it: .card for most
 grouping; .card-outlined when many cards sit close and shadows would
 pile up; a clickable card is an <a class="card card-clickable"> — the
@@ -504,12 +504,12 @@ panel for app pages; the drawer is the document-world sibling.
 ### Accordion, toast, dropdown menu
 
 What it is: the accordion is native <details class="accordion">
-dressed (hairline rows, rotating chevron; give siblings the same name
+styled (hairline rows, rotating chevron; give siblings the same name
 attribute and the browser keeps exactly one open); the toast is
 facet.toast(message, kind) — a transient pill that says one thing and
 leaves after four seconds, announced politely (kinds success /
 warning / error / info color the dot); the dropdown is
-details.dropdown whose summary wears button clothes and whose
+details.dropdown whose summary is styled as a button and whose
 .dropdown-menu holds real buttons and links, closed by outside
 clicks, Esc, or picking an item. When to use it: never a toast for a
 question (dialog) and never a dropdown for navigation (links).
@@ -562,7 +562,7 @@ pagination are links, never buttons.
 What it is: the navigation link with its three states designed —
 quiet by default, named on hover, plainly marked when it is the page
 you are on (aria-current="page"). What it is for: headers, sidebars,
-footers. When to use it: every navigational link in chrome; in
+footers. When to use it: every navigational link in navigation and controls; in
 content, plain underlined links stay the rule.
 
     <nav aria-label="Main">
@@ -629,7 +629,7 @@ determinate progress needs value and max with words nearby.
 
 ### Skeleton, spinner, empty state
 
-What it is: the three honest ways to show absence. Skeleton: a
+What it is: three ways to show absence. Skeleton: a
 shimmering placeholder — put .skeleton on blocks sized like the
 content it stands in for; mark the group aria-hidden. Spinner: a
 small accent ring for indeterminate waits — give the row role=status
@@ -651,11 +651,11 @@ is content, not an error.
 
 ### Flagship link
 
-What it is: the big confident link — heading voice, strong accent
-underline, an arrow that leans into the journey on hover. What it is
+What it is: a large link — heading-sized text, a strong accent
+underline, and an arrow that shifts forward on hover. What it is
 for: the one onward step at the end of a section. When to use it: at
 most one or two per screen; ordinary references stay plain underlined
-links. Always an <a> to a real URL, never a button in costume.
+links. Always an <a> to a real URL, never a button styled as a link.
 
     <a class="flagship-link" href="/report">See the full report</a>
 
@@ -680,9 +680,9 @@ warning help play pause.
 
 ### Parallax & idle motion
 
-What it is: alive by default. data-parallax="depth" registers an
+What it is: ambient motion, on by default. data-parallax="depth" registers an
 element with facet.motion — it drifts up to depth pixels behind the
-desktop pointer, the scroll's momentum (a velocity kick), or the
+desktop pointer, the scroll's momentum (a velocity impulse), or the
 device tilt where no permission gate blocks it (iOS gates it;
 facet.motion.setMode("tilt") asks). The idle-* classes (.idle-float,
 .idle-sway, .idle-pulse) give resting elements a slow pulse; they
@@ -701,7 +701,7 @@ prefers-reduced-motion still everything.
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one
 full screen at a time and each .snap-section centers its content at a
 readable width. What it is for: the calculator page skeleton — intro
-screen, then inputs, then results — and any page that tells one story one
+screen, then inputs, then results — and any page presented one
 screen at a time. When to use it: single-purpose pages with a clear
 screen-by-screen flow. Not for ordinary documents; normal pages just
 scroll. The .snap wrapper exists to enable scrolling, which is the one
@@ -718,7 +718,7 @@ iOS-proven pager (CSS mandatory snap breaks on iOS): the outer never
 free-scrolls — a spring (w=11, z=0.9, tuned and final) moves it between
 section tops — sections stay one viewport tall and scroll natively
 inside themselves, pulling past an edge pages to the neighbour with a
-rubber-band hint, a wheel edge-push hops once with a cooldown, and
+elastic hint, a wheel edge-push advances once with a cooldown, and
 paging up lands at the previous section's bottom. Gestures starting on
 .chart, input or textarea are ignored. The pager dispatches
 "facet:section" ({id, index}) on the .snap and exposes
@@ -732,7 +732,7 @@ identically on <button> and on <a>. What it is for: .btn-primary carries
 the screen's one main action in accent-1. .btn-secondary is every other
 action, on the accent-2 fill. .btn-ghost is for quiet actions inside busy
 areas, invisible until hovered. When to use it: any click that does something. One primary
-per screen at most. Navigation dressed as a button is an <a class="btn">.
+per screen at most. Navigation styled as a button is an <a class="btn">.
 Put the button's key action name in a data-event attribute as the
 analytics hook.
 
@@ -795,7 +795,7 @@ line.
 
 ### Slider
 
-What it is: a real range input wearing the theme — hairline track,
+What it is: a real, themed range input — hairline track,
 accent-3 thumb — paired with a live value readout. What it is for: picking a number
 inside a known range where the feel of more-and-less matters more than
 exact digits: years, percentages, counts. When to use it: bounded inputs
@@ -813,7 +813,7 @@ native element.
 ### Result block
 
 What it is: a verdict-first result card: one plain-language sentence a
-person can repeat at dinner, one big number, then the supporting figures.
+person can repeat, one big number, then the supporting figures.
 What it is for: the centrepiece of a results screen — readable at a
 glance, and announced by screen readers on every recalculation when the
 block carries aria-live="polite". When to use it: whenever a calculation
@@ -883,7 +883,7 @@ for calculator apps:
 Put data-transition="page" on the html tag (or the facet.js script tag,
 or facet.set({transition: "page"})) and every same-origin navigation
 between Facet pages transitions: the old page eases up and away, the
-new one springs in per the motion personality, and the URL changes
+new one springs in per the motion mode, and the URL changes
 normally. A link with data-no-transition snaps out instead. facet.go(url)
 navigates programmatically with the same transition. Built on
 cross-document view transitions; browsers without support simply
@@ -916,7 +916,7 @@ facet.js script tag (this registers the worker), and add
 <link rel="manifest" href="/manifest.json"> plus the apple-mobile-web-app
 metas in the head — copy the exact head block from /templates/app.html.
 
-Install experience: desktop Chrome/Edge show an install control in the
+Install experience: desktop browsers that support installation show an install control in the
 address bar; Android offers Add-to-Home-Screen; iOS Safari installs via
 Share -> Add to Home Screen (iOS never auto-prompts). Give any button
 data-install and it appears only when the browser actually offers
@@ -930,7 +930,7 @@ always the latest from the web; versioned freezes start at /lib/v1/.
 
 ## Backgrounds
 
-Whisper-faint page and section backgrounds drawn with CSS gradients
+Very faint page and section backgrounds drawn with CSS gradients
 only, colored by the tokens so every theme and mode gets them for
 free. One class on a section or body; content sits straight on top.
 .bg-grid is the technical drawing (plus marks at grid intersections),
@@ -965,7 +965,7 @@ fields); form section (grouped fields, one submit row); article set
 
 ## Themed map
 
-A Google Map wearing the active theme — ground, water, parks and roads
+A Google Map styled with the active theme — ground, water, parks and roads
 derived from the base family, labels from the text family, boundaries
 from the quiet accent, recomputed live when the theme or mode switches.
 Bring your own key (the library never ships one): put data-map on a
@@ -1026,7 +1026,7 @@ Icons added for app UIs: chart, grid, sliders, refresh, undo, volume,
 vibrate, motion, contrast, plus-square, download-cloud (48 -> 59).
 
 Tooltip on touch: the [data-tip] bubble gains a triangle tail, and on
-touch devices (where iOS makes :hover stick) a tap peeks the bubble for
+touch devices (where iOS makes :hover stick) a tap shows the bubble for
 five seconds instead — automatic, nothing to wire. Pinch zoom is
 blocked at the gesture level.
 
@@ -1044,15 +1044,15 @@ from the slider's own min/max. facet.sliderScale(wrap) rebuilds after a
 range change.
 
 Install nudge card (.nudge-scrim > .nudge-card) and the full-screen
-instruction overlay (.overlay-guide): the gentle add-to-home-screen ask
+instruction overlay (.overlay-guide): the add-to-home-screen prompt
 and the dark how-to screen, driven by facet.installNudge — addNow()
 returns "native" (Android prompt shown) or "guide" (show the overlay).
 The overlay's dark palette is deliberately fixed across themes.
 
 Nav menu (.nav-menu): a floating navigation cluster pinned bottom-right — a
 "Menu" pill that opens a stack of page links, and a same-size round Settings
-gear beside it that opens the app-settings sheet of toggles. Both triggers and
-every link are the base .btn.btn-pill (the gear is .btn-pill.btn-icon), so the
+button beside it that opens the app-settings sheet of toggles. Both triggers and
+every link are the base .btn.btn-pill (the button is .btn-pill.btn-icon), so the
 menu inherits the button's sizing, press and theming — change the button and
 the menu changes with it. It is a real <details> wrapping real <a> links, so it
 works with JavaScript off (the summary opens the links inline) and the links
@@ -1061,7 +1061,7 @@ facet.navMenu) upgrades it to a floating overlay — a dimming scrim, body
 scroll-lock, a staggered bottom-up reveal, Escape to close, and focus moved
 into the menu and back. Reduced motion drops the stagger. It is an overlay
 control, not content: author it at the end of <body>, it is user-select:none,
-and it prints off. The Settings gear is a plain button[aria-controls] on a
+and it prints off. The Settings button is a plain button[aria-controls] on a
 .sheet, wired like
 any other sheet trigger.
 
@@ -1083,16 +1083,16 @@ any other sheet trigger.
            aria-label="Settings"> ...the .menu-icon-btn toggle row... </aside>
 
 Components: .tab-bar (bottom pill of .tab-seg segments + .tab-divider +
-trailing .tab-settings gear; a .tab-indicator pill is injected and
-glides on per-edge analytic springs), .sheet-scrim + .sheet
-(right-edge settings panel on a rigid rubber-band spring; scrim tap and
+trailing .tab-settings button; a .tab-indicator pill is injected and
+moves on per-edge analytic springs), .sheet-scrim + .sheet
+(right-edge settings panel on a rigid spring; scrim tap and
 Esc close), .menu-item/.menu-label/.menu-icon-row/.menu-icon-btn (thin
 menu rows and square icon toggles), .scroll-gauge (floating scrollbar
 look-alike; .scroll-gauge-page is the draggable whole-page lane), and
 .float-btn — a lone floating round trigger pinned bottom-left
 (.float-btn-right for bottom-right): give it aria-controls pointing at
 a .sheet and it opens it, aria-expanded managed, press feedback
-included, and .nav-menu (the floating Menu-pill + Settings-gear cluster
+included, and .nav-menu (the floating Menu-pill + Settings-button cluster
 above). Markup contracts: the wall entries on the Library page — the
 copy button under each demo gives the exact HTML.
 
@@ -1124,7 +1124,7 @@ chart, filterable signups table beside an activity panel.
 /templates/social.html — social app (Ripple): three-column feed on
 desktop that folds to one column with the app-kit bottom tab bar on
 phones; compose box, feed of post cards, trends and who-to-follow, and
-the settings sheet behind the tab bar's gear.
+the settings sheet behind the tab bar's settings button.
 /templates/app.html — app shell (sidebar + top bar) with a working
 dashboard: stat row, live chart, data table with toolbar;
 installable: manifest link, apple metas, the one-line sw stub wired.
@@ -1203,16 +1203,16 @@ same bug the hard way.
 
 Pager law: full-page snap sections that can outgrow the viewport are
 never built with CSS scroll-snap — mandatory re-snaps a tall section
-back to its top after a flick and wedges the next gesture, proximity
-feels like no snap, and a free-scrolling outer with a JS settle-snap is
-mushy and fights momentum. The model that works is the pager .snap
+back to its top after a flick and blocks the next gesture, proximity
+behaves like no snap, and a free-scrolling outer with a JS settle-snap is
+imprecise and works against momentum. The model that works is the pager .snap
 ships: the outer never free-scrolls, JS springs its scrollTop between
 section tops, each section is 100dvh and scrolls natively inside, and
-gestures hand off at section edges with a rubber-band hint.
+gestures hand off at section edges with an elastic hint.
 
 Gesture law: tame iOS with touch-action — pan-y on scrollers (vertical
 scroll only, also kills double-tap zoom and pinch), manipulation on
-fixed chrome, none on drag surfaces such as scrubbing charts and the
+fixed interface controls, none on drag surfaces such as scrubbing charts and the
 page gauge. Pair with a gesturestart preventDefault for older iOS pinch
 (facet.js does this globally). Never rely on viewport user-scalable=no
 or maximum-scale; iOS ignores both.
@@ -1234,9 +1234,9 @@ implements this: network-first for pages and /lib/, cache-first with
 background revalidation for other static assets.
 
 Parallax exclusion: elements carrying their own transform physics —
-velvet lift and press, the pager's rubber-band translate — never
+velvet lift and press, the pager's elastic translate — never
 register with facetMotion. Two writers on one inline transform collide,
-and the loser flickers.
+and the losing one flickers.
 
 Font-list law: never put inherit inside a font-family list
 (ui-rounded, "SF Pro Rounded", inherit is silently invalid and drops
@@ -1244,7 +1244,7 @@ the whole declaration). A stack ends in a generic family, always.
 
 ## iOS, honestly: what a website can and cannot do
 
-What a website CAN do on iOS: tint Safari's chrome with theme-color
+What a website CAN do on iOS: tint Safari's UI with theme-color
 (facet.js keeps the meta synced to the active theme's background,
 live); ship apple-touch-icon and install standalone (manifest + the
 apple metas from the app shell law); send web push and set an app

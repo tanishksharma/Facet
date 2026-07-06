@@ -318,7 +318,7 @@ function overlayCodeTools() {
 
 /* Size badge: fetches the two shipped files, gzips them right here
    in the browser (CompressionStream), and states the real number.
-   Quietly absent where the API is missing — never a made-up figure. */
+   Absent where the API is missing — never an invented figure. */
 async function initSizeBadge() {
   const badge = document.querySelector("#size-badge");
   if (!badge || typeof CompressionStream === "undefined") return;
@@ -334,7 +334,7 @@ async function initSizeBadge() {
     badge.textContent =
       `${((css + js) / 1024).toFixed(1)} KB gzipped over the wire — two files, zero dependencies, never minified.`;
     badge.hidden = false;
-  } catch { /* offline: no badge beats a wrong badge */ }
+  } catch { /* offline: show no badge rather than a wrong one */ }
 }
 
 /* Playground: the textarea renders into a real framed page built
@@ -684,7 +684,7 @@ function insertLayerBands() {
     ["components", "Layer 2", "Components",  "Every piece of the library, live — grouped and filterable. Each folds to a heading and a line; open one to see it work."],
     ["blocks",     "Layer 3", "Blocks",     "The components, assembled into ready page sections you copy whole."],
     ["templates",  "Layer 4", "Templates",  "Whole pages — full app and site layouts you rename and fill in."],
-    ["appfeel",    "Layer 5", "App feel",   "The coat that makes a finished page feel native: parallax, sound, surfaces, and the app kit."],
+    ["appfeel",    "Layer 5", "App feel",   "The layer that makes a finished page feel native: parallax, sound, surfaces, and the app kit."],
     ["playground", "Tools",   "Playground","An editable live playground that renders whatever you type through the real library files."],
   ];
   for (const [id, kicker, title, blurb] of bands) {

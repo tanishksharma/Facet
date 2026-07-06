@@ -1,5 +1,5 @@
 {
-  "$comment": "Facet PWA manifest template. Copy into your project root as manifest.json, fill the placeholders, link it with <link rel=\"manifest\" href=\"/manifest.json\">, and ship the three icons: icon-192.png (192x192), icon-512.png (512x512), and icon-512-maskable.png (512x512 with the artwork inside the inner 80% safe zone). Set theme_color and background_color to your theme's --background value so the installed app's chrome matches.",
+  "$comment": "Facet PWA manifest template. Copy into your project root as manifest.json, fill the placeholders, link it with <link rel=\"manifest\" href=\"/manifest.json\">, and ship the three icons: icon-192.png (192x192), icon-512.png (512x512), and icon-512-maskable.png (512x512 with the artwork inside the inner 80% safe zone). Set theme_color and background_color to your theme's --background value so the installed app's interface matches.",
   "name": "Your app's full name",
   "short_name": "App",
   "description": "One line on what this app does.",

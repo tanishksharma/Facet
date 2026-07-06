@@ -185,7 +185,7 @@
           </h3>
           <ul>
             <li>Points under a heading sit at body size</li>
-            <li>With a four-pixel breath between lines</li>
+            <li>With four pixels of space between lines</li>
             <li>And the list marker hanging in the padding</li>
           </ul>
 
@@ -416,7 +416,7 @@
         </ul>
         <p>
           Small radii on controls, medium on cards, large on overlays, pill
-          for chips and thumbs. Shadows stay whisper-flat in every theme.
+          for chips and thumbs. Shadows stay subtle and flat in every theme.
           How things move is its own system — see
           <a href="#motion">Motion</a> just below.
         </p>
@@ -429,16 +429,16 @@
       <article class="element stack" id="motion">
         <h3>Motion</h3>
         <p>
-          What it is: the library's motion personality — how everything
+          What it is: the library's motion system — how everything
           moves, as a system. Two complete motion sets behind one
-          attribute. Lively, the default: momentum, weight and a playful
-          spring — presses sink and bounce back, tooltips and reveals
+          attribute. Lively, the default: momentum, weight and a
+          spring — presses sink and rebound, tooltips and reveals
           arrive with a settle, thumbs carry momentum. Calm: short,
-          near-linear, slight, for products that should whisper. What it
+          near-linear, slight, for products that should stay subtle. What it
           is for: every transition in the library reads the motion tokens
           (<code>--duration-fast/normal/slow</code>,
           <code>--ease-out</code>, <code>--ease-in-out</code>,
-          <code>--ease-spring</code>), so the personality applies
+          <code>--ease-spring</code>), so the motion system applies
           everywhere at once and no component ever hardcodes an easing.
           When to use it: nothing to do for Lively. Set
           <code>data-motion="calm"</code> on the html tag — or
@@ -450,7 +450,7 @@
           page chose.
         </p>
         <p class="chips" role="group" aria-label="Motion personality">
-          <button class="chip" aria-pressed="true" data-config-key="motion" data-config-value="" data-tip="Momentum, weight, playful spring — the default">Lively</button>
+          <button class="chip" aria-pressed="true" data-config-key="motion" data-config-value="" data-tip="Momentum, weight and spring — the default">Lively</button>
           <button class="chip" aria-pressed="false" data-config-key="motion" data-config-value="calm" data-tip="Short, near-linear, slight">Calm</button>
           <button class="chip" aria-pressed="false" data-config-key="motion" data-config-value="off" data-tip="No animation at all">Off</button>
         </p>
@@ -595,7 +595,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           row owns the gap, so children stay margin-free, exactly like
           the stack owns vertical rhythm. Variants:
           <code>.row-tight</code> for close runs,
-          <code>.row-loose</code> for breathing room.
+          <code>.row-loose</code> for looser spacing.
         </p>
         <p class="chips" role="group" aria-label="Row gaps">
           <button class="chip" aria-pressed="false" data-chip-group="rowgap" data-chip-class="row-tight">Tight</button>
@@ -1054,7 +1054,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <h3 data-status="stable">Card</h3>
         <p>
           What it is: the grouped-surface primitive — a padded,
-          rounded panel a breath above the page. What it is for: one
+          rounded panel raised slightly above the page. What it is for: one
           thing per card: a product, a stat, a setting group, a
           summary. When to use it: <code>.card</code> for most
           grouping; <code>.card-outlined</code> when many cards sit
@@ -1070,7 +1070,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <article class="card stack-tight">
               <p class="text-caption">Default</p>
               <strong>Monthly summary</strong>
-              <p class="text-footnote" style="color: var(--text-muted);">A breath above the page.</p>
+              <p class="text-footnote" style="color: var(--text-muted);">Raised slightly above the page.</p>
             </article>
             <article class="card-outlined stack-tight">
               <p class="text-caption">Outlined</p>
@@ -1474,8 +1474,8 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           when it is the page you are on
           (<code>aria-current="page"</code>). What it is for: headers,
           sidebars, footers — anywhere a set of destinations lives.
-          When to use it: every navigational link in chrome. In
-          content, plain underlined links stay the rule;
+          When to use it: every navigational link in navigation and
+          controls. In content, plain underlined links stay the rule;
           <code>.nav-link</code> is for wayfinding surfaces where
           underlines would pile up.
         </p>
@@ -1494,17 +1494,17 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       <article class="element stack" id="flagship-link" data-cat="nav">
         <h3 data-status="stable">Flagship link</h3>
         <p>
-          What it is: the big confident link — heading voice, a strong
-          accent underline, and an arrow that leans into the journey
+          What it is: the prominent link — heading voice, a strong
+          accent underline, and an arrow that shifts forward
           on hover. What it is for: the one onward step at the end of
           a section: "See the full report", "Start a project". When to
           use it: at most one or two per screen; ordinary references
           stay plain underlined links. It is always an
-          <code>&lt;a&gt;</code> to a real URL — never a button in
-          costume.
+          <code>&lt;a&gt;</code> to a real URL — never a button styled
+          to look like one.
         </p>
         <div class="demo">
-          <a class="flagship-link" href="#flagship-link" data-tip="The arrow leans in on hover">See the full report</a>
+          <a class="flagship-link" href="#flagship-link" data-tip="The arrow shifts forward on hover">See the full report</a>
         </div>
         <pre id="code-flagship-link"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-flagship-link" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
@@ -2211,9 +2211,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       <section id="appfeel" class="stack">
         <h2>App feel</h2>
         <p>
-          Layer 5 is the coat you brush over a finished page to make it feel
+          Layer 5 is what you apply to a finished page to make it feel
           like a native app: parallax and idle motion, synthesized sound and
-          haptics, whisper backgrounds, and the app kit — the tab bar, the
+          haptics, faint backgrounds, and the app kit — the tab bar, the
           settings sheet, the float button and the scroll gauge. Every
           control is live in the settings sheet at the bottom-right of this
           page — open it and flip Motion or Sounds to feel what the HTML
@@ -2225,7 +2225,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       <article class="element stack" id="motion-pack">
         <h3 data-status="beta">Parallax &amp; idle motion</h3>
         <p>
-          What it is: alive by default.
+          What it is: subtle motion by default.
           <code>data-parallax="depth"</code> lets an element drift up
           to that many pixels behind the pointer on desktop, behind
           the scroll's momentum everywhere, and behind the device's
@@ -2233,14 +2233,14 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           <code>facet.motion</code> is the engine
           (register/setMode/cycle; off | cursor | tilt). The
           <code>idle-*</code> classes give key elements a resting
-          pulse: a slow float, a faint sway, a soft breathing scale.
+          pulse: a slow float, a faint sway, a soft pulsing scale.
           What it is for: heroes, illustrations, decorative cards —
-          life at the edges, never on the reading path. When to use
+          movement at the edges, never on the reading path. When to use
           it: sparingly; one or two moving things per screen. The
           idle classes animate translate/rotate/scale, so they
           compose with the engine's transform instead of colliding —
           the parallax exclusion, solved structurally. Calm stills
-          idle life; off and reduced motion still everything. Move
+          idle motion; off and reduced motion still everything. Move
           your pointer over this page and watch the cards below.
         </p>
         <div class="demo">
@@ -2251,7 +2251,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             </article>
             <article class="card stack-tight idle-float" data-tip="A slow resting float">
               <p class="text-caption">.idle-float</p>
-              <strong>I breathe at rest</strong>
+              <strong>I pulse at rest</strong>
             </article>
             <article class="card stack-tight idle-sway" data-tip="A faint resting sway">
               <p class="text-caption">.idle-sway</p>
@@ -2301,7 +2301,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       <article class="element stack" id="backgrounds">
         <h3 data-status="beta">Backgrounds</h3>
         <p>
-          What it is: whisper-faint page and section backgrounds drawn
+          What it is: very faint page and section backgrounds drawn
           with CSS gradients only, colored by the tokens so every theme
           and mode gets them for free. What it is for: giving big quiet
           surfaces a material — a hero, a section divider zone, a whole
@@ -2335,15 +2335,15 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <h3 data-status="beta">Tab bar</h3>
         <p>
           What it is: the iOS-style bottom pill — text segments, a hairline
-          divider, a trailing gear — with one injected .tab-indicator pill
-          gliding behind the active segment on per-edge analytic springs:
+          divider, a trailing settings button — with one injected .tab-indicator pill
+          moving behind the active segment on per-edge analytic springs:
           the leading edge leads with momentum, the trailing edge lags so
           the pill stretches, and both settle with a small fixed overshoot
           whatever the jump length. What it is for: section navigation in
           app-shaped pages; it wires itself to the page's snap pager
-          ([data-section] segments page there, and the pager's moves glide
+          ([data-section] segments page there, and the pager's moves slide
           the pill back behind a one-second nav lock so pass-through
-          sections stay quiet) and its gear opens the sheet it
+          sections stay quiet) and its settings button opens the sheet it
           aria-controls. When to use it: any snap-paged product. On a real
           page it floats fixed above the bottom edge; here it sits in the
           flow. Frosted and embossed in the base theme; a tuned translucent
@@ -2371,7 +2371,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p>
           What it is: the settings panel — a right-edge slab floating clear
           of the screen over a dark scrim, sliding in as one rigid block on
-          a rubber-band spring that overshoots a touch and eases back;
+          a spring that overshoots slightly and eases back;
           inside it, menu groups of thin rows (.menu-item under a
           .menu-label) and a foot row of square icon toggles
           (.menu-icon-btn) whose ON state stands raised while OFF sinks
@@ -2422,7 +2422,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           it is for: pages that need the settings sheet (or any panel) but
           not section navigation: give it aria-controls pointing at a
           .sheet and facet.js wires the open/close, the aria-expanded state
-          and the press feedback exactly like the tab bar's gear. When to
+          and the press feedback exactly like the tab bar's settings button. When to
           use it: whenever a page has one floating action; .float-btn-right
           pins it bottom-right instead. Always an aria-label and a
           data-tip: the icon alone says nothing. On a real page it floats
@@ -2445,9 +2445,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p>
           What it is: a floating navigation cluster pinned bottom-right — a
           "Menu" pill that opens a stack of page links, and a same-size
-          round Settings gear beside it that opens the app-settings sheet
+          round Settings button beside it that opens the app-settings sheet
           of toggles. Both triggers and every link are the base
-          <code>.btn.btn-pill</code> (the gear is <code>.btn-pill.btn-icon</code>),
+          <code>.btn.btn-pill</code> (the settings button is <code>.btn-pill.btn-icon</code>),
           so the menu inherits the button's sizing, press and theming —
           change the button and the menu changes with it. What it is for:
           whole-site navigation on any Facet page, plus the app's own
@@ -2459,7 +2459,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           facet.js upgrades it to a floating overlay: a dimming scrim, body
           scroll-lock, a staggered reveal, Escape to close, and focus moved
           into the menu and back. Reduced motion drops the stagger. It is
-          chrome, not content: authored at the end of the body,
+          navigation, not content: authored at the end of the body,
           user-select none, and it prints off. On a real page it floats
           fixed; here it sits in the flow.
         </p>
@@ -2499,7 +2499,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <div class="sheet-scroll">
               <span class="menu-label">Settings</span>
               <p class="text-footnote" style="color: var(--text-muted); padding: 0 var(--space-inline);">
-                The Menu pill opens navigation; this gear opens the app's toggles.
+                The Menu pill opens navigation; this button opens the app's toggles.
               </p>
               <div class="sheet-group">
                 <button type="button" class="menu-item" data-language-cycle data-languages="en,hi" data-event="language">

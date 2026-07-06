@@ -12,7 +12,7 @@
 <head>
   <meta charset="utf-8">
   <title>Ripple — your feed</title>
-  <meta name="description" content="Ripple: a fast, quiet social feed. Post an update, follow the people building things, and read the room in one column.">
+  <meta name="description" content="Ripple: a fast social feed. Post an update, follow the people building things, and follow the conversation in one column.">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#FFFFFF">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -245,7 +245,7 @@
 
        The tab bar and the settings sheet wire themselves from facet.js:
        the sliding pill, the active section and the gear-to-sheet open all
-       work with no code here. Everything below is just feed sugar. */
+       work with no code here. Everything below is feed-specific behaviour. */
     addEventListener("DOMContentLoaded", () => {
       // Give the reply action a proper speech-bubble glyph, then re-render
       // every icon on the page. facet.icons is the live glyph table.

@@ -51,8 +51,8 @@
 
 /*
    Theme · Default (light). Ships first, no attribute needed.
-   Paper white, near-black ink, gray hairlines, small radii, whisper
-   shadows. Zero decoration, the quiet base. The accent ranks are the ink
+   Paper white, near-black ink, gray hairlines, small radii, very light
+   shadows. Zero decoration, the neutral base. The accent ranks are the ink
    itself: accent-1 primary actions are black on white deepening to full
    black, accent-2 is the quiet surface fill, accent-3 the interactive
    ink for links and small affordances.
@@ -67,7 +67,7 @@
 
   /* ----- Colors: core palette ----- */
   --background: #FFFFFF;      /* paper: the page itself */
-  --surface: #FAFAFA;         /* a breath above the page: cards, inputs */
+  --surface: #FAFAFA;         /* one step above the page: cards, inputs */
   --text: #17171B;            /* near-black ink */
   --text-muted: #6E6E76;      /* secondary text, hints, captions */
   --border: #E4E4E8;          /* gray hairlines and edges */
@@ -173,17 +173,17 @@
   --border-focus: 2px;        /* the focus ring width — focus only */
   --border-highlight: 2px;    /* draw attention to an element: active bars, selected */
 
-  /* ----- Elevation: whisper-flat shadows ----- */
+  /* ----- Elevation: very light shadows ----- */
   --shadow-flat: none;
   --shadow-raised: 0 1px 2px rgb(23 23 27 / 0.06);
   --shadow-floating: 0 4px 12px rgb(23 23 27 / 0.08);
   --shadow-overlay: 0 12px 32px rgb(23 23 27 / 0.14);
 
-  /* ----- Motion: the personality ----- */
-  /* Lively, the default: momentum, weight, a settle in every arrival.
+  /* ----- Motion: timing and easing ----- */
+  /* Animated, the default: momentum, weight, a settle in every arrival.
      Color changes use --ease-out; anything that moves or scales uses
      --ease-spring, which overshoots slightly and settles. Swap the whole
-     personality with data-motion="calm" (quiet, near-linear) or stop it
+     motion behaviour with data-motion="calm" (subdued, near-linear) or stop it
      with data-motion="off" — one attribute, page-wide or per subtree.
      prefers-reduced-motion sits above all of it. */
   --duration-fast: 150ms;     /* hovers, color changes */
@@ -239,7 +239,7 @@
 
 /*
    Theme · Sand (light). <html data-theme="sand">.
-   Modern beige, boring on purpose, quietly elegant. Palette pulled from
+   Modern beige, restrained on purpose, understated. Palette pulled from
    Minecraft desert biome blocks, with the ink darkened for AA contrast.
    Parked, not deleted: available whenever a project wants it.
 */
@@ -323,8 +323,8 @@
    is the only accent ink.
 
    The behavioral laws that ARE this theme (full text ships with the
-   library docs): one raised face per screen — the primary CTA wears the
-   accent; cushion press — the dent is a fading overlay, the face
+   library docs): one raised face per screen — the primary CTA carries the
+   accent; press feedback — the dent is a fading overlay, the face
    gradient never changes on press; raised text rides up and dips while
    pressed; icons engrave like text; state changes ease, never jump;
    elements carrying velvet lift/press transforms must NOT register with
@@ -365,7 +365,7 @@
   --error: #9A2019;
   --info: #1B457A;
 
-  /* Two type voices: an elegant serif display for statements, the
+  /* Two type styles: a serif display for statements, the
      rounded stack for controls and micro labels. */
   --font-heading: "Baskerville", "Palatino", "New York", ui-serif, Georgia, serif;
   --weight-heading: 400;
@@ -412,7 +412,7 @@
   --v-well-pad: 7px;  --v-pill-drop: 2px;  --v-face-up: 2.5px;
   --v-lift: 3px;  --v-dip: 1.5px;  --v-sink: 1px;
   --v-font: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", "Varela Round", "Nunito", sans-serif;
-  /* press lands fast, release springs back — tuned, final, personality-proof */
+  /* press lands fast, release springs back — tuned, final, unaffected by the motion setting */
   --v-press-in: 0.09s ease-out;
   --v-press-out: 0.32s cubic-bezier(0.34, 1.45, 0.6, 1);
 }
@@ -494,12 +494,12 @@
 }
 
 /*
-   Velvet recipes: how existing Facet components wear the material.
+   Velvet recipes: how existing Facet components use the material.
    Scoped under the theme; recipes for the handoff's new components (tab
    bar, sheet, gauge...) arrive with those components. Press language
    everywhere: the dent is a fading ::after overlay, the face gradient
    never changes; the tuned press physics are final in every motion
-   personality — only data-motion="off" and prefers-reduced-motion stop
+   setting — only data-motion="off" and prefers-reduced-motion stop
    them.
 */
 
@@ -515,7 +515,7 @@
 [data-theme="velvet"] textarea:hover,
 [data-theme="velvet"] select:hover { border-color: transparent; }
 
-/* Buttons: rounded voice, raised faces, cushion press. */
+/* Buttons: rounded typeface, raised faces, press feedback. */
 [data-theme="velvet"] .btn {
   position: relative;
   border: none;
@@ -540,7 +540,7 @@
 }
 [data-theme="velvet"] .btn:active::after { opacity: 1; transition: opacity var(--v-press-in); }
 
-/* The one raised face per screen: the primary CTA wears the gold. */
+/* The one raised face per screen: the primary CTA carries the gold. */
 [data-theme="velvet"] .btn-primary {
   background: var(--v-face-accent);
   color: var(--v-ink-accent);
@@ -614,7 +614,7 @@
     var(--v-face);
 }
 
-/* Result blocks are wells; the numbers that matter glow gold. */
+/* Result blocks are wells; the key numbers show in gold. */
 [data-theme="velvet"] .result {
   background: var(--v-well-bg);
   border: none;
@@ -640,7 +640,7 @@
 [data-theme="velvet"] .number-words { color: var(--v-gold); }
 [data-theme="velvet"] .field output { color: var(--v-gold); }
 
-/* Micro labels: the rounded voice, wide-tracked uppercase. */
+/* Micro labels: the rounded typeface, wide-tracked uppercase. */
 [data-theme="velvet"] .field-label {
   font-family: var(--v-font);
   font-size: var(--text-caption);
@@ -658,7 +658,7 @@
    blue glow under the one primary action. Accent-1 is glossy sky blue,
    accent-2 the translucent plastic fill, accent-3 the aero grass green
    that keeps AA as link text. The --a-* material tokens carry the
-   glass itself; recipes below dress the components in it.
+   glass itself; recipes below apply it to the components.
 */
 [data-theme="aero"] {
   --background: #EAF6FD;      /* pale sky */
@@ -687,7 +687,7 @@
   --error: #C03A2E;
   --info: #1273B8;
 
-  /* Blue-tinted depth: aero shadows are sky, never soot. */
+  /* Blue-tinted depth: aero shadows are blue-toned, never black. */
   --shadow-raised: 0 1px 2px rgb(12 48 73 / 0.10);
   --shadow-floating: 0 4px 14px rgb(12 48 73 / 0.14);
   --shadow-overlay: 0 12px 36px rgb(12 48 73 / 0.22);
@@ -706,7 +706,7 @@
 
 /*
    Theme · Aero (dark). Composes: <html data-theme="aero" data-mode="dark">.
-   Ocean glass: deep water ground, the same gloss dimmed to moonlight,
+   Ocean glass: deep water ground, the same gloss dimmed for the dark ground,
    sky blue lifted to stay the action color, grass green turned to
    sea glass.
 */
@@ -750,7 +750,7 @@
 }
 
 /*
-   Aero recipes: how components wear the glass. Pills everywhere, the
+   Aero recipes: how components use the glass. Pills everywhere, the
    gloss layered over each rank's own fill, a translucent white edge,
    and the primary action alone carries the blue glow. Tokens only —
    the ranks still come from the blocks above.
@@ -780,7 +780,7 @@
   background-color: var(--a-glass-bg);
 }
 
-/* Panels get the faint gloss too — chrome and cards read as plastic. */
+/* Panels get the faint gloss too — interface controls and cards read as plastic. */
 [data-theme="aero"] .result,
 [data-theme="aero"] .tab-bar,
 [data-theme="aero"] .sheet,
@@ -794,7 +794,7 @@
    Theme · Elegant (light). <html data-theme="elegant">.
    The old Gems signature carried forward: cream surfaces, gold
    hairlines, serif display type, carved elevation. Warm ivory ground,
-   umber ink, antique gold as the only accent voice — accent-1 and
+   umber ink, antique gold as the only accent — accent-1 and
    accent-3 are golds, accent-2 the quiet cream fill. Headings switch
    to the serif stack through the --font-heading token alone; the
    --e-carve token presses panels gently INTO the cream instead of
@@ -827,12 +827,12 @@
   --error: #A44A35;           /* terracotta */
   --info: #5B6E8C;            /* slate */
 
-  /* Warm depth, and shallow: elegance never casts a heavy shadow. */
+  /* Warm depth, and shallow: this theme never casts a heavy shadow. */
   --shadow-raised: 0 1px 2px rgb(43 36 23 / 0.08);
   --shadow-floating: 0 4px 12px rgb(43 36 23 / 0.10);
   --shadow-overlay: 0 12px 32px rgb(43 36 23 / 0.18);
 
-  /* Serif display voice — the token does all the work downstream.
+  /* Serif display type — the token does all the work downstream.
      Stack ends in a generic family (font-list law). */
   --font-heading: "Iowan Old Style", "Palatino Linotype", Palatino,
                   Georgia, "Times New Roman", serif;
@@ -846,8 +846,8 @@
 
 /*
    Theme · Elegant (dark). Composes: <html data-theme="elegant"
-   data-mode="dark">. The obsidian twin: near-black warm ground, lit
-   gold for both accent voices, the hairlines dimmed to old brass.
+   data-mode="dark">. The obsidian counterpart: near-black warm ground, lit
+   gold for both accents, the hairlines dimmed to old brass.
 */
 [data-theme="elegant"][data-mode="dark"] {
   --background: #14110B;      /* obsidian */
@@ -914,7 +914,7 @@
    always the system blue, and on macOS almost nobody changes their accent,
    so wiring accent-3 to it made nearly every Apple user blue and every
    Chromium user ink — not the point of "wear the user's own accent". As a
-   separate color, the effect is honest: blue by default for all, and a
+   separate color, the effect is accurate: blue by default for all, and a
    user's chosen accent only for the few on a supporting browser who set one.
 
    Support (probed, July 2026): AccentColor / AccentColorText resolve on
@@ -997,8 +997,8 @@
 
 /* Text roles: the type scale as classes, one per token, so any element
    can take a scale step without an inline style. Display and the
-   heading steps carry the heading voice; the rest stay in the body
-   voice. Same names as the tokens: .text-display, .text-h1 … .text-h4,
+   heading steps carry the heading font; the rest stay in the body
+   font. Same names as the tokens: .text-display, .text-h1 … .text-h4,
    .text-body, .text-quote, .text-footnote, .text-caption. */
 .text-display { font-family: var(--font-heading); font-size: var(--text-display); font-weight: var(--weight-heading); line-height: 1.1; }
 .text-h1      { font-family: var(--font-heading); font-size: var(--text-h1); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
@@ -1012,7 +1012,7 @@
 
 
 /* ----- BACKGROUNDS: quiet patterns, one class, any theme -----
-   What it is: whisper-faint page and section backgrounds drawn with
+   What it is: very faint page and section backgrounds drawn with
    CSS gradients only, colored by the tokens so every theme and mode
    gets them for free. What it is for: giving big quiet surfaces a
    material — a hero, a section divider zone, a whole page. When to
@@ -1087,14 +1087,14 @@
     calc(var(--bg-cell) / 5) calc(var(--bg-cell) / 5);
 }
 
-/* Contrast request: the whisper goes silent. */
+/* Contrast request: the pattern is removed. */
 @media (prefers-contrast: more) {
   .bg-grid, .bg-dots, .bg-ruled, .bg-graph { background-image: none; }
 }
 
 
 /*
-   Motion personality · the spring, upgraded. Browsers that understand
+   Motion · the spring, upgraded. Browsers that understand
    linear() get a real spring for --ease-spring: overshoot, then settle
    with momentum. Everyone else keeps the bouncy back-out fallback above.
 */
@@ -1109,8 +1109,8 @@
 }
 
 /*
-   Motion personality · Calm. <html data-motion="calm"> (or any subtree).
-   Short, near-linear, slight — for products that should whisper. Same
+   Motion · Calm. <html data-motion="calm"> (or any subtree).
+   Short, near-linear, slight — for products that should stay subdued. Same
    tokens, quieter values; no component changes a thing.
 */
 [data-motion="calm"] {
@@ -1123,7 +1123,7 @@
 }
 
 /*
-   Motion personality · Off. <html data-motion="off">. The explicit stop:
+   Motion · Off. <html data-motion="off">. The explicit stop:
    everything snaps, nothing animates. prefers-reduced-motion (further
    down) does the same thing for visitors who asked the OS for it.
 */
@@ -1138,14 +1138,14 @@
 
 /*
    Seamless page transitions. <html data-transition="page">. Moving
-   between pages of a Facet product stops looking like one page died and
-   another loaded: the old page eases away, the new one springs in, and
+   between pages of a Facet product no longer looks like a full page
+   reload: the old page eases away, the new one springs in, and
    the URL changes normally — real multi-page navigation, no router.
 
    Built on cross-document view transitions. The at-rule below arms them
    for every Facet page; the animations only play on pages that opt in
    with the attribute (everyone else keeps an instant swap), only within
-   the same origin, and they ride the motion personality tokens — Lively
+   the same origin, and they ride the motion tokens — Animated
    pages arrive with a settle, Calm pages slide quietly, data-motion="off"
    and prefers-reduced-motion snap. Browsers without support simply
    navigate: never broken, just instant.
@@ -1690,7 +1690,7 @@ figcaption {
    accent color. .btn-secondary is every other action. .btn-ghost is for
    quiet actions inside busy areas, invisible until hovered.
    When to use it: any click that does something. One primary per screen at
-   most. Navigation dressed as a button is an <a class="btn">. Put the
+   most. Navigation styled as a button is an <a class="btn">. Put the
    button's key action name in a data-event attribute as the analytics hook.
 
    Usage:  <button class="btn btn-primary" data-event="calc-run"
@@ -1719,7 +1719,7 @@ figcaption {
     transform var(--duration-normal) var(--ease-spring);
 }
 
-/* Press with weight; release springs back with the personality. */
+/* Press with weight; release springs back with the motion setting. */
 .btn:active { transform: translateY(1px) scale(0.97); }
 
 /* Primary: filled with accent-1. One per screen. */
@@ -1780,7 +1780,7 @@ figcaption {
    already an inline-flex row of gap-separated children, so an inline
    <svg> icon plus a text label sit side by side with no extra rule —
    this modifier only rounds the ends. The nav menu is built entirely
-   from .btn.btn-pill (its Menu trigger, its Settings gear as
+   from .btn.btn-pill (its Menu trigger, its Settings button as
    .btn-pill.btn-icon, and every nav link), so any change to the base
    button — padding, height, weight, press physics — flows straight
    into the menu. Combines with every variant and size. */
@@ -1877,7 +1877,7 @@ figcaption {
   border-color: var(--error);
 }
 
-/* Select wears a token-colored chevron (two tiny gradients — no
+/* Select shows a token-colored chevron (two small gradients — no
    image files, ever) once the native arrow is dropped. */
 select {
   appearance: none;
@@ -1896,7 +1896,7 @@ select {
 input[type="search"] { border-radius: var(--radius-pill); }
 
 /* File upload: the native input stays (drag-drop, keyboard, form
-   value all free); only its button dresses like a secondary action
+   value all free); only its button is styled like a secondary action
    and the filename text steps back. */
 input[type="file"] {
   border: none;
@@ -1938,7 +1938,7 @@ input[type="week"] {
 
 .number-input input {
   padding-right: var(--space-hero);          /* room for the clear button */
-  font-size: var(--text-h4);              /* numbers deserve to be legible */
+  font-size: var(--text-h4);              /* numbers need to be legible */
   font-variant-numeric: tabular-nums;     /* digits align while typing */
 }
 
@@ -1968,7 +1968,7 @@ input[type="week"] {
 /* --------------------------------------------------------------------------
    SLIDER
 
-   What it is: a real range input wearing the theme — hairline track,
+   What it is: a real range input styled by the theme — hairline track,
    accent-3 thumb — paired with a live value readout.
    What it is for: picking a number inside a known range where the feel of
    more-and-less matters more than exact digits: years, percentages, counts.
@@ -2105,7 +2105,7 @@ input[type="week"] {
    RESULT BLOCK
 
    What it is: a verdict-first result card: one plain-language sentence a
-   person can repeat at dinner, one big number, then the supporting figures.
+   person can repeat in conversation, one large number, then the supporting figures.
    What it is for: the centrepiece of a results screen — readable at a
    glance, and announced by screen readers on every recalculation when the
    block carries aria-live="polite".
@@ -2293,14 +2293,14 @@ input[type="week"] {
 
 /* ----- CHOICE CONTROLS: checkbox, radio, switch -----
    What it is: the yes/no and pick-one controls — native checkbox and
-   radio wearing the theme through accent-color, and a switch that is
+   radio styled by the theme through accent-color, and a switch that is
    a checkbox upgraded with one class. What it is for: settings,
    consents, filters — checkbox for independent yes/nos, radio for
    one-of-few with all options visible, switch for a setting that
    takes effect immediately. When to use it: wrap control and text in
    a label.check-row so the whole line is the hit target. The switch
    keeps checkbox semantics — form value, keyboard, screen readers —
-   the class only changes the clothes. */
+   the class only changes the appearance. */
 input[type="checkbox"],
 input[type="radio"] {
   accent-color: var(--accent-1);
@@ -2319,7 +2319,7 @@ input[type="radio"] {
 }
 .check-row:has(input:disabled) { cursor: not-allowed; color: var(--text-muted); }
 
-/* The switch: a checkbox in track-and-thumb clothes. */
+/* The switch: a checkbox styled as a track and thumb. */
 input[type="checkbox"].switch {
   appearance: none;
   position: relative;
@@ -2347,7 +2347,7 @@ input[type="checkbox"].switch:checked { background: var(--accent-1); }
 input[type="checkbox"].switch:checked::before { translate: 1.125rem 0; }
 input[type="checkbox"].switch:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* ----- MODAL, DRAWER, POPOVER: the native top layer, dressed -----
+/* ----- MODAL, DRAWER, POPOVER: the native top layer, styled -----
    What it is: overlays built on the platform's own machinery — modal
    and drawer are <dialog> (focus trap, Esc, inert page for free),
    popover is the popover attribute (top layer, light dismiss, no JS).
@@ -2392,7 +2392,7 @@ dialog.drawer::backdrop {
   background: rgb(0 0 0 / 0.5);
   backdrop-filter: blur(3px);
 }
-/* Arrive with the motion personality; leave instantly. */
+/* Arrive with the motion setting; leave instantly. */
 dialog.modal[open] { animation: facet-modal-in var(--duration-base) var(--ease-spring); }
 dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease-spring); }
 @keyframes facet-modal-in { from { opacity: 0; translate: 0 14px; } }
@@ -2417,7 +2417,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
    fields in forms, links in navs — documented as copyable patterns
    on the Library page. Most need no CSS at all; these are the handful of
    real jobs the assemblies add: a horizontal card scroller, the
-   collapsing top menu, hero and CTA voices, stat cards, and the two
+   collapsing top menu, hero and CTA styles, stat cards, and the two
    editorial pieces (pull quote, media figure). */
 
 /* Horizontal scrolling card row: side-scrolls with momentum, cards
@@ -2474,7 +2474,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 }
 .hero h1, .hero .text-display { margin: 0; }
 
-/* CTA band: the closing ask — an ink-filled strip that flips the
+/* CTA band: the final call to action — an ink-filled strip that flips the
    tokens so everything inside just works. */
 .cta-band {
   display: grid;
@@ -2503,7 +2503,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 }
 .stat span { font-size: var(--text-caption); color: var(--text-muted); }
 
-/* Pull quote: the sentence worth stealing, set large. */
+/* Pull quote: the sentence worth emphasising, set large. */
 .pullquote {
   border-left: var(--border-highlight) solid var(--accent-3);
   padding-left: var(--space-card);
@@ -2534,19 +2534,19 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   color: var(--text-muted);
 }
 
-/* ----- MOTION PACK: parallax depths and idle life -----
-   What it is: alive by default. data-parallax="depth" lets an
+/* ----- MOTION PACK: parallax depths and idle motion -----
+   What it is: subtle motion by default. data-parallax="depth" lets an
    element drift up to that many pixels behind the pointer (desktop),
    the scroll's momentum (everywhere) or the device's tilt (where no
    permission gate blocks it) — facet.motion is the engine. The
-   idle-* classes give key elements a resting pulse: a slow float, a
-   faint sway, a soft breathing scale. What it is for: heroes,
-   illustrations, decorative cards — life at the edges, never on the
+   idle-* classes give key elements a continuous idle motion: a slow float, a
+   faint sway, a soft pulsing scale. What it is for: heroes,
+   illustrations, decorative cards — motion at the edges, never on the
    reading path. When to use it: sparingly; one or two moving things
    per screen. Idle classes animate the translate/rotate/scale
    properties, so they compose with the engine's transform instead of
-   colliding (the parallax exclusion, solved structurally). Calm
-   personality stills idle life; off and prefers-reduced-motion still
+   colliding (the parallax exclusion, solved structurally). The Calm
+   motion setting stills idle motion; off and prefers-reduced-motion still
    everything. */
 .idle-float { animation: facet-idle-float 5s ease-in-out infinite alternate; }
 .idle-sway  { animation: facet-idle-sway 7s ease-in-out infinite alternate; }
@@ -2581,13 +2581,13 @@ svg[data-icon] {
 }
 
 /* ----- FLAGSHIP LINK: the signature way to another page -----
-   What it is: the big confident link — heading voice, a strong
-   accent underline, and an arrow that leans into the journey on
+   What it is: the large prominent link — heading type, a strong
+   accent underline, and an arrow that shifts forward on
    hover. What it is for: the one onward step at the end of a
    section: "See the full report", "Start a project". When to use
    it: at most one or two per screen; ordinary references stay plain
    underlined links. It is always an <a> to a real URL — never a
-   button in costume. */
+   button styled as a link. */
 .flagship-link {
   display: inline-flex;
   align-items: baseline;
@@ -2609,8 +2609,8 @@ svg[data-icon] {
 .flagship-link:hover { color: var(--accent-3); }
 .flagship-link:hover::after { translate: 0.35em 0; }
 
-/* ----- SKELETON, SPINNER, EMPTY STATE: the waiting family -----
-   What it is: the three honest ways to show absence. The skeleton is
+/* ----- SKELETON, SPINNER, EMPTY STATE: the waiting states -----
+   What it is: the three ways to show absence. The skeleton is
    a shimmering placeholder shaped like the content it stands in for
    (put .skeleton on sized blocks). The spinner is a small accent
    ring for work with no known shape or length. The empty state is a
@@ -2619,7 +2619,7 @@ svg[data-icon] {
    indeterminate waits (spinner), and genuinely nothing-yet screens
    (empty). When to use it: skeletons over spinners whenever the
    shape is known; always pair a spinner with words — under reduced
-   motion the ring stands still and the words do the talking. */
+   motion the ring stands still and the words convey the state. */
 .skeleton {
   display: block;
   min-height: 1em;
@@ -2660,7 +2660,7 @@ svg[data-icon] {
 }
 .empty strong { color: var(--text); }
 
-/* ----- BADGE, CHIP, AVATAR, PROGRESS: the small talkers -----
+/* ----- BADGE, CHIP, AVATAR, PROGRESS: the small signals -----
    What it is: four tiny signals. The badge is a status word in a
    tinted pill (kinds success / warning / error / info via a class).
    The chip is a small toggleable pill button — aria-pressed carries
@@ -2820,7 +2820,7 @@ table.table {
    quiet by default, named on hover, plainly marked when it is the
    page you are on (aria-current="page"). What it is for: headers,
    sidebars, footers — anywhere a set of destinations lives. When to
-   use it: every navigational link in chrome. In content, plain <a>
+   use it: every navigational link in navigation and controls. In content, plain <a>
    underlined links stay the rule; .nav-link is for wayfinding
    surfaces where underlines would pile up. */
 .nav-link {
@@ -2917,7 +2917,7 @@ table.table {
    with the current page filled in accent-1 and marked aria-current.
    What it is for: long lists split across URLs, so every page is
    linkable and crawlable. When to use it: server-side or URL-driven
-   paging. For infinite content, prefer a "load more" button — honest
+   paging. For infinite content, prefer a "load more" button — explicit
    and keyboard-friendly. Disable an edge arrow with
    aria-disabled="true" on a span, never a dead link. */
 .pagination {
@@ -2948,8 +2948,8 @@ table.table {
 
 /* ----- ACCORDION: native details, one open at a time if named -----
    What it is: expandable rows on <details class="accordion"> — the
-   platform's own disclosure, dressed: hairline rows, a rotating
-   chevron, roomy 44px summaries. What it is for: FAQs, advanced
+   platform's own disclosure, styled: hairline rows, a rotating
+   chevron, spacious 44px summaries. What it is for: FAQs, advanced
    settings, anything long that most readers skip. When to use it:
    give sibling accordions the same name attribute and the browser
    keeps exactly one open — no JS anywhere. */
@@ -3032,7 +3032,7 @@ details.accordion {
 
 /* ----- DROPDOWN MENU: a details that opens under its button -----
    What it is: a small action menu on <details class="dropdown"> — the
-   summary wears button clothes, the .dropdown-menu panel drops in
+   summary is styled as a button, the .dropdown-menu panel drops in
    under it, outside clicks and Esc close it (facet.js), and every
    item is a real button or link. What it is for: two-to-seven
    secondary actions behind one trigger: export, duplicate, delete.
@@ -3082,7 +3082,7 @@ details.dropdown {
 
 /* ----- CARD: default, outlined, clickable -----
    What it is: the grouped-surface primitive — a padded, rounded panel
-   a breath above the page. What it is for: one thing per card: a
+   one step above the page. What it is for: one thing per card: a
    product, a stat, a setting group, a summary. When to use it: .card
    for most grouping; .card-outlined when many cards sit close and
    shadows would pile up; a clickable card is an <a class="card
@@ -3217,7 +3217,7 @@ details.dropdown {
    whenever things sit beside each other — the row owns the gap, so
    children stay margin-free, exactly like the stack owns vertical
    rhythm. Variants: .row-tight for close runs, .row-loose for
-   breathing room. */
+   extra spacing. */
 .row,
 .row-tight,
 .row-loose {
@@ -3265,7 +3265,7 @@ details.dropdown {
    Embossed frosted glass: translucent over a backdrop blur, pressed INTO
    the page via inset shadows (dark from the top, faint from the bottom).
    The active highlight is one .tab-indicator pill (injected by
-   facetTabIndicator) that glides between segments like iOS. */
+   facetTabIndicator) that moves between segments like iOS. */
 .tab-bar {
   position: fixed;
   bottom: calc(var(--space-inline) + env(safe-area-inset-bottom, 0px));
@@ -3294,7 +3294,7 @@ details.dropdown {
   height: calc(100% - var(--space-tight) * 2);
   width: 0;
   border-radius: var(--radius-pill);
-  /* raised pill gliding inside the inset bar; facetTabIndicator
+  /* raised pill moving inside the inset bar; facetTabIndicator
      animates transform/width itself (squash-and-stretch), so no
      CSS transition here */
   background: color-mix(in srgb, var(--surface) 92%, transparent);
@@ -3320,7 +3320,7 @@ details.dropdown {
 }
 .tab-seg[aria-current="true"] {
   color: var(--accent-pressed);
-  /* the active label rides the raised pill: crisper, lighter press */
+  /* the active label sits on the raised pill: crisper, lighter press */
   text-shadow: 0 1px 0 color-mix(in srgb, var(--background) 40%, transparent);
 }
 .tab-divider {
@@ -3345,7 +3345,7 @@ details.dropdown {
   color: var(--text-muted);
   transition: color var(--duration-fast) var(--ease-out);
 }
-/* The gear turns a quarter with the panel: in on open, back on close. */
+/* The settings icon turns a quarter with the panel: in on open, back on close. */
 .tab-settings svg {
   transition: transform var(--duration-slow) var(--ease-in-out);
 }
@@ -3397,7 +3397,7 @@ details.dropdown {
 /* Nav + actions scroll in the top region; the icon row lives in a foot
    pinned below it. The scroll region keeps the panel's RESTING width and
    anchors to the right edge, so while the frame's left edge overshoots
-   and breathes, the text inside lands linearly and then stays still —
+   and settles, the text inside lands linearly and then stays still —
    the tab bar's still-labels/moving-pill split, applied to the panel.
    The foot spans the frame itself, so its buttons stretch and snap back
    with the overshoot. */
@@ -3440,7 +3440,7 @@ details.dropdown {
   right: var(--space-control);
   height: 25%;
   width: 8px;                   /* left edge lands at the radius line */
-  padding: 2px;                 /* breathing room around the pill */
+  padding: 2px;                 /* spacing around the pill */
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--text) 8%, transparent);
   box-shadow:
@@ -3462,7 +3462,7 @@ details.dropdown {
 }
 /* Page-level variant: a fixed lane floating just off the right edge,
    half the viewport tall, vertically centred. The thumb is the
-   viewport's true share of the page, so snaps and smooth glides
+   viewport's true share of the page, so snaps and smooth scrolling
    read 1:1 on it. */
 .scroll-gauge-page {
   position: fixed;
@@ -3477,7 +3477,7 @@ details.dropdown {
   touch-action: none;         /* the gauge drags the page, never scrolls */
   transition: width 0.16s ease, right 0.16s ease;
 }
-/* grab: the lane widens and the pill lights up in the theme colour */
+/* grab: the lane widens and the pill highlights in the theme colour */
 .scroll-gauge-page.grabbing {
   width: 18px;
   right: calc(var(--space-control) - 4px);
@@ -3489,8 +3489,8 @@ details.dropdown {
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.4);
 }
 
-/* ----- THEMED MAP: a Google Map wearing the active theme -----
-   What it is: a Google Map wearing the active theme — ground, water,
+/* ----- THEMED MAP: a Google Map styled with the active theme -----
+   What it is: a Google Map styled with the active theme — ground, water,
    parks and roads derived from the base family, labels from the text
    family, boundaries from the quiet accent, recomputed live when the
    theme or mode switches. What it is for: maps that belong to the
@@ -3655,7 +3655,7 @@ details.dropdown {
    for: pages that need the settings sheet (or any panel) but not
    section navigation: give it aria-controls pointing at a .sheet and
    facet.js wires the open/close, the aria-expanded state and the press
-   feedback exactly like the tab bar's gear. When to use it: whenever a
+   feedback exactly like the tab bar's settings button. When to use it: whenever a
    page has one floating action; .float-btn-right pins it bottom-right
    instead. Always an aria-label and a data-tip: the icon alone says
    nothing.
@@ -3705,8 +3705,8 @@ details.dropdown {
   right: calc(var(--space-stack) + env(safe-area-inset-right, 0px));
 }
 
-/* Velvet: the floating trigger is a raised face; open, it wears the
-   pill like the tab bar's gear. Cushion press, face never changes. */
+/* Velvet: the floating trigger is a raised face; open, it takes the
+   pill styling like the tab bar's settings button. Press feedback, face never changes. */
 [data-theme="velvet"] .float-btn {
   position: fixed;                 /* the .btn recipe must not unpin it */
   border: none;
@@ -3734,8 +3734,8 @@ details.dropdown {
 
    What it is: a floating navigation cluster pinned bottom-right — a
    "Menu" pill that opens a stack of page links, and a same-size round
-   Settings gear beside it that opens the app-settings sheet of toggles.
-   Both triggers and every link are the base .btn.btn-pill (the gear is
+   Settings button beside it that opens the app-settings sheet of toggles.
+   Both triggers and every link are the base .btn.btn-pill (the settings button is
    .btn-pill.btn-icon), so the menu inherits the button's sizing, press
    and theming — change the button and the menu changes with it.
    What it is for: whole-site navigation on any Facet page, plus the
@@ -3851,7 +3851,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
    single pick too wide for a segmented control; shipped as the
    inflation app's ten-currency picker. State changes ease — selection
    must never jump. Velvet: unselected options sit flat in carved
-   wells, the selected one stands proud with its symbol in gold.
+   wells, the selected one stands raised with its symbol in gold.
 
    Usage:
      <div class="choice-grid" role="group" aria-labelledby="cur-label">
@@ -3922,7 +3922,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
 /* --------------------------------------------------------------------------
    SLIDER TICK SCALE
 
-   What it is: a tick scale hugging a slider's track — minor ticks,
+   What it is: a tick scale aligned to a slider's track — minor ticks,
    sparse labels, and an optional highlighted "now" tick marking a
    meaningful value (the current year where a projection begins). What
    it is for: giving a long range slider landmarks so positions read as
@@ -3949,7 +3949,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
 .slider-scale {
   position: relative;
   height: 18px;
-  margin: -3px 16px 0;                /* hugs the track; half-knob inset */
+  margin: -3px 16px 0;                /* aligned to the track; half-knob inset */
 }
 .slider-scale .tick {
   position: absolute;
@@ -3977,9 +3977,9 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
    INSTALL NUDGE CARD
 
    What it is: a card over a dim blurred scrim, sitting just above the
-   bottom chrome: eyebrow, title, one-line pitch, a primary "Add now", a
+   bottom controls: eyebrow, title, one-line description, a primary "Add now", a
    dimmed "Add it later", fine-print "Don't ask again". What it is for:
-   the gentle add-to-home-screen ask, driven by facet.installNudge —
+   the add-to-home-screen prompt, driven by facet.installNudge —
    shown once per session after a delay, never when standalone,
    installed or opted out. When to use it: installable products; wire
    "Add now" to installNudge.addNow() and show the instruction overlay
@@ -4065,7 +4065,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
    INSTRUCTION OVERLAY
 
    What it is: the whole screen goes near-black and the direction sits
-   up top where the eye lands — eyebrow, huge title with the key phrase
+   at the top — eyebrow, large title with the key phrase
    highlighted, muted body lines, a faint tap-anywhere-to-close. What it
    is for: full-screen how-tos; shipped as the iOS Add-to-Home-Screen
    walk-through. When to use it: any instruction that deserves the whole
@@ -4105,7 +4105,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
 .overlay-title strong { color: #dcbe8e; }
 .overlay-sub { color: rgb(255 255 255 / 0.6); font-size: var(--text-h4); }
 
-/* Velvet capsule number input: the amount reads as one soft capsule. */
+/* Velvet capsule number input: the amount reads as one rounded capsule. */
 [data-theme="velvet"] .number-input input {
   border-radius: var(--radius-pill);
   padding-inline: var(--space-card);

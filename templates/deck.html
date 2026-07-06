@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
   <style>
-    /* Deck chrome: every slide is a fixed 1920x1080 canvas, scaled to
+    /* Deck frame: every slide is a fixed 1920x1080 canvas, scaled to
        fit the window; one shows at a time. In print, all of them, one
        per page, at full size. */
     body { margin: 0; overflow: hidden; background: var(--text); }
@@ -103,8 +103,8 @@
   <p class="slide-count" aria-live="polite">1 / 5</p>
 
   <script>
-    /* Deck chrome: scale-to-fit and arrow navigation. Presentation
-       glue belongs to the deck, so it lives here, not in the library. */
+    /* Deck frame: scale-to-fit and arrow navigation. Presentation
+       logic belongs to the deck, so it lives here, not in the library. */
     const deckSlides = [...document.querySelectorAll(".slide")];
     const deckCount = document.querySelector(".slide-count");
     let deckAt = 0;

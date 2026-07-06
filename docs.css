@@ -33,8 +33,8 @@
 .site-link:hover { color: var(--text); }
 .site-link[aria-current="page"] { color: var(--text); }
 
-/* Landing — one calm centered column: heading, the two tags, a copy
-   button and the theme chips. The code block is the star, so the
+/* Landing — one centered column: heading, the two tags, a copy
+   button and the theme chips. The code block is the focus, so the
    heading stays modest (not display-sized). */
 .landing {
   display: grid;
@@ -104,7 +104,7 @@
 
 /* Layer groups: each stays contracted until you click its label
    (native <details> toggle). Scroll only marks the layer you are in —
-   it never opens or collapses one. Roomy spacing above and below every
+   it never opens or collapses one. Ample spacing above and below every
    layer so the labels read as distinct sections, not a dense list. */
 .nav-group > summary {
   list-style: none;
@@ -154,9 +154,9 @@
   .docs-index { position: static; max-height: none; }
 }
 
-/* Generous, even breathing room between every section and wall entry,
+/* Even spacing between every section and wall entry,
    carried by the gap alone — no per-entry rule, so the page reads as
-   calm space, not a stack of faint lines. The only rules on the page
+   open space, not a stack of faint lines. The only rules on the page
    are the deliberate ones: the landing divider and the layer bands. */
 #main.stack-loose { gap: var(--space-hero); }
 section[id], article[id] { scroll-margin-top: var(--space-card); }
@@ -200,7 +200,7 @@ section[id], article[id] { scroll-margin-top: var(--space-card); }
 /* Features and Rules as a topic grid: each subject is a card you can
    scan; clicking one opens its full text in a popup. The whole
    inventory still ships in the DOM (inside the dialogs), so nothing is
-   hidden from a crawler — it is just folded behind a calm grid. */
+   hidden from a crawler — it is just folded behind a grid. */
 .topic-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
@@ -271,7 +271,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 }
 /* Open: the callout gives way to the full description inside. */
 .fold[open] > summary .fold-note { display: none; }
-/* The body of an opened fold gets breathing room above it. */
+/* The body of an opened fold gets space above it. */
 .fold[open] > :not(summary):first-of-type { margin-top: var(--space-stack); }
 
 /* One wall entry. */
@@ -369,7 +369,7 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   margin-bottom: var(--space-tight);
 }
 
-/* App chrome shown statically inside wall demos: the real things
+/* Interface controls shown statically inside wall demos: the real things
    are position:fixed; here they sit in the flow so the page reads. */
 .element .demo .tab-bar,
 .element .demo .float-btn,
