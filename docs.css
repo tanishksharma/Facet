@@ -608,6 +608,36 @@ h2:hover .permalink, h3:hover .permalink,
 #how-to .step-num { margin: 0; }
 #how-to .step-body p { margin-top: var(--space-tight); }
 
+/* How-to as two audience tracks (people / AI): two left-aligned cards
+   inside the centred home section, stacking to one column on phones. */
+.how-tracks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: var(--space-stack);
+  max-width: 60rem;
+  margin-inline: auto;
+  text-align: left;
+}
+.how-track { align-items: stretch; }
+.how-track-who {
+  margin: 0;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-strong);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.how-list,
+.how-files {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-inline);
+  margin: 0;
+}
+.how-list { padding-left: 1.2rem; }
+.how-files { list-style: none; padding-left: 0; }
+.how-track pre { white-space: pre-wrap; }
+
 /* Code-block action cluster: icons pinned to the snippet's bottom-right,
    instead of a row of buttons below it. */
 .code-wrap { position: relative; }

@@ -9,6 +9,9 @@
   <meta property="og:description" content="Facet is a plain HTML, CSS and JS design library — one stylesheet, one script, no build step, never minified. This page is the manual: what it does, its rules, and how to use it.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23FFFFFF'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%2317171B'/></svg>">
+  <!-- Machine-discoverable pointers for AI agents and crawlers. -->
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="Facet — how to use it, for AI">
+  <link rel="alternate" type="application/json" href="/facet.json" title="Facet — machine-readable manifest">
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
   <link rel="stylesheet" href="/docs.css">
@@ -98,60 +101,75 @@
       </section>
 
       <!-- =============================================================
-           MANUAL · HOW TO USE
-           The path from nothing to a shipped page, as numbered steps —
-           each one an attribute or a class, never a build step.
+           HOW TO USE · two audience tracks. People read this site; an AI
+           reads the source (llms.txt first, then the commented
+           facet.css/facet.js). The human decides, the AI builds.
            ============================================================= -->
       <section id="how-to" class="stack home-section">
-        <h2>How to use the library</h2>
+        <h2>How to use Facet</h2>
         <p>
-          From an empty file to a shipped page in a few steps. Every one is an
-          attribute or a class — there is no build step, nothing to install.
+          Two ways in, depending on who is reading. People read this site to
+          learn what Facet offers; an AI reads the source to know exactly how
+          every piece works. You bring them together — you decide, your AI
+          builds.
         </p>
-        <ol class="steps">
-          <li class="step">
-            <span class="step-num" aria-hidden="true">1</span>
-            <div class="step-body">
-              <h3>Add the two tags</h3>
-              <p>One <code>&lt;link&gt;</code> and one <code>&lt;script&gt;</code> from a public URL — copy them from the top of this page. That is the whole install.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">2</span>
-            <div class="step-body">
-              <h3>Start from a layout</h3>
-              <p>Rename a ready page — landing, app shell, article, pitch deck, document or business card — or assemble one from the block layer. Fill in your words.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">3</span>
-            <div class="step-body">
-              <h3>Pick a theme</h3>
-              <p>One attribute on <code>&lt;html&gt;</code> restyles the whole page — <code>data-theme</code> and <code>data-mode</code>. Or build your own on the <a href="/build.html">Build a theme</a> page and paste the config.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">4</span>
-            <div class="step-body">
-              <h3>Assemble with components</h3>
-              <p>Write semantic HTML with the right classes — buttons, cards, fields, tabs. Every behaviour self-wires from data attributes on load; there is no JS to write.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">5</span>
-            <div class="step-body">
-              <h3>Tune the feel, globally</h3>
-              <p>Density (<code>data-density</code>), type size (<code>data-text-size</code>) and motion (<code>data-motion</code>) are one attribute each — page-wide or per subtree, no per-element work.</p>
-            </div>
-          </li>
-          <li class="step">
-            <span class="step-num" aria-hidden="true">6</span>
-            <div class="step-body">
-              <h3>Ship it</h3>
-              <p>Deploy the static files. A one-line service worker makes the page installable and offline-ready; the head pack and sitemap keep it SEO- and AI-readable.</p>
-            </div>
-          </li>
-        </ol>
+        <div class="how-tracks">
+
+          <article class="card how-track stack">
+            <p class="how-track-who">If you are a person</p>
+            <ol class="how-list">
+              <li>
+                <strong>Skim this page.</strong> The
+                <a href="#features">Features</a> show what Facet can do; the
+                principles below show what you can count on. You never need to
+                read the CSS or JavaScript.
+              </li>
+              <li>
+                <strong>Grab the two tags.</strong> One link and one script,
+                copied from the top of this page. That is the entire install —
+                no framework, no build step.
+              </li>
+              <li>
+                <strong>Explore the <a href="/library.html">Library</a>.</strong>
+                Every component, block, template and whole app shell, live and
+                with copy-paste code. Find the shells and pieces you want to use.
+              </li>
+              <li>
+                <strong>Let your AI build it.</strong> Tell your assistant which
+                template and components to use and ask it for a few options to
+                choose from. It reads the code so you do not have to.
+              </li>
+            </ol>
+          </article>
+
+          <article class="card how-track stack">
+            <p class="how-track-who">If you are an AI</p>
+            <p>
+              Everything you need is in the source. Start with the manual, then
+              drop into the files for exact detail:
+            </p>
+            <ul class="how-files">
+              <li>
+                <a href="/llms.txt"><code>llms.txt</code></a> — <strong>read this
+                first.</strong> The complete usage guide: every feature and every
+                component, with copy-paste snippets, in one plain-text fetch.
+              </li>
+              <li>
+                <a href="/lib/facet.css"><code>facet.css</code></a> — the whole
+                design system, commented in place: every token and component
+                documented where it lives.
+              </li>
+              <li>
+                <a href="/lib/facet.js"><code>facet.js</code></a> — the
+                behaviours, one small named function each, commented the same way.
+              </li>
+            </ul>
+            <p>Pointing an assistant at Facet? Hand it this:</p>
+            <pre id="ai-prompt"><code>Use the Facet design library at https://facet-kappa.vercel.app. Read /llms.txt for how to use every feature and component; the fully-commented source is /lib/facet.css and /lib/facet.js. Build pages with semantic HTML plus Facet's classes and data-attributes — no framework, no build step.</code></pre>
+            <p><button class="btn btn-small" data-copy="#ai-prompt" data-tip="Copies the prompt to paste into your AI">Copy the prompt</button></p>
+          </article>
+
+        </div>
       </section>
 
       <hr class="section-rule container-wide" aria-hidden="true">
