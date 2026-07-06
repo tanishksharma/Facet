@@ -95,7 +95,11 @@ wins; tabular figures on numeric UI.
 
 Components and behaviours: themed layout primitives (container in four
 widths, stack in three gaps, full-viewport snap sections); buttons in
-three variants and three sizes working on <button> and <a>; icon buttons;
+three variants and three sizes working on <button> and <a>, plus .btn-pill
+capsule shape (an icon-and-label pill with no extra markup); icon buttons;
+the app-kit floating chrome — tab bar, settings sheet, float button, scroll
+gauge, and the nav menu (a floating Menu-pill + Settings-gear cluster, built
+from .btn.btn-pill, a no-JS <details> of real links upgraded to an overlay);
 the calculator-grade number input (prefilled example, one-tap clear,
 locale-aware grouping, words helper in the active language); labelled
 fields with hints and
@@ -706,6 +710,9 @@ analytics hook.
             data-tip="Runs the calculation">Calculate</button>
 
 Variants: .btn-primary, .btn-secondary (default for bare .btn), .btn-ghost
+Shapes: .btn-pill rounds the button into a capsule. Because the base .btn is
+already an inline-flex row, an inline <svg> icon plus a text label sit side by
+side with no extra class — that is the icon-pill the nav menu is built from.
 Sizes: .btn-small, default, .btn-large
 States built in: hover, focus ring, pressed, :disabled
 
@@ -1012,6 +1019,38 @@ and the dark how-to screen, driven by facet.installNudge — addNow()
 returns "native" (Android prompt shown) or "guide" (show the overlay).
 The overlay's dark palette is deliberately fixed across themes.
 
+Nav menu (.nav-menu): a floating navigation cluster pinned bottom-right — a
+"Menu" pill that opens a stack of page links, and a same-size round Settings
+gear beside it that opens the app-settings sheet of toggles. Both triggers and
+every link are the base .btn.btn-pill (the gear is .btn-pill.btn-icon), so the
+menu inherits the button's sizing, press and theming — change the button and
+the menu changes with it. It is a real <details> wrapping real <a> links, so it
+works with JavaScript off (the summary opens the links inline) and the links
+sit in the DOM for crawlers and AI; facet.js (initNavMenu, re-runnable via
+facet.navMenu) upgrades it to a floating overlay — a dimming scrim, body
+scroll-lock, a staggered bottom-up reveal, Escape to close, and focus moved
+into the menu and back. Reduced motion drops the stagger. It is chrome, not
+content: author it at the end of <body>, it is user-select:none, and it prints
+off. The Settings gear is a plain button[aria-controls] on a .sheet, wired like
+any other sheet trigger.
+
+    <nav class="nav-menu" aria-label="Site" data-print="off">
+      <details class="nav-menu-panel">
+        <summary class="btn btn-pill nav-menu-trigger" data-tip="Menu"
+                 data-event="nav-menu"><svg data-icon="menu"></svg> Menu</summary>
+        <div class="nav-menu-items">
+          <a class="btn btn-pill" href="/"><svg data-icon="home"></svg> Home</a>
+          <a class="btn btn-pill" href="/work"><svg data-icon="grid"></svg> Work</a>
+        </div>
+      </details>
+      <button type="button" class="btn btn-pill btn-icon" aria-controls="nav-settings"
+              aria-expanded="false" aria-label="Settings" data-tip="Settings"
+              data-event="nav-settings"><svg data-icon="settings"></svg></button>
+    </nav>
+    <div class="sheet-scrim" data-open="false"></div>
+    <aside class="sheet" id="nav-settings" data-open="false" aria-hidden="true"
+           aria-label="Settings"> ...the .menu-icon-btn toggle row... </aside>
+
 Components: .tab-bar (bottom pill of .tab-seg segments + .tab-divider +
 trailing .tab-settings gear; a .tab-indicator pill is injected and
 glides on per-edge analytic springs), .sheet-scrim + .sheet
@@ -1022,7 +1061,8 @@ look-alike; .scroll-gauge-page is the draggable whole-page lane), and
 .float-btn — a lone floating round trigger pinned bottom-left
 (.float-btn-right for bottom-right): give it aria-controls pointing at
 a .sheet and it opens it, aria-expanded managed, press feedback
-included. Markup contracts: the wall entries on the Library page — the
+included, and .nav-menu (the floating Menu-pill + Settings-gear cluster
+above). Markup contracts: the wall entries on the Library page — the
 copy button under each demo gives the exact HTML.
 
 Modules on window.facet: feedback (synthesized UI sounds + haptics, ON
@@ -1031,7 +1071,8 @@ switches), sheet(el, scrim, {onChange}), scrollGauge(scroller, {...}),
 tabIndicator(bar), installNudge(el, {...}), motion (parallax engine:
 register/init/setMode/cycle, modes off|cursor|tilt, reduced-motion
 off). Auto-wiring: .tab-bar finds the page's pager and its sheet; any
-button[aria-controls] on a .sheet opens it. Velvet law: elements with
+button[aria-controls] on a .sheet opens it; a .nav-menu upgrades its
+<details> into the floating overlay (facet.navMenu re-runs it). Velvet law: elements with
 velvet lift/press transforms must not register with facet.motion.
 
 ## Templates

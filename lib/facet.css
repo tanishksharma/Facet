@@ -1776,6 +1776,16 @@ figcaption {
   .btn-small { min-height: 44px; }        /* fingers get the full target */
 }
 
+/* Pill: the button becomes a fully-rounded capsule. The base .btn is
+   already an inline-flex row of gap-separated children, so an inline
+   <svg> icon plus a text label sit side by side with no extra rule —
+   this modifier only rounds the ends. The nav menu is built entirely
+   from .btn.btn-pill (its Menu trigger, its Settings gear as
+   .btn-pill.btn-icon, and every nav link), so any change to the base
+   button — padding, height, weight, press physics — flows straight
+   into the menu. Combines with every variant and size. */
+.btn-pill { border-radius: var(--radius-pill); }
+
 /* --------------------------------------------------------------------------
    ICON BUTTON
 
@@ -3718,6 +3728,116 @@ details.dropdown {
   color: var(--v-ink-strong);
 }
 [data-theme="velvet"] .float-btn svg { filter: var(--v-icon-filter); }
+
+/* --------------------------------------------------------------------------
+   NAV MENU
+
+   What it is: a floating navigation cluster pinned bottom-right — a
+   "Menu" pill that opens a stack of page links, and a same-size round
+   Settings gear beside it that opens the app-settings sheet of toggles.
+   Both triggers and every link are the base .btn.btn-pill (the gear is
+   .btn-pill.btn-icon), so the menu inherits the button's sizing, press
+   and theming — change the button and the menu changes with it.
+   What it is for: whole-site navigation on any Facet page, plus the
+   app's own controls, behind two thumb-reachable floating controls.
+   When to use it: the primary nav for a content site or app. It is a
+   real <details> wrapping real <a> links, so it works with JavaScript
+   off — the summary opens the links inline — and the links sit in the
+   DOM for crawlers and AI. facet.js (initNavMenu) upgrades it to a
+   floating overlay: a dimming scrim, body scroll-lock, a staggered
+   reveal, Escape to close, and focus moved into the menu and back.
+   prefers-reduced-motion drops the stagger. Chrome, not content: it is
+   authored at the end of <body>, is user-select:none, and prints off.
+
+   Usage:
+     <nav class="nav-menu" aria-label="Site" data-print="off">
+       <details class="nav-menu-panel">
+         <summary class="btn btn-pill nav-menu-trigger" data-tip="Menu"
+                  data-event="nav-menu"><svg>...menu...</svg> Menu</summary>
+         <div class="nav-menu-items">
+           <a class="btn btn-pill" href="/"><svg>...</svg> Home</a>
+           <a class="btn btn-pill" href="/work"><svg>...</svg> Work</a>
+         </div>
+       </details>
+       <button type="button" class="btn btn-pill btn-icon"
+               aria-controls="nav-settings" aria-expanded="false"
+               aria-label="Settings" data-tip="Settings"
+               data-event="nav-settings"><svg>...gear...</svg></button>
+     </nav>
+     <div class="sheet-scrim" data-open="false"></div>
+     <aside class="sheet" id="nav-settings" ...the toggle icon-row...></aside>
+   -------------------------------------------------------------------------- */
+
+.nav-menu {
+  position: fixed;
+  right: calc(var(--space-stack) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--space-stack) + env(safe-area-inset-bottom, 0px));
+  z-index: 30;
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-tight);
+  user-select: none;                 /* chrome: never lands in a copy */
+  -webkit-user-select: none;
+}
+/* the details holds the pill and its pop-up stack; it must not stretch */
+.nav-menu-panel { position: relative; display: flex; }
+
+/* the Menu pill IS a .btn.btn-pill — strip the native disclosure marker */
+.nav-menu-trigger { cursor: pointer; list-style: none; }
+.nav-menu-trigger::-webkit-details-marker { display: none; }
+.nav-menu-trigger::marker { content: ""; }
+/* icons ride the button's text size, so they scale with the base button */
+.nav-menu svg { width: 1.15em; height: 1.15em; flex: none; }
+
+/* the link stack floats above the trigger, right-aligned to it */
+.nav-menu-items {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + var(--space-tight));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-tight);
+}
+/* Enhanced only: each pop-up link starts just below its resting spot and
+   the JS adds .is-in one after another for the bottom-up cascade. With
+   JS off there is no data-enhanced, so the links show at rest the moment
+   the <details> opens — no flash, fully usable. */
+.nav-menu[data-enhanced="true"] .nav-menu-items > * {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-normal) var(--ease-spring);
+}
+.nav-menu[data-enhanced="true"] .nav-menu-items > .is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* the dimming scrim behind an open menu: facet.js inserts one
+   .nav-menu-scrim at the end of <body> and toggles data-open */
+.nav-menu-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 29;                       /* under the cluster (30), over content */
+  background: rgb(0 0 0 / 0.45);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-slow) var(--ease-in-out);
+}
+.nav-menu-scrim[data-open="true"] { opacity: 1; pointer-events: auto; }
+/* lock the page behind the overlay */
+body.nav-menu-open { overflow: hidden; touch-action: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-menu[data-enhanced="true"] .nav-menu-items > * {
+    transition: none; opacity: 1; transform: none;
+  }
+  .nav-menu-scrim { transition: none; }
+}
 
 /* --------------------------------------------------------------------------
    CHOICE GRID

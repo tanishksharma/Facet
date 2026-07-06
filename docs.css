@@ -372,7 +372,15 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 /* App chrome shown statically inside wall demos: the real things
    are position:fixed; here they sit in the flow so the page reads. */
 .element .demo .tab-bar,
-.element .demo .float-btn { position: static; transform: none; }
+.element .demo .float-btn,
+.element .demo .nav-menu { position: static; transform: none; }
+/* the fixed cluster is shown in the flow here; the pop-up stacks below
+   the Menu pill (rather than floating over it) so the demo reads top to
+   bottom — the real thing floats bottom-right over the page. */
+#nav-menu .demo .nav-menu { position: relative; z-index: 40; align-items: flex-start; }
+#nav-menu .demo .nav-menu-panel { display: block; }
+#nav-menu .demo .nav-menu-items { position: static; align-items: flex-start; margin-top: var(--space-tight); }
+#nav-menu .demo { min-height: 8rem; }
 #tab-bar .demo { overflow-x: auto; }   /* the pill outgrows tiny phones */
 .element .demo .nudge-scrim,
 .element .demo .overlay-guide { position: static; border-radius: var(--radius-panel); }

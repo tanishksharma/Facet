@@ -755,6 +755,7 @@
         ".btn-primary",
         ".btn-secondary",
         ".btn-ghost",
+        ".btn-pill",
         ".btn-small",
         ".btn-large"
       ],
@@ -766,6 +767,7 @@
         ".btn": "secondary by default, on the accent-2 fill",
         ".btn-primary": "the screen's one main action, accent-1",
         ".btn-ghost": "quiet actions in busy areas, invisible until hovered",
+        ".btn-pill": "capsule shape; an inline SVG + text label is an icon pill with no extra markup — the nav menu is built from it",
         ".btn-small": "compact contexts",
         ".btn-large": "hero moments"
       },
@@ -1044,6 +1046,42 @@
       "a11y": "Needs an aria-label; manages aria-expanded like the gear."
     },
     {
+      "name": "Nav menu",
+      "classes": [
+        ".nav-menu",
+        ".nav-menu-panel",
+        ".nav-menu-trigger",
+        ".nav-menu-items",
+        ".nav-menu-scrim"
+      ],
+      "attributes": [
+        "data-print",
+        "data-event"
+      ],
+      "summary": "Floating bottom-right cluster: a Menu pill opening page links plus a same-size Settings gear opening the toggle sheet; built from .btn.btn-pill.",
+      "classNotes": {
+        ".nav-menu": "the fixed cluster; user-select none, prints off",
+        ".nav-menu-panel": "the <details> holding the Menu pill and its pop-up stack",
+        ".nav-menu-trigger": "the <summary> styled as the Menu pill (.btn.btn-pill)",
+        ".nav-menu-items": "the floating stack of .btn.btn-pill links",
+        ".nav-menu-scrim": "the dimming overlay facet.js inserts behind an open menu"
+      },
+      "keys": [
+        [
+          "Enter / Space",
+          "opens the menu (summary)"
+        ],
+        [
+          "Esc",
+          "closes it, focus returns to the pill"
+        ]
+      ],
+      "do": "Author real <a> links inside the <details> so navigation works with JS off and stays crawlable; the gear is a plain aria-controls sheet trigger.",
+      "dont": "Rebuild the pill — reuse .btn.btn-pill so the base button stays the single source of sizing.",
+      "why": "Navigation must survive without JavaScript; the overlay is enhancement on top of a working disclosure.",
+      "a11y": "Native <details>/<summary> carries the expanded state; JS moves focus into the menu on open and back to the trigger on close; reduced motion drops the stagger."
+    },
+    {
       "name": "Scroll gauge",
       "classes": [
         ".scroll-gauge",
@@ -1200,6 +1238,7 @@
     "facet.chart": "Draw the themed line chart: facet.chart(el, {points, projectFrom, events, format}) → {update}.",
     "facet.icons": "The glyph table (name → svg markup); extend it, then call facet.icon().",
     "facet.icon": "(Re)fill every svg[data-icon] on the page.",
+    "facet.navMenu": "(Re)wire floating .nav-menu overlays (idempotent; run after inserting a menu).",
     "facet.location": "The cached location object once locate() resolves (null before, null on failure).",
     "facet.version": "The library version string (\"0.2.0\").",
     "facet.scheme": "Three-way appearance: facet.scheme.get()/set('auto'|'light'|'dark')/cycle(); auto follows the OS live, persisted in URL + localStorage.",
