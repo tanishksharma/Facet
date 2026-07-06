@@ -137,6 +137,7 @@
           <li><a href="#sheet">Sheet &amp; menu</a></li>
           <li><a href="#float-button">Float button</a></li>
           <li><a href="#nav-menu">Nav menu</a></li>
+          <li><a href="#translation">Content translation</a></li>
           <li><a href="#scroll-gauge">Scroll gauge</a></li>
           <li><a href="#installable">Installable (PWA)</a></li>
         </ul>
@@ -2526,6 +2527,46 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-nav-menu"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-nav-menu" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- CONTENT TRANSLATION -->
+      <article class="element stack" id="translation" data-cat="appkit">
+        <h3 data-status="beta">Content translation</h3>
+        <p>
+          What it is: the same <code>data-language</code> switch that
+          translates the library's own strings, extended to the page's own
+          content. What it is for: a multilingual page that stays one HTML
+          file — you write each translated variant inline instead of
+          maintaining parallel pages. When to use it: any content you want
+          offered in more than one language. Mark the natural container
+          <code>data-i18n</code> and give it one child per language, each
+          tagged <code>data-lang="xx"</code>; the active language's variant
+          shows and the rest hide. Author the default-language variant plain
+          and the others <code>hidden</code>, so with JavaScript off exactly
+          one language shows — the page stays readable and crawlable — and
+          this only switches which. Switch with a
+          <code>data-language-switch="xx"</code> button or a single
+          <code>data-language-cycle</code> button; the choice rides the URL
+          (<code>?language=</code>) so a shared link opens in the same
+          tongue. It re-localises the whole page live, this demo included.
+        </p>
+        <div class="demo">
+          <p data-i18n style="font-size: var(--text-h4); font-weight: var(--weight-strong);">
+            <span data-lang="en">The quick brown fox.</span>
+            <span data-lang="hi" hidden>तेज़ भूरी लोमड़ी।</span>
+          </p>
+          <p data-i18n style="color: var(--text-muted);">
+            <span data-lang="en">Only the active language shows; the rest are hidden in place.</span>
+            <span data-lang="hi" hidden>केवल सक्रिय भाषा दिखती है; बाकी यहीं छिपी रहती हैं।</span>
+          </p>
+          <button type="button" class="btn btn-pill" data-language-cycle data-languages="en,hi"
+                  aria-label="Switch language" data-tip="Cycles the page language; carried in the URL as ?language=" data-event="language">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3 3.5 3 12.5 0 16M12 4c-3 3.5-3 12.5 0 16"/></svg>
+            <span class="menu-value">EN</span>
+          </button>
+        </div>
+        <pre id="code-translation"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-translation" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SCROLL GAUGE -->

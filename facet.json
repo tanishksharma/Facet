@@ -171,7 +171,27 @@
     {
       "attribute": "data-language",
       "on": "html",
-      "summary": "Switches every library string (en, hi; extend facet.strings)."
+      "summary": "Switches every library string (en, hi; extend facet.strings) and every data-i18n content variant."
+    },
+    {
+      "attribute": "data-i18n",
+      "on": "any content container",
+      "summary": "Marks a translation group; its data-lang children are the per-language variants, the active one shown and the rest hidden."
+    },
+    {
+      "attribute": "data-lang",
+      "on": "a child of a data-i18n group",
+      "summary": "Tags one language variant (data-lang=\"xx\"); author the default plain and the rest hidden so one language shows with JS off."
+    },
+    {
+      "attribute": "data-language-switch",
+      "on": "button",
+      "summary": "Sets the page language to its value (one button per language); aria-pressed follows the active language."
+    },
+    {
+      "attribute": "data-language-cycle",
+      "on": "button",
+      "summary": "Walks the page languages on click (data-languages list, else every facet.strings language); writes the active code to a .menu-value or the button text."
     },
     {
       "attribute": "data-numbers",
@@ -1082,6 +1102,28 @@
       "a11y": "Native <details>/<summary> carries the expanded state; JS moves focus into the menu on open and back to the trigger on close; reduced motion drops the stagger."
     },
     {
+      "name": "Content translation",
+      "classes": [],
+      "attributes": [
+        "data-i18n",
+        "data-lang",
+        "data-t",
+        "data-language-switch",
+        "data-language-cycle"
+      ],
+      "summary": "Inline per-language content variants switched by data-language, plus keyed [data-t] strings; works with JS off in the default language.",
+      "keys": [
+        [
+          "Enter / Space",
+          "switches or cycles the language (on the button)"
+        ]
+      ],
+      "do": "Author the default-language variant plain and the others hidden, so exactly one language shows with JavaScript off and crawlers read it.",
+      "dont": "Ship parallel per-language pages, or hide the default variant (then nothing shows without JS).",
+      "why": "A multilingual page should stay one crawlable HTML file; switching language is enhancement over a working default.",
+      "a11y": "Real text in the DOM (no ::before content); the switch button carries an accessible name and aria-pressed follows the active language; the choice rides ?language= for shareable state."
+    },
+    {
       "name": "Scroll gauge",
       "classes": [
         ".scroll-gauge",
@@ -1239,6 +1281,7 @@
     "facet.icons": "The glyph table (name → svg markup); extend it, then call facet.icon().",
     "facet.icon": "(Re)fill every svg[data-icon] on the page.",
     "facet.navMenu": "(Re)wire floating .nav-menu overlays (idempotent; run after inserting a menu).",
+    "facet.translate": "(Re)apply content-language variants: show the active data-lang inside each data-i18n group, fill [data-t] from facet.strings. Run after inserting markup.",
     "facet.location": "The cached location object once locate() resolves (null before, null on failure).",
     "facet.version": "The library version string (\"0.2.0\").",
     "facet.scheme": "Three-way appearance: facet.scheme.get()/set('auto'|'light'|'dark')/cycle(); auto follows the OS live, persisted in URL + localStorage.",

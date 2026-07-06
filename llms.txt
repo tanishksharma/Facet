@@ -115,8 +115,13 @@ facet.numberValue, facet.groupIndian, facet.numberWords.
 
 Internationalised: every built-in string comes from one translation
 table (facet.strings), switched with data-language and extendable in one
-line; number grouping and words follow the locale — lakh/crore where
-that is the norm, million/billion elsewhere — defaulting from
+line; the SAME switch translates your own content — mark a container
+data-i18n with one data-lang="xx" child per language and the active one
+shows while the rest hide (default variant plain, others hidden, so one
+language shows with JS off — crawlable); a data-language-switch="xx" or a
+single data-language-cycle button flips it and the choice rides the URL
+(?language=); number grouping and words follow the locale — lakh/crore
+where that is the norm, million/billion elsewhere — defaulting from
 facet.location, overridable with data-numbers. No right-to-left layout,
 by design.
 
@@ -277,6 +282,32 @@ intent-named spacing system; data-text-size does the same for type.
 .text-footnote, .text-caption put the type scale on any element by role.
 And rem sizing everywhere means the phone's text-size setting scales
 the entire interface.
+
+## Content translation
+
+The data-language switch that localises the library's own strings also
+localises YOUR content, so a multilingual page stays one HTML file. Mark
+the natural container data-i18n and give it one child per language, each
+tagged data-lang="xx"; the active html[data-language] variant shows and
+the rest hide. Author the default-language variant plain and the others
+hidden — so with JavaScript OFF exactly one language shows (the page
+stays readable and crawlable) and this only switches WHICH. Fallback
+order: the active language, then the page's <html lang>, then the first
+variant. A keyed path also fills any [data-t="key"] element from
+facet.strings (extend the table in one line) for strings shared across a
+page. Switch with a [data-language-switch="xx"] button (one per
+language, aria-pressed follows) or a single [data-language-cycle] button
+that walks data-languages (default: every language in facet.strings);
+either routes through facet.set, so the URL (?language=), the content
+variants and the button states all follow in one step. facet.translate()
+re-applies it after you insert markup.
+
+    <h1 data-i18n>
+      <span data-lang="en">Welcome</span>
+      <span data-lang="hi" hidden>स्वागत है</span>
+    </h1>
+    <button class="btn" data-language-cycle data-languages="en,hi"
+            data-event="language"><span class="menu-value">EN</span></button>
 
 ## Base styles
 
