@@ -161,842 +161,338 @@
            ============================================================= -->
       <section id="features" class="stack home-section">
         <h2>Features</h2>
-        <p>
-          Everything this library does, one feature at a time — grouped by
-          what it is for. Tap any card for the detail. The same inventory
-          ships as plain text in <a href="/llms.txt">llms.txt</a> so an AI can
-          read, use and recommend Facet from one fetch.
-        </p>
+        <p>Everything Facet gives you, grouped by what it is for. Tap any card for the detail. The complete technical inventory also lives in <a href="/llms.txt">llms.txt</a> for AI tools.</p>
         <div class="feat-group">
-          <h3 class="feat-group-name">Two files, no framework</h3>
+          <h3 class="feat-group-name">Two files, zero setup</h3>
           <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-1" data-tip="Read more"><span class="feat-card-name">Two files</span><span class="feat-card-phrase">one link tag and one script tag, hosted at a public URL. No React, no npm, no build step, nothing to install.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-2" data-tip="Read more"><span class="feat-card-name">Never minified</span><span class="feat-card-phrase">the shipped files are the readable, commented source. Gzip handles size.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-3" data-tip="Read more"><span class="feat-card-name">Projects consume by URL and update the moment the library does</span><span class="feat-card-phrase">until v1, always the latest, straight from the web. From v1: frozen copies under /lib/v1/ pin old projects forever, and…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-4" data-tip="Read more"><span class="feat-card-name">App-ready out of the box</span><span class="feat-card-phrase">a one-line service worker stub gives any project the Facet caching strategy — pages network-first so deploys land on…</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-1" data-tip="Read more"><span class="feat-card-name">Two files, nothing to install</span><span class="feat-card-phrase">One link tag and one script tag from a URL. No framework, no npm, no build step.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-2" data-tip="Read more"><span class="feat-card-name">Never minified</span><span class="feat-card-phrase">The files you load are the readable, commented source. Compression handles the size.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-3" data-tip="Read more"><span class="feat-card-name">Always up to date</span><span class="feat-card-phrase">Point your project at the URL and it gets every fix and new component the moment they ship.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-4" data-tip="Read more"><span class="feat-card-name">Installable as an app</span><span class="feat-card-phrase">One extra line turns any project into an offline-capable, installable web app.</span></button>
           </div>
         </div>
         <div class="feat-group">
-          <h3 class="feat-group-name">Restyle in one attribute</h3>
+          <h3 class="feat-group-name">Restyle everything in one attribute</h3>
           <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-5" data-tip="Read more"><span class="feat-card-name">One attribute on the html tag restyles the whole page</span><span class="feat-card-phrase">layout containers included: data-theme="sand". No attribute is the Default theme.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-6" data-tip="Read more"><span class="feat-card-name">Dark mode is its own attribute</span><span class="feat-card-phrase">data-mode="dark", and composes with every theme.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-7" data-tip="Read more"><span class="feat-card-name">Both attributes work on any element, not just html</span><span class="feat-card-phrase">theme one section of a page (that is how the Color demo above is built).</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-8" data-tip="Read more"><span class="feat-card-name">The visitor's system dark preference is honoured automatically</span><span class="feat-card-phrase">when the page does not choose.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-9" data-tip="Read more"><span class="feat-card-name">Theme and mode ride the URL (?theme=, ?mode=)</span><span class="feat-card-phrase">a shared link opens looking exactly like the sender's screen.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-10" data-tip="Read more"><span class="feat-card-name">One-line switcher buttons</span><span class="feat-card-phrase">data-theme-switch and data-mode-toggle on any button, no JS to write.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-11" data-tip="Read more"><span class="feat-card-name">Setup by configuration</span><span class="feat-card-phrase">data-theme / data-mode / data-density / data-language on the facet.js script tag boot a page straight into that look —…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-12" data-tip="Read more"><span class="feat-card-name">Native widgets follow</span><span class="feat-card-phrase">scrollbars and form controls flip with color-scheme, and facet.js keeps the theme-color meta synced so the browser's…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-13" data-tip="Read more"><span class="feat-card-name">The OS accent as its own opt-in color</span><span class="feat-card-phrase">--os-accent is a dormant token no component uses — reach for it with var(--os-accent) and it is the iOS system blue…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-14" data-tip="Read more"><span class="feat-card-name">Custom accent as a supported recipe</span><span class="feat-card-phrase">override a rank's four tokens (color, hover, pressed, on-color) in one block — page-wide on :root or per-subtree on any…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-15" data-tip="Read more"><span class="feat-card-name">Style Mixer, the theme generator</span><span class="feat-card-phrase">a picker per semantic token restyles this whole page live on top of any theme, hover/pressed shades and on-colors…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-16" data-tip="Read more"><span class="feat-card-name">Skin Lab</span><span class="feat-card-phrase">every theme in light and dark side by side, all rendering the same real slice of interface from identical markup — the…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-17" data-tip="Read more"><span class="feat-card-name">Themed Google Map</span><span class="feat-card-phrase">data-map on a div, bring your own key, and the map wears the active theme — ground, water, roads and labels derived…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-18" data-tip="Read more"><span class="feat-card-name">facet.json</span><span class="feat-card-phrase">the machine-readable manifest — every theme, token, class, data attribute, component and API call as one JSON fetch,…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-19" data-tip="Read more"><span class="feat-card-name">Whole-page templates, previewed in every device</span><span class="feat-card-phrase">landing, SaaS dashboard, social app, app shell, article, pitch deck, A4 document, business card — shown live at desktop, tablet…</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-5" data-tip="Read more"><span class="feat-card-name">One attribute themes the whole page</span><span class="feat-card-phrase">data-theme="sand" restyles every color, layout included. No attribute is the default.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-6" data-tip="Read more"><span class="feat-card-name">Dark mode that composes</span><span class="feat-card-phrase">data-mode="dark" is separate from the theme and stacks with any of them.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-7" data-tip="Read more"><span class="feat-card-name">Theme just one section</span><span class="feat-card-phrase">The theme and mode attributes work on any element, not only the whole page.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-8" data-tip="Read more"><span class="feat-card-name">Follows the visitor's system</span><span class="feat-card-phrase">With no mode forced, the page matches the reader's light or dark preference automatically.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-9" data-tip="Read more"><span class="feat-card-name">Shareable links keep the look</span><span class="feat-card-phrase">Theme and mode are saved in the URL, so a shared link opens exactly as you saw it.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-10" data-tip="Read more"><span class="feat-card-name">One-line theme and mode switches</span><span class="feat-card-phrase">Add data-theme-switch or data-mode-toggle to any button — no JavaScript.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-11" data-tip="Read more"><span class="feat-card-name">Build your own theme, visually</span><span class="feat-card-phrase">A live builder tunes each color and hands you a paste-ready config; Skin Lab compares every theme at once.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-12" data-tip="Read more"><span class="feat-card-name">Bring your own brand color</span><span class="feat-card-phrase">Override one accent in a small block and every button, link and highlight follows.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-13" data-tip="Read more"><span class="feat-card-name">Themed Google Map</span><span class="feat-card-phrase">One attribute makes an embedded map wear the active theme's colors.</span></button>
           </div>
         </div>
         <div class="feat-group">
-          <h3 class="feat-group-name">Everything is a role-named token</h3>
+          <h3 class="feat-group-name">It adapts to the reader</h3>
           <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-20" data-tip="Read more"><span class="feat-card-name">Every design decision is a CSS variable named by role</span><span class="feat-card-phrase">color, type, spacing, container widths, radii, borders, shadows, motion, focus. Build with tokens and a theme change…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-21" data-tip="Read more"><span class="feat-card-name">Ranked accents</span><span class="feat-card-phrase">base family plus accent-1 (the one primary action), accent-2 (every secondary action's fill) and accent-3 (links,…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-22" data-tip="Read more"><span class="feat-card-name">Status colors (success</span><span class="feat-card-phrase">warning, error, info) tuned per theme, light and dark.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-23" data-tip="Read more"><span class="feat-card-name">Whisper-flat shadow scale and a 4px spacing scale</span><span class="feat-card-phrase">shared by every component and layout primitive.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-14" data-tip="Read more"><span class="feat-card-name">Respects the phone's text-size setting</span><span class="feat-card-phrase">Everything is measured in relative units, so the whole UI grows when a reader raises their text size.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-15" data-tip="Read more"><span class="feat-card-name">Headlines that scale smoothly</span><span class="feat-card-phrase">Hero and heading sizes flex between phone and desktop with no breakpoints to manage.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-16" data-tip="Read more"><span class="feat-card-name">Mobile-first by default</span><span class="feat-card-phrase">44px touch targets, no hover-only controls, and safe-area handling out of the box.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-17" data-tip="Read more"><span class="feat-card-name">Motion with a personality</span><span class="feat-card-phrase">Springy and alive by default; switch it to calm or off, and reduced-motion always wins.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-18" data-tip="Read more"><span class="feat-card-name">Handles high-contrast modes</span><span class="feat-card-phrase">Text and borders strengthen automatically for high-contrast and forced-colors readers.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-19" data-tip="Read more"><span class="feat-card-name">Smooth page-to-page transitions</span><span class="feat-card-phrase">One attribute animates navigation — the old page eases out, the new one springs in.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-20" data-tip="Read more"><span class="feat-card-name">Speaks the visitor's language and numbers</span><span class="feat-card-phrase">Built-in labels translate with one attribute, and numbers group the local way.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-21" data-tip="Read more"><span class="feat-card-name">Prints cleanly</span><span class="feat-card-phrase">Sensible margins, chrome hidden, ink-friendly colors when someone prints a page.</span></button>
           </div>
         </div>
         <div class="feat-group">
-          <h3 class="feat-group-name">It bends to the reader</h3>
+          <h3 class="feat-group-name">Write plain HTML, get a designed page</h3>
           <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-24" data-tip="Read more"><span class="feat-card-name">Respects the phone's text-size setting</span><span class="feat-card-phrase">every font size and space is set in rem, so when a reader raises their device or browser text size, the entire…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-25" data-tip="Read more"><span class="feat-card-name">Fluid display and h1 sizes</span><span class="feat-card-phrase">clamp() scales hero type between phone and desktop with no breakpoints to manage.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-26" data-tip="Read more"><span class="feat-card-name">Mobile-first</span><span class="feat-card-phrase">44px touch targets everywhere, no hover-only interactions, safe viewport handling.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-27" data-tip="Read more"><span class="feat-card-name">Seamless page transitions</span><span class="feat-card-phrase">with data-transition="page" on the html tag, moving between pages animates the old page away and springs the new one in…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-28" data-tip="Read more"><span class="feat-card-name">Motion with personality</span><span class="feat-card-phrase">Lively by default — presses have weight, arrivals settle with a playful spring (a true linear() spring curve where…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-29" data-tip="Read more"><span class="feat-card-name">prefers-reduced-motion honoured above any page choice</span><span class="feat-card-phrase">every transition and animation in the library collapses to nothing.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-30" data-tip="Read more"><span class="feat-card-name">prefers-contrast</span><span class="feat-card-phrase">more honoured at the token layer: muted text gives up its gray, borders climb toward the ink, the focus ring thickens —…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-31" data-tip="Read more"><span class="feat-card-name">Forced colors (Windows High Contrast) audited</span><span class="feat-card-phrase">elements whose shape was carried by a background alone keep a real border in the system palette.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-32" data-tip="Read more"><span class="feat-card-name">Global density</span><span class="feat-card-phrase">data-density="small|medium|large" scales the whole spacing system at once — spacing is named by intent (--space-card,…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-33" data-tip="Read more"><span class="feat-card-name">.visually-hidden</span><span class="feat-card-phrase">screen-reader-only text with the standard clip pattern.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-34" data-tip="Read more"><span class="feat-card-name">Text roles named by intent</span><span class="feat-card-phrase">.text-display, .text-h1….text-h4, .text-body, .text-quote, .text-footnote, .text-caption — the type scale as classes,…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-35" data-tip="Read more"><span class="feat-card-name">Print base included</span><span class="feat-card-phrase">sensible margins, navigation hidden, ink-friendly colors when a page is printed.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Semantic HTML already looks designed</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-36" data-tip="Read more"><span class="feat-card-name">Raw semantic HTML already looks designed</span><span class="feat-card-phrase">headings, text, links, lists, quotes, code, tables, forms, figures — no classes needed.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-37" data-tip="Read more"><span class="feat-card-name">One visible focus ring everywhere</span><span class="feat-card-phrase">keyboard only. Selection colors, thin scrollbars, skip-to-content link, placeholder styling.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-38" data-tip="Read more"><span class="feat-card-name">The hidden attribute always wins</span><span class="feat-card-phrase">even over components that set their own display.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-39" data-tip="Read more"><span class="feat-card-name">Numbers align while typing</span><span class="feat-card-phrase">tabular figures on all numeric UI.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-22" data-tip="Read more"><span class="feat-card-name">Semantic HTML already looks designed</span><span class="feat-card-phrase">Headings, text, links, lists, quotes, code, tables and forms look right with no classes.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-23" data-tip="Read more"><span class="feat-card-name">Polished basics everywhere</span><span class="feat-card-phrase">One clear focus ring, tidy text selection, thin scrollbars, and a skip-to-content link.</span></button>
           </div>
         </div>
         <div class="feat-group">
           <h3 class="feat-group-name">A whole library of components</h3>
           <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-40" data-tip="Read more"><span class="feat-card-name">Layout primitives</span><span class="feat-card-phrase">container (four widths), stack and row (three gaps each), the auto-fitting grid (breakpoint-free responsive columns),…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-41" data-tip="Read more"><span class="feat-card-name">The app kit, extracted from a shipped product</span><span class="feat-card-phrase">the bottom tab bar with its spring-physics gliding pill, the settings sheet on rigid rubber-band springs, the menu list…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-42" data-tip="Read more"><span class="feat-card-name">The snap pager</span><span class="feat-card-phrase">full-viewport snap pages auto-upgrade to the iOS-proven pager — spring transitions between section tops, native…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-43" data-tip="Read more"><span class="feat-card-name">Buttons in three variants and three sizes that</span><span class="feat-card-phrase">work identically on &lt;button&gt; and &lt;a&gt;; square icon buttons to match.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-44" data-tip="Read more"><span class="feat-card-name">The calculator-grade number input</span><span class="feat-card-phrase">prefilled example, one-tap clear on first touch, Indian digit grouping while typing (25,00,000), and a words helper…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-45" data-tip="Read more"><span class="feat-card-name">Fields with labels</span><span class="feat-card-phrase">hints and error states; themed sliders with live readouts; the detailed slider for wide ranges — coarse drag plus −/+…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-46" data-tip="Read more"><span class="feat-card-name">Choice controls</span><span class="feat-card-phrase">native checkbox and radio themed through accent-color, and a switch that is a checkbox upgraded with one class — form…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-47" data-tip="Read more"><span class="feat-card-name">Stepper (a real number input between two step buttons</span><span class="feat-card-phrase">min, max and step rule) and segmented control (one-of-few on hidden radios: arrows, form value and announcements stay…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-48" data-tip="Read more"><span class="feat-card-name">The wired field family</span><span class="feat-card-phrase">one label.field pattern around text input, textarea, select (token-colored chevron, no image files) and a capsule…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-49" data-tip="Read more"><span class="feat-card-name">File upload and date input, themed but native</span><span class="feat-card-phrase">the file button dresses as a secondary action (drag-drop and form value stay the browser's), the date picker keeps its…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-50" data-tip="Read more"><span class="feat-card-name">Cards in three voices</span><span class="feat-card-phrase">default, outlined, and clickable (the whole surface is an &lt;a&gt; that lifts and presses) — raised out of the velvet,…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-51" data-tip="Read more"><span class="feat-card-name">Modal, drawer and popover on the platform's own top layer</span><span class="feat-card-phrase">&lt;dialog&gt; opened by any aria-controls button (focus trap, Esc, backdrop close free), popovers on one attribute…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-52" data-tip="Read more"><span class="feat-card-name">Accordion on native &lt;details&gt; (same name = one open at a time</span><span class="feat-card-phrase">no JS); facet.toast() transient notices announced politely; dropdown menus of real buttons that close on outside click,…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-53" data-tip="Read more"><span class="feat-card-name">Wayfinding</span><span class="feat-card-phrase">real ARIA tabs with arrow keys and an accent underline; breadcrumbs with aria-current; pagination as real links in 44px…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-54" data-tip="Read more"><span class="feat-card-name">Data table</span><span class="feat-card-phrase">muted header, zebra rows, row hover, tabular right-aligned numbers via .num, and a .table-scroll wrapper so wide tables…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-55" data-tip="Read more"><span class="feat-card-name">The themed line chart</span><span class="feat-card-phrase">facet.chart(el, {points}) — accent-1 data line with dashed projections, event markers labelled above the plot, a drag…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-56" data-tip="Read more"><span class="feat-card-name">The small talkers</span><span class="feat-card-phrase">tinted status badges, self-toggling filter chips (aria-pressed, promoted from this site's own controls), avatars for…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-57" data-tip="Read more"><span class="feat-card-name">The waiting family</span><span class="feat-card-phrase">shimmering skeletons shaped like the content, an accent spinner ring for shapeless waits, and a dashed empty state that…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-58" data-tip="Read more"><span class="feat-card-name">The flagship link</span><span class="feat-card-phrase">the signature onward step — heading voice, strong accent underline, an arrow that leans in on hover; always a real…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-59" data-tip="Read more"><span class="feat-card-name">Forty-eight thin line icons on one attribute</span><span class="feat-card-phrase">&lt;svg data-icon="search"&gt; — carried inside facet.js (no files, no sprite), riding currentColor, extendable in one…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-60" data-tip="Read more"><span class="feat-card-name">Alive by default</span><span class="feat-card-phrase">data-parallax="depth" drifts elements behind the pointer, the scroll's momentum, or the device's tilt (permission-gated…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-61" data-tip="Read more"><span class="feat-card-name">A description tooltip on one attribute</span><span class="feat-card-phrase">data-tip on anything, shown on hover and keyboard focus, pure CSS.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-62" data-tip="Read more"><span class="feat-card-name">All behaviour wires itself to data attributes on load</span><span class="feat-card-phrase">pages opt in by writing HTML, never JS.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-63" data-tip="Read more"><span class="feat-card-name">A tiny JS API for calculator apps</span><span class="feat-card-phrase">facet.numberValue(), facet.groupIndian(), facet.numberWords().</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-64" data-tip="Read more"><span class="feat-card-name">Speaks the visitor's numbers and language</span><span class="feat-card-phrase">grouping and the words helper follow the locale — lakh/crore where that is the norm, million/billion elsewhere —…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-65" data-tip="Read more"><span class="feat-card-name">Built-in context</span><span class="feat-card-phrase">facet.now() answers the date, time and timezone synchronously; facet.location resolves the visitor's rough place (city,…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-66" data-tip="Read more"><span class="feat-card-name">Backgrounds</span><span class="feat-card-phrase">.bg-grid (technical drawing with plus-marked intersections), .bg-dots, .bg-ruled, .bg-graph — one class, gradients…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-67" data-tip="Read more"><span class="feat-card-name">Twenty blocks</span><span class="feat-card-phrase">card grids and shelves, filterable lists, product grid/detail/cart, top menu with a native phone fold, sidebar nav,…</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-24" data-tip="Read more"><span class="feat-card-name">Layout building blocks</span><span class="feat-card-phrase">Containers, stacks, rows, an auto-fitting grid, and full-screen snap pages — no breakpoints to manage.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-25" data-tip="Read more"><span class="feat-card-name">The app kit</span><span class="feat-card-phrase">A bottom tab bar, a slide-in settings sheet, a floating menu button and a scroll gauge — all self-wiring.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-26" data-tip="Read more"><span class="feat-card-name">Buttons</span><span class="feat-card-phrase">Three styles and three sizes, working the same on a button or a link, with matching icon buttons.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-27" data-tip="Read more"><span class="feat-card-name">Form fields done properly</span><span class="feat-card-phrase">Text, textarea, select and search — all with labels, hints and error states, all themed.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-28" data-tip="Read more"><span class="feat-card-name">Sliders</span><span class="feat-card-phrase">Themed sliders with live readouts, plus a detailed slider for wide ranges.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-29" data-tip="Read more"><span class="feat-card-name">A serious number input</span><span class="feat-card-phrase">Prefilled example, one-tap clear, local digit grouping while typing, and a spell-it-out helper.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-30" data-tip="Read more"><span class="feat-card-name">Choice controls</span><span class="feat-card-phrase">Checkboxes, radios, a switch, steppers and segmented controls — native, themed, keyboard-friendly.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-31" data-tip="Read more"><span class="feat-card-name">Cards</span><span class="feat-card-phrase">Plain, outlined, or fully clickable — where the whole surface is a link that lifts and presses.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-32" data-tip="Read more"><span class="feat-card-name">Modals, drawers and popovers</span><span class="feat-card-phrase">On the browser's own top layer, opened by one attribute, with Esc and click-outside handled.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-33" data-tip="Read more"><span class="feat-card-name">Menus, toasts and accordions</span><span class="feat-card-phrase">Dropdown menus, brief notices, and expand/collapse sections — native where possible, no JS to wire.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-34" data-tip="Read more"><span class="feat-card-name">Navigation</span><span class="feat-card-phrase">Real tabs, breadcrumbs and pagination — proper ARIA, keyboard-navigable.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-35" data-tip="Read more"><span class="feat-card-name">Data and status</span><span class="feat-card-phrase">Tables, charts, badges, chips, avatars and progress bars.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-36" data-tip="Read more"><span class="feat-card-name">Graceful waiting states</span><span class="feat-card-phrase">Skeletons shaped like your content, a spinner, and honest empty states.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-37" data-tip="Read more"><span class="feat-card-name">48 line icons on one attribute</span><span class="feat-card-phrase">A named svg fills itself in, takes the surrounding text color, and needs no files.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-38" data-tip="Read more"><span class="feat-card-name">A description tooltip on one attribute</span><span class="feat-card-phrase">data-tip on anything shows a helpful bubble on hover and on keyboard focus.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-39" data-tip="Read more"><span class="feat-card-name">Parallax and idle motion</span><span class="feat-card-phrase">Elements drift with the pointer, the scroll, or the device tilt — subtle and opt-in.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-40" data-tip="Read more"><span class="feat-card-name">Sound and haptics</span><span class="feat-card-phrase">Synthesized taps and clicks, on by default, with a switch to turn them off.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-41" data-tip="Read more"><span class="feat-card-name">Textured backgrounds</span><span class="feat-card-phrase">Grid, dots, ruled and graph-paper surfaces from one class, colored by the theme.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-42" data-tip="Read more"><span class="feat-card-name">Built-in context helpers</span><span class="feat-card-phrase">The current date, time and timezone on demand, and the visitor's rough location when allowed.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-43" data-tip="Read more"><span class="feat-card-name">Ready-made blocks and whole pages</span><span class="feat-card-phrase">Twenty copy-and-fill sections, plus full templates: landing, dashboard, social app and more.</span></button>
           </div>
         </div>
         <div class="feat-group">
-          <h3 class="feat-group-name">Accessible by default</h3>
+          <h3 class="feat-group-name">Accessible and AI-ready by default</h3>
           <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-68" data-tip="Read more"><span class="feat-card-name">AA contrast in every theme, light and dark</span><span class="feat-card-phrase">the palettes are built to pass, not checked after.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-69" data-tip="Read more"><span class="feat-card-name">Everything keyboard operable with the visible ring; ARIA</span><span class="feat-card-phrase">roles and labels wherever semantics fall short; icon-only controls always labelled.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-70" data-tip="Read more"><span class="feat-card-name">Live regions on things that change</span><span class="feat-card-phrase">results and number-words announce themselves politely.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-44" data-tip="Read more"><span class="feat-card-name">AA contrast in every theme</span><span class="feat-card-phrase">Light and dark, the palettes are built to pass — not checked after the fact.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-45" data-tip="Read more"><span class="feat-card-name">Fully keyboard operable</span><span class="feat-card-phrase">Everything reachable and usable by keyboard, with a clear focus ring and proper labels.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-46" data-tip="Read more"><span class="feat-card-name">Operable by AI agents</span><span class="feat-card-phrase">Real buttons and links, shallow structure, and page state in the URL — so an agent can read and drive it.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-47" data-tip="Read more"><span class="feat-card-name">The whole library as one text file</span><span class="feat-card-phrase">llms.txt teaches an AI everything about Facet in a single fetch.</span></button>
           </div>
         </div>
         <div class="feat-group">
-          <h3 class="feat-group-name">Built for AI and the open web</h3>
+          <h3 class="feat-group-name">Try it and learn it right here</h3>
           <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-71" data-tip="Read more"><span class="feat-card-name">Operable by agents through the DOM alone</span><span class="feat-card-phrase">shallow semantic structure, real buttons and links with accessible names, no synthetic widgets.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-72" data-tip="Read more"><span class="feat-card-name">State lives in the URL</span><span class="feat-card-phrase">so an agent can reach any page state by constructing a link.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-73" data-tip="Read more"><span class="feat-card-name">Stable descriptive IDs and data-event action names</span><span class="feat-card-phrase">agents and analytics target the same hooks.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-74" data-tip="Read more"><span class="feat-card-name">llms.txt</span><span class="feat-card-phrase">the entire library — tokens, components, snippets, rules — as one plain-text fetch. Nothing on this site needs JS to be…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-75" data-tip="Read more"><span class="feat-card-name">Every component's docs description is written as instructions</span><span class="feat-card-phrase">an AI can follow, and the identical text lives in the source file comments.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-48" data-tip="Read more"><span class="feat-card-name">Every component is live</span><span class="feat-card-phrase">The Library page shows each one working, with chips that flip its variants and states.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-49" data-tip="Read more"><span class="feat-card-name">Copy the exact HTML</span><span class="feat-card-phrase">The snippet is taken from the live demo, so what you copy is precisely what you see.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-50" data-tip="Read more"><span class="feat-card-name">A playground and a cheatsheet</span><span class="feat-card-phrase">Try any snippet live in a real Facet page, and look up every class on one filterable screen.</span></button>
           </div>
         </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">This site is the proof</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-76" data-tip="Read more"><span class="feat-card-name">The docs are the demo</span><span class="feat-card-phrase">every component live on this one page, with variant and state chips that flip the real thing.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-77" data-tip="Read more"><span class="feat-card-name">The copy button gives you the exact HTML of what you are looking at</span><span class="feat-card-phrase">the snippet is serialized from the live DOM, never hand-written.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-78" data-tip="Read more"><span class="feat-card-name">Search that filters the wall and the index</span><span class="feat-card-phrase">together; a scrollspy sidebar that shows where you are; the whole page re-renders in any theme from the header.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-79" data-tip="Read more"><span class="feat-card-name">Copy as Markdown on every wall entry</span><span class="feat-card-phrase">the description and exact snippet packaged for an LLM prompt in one click.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-80" data-tip="Read more"><span class="feat-card-name">The analytics bridge, documented in Rules</span><span class="feat-card-phrase">five lines wire any vendor to every data-event hook the library ships.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-81" data-tip="Read more"><span class="feat-card-name">A live size badge in the landing</span><span class="feat-card-phrase">the two files fetched and gzipped in your own browser — the real number, never a claim.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-82" data-tip="Read more"><span class="feat-card-name">Playground</span><span class="feat-card-phrase">one editable HTML box rendering live through the real library files, following this page's theme and mode.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-83" data-tip="Read more"><span class="feat-card-name">Cheatsheet</span><span class="feat-card-phrase">every class, attribute and API call on one dense filterable screen, rendered from facet.json so it can never drift.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-84" data-tip="Read more"><span class="feat-card-name">Click any swatch or token name to copy</span><span class="feat-card-phrase">its var(--name); hover any heading for its permalink.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-85" data-tip="Read more"><span class="feat-card-name">Keyboard-first</span><span class="feat-card-phrase">/ or Cmd+K jumps to search, arrow keys walk the index.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-86" data-tip="Read more"><span class="feat-card-name">Live AA/AAA contrast badges under each color panel</span><span class="feat-card-phrase">recomputed on every theme and mode switch.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-87" data-tip="Read more"><span class="feat-card-name">Every wall entry carries its maturity badge (alpha / beta / stable)</span><span class="feat-card-phrase">phone/tablet/desktop preview widths, Open in CodePen, and an edit-on-GitHub link.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-88" data-tip="Read more"><span class="feat-card-name">A reference block per wall entry, rendered from facet.json</span><span class="feat-card-phrase">every class with its one-liner, the keyboard table, a Do/Don't pair with the reason, and the accessibility note.</span></button>
-          </div>
-        </div>
-        <dialog class="modal stack topic-modal" id="cardmodal-1"><h3>Two files</h3>
-          <p>Two files, one link tag and one script tag, hosted at a public URL. No React, no npm, no build step, nothing to install.</p>
+        <dialog class="modal stack topic-modal" id="fx-1"><h3>Two files, nothing to install</h3>
+          <p>Facet is one CSS file and one JS file. You add a link tag and a script tag pointing at the hosted URL and everything works — no framework to learn, no package to install, no build to run.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-2"><h3>Never minified</h3>
-          <p>Never minified: the shipped files are the readable, commented source. Gzip handles size.</p>
+        <dialog class="modal stack topic-modal" id="fx-2"><h3>Never minified</h3>
+          <p>The shipped files are the real, commented source — open them and read exactly what is happening. Gzip keeps them small, so readability costs you nothing.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-3"><h3>Projects consume by URL and update the moment the library does</h3>
-          <p>Projects consume by URL and update the moment the library does — until v1, always the latest, straight from the web. From v1: frozen copies under /lib/v1/ pin old projects forever, and cached updates take over only on the next page load, never mid-page.</p>
+        <dialog class="modal stack topic-modal" id="fx-3"><h3>Always up to date</h3>
+          <p>Because you link to the hosted files instead of copying them in, your site picks up improvements automatically. At 1.0, frozen copies let you pin an old version for good if you prefer.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-4"><h3>App-ready out of the box</h3>
-          <p>App-ready out of the box: a one-line service worker stub gives any project the Facet caching strategy — pages network-first so deploys land on the very next refresh, cache as the offline fallback, other assets cached instantly and revalidated behind. <code>data-service-worker</code> registers it; <code>data-install</code> buttons appear when the browser offers installation; a manifest template ships in /templates.</p>
+        <dialog class="modal stack topic-modal" id="fx-4"><h3>Installable as an app</h3>
+          <p>Add one small service-worker file and your site caches itself for offline use and can be installed to a phone's home screen with an app icon and a full-screen shell — the same setup this library uses.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-5"><h3>One attribute on the html tag restyles the whole page</h3>
-          <p>One attribute on the html tag restyles the whole page, layout containers included: <code>data-theme="sand"</code>. No attribute is the Default theme.</p>
+        <dialog class="modal stack topic-modal" id="fx-5"><h3>One attribute themes the whole page</h3>
+          <p>Put one attribute on the page and the entire design changes — text, surfaces, borders, buttons, even layout backgrounds. Remove it and you are back to the clean default theme.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-6"><h3>Dark mode is its own attribute</h3>
-          <p>Dark mode is its own attribute, <code>data-mode="dark"</code>, and composes with every theme.</p>
+        <dialog class="modal stack topic-modal" id="fx-6"><h3>Dark mode that composes</h3>
+          <p>Dark mode is its own switch, independent of which theme you chose, so every theme automatically has a light and a dark version.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-7"><h3>Both attributes work on any element, not just html</h3>
-          <p>Both attributes work on any element, not just html: theme one section of a page (that is how the Color demo above is built).</p>
+        <dialog class="modal stack topic-modal" id="fx-7"><h3>Theme just one section</h3>
+          <p>Want one panel in another theme, or a dark hero on a light page? Put the attribute on that element and only that part restyles.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-8"><h3>The visitor's system dark preference is honoured automatically</h3>
-          <p>The visitor's system dark preference is honoured automatically when the page does not choose.</p>
+        <dialog class="modal stack topic-modal" id="fx-8"><h3>Follows the visitor's system</h3>
+          <p>If you do not pick a mode, Facet respects whatever the visitor's device is set to, and follows it live if they change it.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-9"><h3>Theme and mode ride the URL (?theme=, ?mode=)</h3>
-          <p>Theme and mode ride the URL (<code>?theme=</code>, <code>?mode=</code>): a shared link opens looking exactly like the sender's screen.</p>
+        <dialog class="modal stack topic-modal" id="fx-9"><h3>Shareable links keep the look</h3>
+          <p>The current theme and mode ride along in the web address. Send someone the link and it opens looking identical to your screen.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-10"><h3>One-line switcher buttons</h3>
-          <p>One-line switcher buttons: <code>data-theme-switch</code> and <code>data-mode-toggle</code> on any button, no JS to write.</p>
+        <dialog class="modal stack topic-modal" id="fx-10"><h3>One-line theme and mode switches</h3>
+          <p>Building a theme picker or a dark-mode toggle is a single attribute on a button. Facet wires the click, the state and the URL for you.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-11"><h3>Setup by configuration</h3>
-          <p>Setup by configuration: <code>data-theme</code> / <code>data-mode</code> / <code>data-density</code> / <code>data-language</code> on the facet.js script tag boot a page straight into that look — copy the configured tags off this page's setup strip. At runtime, <code>facet.set({...})</code> changes theme, mode or any token live, no reload.</p>
+        <dialog class="modal stack topic-modal" id="fx-11"><h3>Build your own theme, visually</h3>
+          <p>The theme builder lets you adjust each color and watch the whole page update, then copy a small config into your project. Skin Lab lines up every theme in light and dark so you can compare at a glance.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-12"><h3>Native widgets follow</h3>
-          <p>Native widgets follow: scrollbars and form controls flip with <code>color-scheme</code>, and facet.js keeps the <code>theme-color</code> meta synced so the browser's own chrome wears the theme too.</p>
+        <dialog class="modal stack topic-modal" id="fx-12"><h3>Bring your own brand color</h3>
+          <p>Set your brand's accent colors once and every component that uses that accent picks them up — page-wide, or scoped to one section.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-13"><h3>The OS accent as its own opt-in color</h3>
-          <p>The OS accent as its own opt-in color: <code>--os-accent</code> is a dormant token no component uses — reach for it with <code>var(--os-accent)</code> and it is the iOS system blue everywhere, upgrading to the visitor's real OS accent only where the browser exposes it (Safari 16.4+, Firefox 103+). Kept separate on purpose, so the accent ranks stay the theme's own inks rather than making nearly every Apple user blue.</p>
+        <dialog class="modal stack topic-modal" id="fx-13"><h3>Themed Google Map</h3>
+          <p>Drop in a map with one attribute and your own key, and its ground, water, roads and labels are recolored to match your theme, light or dark.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-14"><h3>Custom accent as a supported recipe</h3>
-          <p>Custom accent as a supported recipe: override a rank's four tokens (color, hover, pressed, on-color) in one block — page-wide on :root or per-subtree on any element — and every component using that rank follows in every state. The recipe with a live example is in the Color section; <code>facet.set</code> applies the same override live at runtime.</p>
+        <dialog class="modal stack topic-modal" id="fx-14"><h3>Respects the phone's text-size setting</h3>
+          <p>People who set a larger text size on their phone or browser get a larger interface everywhere — not just bigger body text, but proportional spacing and controls too.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-15"><h3>Style Mixer, the theme generator</h3>
-          <p>Style Mixer, the theme generator: a picker per semantic token restyles this whole page live on top of any theme, hover/pressed shades and on-colors derive automatically, the mix rides the URL for sharing, and the result exports as a paste-ready <code>facet.set</code> config block.</p>
+        <dialog class="modal stack topic-modal" id="fx-15"><h3>Headlines that scale smoothly</h3>
+          <p>Large display type resizes fluidly with the screen, so headlines look right on a phone and on a wide monitor without a single media query.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-16"><h3>Skin Lab</h3>
-          <p>Skin Lab: every theme in light and dark side by side, all rendering the same real slice of interface from identical markup — the one-attribute promise, proven in one glance.</p>
+        <dialog class="modal stack topic-modal" id="fx-16"><h3>Mobile-first by default</h3>
+          <p>Everything is sized for thumbs, nothing important hides behind a hover, and the layout respects notches and home indicators — so it feels right on a phone from the start.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-17"><h3>Themed Google Map</h3>
-          <p>Themed Google Map: <code>data-map</code> on a div, bring your own key, and the map wears the active theme — ground, water, roads and labels derived from the tokens by formula, restyled live on theme or mode switch; a quiet themed placeholder without a key, never a broken embed; <code>facet.mapStyle()</code> exposes the styles array.</p>
+        <dialog class="modal stack topic-modal" id="fx-17"><h3>Motion with a personality</h3>
+          <p>Presses have weight and things settle with a gentle spring. Prefer it quieter? One attribute calms or removes all motion, and a reader's reduced-motion setting overrides everything.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-18"><h3>facet.json</h3>
-          <p><a href="/facet.json">facet.json</a>: the machine-readable manifest — every theme, token, class, data attribute, component and API call as one JSON fetch, kept in sync by the same rule as this list.</p>
+        <dialog class="modal stack topic-modal" id="fx-18"><h3>Handles high-contrast modes</h3>
+          <p>When a reader turns on a high-contrast or forced-colors mode, Facet responds at the color level — grays firm up, borders appear, the focus ring thickens — so nothing disappears.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-19"><h3>Whole-page templates, previewed in every device</h3>
-          <p>Eight templates, whole pages ready to rename: <a href="/templates/landing.html">landing</a>, <a href="/templates/saas.html">SaaS analytics dashboard</a>, <a href="/templates/social.html">social app</a> (three-column feed + tab bar + settings sheet), <a href="/templates/app.html">app shell + dashboard</a> (installable), <a href="/templates/article.html">article</a>, <a href="/templates/deck.html">1920×1080 pitch deck</a> (arrow keys, exact print-to-PDF), <a href="/templates/document.html">A4 letterhead / invoice / one-pager</a>, and the <a href="/templates/card.html">business card with its print sheet</a>. On the <a href="/library.html#templates">Library</a> page the three flagship shapes render live in a real iframe you can flip between desktop, tablet and phone widths. Every one carries the SEO head pack; robots.txt and sitemap.xml ship at the root.</p>
+        <dialog class="modal stack topic-modal" id="fx-19"><h3>Smooth page-to-page transitions</h3>
+          <p>Add one attribute and moving between pages feels like an app: the current page slides away and the next springs in, while the URL changes normally.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-20"><h3>Every design decision is a CSS variable named by role</h3>
-          <p>Every design decision is a CSS variable named by role — color, type, spacing, container widths, radii, borders, shadows, motion, focus. Build with tokens and a theme change costs zero code.</p>
+        <dialog class="modal stack topic-modal" id="fx-20"><h3>Speaks the visitor's language and numbers</h3>
+          <p>Every built-in label comes from one translation table you switch with a single attribute and extend in a line. Number grouping follows the locale — lakh and crore where that is the norm, million and billion elsewhere.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-21"><h3>Ranked accents</h3>
-          <p>Ranked accents: base family plus accent-1 (the one primary action), accent-2 (every secondary action's fill) and accent-3 (links, labels, quiet affordances), each with hover, pressed and on-colors, in every theme. Components pick ranks, never colors.</p>
+        <dialog class="modal stack topic-modal" id="fx-21"><h3>Prints cleanly</h3>
+          <p>Hit print and you get a tidy document — navigation and controls drop away, colors go easy on ink, and margins are sane.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-22"><h3>Status colors (success</h3>
-          <p>Status colors (success, warning, error, info) tuned per theme, light and dark.</p>
+        <dialog class="modal stack topic-modal" id="fx-22"><h3>Semantic HTML already looks designed</h3>
+          <p>Before you add a single class, raw HTML is already styled — a clean, readable page out of the box. Classes are for components, not for making basic text presentable.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-23"><h3>Whisper-flat shadow scale and a 4px spacing scale</h3>
-          <p>Whisper-flat shadow scale and a 4px spacing scale shared by every component and layout primitive.</p>
+        <dialog class="modal stack topic-modal" id="fx-23"><h3>Polished basics everywhere</h3>
+          <p>The small things that make a site feel finished are handled: a single visible focus outline for keyboard users, nice selection colors, slim scrollbars, and a skip link for screen readers.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-24"><h3>Respects the phone's text-size setting</h3>
-          <p>Respects the phone's text-size setting: every font size and space is set in rem, so when a reader raises their device or browser text size, the entire interface scales with it — type, padding, gaps, all of it.</p>
+        <dialog class="modal stack topic-modal" id="fx-24"><h3>Layout building blocks</h3>
+          <p>The pieces you arrange everything else with: width-capped containers, evenly-spaced stacks and rows, a grid that fits as many columns as comfortably fit, and full-screen swipe pages for app-like flows.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-25"><h3>Fluid display and h1 sizes</h3>
-          <p>Fluid display and h1 sizes: <code>clamp()</code> scales hero type between phone and desktop with no breakpoints to manage.</p>
+        <dialog class="modal stack topic-modal" id="fx-25"><h3>The app kit</h3>
+          <p>Everything that makes a web page feel like a native app: a tab bar with a gliding selection pill, a settings panel that slides in on a spring, a floating action button, and a scroll indicator. Drop them in and they wire themselves up.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-26"><h3>Mobile-first</h3>
-          <p>Mobile-first: 44px touch targets everywhere, no hover-only interactions, safe viewport handling.</p>
+        <dialog class="modal stack topic-modal" id="fx-26"><h3>Buttons</h3>
+          <p>Primary, secondary and quiet buttons in small, medium and large — identical whether they are a real button or a link. Square icon-only buttons match.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-27"><h3>Seamless page transitions</h3>
-          <p>Seamless page transitions: with <code>data-transition="page"</code> on the html tag, moving between pages animates the old page away and springs the new one in while the URL changes normally — real multi-page navigation, no router. Per-link opt-out with <code>data-no-transition</code>, <code>facet.go(url)</code> for programmatic moves; unsupported browsers just navigate instantly, and reduced motion snaps.</p>
+        <dialog class="modal stack topic-modal" id="fx-27"><h3>Form fields done properly</h3>
+          <p>Every input comes wired with a label, room for a hint, and a clear error state, styled to match your theme — including a select with a themed arrow and no image files.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-28"><h3>Motion with personality</h3>
-          <p>Motion with personality: Lively by default — presses have weight, arrivals settle with a playful spring (a true <code>linear()</code> spring curve where supported) — or <code>data-motion="calm"</code> for short, near-linear motion, <code>data-motion="off"</code> for none. One attribute, page-wide or per subtree; every transition reads the motion tokens.</p>
+        <dialog class="modal stack topic-modal" id="fx-28"><h3>Sliders</h3>
+          <p>A clean slider that shows its value as you drag, and a heavier version for big ranges that pairs a coarse drag with plus/minus steppers and a number box for precise values.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-29"><h3>prefers-reduced-motion honoured above any page choice</h3>
-          <p><code>prefers-reduced-motion</code> honoured above any page choice: every transition and animation in the library collapses to nothing.</p>
+        <dialog class="modal stack topic-modal" id="fx-29"><h3>A serious number input</h3>
+          <p>Built for calculators and money: it starts with an example, clears on first touch, groups digits the way the reader's country does as they type, and can spell the amount out in words.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-30"><h3>prefers-contrast</h3>
-          <p><code>prefers-contrast: more</code> honoured at the token layer: muted text gives up its gray, borders climb toward the ink, the focus ring thickens — in every theme, light and dark, zero extra code.</p>
+        <dialog class="modal stack topic-modal" id="fx-30"><h3>Choice controls</h3>
+          <p>The full set of pick-one and toggle controls, built on native inputs so they stay accessible and submit in forms, just dressed to match your theme.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-31"><h3>Forced colors (Windows High Contrast) audited</h3>
-          <p>Forced colors (Windows High Contrast) audited: elements whose shape was carried by a background alone keep a real border in the system palette.</p>
+        <dialog class="modal stack topic-modal" id="fx-31"><h3>Cards</h3>
+          <p>A flexible surface for grouping content. Make it clickable and the entire card becomes a link with a satisfying lift-and-press.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-32"><h3>Global density</h3>
-          <p>Global density: <code>data-density="small|medium|large"</code> scales the whole spacing system at once — spacing is named by intent (<code>--space-card</code>, <code>--space-section</code>), never by number, so one attribute re-densifies a page. Type has the same three-step control, <code>data-text-size</code>. Both are theme-defined, page-wide or per subtree, and script-tag config keys.</p>
+        <dialog class="modal stack topic-modal" id="fx-32"><h3>Modals, drawers and popovers</h3>
+          <p>Dialogs, side drawers and small popovers that sit above everything correctly, open from any button with one attribute, and close on Escape or a backdrop click — no extra code.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-33"><h3>.visually-hidden</h3>
-          <p><code>.visually-hidden</code>: screen-reader-only text with the standard clip pattern.</p>
+        <dialog class="modal stack topic-modal" id="fx-33"><h3>Menus, toasts and accordions</h3>
+          <p>The disclosure set: dropdown menus of real buttons, short toast notices that announce themselves, and accordions where opening one closes the rest.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-34"><h3>Text roles named by intent</h3>
-          <p>Text roles named by intent: <code>.text-display</code>, <code>.text-h1</code>…<code>.text-h4</code>, <code>.text-body</code>, <code>.text-quote</code>, <code>.text-footnote</code>, <code>.text-caption</code> — the type scale as classes, so any element takes a role without an inline style. Global type size rides <code>data-text-size="small|medium|large"</code>.</p>
+        <dialog class="modal stack topic-modal" id="fx-34"><h3>Navigation</h3>
+          <p>Tabs you can arrow between, breadcrumbs that mark the current page, and pagination built from real links with big enough tap targets.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-35"><h3>Print base included</h3>
-          <p>Print base included: sensible margins, navigation hidden, ink-friendly colors when a page is printed.</p>
+        <dialog class="modal stack topic-modal" id="fx-35"><h3>Data and status</h3>
+          <p>The pieces for showing information: clean tables, simple charts, tinted status badges, filter chips, initial avatars and progress indicators.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-36"><h3>Raw semantic HTML already looks designed</h3>
-          <p>Raw semantic HTML already looks designed: headings, text, links, lists, quotes, code, tables, forms, figures — no classes needed.</p>
+        <dialog class="modal stack topic-modal" id="fx-36"><h3>Graceful waiting states</h3>
+          <p>While things load, show a shimmer shaped like the real content or a spinner; when there is nothing yet, a clear empty state instead of a blank space.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-37"><h3>One visible focus ring everywhere</h3>
-          <p>One visible focus ring everywhere, keyboard only. Selection colors, thin scrollbars, skip-to-content link, placeholder styling.</p>
+        <dialog class="modal stack topic-modal" id="fx-37"><h3>48 line icons on one attribute</h3>
+          <p>A set of clean line icons built into the library. Name one on an empty svg and it fills in, riding the current text color; add your own in a line.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-38"><h3>The hidden attribute always wins</h3>
-          <p>The <code>hidden</code> attribute always wins, even over components that set their own display.</p>
+        <dialog class="modal stack topic-modal" id="fx-38"><h3>A description tooltip on one attribute</h3>
+          <p>Explain any control with one attribute. The tip appears on hover and on keyboard focus, so it helps everyone, and it is pure CSS.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-39"><h3>Numbers align while typing</h3>
-          <p>Numbers align while typing: tabular figures on all numeric UI.</p>
+        <dialog class="modal stack topic-modal" id="fx-39"><h3>Parallax and idle motion</h3>
+          <p>Add a little life: chosen elements float gently or drift behind the cursor, the scroll's momentum, or the phone's tilt. It is opt-in and respects reduced-motion.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-40"><h3>Layout primitives</h3>
-          <p>Layout primitives — container (four widths), stack and row (three gaps each), the auto-fitting grid (breakpoint-free responsive columns), full-viewport snap sections — all themed, so layout restyles with the theme too.</p>
+        <dialog class="modal stack topic-modal" id="fx-40"><h3>Sound and haptics</h3>
+          <p>Controls can play a soft synthesized click and a haptic tap — no audio files — giving the interface a physical feel. Users can toggle it in the settings sheet.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-41"><h3>The app kit, extracted from a shipped product</h3>
-          <p>The app kit, extracted from a shipped product: the bottom tab bar with its spring-physics gliding pill, the settings sheet on rigid rubber-band springs, the menu list with square icon toggles, the floating scroll gauge (draggable page variant included), the lone .float-btn corner trigger, synthesized UI sounds and haptics (on by default, user-toggleable), the install nudge, and the parallax engine (off/cursor/tilt) — all self-wiring: a .tab-bar finds its pager and its sheet, any button aria-controlling a .sheet opens it. Wall entries land as the ingestion completes.</p>
+        <dialog class="modal stack topic-modal" id="fx-41"><h3>Textured backgrounds</h3>
+          <p>Give a section a faint material — a technical grid, dots, notebook rules or graph paper — with a single class that recolors itself per theme.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-42"><h3>The snap pager</h3>
-          <p>The snap pager: full-viewport snap pages auto-upgrade to the iOS-proven pager — spring transitions between section tops, native scrolling inside sections, gesture handoff with a rubber-band hint, wheel paging with cooldown — because CSS scroll-snap alone breaks on iOS. No-JS pages keep plain CSS snapping; data-pager="off" opts out.</p>
+        <dialog class="modal stack topic-modal" id="fx-42"><h3>Built-in context helpers</h3>
+          <p>Handy context without wiring up services: date, time and timezone whenever you need them, and the visitor's approximate city when it is appropriate — configurable and easy to switch off.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-43"><h3>Buttons in three variants and three sizes that</h3>
-          <p>Buttons in three variants and three sizes that work identically on <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code>; square icon buttons to match.</p>
+        <dialog class="modal stack topic-modal" id="fx-43"><h3>Ready-made blocks and whole pages</h3>
+          <p>Beyond single components: assembled sections like heroes, pricing and carts you copy whole, and complete page templates you rename and fill in — each previewable at phone, tablet and desktop widths.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-44"><h3>The calculator-grade number input</h3>
-          <p>The calculator-grade number input: prefilled example, one-tap clear on first touch, Indian digit grouping while typing (25,00,000), and a words helper that reads it back — "25 lakh".</p>
+        <dialog class="modal stack topic-modal" id="fx-44"><h3>AA contrast in every theme</h3>
+          <p>Every theme is designed so text meets AA contrast in both light and dark. Accessibility is a starting constraint here, not an afterthought.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-45"><h3>Fields with labels</h3>
-          <p>Fields with labels, hints and error states; themed sliders with live readouts; the detailed slider for wide ranges — coarse drag plus −/+ steppers and a number box for the exact value between; verdict-first result blocks that announce recalculations to screen readers.</p>
+        <dialog class="modal stack topic-modal" id="fx-45"><h3>Fully keyboard operable</h3>
+          <p>You can drive the whole interface from the keyboard, controls announce themselves correctly, and icon-only buttons always carry a label.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-46"><h3>Choice controls</h3>
-          <p>Choice controls: native checkbox and radio themed through <code>accent-color</code>, and a switch that is a checkbox upgraded with one class — form value, keyboard and screen-reader semantics untouched.</p>
+        <dialog class="modal stack topic-modal" id="fx-46"><h3>Operable by AI agents</h3>
+          <p>Because everything is real semantic HTML with accessible names and state stored in the URL, an AI agent can understand a page by reading it and act by clicking real controls — no guessing at custom widgets.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-47"><h3>Stepper (a real number input between two step buttons</h3>
-          <p>Stepper (a real number input between two step buttons — min, max and step rule) and segmented control (one-of-few on hidden radios: arrows, form value and announcements stay native).</p>
+        <dialog class="modal stack topic-modal" id="fx-47"><h3>The whole library as one text file</h3>
+          <p>A plain-text guide at the site root describes every token, component and snippet, so an AI assistant can learn the entire library from one file and help you build with it.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-48"><h3>The wired field family</h3>
-          <p>The wired field family: one <code>label.field</code> pattern around text input, textarea, select (token-colored chevron, no image files) and a capsule search field — real labels, hints, and the <code>.field-invalid</code> error state.</p>
+        <dialog class="modal stack topic-modal" id="fx-48"><h3>Every component is live</h3>
+          <p>This is not a list of screenshots — every component is running on the Library page, and you can flip its variants and states to see exactly how each looks.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-49"><h3>File upload and date input, themed but native</h3>
-          <p>File upload and date input, themed but native: the file button dresses as a secondary action (drag-drop and form value stay the browser's), the date picker keeps its platform UI with the accent highlight.</p>
+        <dialog class="modal stack topic-modal" id="fx-49"><h3>Copy the exact HTML</h3>
+          <p>Each copy button gives you the real HTML behind the demo you are looking at, generated from the live page so it always matches. You can also copy it as Markdown to paste into an AI prompt.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-50"><h3>Cards in three voices</h3>
-          <p>Cards in three voices — default, outlined, and clickable (the whole surface is an <code>&lt;a&gt;</code> that lifts and presses) — raised out of the velvet, carved into the cream, glossed in aero, automatically.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-51"><h3>Modal, drawer and popover on the platform's own top layer</h3>
-          <p>Modal, drawer and popover on the platform's own top layer: <code>&lt;dialog&gt;</code> opened by any <code>aria-controls</code> button (focus trap, Esc, backdrop close free), popovers on one attribute with light dismiss and zero JS.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-52"><h3>Accordion on native &lt;details&gt; (same name = one open at a time</h3>
-          <p>Accordion on native <code>&lt;details&gt;</code> (same <code>name</code> = one open at a time, no JS); <code>facet.toast()</code> transient notices announced politely; dropdown menus of real buttons that close on outside click, Esc, or a pick.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-53"><h3>Wayfinding</h3>
-          <p>Wayfinding: real ARIA tabs with arrow keys and an accent underline; breadcrumbs with <code>aria-current</code>; pagination as real links in 44px squares — every page a URL; <code>.nav-link</code> with its three designed states for chrome navigation.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-54"><h3>Data table</h3>
-          <p>Data table: muted header, zebra rows, row hover, tabular right-aligned numbers via <code>.num</code>, and a <code>.table-scroll</code> wrapper so wide tables scroll on phones.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-55"><h3>The themed line chart</h3>
-          <p>The themed line chart: <code>facet.chart(el, {points})</code> — accent-1 data line with dashed projections, event markers labelled above the plot, a drag crosshair that reads values, all colors tokens so a theme switch restyles a live chart.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-56"><h3>The small talkers</h3>
-          <p>The small talkers: tinted status badges, self-toggling filter chips (<code>aria-pressed</code>, promoted from this site's own controls), avatars for images or initials, and the native <code>&lt;progress&gt;</code> themed.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-57"><h3>The waiting family</h3>
-          <p>The waiting family: shimmering skeletons shaped like the content, an accent spinner ring for shapeless waits, and a dashed empty state that names what belongs there and offers the one action that fills it.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-58"><h3>The flagship link</h3>
-          <p>The flagship link: the signature onward step — heading voice, strong accent underline, an arrow that leans in on hover; always a real <code>&lt;a&gt;</code>.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-59"><h3>Forty-eight thin line icons on one attribute</h3>
-          <p>Forty-eight thin line icons on one attribute — <code>&lt;svg data-icon="search"&gt;</code> — carried inside facet.js (no files, no sprite), riding <code>currentColor</code>, extendable in one line.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-60"><h3>Alive by default</h3>
-          <p>Alive by default: <code>data-parallax="depth"</code> drifts elements behind the pointer, the scroll's momentum, or the device's tilt (permission-gated on iOS, honestly handled); <code>idle-*</code> classes give resting elements a slow float, sway or pulse on the composable translate/rotate/scale properties. Calm stills idle life; off and reduced motion still everything.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-61"><h3>A description tooltip on one attribute</h3>
-          <p>A description tooltip on one attribute: <code>data-tip</code> on anything, shown on hover and keyboard focus, pure CSS.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-62"><h3>All behaviour wires itself to data attributes on load</h3>
-          <p>All behaviour wires itself to data attributes on load — pages opt in by writing HTML, never JS.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-63"><h3>A tiny JS API for calculator apps</h3>
-          <p>A tiny JS API for calculator apps: <code>facet.numberValue()</code>, <code>facet.groupIndian()</code>, <code>facet.numberWords()</code>.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-64"><h3>Speaks the visitor's numbers and language</h3>
-          <p>Speaks the visitor's numbers and language: grouping and the words helper follow the locale — lakh/crore where that is the norm, million/billion elsewhere — defaulting from <code>facet.location</code>, overridable with <code>data-numbers</code>. Every string the library ships comes from one translation table, switched with <code>data-language</code> and extendable in one line: <code>facet.strings.ta = {...}</code>. No right-to-left support, by design.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-65"><h3>Built-in context</h3>
-          <p>Built-in context: <code>facet.now()</code> answers the date, time and timezone synchronously; <code>facet.location</code> resolves the visitor's rough place (city, region, country) from a configurable, disablable IP lookup, upgraded to GPS only where permission already exists. Null on failure, never a prompt, never a throw.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-66"><h3>Backgrounds</h3>
-          <p>Backgrounds: <code>.bg-grid</code> (technical drawing with plus-marked intersections), <code>.bg-dots</code>, <code>.bg-ruled</code>, <code>.bg-graph</code> — one class, gradients only, token-colored in every theme and mode, silent under <code>prefers-contrast: more</code>.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-67"><h3>Twenty blocks</h3>
-          <p>Twenty blocks — card grids and shelves, filterable lists, product grid/detail/cart, top menu with a native phone fold, sidebar nav, footer, hero, feature grid, pricing, FAQ, CTA band, social proof, data table with toolbar, stat row, settings, form, and the article set — every one an assembly of the components, copyable whole. A live filter behavior rides <code>data-filter</code> on any input.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-68"><h3>AA contrast in every theme, light and dark</h3>
-          <p>AA contrast in every theme, light and dark — the palettes are built to pass, not checked after.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-69"><h3>Everything keyboard operable with the visible ring; ARIA</h3>
-          <p>Everything keyboard operable with the visible ring; ARIA roles and labels wherever semantics fall short; icon-only controls always labelled.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-70"><h3>Live regions on things that change</h3>
-          <p>Live regions on things that change: results and number-words announce themselves politely.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-71"><h3>Operable by agents through the DOM alone</h3>
-          <p>Operable by agents through the DOM alone: shallow semantic structure, real buttons and links with accessible names, no synthetic widgets.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-72"><h3>State lives in the URL</h3>
-          <p>State lives in the URL, so an agent can reach any page state by constructing a link.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-73"><h3>Stable descriptive IDs and data-event action names</h3>
-          <p>Stable descriptive IDs and <code>data-event</code> action names: agents and analytics target the same hooks.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-74"><h3>llms.txt</h3>
-          <p><a href="/llms.txt">llms.txt</a>: the entire library — tokens, components, snippets, rules — as one plain-text fetch. Nothing on this site needs JS to be read.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-75"><h3>Every component's docs description is written as instructions</h3>
-          <p>Every component's docs description is written as instructions an AI can follow, and the identical text lives in the source file comments.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-76"><h3>The docs are the demo</h3>
-          <p>The docs are the demo: every component live on this one page, with variant and state chips that flip the real thing.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-77"><h3>The copy button gives you the exact HTML of what you are looking at</h3>
-          <p>The copy button gives you the exact HTML of what you are looking at — the snippet is serialized from the live DOM, never hand-written.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-78"><h3>Search that filters the wall and the index</h3>
-          <p>Search that filters the wall and the index together; a scrollspy sidebar that shows where you are; the whole page re-renders in any theme from the header.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-79"><h3>Copy as Markdown on every wall entry</h3>
-          <p>Copy as Markdown on every wall entry: the description and exact snippet packaged for an LLM prompt in one click.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-80"><h3>The analytics bridge, documented in Rules</h3>
-          <p>The analytics bridge, documented in Rules: five lines wire any vendor to every <code>data-event</code> hook the library ships.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-81"><h3>A live size badge in the landing</h3>
-          <p>A live size badge in the landing: the two files fetched and gzipped in your own browser — the real number, never a claim.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-82"><h3>Playground</h3>
-          <p>Playground: one editable HTML box rendering live through the real library files, following this page's theme and mode.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-83"><h3>Cheatsheet</h3>
-          <p>Cheatsheet: every class, attribute and API call on one dense filterable screen, rendered from facet.json so it can never drift.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-84"><h3>Click any swatch or token name to copy</h3>
-          <p>Click any swatch or token name to copy its <code>var(--name)</code>; hover any heading for its permalink.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-85"><h3>Keyboard-first</h3>
-          <p>Keyboard-first: <kbd>/</kbd> or <kbd>Cmd</kbd>+<kbd>K</kbd> jumps to search, arrow keys walk the index.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-86"><h3>Live AA/AAA contrast badges under each color panel</h3>
-          <p>Live AA/AAA contrast badges under each color panel, recomputed on every theme and mode switch.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-87"><h3>Every wall entry carries its maturity badge (alpha / beta / stable)</h3>
-          <p>Every wall entry carries its maturity badge (alpha / beta / stable), phone/tablet/desktop preview widths, Open in CodePen, and an edit-on-GitHub link.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-88"><h3>A reference block per wall entry, rendered from facet.json</h3>
-          <p>A reference block per wall entry, rendered from facet.json: every class with its one-liner, the keyboard table, a Do/Don't pair with the reason, and the accessibility note.</p>
+        <dialog class="modal stack topic-modal" id="fx-50"><h3>A playground and a cheatsheet</h3>
+          <p>The Playground renders whatever you type through the actual library files so you can experiment safely. The Cheatsheet lists every class and attribute on one searchable screen.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
       </section>
 
       <!-- =============================================================
-           BEST PRACTICES · how the library is built, used and grown.
+           WHAT YOU CAN COUNT ON · the principles behind the library.
            ============================================================= -->
       <section id="rules" class="stack home-section">
-        <h2>Best practices</h2>
-        <p>
-          The guidelines the library holds itself to — good practices for
-          building on the open web, each on its own card. They live in the
-          repo as
-          <a href="https://github.com/tanishksharma/Facet/blob/main/CLAUDE.md">CLAUDE.md</a>
-          for AI builders and at <a href="/llms.txt">llms.txt</a> for crawlers.
-        </p>
+        <h2>What you can count on</h2>
+        <p>The promises behind every component — the principles the library holds itself to, so you always know what you are getting.</p>
         <div class="feat-group">
-          <h3 class="feat-group-name">Core principles</h3>
+          <h3 class="feat-group-name">What you can count on</h3>
           <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-89" data-tip="Read more"><span class="feat-card-name">Readability is the product. Modern frontend is div</span><span class="feat-card-phrase">soup and minified garbage, unreadable by humans. This library is the opposite.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-90" data-tip="Read more"><span class="feat-card-name">One-glance HTML</span><span class="feat-card-phrase">any page's structure makes sense on first read. Semantic tags, self-explanatory classes.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-91" data-tip="Read more"><span class="feat-card-name">Not one extra wrapper. A container inside a</span><span class="feat-card-phrase">container exists only to enable a real feature, like scrolling.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-92" data-tip="Read more"><span class="feat-card-name">Least code that stays readable</span><span class="feat-card-phrase">entire products are assembled by writing HTML files with the right classes.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-93" data-tip="Read more"><span class="feat-card-name">Pure HTML</span><span class="feat-card-phrase">CSS and JS. No build step, no framework, never minified. Gzip handles size.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-94" data-tip="Read more"><span class="feat-card-name">One-step theme change</span><span class="feat-card-phrase">one attribute on the html tag restyles the whole page, layout containers included.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-95" data-tip="Read more"><span class="feat-card-name">Everything explained in place</span><span class="feat-card-phrase">every interactive element carries a description tooltip.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-96" data-tip="Read more"><span class="feat-card-name">Fully commented</span><span class="feat-card-phrase">every file self-describes with intros, usage notes and to-dos, so any AI can build products with it.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-97" data-tip="Read more"><span class="feat-card-name">Accessible</span><span class="feat-card-phrase">SEO-ready and AI-crawlable by default. Enforced through the checklist below, not optional.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-98" data-tip="Read more"><span class="feat-card-name">AI-native operation</span><span class="feat-card-phrase">everything built with Facet is operable by agents through the DOM alone — real buttons and links with accessible names,…</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-1" data-tip="Read more"><span class="feat-card-name">The code you ship stays readable</span><span class="feat-card-phrase">No minified soup — the library, and the pages you build with it, stay human-readable.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-2" data-tip="Read more"><span class="feat-card-name">One-glance HTML</span><span class="feat-card-phrase">Semantic tags and self-explanatory class names, so a page reads top to bottom.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-3" data-tip="Read more"><span class="feat-card-name">No wrapper soup</span><span class="feat-card-phrase">A container exists only to do a real job, like scrolling — never decoration.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-4" data-tip="Read more"><span class="feat-card-name">Real controls, always</span><span class="feat-card-phrase">Buttons are buttons, links are links, and every field has a real label.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-5" data-tip="Read more"><span class="feat-card-name">Accessible, SEO-ready and AI-readable</span><span class="feat-card-phrase">Built in from the start, not bolted on later.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-6" data-tip="Read more"><span class="feat-card-name">Battle-tested on iOS</span><span class="feat-card-phrase">The hard-won rules for snap pages, gestures, PWA shells and caching are already baked in.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-7" data-tip="Read more"><span class="feat-card-name">Bring your own analytics</span><span class="feat-card-phrase">Every key action has a stable, named hook — wire any analytics tool in a few lines.</span></button>
           </div>
         </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">How the library is used</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-99" data-tip="Read more"><span class="feat-card-name">Every page starts from the library</span><span class="feat-card-phrase">never from blank CSS.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-100" data-tip="Read more"><span class="feat-card-name">Start from a whole-page template</span><span class="feat-card-phrase">landing, SaaS dashboard or social app — or lay the page out with the layout primitives (container, stack, grid, snap) and fill each…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-101" data-tip="Read more"><span class="feat-card-name">Copy snippets straight off this wall. They render</span><span class="feat-card-phrase">in any page that links facet.css.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-102" data-tip="Read more"><span class="feat-card-name">App logic</span><span class="feat-card-phrase">data fetching and state management live in projects, never in the library.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Markup rules</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-103" data-tip="Read more"><span class="feat-card-name">Semantic tags over div</span><span class="feat-card-phrase">header, nav, main, section, article, aside, footer, figure.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-104" data-tip="Read more"><span class="feat-card-name">The wrapper law</span><span class="feat-card-phrase">an element exists only to hold content, create layout, or carry behavior. Anything else is deleted.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-105" data-tip="Read more"><span class="feat-card-name">Container inside a container only to enable a real feature</span><span class="feat-card-phrase">scroll areas, sticky regions, overflow clipping.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-106" data-tip="Read more"><span class="feat-card-name">Structural elements contain content or other structural elements</span><span class="feat-card-phrase">Never decorative nesting.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-107" data-tip="Read more"><span class="feat-card-name">Buttons are button</span><span class="feat-card-phrase">links are a, form fields have real label elements.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-108" data-tip="Read more"><span class="feat-card-name">One h1 per page. Heading levels never skip</span><span class="feat-card-phrase"></span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">The compliance checklist</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-109" data-tip="Read more"><span class="feat-card-name">Semantic tokens only. No raw hex</span><span class="feat-card-phrase">px sizes outside the scales, or hardcoded fonts.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-110" data-tip="Read more"><span class="feat-card-name">Works in every theme and in light and</span><span class="feat-card-phrase">dark with zero extra code.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-111" data-tip="Read more"><span class="feat-card-name">All states covered</span><span class="feat-card-phrase">hover, focus, active, disabled, and where relevant empty, loading, error.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-112" data-tip="Read more"><span class="feat-card-name">Keyboard operable with a visible focus ring. ARIA</span><span class="feat-card-phrase">roles and labels where semantics fall short.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-113" data-tip="Read more"><span class="feat-card-name">Interactive elements ship with a description tooltip</span><span class="feat-card-phrase"></span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-114" data-tip="Read more"><span class="feat-card-name">Responsive and mobile-usable</span><span class="feat-card-phrase">44px touch targets, no hover-only interactions.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-115" data-tip="Read more"><span class="feat-card-name">Minimal semantic markup. Every element has a job</span><span class="feat-card-phrase">per the markup rules.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-116" data-tip="Read more"><span class="feat-card-name">Fully commented in the file</span><span class="feat-card-phrase">what it is, how to use it, its options, open to-dos.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-117" data-tip="Read more"><span class="feat-card-name">Names follow the naming rules. Nothing minified</span><span class="feat-card-phrase"></span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-118" data-tip="Read more"><span class="feat-card-name">Analytics hook on its key action where relevant</span><span class="feat-card-phrase">a data-event attribute.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-119" data-tip="Read more"><span class="feat-card-name">Wall entry added on this page</span><span class="feat-card-phrase">live demo, variant and state chips, exact snippet with copy.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-120" data-tip="Read more"><span class="feat-card-name">Docs description added</span><span class="feat-card-phrase">what it is, what it is for, when to use it. Written to read as AI instructions, same text as the file comment and…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-121" data-tip="Read more"><span class="feat-card-name">BACKLOG.md item ticked. Committed to Git with a</span><span class="feat-card-phrase">clear message.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Naming, maintaining, versioning</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-122" data-tip="Read more"><span class="feat-card-name">Tokens named by role, not value</span><span class="feat-card-phrase">--surface, not --gray-100.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-123" data-tip="Read more"><span class="feat-card-name">One class prefix and pattern per component</span><span class="feat-card-phrase">.btn, .btn-primary, predictable everywhere.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-124" data-tip="Read more"><span class="feat-card-name">JS: one small named function per behavior. The</span><span class="feat-card-phrase">name says what it does.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-125" data-tip="Read more"><span class="feat-card-name">Docs are demos. A component is not done</span><span class="feat-card-phrase">until this page shows it live with its code.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-126" data-tip="Read more"><span class="feat-card-name">One component</span><span class="feat-card-phrase">one clearly commented section in the CSS file. Nothing is scattered.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-127" data-tip="Read more"><span class="feat-card-name">All changes go through Git commits. The live</span><span class="feat-card-phrase">files are never edited ad hoc.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-128" data-tip="Read more"><span class="feat-card-name">Growth by extraction</span><span class="feat-card-phrase">build a new pattern inside a project first, promote it once it repeats.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-129" data-tip="Read more"><span class="feat-card-name">Consume by URL only. Tag releases in Git. On dependency</span><span class="feat-card-phrase">freeze a copy to /lib/v1/ and keep working in /lib/.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Platform laws (paid for on iOS)</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-130" data-tip="Read more"><span class="feat-card-name">Pager law. Full-page snap sections that can outgrow</span><span class="feat-card-phrase">the viewport are never built with CSS scroll-snap: mandatory re-snaps a tall section back to its top after a flick and…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-131" data-tip="Read more"><span class="feat-card-name">Gesture law. Tame iOS with touch-action</span><span class="feat-card-phrase">pan-y on scrollers (vertical scroll only — also kills double-tap zoom and pinch), manipulation on fixed chrome, none on…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-132" data-tip="Read more"><span class="feat-card-name">App shell law. For a standalone PWA</span><span class="feat-card-phrase">viewport-fit=cover alone is not enough on iOS: without apple-mobile-web-app-capable and…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-133" data-tip="Read more"><span class="feat-card-name">Caching law. HTML documents and</span><span class="feat-card-phrase">until versioned freezes exist, the /lib/ files themselves are never cache-first: every refresh loads from the network…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-134" data-tip="Read more"><span class="feat-card-name">Parallax exclusion. Elements carrying their own transform physics</span><span class="feat-card-phrase">velvet lift and press, the pager's rubber-band translate — never register with facetMotion: two writers on one inline…</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-135" data-tip="Read more"><span class="feat-card-name">Font-list law. Never put inherit inside a font-family list (ui-rounded</span><span class="feat-card-phrase">"SF Pro Rounded", inherit is silently invalid and drops the whole declaration). A stack ends in a generic family,…</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">iOS, honestly</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-136" data-tip="Read more"><span class="feat-card-name">iOS, honestly: what a website can and cannot do</span><span class="feat-card-phrase">The research pass behind the platform laws, kept current so nobody designs around a capability that does not exist.…</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Analytics: bring your own</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="cardmodal-137" data-tip="Read more"><span class="feat-card-name">Analytics: bring your own vendor</span><span class="feat-card-phrase">No analytics tool is baked in. Every key action in the library carries a stable, documented data-event name — the same…</span></button>
-          </div>
-        </div>
-        <dialog class="modal stack topic-modal" id="cardmodal-89"><h3>Readability is the product. Modern frontend is div</h3>
-          <p>Readability is the product. Modern frontend is div soup and minified garbage, unreadable by humans. This library is the opposite.</p>
+        <dialog class="modal stack topic-modal" id="bp-1"><h3>The code you ship stays readable</h3>
+          <p>Facet exists because modern front-end is often an unreadable pile of machinery. Here the library and the pages you write with it stay clean and legible — that is the whole point.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-90"><h3>One-glance HTML</h3>
-          <p>One-glance HTML: any page's structure makes sense on first read. Semantic tags, self-explanatory classes.</p>
+        <dialog class="modal stack topic-modal" id="bp-2"><h3>One-glance HTML</h3>
+          <p>Structure makes sense on first read: header, nav, main, section, article. You can look at a page and understand it without decoding it.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-91"><h3>Not one extra wrapper. A container inside a</h3>
-          <p>Not one extra wrapper. A container inside a container exists only to enable a real feature, like scrolling.</p>
+        <dialog class="modal stack topic-modal" id="bp-3"><h3>No wrapper soup</h3>
+          <p>Facet never nests boxes for the sake of it. An extra container is only there to enable something real, like a scroll area or a sticky region.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-92"><h3>Least code that stays readable</h3>
-          <p>Least code that stays readable: entire products are assembled by writing HTML files with the right classes.</p>
+        <dialog class="modal stack topic-modal" id="bp-4"><h3>Real controls, always</h3>
+          <p>Every interactive thing is the right HTML element with an accessible name — so it works with the keyboard, with screen readers, and with AI agents, for free.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-93"><h3>Pure HTML</h3>
-          <p>Pure HTML, CSS and JS. No build step, no framework, never minified. Gzip handles size.</p>
+        <dialog class="modal stack topic-modal" id="bp-5"><h3>Accessible, SEO-ready and AI-readable</h3>
+          <p>Contrast, keyboard support, structured markup and a machine-readable guide are baseline in Facet, so the sites you build inherit them without extra work.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-94"><h3>One-step theme change</h3>
-          <p>One-step theme change: one attribute on the html tag restyles the whole page, layout containers included.</p>
+        <dialog class="modal stack topic-modal" id="bp-6"><h3>Battle-tested on iOS</h3>
+          <p>Real app work on iPhone taught some painful lessons — how full-screen pages must scroll, how to tame gestures, what a standalone web app actually needs, and why caching has to be handled just so. Those fixes are built into the library so your app feels native instead of janky.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-95"><h3>Everything explained in place</h3>
-          <p>Everything explained in place: every interactive element carries a description tooltip.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-96"><h3>Fully commented</h3>
-          <p>Fully commented: every file self-describes with intros, usage notes and to-dos, so any AI can build products with it.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-97"><h3>Accessible</h3>
-          <p>Accessible, SEO-ready and AI-crawlable by default. Enforced through the checklist below, not optional.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-98"><h3>AI-native operation</h3>
-          <p>AI-native operation: everything built with Facet is operable by agents through the DOM alone — real buttons and links with accessible names, state in the URL, stable IDs and data-event names, llms.txt as the one-fetch manual.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-99"><h3>Every page starts from the library</h3>
-          <p>Every page starts from the library, never from blank CSS.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-100"><h3>Start from a whole-page template</h3>
-          <p>Start from a whole-page template — landing, SaaS dashboard, social app, app shell, article, deck, document or card — or lay the page out yourself with the layout primitives (container, stack, grid, snap) and fill each area with components. The Layer 4 set previews live on the <a href="/library.html#templates">Library</a> page at desktop, tablet and phone widths.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-101"><h3>Copy snippets straight off this wall. They render</h3>
-          <p>Copy snippets straight off this wall. They render in any page that links facet.css.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-102"><h3>App logic</h3>
-          <p>App logic, data fetching and state management live in projects, never in the library.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-103"><h3>Semantic tags over div</h3>
-          <p>Semantic tags over div: header, nav, main, section, article, aside, footer, figure.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-104"><h3>The wrapper law</h3>
-          <p>The wrapper law: an element exists only to hold content, create layout, or carry behavior. Anything else is deleted.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-105"><h3>Container inside a container only to enable a real feature</h3>
-          <p>Container inside a container only to enable a real feature: scroll areas, sticky regions, overflow clipping.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-106"><h3>Structural elements contain content or other structural elements</h3>
-          <p>Structural elements contain content or other structural elements. Never decorative nesting.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-107"><h3>Buttons are button</h3>
-          <p>Buttons are <code>button</code>, links are <code>a</code>, form fields have real <code>label</code> elements.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-108"><h3>One h1 per page. Heading levels never skip</h3>
-          <p>One h1 per page. Heading levels never skip.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-109"><h3>Semantic tokens only. No raw hex</h3>
-          <p>Semantic tokens only. No raw hex, px sizes outside the scales, or hardcoded fonts.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-110"><h3>Works in every theme and in light and</h3>
-          <p>Works in every theme and in light and dark with zero extra code.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-111"><h3>All states covered</h3>
-          <p>All states covered: hover, focus, active, disabled, and where relevant empty, loading, error.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-112"><h3>Keyboard operable with a visible focus ring. ARIA</h3>
-          <p>Keyboard operable with a visible focus ring. ARIA roles and labels where semantics fall short.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-113"><h3>Interactive elements ship with a description tooltip</h3>
-          <p>Interactive elements ship with a description tooltip.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-114"><h3>Responsive and mobile-usable</h3>
-          <p>Responsive and mobile-usable: 44px touch targets, no hover-only interactions.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-115"><h3>Minimal semantic markup. Every element has a job</h3>
-          <p>Minimal semantic markup. Every element has a job, per the markup rules.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-116"><h3>Fully commented in the file</h3>
-          <p>Fully commented in the file: what it is, how to use it, its options, open to-dos.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-117"><h3>Names follow the naming rules. Nothing minified</h3>
-          <p>Names follow the naming rules. Nothing minified.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-118"><h3>Analytics hook on its key action where relevant</h3>
-          <p>Analytics hook on its key action where relevant: a <code>data-event</code> attribute.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-119"><h3>Wall entry added on this page</h3>
-          <p>Wall entry added on this page: live demo, variant and state chips, exact snippet with copy.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-120"><h3>Docs description added</h3>
-          <p>Docs description added: what it is, what it is for, when to use it. Written to read as AI instructions, same text as the file comment and llms.txt.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-121"><h3>BACKLOG.md item ticked. Committed to Git with a</h3>
-          <p>BACKLOG.md item ticked. Committed to Git with a clear message.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-122"><h3>Tokens named by role, not value</h3>
-          <p>Tokens named by role, not value: <code>--surface</code>, not <code>--gray-100</code>.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-123"><h3>One class prefix and pattern per component</h3>
-          <p>One class prefix and pattern per component: <code>.btn</code>, <code>.btn-primary</code>, predictable everywhere.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-124"><h3>JS: one small named function per behavior. The</h3>
-          <p>JS: one small named function per behavior. The name says what it does.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-125"><h3>Docs are demos. A component is not done</h3>
-          <p>Docs are demos. A component is not done until this page shows it live with its code.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-126"><h3>One component</h3>
-          <p>One component, one clearly commented section in the CSS file. Nothing is scattered.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-127"><h3>All changes go through Git commits. The live</h3>
-          <p>All changes go through Git commits. The live files are never edited ad hoc.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-128"><h3>Growth by extraction</h3>
-          <p>Growth by extraction: build a new pattern inside a project first, promote it once it repeats.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-129"><h3>Consume by URL only. Tag releases in Git. On dependency</h3>
-          <p>Consume by URL only. Tag releases in Git. On dependency, freeze a copy to <code>/lib/v1/</code> and keep working in <code>/lib/</code>.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-130"><h3>Pager law. Full-page snap sections that can outgrow</h3>
-          <p><strong>Pager law.</strong> Full-page snap sections that can outgrow the viewport are never built with CSS scroll-snap: <code>mandatory</code> re-snaps a tall section back to its top after a flick and wedges the next gesture, <code>proximity</code> feels like no snap, and a free-scrolling outer with a JS settle-snap is mushy and fights momentum. The model that works is the pager <code>.snap</code> ships: the outer never free-scrolls, JS springs its scrollTop between section tops, each section is 100dvh and scrolls natively inside, and gestures hand off at section edges with a rubber-band hint.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-131"><h3>Gesture law. Tame iOS with touch-action</h3>
-          <p><strong>Gesture law.</strong> Tame iOS with <code>touch-action</code>: <code>pan-y</code> on scrollers (vertical scroll only — also kills double-tap zoom and pinch), <code>manipulation</code> on fixed chrome, <code>none</code> on drag surfaces such as scrubbing charts and the page gauge. Pair with a <code>gesturestart</code> preventDefault for older iOS pinch — facet.js does this globally. Never rely on viewport <code>user-scalable=no</code> or <code>maximum-scale</code>; iOS ignores both.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-132"><h3>App shell law. For a standalone PWA</h3>
-          <p><strong>App shell law.</strong> For a standalone PWA, <code>viewport-fit=cover</code> alone is not enough on iOS: without <code>apple-mobile-web-app-capable</code> and <code>apple-mobile-web-app-status-bar-style</code> set to <code>black-translucent</code>, the installed app gets an opaque strip cutting the page at the status bar. Every app page carries both metas, keeps safe-area <code>env()</code> insets in its section padding, and the manifest's background_color and theme_color match the shipped theme.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-133"><h3>Caching law. HTML documents and</h3>
-          <p><strong>Caching law.</strong> HTML documents and, until versioned freezes exist, the /lib/ files themselves are never cache-first: every refresh loads from the network and caches answer only offline. A worker that serves pages from cache and revalidates behind makes every deploy invisible until a second refresh — that bug shipped once and is now law. facet-sw.js implements this: network-first for pages and /lib/, cache-first with background revalidation for other static assets.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-134"><h3>Parallax exclusion. Elements carrying their own transform physics</h3>
-          <p><strong>Parallax exclusion.</strong> Elements carrying their own transform physics — velvet lift and press, the pager's rubber-band translate — never register with facetMotion: two writers on one inline transform collide, and the loser flickers.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-135"><h3>Font-list law. Never put inherit inside a font-family list (ui-rounded</h3>
-          <p><strong>Font-list law.</strong> Never put <code>inherit</code> inside a font-family list (<code>ui-rounded, "SF Pro Rounded", inherit</code> is silently invalid and drops the whole declaration). A stack ends in a generic family, always.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-136"><h3>iOS, honestly: what a website can and cannot do</h3>
-          <p>
-          The research pass behind the platform laws, kept current so
-          nobody designs around a capability that does not exist.
-          What a website CAN do on iOS: tint Safari's own chrome with
-          <code>theme-color</code> (facet.js keeps it synced to the
-          active theme's background, live); ship a home-screen icon
-          (<code>apple-touch-icon</code>) and install as a standalone
-          app (manifest + the apple metas from the app shell law);
-          send <strong>web push</strong> and set an app
-          <strong>badge</strong> — but only after the visitor adds the
-          app to their home screen (iOS 16.4+), never from a plain
-          Safari tab, and only from a user gesture. What it CANNOT do:
-          see or join Screen Time, read a visitor's age, or apply
-          parental controls — all of that is OS territory, and any
-          design leaning on it is designing fiction.
-        </p>
-        <p>
-          Child safety, the honest version: there is no web API for
-          it. A site's real levers are self-labeling and restraint —
-          adult content declares itself with the RTA rating meta
-          (<code>&lt;meta name="rating"
-          content="RTA-5042-1996-1400-1577-RTA"&gt;</code>) so OS
-          filters like Screen Time's "Limit Adult Websites" catch it;
-          family content can state <code>isFamilyFriendly</code> in
-          its JSON-LD; and everything Facet ships is quiet by design —
-          no autoplay, no dark patterns, nothing engineered to hook
-          anyone, children included.
-        </p>
-        <p>The head pack every Facet app page carries:</p>
-        <pre id="code-headpack"><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"&gt;
-&lt;meta name="theme-color" content="#FFFFFF"&gt; &lt;!-- facet.js keeps this synced to the theme --&gt;
-&lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
-&lt;meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"&gt;
-&lt;link rel="apple-touch-icon" href="/icons/icon-180.png"&gt;
-&lt;link rel="manifest" href="/manifest.json"&gt;</code></pre>
-        <p><button class="btn btn-small" data-copy="#code-headpack" data-tip="Copies the head pack above">Copy</button></p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="cardmodal-137"><h3>Analytics: bring your own vendor</h3>
-          <p>
-          No analytics tool is baked in. Every key action in the library
-          carries a stable, documented <code>data-event</code> name — the
-          same hooks agents target. This five-line bridge wires any
-          vendor to all of them at once; swap the <code>track</code>
-          call for your tool's API and you are done.
-        </p>
-        <pre id="code-analytics"><code>&lt;script&gt;
-  addEventListener("click", (event) =&gt; {
-    const hook = event.target.closest("[data-event]");
-    if (hook) yourAnalytics.track(hook.dataset.event, { page: location.pathname });
-  });
-&lt;/script&gt;</code></pre>
-        <p><button class="btn btn-small" data-copy="#code-analytics" data-tip="Copies the bridge snippet above">Copy</button></p>
+        <dialog class="modal stack topic-modal" id="bp-7"><h3>Bring your own analytics</h3>
+          <p>No tracking vendor is baked in. Instead, important actions carry a documented data-event name, so you can connect whichever analytics tool you use with a short snippet.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
       </section>
