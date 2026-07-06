@@ -1,5 +1,5 @@
 {
-  "$comment": "facet.json — the machine-readable manifest of Facet. Same inventory as the Features section on the homepage and llms.txt (the three-places rule keeps them in sync; this file updates in the same commit as any capability). Consume the library itself by URL: one link tag, one script tag.",
+  "$comment": "facet.json — the machine-readable manifest of Facet. The exhaustive inventory is llms.txt; the homepage Features are a curated human subset; this file mirrors that inventory as structured data and updates in the same commit as any capability. Consume the library itself by URL: one link tag, one script tag.",
   "name": "Facet",
   "files": {
     "css": "/lib/facet.css",

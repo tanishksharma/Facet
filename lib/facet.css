@@ -2405,7 +2405,7 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 /* ----- BLOCK HELPERS: the few styles the block layer adds -----
    Blocks are assemblies of existing components — cards in grids,
    fields in forms, links in navs — documented as copyable patterns
-   on the homepage. Most need no CSS at all; these are the handful of
+   on the Library page. Most need no CSS at all; these are the handful of
    real jobs the assemblies add: a horizontal card scroller, the
    collapsing top menu, hero and CTA voices, stat cards, and the two
    editorial pieces (pull quote, media figure). */
@@ -2548,8 +2548,8 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 [data-motion="calm"] .idle-sway,
 [data-motion="calm"] .idle-pulse { animation: none; }
 
-/* ----- ICONS: forty thin line glyphs on one attribute -----
-   What it is: the icon set — forty-eight 24x24 glyphs at a 1.5px
+/* ----- ICONS: thin line glyphs on one attribute -----
+   What it is: the icon set — 24x24 line glyphs at a 1.5px
    stroke with round caps, carried as markup in facet.js (no image files, no
    sprite fetch). What it is for: every small symbol a product needs:
    navigation, actions, states. When to use it: write
@@ -3242,7 +3242,7 @@ details.dropdown {
 /* --------------------------------------------------------------------------
    APP COMPONENTS — ingested verbatim from the shipped inflation app.
    Base recipes, tokens only; their velvet skins live in the velvet theme
-   block. Every piece has its wall entry on the homepage; the copy button
+   block. Every piece has its wall entry on the Library page; the copy button
    under each demo gives the exact markup contract.
      TAB BAR   .tab-bar > .tab-seg / .tab-divider / .tab-settings
      SHEET     .sheet-scrim + .sheet[data-open] > .sheet-scroll/.sheet-foot

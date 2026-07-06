@@ -427,7 +427,7 @@ SaaS dashboard (templates/saas.html) and social app (templates/social.html) alre
 
 ### Icon set — grow as needed
 
-- [ ] Keep the thin line-icon set covering common needs; add glyphs as gaps appear (~48 shipped so far).
+- [ ] Keep the thin line-icon set covering common needs; add glyphs as gaps appear (~60 shipped so far).
 
 
 -------------------------------------------------------------------------------

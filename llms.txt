@@ -4,13 +4,22 @@ Facet is a plain HTML, CSS and JS design library. It is one CSS file and one
 JS file hosted at a public URL. Any page consumes it with one link tag and
 one script tag. No React, no build step, no npm install, never minified.
 This file is the full usage guide as plain text, for AI crawlers and
-builders. The same content lives rendered at the site root and as CLAUDE.md
-in the repo: https://github.com/tanishksharma/Facet
+builders — the exhaustive inventory of what Facet does and how to use it.
+The human version is the website (start at the site root); the rules for
+building and maintaining the library itself are in CLAUDE.md. Repo:
+https://github.com/tanishksharma/Facet
+
+Write pages as clean, semantic HTML: real header / nav / main / section /
+article / footer, real buttons and links with accessible names, one h1 per
+page, and not one extra wrapper (a container exists only to enable a real
+feature, like scrolling). The full markup rules are under "Rules for
+building on Facet" below.
 
 ## Features — the complete capability inventory
 
-This list is the inventory: if a capability is not on it, it does not
-exist. It matches the Features section on the library homepage.
+This list is the exhaustive inventory: if a capability is not on it, it
+does not exist. (The Features section on the homepage is a curated,
+human-friendly subset of this list.)
 
 Distribution: two files, one link + one script tag, public URL, no
 framework, no npm, no build step, never minified. Until v1 every project
@@ -50,10 +59,10 @@ kept separate so the accent ranks stay the theme's own inks; custom accent
 as a supported recipe — override
 a rank's four tokens in one block, page-wide on :root or per-subtree on
 any element, and every component using that rank follows; Style Mixer
-on the homepage — a picker per semantic token restyles the page live
+on the Build-a-theme page — a picker per semantic token restyles the page live
 over any theme, derives hover/pressed/on-colors, rides the URL (?mix=)
 and exports a paste-ready facet.set config block; Skin Lab on the
-homepage — every theme in light and dark side by side, the same real
+Build-a-theme page — every theme in light and dark side by side, the same real
 layout from identical markup, one attribute apart.
 
 Tokens: every design decision is a role-named CSS variable — color with
@@ -117,7 +126,7 @@ URL; stable IDs and data-event action names; this file as the one-fetch
 manual; docs descriptions written as AI instructions, identical to source
 file comments.
 
-The library site: every component live on one page with variant/state
+The Library page: every component live, with variant/state
 chips; copy buttons serve the exact HTML serialized from the live DOM;
 search, scrollspy sidebar, live theme switching.
 
@@ -618,7 +627,7 @@ links. Always an <a> to a real URL, never a button in costume.
 
 ### Icons
 
-What it is: forty-eight 24x24 line glyphs at a 1.5px stroke with round
+What it is: 24x24 line glyphs at a 1.5px stroke with round
 caps, carried as markup inside facet.js — no image files, no sprite
 fetch. Write <svg data-icon="search"></svg> and facet.js fills it;
 icons ride currentColor and scale with the surrounding text.
@@ -917,7 +926,7 @@ every future theme gets its map for free.
     <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12"
          data-map-key="YOUR_KEY"></div>
 
-## App-kit self-wiring (R19 — apps are markup + data only)
+## App-kit self-wiring (apps are markup + data only)
 
 The app kit wires the whole app shell from markup, so a calculator is
 markup + its own data/logic with no library-shaped glue:
@@ -997,7 +1006,7 @@ look-alike; .scroll-gauge-page is the draggable whole-page lane), and
 .float-btn — a lone floating round trigger pinned bottom-left
 (.float-btn-right for bottom-right): give it aria-controls pointing at
 a .sheet and it opens it, aria-expanded managed, press feedback
-included. Markup contracts: the wall entries on the homepage — the
+included. Markup contracts: the wall entries on the Library page — the
 copy button under each demo gives the exact HTML.
 
 Modules on window.facet: feedback (synthesized UI sounds + haptics, ON
@@ -1066,7 +1075,7 @@ covered. Keyboard operable with a visible focus ring. Interactive elements
 ship with a description tooltip. 44px touch targets, no hover-only
 interactions. Minimal semantic markup. Fully commented in the file. Names
 follow the naming rules, nothing minified. data-event analytics hook on
-the key action. Wall entry on the library homepage: live demo, variant and
+the key action. Wall entry on library.html (the Library page): live demo, variant and
 state chips, exact snippet with copy. Docs description — what it is, what
 it is for, when to use it — same text as the file comment and this file.
 Committed to Git with a clear message.
@@ -1097,12 +1106,12 @@ ships, freeze a copy of the current files to /lib/v1/ and leave them
 untouched; work continues in /lib/. Old projects point at their frozen
 folder forever.
 
-## Platform laws — paid for on iOS
+## iOS rules — fixes for real iPhone bugs
 
-Hard-won facts from shipped app work, mostly against mobile Safari. They
-bind everything built with Facet; the library already obeys each one, so
-following them costs nothing — the laws are here so nobody relearns them
-the expensive way.
+These are fixes for specific bugs that show up on iPhone (mostly mobile
+Safari) and not on desktop. The library already obeys every one, so
+following them costs nothing — they are written down so nobody hits the
+same bug the hard way.
 
 Pager law: full-page snap sections that can outgrow the viewport are
 never built with CSS scroll-snap — mandatory re-snaps a tall section
