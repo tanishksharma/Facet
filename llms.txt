@@ -852,28 +852,44 @@ navigates programmatically with the same transition. Built on
 cross-document view transitions; browsers without support simply
 navigate. data-motion="off" and prefers-reduced-motion make pages snap.
 
-## Offline, install and updates
+## Make a page installable (PWA) — offline, install and updates
 
-Create sw.js at your project root with exactly one line:
+Three small files at your project ROOT turn any Facet page into an
+installable, offline-capable app. Facet ships the caching engine
+(/lib/facet-sw.js); you provide these three because a manifest and a
+service worker must be served from your own site root:
+
+1. sw.js — one line that switches Facet's engine on at your root:
 
     importScripts("https://facet-kappa.vercel.app/lib/facet-sw.js");
 
-(The browser requires the registered file to be same-origin; the line is
-a pointer, not a copy — the strategy lives in the library and updates
-centrally.) Then opt in on the script tag:
+   A service worker can only control pages at or below its own url, so
+   this file must sit at the ROOT (not a subfolder). It is a pointer, not
+   a copy — the strategy lives in the library and updates centrally.
 
-    <script src="https://facet-kappa.vercel.app/lib/facet.js"
-            data-service-worker="/sw.js" defer></script>
+2. manifest.json — the install "info card" (name, colors, icons). Copy
+   /templates/manifest.json and edit name + colors to match your theme's
+   --background. References icons at 192, 512, and a 512 maskable.
 
-Pages and the /lib/ files are then network-first (per the caching law:
-every refresh loads the current deploy, the cache answers only offline)
-while other static assets serve from cache instantly and revalidate in
-the background. Add <link rel="manifest" href="/manifest.json">
-using /templates/manifest.json (name, colors matched to your theme's
---background, icons 192 / 512 / 512-maskable), give any button
-data-install, and the button appears exactly when installation is
-available. Until v1, the library itself is always the latest from the
-web; versioned freezes start at /lib/v1/.
+3. icons/ — the PNG app icons (192, 512, 512-maskable). A default Facet
+   set ships at /icons/; replace them with your own.
+
+Then wire them on the page: put data-service-worker="/sw.js" on the
+facet.js script tag (this registers the worker), and add
+<link rel="manifest" href="/manifest.json"> plus the apple-mobile-web-app
+metas in the head — copy the exact head block from /templates/app.html.
+
+Install experience: desktop Chrome/Edge show an install control in the
+address bar; Android offers Add-to-Home-Screen; iOS Safari installs via
+Share -> Add to Home Screen (iOS never auto-prompts). Give any button
+data-install and it appears only when the browser actually offers
+installation; facet.install() triggers the prompt in code.
+
+Caching (the caching law): pages and the unversioned /lib/ files are
+network-first — every refresh loads the current deploy, the cache answers
+only offline — while other static assets serve from cache instantly and
+revalidate behind. Updates ship by redeploying. Until v1 the library is
+always the latest from the web; versioned freezes start at /lib/v1/.
 
 ## Backgrounds
 

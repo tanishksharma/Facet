@@ -2,11 +2,11 @@
 <html lang="en" data-transition="page">
 <!--
   Facet template · App shell + dashboard
-  Sidebar navigation beside a top bar and one working dashboard
-  screen: stat row, chart, data table with toolbar. Installable out
-  of the box: manifest + the one-line service worker stub
-  (create /sw.js containing importScripts of /lib/facet-sw.js, per
-  the caching law) + the apple metas from the app shell law.
+  Sidebar navigation beside a top bar and one working dashboard screen:
+  stat row, chart, data table with toolbar. Installable: it ships the PWA
+  head block (manifest link + apple metas) and registers /sw.js. The full
+  "make it installable" recipe is in llms.txt; the referenced /sw.js,
+  /manifest.json and /icons/ ship at the site root — copy them across.
 -->
 <head>
   <meta charset="utf-8">

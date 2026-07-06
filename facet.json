@@ -5,7 +5,10 @@
     "css": "/lib/facet.css",
     "js": "/lib/facet.js",
     "serviceWorker": "/lib/facet-sw.js",
+    "serviceWorkerStub": "/sw.js",
+    "manifest": "/manifest.json",
     "manifestTemplate": "/templates/manifest.json",
+    "icons": "/icons/",
     "manual": "/llms.txt",
     "templates": {
       "landing": "/templates/landing.html",

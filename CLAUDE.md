@@ -17,6 +17,7 @@ The repo root is the library's website, deployed by Vercel as a static site on e
 /lib
   facet.css        the whole design system
   facet.js         small vanilla JS behaviours
+  facet-sw.js      the shared PWA caching engine (network-first pages)
 /templates
   landing.html     marketing page assembled from the block layer
   saas.html        SaaS analytics dashboard: sidebar, KPIs, chart, table
@@ -37,6 +38,9 @@ build.html         theme builder + Skin Lab
 docs.css           docs-site styles (NOT part of /lib)
 docs.js            docs-site behaviour (NOT part of /lib)
 llms.txt           the full usage guide as plain text for AI crawlers
+sw.js              PWA: one-line service worker at the root (loads facet-sw.js)
+manifest.json      PWA: the site's install manifest (also the copy reference)
+icons/             PWA: app icon PNGs (180 apple, 192, 512, 512-maskable)
 ```
 
 Projects consume the library by URL, never by copying files in:

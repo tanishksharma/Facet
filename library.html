@@ -137,6 +137,7 @@
           <li><a href="#sheet">Sheet &amp; menu</a></li>
           <li><a href="#float-button">Float button</a></li>
           <li><a href="#scroll-gauge">Scroll gauge</a></li>
+          <li><a href="#installable">Installable (PWA)</a></li>
         </ul>
         </details>
       </nav>
@@ -2467,6 +2468,44 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-scroll-gauge"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-scroll-gauge" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- INSTALLABLE (PWA) · a recipe, not a live component, so it is a plain
+           article (no serialized-snippet machinery) with copyable code. -->
+      <article class="stack" id="installable">
+        <h3>Installable (PWA)</h3>
+        <p>
+          What it is: the setup that turns any Facet page into an installable,
+          offline-capable app. What it is for: products you want on a phone's
+          home screen — opening full-screen, working offline. When to use it:
+          any app-shaped page. Facet ships the caching engine
+          (<code>/lib/facet-sw.js</code>) plus a working reference set —
+          <code>/sw.js</code>, <code>/manifest.json</code> and
+          <code>/icons/</code> — that you copy into your own project root.
+          The full step-by-step recipe lives in <a href="/llms.txt">llms.txt</a>;
+          the <a href="/templates/app.html">app template</a> ships the exact
+          head block below.
+        </p>
+        <div class="demo">
+          <button class="btn btn-primary" data-install data-tip="Appears only when the browser offers install — on this demo it may stay hidden">Install app</button>
+        </div>
+        <p class="text-footnote" style="color: var(--text-muted); max-width: 60ch;">
+          The install button reveals itself only when the browser actually
+          offers installation (so here it may stay hidden).
+          <code>facet.install()</code> triggers the prompt from code.
+        </p>
+        <p class="text-caption" style="color: var(--text-muted);">1 · <code>sw.js</code> at your project root — one line:</p>
+        <pre id="code-pwa-sw"><code>importScripts("https://facet-kappa.vercel.app/lib/facet-sw.js");</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-pwa-sw" data-tip="Copies the one-line service worker">Copy sw.js</button></p>
+        <p class="text-caption" style="color: var(--text-muted);">2 · the head block on the page (manifest, apple metas, worker registration):</p>
+        <pre id="code-pwa-head"><code>&lt;link rel="manifest" href="/manifest.json"&gt;
+&lt;meta name="theme-color" content="#FFFFFF"&gt;
+&lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+&lt;meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"&gt;
+&lt;link rel="apple-touch-icon" href="/icons/icon-180.png"&gt;
+&lt;script src="https://facet-kappa.vercel.app/lib/facet.js" data-service-worker="/sw.js" defer&gt;&lt;/script&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-pwa-head" data-tip="Copies the PWA head block">Copy the head block</button></p>
+        <p class="text-caption" style="color: var(--text-muted);">3 · <code>manifest.json</code> + <code>icons/</code> — copy <a href="/templates/manifest.json">the template manifest</a> and the icon set, then edit the name and colors.</p>
       </article>
 
     </main>
