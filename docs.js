@@ -362,68 +362,6 @@ function initPlayground() {
   render();
 }
 
-/* Cheatsheet: rendered from facet.json, so the dense screen and
-   the machine manifest are one source. The filter hides rows and
-   whole groups that stop matching. */
-async function initCheatsheet() {
-  const body = document.querySelector("#cheat-body");
-  const filter = document.querySelector("#cheat-filter");
-  if (!body || !filter) return;
-  let manifest;
-  try { manifest = await (await fetch("/facet.json")).json(); }
-  catch { body.textContent = "facet.json did not load."; return; }
-
-  const row = (term, note) => {
-    const div = document.createElement("div");
-    div.className = "cheat-row";
-    const code = document.createElement("code");
-    code.textContent = term;
-    const span = document.createElement("span");
-    span.textContent = note;
-    div.append(code, span);
-    return div;
-  };
-  const head = (text) => {
-    const h = document.createElement("p");
-    h.className = "cheat-head";
-    h.textContent = text;
-    return h;
-  };
-
-  body.append(head("Components"));
-  for (const c of manifest.components) {
-    body.append(row([...(c.classes || []), ...(c.attributes || [])].join("  "), `${c.name} — ${c.summary}`));
-  }
-  body.append(head("Global attributes"));
-  for (const a of manifest.globalAttributes) {
-    body.append(row(a.attribute, `on ${a.on} — ${a.summary}`));
-  }
-  body.append(head("Tokens"));
-  for (const [group, names] of Object.entries(manifest.tokens)) {
-    body.append(row(names.join("  "), group));
-  }
-  body.append(head("JavaScript API"));
-  for (const [call, note] of Object.entries(manifest.api)) {
-    body.append(row(call + "()", note));
-  }
-
-  filter.addEventListener("input", () => {
-    const q = filter.value.trim().toLowerCase();
-    let groupHead = null, groupHasHit = false;
-    for (const el of body.children) {
-      if (el.classList.contains("cheat-head")) {
-        if (groupHead) groupHead.hidden = !groupHasHit && !!q;
-        groupHead = el; groupHasHit = false;
-        continue;
-      }
-      const hit = !q || el.textContent.toLowerCase().includes(q);
-      el.hidden = !hit;
-      if (hit) groupHasHit = true;
-    }
-    if (groupHead) groupHead.hidden = !groupHasHit && !!q;
-  });
-}
-
 /* Click-to-copy tokens: every swatch and every token name in a
    type label becomes a real button copying its var(--name). */
 function initTokenCopy() {
@@ -633,71 +571,13 @@ function initDemoTools() {
   }
 }
 
-/* Reference block per wall entry, rendered from facet.json: the
-   class table with one-liners, the keyboard table, the Do/Don't
-   pair with its reason, and the accessibility note. One source —
-   the manifest — so the wall and the machine view cannot drift. */
-async function initReferenceBlocks() {
-  let manifest;
-  try { manifest = await (await fetch("/facet.json")).json(); }
-  catch { return; }
-  const byId = {};
-  const slug = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-  for (const c of manifest.components) byId[slug(c.name)] = c;
-  const ALIAS = { "sheet": "sheet-menu", "map": "themed-map", "snap-section": "snap-section", "slider-detail": "detailed-slider" };
-
-  for (const article of document.querySelectorAll("article.element")) {
-    const c = byId[ALIAS[article.id] || article.id];
-    if (!c) continue;
-    const details = document.createElement("details");
-    details.className = "ref";
-    const summary = document.createElement("summary");
-    summary.textContent = "Reference: classes, keyboard, do & don't, accessibility";
-    details.appendChild(summary);
-
-    const table = (head, rows) => {
-      const t = document.createElement("table");
-      const tr = document.createElement("tr");
-      for (const h of head) { const th = document.createElement("th"); th.textContent = h; tr.appendChild(th); }
-      t.appendChild(tr);
-      for (const cells of rows) {
-        const r = document.createElement("tr");
-        cells.forEach((cell, i) => {
-          const td = document.createElement("td");
-          if (i === 0) { const code = document.createElement("code"); code.textContent = cell; td.appendChild(code); }
-          else td.textContent = cell;
-          r.appendChild(td);
-        });
-        t.appendChild(r);
-      }
-      return t;
-    };
-
-    if (c.classNotes) details.appendChild(table(["Class", "Use it for"], Object.entries(c.classNotes)));
-    else if (c.attributes) details.appendChild(table(["Attribute", ""], c.attributes.map(a => [a, ""])));
-    if (c.keys) details.appendChild(table(["Key", "Does"], c.keys));
-
-    const note = document.createElement("p");
-    note.className = "ref-note";
-    const bits = [];
-    if (c.do) bits.push(`Do: ${c.do}`);
-    if (c.dont) bits.push(`Don't: ${c.dont}`);
-    if (c.why) bits.push(`Why: ${c.why}`);
-    if (c.a11y) bits.push(`Accessibility: ${c.a11y}`);
-    note.textContent = bits.join(" ");
-    if (bits.length) details.appendChild(note);
-
-    article.appendChild(details);
-  }
-}
-
-/* Relocate the two developer tools (Playground, Cheatsheet) to the
-   end of the page, so DOM order matches the sidebar's Tools group.
-   They were wedged mid-Layer-1, which made clicks and the scrollspy
-   disagree — the section you scrolled into never matched the link. */
+/* Relocate the Playground to the end of the page, so DOM order matches
+   the sidebar's Tools group. It was wedged mid-Layer-1, which made clicks
+   and the scrollspy disagree — the section you scrolled into never
+   matched the link. */
 function relocateTools() {
   const main = document.querySelector("#main");
-  for (const id of ["playground", "cheatsheet"]) {
+  for (const id of ["playground"]) {
     const sec = document.querySelector("#" + id);
     if (sec) main.appendChild(sec);
   }
@@ -805,7 +685,7 @@ function insertLayerBands() {
     ["blocks",     "Layer 3", "Blocks",     "The components, assembled into ready page sections you copy whole."],
     ["templates",  "Layer 4", "Templates",  "Whole pages — full app and site layouts you rename and fill in."],
     ["appfeel",    "Layer 5", "App feel",   "The coat that makes a finished page feel native: parallax, sound, surfaces, and the app kit."],
-    ["playground", "Tools",   "Playground & cheatsheet","An editable live playground, and the whole manifest as a filterable cheatsheet."],
+    ["playground", "Tools",   "Playground","An editable live playground that renders whatever you type through the real library files."],
   ];
   for (const [id, kicker, title, blurb] of bands) {
     const anchor = document.querySelector("#" + id);
@@ -915,14 +795,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   initMarkdownButtons();
   initDemoTools();
   overlayCodeTools();              // code actions become a corner icon cluster
-  await initReferenceBlocks();     // append the ref block INTO each article first
-  relocateTools();                 // Playground + Cheatsheet to the end
+  relocateTools();                 // Playground to the end
   insertLayerBands();
   initPlayground();
   initFeedbackDemo();              // the Sound & haptics wall buttons
   initWallFilter();                // Layer 3 category filter chips
   initDevicePreview();             // Layer 5 templates in scaled device frames
-  await initCheatsheet();
   const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
   if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
   document.querySelector("#demo-toast")?.addEventListener("click", () => {

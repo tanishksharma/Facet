@@ -33,7 +33,7 @@ index.html         home: philosophy, curated features, how-to (people vs AI), pr
 library.html       the whole library on one page — one growing ladder:
                    Layer 1 Tokens & base, 2 Components (grouped + filterable),
                    3 Blocks, 4 Templates (with live device previews), 5 App feel
-playground.html    live playground + facet.json cheatsheet
+playground.html    live playground (renders through the real library files)
 build.html         theme builder + Skin Lab
 docs.css           docs-site styles (NOT part of /lib)
 docs.js            docs-site behaviour (NOT part of /lib)
@@ -80,7 +80,7 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     Truth for: the live component wall (demos + copy-paste HTML)
 
 `playground.html`
-    What:      live playground + cheatsheet (rendered from facet.json)
+    What:      live playground (renders through the real library files)
     Read by:   people
     Truth for: -
 
@@ -99,11 +99,6 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     Read by:   consumers' AI (PRIMARY)
     Truth for: the exhaustive capability + component inventory
 
-`facet.json`
-    What:      machine manifest of every theme, token, class, attribute, component, block, API
-    Read by:   consumers' AI; the cheatsheet + reference blocks
-    Truth for: the structured manifest
-
 `CLAUDE.md  (this file)`
     What:      the build/maintain charter — and the Backlog section at the end
     Read by:   Claude + contributors
@@ -117,7 +112,7 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
 `docs.css / docs.js`
     What:      docs-site styling + behaviour — NOT shipped in /lib
     Read by:   contributors
-    Truth for: the site's own chrome
+    Truth for: the docs site's own styling and scripts
 
 `sitemap.xml`
     What:      a plain URL list for search-engine crawlers — SEO only; not descriptions, and not what an AI reads (AI reads llms.txt)
@@ -137,9 +132,8 @@ Adding or changing a component means updating all of these in the **same commit*
 2. `/lib/facet.js` — its behaviour, if any (one named function).
 3. `library.html` — its wall entry: live demo of every variant/state + the exact snippet.
 4. `llms.txt` — its full usage entry, plus its line in the capability inventory. **llms.txt is the source of truth for "does this exist".**
-5. `facet.json` — its manifest entry (class / attribute / API).
-6. `index.html` — a curated Features card ONLY if it is a headline, user-facing capability. The home Features are the human subset, not the exhaustive list; the exhaustive list is `llms.txt`.
-7. The Backlog section at the end of this file — tick the item.
+5. `index.html` — a curated Features card ONLY if it is a headline, user-facing capability. The home Features are the human subset, not the exhaustive list; the exhaustive list is `llms.txt`.
+6. The Backlog section at the end of this file — tick the item.
 
 The description text is written once and reused word-for-word in three places: the file comment in `facet.css`/`facet.js`, the `library.html` wall entry, and `llms.txt`.
 
@@ -211,7 +205,7 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 - [ ] Analytics hook on its key action where relevant: a `data-event` attribute.
 - [ ] Wall entry added on library.html: live demo of every variant and state, variant and state chips, exact snippet with copy button.
 - [ ] Docs description added: what it is, what it is for, when to use it. Written to read as AI instructions, the same text word for word in the file comment, the wall entry and llms.txt.
-- [ ] Inventory updated in the same commit: the capability's full entry in llms.txt (the exhaustive list) and its facet.json manifest entry; a curated card in the index.html Features section only if it is a headline user-facing feature.
+- [ ] Inventory updated in the same commit: the capability's full entry in llms.txt (the exhaustive list); a curated card in the index.html Features section only if it is a headline user-facing feature.
 - [ ] Committed to Git with a clear message.
 
 
@@ -278,9 +272,9 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 - One component, one clearly commented section in the CSS file. Nothing is scattered.
 - Growth by extraction: build a new pattern inside a project first, promote it once it repeats.
 - App logic, data fetching and state management live in projects, never in the library.
-- Docs-only styles and scripts live in docs.css and docs.js — never in /lib. They serve the site's own chrome, not the shipped library.
+- Docs-only styles and scripts live in docs.css and docs.js — never in /lib. They serve the docs site's own styling and scripts, not the shipped library.
 - Every new component passes the full compliance checklist above before it ships.
-- The inventory rule: llms.txt is the exhaustive list of every capability the library ships — if it is not in llms.txt, it does not exist. The homepage Features are a curated human subset; facet.json mirrors the same as structured data. No capability ships without its llms.txt line.
+- The inventory rule: llms.txt is the exhaustive list of every capability the library ships — if it is not in llms.txt, it does not exist. The homepage Features are a curated human subset. No capability ships without its llms.txt line.
 - When a component or rule changes, update its three descriptions together — the file comment, the library.html wall entry, and llms.txt (full keep-in-sync contract in the project map above).
 
 
@@ -436,7 +430,7 @@ SaaS dashboard (templates/saas.html) and social app (templates/social.html) alre
 ===============================================================================
 
 
-The full shipped history is in git and in the live files (facet.css / facet.js / library.html / llms.txt / facet.json). These are the durable calls that still constrain new work:
+The full shipped history is in git and in the live files (facet.css / facet.js / library.html / llms.txt). These are the durable calls that still constrain new work:
 
 - No right-to-left layout — translation yes, RTL no.
 - Layer = composition level: a single reusable piece is Layer 2 · Components (in one of the six categories, snap/layout included); motion, sound and app-chrome are Layer 5 · App feel; an assembly of pieces is a Layer 3 · Block; a whole page is a Layer 4 · Template. Never create a layer that holds only one entry.

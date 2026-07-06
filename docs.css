@@ -390,24 +390,6 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   height: 12rem; overflow-y: auto; padding-right: var(--space-card);
 }
 
-/* Cheatsheet rows: dense definition rows, filterable. */
-.cheat-row {
-  display: grid;
-  grid-template-columns: minmax(min(12rem, 40vw), 1fr) minmax(0, 2fr);
-  gap: var(--space-inline);
-  padding-block: var(--space-control);
-  border-bottom: var(--border-hairline) solid var(--border);
-  font-size: var(--text-footnote);
-}
-.cheat-row code { overflow-wrap: anywhere; }
-.cheat-row span { color: var(--text-muted); overflow-wrap: anywhere; }
-.cheat-head {
-  margin-top: var(--space-stack);
-  font-size: var(--text-caption);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
 
 /* Rows of copy buttons under snippets sit side by side. */
 .element p:has(> [data-copy]) { display: flex; gap: var(--space-control); flex-wrap: wrap; max-width: none; }
@@ -535,17 +517,6 @@ h2:hover .permalink, h3:hover .permalink,
   margin-bottom: var(--space-tight);
 }
 .part-label + * { margin-top: 0; }
-.ref { font-size: var(--text-footnote); }
-.ref summary { cursor: pointer; color: var(--text-muted); }
-.ref table { width: 100%; border-collapse: collapse; margin-top: var(--space-control); }
-.ref td, .ref th {
-  text-align: left;
-  padding: var(--space-tight) var(--space-inline) var(--space-tight) 0;
-  border-bottom: var(--border-hairline) solid var(--border);
-  vertical-align: top;
-}
-.ref th { color: var(--text-muted); font-weight: var(--weight-strong); }
-.ref .ref-note { color: var(--text-muted); margin-top: var(--space-control); max-width: none; }
 
 /* Backgrounds demo: a fixed-height canvas so the pattern reads. */
 #backgrounds .demo > section { min-height: 11rem; border-radius: var(--radius-panel); }

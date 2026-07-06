@@ -25,11 +25,10 @@ Distribution: two files, one link + one script tag, public URL, no
 framework, no npm, no build step, never minified. Until v1 every project
 always gets the latest straight from the web; from v1, frozen /lib/v1/
 copies pin old projects and cached updates apply only at page
-boundaries. /facet.json is the machine-readable manifest: every theme,
-token, class, data attribute, component and API call in one fetch.
-The homepage adds tools over it: a Playground (one editable HTML box
-rendering live through the real library) and a Cheatsheet (the whole
-manifest as one dense filterable screen).
+boundaries. This file (llms.txt) is the exhaustive usage guide, and the
+readable, commented source of lib/facet.css and lib/facet.js is the
+ground truth — an AI reads those directly. The site adds a Playground:
+one editable HTML box rendering live through the real library.
 
 App-ready (PWA): a one-line sw.js stub — importScripts of
 /lib/facet-sw.js — gives any project the shared caching strategy:
@@ -97,7 +96,7 @@ Components and behaviours: themed layout primitives (container in four
 widths, stack in three gaps, full-viewport snap sections); buttons in
 three variants and three sizes working on <button> and <a>, plus .btn-pill
 capsule shape (an icon-and-label pill with no extra markup); icon buttons;
-the app-kit floating chrome — tab bar, settings sheet, float button, scroll
+the app-kit floating controls — tab bar, settings sheet, float button, scroll
 gauge, and the nav menu (a floating Menu-pill + Settings-gear cluster, built
 from .btn.btn-pill, a no-JS <details> of real links upgraded to an overlay);
 the calculator-grade number input (prefilled example, one-tap clear,
@@ -1060,9 +1059,10 @@ works with JavaScript off (the summary opens the links inline) and the links
 sit in the DOM for crawlers and AI; facet.js (initNavMenu, re-runnable via
 facet.navMenu) upgrades it to a floating overlay — a dimming scrim, body
 scroll-lock, a staggered bottom-up reveal, Escape to close, and focus moved
-into the menu and back. Reduced motion drops the stagger. It is chrome, not
-content: author it at the end of <body>, it is user-select:none, and it prints
-off. The Settings gear is a plain button[aria-controls] on a .sheet, wired like
+into the menu and back. Reduced motion drops the stagger. It is an overlay
+control, not content: author it at the end of <body>, it is user-select:none,
+and it prints off. The Settings gear is a plain button[aria-controls] on a
+.sheet, wired like
 any other sheet trigger.
 
     <nav class="nav-menu" aria-label="Site" data-print="off">

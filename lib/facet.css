@@ -3746,8 +3746,9 @@ details.dropdown {
    DOM for crawlers and AI. facet.js (initNavMenu) upgrades it to a
    floating overlay: a dimming scrim, body scroll-lock, a staggered
    reveal, Escape to close, and focus moved into the menu and back.
-   prefers-reduced-motion drops the stagger. Chrome, not content: it is
-   authored at the end of <body>, is user-select:none, and prints off.
+   prefers-reduced-motion drops the stagger. It is an overlay control,
+   not page content: authored at the end of <body>, user-select:none,
+   and it prints off.
 
    Usage:
      <nav class="nav-menu" aria-label="Site" data-print="off">
@@ -3776,7 +3777,7 @@ details.dropdown {
   display: flex;
   align-items: flex-end;
   gap: var(--space-tight);
-  user-select: none;                 /* chrome: never lands in a copy */
+  user-select: none;                 /* a control, not content: never lands in a copy */
   -webkit-user-select: none;
 }
 /* the details holds the pill and its pop-up stack; it must not stretch */

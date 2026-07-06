@@ -4,14 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Playground — Facet</title>
-  <meta name="description" content="Try Facet live: an editable HTML box rendering through the real library files, and the whole manifest as a filterable cheatsheet.">
+  <meta name="description" content="Try Facet live: an editable HTML box rendering through the real library files.">
   <meta property="og:title" content="Playground — Facet">
-  <meta property="og:description" content="Try Facet live: an editable HTML box rendering through the real library files, and the whole manifest as a filterable cheatsheet.">
+  <meta property="og:description" content="Try Facet live: an editable HTML box rendering through the real library files.">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23FFFFFF'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%2317171B'/></svg>">
-  <!-- Machine-discoverable pointers for AI agents and crawlers. -->
+  <!-- Machine-discoverable pointer for AI agents and crawlers. -->
   <link rel="alternate" type="text/plain" href="/llms.txt" title="Facet — how to use it, for AI">
-  <link rel="alternate" type="application/json" href="/facet.json" title="Facet — machine-readable manifest">
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
   <link rel="stylesheet" href="/docs.css">
@@ -26,7 +25,7 @@
       <div class="site-links">
         <a class="site-link" href="/" data-tip-below data-tip="What Facet is and how to use it">Home</a>
         <a class="site-link" href="/library.html" data-tip-below data-tip="The whole library: tokens, components, blocks, templates, app feel">Library</a>
-        <a class="site-link" href="/playground.html" aria-current="page" data-tip-below data-tip="Try a snippet live, and look any class up">Playground</a>
+        <a class="site-link" href="/playground.html" aria-current="page" data-tip-below data-tip="Try a snippet live in a real Facet page">Playground</a>
         <a class="site-link" href="/build.html" data-tip-below data-tip="Build your own theme, live — plus Skin Lab">Build a theme</a>
         <a class="site-link" href="/llms.txt" data-tip-below data-tip="The whole library as plain text, for LLMs">llms.txt</a>
         <a class="site-link" href="/CLAUDE.md" data-tip-below data-tip="The build charter: how Facet is built and maintained">CLAUDE.md</a>
@@ -53,26 +52,6 @@
       <label for="playground-input">Your HTML</label>
       <textarea id="playground-input" rows="8" spellcheck="false" data-tip="Renders below as you type"></textarea>
       <iframe id="playground-frame" class="lab-frame" style="height: 16rem;" title="Playground preview"></iframe>
-    </section>
-
-
-    <!-- =============================================================
-         TOOLS · CHEATSHEET
-         Every class and attribute on one dense screen, straight from
-         facet.json so it can never drift from the manifest.
-         ============================================================= -->
-    <section id="cheatsheet" class="stack">
-      <h2>Cheatsheet</h2>
-      <p>
-        What it is: every class, data attribute and API call on one dense
-        screen, rendered from <a href="/facet.json">facet.json</a> so it can
-        never drift from the manifest. What it is for: the lookup you keep
-        open while writing HTML in another window. When to use it: once you
-        know the components and only need their names.
-      </p>
-      <label for="cheat-filter">Filter the sheet</label>
-      <input id="cheat-filter" type="search" placeholder="btn, data-tip, mapStyle…" data-tip="Hides every row that does not match">
-      <div id="cheat-body" class="stack-tight"></div>
     </section>
   </main>
   <script src="/docs.js" defer></script>
