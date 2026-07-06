@@ -263,11 +263,11 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 
 -------------------------------------------------------------------------------
 
-## Platform laws — paid for on iOS
+## iOS rules — fixes for real iPhone bugs
 ===============================================================================
 
 
-Hard-won facts from shipped app work; they bind everything built with or added to the library. These are contributor rules — the full wording lives here and in llms.txt, not on the consumer-facing homepage.
+iOS breaks in ways desktop browsers don't. Each rule below exists because we shipped a real app, hit that exact bug, and this is the fix — ignore one and the bug comes back. They bind anything built in or added to the library. (These are builder rules; the user-facing version is not on the homepage.)
 
 - Pager law: full-page snap sections that can outgrow the viewport are never built with CSS scroll-snap; the pager model (.snap upgraded by facet.js) is the only thing that survives iOS.
 - Gesture law: `touch-action: pan-y` on scrollers, `manipulation` on fixed chrome, `none` on drag surfaces; `gesturestart` preventDefault covers older iOS pinch; never rely on viewport `user-scalable=no`.
@@ -283,8 +283,8 @@ Hard-won facts from shipped app work; they bind everything built with or added t
 ===============================================================================
 
 
-- No analytics vendor is baked in. People bring their own.
-- Components expose `data-event` attributes on key actions, named and documented. One documented snippet wires any analytics tool to those hooks in a few lines.
+- No analytics vendor is baked in — bring your own.
+- Every key action carries a stable `data-event="name"` attribute (documented per component). To track them: add ONE click listener that finds the nearest `[data-event]` and forwards its name to your tool — `document.addEventListener("click", e => { const el = e.target.closest("[data-event]"); if (el) track(el.dataset.event); })`. Because the hook is a plain attribute, any vendor (GA, Plausible, PostHog, …) wires the same way. The copy-paste version lives in llms.txt under Analytics.
 
 
 -------------------------------------------------------------------------------
@@ -318,41 +318,21 @@ Hard-won facts from shipped app work; they bind everything built with or added t
 ===============================================================================
 
 
-One attribute on the html tag switches the theme, layout containers included. Dark mode is its own attribute, `data-mode="dark"`, and composes with every theme. facet.js also carries both in the URL query (?theme=, ?mode=), wires switcher buttons via `data-theme-switch` and `data-mode-toggle`, boots a page from data attributes on its own script tag (`data-theme`, `data-mode`, ...), and exposes `facet.set({...})` for live configuration changes at runtime.
+One attribute (`data-theme`) switches the theme, layout containers included; `data-mode="dark"` is separate and composes with any theme. facet.js carries both in the URL (`?theme=`, `?mode=`), wires `data-theme-switch` / `data-mode-toggle` buttons, boots a page from data attributes on its own script tag, and exposes `facet.set({...})` at runtime.
 
-### Theme · Default (ships first, no attribute)
+**Where themes live.** A theme is a `[data-theme="…"]` block in `/lib/facet.css` that maps the semantic tokens (the base family + accent ranks, each with hover / pressed / on-colors, in light and dark). That file is the ONLY place raw hex values exist — do not copy them here. See every theme live on the home-page switcher and tune one on the Build-a-theme page.
 
-Paper white, near-black ink, gray hairlines, small radii, whisper shadows. Zero decoration, the quiet base. The accent ranks are the ink itself.
+**Colour is ranked, not named.** Components use `--accent-1/-2/-3` (each with `-hover`, `-pressed`, `--on-accent-N`) and never pick a raw colour. One accent-1 action per screen.
 
-- Background: `#FFFFFF`
-- Surface: `#FAFAFA`
-- Text: `#17171B`
-- Muted text: `#6E6E76`
-- Borders: `#E4E4E8`
-- Accent-1 (primary actions): `#17171B`, deepening to `#000000`
-- Accent-2 (secondary fill): the surface family, `#FAFAFA` to `#E4E4E8`
-- Accent-3 (links, labels, focus): the ink.
-- The OS accent is a separate opt-in token, `--os-accent` (dormant — no component uses it): the iOS system blue everywhere, upgrading to the visitor's real OS accent only where the browser exposes it (Safari 16.4+, Firefox 103+ — `AccentColor` behind an @supports gate). Kept out of the accent ranks on purpose, so Default's ranks stay the ink rather than making nearly every Apple user blue (R2, reworked).
+The shipped set, by design intent:
 
-Color is ranked, not named: components use `--accent-1/-2/-3` (each with `-hover`, `-pressed`, `--on-accent-N`) and never pick raw colors. One accent-1 action per screen.
+- **Default** (no attribute) — paper white, near-black ink, whisper shadows; the quiet base, where the accent ranks are the ink itself. (The OS accent is a separate dormant token, `--os-accent`, kept out of the ranks on purpose.)
+- **Sand** (`data-theme="sand"`) — modern desert beige, quietly elegant; parked but working.
+- **Velvet** (`data-theme="velvet"`) — neumorphic matte material, gold ink, serif display, one light source from above.
+- **Aero** (`data-theme="aero"`) — Frutiger Aero glass gloss, sky aqua, pill buttons; dark is ocean glass.
+- **Elegant** (`data-theme="elegant"`) — cream and gold, serif display, carved (inset) elevation; dark twin is obsidian and gold.
 
-### Theme · Sand (`data-theme="sand"`, parked but working)
-
-Modern beige, boring on purpose, quietly elegant. Palette pulled from Minecraft desert biome blocks, with the inks darkened so every text role passes AA contrast on the sand. Background `#EDE5C0`, surface `#F6F0D8`, text `#33291A`, muted `#665A38`, borders `#D9CD9E`. Accent-1 `#487D31` cactus (deep enough for white labels), accent-2 the sandstone fill, accent-3 `#3A6824` deep cactus.
-
-### Theme · Velvet (`data-theme="velvet"`)
-
-Neumorphic matte material extracted from the shipped inflation app, fully ingested (R18 complete). One light source from straight above; elements are raised faces or carved wells; gold is the only accent ink (accent-1 and accent-3 gold, accent-2 the raised gray face family); serif display headings, rounded control voice. Cushion-press physics are hand-tuned finals and hold in every motion personality. The --v-* material tokens are kept verbatim from the reference implementation.
-
-### Theme · Aero (`data-theme="aero"`)
-
-Frutiger Aero era: sky aqua, glass gloss, translucent plastic, pill buttons. Light: pale sky `#EAF6FD`, white glass surface, deep sea ink `#0C3049`; accent-1 glossy sky blue `#0B6FB8` (deep enough for white labels), accent-2 the translucent plastic fill, accent-3 aero grass green `#0A7D5F`. Dark is ocean glass: deep water `#062A40`, lifted sky blue, sea-glass green. The `--a-*` material tokens carry the glass (gloss gradient with the hard 50% line, translucent border, blue glow on the primary); recipes make buttons and inputs pills.
-
-### Theme · Elegant (`data-theme="elegant"`)
-
-The old Gems signature: cream surfaces `#F7F2E9`, umber ink `#2B2417`, gold hairline borders `#D6C08D`, serif display headings (through the `--font-heading` token alone), carved elevation (the `--e-carve` inset token presses panels into the cream — never a drop shadow). Accent-1 antique gold `#8C6D1F`, accent-2 the cream fill, accent-3 deep gold. Dark twin is obsidian and gold: near-black warm ground `#14110B`, lit gold `#D8B75B`, old-brass hairlines.
-
-All hexes live in `/lib/facet.css` as CSS variables and nowhere else. Everything downstream uses the semantic tokens.
+**Adding a theme:** add its `[data-theme="…"]` block in facet.css mapping every semantic token (light + dark), keep AA contrast in both, then add it to the switcher and the Build page. Everything downstream reads the semantic tokens, so nothing else changes.
 
 
 -------------------------------------------------------------------------------
