@@ -1,4 +1,17 @@
-# Facet
+# Facet — the build charter
+
+> **What this file is.** The single source of truth for *building and
+> maintaining* Facet: its principles, the project map, the keep-in-sync
+> contract, and the checklist a contributor or AI follows to add to the
+> library. Both a human and an AI can read it top to bottom.
+>
+> **You probably don't need this to *use* Facet.** If you just want to build a
+> page with it, read [`llms.txt`](llms.txt) (the usage guide) or start on the
+> [home page](index.html). This charter is for people extending the library
+> itself.
+>
+> Everything below is written as instructions Claude Code reads at the start of
+> every session and follows to the letter.
 
 Facet is a plain HTML, CSS and JS design library used across everything: apps,
 websites, pitch decks, documents and business cards. It is one CSS file and one
