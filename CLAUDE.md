@@ -9,12 +9,12 @@ one script tag. No React, no build step, no npm install, never minified.
 only: vision and requirements, never implementation detail. The backlog lives
 in BACKLOG.md in this repo.
 
-The repo root is the library's website. The homepage IS the library:
-documentation, living demo and proof of distribution in one page — header
-with theme switcher, get-started strip, tokens section, the element wall
-(every component live with its description, chips and exact snippet), and
-the rules. The library files live in `/lib`. Vercel deploys the repo as a
-static site on every push to main.
+The repo root is the library's website, deployed by Vercel as a static site
+on every push to `main`. It is a small multi-page site: the **home page**
+(`index.html`) is the pitch — philosophy, a curated feature list, and how to
+use it — and the **Library** (`library.html`) is the catalogue, where every
+token, component, block, template and app-feel behaviour is live with its
+exact copy-paste code. The library itself is the two files in `/lib`.
 
 ```
 /lib
@@ -31,7 +31,7 @@ static site on every push to main.
   document.html    A4 pages: letterhead, invoice, one-pager
   card.html        3.5x2in business card, front/back + print sheet
   manifest.json    the PWA manifest template
-index.html         home: philosophy, granular features, how-to, best practices
+index.html         home: philosophy, curated features, how-to (people vs AI), principles
 library.html       the whole library on one page — one growing ladder:
                    Layer 1 Tokens & base, 2 Components (grouped + filterable),
                    3 Blocks, 4 Templates (with live device previews), 5 App feel
@@ -50,12 +50,59 @@ Projects consume the library by URL, never by copying files in:
 <script src="https://[domain]/lib/facet.js" defer></script>
 ```
 
+## Project map — every file, and what it is the source of truth for
+
+Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to
+BUILD Facet, read this file (`CLAUDE.md`)**. Everything else hangs off those.
+
+| Path | What it is | Read by | Source of truth for |
+|---|---|---|---|
+| `/lib/facet.css` | the whole design system: tokens, base, every component, all themes | consumers' AI, contributors | all styling; every theme hex |
+| `/lib/facet.js` | the behaviours, one named function each | consumers' AI, contributors | all behaviour; the public `facet.*` API |
+| `index.html` | home: philosophy, curated Features, how-to (people vs AI), principles | people | the human pitch |
+| `library.html` | the catalogue — Layers 1–5 live, with exact snippets + reference blocks | people | the live component wall (demos + copy-paste HTML) |
+| `playground.html` | live playground + cheatsheet (rendered from facet.json) | people | — |
+| `build.html` | visual theme builder + Skin Lab | people | — |
+| `/templates/*.html` | whole-page starters (landing, saas, social, app, article, deck, document, card) | people, consumers' AI | starter pages |
+| `llms.txt` | the full usage guide in one plain-text fetch | **consumers' AI (primary)** | the exhaustive capability + component inventory |
+| `facet.json` | machine manifest of every theme, token, class, attribute, component, block, API | consumers' AI; the cheatsheet + reference blocks | the structured manifest |
+| `CLAUDE.md` | this file — the build/maintain charter | **Claude + contributors** | how to build and add to the library |
+| `BACKLOG.md` | the build queue, one checkbox per item | Claude + owner | what to build next; decisions + exclusions |
+| `README.md` | GitHub front door: what it is, how to consume, how to develop | people arriving via GitHub | — |
+| `docs.css` / `docs.js` | docs-site styling + behaviour — NOT shipped in `/lib` | contributors | the site's own chrome |
+| `sitemap.xml` | a plain URL list for search-engine crawlers — SEO only. Not descriptions, and not what an AI reads (AI reads `llms.txt`). | crawlers | — |
+| `robots.txt` | crawler policy; points to the sitemap | crawlers | — |
+
+### Keep-in-sync contract — what one change must touch
+
+Adding or changing a component means updating all of these in the **same
+commit**, or it drifts:
+
+1. `/lib/facet.css` — the component's own commented section.
+2. `/lib/facet.js` — its behaviour, if any (one named function).
+3. `library.html` — its wall entry: live demo of every variant/state + the
+   exact snippet.
+4. `llms.txt` — its full usage entry, plus its line in the capability
+   inventory. **llms.txt is the source of truth for "does this exist".**
+5. `facet.json` — its manifest entry (class / attribute / API).
+6. `index.html` — a curated Features card ONLY if it is a headline,
+   user-facing capability. The home Features are the human subset, not the
+   exhaustive list; the exhaustive list is `llms.txt`.
+7. `BACKLOG.md` — tick the item.
+
+The description text is written once and reused word-for-word in three
+places: the file comment in `facet.css`/`facet.js`, the `library.html` wall
+entry, and `llms.txt`.
+
+When a page is added, renamed or removed, update three places together:
+this project map, `sitemap.xml`, and the header nav on every page.
+
 ## Standing rules — every session
 
 - The loop: the owner says "continue" — nothing more. Read BACKLOG.md,
   take the top unchecked item, build it through the full pipeline
-  (compliance checklist, wall entry, Features + llms.txt lines, tick the
-  box, verify in a real browser, commit, push), then take the next item
+  (compliance checklist, wall entry on library.html, llms.txt + facet.json
+  lines, tick the box, verify in a real browser, commit, push), then take the next item
   until the turn is done. No re-asking what to work on.
 - New work arrives mid-stream in the owner's words. Write it into
   BACKLOG.md immediately — detailed enough to build from that file alone,
@@ -66,11 +113,13 @@ Projects consume the library by URL, never by copying files in:
   CSS adds and site polish.
 - BACKLOG.md is the only planning file. No separate requirements doc, no
   Notion in the loop; the repo is the whole system of record.
-- The feature inventory rule: every capability the library ships is listed
-  in the Features section on index.html and mirrored in llms.txt. If a
-  capability is not listed there, it does not exist. Every new feature adds
-  its line to both, in the same commit that builds it — no orphan features,
-  nothing built and forgotten.
+- The inventory rule: llms.txt is the exhaustive list of every capability the
+  library ships — if it is not in llms.txt, it does not exist, and every new
+  capability adds its llms.txt line in the same commit that builds it. The
+  Features section on index.html is the curated, human-readable subset: a
+  headline capability gets a card there, but the homepage is not the
+  exhaustive inventory. facet.json carries the same capability as structured
+  data. No orphan features, nothing built and forgotten.
 - Development happens directly on `main`. No feature branches unless
   explicitly requested. All changes go through Git commits; the live files
   are never edited ad hoc.
@@ -78,7 +127,8 @@ Projects consume the library by URL, never by copying files in:
   commit.
 - Whenever a component or rule changes, three places update together with
   the same wording: the file comment in facet.css/facet.js, the wall entry
-  on index.html, and llms.txt.
+  on library.html, and llms.txt. (Full keep-in-sync contract in the project
+  map above.)
 
 ## Core principles
 
@@ -98,7 +148,8 @@ Projects consume the library by URL, never by copying files in:
 - Everything explained in place: every interactive element carries a
   description tooltip.
 - Alive by default: gyroscope parallax and idle animations, with reduced
-  motion honoured. (Motion effects land with Layer 3's motion set.)
+  motion honoured. (Shipped as the App-feel layer: parallax, idle motion,
+  sound and haptics.)
 - Fully commented: every file self-describes with intros, usage notes and
   to-dos, so any AI can build products with it.
 - Accessible, SEO-ready and AI-crawlable by default. Enforced through the
@@ -150,13 +201,15 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 - [ ] Names follow the naming rules. Nothing minified.
 - [ ] Analytics hook on its key action where relevant: a `data-event`
       attribute.
-- [ ] Wall entry added on index.html: live demo of every variant and state,
+- [ ] Wall entry added on library.html: live demo of every variant and state,
       variant and state chips, exact snippet with copy button.
 - [ ] Docs description added: what it is, what it is for, when to use it.
       Written to read as AI instructions, the same text word for word in the
       file comment, the wall entry and llms.txt.
-- [ ] Feature inventory updated: the capability's line added to the
-      Features section on index.html and to llms.txt, same commit.
+- [ ] Inventory updated in the same commit: the capability's full entry in
+      llms.txt (the exhaustive list) and its facet.json manifest entry; a
+      curated card in the index.html Features section only if it is a
+      headline user-facing feature.
 - [ ] BACKLOG.md item ticked.
 - [ ] Committed to Git with a clear message.
 
@@ -193,8 +246,8 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 ## Platform laws — paid for on iOS
 
 Hard-won facts from shipped app work; they bind everything built with or
-added to the library. The full wording lives in the Rules section on
-index.html and in llms.txt — same text in all three places.
+added to the library. These are contributor rules — the full wording lives
+here and in llms.txt, not on the consumer-facing homepage.
 
 - Pager law: full-page snap sections that can outgrow the viewport are
   never built with CSS scroll-snap; the pager model (.snap upgraded by
@@ -228,7 +281,7 @@ index.html and in llms.txt — same text in all three places.
 - Tokens named by role, not value: `--surface`, not `--gray-100`. This
   extends to spacing and type: name them by intent (card spacing, section
   spacing, heading, body, caption) — never by a bare number a builder has to
-  memorise (`--space-2`, `--text-h3` are the old value-named scale, being
+  memorise (`--space-2`, `--text-h3` were the old value-named scale, now
   retired). Density and type size are one global three-step control
   (small/medium/large), and both are set BY THE THEME — you never pick a
   theme and its spacing separately. Full spec + naming in BACKLOG.md.
@@ -239,16 +292,16 @@ index.html and in llms.txt — same text in all three places.
 
 ## Rules for building and maintaining
 
-- Docs are demos. A component is not done until the homepage wall shows it
-  live with its code.
+- Docs are demos. A component is not done until the Library wall
+  (library.html) shows it live with its code.
 - One component, one clearly commented section in the CSS file. Nothing is
   scattered.
 - Growth by extraction: build a new pattern inside a project first, promote it
   once it repeats.
 - App logic, data fetching and state management live in projects, never in
   the library.
-- Docs-only styles and scripts stay inline in index.html, clearly marked.
-  They never leak into /lib.
+- Docs-only styles and scripts live in docs.css and docs.js — never in
+  /lib. They serve the site's own chrome, not the shipped library.
 
 ## Themes
 

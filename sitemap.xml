@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Facet's own sitemap; templates copy this shape. Update the domain
-     when the site gets its real one. -->
+     when the site gets its real one.
+     NOTE: this is a plain URL list for search-engine crawlers (SEO) only —
+     not page descriptions, and not what an AI reads. The human/AI-readable
+     map of the whole project lives in CLAUDE.md; the usage guide is llms.txt.
+     Keep this list in sync with the header nav and the CLAUDE.md project map. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://facet-kappa.vercel.app/</loc></url>
   <url><loc>https://facet-kappa.vercel.app/library.html</loc></url>
