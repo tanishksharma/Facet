@@ -1,37 +1,7 @@
 /* Facet docs site styles — presentation of the site's own pages
-   (home, components, layouts). Not part of the library; never in /lib. */
-
-/* Site header: a plain page-nav bar, not sticky and with no theme
-   switcher — the theme picker lives in the hero. Just the wordmark and
-   the ways out of the home page: build a theme, the machine files,
-   the source. */
-.site-header {
-  border-bottom: var(--border-hairline) solid var(--border);
-}
-.site-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-control) var(--space-stack);
-  padding-block: var(--space-inline);
-}
-.site-nav .wordmark {
-  font-weight: var(--weight-heading);
-  font-size: var(--text-h3);
-  text-decoration: none;
-  letter-spacing: -0.02em;
-}
-.site-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-tight) var(--space-stack); }
-.site-link {
-  text-decoration: none;
-  color: var(--text-muted);
-  font-size: var(--text-footnote);
-  font-weight: var(--weight-strong);
-  padding-block: var(--space-tight);
-}
-.site-link:hover { color: var(--text); }
-.site-link[aria-current="page"] { color: var(--text); }
+   (home, library, build). Not part of the library; never in /lib.
+   The page header was removed — the floating site menu (bottom-right)
+   carries the navigation now. */
 
 /* Landing — one centered column: heading, the two tags, a copy
    button and the theme chips. The code block is the focus, so the
