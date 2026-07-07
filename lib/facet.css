@@ -145,12 +145,54 @@
   --text-footnote: calc(0.875rem * var(--text-scale));   /* the fine print (was --text-footnote) */
   --text-caption:  calc(0.75rem  * var(--text-scale));   /* labels, badges, meta */
 
-  /* ----- Typography: weights and line heights ----- */
-  --weight-heading: 650;      /* variable-font friendly; falls back to bold */
-  --weight-body: 400;
-  --weight-strong: 600;
-  --leading-heading: 1.2;
-  --leading-body: 1.6;
+  /* ----- Typography: weights -----
+     Four steps, named by role. Medium is the UI weight: nav, buttons,
+     labels, table headers — the text that must read as deliberate without
+     shouting. A theme swaps these to re-voice every heading and control. */
+  --weight-body: 400;         /* running text */
+  --weight-medium: 500;       /* UI labels, nav, buttons, table headers */
+  --weight-strong: 600;       /* <strong>, emphasis inside body */
+  --weight-heading: 650;      /* headings; variable-font friendly, falls back to bold */
+
+  /* ----- Typography: line height, named by role -----
+     Tighter as type gets larger — big display text needs less leading, body
+     text needs more to stay readable. One value per role so a theme sets the
+     whole vertical feel at once. */
+  --leading-display: 1.05;    /* hero statements and big numbers */
+  --leading-heading: 1.15;    /* h1, h2 */
+  --leading-snug: 1.3;        /* h3–h6, lead paragraphs, dense headings */
+  --leading-body: 1.6;        /* running prose */
+  --leading-ui: 1.4;          /* buttons, table cells, tight controls */
+
+  /* ----- Typography: tracking (letter-spacing), named by role -----
+     The elegant signature: large type tightens (negative), small caps-y
+     labels open up (positive). Scales with size because the values are in em.
+     A theme retunes the whole voice by shifting these. */
+  --tracking-display: -0.03em;  /* hero and h1 */
+  --tracking-heading: -0.02em;  /* h2 */
+  --tracking-snug: -0.01em;     /* h3–h6 */
+  --tracking-body: 0em;         /* running text */
+  --tracking-label: 0.02em;     /* buttons, nav, field labels */
+  --tracking-caps: 0.06em;      /* uppercase micro-labels: eyebrows, badges, meta */
+
+  /* ----- Typography: reading measure -----
+     Max line length for comfortable reading, in ch (character widths) so it
+     tracks the font. Prose caps at --measure; lead paragraphs and card copy
+     use the narrower one. */
+  --measure: 66ch;            /* body prose */
+  --measure-narrow: 54ch;     /* lead-ins, card and callout copy */
+
+  /* ----- Typography: prose rhythm (vertical margins) -----
+     The space above and below headings and between blocks, in em so it
+     scales with each element's own size (a big heading gets a big break).
+     A heading sits close to the content it introduces (small below) and
+     apart from what came before (larger above). Layout primitives that use
+     gap (.stack, .row) zero these out, so rhythm governs raw prose while gap
+     governs app layout — never both at once. */
+  --flow-heading-above: 1.5em;  /* group break before a heading */
+  --flow-heading-below: 0.5em;  /* heading hugs the content it introduces */
+  --flow-paragraph: 1em;        /* between paragraphs, lists, quotes, tables */
+  --flow-tight: 0.5em;          /* between closely related lines */
 
   /* ----- Spacing: named by intent, scaled by density -----
      Pick spacing by role, never by a bare number. Each token says where it
@@ -1033,11 +1075,11 @@
    heading steps carry the heading font; the rest stay in the body
    font. Same names as the tokens: .text-display, .text-h1 … .text-h4,
    .text-body, .text-quote, .text-footnote, .text-caption. */
-.text-display { font-family: var(--font-heading); font-size: var(--text-display); font-weight: var(--weight-heading); line-height: 1.1; }
-.text-h1      { font-family: var(--font-heading); font-size: var(--text-h1); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
-.text-h2      { font-family: var(--font-heading); font-size: var(--text-h2); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
-.text-h3      { font-family: var(--font-heading); font-size: var(--text-h3); font-weight: var(--weight-strong); line-height: var(--leading-heading); }
-.text-h4      { font-family: var(--font-heading); font-size: var(--text-h4); font-weight: var(--weight-strong); line-height: var(--leading-heading); }
+.text-display { font-family: var(--font-heading); font-size: var(--text-display); font-weight: var(--weight-heading); line-height: var(--leading-display); letter-spacing: var(--tracking-display); }
+.text-h1      { font-family: var(--font-heading); font-size: var(--text-h1); font-weight: var(--weight-heading); line-height: var(--leading-heading); letter-spacing: var(--tracking-display); }
+.text-h2      { font-family: var(--font-heading); font-size: var(--text-h2); font-weight: var(--weight-heading); line-height: var(--leading-heading); letter-spacing: var(--tracking-heading); }
+.text-h3      { font-family: var(--font-heading); font-size: var(--text-h3); font-weight: var(--weight-strong); line-height: var(--leading-snug); letter-spacing: var(--tracking-heading); }
+.text-h4      { font-family: var(--font-heading); font-size: var(--text-h4); font-weight: var(--weight-strong); line-height: var(--leading-snug); letter-spacing: var(--tracking-snug); }
 .text-body    { font-size: var(--text-body);    line-height: var(--leading-body); }
 .text-quote   { font-size: var(--text-quote);   line-height: var(--leading-body); font-style: italic; }
 .text-footnote   { font-size: var(--text-footnote);   line-height: 1.5; }
@@ -1306,23 +1348,26 @@ body {
 
 /* ----- Headings ----- */
 
+/* Shared heading traits; size, line-height and tracking are set per level
+   below so each reads at its own weight. Margins give raw prose its rhythm:
+   a heading separates from what's above it and hugs the content below. */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: var(--weight-heading);
-  line-height: var(--leading-heading);
-  letter-spacing: -0.01em;
   text-wrap: balance;
+  margin: var(--flow-heading-above) 0 var(--flow-heading-below);
 }
 
-h1 { font-size: var(--text-h1); }
-h2 { font-size: var(--text-h2); }
-h3 { font-size: var(--text-h3); }
-h4, h5, h6 { font-size: var(--text-h4); }
+h1 { font-size: var(--text-h1); line-height: var(--leading-heading); letter-spacing: var(--tracking-display); }
+h2 { font-size: var(--text-h2); line-height: var(--leading-heading); letter-spacing: var(--tracking-heading); }
+h3 { font-size: var(--text-h3); line-height: var(--leading-snug);    letter-spacing: var(--tracking-heading); }
+h4, h5, h6 { font-size: var(--text-h4); line-height: var(--leading-snug); letter-spacing: var(--tracking-snug); }
 
 /* ----- Text ----- */
 
 p {
-  max-width: 65ch;              /* comfortable reading measure by default */
+  max-width: var(--measure);   /* comfortable reading measure by default */
+  margin: 0 0 var(--flow-paragraph);
   text-wrap: pretty;
 }
 
@@ -1341,17 +1386,30 @@ a {
 a:hover { text-decoration-color: currentColor; }
 
 ul, ol {
+  margin: 0 0 var(--flow-paragraph);
   padding-left: var(--space-card);
 }
 
-li + li { margin-top: var(--space-tight); }
+li + li { margin-top: var(--flow-tight); }
 
 blockquote {
+  margin: 0 0 var(--flow-paragraph);
   padding-left: var(--space-stack);
   border-left: var(--border-highlight) solid var(--accent-3);
   color: var(--text-muted);
   font-style: italic;
 }
+
+figure, table, pre { margin: 0 0 var(--flow-paragraph); }
+
+/* Prose rhythm, contained. The margins above give raw semantic HTML its
+   vertical flow; these three rules keep that flow from fighting anything:
+   a container never opens with a top margin or closes with a trailing one,
+   and gap-based layout primitives (.stack, .row) own their spacing outright
+   so margins and gap never stack. :where() keeps specificity at zero. */
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table, figure):first-child { margin-top: 0; }
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table, figure):last-child { margin-bottom: 0; }
+:where(.stack, .stack-tight, .stack-loose, .row, .row-tight, .row-loose) > * { margin-block: 0; }
 
 hr {
   border: none;
@@ -1393,7 +1451,8 @@ pre code {
 label {
   display: block;
   font-size: var(--text-footnote);
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-label);
 }
 
 input,
@@ -1464,11 +1523,11 @@ th, td {
 }
 
 th {
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-medium);
   color: var(--text-muted);
   font-size: var(--text-caption);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-caps);
 }
 
 tbody tr:hover {
@@ -1744,7 +1803,9 @@ figcaption {
   border-radius: var(--radius-control);
   background: var(--accent-2);
   color: var(--on-accent-2);
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-ui);
+  letter-spacing: var(--tracking-label);
   text-decoration: none;                  /* .btn also works on <a> */
   transition:
     background var(--duration-fast) var(--ease-out),
@@ -2201,7 +2262,7 @@ input[type="week"] {
   font-size: var(--text-caption);
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-caps);
 }
 
 .result-figures dd {

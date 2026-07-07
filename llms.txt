@@ -66,7 +66,15 @@ page), --surface (cards/inputs, one step above), --surface-hover and
 --border-strong (three line weights), and --text / --text-muted /
 --text-subtle (three text weights) — so a component picks the exact
 neutral it needs. Plus per-theme status colors, type and spacing named by
-intent and each scaled by a global small/medium/large control, weights,
+intent and each scaled by a global small/medium/large control. Typography
+is fully tokenised by role: four weights (--weight-body/-medium/-strong/
+-heading), line-height per role (--leading-display/-heading/-snug/-body/
+-ui, tighter as type grows), tracking per role (--tracking-display/
+-heading/-snug/-body/-label/-caps — large type tightens, caps labels open
+up), reading measure (--measure, --measure-narrow), and prose rhythm
+(--flow-heading-above/-below, --flow-paragraph, --flow-tight — em-based
+vertical margins that give raw semantic HTML its flow; gap layouts zero
+them so rhythm and gap never stack). Plus
 container widths, radii by role (--radius-control/-panel/-card/-pill),
 border WIDTHS by role (--border-hairline for separators, --border-element
 for outlines, --border-focus for the focus ring, --border-highlight for
