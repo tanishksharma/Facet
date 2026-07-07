@@ -983,11 +983,13 @@ every future theme gets its map for free.
 The app kit wires the whole app shell from markup, so a calculator is
 markup + its own data/logic with no library-shaped glue:
 
-Settings icon-row: a .menu-icon-row of .menu-icon-btn[data-control]
-buttons self-wire — "sounds" and "haptics" flip facet.feedback.sound/
-haptic.enabled, "motion" cycles facet.motion (Off/Cursor/Tilt),
-"appearance" cycles facet.scheme (Light/Dark/Auto). Each writes its
-.menu-value word and dims via data-off. Zero app JS.
+Settings controls: any element carrying data-control self-wires (a
+.menu-icon-btn, a .menu-item row, or a .nav-set pill) — "sounds" and
+"haptics" flip facet.feedback.sound/haptic.enabled, "motion" cycles
+facet.motion (Off/Cursor/Tilt), "appearance" cycles facet.scheme
+(Light/Dark/Auto), and "theme" cycles the shipped themes (Default/Sand/
+Velvet/Aero/Elegant). Each writes its .menu-value word and dims via
+data-off. Zero app JS.
 
 Appearance is three-way (facet.scheme): auto follows the OS live,
 light/dark are held, remembered in the URL and localStorage.

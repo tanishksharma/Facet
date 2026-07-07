@@ -77,11 +77,16 @@
 }
 /* The index is its own panel: a surface fill a shade off the page, a
    hairline all round (so its right edge divides it from the wall) and
-   inner padding. It sticks with the page scroll and never scrolls on its
-   own — the layer groups collapse to keep it short. */
+   inner padding. It sticks with the page scroll and is capped to the
+   viewport height, so its own content — not the page — scrolls when the
+   groups are expanded past the screen; when they fit, there is no
+   scrollbar and the panel simply sits still. */
 .docs-index {
   position: sticky;
   top: var(--space-stack);
+  max-height: calc(100dvh - 2 * var(--space-stack));
+  overflow-y: auto;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   gap: var(--space-control);
