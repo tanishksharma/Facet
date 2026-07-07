@@ -288,8 +288,7 @@ One attribute (`data-theme`) switches the theme, layout containers included; `da
 
 The shipped set, by design intent:
 
-- **Default** (no attribute) — a soft off-white page with white surfaces that lift above it, softened ink, a cool-tuned neutral ramp of semantic roles (surface / surface-hover / surface-active, three border weights, three text weights) and layered whisper-light shadows; the neutral base, where the accent ranks are the ink itself. (The OS accent is a separate dormant token, `--os-accent`, kept out of the ranks on purpose.)
-- **Sand** (`data-theme="sand"`) — modern desert beige, quietly elegant; parked but working.
+- **Default** (no attribute) — a cool near-white page with white surfaces that lift above it, a refined Radix-slate neutral ramp (surface / surface-hover / surface-active, three border weights, three text weights) and whisper-light, navy-tinted layered shadows; hierarchy comes from elevation and hairline borders, not heavy shadow. The neutral base, where the accent ranks are the ink itself (a Vercel-black primary). Dark is Linear's near-black surface ladder (never pure black), softened paper ink, and a top-edge inset highlight in place of shadow. (The OS accent is a separate dormant token, `--os-accent`, kept out of the ranks on purpose.)
 - **Velvet** (`data-theme="velvet"`) — neumorphic matte material, gold ink, serif display, one light source from above.
 - **Aero** (`data-theme="aero"`) — Frutiger Aero glass gloss, sky aqua, pill buttons; dark is ocean glass.
 - **Elegant** (`data-theme="elegant"`) — cream and gold, serif display, carved (inset) elevation; dark twin is obsidian and gold.

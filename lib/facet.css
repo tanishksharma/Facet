@@ -20,8 +20,8 @@
 
     <html>                                 Default, light
     <html data-mode="dark">                Default, dark
-    <html data-theme="sand">               Sand, light
-    <html data-theme="sand" data-mode="dark">   Sand, dark
+    <html data-theme="velvet">             Velvet, light
+    <html data-theme="aero" data-mode="dark">   Aero, dark
 
   The same attributes work on any element, not just <html>: put
   data-mode="dark" on a section and only that subtree flips — that is how
@@ -86,16 +86,16 @@
      and LIFT above it (the charter's "one step above"); the two interactive
      fills, three border weights and three text weights give every component
      the exact neutral it needs instead of overloading one gray. */
-  --background: #F8F8FA;      /* the page itself: soft off-white */
+  --background: #FBFCFD;      /* the page itself: cool off-white (Radix slate-1) */
   --surface: #FFFFFF;         /* one step above the page: cards, inputs, menus */
-  --surface-hover: #F2F2F6;   /* interactive fill, rest→hover: rows, ghost buttons, options */
-  --surface-active: #E9E9EF;  /* interactive fill, pressed */
-  --border-subtle: #EDEDF1;   /* the faintest line: dividers, row separators */
-  --border: #E2E2E8;          /* the outline of an element: cards, inputs, chips */
-  --border-strong: #CDCDD5;   /* emphasis: hovered inputs, selected outlines */
-  --text: #1B1B21;            /* primary ink, softened off pure black */
-  --text-muted: #63636D;      /* secondary text, hints, captions (AA on surface) */
-  --text-subtle: #8B8B96;     /* tertiary: placeholders, disabled, the non-essential */
+  --surface-hover: #F8F9FA;   /* interactive fill, rest→hover (slate-2) */
+  --surface-active: #F1F3F5;  /* interactive fill, pressed (slate-3) */
+  --border-subtle: #ECEEF0;   /* the faintest line: dividers, row separators (slate-4) */
+  --border: #DFE3E6;          /* the outline of an element: cards, inputs, chips (slate-6) */
+  --border-strong: #C1C8CD;   /* emphasis: hovered inputs, selected outlines (slate-8) */
+  --text: #11181C;            /* primary ink, cool near-black (slate-12) */
+  --text-muted: #687076;      /* secondary text, hints, captions — AA on surface (slate-11) */
+  --text-subtle: #889199;     /* tertiary: placeholders, disabled, the non-essential */
 
   /* ----- Colors: the accent ranks ----- */
   /* Components never pick colors; they pick ranks. Accent-1 is the one
@@ -104,19 +104,19 @@
      small affordances. Each rank carries hover, pressed and an on-color
      for text sitting on it. In Default, accent-1 and accent-3 are the
      ink itself; accent-2 is the surface family. */
-  --accent-1: #1B1B21;
-  --accent-1-hover: #0E0E12;
-  --accent-1-pressed: #000000;
+  --accent-1: #11181C;        /* the ink is the accent — a Vercel-black primary */
+  --accent-1-hover: #0A0F12;
+  --accent-1-pressed: #05080A;
   --on-accent-1: #FFFFFF;
 
-  --accent-2: #F1F1F5;        /* a real light-gray fill, distinct from the white surface */
-  --accent-2-hover: #E8E8EE;
-  --accent-2-pressed: #DEDEE5;
-  --on-accent-2: #1B1B21;
+  --accent-2: #F1F3F5;        /* a real light-gray fill, distinct from the white surface (slate-3) */
+  --accent-2-hover: #ECEEF0;
+  --accent-2-pressed: #DFE3E6;
+  --on-accent-2: #11181C;
 
-  --accent-3: #1B1B21;        /* the quiet interactive rank — the ink */
-  --accent-3-hover: #0E0E12;
-  --accent-3-pressed: #000000;
+  --accent-3: #11181C;        /* the quiet interactive rank — the ink */
+  --accent-3-hover: #0A0F12;
+  --accent-3-pressed: #05080A;
   --on-accent-3: #FFFFFF;
 
   /* The OS accent, as its own opt-in color — dormant, used by nothing until
@@ -250,15 +250,19 @@
      with the cool ink rather than pure black — so a surface reads as lifted,
      not outlined. The higher the element, the softer and larger the spread. */
   --shadow-flat: none;
+  /* Whisper-light, layered, tinted with a cool navy (16 24 40) rather than
+     pure black, so a surface reads as lifted, not outlined — the premium cast
+     shared by Radix, Stripe and Untitled UI. A tight contact shadow plus a
+     soft ambient one; the higher the element, the softer and larger. */
   --shadow-raised:
-    0 1px 2px -1px rgb(27 27 33 / 0.10),
-    0 1px 3px rgb(27 27 33 / 0.05);
+    0 1px 2px rgb(16 24 40 / 0.04),
+    0 1px 3px rgb(16 24 40 / 0.06);
   --shadow-floating:
-    0 4px 10px -3px rgb(27 27 33 / 0.12),
-    0 2px 5px -2px rgb(27 27 33 / 0.06);
+    0 2px 4px rgb(16 24 40 / 0.05),
+    0 4px 8px rgb(16 24 40 / 0.06);
   --shadow-overlay:
-    0 16px 36px -10px rgb(27 27 33 / 0.18),
-    0 6px 14px -6px rgb(27 27 33 / 0.10);
+    0 8px 16px rgb(16 24 40 / 0.06),
+    0 16px 32px rgb(16 24 40 / 0.08);
 
   /* ----- Motion: timing and easing ----- */
   /* Animated, the default: momentum, weight, a settle in every arrival.
@@ -287,122 +291,50 @@
    spacing, shape and motion carry over.
 */
 [data-mode="dark"] {
-  --background: #0F0F12;      /* the page: near-black */
-  --surface: #1A1A1F;        /* one step above: cards lift out of the ground */
-  --surface-hover: #232329;  /* interactive fill, rest→hover */
-  --surface-active: #2C2C34; /* interactive fill, pressed */
-  --border-subtle: #232329;  /* the faintest line */
-  --border: #303038;         /* element outlines */
-  --border-strong: #45454F;  /* emphasis */
-  --text: #F4F4F6;           /* paper ink */
-  --text-muted: #9B9BA4;     /* secondary */
-  --text-subtle: #6C6C76;    /* tertiary */
+  --background: #0F1011;      /* the page: near-black, never pure #000 (Linear) */
+  --surface: #141516;        /* one step above: cards lift out of the ground */
+  --surface-hover: #18191A;  /* interactive fill, rest→hover */
+  --surface-active: #202425; /* interactive fill, pressed */
+  --border-subtle: #202123;  /* the faintest line */
+  --border: #2C2E31;         /* element outlines */
+  --border-strong: #4C5155;  /* emphasis */
+  --text: #ECEDEE;           /* paper ink, softened off pure white */
+  --text-muted: #889096;     /* secondary */
+  --text-subtle: #63676B;    /* tertiary */
 
-  --accent-1: #F4F4F6;
+  --accent-1: #ECEDEE;
   --accent-1-hover: #FFFFFF;
-  --accent-1-pressed: #E2E2E5;
-  --on-accent-1: #17171B;
+  --accent-1-pressed: #D4D6D8;
+  --on-accent-1: #11181C;
 
-  --accent-2: #232329;       /* a raised gray fill, distinct from the surface */
-  --accent-2-hover: #2C2C34;
-  --accent-2-pressed: #35353D;
-  --on-accent-2: #F4F4F6;
+  --accent-2: #202425;       /* a raised gray fill, distinct from the surface */
+  --accent-2-hover: #262B2C;
+  --accent-2-pressed: #2E3335;
+  --on-accent-2: #ECEDEE;
 
-  --accent-3: #F4F4F5;
+  --accent-3: #ECEDEE;
   --accent-3-hover: #FFFFFF;
-  --accent-3-pressed: #E2E2E5;
-  --on-accent-3: #17171B;
+  --accent-3-pressed: #D4D6D8;
+  --on-accent-3: #11181C;
 
   --success: #56B87A;
   --warning: #D8A23E;
   --error: #E5766A;
   --info: #7AA7DC;
 
+  /* Dark: shadows barely register, so hierarchy leans on borders plus a 1px
+     inset top highlight — the "light catches the top edge" trick from Linear
+     and Vercel — with just a soft cast underneath. */
   --shadow-raised:
-    0 1px 2px -1px rgb(0 0 0 / 0.50),
-    0 1px 3px rgb(0 0 0 / 0.35);
+    inset 0 1px 0 rgb(255 255 255 / 0.04),
+    0 1px 2px rgb(0 0 0 / 0.40);
   --shadow-floating:
-    0 4px 10px -3px rgb(0 0 0 / 0.55),
-    0 2px 5px -2px rgb(0 0 0 / 0.40);
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 4px 12px rgb(0 0 0 / 0.50);
   --shadow-overlay:
-    0 16px 36px -10px rgb(0 0 0 / 0.65),
-    0 6px 14px -6px rgb(0 0 0 / 0.45);
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 16px 40px rgb(0 0 0 / 0.60);
 }
-
-/*
-   Theme · Sand (light). <html data-theme="sand">.
-   Modern beige, restrained on purpose, understated. Palette pulled from
-   Minecraft desert biome blocks, with the ink darkened for AA contrast.
-   Parked, not deleted: available whenever a project wants it.
-*/
-[data-theme="sand"] {
-  --background: #EDE5C0;      /* sand */
-  --surface: #F6F0D8;         /* smooth sandstone */
-  --text: #33291A;            /* dark earth */
-  --text-muted: #665A38;      /* dead bush, deepened for AA on sand */
-  --border: #D9CD9E;          /* sandstone shadow */
-
-  --accent-1: #487D31;        /* cactus, deep enough for white labels (AA) */
-  --accent-1-hover: #3E6E27;
-  --accent-1-pressed: #356020;
-  --on-accent-1: #FFFFFF;
-
-  --accent-2: #F6F0D8;        /* smooth sandstone, the quiet action fill */
-  --accent-2-hover: #F0E9CE;
-  --accent-2-pressed: #E5DBB4;
-  --on-accent-2: #33291A;
-
-  --accent-3: #3A6824;        /* deep cactus: AA as text on sand */
-  --accent-3-hover: #356020;
-  --accent-3-pressed: #2F551C;
-  --on-accent-3: #FFFFFF;
-
-  --success: #3A6B25;
-  --warning: #7A5711;
-  --error: #93452F;
-  --info: #456073;
-
-  --shadow-raised: 0 1px 2px rgb(51 41 26 / 0.08);
-  --shadow-floating: 0 4px 12px rgb(51 41 26 / 0.10);
-  --shadow-overlay: 0 12px 32px rgb(51 41 26 / 0.16);
-}
-
-/*
-   Theme · Sand (dark). Composes: <html data-theme="sand" data-mode="dark">.
-   Dark earth ground, sand-colored ink, cactus stays the accent.
-*/
-[data-theme="sand"][data-mode="dark"] {
-  --background: #211A0F;
-  --surface: #2C2415;
-  --text: #EFE7C8;
-  --text-muted: #A99C6E;
-  --border: #453B24;
-
-  --accent-1: #6FAE52;
-  --accent-1-hover: #7CBB5F;
-  --accent-1-pressed: #619E46;
-  --on-accent-1: #1C2611;
-
-  --accent-2: #2C2415;
-  --accent-2-hover: #352C1A;
-  --accent-2-pressed: #453B24;
-  --on-accent-2: #EFE7C8;
-
-  --accent-3: #7CBB5F;        /* lighter cactus: AA as text on dark earth */
-  --accent-3-hover: #8AC46E;
-  --accent-3-pressed: #6FAE52;
-  --on-accent-3: #1C2611;
-
-  --success: #6FAE52;
-  --warning: #C79A45;
-  --error: #C4735C;
-  --info: #7FA0B4;
-
-  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4);
-  --shadow-floating: 0 4px 12px rgb(0 0 0 / 0.45);
-  --shadow-overlay: 0 12px 32px rgb(0 0 0 / 0.55);
-}
-
 
 /*
    Theme · Velvet (light). <html data-theme="velvet">.

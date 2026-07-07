@@ -444,7 +444,7 @@
     function initSkinLab() {
       const grid = document.querySelector("#lab-grid");
       if (!grid) return;
-      const THEMES = [["", "Default"], ["sand", "Sand"], ["velvet", "Velvet"], ["aero", "Aero"], ["elegant", "Elegant"]];
+      const THEMES = [["", "Default"], ["velvet", "Velvet"], ["aero", "Aero"], ["elegant", "Elegant"]];
       const LAYOUT = `
         <main class="container stack" style="padding: 1rem;">
           <h2 style="margin: 0;">Ledger</h2>
@@ -508,7 +508,7 @@
         <a class="menu-item" href="/lib/facet.js" data-event="ref-js"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> facet.js</a>
 
         <span class="menu-label">Theme</span>
-        <button type="button" class="menu-item" data-control="theme" aria-label="Theme: tap to cycle" data-tip="Cycles the palette: Default, Sand, Velvet, Aero, Elegant" data-event="cycle-theme">
+        <button type="button" class="menu-item" data-control="theme" aria-label="Theme: tap to cycle" data-tip="Cycles the palette: Default, Velvet, Aero, Elegant" data-event="cycle-theme">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z"/></svg>
           Theme <span class="menu-value">Default</span>
         </button>

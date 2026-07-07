@@ -166,13 +166,14 @@ included. Dark mode is a second attribute and composes with every theme.
 
     <html>                                    Default theme, light
     <html data-mode="dark">                   Default theme, dark
-    <html data-theme="sand">                  Sand theme, light
-    <html data-theme="sand" data-mode="dark"> Sand theme, dark
+    <html data-theme="velvet">                Velvet theme, light
+    <html data-theme="aero" data-mode="dark"> Aero theme, dark
 
-Themes: Default (white and black, the accent ranks are the ink itself)
-ships first. Sand
-(Minecraft desert beige, cactus accent-1) is parked and
-working. Velvet (data-theme="velvet") is the neumorphic material
+Themes: Default (cool near-white and near-black, the accent ranks are the
+ink itself — a refined Radix-slate neutral ramp with whisper-light,
+navy-tinted layered shadows and hairline borders; dark is Linear's near-black
+ladder with a top-edge inset highlight) ships first.
+Velvet (data-theme="velvet") is the neumorphic material
 extracted from the shipped inflation app: matte velvet surfaces, one
 light source from above, elements raised out of the fabric or carved
 into it, gold as the only accent ink, serif display headings, tuned
@@ -187,22 +188,22 @@ panels pressed into the cream, never floated on shadows; its dark twin
 is obsidian and gold.
 
 facet.js also reads ?theme= and ?mode= from the URL on load, so a shared
-link opens in the sender's theme. Buttons with data-theme-switch="sand"
+link opens in the sender's theme. Buttons with data-theme-switch="velvet"
 (empty value = Default) switch the theme live; buttons with
 data-mode-toggle flip light and dark. Both write their choice back to the
 URL.
 
 Setup by configuration: the facet.js script tag can carry the look —
-<script src=".../facet.js" data-theme="sand" data-mode="dark" defer>
+<script src=".../facet.js" data-theme="velvet" data-mode="dark" defer>
 boots the page into that configuration before first paint (explicit html
 attributes win over it; the URL wins over both). At runtime,
 facet.set({...}) applies key-value pairs live with no reload:
-facet.set({theme: "sand"}), facet.set({mode: "dark"}),
+facet.set({theme: "velvet"}), facet.set({mode: "dark"}),
 facet.set({"--accent-1": "#5F9E44"}) to override any token. Attributes
 on html stay the source of truth, so custom scripts keep working.
 
 The same attributes work on any element, not just html: put
-data-mode="dark" (or "light", or data-theme="sand") on a section and only
+data-mode="dark" (or "light", or data-theme="velvet") on a section and only
 that subtree flips — tokens are inherited custom properties, so the
 nearest element carrying the attribute wins. A themed subtree paints its
 own background and text automatically.
@@ -1068,8 +1069,8 @@ Settings controls: any element carrying data-control self-wires (a
 .menu-icon-btn, a .menu-item row, or a .nav-set pill) — "sounds" and
 "haptics" flip facet.feedback.sound/haptic.enabled, "motion" cycles
 facet.motion (Off/Cursor/Tilt), "appearance" cycles facet.scheme
-(Light/Dark/Auto), and "theme" cycles the shipped themes (Default/Sand/
-Velvet/Aero/Elegant). Each writes its .menu-value word and dims via
+(Light/Dark/Auto), and "theme" cycles the shipped themes (Default/Velvet/
+Aero/Elegant). Each writes its .menu-value word and dims via
 data-off. Zero app JS.
 
 Appearance is three-way (facet.scheme): auto follows the OS live,
