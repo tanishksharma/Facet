@@ -3732,46 +3732,52 @@ details.dropdown {
 /* --------------------------------------------------------------------------
    NAV MENU
 
-   What it is: a floating navigation cluster pinned bottom-right — a
-   "Menu" pill that opens a stack of page links, and a same-size round
-   Settings button beside it that opens the app-settings sheet of toggles.
-   Both triggers and every link are the base .btn.btn-pill (the settings button is
-   .btn-pill.btn-icon), so the menu inherits the button's sizing, press
-   and theming — change the button and the menu changes with it.
-   What it is for: whole-site navigation on any Facet page, plus the
-   app's own controls, behind two thumb-reachable floating controls.
-   When to use it: the primary nav for a content site or app. It is a
-   real <details> wrapping real <a> links, so it works with JavaScript
-   off — the summary opens the links inline — and the links sit in the
-   DOM for crawlers and AI. facet.js (initNavMenu) upgrades it to a
-   floating overlay: a dimming scrim, body scroll-lock, a staggered
-   reveal, Escape to close, and focus moved into the menu and back.
-   prefers-reduced-motion drops the stagger. It is an overlay control,
-   not page content: authored at the end of <body>, user-select:none,
-   and it prints off.
+   What it is: a floating navigation cluster pinned bottom-left — a "Menu"
+   pill that opens a stack of page links, and a same-size round Settings
+   button beside it that opens a stack of setting toggles. Both stacks rise
+   ABOVE their own trigger; opening one closes the other, and neither
+   trigger moves when a stack opens (the stacks are positioned out of
+   flow). Every link and the Menu pill are the base .btn.btn-pill (the
+   Settings button is .btn-pill.btn-icon); each setting is a
+   .btn.btn-pill.nav-set whose on/off state shows in the pill itself.
+   What it is for: whole-site navigation on any Facet page, plus the app's
+   own settings (appearance, motion, sound, haptics, language), behind two
+   thumb-reachable floating controls.
+   When to use it: the primary nav for a content site or app. The Menu is a
+   real <details> wrapping real <a> links, so it works with JavaScript off
+   — the summary opens the links inline — and the links sit in the DOM for
+   crawlers and AI. facet.js (initNavMenu) upgrades both stacks to a
+   floating overlay: a dimming scrim, body scroll-lock, a staggered reveal,
+   Escape to close, and focus moved into the open stack and back. The
+   setting pills self-wire through data-control (appearance/motion/sounds/
+   haptics) and data-language-cycle, exactly like the settings sheet.
+   prefers-reduced-motion drops the stagger. It is an overlay control, not
+   page content: authored at the end of <body>, user-select:none, prints off.
 
    Usage:
      <nav class="nav-menu" aria-label="Site" data-print="off">
        <details class="nav-menu-panel">
-         <summary class="btn btn-pill nav-menu-trigger" data-tip="Menu"
+         <summary class="btn btn-pill nav-menu-trigger"
                   data-event="nav-menu"><svg>...menu...</svg> Menu</summary>
          <div class="nav-menu-items">
            <a class="btn btn-pill" href="/"><svg>...</svg> Home</a>
-           <a class="btn btn-pill" href="/work"><svg>...</svg> Work</a>
          </div>
        </details>
-       <button type="button" class="btn btn-pill btn-icon"
-               aria-controls="nav-settings" aria-expanded="false"
-               aria-label="Settings" data-tip="Settings"
-               data-event="nav-settings"><svg>...gear...</svg></button>
+       <details class="nav-menu-panel">
+         <summary class="btn btn-pill btn-icon nav-menu-trigger"
+                  aria-label="Settings"><svg>...gear...</svg></summary>
+         <div class="nav-menu-items">
+           <button type="button" class="btn btn-pill nav-set" data-control="sounds"
+                   aria-label="Sound"><svg>...</svg> Sound
+             <span class="menu-value">On</span></button>
+         </div>
+       </details>
      </nav>
-     <div class="sheet-scrim" data-open="false"></div>
-     <aside class="sheet" id="nav-settings" ...the toggle icon-row...></aside>
    -------------------------------------------------------------------------- */
 
 .nav-menu {
   position: fixed;
-  right: calc(var(--space-stack) + env(safe-area-inset-right, 0px));
+  left: calc(var(--space-stack) + env(safe-area-inset-left, 0px));
   bottom: calc(var(--space-stack) + env(safe-area-inset-bottom, 0px));
   z-index: 30;
   display: flex;
@@ -3780,8 +3786,11 @@ details.dropdown {
   user-select: none;                 /* a control, not content: never lands in a copy */
   -webkit-user-select: none;
 }
-/* the details holds the pill and its pop-up stack; it must not stretch */
-.nav-menu-panel { position: relative; display: flex; }
+/* each details holds a trigger and its pop-up stack; it must not stretch.
+   It is NOT the positioning context — the stack anchors to .nav-menu (the
+   whole cluster), so every stack, Menu or Settings, opens from the same
+   left edge in the same column, never offset to its own trigger. */
+.nav-menu-panel { display: flex; }
 
 /* the Menu pill IS a .btn.btn-pill — strip the native disclosure marker */
 .nav-menu-trigger { cursor: pointer; list-style: none; }
@@ -3790,15 +3799,32 @@ details.dropdown {
 /* icons ride the button's text size, so they scale with the base button */
 .nav-menu svg { width: 1.15em; height: 1.15em; flex: none; }
 
-/* the link stack floats above the trigger, right-aligned to it */
+/* the stack floats ABOVE its own trigger, left-aligned to it, out of flow
+   so the sibling trigger never moves when it opens */
 .nav-menu-items {
   position: absolute;
-  right: 0;
+  left: 0;
   bottom: calc(100% + var(--space-tight));
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: var(--space-tight);
+}
+
+/* setting pill: a toggle whose state shows in the pill — the value word
+   sits at the trailing edge; the OFF state reads muted and hollow, ON
+   reads filled like the base button, so active/inactive is visible. */
+.nav-set { justify-content: flex-start; white-space: nowrap; }
+.nav-set .menu-value {
+  margin-left: auto;
+  padding-left: var(--space-inline);
+  color: var(--accent-3);
+  font-weight: var(--weight-strong);
+}
+.nav-set[aria-pressed="false"] {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-muted);
 }
 /* Enhanced only: each pop-up link starts just below its resting spot and
    the JS adds .is-in one after another for the bottom-up cascade. With

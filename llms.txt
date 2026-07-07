@@ -1048,38 +1048,46 @@ and the dark how-to screen, driven by facet.installNudge — addNow()
 returns "native" (Android prompt shown) or "guide" (show the overlay).
 The overlay's dark palette is deliberately fixed across themes.
 
-Nav menu (.nav-menu): a floating navigation cluster pinned bottom-right — a
+Nav menu (.nav-menu): a floating navigation cluster pinned bottom-left — a
 "Menu" pill that opens a stack of page links, and a same-size round Settings
-button beside it that opens the app-settings sheet of toggles. Both triggers and
-every link are the base .btn.btn-pill (the button is .btn-pill.btn-icon), so the
-menu inherits the button's sizing, press and theming — change the button and
-the menu changes with it. It is a real <details> wrapping real <a> links, so it
-works with JavaScript off (the summary opens the links inline) and the links
-sit in the DOM for crawlers and AI; facet.js (initNavMenu, re-runnable via
-facet.navMenu) upgrades it to a floating overlay — a dimming scrim, body
-scroll-lock, a staggered bottom-up reveal, Escape to close, and focus moved
-into the menu and back. Reduced motion drops the stagger. It is an overlay
-control, not content: author it at the end of <body>, it is user-select:none,
-and it prints off. The Settings button is a plain button[aria-controls] on a
-.sheet, wired like
-any other sheet trigger.
+button beside it that opens a stack of setting toggles. Both stacks rise ABOVE
+their own trigger; opening one closes the other, and neither trigger moves when
+a stack opens (the stacks are out of flow). Every link and the Menu pill are the
+base .btn.btn-pill (the Settings button is .btn-pill.btn-icon); each setting is a
+.btn.btn-pill.nav-set whose on/off state shows in the pill itself (aria-pressed
+false reads muted/hollow, true reads filled). The Menu is a real <details>
+wrapping real <a> links, so it works with JavaScript off (the summary opens the
+links inline) and the links sit in the DOM for crawlers and AI; facet.js
+(initNavMenu, re-runnable via facet.navMenu) upgrades both stacks to a floating
+overlay — a dimming scrim, body scroll-lock, a staggered bottom-up reveal,
+Escape to close, and focus moved into the open stack and back. The setting pills
+self-wire through data-control (appearance/motion/sounds/haptics) and
+data-language-cycle, exactly like the settings sheet. Reduced motion drops the
+stagger. It is an overlay control, not content: author it at the end of <body>,
+it is user-select:none, and it prints off.
 
     <nav class="nav-menu" aria-label="Site" data-print="off">
       <details class="nav-menu-panel">
-        <summary class="btn btn-pill nav-menu-trigger" data-tip="Menu"
+        <summary class="btn btn-pill nav-menu-trigger"
                  data-event="nav-menu"><svg data-icon="menu"></svg> Menu</summary>
         <div class="nav-menu-items">
           <a class="btn btn-pill" href="/"><svg data-icon="home"></svg> Home</a>
           <a class="btn btn-pill" href="/work"><svg data-icon="grid"></svg> Work</a>
         </div>
       </details>
-      <button type="button" class="btn btn-pill btn-icon" aria-controls="nav-settings"
-              aria-expanded="false" aria-label="Settings" data-tip="Settings"
-              data-event="nav-settings"><svg data-icon="settings"></svg></button>
+      <details class="nav-menu-panel">
+        <summary class="btn btn-pill btn-icon nav-menu-trigger"
+                 aria-label="Settings"><svg data-icon="settings"></svg></summary>
+        <div class="nav-menu-items">
+          <button type="button" class="btn btn-pill nav-set" data-control="sounds"
+                  aria-label="Sound"><svg data-icon="volume"></svg> Sound
+            <span class="menu-value">On</span></button>
+          <button type="button" class="btn btn-pill nav-set" data-language-cycle
+                  data-languages="en,hi" aria-label="Language"><svg data-icon="globe"></svg>
+            Language <span class="menu-value">EN</span></button>
+        </div>
+      </details>
     </nav>
-    <div class="sheet-scrim" data-open="false"></div>
-    <aside class="sheet" id="nav-settings" data-open="false" aria-hidden="true"
-           aria-label="Settings"> ...the .menu-icon-btn toggle row... </aside>
 
 Components: .tab-bar (bottom pill of .tab-seg segments + .tab-divider +
 trailing .tab-settings button; a .tab-indicator pill is injected and

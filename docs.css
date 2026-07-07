@@ -70,19 +70,25 @@
    beside the content — a real layout job. */
 .docs-layout {
   display: grid;
-  grid-template-columns: 14rem minmax(0, 1fr);
+  grid-template-columns: 15rem minmax(0, 1fr);
   gap: var(--space-section);
   align-items: start;
   padding-block: var(--space-page);
 }
+/* The index is its own panel: a surface fill a shade off the page, a
+   hairline all round (so its right edge divides it from the wall) and
+   inner padding. It sticks with the page scroll and never scrolls on its
+   own — the layer groups collapse to keep it short. */
 .docs-index {
   position: sticky;
   top: var(--space-stack);
-  max-height: calc(100dvh - var(--space-page));
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-tight);
+  gap: var(--space-control);
+  padding: var(--space-card) var(--space-inline);
+  background: var(--surface);
+  border: var(--border-hairline) solid var(--border);
+  border-radius: var(--radius-card);
 }
 .docs-index ul { list-style: none; padding: 0; margin: 0 0 var(--space-control); }
 .docs-index a {
@@ -274,11 +280,41 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 /* The body of an opened fold gets space above it. */
 .fold[open] > :not(summary):first-of-type { margin-top: var(--space-stack); }
 
-/* One wall entry. */
+/* Collapsible Layer-1 token section: the h2 is the toggle. Starts open,
+   so the content shows straight after the layer band, but can collapse. */
+.fold-section > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-inline);
+  padding-block: var(--space-tight);
+}
+.fold-section > summary::-webkit-details-marker { display: none; }
+.fold-section > summary h2 { margin: 0; }
+.fold-section > summary .fold-chevron { margin-left: auto; }
+.fold-section[open] > summary .fold-chevron { rotate: 225deg; }
+.fold-section > summary:hover .fold-chevron { border-color: var(--text); }
+.fold-section[open] > :not(summary):first-of-type { margin-top: var(--space-stack); }
+
+/* A hairline divider above every collapsible block — the token sections,
+   the component entries and their category headings — so each reads as a
+   separate, self-contained section down the page. */
+#main > section > .fold-section,
+article.element,
+.wall-group {
+  border-top: var(--border-hairline) solid var(--border);
+  padding-top: var(--space-card);
+}
+
+/* One wall entry. The demo is a distinct panel — a surface fill a shade
+   off the page, a solid hairline and a soft lift — so each live component
+   reads as sitting inside its own section, not floating on the page. */
 .element .demo {
-  background: var(--background);
-  border: var(--border-element) dashed var(--border);
-  border-radius: var(--radius-panel);
+  background: var(--surface);
+  border: var(--border-hairline) solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-raised);
   padding: var(--space-card);
 }
 
@@ -374,13 +410,12 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .element .demo .tab-bar,
 .element .demo .float-btn,
 .element .demo .nav-menu { position: static; transform: none; }
-/* the fixed cluster is shown in the flow here; the pop-up stacks below
-   the Menu pill (rather than floating over it) so the demo reads top to
-   bottom — the real thing floats bottom-right over the page. */
-#nav-menu .demo .nav-menu { position: relative; z-index: 40; align-items: flex-start; }
-#nav-menu .demo .nav-menu-panel { display: block; }
-#nav-menu .demo .nav-menu-items { position: static; align-items: flex-start; margin-top: var(--space-tight); }
-#nav-menu .demo { min-height: 8rem; }
+/* the fixed cluster is shown in the flow here: it sits at the bottom-left
+   of a tall box and both stacks rise ABOVE their own trigger (their real
+   position), so opening one shifts nothing — exactly like the real thing
+   floating bottom-left over the page. */
+#nav-menu .demo { min-height: 20rem; display: flex; align-items: flex-end; }
+#nav-menu .demo .nav-menu { position: relative; z-index: 40; }
 #tab-bar .demo { overflow-x: auto; }   /* the pill outgrows tiny phones */
 .element .demo .nudge-scrim,
 .element .demo .overlay-guide { position: static; border-radius: var(--radius-panel); }

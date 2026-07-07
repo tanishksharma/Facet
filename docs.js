@@ -715,6 +715,34 @@ function foldWallEntries() {
   }
 }
 
+/* The Layer-1 token sections (Typography, Fonts, Color, Spacing, Shape,
+   Base) fold like the component entries: the h2 becomes a clickable
+   summary with a chevron and the body collapses. They start open, so the
+   content shows straight after the layer band, but each can be collapsed. */
+function foldSections() {
+  const FOLD_IDS = ["typography", "fonts", "color", "spacing", "shape", "base"];
+  for (const id of FOLD_IDS) {
+    const section = document.getElementById(id);
+    if (!section || section.querySelector(":scope > .fold-section")) continue;   // idempotent
+    const h2 = section.querySelector(":scope > h2");
+    if (!h2) continue;
+    const details = document.createElement("details");
+    details.className = "fold-section";
+    details.open = true;
+    while (section.firstChild) details.appendChild(section.firstChild);
+    const summary = document.createElement("summary");
+    const chevron = document.createElement("span");
+    chevron.className = "fold-chevron";
+    chevron.setAttribute("aria-hidden", "true");
+    summary.append(h2, chevron);
+    details.prepend(summary);
+    section.appendChild(details);
+    details.addEventListener("toggle", () => {
+      if (details.open) requestAnimationFrame(() => dispatchEvent(new Event("resize")));
+    });
+  }
+}
+
 /* Label the parts of an opened wall entry, so it is obvious what each
    region is: every control chip group is captioned by what it changes
    (its aria-label — "Stack gaps", "Device width"…), the live demo is
@@ -736,8 +764,11 @@ function labelWallParts() {
     }
     const demo = fold.querySelector(":scope > .demo");
     if (demo && !labelled(demo)) demo.before(mk("Preview"));
-    const pre = fold.querySelector(":scope > pre");
-    if (pre && !labelled(pre)) pre.before(mk("Code"));
+    // the code block may be a bare <pre> or already wrapped by
+    // overlayCodeTools in a .code-wrap — label whichever is the direct
+    // child, so every entry gets a "Code" heading and its gap above it.
+    const code = fold.querySelector(":scope > pre, :scope > .code-wrap");
+    if (code && !labelled(code)) code.before(mk("Code"));
   }
 }
 
@@ -746,7 +777,7 @@ function initFoldLinks() {
   for (const a of document.querySelectorAll(".docs-index a[href^='#']")) {
     a.addEventListener("click", () => {
       const target = document.querySelector(a.getAttribute("href"));
-      const fold = target && target.querySelector && target.querySelector(":scope > .fold");
+      const fold = target && target.querySelector && target.querySelector(":scope > .fold, :scope > .fold-section");
       if (fold) fold.open = true;
     });
   }
@@ -813,6 +844,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Fold, control and spy — after all content and demo wiring, so the
   // injected snippets, demo tools and reference blocks fold in too.
+  foldSections();
   foldWallEntries();
   labelWallParts();
   initWallSearch();
