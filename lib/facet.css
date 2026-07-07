@@ -2358,6 +2358,9 @@ input[type="checkbox"].switch {
   position: relative;
   width: 2.75rem;
   height: 1.625rem;
+  min-height: 0;        /* the base input touch-target must not square the track — the .check-row gives the 44px target */
+  padding: 0;
+  border: none;
   border-radius: var(--radius-pill);
   background: var(--border);
   transition: background var(--duration-fast) var(--ease-out);
@@ -2372,7 +2375,7 @@ input[type="checkbox"].switch::before {
   width: calc(1.625rem - 4px);
   height: calc(1.625rem - 4px);
   border-radius: var(--radius-pill);
-  background: var(--background);
+  background: var(--surface);        /* white knob pops against the gray track */
   box-shadow: var(--shadow-raised);
   transition: translate var(--duration-base) var(--ease-spring);
 }
