@@ -65,15 +65,10 @@
     .build-sliders { display: grid; gap: var(--space-stack); }
     .build-sliders .field { gap: var(--space-tight); }
 
-    /* Theme builder: controls on the left, a live preview canvas on the
-       right. The build applies its tokens to the canvas alone, so it is a
-       real, contained workspace. */
-    .builder {
-      display: grid;
-      grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
-      gap: var(--space-card);
-      align-items: start;
-    }
+    /* Theme builder: a full-width live-preview canvas you scroll through,
+       with the controls lifted into a floating inspector docked over it. The
+       build applies its tokens to the canvas alone, so it is a real,
+       contained workspace. */
     .builder-canvas {
       background: var(--background);
       color: var(--text);
@@ -84,14 +79,57 @@
       padding: var(--space-page);
       display: grid;
       gap: var(--space-section);
-      position: sticky;
-      top: var(--space-stack);
     }
     .bc-panel + .bc-panel { border-top: var(--border-hairline) solid var(--border); padding-top: var(--space-section); }
     .bc-panel .part-label { margin-top: 0; }
-    @media (max-width: 52rem) {
-      .builder { grid-template-columns: minmax(0, 1fr); }
-      .builder-canvas { position: static; }
+    .bc-figure { font-family: var(--font-numeric); font-size: var(--text-display); line-height: var(--leading-display); letter-spacing: var(--tracking-display); font-variant-numeric: tabular-nums lining-nums; }
+    .bc-quote { font-family: var(--font-quote); font-size: var(--text-quote); font-style: italic; color: var(--text-muted); border-left: var(--border-highlight) solid var(--accent-3); padding-left: var(--space-stack); margin: 0; }
+
+    /* The floating inspector: a docked, collapsible control panel over the
+       preview. Native <details>, so it opens and closes with no JS; fixed to
+       the lower-right on desktop, a bottom sheet on narrow screens. */
+    .builder-inspector {
+      position: fixed;
+      right: var(--space-stack);
+      bottom: var(--space-stack);
+      width: min(23rem, calc(100vw - 2 * var(--space-stack)));
+      background: var(--surface);
+      border: var(--border-element) solid var(--border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-overlay);
+      z-index: 60;
+      overflow: hidden;
+    }
+    .builder-inspector > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-control);
+      padding: var(--space-inline) var(--space-card);
+      font-weight: var(--weight-medium);
+    }
+    .builder-inspector > summary::-webkit-details-marker { display: none; }
+    .builder-inspector > summary .inspector-caret {
+      margin-left: auto;
+      width: 0.55rem; height: 0.55rem;
+      border-right: 2px solid var(--text-muted);
+      border-bottom: 2px solid var(--text-muted);
+      rotate: 45deg;
+      transition: rotate var(--duration-base) var(--ease-spring);
+    }
+    .builder-inspector[open] > summary .inspector-caret { rotate: 225deg; }
+    .inspector-body {
+      max-height: min(72vh, 40rem);
+      overflow-y: auto;
+      padding: 0 var(--space-card) var(--space-card);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-stack);
+      border-top: var(--border-hairline) solid var(--border-subtle);
+    }
+    @media (max-width: 34rem) {
+      .builder-inspector { right: var(--space-inline); left: var(--space-inline); bottom: var(--space-inline); width: auto; }
     }
 
     /* Region captions (Landing / Form / Cards). */
@@ -140,11 +178,14 @@
     <section id="style-mixer" class="stack">
       <h2>Pick your tokens</h2>
       <div class="builder">
-        <div class="builder-controls stack">
+        <details class="builder-inspector" id="inspector" open>
+          <summary>Theme controls <span class="inspector-caret" aria-hidden="true"></span></summary>
+          <div class="inspector-body">
           <div class="tabs" role="tablist" aria-label="Token category">
             <button type="button" role="tab" aria-selected="true" aria-controls="tab-colors" id="t-colors" data-tip="The palette">Colors</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="tab-fonts" id="t-fonts" data-tip="The five type roles">Fonts</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="tab-type" id="t-type" data-tip="Weight, size, line-height, tracking">Type</button>
             <button type="button" role="tab" aria-selected="false" aria-controls="tab-spacing" id="t-spacing" data-tip="Density and the spacing scale">Spacing</button>
-            <button type="button" role="tab" aria-selected="false" aria-controls="tab-type" id="t-type" data-tip="Type size and the scale">Type</button>
             <button type="button" role="tab" aria-selected="false" aria-controls="tab-shape" id="t-shape" data-tip="Radii and borders">Shape</button>
           </div>
 
@@ -152,12 +193,31 @@
           <div role="tabpanel" id="tab-colors" aria-labelledby="t-colors" class="mixer-grid">
             <label>Background <input type="color" data-mix="background" data-tip="The page itself"></label>
             <label>Surface <input type="color" data-mix="surface" data-tip="Cards, inputs, panels"></label>
+            <label>Surface hover <input type="color" data-mix="surface-hover" data-tip="Interactive fill, rest→hover"></label>
+            <label>Surface active <input type="color" data-mix="surface-active" data-tip="Interactive fill, pressed"></label>
             <label>Text <input type="color" data-mix="text" data-tip="The ink"></label>
             <label>Muted text <input type="color" data-mix="text-muted" data-tip="Hints and captions"></label>
-            <label>Border <input type="color" data-mix="border" data-tip="Hairlines and edges"></label>
+            <label>Subtle text <input type="color" data-mix="text-subtle" data-tip="Placeholders, disabled"></label>
+            <label>Border subtle <input type="color" data-mix="border-subtle" data-tip="The faintest line"></label>
+            <label>Border <input type="color" data-mix="border" data-tip="Element outlines"></label>
+            <label>Border strong <input type="color" data-mix="border-strong" data-tip="Emphasis edges"></label>
             <label>Accent 1 <input type="color" data-mix="accent-1" data-tip="The one primary action"></label>
             <label>Accent 2 <input type="color" data-mix="accent-2" data-tip="Every secondary fill"></label>
             <label>Accent 3 <input type="color" data-mix="accent-3" data-tip="Links, labels, focus"></label>
+          </div>
+
+          <!-- FONTS: the five type roles, each a real face chosen by the theme. -->
+          <div role="tabpanel" id="tab-fonts" aria-labelledby="t-fonts" class="build-sliders" hidden>
+            <label class="field"><span class="field-label">Heading · <code>--font-heading</code></span>
+              <select data-mix-font="--font-heading" data-tip="Titles and display type"></select></label>
+            <label class="field"><span class="field-label">Body &amp; UI · <code>--font-body</code></span>
+              <select data-mix-font="--font-body" data-tip="Running text and interface"></select></label>
+            <label class="field"><span class="field-label">Mono · <code>--font-mono</code></span>
+              <select data-mix-font="--font-mono" data-tip="Code and captions"></select></label>
+            <label class="field"><span class="field-label">Quote · <code>--font-quote</code></span>
+              <select data-mix-font="--font-quote" data-tip="Quotes and callouts"></select></label>
+            <label class="field"><span class="field-label">Numbers · <code>--font-numeric</code></span>
+              <select data-mix-font="--font-numeric" data-tip="Big standalone figures"></select></label>
           </div>
 
           <!-- SPACING -->
@@ -214,11 +274,12 @@
             <button class="btn btn-small" data-copy="#code-style-mixer" data-tip="Copies the config block for your own page">Copy the config</button>
           </p>
           <pre id="code-style-mixer"><code></code></pre>
-        </div>
+          </div>
+        </details>
 
-        <!-- Live preview: three real layouts. The build sets the token
-             custom properties on this canvas only, so everything inside
-             restyles while the rest of the page stays put. -->
+        <!-- Live preview: four real layouts stacked full-width. The build sets
+             the token custom properties on this canvas only, so everything
+             inside restyles while the rest of the page stays put. -->
         <div class="builder-canvas" id="builder-canvas" aria-label="Live preview">
           <div class="bc-panel">
             <span class="part-label">Landing</span>
@@ -255,6 +316,14 @@
                 <p style="margin:0; font-size: var(--text-footnote); color: var(--text-muted);">Up to date</p>
                 <span class="badge badge-info">Synced</span>
               </div>
+            </div>
+          </div>
+          <div class="bc-panel">
+            <span class="part-label">Editorial</span>
+            <div class="stack">
+              <span class="eyebrow">Annual report</span>
+              <p class="bc-figure" style="margin:0;">₹ 74,25,000</p>
+              <blockquote class="bc-quote">Good design is as little design as possible — the quote face, set apart from the headings.</blockquote>
             </div>
           </div>
         </div>
@@ -380,6 +449,34 @@
       for (const p of pickers) {
         p.addEventListener("input", () => { setToken("--" + p.dataset.mix, p.value); writeUrl(); renderExport(); });
       }
+
+      // Font selects: each of the five roles picks a real family. "" clears
+      // the override back to the theme's own face.
+      const FONT_OPTIONS = [
+        ["", "Theme default"],
+        ['"Cormorant", Georgia, "Times New Roman", serif', "Cormorant — calligraphic serif"],
+        ['"Playfair Display", Georgia, serif', "Playfair Display — didone serif"],
+        ['"Newsreader", Georgia, serif', "Newsreader — editorial serif"],
+        ['"Nunito Sans", system-ui, sans-serif', "Nunito Sans — rounded sans"],
+        ['"JetBrains Mono", ui-monospace, monospace', "JetBrains Mono — technical mono"],
+        ['system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', "System sans"],
+        ['Georgia, "Times New Roman", serif', "System serif"],
+        ['ui-monospace, "SF Mono", Menlo, monospace', "System mono"],
+      ];
+      const fontSelects = [...document.querySelectorAll("[data-mix-font]")];
+      for (const sel of fontSelects) {
+        for (const [val, label] of FONT_OPTIONS) {
+          const o = document.createElement("option");
+          o.value = val; o.textContent = label;
+          sel.appendChild(o);
+        }
+        sel.addEventListener("change", () => {
+          const cssVar = sel.dataset.mixFont;
+          if (sel.value) setToken(cssVar, sel.value);
+          else { delete tokens[cssVar]; canvas.style.removeProperty(cssVar); }
+          writeUrl(); renderExport();
+        });
+      }
       // Numeric detail sliders: the library wires the slider and fires
       // facet:slide; we just read the value and paint the token.
       for (const s of sliders) {
@@ -409,6 +506,7 @@
           s.querySelector('input[type="range"]').value = val;
           s.querySelector(".slider-detail-number").value = val;
         }
+        for (const sel of fontSelects) sel.value = "";
         writeUrl(); renderExport(); syncColorPickers();
       };
       document.querySelector("#mixer-reset").addEventListener("click", reset);
@@ -421,6 +519,8 @@
             setToken(k, v);
             const s = sliders.find((x) => x.dataset.token === k);
             if (s) { const n = parseFloat(v); s.querySelector('input[type="range"]').value = n; s.querySelector(".slider-detail-number").value = n; }
+            const fsel = fontSelects.find((x) => x.dataset.mixFont === k);
+            if (fsel) fsel.value = v;
           }
           if (saved.scales) { setScale("density", saved.scales.density || ""); setScale("textSize", saved.scales.textSize || ""); }
         }
