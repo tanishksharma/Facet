@@ -726,6 +726,13 @@
   --a-glass-border: rgb(255 255 255 / 0.65);
   --a-glass-bg: rgb(255 255 255 / 0.55);
   --a-glow: 0 2px 12px rgb(11 111 184 / 0.35);
+
+  /* A sky gradient behind everything, so the frosted glass has real colour to
+     refract (flat glass reads as gray). Fixed so it stays put while scrolling. */
+  background-image:
+    radial-gradient(140% 100% at 50% -10%, rgb(255 255 255 / 0.55), transparent 55%),
+    linear-gradient(168deg, #D6EEFB 0%, #EAF6FD 45%, #E1F5EE 100%);
+  background-attachment: fixed;
 }
 
 /*
@@ -769,8 +776,14 @@
     rgb(255 255 255 / 0.30), rgb(255 255 255 / 0.10) 48%,
     rgb(255 255 255 / 0.00) 52%, rgb(255 255 255 / 0.06));
   --a-glass-border: rgb(255 255 255 / 0.28);
-  --a-glass-bg: rgb(255 255 255 / 0.08);
+  --a-glass-bg: rgb(150 200 235 / 0.10);
   --a-glow: 0 2px 14px rgb(53 179 245 / 0.45);
+
+  /* Deep-ocean gradient behind the submerged glass. */
+  background-image:
+    radial-gradient(140% 100% at 50% -10%, rgb(120 200 255 / 0.14), transparent 55%),
+    linear-gradient(168deg, #04283D 0%, #0A3D5C 55%, #06304A 100%);
+  background-attachment: fixed;
 }
 
 /*
@@ -810,8 +823,28 @@
 [data-theme="aero"] .sheet,
 [data-theme="aero"] .float-btn,
 [data-theme="aero"] .card {
+  background-color: var(--a-glass-bg);        /* translucent, so the blur shows through */
   background-image: var(--a-gloss);
   border-color: var(--a-glass-border);
+  /* The 2025 signature: a real frosted-glass blur, plus a saturation boost so
+     the colour behind the glass blooms — this is what reads as Aero, not gray. */
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+}
+[data-theme="aero"] input:not(.slider),
+[data-theme="aero"] select,
+[data-theme="aero"] textarea {
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  backdrop-filter: blur(10px) saturate(160%);
+}
+/* Where backdrop-filter is unsupported, fall back to an opaque surface so
+   glass panels never turn illegible. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  [data-theme="aero"] .result,
+  [data-theme="aero"] .tab-bar,
+  [data-theme="aero"] .sheet,
+  [data-theme="aero"] .float-btn,
+  [data-theme="aero"] .card { background-color: var(--surface); }
 }
 
 /*
@@ -856,16 +889,24 @@
   --shadow-floating: 0 4px 12px rgb(43 36 23 / 0.10);
   --shadow-overlay: 0 12px 32px rgb(43 36 23 / 0.18);
 
-  /* Serif display type — the token does all the work downstream.
+  /* High-contrast didone display serif — the editorial-luxury signature.
      Stack ends in a generic family (font-list law). */
-  --font-heading: "Iowan Old Style", "Palatino Linotype", Palatino,
+  --font-heading: "Playfair Display", "Iowan Old Style", Palatino,
                   Georgia, "Times New Roman", serif;
 
-  /* ----- Carved elevation ----- */
-  /* Panels are pressed into the cream: a soft interior top shadow and
-     a bright lower lip, never a drop shadow. */
-  --e-carve: inset 0 1px 3px rgb(43 36 23 / 0.12),
-             inset 0 -1px 0 rgb(255 255 255 / 0.65);
+  /* Luxury reads as crisp, not friendly — tighten the corners. */
+  --radius-control: 3px;
+  --radius-panel: 4px;
+  --radius-card: 5px;
+
+  /* ----- Carved (letterpress) elevation ----- */
+  /* Panels are pressed into the paper, never floated: a dark inset top-left
+     (ink settling in the well) and a bright inset bottom-right (paper catching
+     light), plus a 1px outer light line to sell the debossed edge. */
+  --e-carve:
+    inset 2px 2px 5px rgb(90 70 30 / 0.20),
+    inset -2px -2px 5px rgb(255 252 244 / 0.85),
+    0 1px 0 rgb(255 255 255 / 0.55);
 }
 
 /*
@@ -904,8 +945,9 @@
   --shadow-floating: 0 4px 12px rgb(0 0 0 / 0.45);
   --shadow-overlay: 0 12px 32px rgb(0 0 0 / 0.55);
 
-  --e-carve: inset 0 1px 3px rgb(0 0 0 / 0.55),
-             inset 0 -1px 0 rgb(255 255 255 / 0.07);
+  --e-carve:
+    inset 2px 2px 6px rgb(0 0 0 / 0.60),
+    inset -1px -1px 3px rgb(120 100 60 / 0.14);
 }
 
 /*
@@ -922,6 +964,17 @@
 [data-theme="elegant"] textarea,
 [data-theme="elegant"] select {
   box-shadow: var(--e-carve);
+}
+/* The one gold action gets a thin metallic gradient rather than a flat fill —
+   brushed brass, not a paint chip. */
+[data-theme="elegant"] .btn-primary {
+  background-image: linear-gradient(145deg, #E6C458, #B8860B 45%, #8A6208);
+  border-color: #8A6208;
+}
+[data-theme="elegant"][data-mode="dark"] .btn-primary,
+[data-theme="elegant"] [data-mode="dark"] .btn-primary {
+  background-image: linear-gradient(145deg, #E8CE7E, #D8B75B 45%, #B99A3E);
+  border-color: #B99A3E;
 }
 /* Quiet actions carry the hairline instead of a filled edge. */
 [data-theme="elegant"] .btn {
