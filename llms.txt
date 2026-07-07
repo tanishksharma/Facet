@@ -233,10 +233,20 @@ the accent ranks — components pick ranks, never colors:
                                                  quiet affordances
 Status: --success, --warning, --error, --info
 
-Type (named by role, not size): --font-heading, --font-body, --font-mono;
---text-display, --text-h1, --text-h2, --text-h3, --text-h4, --text-body,
---text-quote, --text-footnote, --text-caption; --weight-heading, --weight-body,
---weight-strong; --leading-heading, --leading-body. Global type size:
+Type (named by role, not size). Font, one face per job:
+--font-heading (calligraphic serif), --font-body (rounded sans),
+--font-mono (technical monospace), --font-quote (editorial serif for quotes
+and callouts), --font-numeric (display serif for big standalone numbers) —
+every stack ends in a system fallback. Size: --text-display, --text-h1,
+--text-h2, --text-h3, --text-h4, --text-body, --text-quote, --text-footnote,
+--text-caption. Weight: --weight-body, --weight-medium (UI labels/nav/buttons),
+--weight-strong, --weight-heading. Line height per role:
+--leading-display/-heading/-snug/-body/-ui (tighter as type grows). Tracking
+per role: --tracking-display/-heading/-snug/-body/-label/-caps (large type
+tightens, caps labels open up). Measure: --measure, --measure-narrow. Prose
+rhythm (em-based vertical margins): --flow-heading-above/-below,
+--flow-paragraph, --flow-tight; gap layouts (.stack, .row) zero these so
+rhythm and gap never stack. Global type size:
 data-text-size="small|medium|large" (theme-defined, independent of density).
 
 Spacing (named by intent, not by number): --space-tight (bound pairs, 4px),

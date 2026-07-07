@@ -143,8 +143,9 @@
         <p>
           The scale in use, as a real page of writing. Every block below is
           a raw HTML tag styled by the base layer; the mono tag under each
-          names the token doing the work. System font stacks throughout:
-          nothing to download, instant render, native feel on every device.
+          names the token doing the work. Each font stack ends in a system
+          fallback, so text renders instantly and survives a font failing to
+          load.
         </p>
 
         <article class="stack">
@@ -182,10 +183,10 @@
             <small class="type-label">--text-h3</small>
           </h3>
           <p>
-            Headings share the body stack and differentiate by weight
-            (<code>--weight-heading</code>, 650) and a slightly tightened
-            letter-spacing, which is what keeps the whole page feeling like
-            one voice.
+            Headings take their own face (<code>--font-heading</code>) at
+            <code>--weight-heading</code>, with line-height and letter-spacing
+            that tighten as the type grows — display and h1 tightest, h3–h6
+            snug — which is what keeps the whole page feeling like one voice.
           </p>
 
           <blockquote>
@@ -225,19 +226,20 @@
       <section id="fonts" class="stack">
         <h2>Fonts</h2>
         <p>
-          Three type families do the work — a heading face, a body face and
-          a monospace face — each named by role, not by name, and chosen by
-          the theme. Switch the theme below and they re-render live: the
-          Default, Sand and Aero themes use the system UI stack, while
-          Velvet and Elegant set a serif heading face. No web fonts are
-          downloaded — every family is a system stack, so text renders
-          instantly and looks native on the device.
+          Five type families, each chosen for one job and named by role, not
+          by name — so the theme picks the faces and components just ask for
+          "the heading font" or "the number font". The Default theme sets a
+          calligraphic serif for headings, a friendly rounded sans for body,
+          a technical monospace for captions and code, an editorial serif for
+          quotes, and a display serif for big standalone numbers. Every stack
+          ends in a system fallback, so text renders instantly and survives a
+          font failing to load. Switch the theme below and they re-render live.
         </p>
         <p class="chips" role="group" aria-label="Preview theme">
-          <button class="chip" data-theme-switch="" data-tip="Default — system sans">Default</button>
-          <button class="chip" data-theme-switch="sand" data-tip="Sand — system sans">Sand</button>
+          <button class="chip" data-theme-switch="" data-tip="Default — five roles">Default</button>
+          <button class="chip" data-theme-switch="sand" data-tip="Sand">Sand</button>
           <button class="chip" data-theme-switch="velvet" data-tip="Velvet — serif heading">Velvet</button>
-          <button class="chip" data-theme-switch="aero" data-tip="Aero — system sans">Aero</button>
+          <button class="chip" data-theme-switch="aero" data-tip="Aero">Aero</button>
           <button class="chip" data-theme-switch="elegant" data-tip="Elegant — serif heading">Elegant</button>
         </p>
         <article class="stack">
@@ -260,11 +262,29 @@
         </article>
         <article class="stack">
           <p style="font-family: var(--font-mono); font-size: var(--text-h3);">
-            Mono face — code and figures
+            Mono face — code and captions
             <small class="type-label">--font-mono</small>
           </p>
           <p style="font-family: var(--font-mono); color: var(--text-muted);">
             const facet = "0123456789"; // ABCDEFG abcdefg
+          </p>
+        </article>
+        <article class="stack">
+          <p style="font-family: var(--font-quote); font-size: var(--text-h3); font-style: italic;">
+            Quote face — quotes and callouts
+            <small class="type-label">--font-quote</small>
+          </p>
+          <p style="font-family: var(--font-quote); font-style: italic; color: var(--text-muted);">
+            The quick brown fox jumps over the lazy dog. ABCDEFG abcdefg 0123456789 &amp; ?!
+          </p>
+        </article>
+        <article class="stack">
+          <p style="font-family: var(--font-numeric); font-size: var(--text-h3);">
+            Number face — big standalone figures
+            <small class="type-label">--font-numeric</small>
+          </p>
+          <p style="font-family: var(--font-numeric); font-size: var(--text-display); line-height: var(--leading-display); font-variant-numeric: tabular-nums lining-nums;">
+            0123456789
           </p>
         </article>
       </section>

@@ -43,6 +43,18 @@
   To-dos are marked "TODO" inline where they sit.
 */
 
+/* ----- Web fonts -----
+   Five families, each loaded for one job (see --font-* in the token layer):
+   Cormorant for calligraphic headings, Nunito Sans for friendly body text,
+   JetBrains Mono for technical captions and code, Newsreader for quotes and
+   callouts, Playfair Display for big standalone numbers. Loaded from Google
+   Fonts through the stylesheet, so no extra tag in anyone's HTML and it works
+   with JavaScript off. Each font stack still ends in a system fallback, so
+   text renders instantly and survives the font failing to load. display=swap
+   shows fallback text first, then swaps — never a blank flash of text.
+   @import must stay at the very top, before any style rule. */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;1,400;1,500&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@500;600;700&display=swap');
+
 
 /* ==========================================================================
    1. TOKENS
@@ -124,12 +136,16 @@
   --error: #B3261E;           /* something failed */
   --info: #295FA6;            /* neutral notices */
 
-  /* ----- Typography: font stacks ----- */
-  /* System stacks: nothing to download, instant render, native feel.
-     Headings share the body stack and differentiate by weight and spacing. */
-  --font-heading: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  /* ----- Typography: font stacks, one per job -----
+     Five roles, each a different face chosen for what it does, every stack
+     ending in a system fallback (never `inherit` — that voids the whole
+     declaration) so text renders instantly and survives a font failing to
+     load. A theme re-voices the library by swapping these five. */
+  --font-heading: "Cormorant", Georgia, "Times New Roman", serif;         /* calligraphic display serif for titles */
+  --font-body: "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* friendly, round, readable */
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;   /* technical captions and code */
+  --font-quote: "Newsreader", Georgia, "Times New Roman", serif;          /* quotes and callouts, set apart */
+  --font-numeric: "Playfair Display", Georgia, "Times New Roman", serif;  /* big standalone numbers */
 
   /* ----- Typography: type scale, named by role, scaled by size -----
      --text-scale (data-text-size small/medium/large) shifts type globally;
@@ -152,7 +168,7 @@
   --weight-body: 400;         /* running text */
   --weight-medium: 500;       /* UI labels, nav, buttons, table headers */
   --weight-strong: 600;       /* <strong>, emphasis inside body */
-  --weight-heading: 650;      /* headings; variable-font friendly, falls back to bold */
+  --weight-heading: 600;      /* headings; suits Cormorant's display cut, falls back to semibold */
 
   /* ----- Typography: line height, named by role -----
      Tighter as type gets larger — big display text needs less leading, body
@@ -1396,8 +1412,10 @@ blockquote {
   margin: 0 0 var(--flow-paragraph);
   padding-left: var(--space-stack);
   border-left: var(--border-highlight) solid var(--accent-3);
-  color: var(--text-muted);
+  font-family: var(--font-quote);   /* the editorial quote face, set apart from headings */
+  font-size: var(--text-quote);
   font-style: italic;
+  color: var(--text-muted);
 }
 
 figure, table, pre { margin: 0 0 var(--flow-paragraph); }
@@ -2241,12 +2259,13 @@ input[type="week"] {
 }
 
 .result-number {
+  font-family: var(--font-numeric);       /* the big-number face, standing on its own */
   font-size: var(--text-display);
   font-weight: var(--weight-heading);
-  line-height: var(--leading-heading);
+  line-height: var(--leading-display);
   color: var(--text);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: var(--tracking-display);
 }
 
 .result-figures {
@@ -2594,9 +2613,12 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
   border-radius: var(--radius-card);
 }
 .stat strong {
-  font-size: var(--text-h2);
+  font-family: var(--font-numeric);       /* the big-number face */
+  font-size: var(--text-display);
   font-weight: var(--weight-heading);
-  font-variant-numeric: tabular-nums;
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 .stat span { font-size: var(--text-caption); color: var(--text-muted); }
 
@@ -2604,10 +2626,11 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-base) var(--ease
 .pullquote {
   border-left: var(--border-highlight) solid var(--accent-3);
   padding-left: var(--space-card);
-  font-family: var(--font-heading);
+  font-family: var(--font-quote);
   font-size: var(--text-h3);
-  font-weight: var(--weight-heading);
-  font-style: normal;
+  font-weight: var(--weight-body);
+  font-style: italic;
+  line-height: var(--leading-snug);
   color: var(--text);
 }
 .pullquote footer {
