@@ -275,24 +275,26 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .fold-section > summary {
   list-style: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: var(--space-inline);
+  display: grid;
+  gap: var(--space-control);
   padding-block: var(--space-tight);
 }
 .fold-section > summary::-webkit-details-marker { display: none; }
-.fold-section > summary h2 { margin: 0; }
-.fold-section > summary .fold-chevron { margin-left: auto; }
+.fold-section .fold-title { display: flex; align-items: center; gap: var(--space-inline); }
+.fold-section .fold-title h2 { margin: 0; }
+.fold-section .fold-chevron { margin-left: auto; }
 .fold-section[open] > summary .fold-chevron { rotate: 225deg; }
 .fold-section > summary:hover .fold-chevron { border-color: var(--text); }
+/* Collapsed: the one-line callout shows, like every component fold. Open: it
+   gives way to the full description inside. */
+.fold-section[open] > summary .fold-note { display: none; }
 .fold-section[open] > :not(summary):first-of-type { margin-top: var(--space-stack); }
 
 /* A hairline divider above every collapsible block — the token sections,
    the component entries and their category headings — so each reads as a
    separate, self-contained section down the page. */
 #main > section > .fold-section,
-article.element,
-.wall-group {
+article.element {
   border-top: var(--border-hairline) solid var(--border);
   padding-top: var(--space-card);
 }
@@ -428,14 +430,19 @@ article.element,
   background: transparent;
 }
 
-/* Wall category headings: a strong label before each component group,
-   lighter than a layer band. Hidden by JS when its group is filtered out. */
+/* Wall category headings: a clean uppercase overline before each component
+   group — sans caps, so it reads as a divider distinct from the serif entry
+   titles below it. The following entry carries its own hairline, so the label
+   needs no border of its own. Hidden by JS when its group is filtered out. */
 .wall-group {
-  margin-top: var(--space-section);
-  padding-bottom: var(--space-tight);
-  border-bottom: var(--border-element) solid var(--border);
-  font-size: var(--text-h4);
-  color: var(--text);
+  margin-top: var(--space-hero);
+  margin-bottom: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-muted);
 }
 /* Category filter chip row sits above the wall; wraps on narrow screens. */
 .wall-filter { flex-wrap: wrap; }
@@ -490,18 +497,6 @@ article.element,
   padding: 1px var(--space-control);
   vertical-align: middle;
 }
-.permalink {
-  margin-left: var(--space-control);
-  border: none;
-  background: none;
-  color: var(--text-muted);
-  font: inherit;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity var(--duration-fast) var(--ease-out);
-}
-h2:hover .permalink, h3:hover .permalink,
-.permalink:focus-visible { opacity: 1; }
 .token-copy {
   display: inline-flex;
   align-items: center;

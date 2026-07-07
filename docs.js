@@ -410,29 +410,6 @@ function initSearchKeys() {
   });
 }
 
-/* Heading permalinks: hover a titled section heading, copy the
-   deep link. On h2 section headings only — folded h3s live inside a
-   clickable summary, where a permalink would fight the toggle. */
-function initPermalinks() {
-  for (const h of document.querySelectorAll("main h2")) {
-    if (h.closest(".home-section")) continue;   // the home manual is not a wall — no hash affordance
-    const target = h.id || h.closest("[id]")?.id;
-    if (!target) continue;
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "permalink";
-    btn.textContent = "#";
-    btn.setAttribute("aria-label", `Copy link to ${h.textContent.trim()}`);
-    btn.dataset.tip = "Copies the deep link to this section";
-    btn.addEventListener("click", async () => {
-      const url = `${location.origin}${location.pathname}#${target}`;
-      try { await navigator.clipboard.writeText(url); } catch { /* denied */ }
-      history.replaceState(null, "", `#${target}`);
-    });
-    h.appendChild(btn);
-  }
-}
-
 /* Live contrast badges: WCAG ratios for the working pairs in each
    color panel, re-checked whenever theme or mode changes. */
 function initContrastBadges() {
@@ -721,20 +698,36 @@ function foldWallEntries() {
    content shows straight after the layer band, but each can be collapsed. */
 function foldSections() {
   const FOLD_IDS = ["typography", "fonts", "color", "spacing", "shape", "base"];
+  const noteFrom = (text) => {
+    const t = text.replace(/\s+/g, " ").trim();
+    if (t.length <= 200) return t;
+    return t.slice(0, 200).replace(/\s+\S*$/, "") + "…";   // trim to a whole word
+  };
   for (const id of FOLD_IDS) {
     const section = document.getElementById(id);
     if (!section || section.querySelector(":scope > .fold-section")) continue;   // idempotent
     const h2 = section.querySelector(":scope > h2");
     if (!h2) continue;
+    const desc = section.querySelector(":scope > p");           // the section's own description
+    const noteText = desc ? noteFrom(desc.textContent) : "";
     const details = document.createElement("details");
     details.className = "fold-section";
     details.open = true;
     while (section.firstChild) details.appendChild(section.firstChild);
     const summary = document.createElement("summary");
+    const titleRow = document.createElement("div");
+    titleRow.className = "fold-title";
     const chevron = document.createElement("span");
     chevron.className = "fold-chevron";
     chevron.setAttribute("aria-hidden", "true");
-    summary.append(h2, chevron);
+    titleRow.append(h2, chevron);
+    summary.append(titleRow);
+    if (noteText) {                                             // the same one-line callout every component fold has
+      const note = document.createElement("p");
+      note.className = "fold-note";
+      note.textContent = noteText;
+      summary.append(note);
+    }
     details.prepend(summary);
     section.appendChild(details);
     details.addEventListener("toggle", () => {
@@ -850,6 +843,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   initWallSearch();
   initFoldLinks();
   initSearchKeys();
-  initPermalinks();
   initScrollSpy();
 });
