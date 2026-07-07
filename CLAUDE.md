@@ -417,6 +417,8 @@ SaaS dashboard (templates/saas.html) and social app (templates/social.html) alre
 
 - v1 freeze — copy /lib/ to /lib/v1/, tag v1, start a changelog, add a version switcher. Deliberately NOT scheduled while the library moves fast: freezing now would pin a stale snapshot. Revisit once the rapid changes are done and the consuming apps are built. Everything stays on the moving /lib/ until then (always-latest, pre-v1). Do not raise it unprompted.
 
+- OS accent (`--os-accent`) — the visitor's real OS accent color (iOS system blue as fallback; the true OS accent only where the browser exposes it, Safari 16.4+ / Firefox 103+). The token stays defined in facet.css as a dormant, opt-in escape hatch (`var(--os-accent)`), kept out of the accent ranks on purpose so a theme's inks stay its own. Parked as a *feature*: no component uses it and it is not billed as a shipped capability — do not list it in the homepage Features or as an active llms.txt capability. Revisit if a real use for OS-native accent surfaces (e.g. a "match my system" opt-in). Until then it is a token in the file, not a feature on the list.
+
 
 -------------------------------------------------------------------------------
 
