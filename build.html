@@ -64,6 +64,18 @@
     /* Stacked token sliders inside a tab panel. */
     .build-sliders { display: grid; gap: var(--space-stack); }
     .build-sliders .field { gap: var(--space-tight); }
+    /* Sub-headings that group the type controls (Weight / Line height / …). */
+    .build-subhead {
+      margin: var(--space-inline) 0 0;
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      font-weight: var(--weight-medium);
+      color: var(--text-subtle);
+    }
+    /* A range row with a live value readout in its label. */
+    .mix-row .field-label { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-control); }
+    .slider-out { font-family: var(--font-mono); font-size: var(--text-caption); color: var(--text-muted); }
 
     /* Theme builder: a full-width live-preview canvas you scroll through,
        with the controls lifted into a floating inspector docked over it. The
@@ -253,6 +265,31 @@
               <label class="field"><span class="field-label">Body · <code>--text-body</code></span><div class="slider-detail" data-token="--text-body" data-unit="px" data-min="12" data-max="24" data-coarse="1" data-fine="1"><input type="range" class="slider" min="12" max="24" step="1" value="16" aria-label="Body"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Body">&minus;</button><input type="number" class="slider-detail-number" min="12" max="24" value="16" aria-label="Body px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Body">+</button></span></div></label>
               <label class="field"><span class="field-label">Footnote · <code>--text-footnote</code></span><div class="slider-detail" data-token="--text-footnote" data-unit="px" data-min="10" data-max="20" data-coarse="1" data-fine="1"><input type="range" class="slider" min="10" max="20" step="1" value="14" aria-label="Footnote"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Footnote">&minus;</button><input type="number" class="slider-detail-number" min="10" max="20" value="14" aria-label="Footnote px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Footnote">+</button></span></div></label>
               <label class="field"><span class="field-label">Caption · <code>--text-caption</code></span><div class="slider-detail" data-token="--text-caption" data-unit="px" data-min="9" data-max="18" data-coarse="1" data-fine="1"><input type="range" class="slider" min="9" max="18" step="1" value="12" aria-label="Caption"><span class="slider-detail-entry"><button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease Caption">&minus;</button><input type="number" class="slider-detail-number" min="9" max="18" value="12" aria-label="Caption px"><button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase Caption">+</button></span></div></label>
+
+              <p class="build-subhead">Weight</p>
+              <label class="field mix-row"><span class="field-label">Heading · <code>--weight-heading</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--weight-heading" data-scale="1" data-unit="" min="300" max="800" step="10" value="600" aria-label="Heading weight"></label>
+              <label class="field mix-row"><span class="field-label">Strong · <code>--weight-strong</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--weight-strong" data-scale="1" data-unit="" min="300" max="800" step="10" value="600" aria-label="Strong weight"></label>
+              <label class="field mix-row"><span class="field-label">Medium · <code>--weight-medium</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--weight-medium" data-scale="1" data-unit="" min="300" max="700" step="10" value="500" aria-label="Medium weight"></label>
+              <label class="field mix-row"><span class="field-label">Body · <code>--weight-body</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--weight-body" data-scale="1" data-unit="" min="300" max="700" step="10" value="400" aria-label="Body weight"></label>
+
+              <p class="build-subhead">Line height</p>
+              <label class="field mix-row"><span class="field-label">Display · <code>--leading-display</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--leading-display" data-scale="0.01" data-unit="" min="95" max="150" step="1" value="105" aria-label="Display line height"></label>
+              <label class="field mix-row"><span class="field-label">Heading · <code>--leading-heading</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--leading-heading" data-scale="0.01" data-unit="" min="100" max="170" step="1" value="115" aria-label="Heading line height"></label>
+              <label class="field mix-row"><span class="field-label">Snug · <code>--leading-snug</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--leading-snug" data-scale="0.01" data-unit="" min="110" max="190" step="1" value="130" aria-label="Snug line height"></label>
+              <label class="field mix-row"><span class="field-label">Body · <code>--leading-body</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--leading-body" data-scale="0.01" data-unit="" min="120" max="210" step="1" value="160" aria-label="Body line height"></label>
+              <label class="field mix-row"><span class="field-label">UI · <code>--leading-ui</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--leading-ui" data-scale="0.01" data-unit="" min="110" max="180" step="1" value="140" aria-label="UI line height"></label>
+
+              <p class="build-subhead">Tracking (letter-spacing)</p>
+              <label class="field mix-row"><span class="field-label">Display · <code>--tracking-display</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--tracking-display" data-scale="0.001" data-unit="em" min="-50" max="20" step="1" value="-30" aria-label="Display tracking"></label>
+              <label class="field mix-row"><span class="field-label">Heading · <code>--tracking-heading</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--tracking-heading" data-scale="0.001" data-unit="em" min="-40" max="20" step="1" value="-20" aria-label="Heading tracking"></label>
+              <label class="field mix-row"><span class="field-label">Body · <code>--tracking-body</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--tracking-body" data-scale="0.001" data-unit="em" min="-20" max="30" step="1" value="0" aria-label="Body tracking"></label>
+              <label class="field mix-row"><span class="field-label">Label · <code>--tracking-label</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--tracking-label" data-scale="0.001" data-unit="em" min="-10" max="60" step="1" value="20" aria-label="Label tracking"></label>
+              <label class="field mix-row"><span class="field-label">Caps · <code>--tracking-caps</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--tracking-caps" data-scale="0.001" data-unit="em" min="0" max="120" step="1" value="60" aria-label="Caps tracking"></label>
+              <label class="field mix-row"><span class="field-label">Wide · <code>--tracking-wide</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--tracking-wide" data-scale="0.001" data-unit="em" min="0" max="240" step="1" value="140" aria-label="Wide tracking"></label>
+
+              <p class="build-subhead">Reading measure</p>
+              <label class="field mix-row"><span class="field-label">Prose · <code>--measure</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--measure" data-scale="1" data-unit="ch" min="40" max="100" step="1" value="66" aria-label="Prose measure"></label>
+              <label class="field mix-row"><span class="field-label">Narrow · <code>--measure-narrow</code> <span class="slider-out"></span></span><input type="range" class="slider" data-mix-num="--measure-narrow" data-scale="1" data-unit="ch" min="36" max="84" step="1" value="54" aria-label="Narrow measure"></label>
             </div>
           </div>
 
@@ -477,6 +514,25 @@
           writeUrl(); renderExport();
         });
       }
+
+      // Numeric type controls (weight, line-height, tracking, measure): native
+      // ranges that scale to the real token value and unit. Integer tokens
+      // (scale 1) round; fractional ones (leading, tracking) keep decimals.
+      const numSliders = [...document.querySelectorAll("[data-mix-num]")];
+      const numInit = new Map(numSliders.map((s) => [s, s.value]));
+      const numFormat = (s) => {
+        const raw = parseFloat(s.value) * parseFloat(s.dataset.scale);
+        const num = parseFloat(s.dataset.scale) === 1 ? Math.round(raw) : +raw.toFixed(3);
+        return num + (s.dataset.unit || "");
+      };
+      const numReadout = (s) => { const o = s.parentElement.querySelector(".slider-out"); if (o) o.textContent = numFormat(s); };
+      for (const s of numSliders) {
+        numReadout(s);
+        s.addEventListener("input", () => {
+          setToken(s.dataset.mixNum, numFormat(s));
+          numReadout(s); writeUrl(); renderExport();
+        });
+      }
       // Numeric detail sliders: the library wires the slider and fires
       // facet:slide; we just read the value and paint the token.
       for (const s of sliders) {
@@ -507,6 +563,7 @@
           s.querySelector(".slider-detail-number").value = val;
         }
         for (const sel of fontSelects) sel.value = "";
+        for (const [s, val] of numInit) { s.value = val; numReadout(s); }
         writeUrl(); renderExport(); syncColorPickers();
       };
       document.querySelector("#mixer-reset").addEventListener("click", reset);
@@ -521,6 +578,8 @@
             if (s) { const n = parseFloat(v); s.querySelector('input[type="range"]').value = n; s.querySelector(".slider-detail-number").value = n; }
             const fsel = fontSelects.find((x) => x.dataset.mixFont === k);
             if (fsel) fsel.value = v;
+            const ns = numSliders.find((x) => x.dataset.mixNum === k);
+            if (ns) { ns.value = parseFloat(v) / parseFloat(ns.dataset.scale); numReadout(ns); }
           }
           if (saved.scales) { setScale("density", saved.scales.density || ""); setScale("textSize", saved.scales.textSize || ""); }
         }
