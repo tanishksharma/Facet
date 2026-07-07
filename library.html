@@ -65,6 +65,7 @@
         <p class="nav-sub">Content &amp; data</p>
         <ul>
           <li><a href="#card">Card</a></li>
+          <li><a href="#list">List</a></li>
           <li><a href="#table">Table</a></li>
           <li><a href="#chart">Chart</a></li>
           <li><a href="#small-talkers">Badge, chip, avatar, progress</a></li>
@@ -1164,6 +1165,65 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-card"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-card" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- LIST -->
+      <article class="element stack" id="list" data-cat="content">
+        <h3 data-status="stable">List</h3>
+        <p>
+          What it is: a list of rows — each with an optional leading icon or
+          avatar, a title, an optional description line under it, and an
+          optional trailing value or action. What it is for: settings, menus,
+          feeds, search results, contact and file lists — any repeated row of
+          items. When to use it: <code>.list</code> for rows on the page
+          separated by hairlines; wrap the same markup in
+          <code>.list-boxed</code> for a bordered card list. A row is one line
+          (icon + title + trailing) or two (add <code>.list-desc</code>, which
+          top-aligns the icon on its own). Make a row actionable by writing it
+          as <code>&lt;a class="list-item" href&gt;</code> or
+          <code>&lt;button class="list-item"&gt;</code> — it fills on hover,
+          presses on click, and is a real keyboard-operable control (put a
+          chevron in <code>.list-trail</code> to signal it). Rows are always
+          direct children of <code>.list</code>, so a <code>&lt;ul&gt;</code>
+          takes <code>&lt;li class="list-item"&gt;</code> and a clickable list
+          is a <code>&lt;nav&gt;</code> of <code>&lt;a class="list-item"&gt;</code>.
+          Reuses the neutral ramp and type tokens, so it needs no tokens of
+          its own and restyles with every theme.
+        </p>
+        <div class="demo">
+          <ul class="list list-boxed">
+            <li class="list-item">
+              <span class="list-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg></span>
+              <span class="list-content">
+                <span class="list-title">Ada Lovelace</span>
+                <span class="list-desc">Signed up today — two-line row, icon top-aligned</span>
+              </span>
+              <span class="list-trail">12</span>
+            </li>
+            <li class="list-item">
+              <span class="list-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2.5h-15Z"/><path d="M10 21h4"/></svg></span>
+              <span class="list-content"><span class="list-title">Notifications</span></span>
+              <span class="list-trail">On</span>
+            </li>
+          </ul>
+          <nav class="list list-boxed" aria-label="Settings" style="margin-top: var(--space-stack);">
+            <a class="list-item" href="#list" data-event="list-open">
+              <span class="list-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg></span>
+              <span class="list-content"><span class="list-title">Settings</span></span>
+              <span class="list-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></span>
+            </a>
+            <a class="list-item" href="#list" data-event="list-open">
+              <span class="list-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg></span>
+              <span class="list-content">
+                <span class="list-title">Account</span>
+                <span class="list-desc">Profile, password and security</span>
+              </span>
+              <span class="list-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></span>
+            </a>
+          </nav>
+        </div>
+        <pre id="code-list"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-list" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- TABLE -->

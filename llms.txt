@@ -114,7 +114,10 @@ fields with hints and
 error states; themed sliders with live readouts; the detailed slider
 (.slider-detail) for wide ranges — coarse drag by data-coarse, −/+ steppers
 and a number box for the fine values between, fires facet:slide; verdict-first
-result blocks with aria-live; the data-tip description tooltip on one attribute;
+result blocks with aria-live; list rows (.list / .list-item — leading icon,
+title, optional description line, optional trailing value or action; one- or
+two-line; bare with hairlines or .list-boxed; rows can be links or buttons);
+the data-tip description tooltip on one attribute;
 all behaviour self-wires to data attributes; built-in context —
 facet.location for the visitor's rough place (IP-based, configurable,
 disablable, off by default); JS API: facet.set, facet.locate,
@@ -517,6 +520,42 @@ raises cards out of the fabric; Elegant carves them in; Aero glosses them.
         <span class="card-inline-meta">Signed up today</span></span>
       <span class="card-inline-trailing">→</span>
     </article>
+
+### List
+
+What it is: a list of rows — each with an optional leading icon or avatar
+(.list-icon), a title (.list-title), an optional description line under it
+(.list-desc), and an optional trailing value or action (.list-trail). What
+it is for: settings, menus, feeds, search results, contact and file lists —
+any repeated row of items. When to use it: .list for rows on the page
+separated by hairlines; wrap the same markup in .list-boxed for a bordered
+card list. A row is one line (icon + title + trailing) or two (add
+.list-desc, which top-aligns the icon on its own). Make a row actionable by
+writing it as <a class="list-item" href> or <button class="list-item"> — it
+fills on hover, presses on click, and is a real keyboard-operable control
+(put a chevron in .list-trail to signal it). Rows are always direct children
+of .list, so a <ul> takes <li class="list-item"> and a clickable list is a
+<nav> of <a class="list-item">. Reuses the neutral ramp and type tokens, so
+it needs no tokens of its own and restyles with every theme.
+
+    <ul class="list list-boxed">
+      <li class="list-item">
+        <span class="list-icon"><svg data-icon="user"></svg></span>
+        <span class="list-content">
+          <span class="list-title">Ada Lovelace</span>
+          <span class="list-desc">Signed up today</span>
+        </span>
+        <span class="list-trail">12</span>
+      </li>
+    </ul>
+
+    <nav class="list list-boxed" aria-label="Settings">
+      <a class="list-item" href="/settings">
+        <span class="list-icon"><svg data-icon="settings"></svg></span>
+        <span class="list-content"><span class="list-title">Settings</span></span>
+        <span class="list-trail"><svg data-icon="chevron-right"></svg></span>
+      </a>
+    </nav>
 
 ### Modal, drawer, popover
 

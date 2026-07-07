@@ -3344,6 +3344,130 @@ details.dropdown {
 .card-inline-meta { color: var(--text-muted); font-size: var(--text-footnote); }
 .card-inline-trailing { flex: none; margin-left: auto; color: var(--text-muted); }
 
+/* ----- LIST: rows of items -----
+   What it is: a list of rows — each with an optional leading icon or avatar,
+   a title, an optional description line under it, and an optional trailing
+   value or action. What it is for: settings, menus, feeds, search results,
+   contact and file lists — any repeated row of items. When to use it: .list
+   for rows on the page separated by hairlines; wrap the same markup in
+   .list-boxed for a bordered card list. A row is one line (icon + title +
+   trailing) or two (add .list-desc, which top-aligns the icon on its own).
+   Make a row actionable by writing it as <a class="list-item" href> or
+   <button class="list-item"> — it fills on hover, presses on click, and is a
+   real keyboard-operable control (put a chevron in .list-trail to signal it).
+   Reuses the neutral ramp and type tokens, so it restyles with every theme
+   and needs no tokens of its own.
+
+   The rows are always DIRECT children of .list, so a <ul> takes
+   <li class="list-item"> and a clickable list is a <nav> of <a class="list-item">
+   — either way the hairline between rows is one rule.
+
+   Usage (static, semantic):
+     <ul class="list list-boxed">
+       <li class="list-item">
+         <span class="list-icon"><svg data-icon="user" aria-hidden="true"></svg></span>
+         <span class="list-content">
+           <span class="list-title">Ada Lovelace</span>
+           <span class="list-desc">Signed up today</span>
+         </span>
+         <span class="list-trail">12</span>
+       </li>
+     </ul>
+
+   Usage (actionable rows):
+     <nav class="list list-boxed">
+       <a class="list-item" href="/settings">
+         <span class="list-icon"><svg data-icon="settings" aria-hidden="true"></svg></span>
+         <span class="list-content"><span class="list-title">Settings</span></span>
+         <span class="list-trail"><svg data-icon="chevron-right" aria-hidden="true"></svg></span>
+       </a>
+     </nav>
+   -------------------------------------------------------------------------- */
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.list-boxed {
+  border: var(--border-element) solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  overflow: hidden;               /* clip row hovers to the rounded corners */
+}
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-inline);
+  min-height: 44px;               /* touch target */
+  margin: 0;                      /* override the base li+li rhythm */
+  padding: var(--space-inline) var(--space-card);
+}
+/* a hairline between adjacent rows, inside a box or bare on the page */
+.list-item + .list-item {
+  border-top: var(--border-hairline) solid var(--border-subtle);
+}
+/* leading slot: a glyph badge or a small avatar image */
+.list-icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-panel);
+  background: var(--surface-hover);
+  color: var(--accent-3);
+  overflow: hidden;
+}
+.list-icon svg { width: 1.25rem; height: 1.25rem; }
+.list-icon img { width: 100%; height: 100%; object-fit: cover; }
+/* text block: title, and an optional description under it */
+.list-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+}
+.list-title { font-weight: var(--weight-medium); }
+.list-desc {
+  color: var(--text-muted);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-snug);
+}
+/* trailing slot: a value, a badge, an action or a chevron */
+.list-trail {
+  flex: none;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-control);
+  color: var(--text-muted);
+  font-size: var(--text-footnote);
+}
+.list-trail svg { width: 1.15rem; height: 1.15rem; }
+/* two-line rows top-align the icon so it sits with the title, not the middle */
+.list-item:has(.list-desc) { align-items: flex-start; }
+/* an actionable row: a real <a> or <button>, filling the whole width */
+a.list-item,
+button.list-item {
+  width: 100%;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+a.list-item:hover,
+button.list-item:hover { background: var(--surface-hover); }
+a.list-item:active,
+button.list-item:active { background: var(--surface-active); }
+
 /* ----- STEPPER: minus, value, plus -----
    What it is: a quantity control — a real number input between two
    step buttons, in one pill. What it is for: counts and small
