@@ -3,6 +3,21 @@
    The page header was removed — the floating site menu (bottom-right)
    carries the navigation now. */
 
+/* The "facet" wordmark. It sits top-left in the flow on the home and
+   build pages (scrolls with the page), tops the library index panel, and
+   heads the site menu. */
+.wordmark {
+  display: inline-block;
+  font-weight: var(--weight-heading);
+  font-size: var(--text-h3);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.page-top { padding-block: var(--space-inline); }
+.docs-index .wordmark { margin-bottom: var(--space-tight); }
+.sheet .wordmark { padding: var(--space-control) var(--space-inline) var(--space-inline); }
+
 /* Landing — one centered column: heading, the two tags, a copy
    button and the theme chips. The code block is the focus, so the
    heading stays modest (not display-sized). */
