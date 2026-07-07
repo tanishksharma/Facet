@@ -189,7 +189,8 @@
   --tracking-snug: -0.01em;     /* h3–h6 */
   --tracking-body: 0em;         /* running text */
   --tracking-label: 0.02em;     /* buttons, nav, field labels */
-  --tracking-caps: 0.06em;      /* uppercase micro-labels: eyebrows, badges, meta */
+  --tracking-caps: 0.06em;      /* uppercase micro-labels: table headers, menu labels, meta */
+  --tracking-wide: 0.14em;      /* spaced-out overlines: eyebrows, kickers, hero labels */
 
   /* ----- Typography: reading measure -----
      Max line length for comfortable reading, in ch (character widths) so it
@@ -1098,8 +1099,8 @@
 .text-h4      { font-family: var(--font-heading); font-size: var(--text-h4); font-weight: var(--weight-strong); line-height: var(--leading-snug); letter-spacing: var(--tracking-snug); }
 .text-body    { font-size: var(--text-body);    line-height: var(--leading-body); }
 .text-quote   { font-size: var(--text-quote);   line-height: var(--leading-body); font-style: italic; }
-.text-footnote   { font-size: var(--text-footnote);   line-height: 1.5; }
-.text-caption { font-size: var(--text-caption); line-height: 1.4; color: var(--text-muted); }
+.text-footnote   { font-size: var(--text-footnote);   line-height: var(--leading-ui); }
+.text-caption { font-size: var(--text-caption); line-height: var(--leading-ui); color: var(--text-muted); }
 
 
 /* ----- BACKGROUNDS: quiet patterns, one class, any theme -----
@@ -2896,7 +2897,7 @@ progress::-moz-progress-bar { background: var(--accent-1); border-radius: var(--
 }
 .chart .line.proj { stroke-dasharray: 7 7; opacity: 0.85; }
 .chart .dot { fill: var(--accent-1); stroke: var(--background); stroke-width: 2; }
-.chart .lbl { fill: var(--text); font-weight: 600; }
+.chart .lbl { fill: var(--text); font-weight: var(--weight-strong); }
 .chart .lbl-m { fill: var(--text-muted); }
 .chart .xhair { stroke: var(--text-muted); stroke-dasharray: 3 3; }
 .chart .evt { stroke: var(--border); stroke-dasharray: 2 5; }
@@ -3283,7 +3284,7 @@ details.dropdown {
 }
 .card-feature-icon svg { width: 1.4rem; height: 1.4rem; }
 .card-feature-title { margin: 0; font-size: var(--text-h4); }
-.card-feature-text { margin: 0; color: var(--text-muted); font-size: var(--text-footnote); line-height: 1.5; }
+.card-feature-text { margin: 0; color: var(--text-muted); font-size: var(--text-footnote); line-height: var(--leading-ui); }
 
 /* Option: a selectable card. The real control is a radio (single-pick) or a
    checkbox (data-multi); :has(:checked) lights the whole card, so it works
@@ -3922,7 +3923,7 @@ button.list-item:active { background: var(--surface-active); }
   font-size: var(--text-caption);
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-caps);
 }
 .menu-divider {
   border: none;
@@ -4264,7 +4265,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
 }
 .choice-btn:active { transform: translateY(1px) scale(0.97); }
 .choice-btn .choice-sym { font-size: var(--text-h4); font-weight: 700; }
-.choice-btn .choice-cap { font-size: var(--text-caption); letter-spacing: 0.06em; }
+.choice-btn .choice-cap { font-size: var(--text-caption); letter-spacing: var(--tracking-caps); }
 .choice-btn[aria-pressed="true"] {
   background: var(--accent-2-hover);
   border-color: var(--text-muted);
@@ -4376,9 +4377,9 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
 
 .eyebrow {
   font-size: var(--text-caption);
-  font-weight: 700;
+  font-weight: var(--weight-strong);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--tracking-wide);
   color: var(--accent-3);
   display: block;
 }

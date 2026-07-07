@@ -70,7 +70,7 @@ intent and each scaled by a global small/medium/large control. Typography
 is fully tokenised by role: four weights (--weight-body/-medium/-strong/
 -heading), line-height per role (--leading-display/-heading/-snug/-body/
 -ui, tighter as type grows), tracking per role (--tracking-display/
--heading/-snug/-body/-label/-caps — large type tightens, caps labels open
+-heading/-snug/-body/-label/-caps/-wide — large type tightens, caps labels open
 up), reading measure (--measure, --measure-narrow), and prose rhythm
 (--flow-heading-above/-below, --flow-paragraph, --flow-tight — em-based
 vertical margins that give raw semantic HTML its flow; gap layouts zero
@@ -245,8 +245,9 @@ every stack ends in a system fallback. Size: --text-display, --text-h1,
 --text-caption. Weight: --weight-body, --weight-medium (UI labels/nav/buttons),
 --weight-strong, --weight-heading. Line height per role:
 --leading-display/-heading/-snug/-body/-ui (tighter as type grows). Tracking
-per role: --tracking-display/-heading/-snug/-body/-label/-caps (large type
-tightens, caps labels open up). Measure: --measure, --measure-narrow. Prose
+per role: --tracking-display/-heading/-snug/-body/-label/-caps/-wide (large
+type tightens, caps labels open up, -wide for spaced overlines/eyebrows).
+Measure: --measure, --measure-narrow. Prose
 rhythm (em-based vertical margins): --flow-heading-above/-below,
 --flow-paragraph, --flow-tight; gap layouts (.stack, .row) zero these so
 rhythm and gap never stack. Global type size:
