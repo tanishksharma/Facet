@@ -428,6 +428,6 @@ The full shipped history is in git and in the live files (facet.css / facet.js /
 
 - No right-to-left layout — translation yes, RTL no.
 - Layer = composition level: a single reusable piece is Layer 2 · Components (in one of the six categories, snap/layout included); motion, sound and app interface are Layer 5 · App feel; an assembly of pieces is a Layer 3 · Block; a whole page is a Layer 4 · Template. Never create a layer that holds only one entry.
-- The site is multi-page: Home · Library · Build a theme · llms.txt · CLAUDE.md · GitHub. (The old Components and Layouts pages merged into Library.)
+- The site is multi-page. The header nav is Home · Library · Build a theme · GitHub; llms.txt (for AI) and CLAUDE.md (for contributors) are linked from the home page's "How to use Facet" tracks rather than the header. (The old Components and Layouts pages merged into Library.)
 - App logic, data and state live in projects, never in the library.
 - (Token, accent, border, spacing/type and theme decisions live in the Naming and Themes sections above — not repeated here.)
