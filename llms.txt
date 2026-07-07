@@ -63,13 +63,19 @@ and exports a paste-ready facet.set config block; Skin Lab on the
 Build-a-theme page — every theme in light and dark side by side, the same real
 layout from identical markup, one attribute apart.
 
-Tokens: every design decision is a role-named CSS variable — color with
-per-theme status colors, type and spacing named by intent (not by number)
-and each scaled by a global small/medium/large control, weights, container
-widths, radii by role (--radius-control/-panel/-card/-pill), borders by role
-(--border-hairline for separators, --border-element for outlines,
---border-focus for the focus ring, --border-highlight for emphasis),
-very light shadows, motion durations and easings, focus ring. Ranked accents: the base family plus
+Tokens: every design decision is a role-named CSS variable — never a
+number. The neutral ramp is a set of semantic roles: --background (the
+page), --surface (cards/inputs, one step above), --surface-hover and
+--surface-active (interactive fills), --border-subtle / --border /
+--border-strong (three line weights), and --text / --text-muted /
+--text-subtle (three text weights) — so a component picks the exact
+neutral it needs. Plus per-theme status colors, type and spacing named by
+intent and each scaled by a global small/medium/large control, weights,
+container widths, radii by role (--radius-control/-panel/-card/-pill),
+border WIDTHS by role (--border-hairline for separators, --border-element
+for outlines, --border-focus for the focus ring, --border-highlight for
+emphasis), layered whisper-light shadows, motion durations and easings,
+focus ring. Ranked accents: the base family plus
 accent-1 (the one primary action), accent-2 (every secondary action's
 fill) and accent-3 (links, labels, quiet affordances), each with hover,
 pressed and on-colors in every theme — components pick ranks, never
@@ -466,14 +472,41 @@ grouping; .card-outlined when many cards sit close and shadows would
 pile up; a clickable card is an <a class="card card-clickable"> — the
 whole surface is the link, it lifts on hover and presses on click.
 Never put more than one primary action inside a card that is itself
-clickable. Velvet raises cards out of the fabric; Elegant carves them
-in; Aero glosses them.
+clickable. Variants, each one modifier on .card: .card-feature displays a
+feature (a .card-feature-icon badge, a .card-feature-title, a
+.card-feature-text); .card-option is a selectable choice for quizzes and
+pickers — a real <label> wrapping a radio (single-pick) or a checkbox
+(add data-multi) plus a .card-option-mark, so :has(:checked) lights the
+whole card with no JavaScript and it stays keyboard operable;
+.card-inline is a compact horizontal row (.card-inline-media,
+.card-inline-body with -title/-meta, .card-inline-trailing). Variants use
+the neutral ramp's own roles (--surface-hover, --border-strong). Velvet
+raises cards out of the fabric; Elegant carves them in; Aero glosses them.
 
     <article class="card">
       <strong>Monthly summary</strong>
       <p>One thing per card.</p>
     </article>
     <a class="card card-clickable" href="/report">Open the report →</a>
+
+    <article class="card card-feature">
+      <span class="card-feature-icon"><svg data-icon="bolt"></svg></span>
+      <h3 class="card-feature-title">Fast by default</h3>
+      <p class="card-feature-text">No runtime between you and the platform.</p>
+    </article>
+
+    <label class="card card-option">
+      <input type="radio" name="q1" class="card-option-input">
+      <span class="card-option-mark" aria-hidden="true"></span>
+      <span class="card-option-body"><span class="card-option-title">Paris</span></span>
+    </label>
+
+    <article class="card card-inline">
+      <span class="card-inline-media"><svg data-icon="user"></svg></span>
+      <span class="card-inline-body"><span class="card-inline-title">Ada Lovelace</span>
+        <span class="card-inline-meta">Signed up today</span></span>
+      <span class="card-inline-trailing">→</span>
+    </article>
 
 ### Modal, drawer, popover
 

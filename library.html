@@ -1088,8 +1088,15 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           <code>&lt;a class="card card-clickable"&gt;</code> — the
           whole surface is the link, it lifts on hover and presses on
           click. Never put more than one primary action inside a card
-          that is itself clickable. Velvet raises cards out of the
-          fabric; Elegant carves them in; Aero glosses them.
+          that is itself clickable. The same primitive carries specialised
+          jobs, each one modifier on <code>.card</code>:
+          <code>.card-feature</code> displays a feature (icon badge,
+          heading, line); <code>.card-option</code> is a selectable choice
+          for quizzes and pickers (a real <code>&lt;label&gt;</code> around
+          a radio or checkbox — lights the whole card when chosen, works
+          with JavaScript off); <code>.card-inline</code> is a compact
+          horizontal item for rich list rows. Velvet raises cards out of
+          the fabric; Elegant carves them in; Aero glosses them.
         </p>
         <div class="demo">
           <div class="grid">
@@ -1108,6 +1115,30 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
               <strong>Open the report &rarr;</strong>
               <p class="text-footnote" style="color: var(--text-muted);">Lifts on hover, presses on click.</p>
             </a>
+          </div>
+          <div class="grid" style="margin-top: var(--space-stack);">
+            <article class="card card-feature">
+              <span class="card-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></span>
+              <h3 class="card-feature-title">Fast by default</h3>
+              <p class="card-feature-text">No runtime sits between you and the platform, so the page loads instantly.</p>
+            </article>
+            <article class="card card-inline">
+              <span class="card-inline-media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg></span>
+              <span class="card-inline-body"><span class="card-inline-title">Ada Lovelace</span><span class="card-inline-meta">Signed up today</span></span>
+              <span class="card-inline-trailing" aria-hidden="true">&rarr;</span>
+            </article>
+          </div>
+          <div role="radiogroup" aria-label="Capital of France" class="stack-tight" style="margin-top: var(--space-stack);">
+            <label class="card card-option">
+              <input type="radio" name="q-capital" class="card-option-input" checked>
+              <span class="card-option-mark" aria-hidden="true"></span>
+              <span class="card-option-body"><span class="card-option-title">Paris</span><span class="card-option-note">Tap a card to choose — the whole card lights up.</span></span>
+            </label>
+            <label class="card card-option">
+              <input type="radio" name="q-capital" class="card-option-input">
+              <span class="card-option-mark" aria-hidden="true"></span>
+              <span class="card-option-body"><span class="card-option-title">Berlin</span></span>
+            </label>
           </div>
         </div>
         <pre id="code-card"><code></code></pre>

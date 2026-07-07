@@ -51,11 +51,14 @@
 
 /*
    Theme · Default (light). Ships first, no attribute needed.
-   Paper white, near-black ink, gray hairlines, small radii, very light
-   shadows. Zero decoration, the neutral base. The accent ranks are the ink
-   itself: accent-1 primary actions are black on white deepening to full
-   black, accent-2 is the quiet surface fill, accent-3 the interactive
-   ink for links and small affordances.
+   A soft off-white page with white surfaces that lift above it; softened
+   ink (not pure black); a cool-tuned neutral ramp of semantic roles
+   (surface / surface-hover / surface-active, three border weights, three
+   text weights) so components pick the exact neutral they need; layered,
+   whisper-light shadows; calm radii. Zero decoration, the neutral base.
+   The accent ranks are the ink itself: accent-1 primary actions are the
+   softened ink deepening to full black, accent-2 is a light-gray fill, and
+   accent-3 is the interactive ink for links and small affordances.
 
    The non-color tokens (type, spacing, shape, elevation, motion, focus)
    live here once and are shared by every theme; themes override only what
@@ -65,12 +68,22 @@
 :root,
 [data-mode="light"] {
 
-  /* ----- Colors: core palette ----- */
-  --background: #FFFFFF;      /* paper: the page itself */
-  --surface: #FAFAFA;         /* one step above the page: cards, inputs */
-  --text: #17171B;            /* near-black ink */
-  --text-muted: #6E6E76;      /* secondary text, hints, captions */
-  --border: #E4E4E8;          /* gray hairlines and edges */
+  /* ----- Colors: the neutral ramp -----
+     Semantic roles, never numbers. One committed temperature (a faint cool
+     cast). The page is a soft off-white; surfaces (cards, inputs) are white
+     and LIFT above it (the charter's "one step above"); the two interactive
+     fills, three border weights and three text weights give every component
+     the exact neutral it needs instead of overloading one gray. */
+  --background: #F8F8FA;      /* the page itself: soft off-white */
+  --surface: #FFFFFF;         /* one step above the page: cards, inputs, menus */
+  --surface-hover: #F2F2F6;   /* interactive fill, rest→hover: rows, ghost buttons, options */
+  --surface-active: #E9E9EF;  /* interactive fill, pressed */
+  --border-subtle: #EDEDF1;   /* the faintest line: dividers, row separators */
+  --border: #E2E2E8;          /* the outline of an element: cards, inputs, chips */
+  --border-strong: #CDCDD5;   /* emphasis: hovered inputs, selected outlines */
+  --text: #1B1B21;            /* primary ink, softened off pure black */
+  --text-muted: #63636D;      /* secondary text, hints, captions (AA on surface) */
+  --text-subtle: #8B8B96;     /* tertiary: placeholders, disabled, the non-essential */
 
   /* ----- Colors: the accent ranks ----- */
   /* Components never pick colors; they pick ranks. Accent-1 is the one
@@ -79,18 +92,18 @@
      small affordances. Each rank carries hover, pressed and an on-color
      for text sitting on it. In Default, accent-1 and accent-3 are the
      ink itself; accent-2 is the surface family. */
-  --accent-1: #17171B;
-  --accent-1-hover: #09090B;
+  --accent-1: #1B1B21;
+  --accent-1-hover: #0E0E12;
   --accent-1-pressed: #000000;
   --on-accent-1: #FFFFFF;
 
-  --accent-2: #FAFAFA;
-  --accent-2-hover: #F0F0F2;
-  --accent-2-pressed: #E4E4E8;
-  --on-accent-2: #17171B;
+  --accent-2: #F1F1F5;        /* a real light-gray fill, distinct from the white surface */
+  --accent-2-hover: #E8E8EE;
+  --accent-2-pressed: #DEDEE5;
+  --on-accent-2: #1B1B21;
 
-  --accent-3: #17171B;        /* the quiet interactive rank — the ink */
-  --accent-3-hover: #09090B;
+  --accent-3: #1B1B21;        /* the quiet interactive rank — the ink */
+  --accent-3-hover: #0E0E12;
   --accent-3-pressed: #000000;
   --on-accent-3: #FFFFFF;
 
@@ -160,8 +173,8 @@
   --width-wide: 80rem;        /* dashboards, galleries */
 
   /* ----- Shape: radii named for what they round ----- */
-  --radius-control: 6px;      /* buttons, inputs, chips — the small controls */
-  --radius-panel: 10px;       /* fields, result blocks, mid-size panels */
+  --radius-control: 8px;      /* buttons, inputs, chips — the small controls */
+  --radius-panel: 12px;       /* fields, result blocks, mid-size panels */
   --radius-card: 16px;        /* cards, modals, hero — the large surfaces */
   --radius-pill: 999px;       /* pills, sliders, avatars */
   /* Borders named by role. Hairline and element are both 1px — the name
@@ -173,11 +186,20 @@
   --border-focus: 2px;        /* the focus ring width — focus only */
   --border-highlight: 2px;    /* draw attention to an element: active bars, selected */
 
-  /* ----- Elevation: very light shadows ----- */
+  /* ----- Elevation: layered, whisper-light shadows -----
+     Two stops each — a tight contact shadow plus a soft ambient one, tinted
+     with the cool ink rather than pure black — so a surface reads as lifted,
+     not outlined. The higher the element, the softer and larger the spread. */
   --shadow-flat: none;
-  --shadow-raised: 0 1px 2px rgb(23 23 27 / 0.06);
-  --shadow-floating: 0 4px 12px rgb(23 23 27 / 0.08);
-  --shadow-overlay: 0 12px 32px rgb(23 23 27 / 0.14);
+  --shadow-raised:
+    0 1px 2px -1px rgb(27 27 33 / 0.10),
+    0 1px 3px rgb(27 27 33 / 0.05);
+  --shadow-floating:
+    0 4px 10px -3px rgb(27 27 33 / 0.12),
+    0 2px 5px -2px rgb(27 27 33 / 0.06);
+  --shadow-overlay:
+    0 16px 36px -10px rgb(27 27 33 / 0.18),
+    0 6px 14px -6px rgb(27 27 33 / 0.10);
 
   /* ----- Motion: timing and easing ----- */
   /* Animated, the default: momentum, weight, a settle in every arrival.
@@ -206,21 +228,26 @@
    spacing, shape and motion carry over.
 */
 [data-mode="dark"] {
-  --background: #121214;
-  --surface: #1B1B1F;
-  --text: #F4F4F5;
-  --text-muted: #9C9CA3;
-  --border: #2E2E33;
+  --background: #0F0F12;      /* the page: near-black */
+  --surface: #1A1A1F;        /* one step above: cards lift out of the ground */
+  --surface-hover: #232329;  /* interactive fill, rest→hover */
+  --surface-active: #2C2C34; /* interactive fill, pressed */
+  --border-subtle: #232329;  /* the faintest line */
+  --border: #303038;         /* element outlines */
+  --border-strong: #45454F;  /* emphasis */
+  --text: #F4F4F6;           /* paper ink */
+  --text-muted: #9B9BA4;     /* secondary */
+  --text-subtle: #6C6C76;    /* tertiary */
 
-  --accent-1: #F4F4F5;
+  --accent-1: #F4F4F6;
   --accent-1-hover: #FFFFFF;
   --accent-1-pressed: #E2E2E5;
   --on-accent-1: #17171B;
 
-  --accent-2: #1B1B1F;
-  --accent-2-hover: #232328;
-  --accent-2-pressed: #2E2E33;
-  --on-accent-2: #F4F4F5;
+  --accent-2: #232329;       /* a raised gray fill, distinct from the surface */
+  --accent-2-hover: #2C2C34;
+  --accent-2-pressed: #35353D;
+  --on-accent-2: #F4F4F6;
 
   --accent-3: #F4F4F5;
   --accent-3-hover: #FFFFFF;
@@ -232,9 +259,15 @@
   --error: #E5766A;
   --info: #7AA7DC;
 
-  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4);
-  --shadow-floating: 0 4px 12px rgb(0 0 0 / 0.45);
-  --shadow-overlay: 0 12px 32px rgb(0 0 0 / 0.55);
+  --shadow-raised:
+    0 1px 2px -1px rgb(0 0 0 / 0.50),
+    0 1px 3px rgb(0 0 0 / 0.35);
+  --shadow-floating:
+    0 4px 10px -3px rgb(0 0 0 / 0.55),
+    0 2px 5px -2px rgb(0 0 0 / 0.40);
+  --shadow-overlay:
+    0 16px 36px -10px rgb(0 0 0 / 0.65),
+    0 6px 14px -6px rgb(0 0 0 / 0.45);
 }
 
 /*
@@ -3118,6 +3151,111 @@ details.dropdown {
   translate: 0 0;
   box-shadow: var(--shadow-raised);
 }
+
+/* ----- CARD VARIANTS: one component, many jobs -----
+   Each builds on .card (the surface primitive) and specialises it with one
+   modifier — same lift, radius and padding underneath. .card-feature
+   displays a feature: an icon badge over a heading and a line. .card-option
+   is a selectable choice for quizzes and pickers: a real <label> around a
+   radio or checkbox that lights the whole card when chosen — works with
+   JavaScript off, keyboard operable. .card-inline is a compact horizontal
+   item: leading media, a text block, an optional trailing action, for rich
+   list rows. Combine any with .card-clickable to make the whole card a
+   link. They use the neutral ramp's own roles (surface-hover fills,
+   border-strong emphasis) so states stay consistent across themes.
+
+   Usage:
+     <article class="card card-feature">
+       <span class="card-feature-icon"><svg data-icon="bolt"></svg></span>
+       <h3 class="card-feature-title">Fast by default</h3>
+       <p class="card-feature-text">No runtime between you and the platform.</p>
+     </article>
+
+     <label class="card card-option">
+       <input type="radio" name="q1" class="card-option-input">
+       <span class="card-option-mark" aria-hidden="true"></span>
+       <span class="card-option-body"><span class="card-option-title">Paris</span></span>
+     </label>
+
+     <article class="card card-inline">
+       <span class="card-inline-media"><svg data-icon="user"></svg></span>
+       <span class="card-inline-body"><span class="card-inline-title">Ada Lovelace</span>
+         <span class="card-inline-meta">Signed up today</span></span>
+       <span class="card-inline-trailing">→</span>
+     </article>
+   -------------------------------------------------------------------------- */
+
+/* Feature: an icon badge, a heading, a description, stacked. */
+.card-feature { display: flex; flex-direction: column; gap: var(--space-inline); }
+.card-feature-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.75rem; height: 2.75rem;
+  border-radius: var(--radius-panel);
+  background: var(--surface-hover);
+  color: var(--accent-3);
+}
+.card-feature-icon svg { width: 1.4rem; height: 1.4rem; }
+.card-feature-title { margin: 0; font-size: var(--text-h4); }
+.card-feature-text { margin: 0; color: var(--text-muted); font-size: var(--text-footnote); line-height: 1.5; }
+
+/* Option: a selectable card. The real control is a radio (single-pick) or a
+   checkbox (data-multi); :has(:checked) lights the whole card, so it works
+   without JavaScript and stays keyboard operable. */
+.card-option {
+  display: flex; align-items: flex-start; gap: var(--space-inline);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+.card-option:hover { border-color: var(--border-strong); background: var(--surface-hover); }
+.card-option-input { position: absolute; width: 1px; height: 1px; opacity: 0; margin: 0; }
+.card-option:has(.card-option-input:checked) {
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 1px var(--accent-1), var(--shadow-raised);
+}
+.card-option:has(.card-option-input:focus-visible) {
+  outline: var(--focus-ring); outline-offset: var(--focus-offset);
+}
+/* the check indicator: a ring for a radio, a rounded square for a checkbox */
+.card-option-mark {
+  flex: none; width: 1.25rem; height: 1.25rem; margin-top: 1px;
+  border: var(--border-element) solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  display: grid; place-items: center;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+.card-option[data-multi] .card-option-mark { border-radius: var(--radius-control); }
+.card-option-mark::after {
+  content: ""; width: 0.5rem; height: 0.5rem; border-radius: var(--radius-pill);
+  background: var(--on-accent-1); scale: 0;
+  transition: scale var(--duration-fast) var(--ease-spring);
+}
+.card-option:has(.card-option-input:checked) .card-option-mark {
+  background: var(--accent-1); border-color: var(--accent-1);
+}
+.card-option:has(.card-option-input:checked) .card-option-mark::after { scale: 1; }
+.card-option-body { min-width: 0; }
+.card-option-title { display: block; font-weight: var(--weight-strong); }
+.card-option-note { display: block; color: var(--text-muted); font-size: var(--text-footnote); }
+
+/* Inline: a compact horizontal item — media, text, trailing. */
+.card-inline { display: flex; align-items: center; gap: var(--space-inline); }
+.card-inline-media {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: var(--radius-panel);
+  background: var(--surface-hover);
+  color: var(--accent-3);
+}
+.card-inline-media svg { width: 1.25rem; height: 1.25rem; }
+.card-inline-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.card-inline-title { font-weight: var(--weight-strong); }
+.card-inline-meta { color: var(--text-muted); font-size: var(--text-footnote); }
+.card-inline-trailing { flex: none; margin-left: auto; color: var(--text-muted); }
 
 /* ----- STEPPER: minus, value, plus -----
    What it is: a quantity control — a real number input between two
