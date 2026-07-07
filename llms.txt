@@ -49,11 +49,7 @@ data-mode-toggle; setup by configuration — data attributes on the
 facet.js script tag boot a page into its look, and facet.set() changes
 theme, mode or any token live at runtime; native scrollbars and form
 controls follow via color-scheme and facet.js keeps the theme-color
-meta synced so the browser's UI follows the theme; the OS accent as its
-own opt-in color — --os-accent is a dormant token (no component uses it):
-var(--os-accent) is the iOS system blue everywhere and the visitor's real
-OS accent only where the browser exposes it (Safari 16.4+, Firefox 103+),
-kept separate so the accent ranks stay the theme's own inks; custom accent
+meta synced so the browser's UI follows the theme; custom accent
 as a supported recipe — override
 a rank's four tokens in one block, page-wide on :root or per-subtree on
 any element, and every component using that rank follows; Style Mixer
@@ -112,10 +108,9 @@ error states; themed sliders with live readouts; the detailed slider
 and a number box for the fine values between, fires facet:slide; verdict-first
 result blocks with aria-live; the data-tip description tooltip on one attribute;
 all behaviour self-wires to data attributes; built-in context —
-facet.now() for date/time/timezone and facet.location for the visitor's
-rough place (configurable, disablable, GPS-upgraded only with existing
-permission); JS API: facet.set, facet.now, facet.locate,
-facet.numberValue, facet.groupIndian, facet.numberWords.
+facet.location for the visitor's rough place (IP-based, configurable,
+disablable, off by default); JS API: facet.set, facet.locate,
+facet.numberValue, facet.groupNumber, facet.numberWords.
 
 Internationalised: every built-in string comes from one translation
 table (facet.strings), switched with data-language and extendable in one
@@ -164,10 +159,7 @@ included. Dark mode is a second attribute and composes with every theme.
     <html data-theme="sand" data-mode="dark"> Sand theme, dark
 
 Themes: Default (white and black, the accent ranks are the ink itself)
-ships first. The OS accent is a separate opt-in token, --os-accent
-(dormant, used by nothing): iOS system blue everywhere, upgrading to the
-visitor's real OS accent only where the browser exposes it (Safari 16.4+,
-Firefox 103+ — Chromium stays on the blue fallback). Sand
+ships first. Sand
 (Minecraft desert beige, cactus accent-1) is parked and
 working. Velvet (data-theme="velvet") is the neumorphic material
 extracted from the shipped inflation app: matte velvet surfaces, one
@@ -883,8 +875,6 @@ for calculator apps:
 
     facet.set({...})           apply configuration live: theme, mode,
                                density, language, or any --token override
-    facet.now()                { date, iso, dateText, timeText, timezone,
-                               year } — synchronous, fresh every call
     facet.version              the library version string, e.g. "0.2.0"
     facet.scheme               three-way appearance: .get() / .set("auto"
                                |"light"|"dark") / .cycle(); auto follows the
@@ -895,13 +885,13 @@ for calculator apps:
                                opt in with data-location on the script tag
                                (or data-location-endpoint for a custom one),
                                so a page that needs no geo makes no network
-                               call. Upgraded to GPS only where permission
-                               was already granted. facet.locate() is the
-                               promise. Silent on failure; never throws.
+                               call. facet.locate() is the promise. Silent
+                               on failure; never throws. Precise GPS is not
+                               requested — that is the app's call on a real
+                               user gesture (navigator.geolocation).
     facet.numberValue(input)   the plain number behind a grouped input
     facet.groupNumber(n, {system})  grouped for the active locale, or force
                                {system:"indian"|"western"} per call
-    facet.groupIndian(n)       74250000 -> "7,42,50,000", always Indian
     facet.numberWords(n, {system})  "7.43 crore" / "74.25 million" / "7.43
                                करोड़" per locale, with a per-call override
     facet.numberSystem()       "indian" or "western", however resolved
