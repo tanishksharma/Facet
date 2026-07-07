@@ -110,7 +110,7 @@ result blocks with aria-live; the data-tip description tooltip on one attribute;
 all behaviour self-wires to data attributes; built-in context —
 facet.location for the visitor's rough place (IP-based, configurable,
 disablable, off by default); JS API: facet.set, facet.locate,
-facet.numberValue, facet.groupNumber, facet.numberWords.
+facet.groupNumber, facet.numberWords, facet.numberSystem.
 
 Internationalised: every built-in string comes from one translation
 table (facet.strings), switched with data-language and extendable in one
@@ -800,8 +800,9 @@ underneath, in the active language: 25 lakh, 2.5 million, 25 लाख. The
 locale follows facet.location and the browser, overridable with
 data-numbers="indian|western"; the language with data-language. All
 behaviours come from facet.js the moment the input carries data-number.
-When to use it: every numeric entry in a calculator. Read the plain
-number in app code with facet.numberValue(input). For the error state,
+When to use it: every numeric entry in a calculator. The field shows the
+grouped text; read the plain number in app code by stripping separators —
+parseFloat(input.value.replace(/[^0-9.]/g, "")). For the error state,
 put .field-invalid on the field and swap the hint for a .field-error
 line.
 
@@ -889,7 +890,6 @@ for calculator apps:
                                on failure; never throws. Precise GPS is not
                                requested — that is the app's call on a real
                                user gesture (navigator.geolocation).
-    facet.numberValue(input)   the plain number behind a grouped input
     facet.groupNumber(n, {system})  grouped for the active locale, or force
                                {system:"indian"|"western"} per call
     facet.numberWords(n, {system})  "7.43 crore" / "74.25 million" / "7.43
