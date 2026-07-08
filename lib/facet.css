@@ -4175,9 +4175,17 @@ button.list-item:active { background: var(--surface-active); }
    haptics) and data-language-cycle, exactly like the settings sheet.
    prefers-reduced-motion drops the stagger. It is an overlay control, not
    page content: authored at the end of <body>, user-select:none, prints off.
+   Variants and slots: .nav-menu-right anchors the whole cluster
+   bottom-right (safe-area aware) and every stack opens right-aligned;
+   left stays the default. An optional .nav-menu-back round pill — a real
+   <a> with a chevron-left — sits on the cluster's outer edge, in the
+   canonical order [back] [Menu] [settings]. The settings trigger's
+   canonical icon is data-icon="sliders", not the gear.
 
    Usage:
      <nav class="nav-menu" aria-label="Site" data-print="off">
+       <a class="btn btn-pill btn-icon nav-menu-back" href="/"
+          aria-label="Back"><svg data-icon="chevron-left"></svg></a>
        <details class="nav-menu-panel">
          <summary class="btn btn-pill nav-menu-trigger"
                   data-event="nav-menu"><svg>...menu...</svg> Menu</summary>
@@ -4187,7 +4195,7 @@ button.list-item:active { background: var(--surface-active); }
        </details>
        <details class="nav-menu-panel">
          <summary class="btn btn-pill btn-icon nav-menu-trigger"
-                  aria-label="Settings"><svg>...gear...</svg></summary>
+                  aria-label="Settings"><svg>...sliders...</svg></summary>
          <div class="nav-menu-items">
            <button type="button" class="btn btn-pill nav-set" data-control="sounds"
                    aria-label="Sound"><svg>...</svg> Sound
@@ -4257,6 +4265,24 @@ button.list-item:active { background: var(--surface-active); }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Right-side variant: the whole cluster anchors bottom-right (safe-area
+   aware) and every pop-up stack opens right-aligned to the cluster, so
+   nothing can hang off-screen. Left stays the default. */
+.nav-menu.nav-menu-right {
+  left: auto;
+  right: calc(var(--space-stack) + env(safe-area-inset-right, 0px));
+}
+.nav-menu.nav-menu-right .nav-menu-items {
+  left: auto;
+  right: 0;
+  align-items: flex-end;
+}
+
+/* Back slot: an optional round pill — a real <a> back link with a
+   chevron-left — on the cluster's outer edge. Canonical order:
+   [back] [Menu] [settings]. */
+.nav-menu-back { flex: none; }
 
 /* setting pill: a toggle whose state shows IN the pill. The pill itself
    stays the solid base button in both states — a whole pill going

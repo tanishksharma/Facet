@@ -2609,9 +2609,12 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           closes the other, and neither trigger moves when a stack opens.
           Every link and the Menu pill are the base
           <code>.btn.btn-pill</code> (the Settings button is
-          <code>.btn-pill.btn-icon</code>); each setting is a
+          <code>.btn-pill.btn-icon</code>, canonical icon
+          <code>data-icon="sliders"</code>); each setting is a
           <code>.btn.btn-pill.nav-set</code> whose on/off state shows in the
-          pill itself. What it is for: whole-site navigation on any Facet
+          pill itself: the pill stays solid in both states and only the
+          trailing <code>.menu-value</code> chip changes (filled accent = on,
+          outlined muted = off). What it is for: whole-site navigation on any Facet
           page, plus the app's own settings — theme, appearance, motion,
           sound, haptics, language — behind two thumb-reachable floating
           controls. When to use it: the primary nav for a content site or
@@ -2631,11 +2634,18 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           <code>data-language-cycle</code>. Clicking a nav link or action
           closes the panel; a <code>.nav-set</code> toggle leaves it open so
           several settings can be changed in a row. Reduced motion drops the
-          stagger. On a real page it floats fixed bottom-left; here it sits in
-          the flow.
+          stagger. Add <code>.nav-menu-right</code> to anchor the cluster
+          bottom-right with right-aligned stacks (left stays the default);
+          an optional <code>.nav-menu-back</code> round pill — a real link
+          with a chevron-left — sits on the cluster's outer edge, in the
+          canonical order [back] [Menu] [settings]. On a real page it floats
+          fixed bottom-left or bottom-right; here it sits in the flow.
         </p>
         <div class="demo">
           <nav class="nav-menu" aria-label="Site" data-print="off">
+            <a class="btn btn-pill btn-icon nav-menu-back" href="#nav-menu" aria-label="Back" data-tip="Back to the previous page">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg>
+            </a>
             <details class="nav-menu-panel">
               <summary class="btn btn-pill nav-menu-trigger" data-tip="Open the navigation menu" data-event="nav-menu">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -2662,7 +2672,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             </details>
             <details class="nav-menu-panel">
               <summary class="btn btn-pill btn-icon nav-menu-trigger" aria-label="Open settings" data-tip="App settings" data-event="nav-settings">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2"/><circle cx="8" cy="16" r="2"/></svg>
               </summary>
               <div class="nav-menu-items">
                 <button type="button" class="btn btn-pill nav-set" data-control="theme" aria-label="Theme" data-tip="Cycles the palette: Default, Velvet, Aero, Elegant" data-event="set-theme">
