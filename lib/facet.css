@@ -1941,7 +1941,8 @@ figcaption {
    All behaviours come from facet.js the moment the input carries
    data-number.
    When to use it: every numeric entry in a calculator. Read the plain
-   number in app code with facet.numberValue(input). For the error state,
+   number in app code by stripping separators —
+   parseFloat(input.value.replace(/[^0-9.]/g, "")). For the error state,
    put .field-invalid on the field and swap the hint for a .field-error
    line.
 

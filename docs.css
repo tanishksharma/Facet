@@ -673,3 +673,136 @@ article.element {
 }
 .code-tools .btn:hover { color: var(--text); background: var(--background); }
 .code-tools .btn svg { width: 1.1rem; height: 1.1rem; }
+
+/* -------------------------------------------------------------------------
+   BUILD-A-THEME PAGE — styles for build.html only: the page head, the
+   token pickers, the builder canvas with its floating inspector, and the
+   Skin Lab gallery. Every selector is a build-page class, so nothing here
+   reaches the other pages. The shared pieces build.html also uses — the
+   wordmark, .page-top, .part-label and .lab-frame — already live above.
+   ------------------------------------------------------------------------- */
+.page-head { padding-block: var(--space-inline) 0; }
+.page-head h1 { margin: 0; font-size: var(--text-h1); }
+.page-head p { color: var(--text-muted); max-width: 60ch; margin: 0; }
+
+/* Token pickers. */
+.mixer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--space-inline);
+}
+.mixer-grid label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-control);
+  font-size: var(--text-footnote);
+  background: var(--surface);
+  border: var(--border-element) solid var(--border);
+  border-radius: var(--radius-panel);
+  padding: var(--space-control) var(--space-inline);
+}
+.mixer-grid input[type="color"] {
+  inline-size: 2.6rem;
+  block-size: 1.9rem;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Stacked token sliders inside a tab panel. */
+.build-sliders { display: grid; gap: var(--space-stack); }
+.build-sliders .field { gap: var(--space-tight); }
+/* Sub-headings that group the type controls (Weight / Line height / …). */
+.build-subhead {
+  margin: var(--space-inline) 0 0;
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--weight-medium);
+  color: var(--text-subtle);
+}
+/* A range row with a live value readout in its label. */
+.mix-row .field-label { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-control); }
+.slider-out { font-family: var(--font-mono); font-size: var(--text-caption); color: var(--text-muted); }
+
+/* Theme builder: a full-width live-preview canvas you scroll through,
+   with the controls lifted into a floating inspector docked over it. The
+   build applies its tokens to the canvas alone, so it is a real,
+   contained workspace. */
+.builder-canvas {
+  background: var(--background);
+  color: var(--text);
+  border: var(--border-element) solid var(--border);
+  border-radius: var(--radius-card);
+  /* padding rides --space-page and the panel gap rides --space-section,
+     so those sliders visibly move the preview too. */
+  padding: var(--space-page);
+  display: grid;
+  gap: var(--space-section);
+}
+.bc-panel + .bc-panel { border-top: var(--border-hairline) solid var(--border); padding-top: var(--space-section); }
+.bc-panel .part-label { margin-top: 0; }
+.bc-figure { font-family: var(--font-numeric); font-size: var(--text-display); line-height: var(--leading-display); letter-spacing: var(--tracking-display); font-variant-numeric: tabular-nums lining-nums; }
+.bc-quote { font-family: var(--font-quote); font-size: var(--text-quote); font-style: italic; color: var(--text-muted); border-left: var(--border-highlight) solid var(--accent-3); padding-left: var(--space-stack); margin: 0; }
+
+/* The floating inspector: a docked, collapsible control panel over the
+   preview. Native <details>, so it opens and closes with no JS; fixed to
+   the lower-right on desktop, a bottom sheet on narrow screens. */
+.builder-inspector {
+  position: fixed;
+  right: var(--space-stack);
+  bottom: var(--space-stack);
+  width: min(23rem, calc(100vw - 2 * var(--space-stack)));
+  background: var(--surface);
+  border: var(--border-element) solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-overlay);
+  z-index: 60;
+  overflow: hidden;
+}
+.builder-inspector > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-control);
+  padding: var(--space-inline) var(--space-card);
+  font-weight: var(--weight-medium);
+}
+.builder-inspector > summary::-webkit-details-marker { display: none; }
+.builder-inspector > summary .inspector-caret {
+  margin-left: auto;
+  width: 0.55rem; height: 0.55rem;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  rotate: 45deg;
+  transition: rotate var(--duration-normal) var(--ease-spring);
+}
+.builder-inspector[open] > summary .inspector-caret { rotate: 225deg; }
+.inspector-body {
+  max-height: min(72vh, 40rem);
+  overflow-y: auto;
+  padding: 0 var(--space-card) var(--space-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack);
+  border-top: var(--border-hairline) solid var(--border-subtle);
+}
+@media (max-width: 34rem) {
+  .builder-inspector { right: var(--space-inline); left: var(--space-inline); bottom: var(--space-inline); width: auto; }
+}
+
+/* Skin Lab: the theme-by-mode gallery of framed mini pages (the frame
+   itself, .lab-frame, is a shared docs style above). */
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: var(--space-stack);
+}
+.lab-cell { display: grid; gap: var(--space-tight); }
+.lab-cell figcaption {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}

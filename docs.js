@@ -765,6 +765,262 @@ function labelWallParts() {
   }
 }
 
+/* -------------------------------------------------------------------------
+   BUILD-A-THEME PAGE — the theme builder and Skin Lab (build.html only).
+   Each init guards on its own root element (#builder-canvas / #lab-grid),
+   so both are inert on every other page.
+   ------------------------------------------------------------------------- */
+
+/* Theme builder: build on the active theme, one token category at a time
+   (colors, spacing, type, shape), previewed live on a scoped canvas —
+   every token is written as a custom property on #builder-canvas alone,
+   so the sample layouts restyle while the rest of the page holds still.
+   Colors fan out to their hover/pressed/on shades; numeric tokens ride
+   the detailed slider. Density and type size are the two global scales,
+   set as data attributes on the canvas. The whole build rides ?mix= so a
+   link reproduces it, and the export block is the paste-ready :root
+   config. Docs-only logic — the library ships facet.set for the
+   whole-page version; this is a contained workspace. */
+function initStyleMixer() {
+  const canvas = document.querySelector("#builder-canvas");
+  const exportCode = document.querySelector("#code-style-mixer code");
+  if (!canvas || !exportCode || !window.facet) return;
+  const root = document.documentElement;
+  const pickers = [...document.querySelectorAll("#tab-colors [data-mix]")];
+  const sliders = [...document.querySelectorAll(".slider-detail[data-token]")];
+  const scaleChips = [...document.querySelectorAll("[data-scale-pick]")];
+
+  const tokens = {};                // "--cssvar" -> raw value the user set
+  const scales = { density: "", textSize: "" };   // the two global scales
+  const isColor = (v) => /^#|^rgb|color-mix|Color$/.test(v) || v.startsWith("#");
+  const sliderInit = new Map(sliders.map((s) => [s, s.querySelector(".slider-detail-number").value]));
+
+  // A picked color fans out to its derived tokens; anything else is literal.
+  const luma = (hex) => {
+    const n = parseInt(hex.slice(1), 16);
+    return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
+  };
+  const derive = (cssVar, val) => {
+    const set = { [cssVar]: val };
+    if (cssVar.startsWith("--accent") && val.startsWith("#")) {
+      const toward = root.dataset.mode === "dark" ? "white" : "black";
+      set[`${cssVar}-hover`] = `color-mix(in srgb, ${val} 86%, ${toward})`;
+      set[`${cssVar}-pressed`] = `color-mix(in srgb, ${val} 74%, ${toward})`;
+      set[`--on-${cssVar.slice(2)}`] = luma(val) > 0.55 ? "#17171B" : "#FFFFFF";
+    }
+    return set;
+  };
+
+  // Colours resolve their live theme value so an untouched picker shows it.
+  const probe = document.createElement("span");
+  probe.hidden = true;
+  canvas.appendChild(probe);
+  const tokenHex = (cssVar) => {
+    probe.style.color = `var(${cssVar})`;
+    const m = getComputedStyle(probe).color.match(/\d+/g) || [0, 0, 0];
+    return "#" + m.slice(0, 3).map((n) => (+n).toString(16).padStart(2, "0")).join("");
+  };
+
+  const renderExport = () => {
+    const entries = Object.entries(tokens).flatMap(([k, v]) => Object.entries(derive(k, v)));
+    const attrs = [scales.density && `data-density="${scales.density}"`,
+                   scales.textSize && `data-text-size="${scales.textSize}"`].filter(Boolean);
+    if (!entries.length && !attrs.length) {
+      exportCode.textContent = "<!-- Move a control and the paste-ready config appears here. -->";
+      return;
+    }
+    const note = attrs.length ? `<!-- on your <html>: ${attrs.join(" ")} -->\n` : "";
+    const call = entries.length
+      ? "<script>\n  addEventListener(\"DOMContentLoaded\", () => facet.set({\n"
+        + entries.map(([k, v]) => `    ${JSON.stringify(k)}: ${JSON.stringify(v)},`).join("\n")
+        + "\n  }));\n<\/script>"
+      : "";
+    exportCode.textContent = note + call;
+  };
+
+  const writeUrl = () => {
+    const url = new URL(location);
+    if (Object.keys(tokens).length || scales.density || scales.textSize) {
+      url.searchParams.set("mix", JSON.stringify({ tokens, scales }));
+    } else url.searchParams.delete("mix");
+    history.replaceState(null, "", url);
+  };
+
+  const setToken = (cssVar, val) => {
+    tokens[cssVar] = val;
+    for (const [k, v] of Object.entries(derive(cssVar, val))) canvas.style.setProperty(k, v);
+  };
+  const setScale = (which, value) => {
+    scales[which] = value;
+    const attr = which === "textSize" ? "text-size" : "density";
+    if (value) canvas.setAttribute(`data-${attr}`, value);
+    else canvas.removeAttribute(`data-${attr}`);
+    for (const c of scaleChips) {
+      if (c.dataset.scalePick === which) c.setAttribute("aria-pressed", String((c.dataset.scaleValue || "") === value));
+    }
+  };
+  const syncColorPickers = () => {
+    for (const p of pickers) p.value = tokens["--" + p.dataset.mix] || tokenHex("--" + p.dataset.mix);
+  };
+
+  // Colour pickers.
+  for (const p of pickers) {
+    p.addEventListener("input", () => { setToken("--" + p.dataset.mix, p.value); writeUrl(); renderExport(); });
+  }
+
+  // Font selects: each of the five roles picks a real family. "" clears
+  // the override back to the theme's own face.
+  const FONT_OPTIONS = [
+    ["", "Theme default"],
+    ['"Cormorant", Georgia, "Times New Roman", serif', "Cormorant — calligraphic serif"],
+    ['"Playfair Display", Georgia, serif', "Playfair Display — didone serif"],
+    ['"Newsreader", Georgia, serif', "Newsreader — editorial serif"],
+    ['"Nunito Sans", system-ui, sans-serif', "Nunito Sans — rounded sans"],
+    ['"JetBrains Mono", ui-monospace, monospace', "JetBrains Mono — technical mono"],
+    ['system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', "System sans"],
+    ['Georgia, "Times New Roman", serif', "System serif"],
+    ['ui-monospace, "SF Mono", Menlo, monospace', "System mono"],
+  ];
+  const fontSelects = [...document.querySelectorAll("[data-mix-font]")];
+  for (const sel of fontSelects) {
+    for (const [val, label] of FONT_OPTIONS) {
+      const o = document.createElement("option");
+      o.value = val; o.textContent = label;
+      sel.appendChild(o);
+    }
+    sel.addEventListener("change", () => {
+      const cssVar = sel.dataset.mixFont;
+      if (sel.value) setToken(cssVar, sel.value);
+      else { delete tokens[cssVar]; canvas.style.removeProperty(cssVar); }
+      writeUrl(); renderExport();
+    });
+  }
+
+  // Numeric type controls (weight, line-height, tracking, measure): native
+  // ranges that scale to the real token value and unit. Integer tokens
+  // (scale 1) round; fractional ones (leading, tracking) keep decimals.
+  const numSliders = [...document.querySelectorAll("[data-mix-num]")];
+  const numInit = new Map(numSliders.map((s) => [s, s.value]));
+  const numFormat = (s) => {
+    const raw = parseFloat(s.value) * parseFloat(s.dataset.scale);
+    const num = parseFloat(s.dataset.scale) === 1 ? Math.round(raw) : +raw.toFixed(3);
+    return num + (s.dataset.unit || "");
+  };
+  const numReadout = (s) => { const o = s.parentElement.querySelector(".slider-out"); if (o) o.textContent = numFormat(s); };
+  for (const s of numSliders) {
+    numReadout(s);
+    s.addEventListener("input", () => {
+      setToken(s.dataset.mixNum, numFormat(s));
+      numReadout(s); writeUrl(); renderExport();
+    });
+  }
+  // Numeric detail sliders: the library wires the slider and fires
+  // facet:slide; we just read the value and paint the token.
+  for (const s of sliders) {
+    s.addEventListener("facet:slide", (e) => {
+      setToken(s.dataset.token, e.detail.value + (s.dataset.unit || ""));
+      writeUrl(); renderExport();
+    });
+  }
+  // Density / type-size scale chips (radio per group). The pressed chips
+  // carry data-chip-owned in the markup so the library's bare-chip
+  // self-toggle never binds to them (docs.js runs after the deferred
+  // library now); stopImmediatePropagation still shields the
+  // aria-pressed we set from any other listener.
+  for (const c of scaleChips) {
+    c.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      setScale(c.dataset.scalePick, c.dataset.scaleValue || "");
+      writeUrl(); renderExport();
+    });
+  }
+
+  const reset = () => {
+    for (const k of Object.keys(tokens)) {
+      for (const dk of Object.keys(derive(k, tokens[k]))) canvas.style.removeProperty(dk);
+      delete tokens[k];
+    }
+    setScale("density", ""); setScale("textSize", "");
+    for (const [s, val] of sliderInit) {
+      s.querySelector('input[type="range"]').value = val;
+      s.querySelector(".slider-detail-number").value = val;
+    }
+    for (const sel of fontSelects) sel.value = "";
+    for (const [s, val] of numInit) { s.value = val; numReadout(s); }
+    writeUrl(); renderExport(); syncColorPickers();
+  };
+  document.querySelector("#mixer-reset").addEventListener("click", reset);
+
+  // A shared link opens with the build already applied.
+  try {
+    const saved = JSON.parse(new URLSearchParams(location.search).get("mix") || "null");
+    if (saved && saved.tokens) {
+      for (const [k, v] of Object.entries(saved.tokens)) {
+        setToken(k, v);
+        const s = sliders.find((x) => x.dataset.token === k);
+        if (s) { const n = parseFloat(v); s.querySelector('input[type="range"]').value = n; s.querySelector(".slider-detail-number").value = n; }
+        const fsel = fontSelects.find((x) => x.dataset.mixFont === k);
+        if (fsel) fsel.value = v;
+        const ns = numSliders.find((x) => x.dataset.mixNum === k);
+        if (ns) { ns.value = parseFloat(v) / parseFloat(ns.dataset.scale); numReadout(ns); }
+      }
+      if (saved.scales) { setScale("density", saved.scales.density || ""); setScale("textSize", saved.scales.textSize || ""); }
+    }
+  } catch { /* malformed ?mix= — ignore */ }
+
+  // Theme or mode switch under a build: untouched pickers re-read the new
+  // theme; built tokens persist by design (a build rides on top).
+  new MutationObserver(() => { syncColorPickers(); renderExport(); })
+    .observe(root, { attributes: true, attributeFilter: ["data-theme", "data-mode"] });
+
+  renderExport();
+  syncColorPickers();
+}
+
+/* Skin Lab: builds one framed mini page per theme × mode. Frames,
+   not subtrees, on purpose — material themes (velvet, aero) scope
+   component recipes under [data-theme], and inside one document an
+   ancestor's recipes would leak into a differently-themed panel.
+   Each frame is a genuine document with the two real tags, so it
+   is also living proof of the one-attribute promise. */
+function initSkinLab() {
+  const grid = document.querySelector("#lab-grid");
+  if (!grid) return;
+  const THEMES = [["", "Default"], ["velvet", "Velvet"], ["aero", "Aero"], ["elegant", "Elegant"]];
+  const LAYOUT = `
+    <main class="container stack" style="padding: 1rem;">
+      <h2 style="margin: 0;">Ledger</h2>
+      <p>The same markup as every other panel — <a href="#">one attribute</a> apart.</p>
+      <p style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button class="btn btn-primary btn-small">Save</button>
+        <button class="btn btn-small">Preview</button>
+      </p>
+      <label for="lab-amount">Amount</label>
+      <input id="lab-amount" type="text" value="12,500">
+      <div class="result"><span>Total</span><strong>₹ 12,500</strong></div>
+    </main>`;
+  for (const [theme, themeName] of THEMES) {
+    for (const mode of ["light", "dark"]) {
+      const cell = document.createElement("figure");
+      cell.className = "lab-cell";
+      const frame = document.createElement("iframe");
+      frame.className = "lab-frame";
+      frame.loading = "lazy";
+      frame.title = `${themeName}, ${mode}`;
+      frame.setAttribute("tabindex", "-1");
+      frame.srcdoc = `<!doctype html>
+        <html${theme ? ` data-theme="${theme}"` : ""} data-mode="${mode}">
+        <head><meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="${location.origin}/lib/facet.css"></head>
+        <body>${LAYOUT}</body></html>`;
+      const cap = document.createElement("figcaption");
+      cap.textContent = `${themeName} · ${mode}`;
+      cell.append(frame, cap);
+      grid.appendChild(cell);
+    }
+  }
+}
+
 /* A sidebar link to a folded entry opens it before scrolling. */
 function initFoldLinks() {
   for (const a of document.querySelectorAll(".docs-index a[href^='#']")) {
@@ -792,6 +1048,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFeedbackDemo();              // the Sound & haptics wall buttons
   initWallFilter();                // Layer 3 category filter chips
   initDevicePreview();             // Layer 5 templates in scaled device frames
+  initStyleMixer();                // build.html: the scoped theme builder
+  initSkinLab();                   // build.html: the theme × mode gallery
   const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
   if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
   document.querySelector("#demo-toast")?.addEventListener("click", () => {
