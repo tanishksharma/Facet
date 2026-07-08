@@ -3699,6 +3699,12 @@ details.dropdown {
    Make a row actionable by writing it as <a class="list-item" href> or
    <button class="list-item"> — it fills on hover, presses on click, and is a
    real keyboard-operable control (put a chevron in .list-trail to signal it).
+   Every look is a composition of the same slots, never a new component:
+   leave out .list-icon for a plain text row; put an avatar image in
+   .list-icon for a person; put a .badge in .list-trail for a status; on a
+   static <li> row, put a real button in .list-trail (a .btn-icon.btn-small
+   with an aria-label) for a dismiss or per-row action — never inside an
+   <a> or <button> row, where a nested control is invalid HTML.
    Reuses the neutral ramp and type tokens, so it restyles with every theme
    and needs no tokens of its own.
 

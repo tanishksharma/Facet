@@ -580,7 +580,13 @@ card list. A row is one line (icon + title + trailing) or two (add
 .list-desc, which top-aligns the icon on its own). Make a row actionable by
 writing it as <a class="list-item" href> or <button class="list-item"> — it
 fills on hover, presses on click, and is a real keyboard-operable control
-(put a chevron in .list-trail to signal it). Rows are always direct children
+(put a chevron in .list-trail to signal it). Every look is a composition
+of the same slots, never a new component: leave out .list-icon for a
+plain text row; put an avatar image in .list-icon for a person; put a
+.badge in .list-trail for a status; on a static <li> row, put a real
+button in .list-trail (a .btn-icon.btn-small with an aria-label) for a
+dismiss or per-row action — never inside an <a> or <button> row, where a
+nested control is invalid HTML. Rows are always direct children
 of .list, so a <ul> takes <li class="list-item"> and a clickable list is a
 <nav> of <a class="list-item">. Reuses the neutral ramp and type tokens, so
 it needs no tokens of its own and restyles with every theme.
@@ -603,6 +609,23 @@ it needs no tokens of its own and restyles with every theme.
         <span class="list-trail"><svg data-icon="chevron-right"></svg></span>
       </a>
     </nav>
+
+    <!-- slot compositions: no icon + status badge; dismiss button on a static row -->
+    <ul class="list list-boxed">
+      <li class="list-item">
+        <span class="list-content"><span class="list-title">Plain row</span></span>
+        <span class="list-trail"><span class="badge badge-success">Paid</span></span>
+      </li>
+      <li class="list-item">
+        <span class="list-icon"><svg data-icon="file"></svg></span>
+        <span class="list-content">
+          <span class="list-title">report-2026.pdf</span>
+          <span class="list-desc">2.4 MB</span>
+        </span>
+        <span class="list-trail"><button type="button" class="btn btn-icon btn-small"
+              aria-label="Remove report-2026.pdf"><svg data-icon="close"></svg></button></span>
+      </li>
+    </ul>
 
 ### App grid
 
@@ -1567,6 +1590,26 @@ Choosing a shell (one per page):
   leaderboard, with back): <main class="view-stack"> — one screen
   visible, hash-routed, the browser's Back works.
 Never nest one shell inside another.
+
+Choosing navigation (one primary navigation per page): the four
+navigation pieces are different components on purpose — they share the
+same pill and token primitives and the same data-control self-wiring,
+but their markup, position and behaviour differ, so they are not
+variants of each other. Pick by the page's shape:
+- A website or document (landing, article, docs): the .top-menu block —
+  the classic in-flow header, wordmark left, links right, folding to a
+  disclosure on phones. Works with no JS.
+- An app-like page or installed PWA: the floating .nav-menu cluster —
+  thumb-reachable Menu and Settings pills in a bottom corner, stacks
+  opening upward as an overlay.
+- An app with three to five top-level sections: the .tab-bar, with the
+  settings sheet on its trailing icon.
+- The .sheet is not navigation itself: it is the right-edge panel any
+  trigger opens — the home of settings rows (data-control) wherever a
+  tab bar or a custom button wants them.
+Never stack two primary navigations on one page (a .top-menu plus a
+.nav-menu): pick the one that matches the page's shape and let it carry
+the settings too.
 
 Safe areas (standalone PWAs, black-translucent status bar):
 - Ship the app-shell metas: viewport-fit=cover on the viewport meta,

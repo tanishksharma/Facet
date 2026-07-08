@@ -1273,7 +1273,16 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           as <code>&lt;a class="list-item" href&gt;</code> or
           <code>&lt;button class="list-item"&gt;</code> — it fills on hover,
           presses on click, and is a real keyboard-operable control (put a
-          chevron in <code>.list-trail</code> to signal it). Rows are always
+          chevron in <code>.list-trail</code> to signal it). Every look is a
+          composition of the same slots, never a new component: leave out
+          <code>.list-icon</code> for a plain text row; put an avatar image
+          in <code>.list-icon</code> for a person; put a <code>.badge</code>
+          in <code>.list-trail</code> for a status; on a static
+          <code>&lt;li&gt;</code> row, put a real button in
+          <code>.list-trail</code> (a <code>.btn-icon.btn-small</code> with
+          an aria-label) for a dismiss or per-row action — never inside an
+          <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> row, where a
+          nested control is invalid HTML. Rows are always
           direct children of <code>.list</code>, so a <code>&lt;ul&gt;</code>
           takes <code>&lt;li class="list-item"&gt;</code> and a clickable list
           is a <code>&lt;nav&gt;</code> of <code>&lt;a class="list-item"&gt;</code>.
@@ -1311,6 +1320,28 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
               <span class="list-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></span>
             </a>
           </nav>
+          <ul class="list list-boxed" style="margin-top: var(--space-stack);" aria-label="Slot compositions">
+            <li class="list-item">
+              <span class="list-content"><span class="list-title">Plain row — no icon at all</span></span>
+              <span class="list-trail"><span class="badge badge-success">Paid</span></span>
+            </li>
+            <li class="list-item">
+              <span class="list-icon"><img src="icons/icon-192.png" alt=""></span>
+              <span class="list-content">
+                <span class="list-title">Avatar image in the icon slot</span>
+                <span class="list-desc">Status badge or a value in the trail</span>
+              </span>
+              <span class="list-trail"><span class="badge badge-warning">Expiring</span></span>
+            </li>
+            <li class="list-item">
+              <span class="list-icon"><svg data-icon="file" aria-hidden="true"></svg></span>
+              <span class="list-content">
+                <span class="list-title">report-2026.pdf</span>
+                <span class="list-desc">2.4 MB — a real button in the trail of a static row</span>
+              </span>
+              <span class="list-trail"><button type="button" class="btn btn-icon btn-small" aria-label="Remove report-2026.pdf" data-tip="Removes this row" data-event="list-remove"><svg data-icon="close" aria-hidden="true"></svg></button></span>
+            </li>
+          </ul>
         </div>
         <pre id="code-list"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-list" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
