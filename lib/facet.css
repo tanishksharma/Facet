@@ -136,6 +136,18 @@
   --error: #B3261E;           /* something failed */
   --info: #295FA6;            /* neutral notices */
 
+  /* ----- Colors: the vivid palette -----
+     Five bright decorative colors named by rank, like the accent ranks.
+     Decoration only — card tints (mixed into the surface), charts,
+     playful accents; never semantic status (the status tokens above carry
+     meaning, these carry personality). A theme may re-tune them;
+     components mix them into surfaces, they never paint text with them. */
+  --color-1: #FF3B30;         /* red */
+  --color-2: #FFCC00;         /* yellow */
+  --color-3: #34C759;         /* green */
+  --color-4: #007AFF;         /* blue */
+  --color-5: #AF52DE;         /* purple */
+
   /* ----- Typography: font stacks, one per job -----
      Five roles, each a different face chosen for what it does, every stack
      ending in a system fallback (never `inherit` — that voids the whole
@@ -3787,6 +3799,106 @@ button.list-item:active { background: var(--surface-active); }
   margin-top: var(--space-tight);
   font-variant-numeric: tabular-nums;
 }
+
+/* --------------------------------------------------------------------------
+   PROMO RAIL
+
+   What it is: the promo rail — a full-bleed carousel of wide feature
+   cards, each washed with a different vivid-palette tint, snapping card
+   by card with the next card peeking in from the edge. What it is for:
+   featured content at the top of a launcher or home screen:
+   announcements, highlights, seasonal picks. When to use it: two to six
+   promos; a single promo is just a card. Each card is one real <a> — a
+   .promo-kicker (small icon and muted name), a .promo-line in the
+   heading face, and a .promo-cta with an arrow. The rail's negative side
+   margins mirror the container's responsive padding exactly
+   (space-stack, then space-page from 640px) — change one and you change
+   both, or the page grows a sideways scrollbar. Tints cycle through the
+   vivid palette by position, mixed into the surface so they stay soft in
+   light and dark; the scrollbar hides and the whole card is the tap
+   target.
+
+   Usage:
+     <div class="promo-scroll" aria-label="Featured">
+       <a class="promo-card" href="/apps/inflation">
+         <span class="promo-kicker"><img src="/icons/icon-192.png" alt=""
+               width="28" height="28"> <span>Inflation calculator</span></span>
+         <span class="promo-line">See what today's money was worth then</span>
+         <span class="promo-cta">Open
+           <svg data-icon="arrow-right" aria-hidden="true"></svg></span>
+       </a>
+     </div>
+   -------------------------------------------------------------------------- */
+
+/* full-bleed rail: the negative margin must MATCH the container's
+   responsive padding (space-stack, then space-page from 640px) or the
+   page grows a horizontal scrollbar */
+.promo-scroll {
+  display: flex;
+  gap: var(--space-inline);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  margin-inline: calc(-1 * var(--space-stack));
+  padding-inline: var(--space-stack);
+  scroll-padding-inline: var(--space-stack);
+  padding-bottom: var(--space-tight);
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+@media (min-width: 640px) {
+  .promo-scroll {
+    margin-inline: calc(-1 * var(--space-page));
+    padding-inline: var(--space-page);
+    scroll-padding-inline: var(--space-page);
+  }
+}
+.promo-scroll::-webkit-scrollbar { display: none; }
+.promo-card {
+  flex: 0 0 min(24rem, calc(100% - 2.75rem));   /* the next card peeks */
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack);
+  padding: var(--space-card);
+  border: var(--border-element) solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+}
+/* the tints: each card washed with the next vivid-palette color, mixed
+   into the surface so the wash stays soft in light and dark; red runs
+   slightly lighter — it overpowers at equal strength */
+.promo-card:nth-child(5n+1) { background: color-mix(in srgb, var(--color-4) 13%, var(--surface)); border-color: color-mix(in srgb, var(--color-4) 36%, var(--border)); }
+.promo-card:nth-child(5n+2) { background: color-mix(in srgb, var(--color-3) 13%, var(--surface)); border-color: color-mix(in srgb, var(--color-3) 36%, var(--border)); }
+.promo-card:nth-child(5n+3) { background: color-mix(in srgb, var(--color-2) 13%, var(--surface)); border-color: color-mix(in srgb, var(--color-2) 36%, var(--border)); }
+.promo-card:nth-child(5n+4) { background: color-mix(in srgb, var(--color-1) 11%, var(--surface)); border-color: color-mix(in srgb, var(--color-1) 32%, var(--border)); }
+.promo-card:nth-child(5n+5) { background: color-mix(in srgb, var(--color-5) 13%, var(--surface)); border-color: color-mix(in srgb, var(--color-5) 36%, var(--border)); }
+.promo-kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-control);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+.promo-kicker img { width: 1.75rem; height: 1.75rem; border-radius: 22.5%; display: block; }
+.promo-line {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-heading);
+  flex: 1;                    /* pushes the CTA to the card's foot */
+}
+.promo-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-tight);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-strong);
+}
+.promo-cta svg { width: 1em; height: 1em; }
+
 
 /* --------------------------------------------------------------------------
    APP COMPONENTS — ingested verbatim from the shipped inflation app.

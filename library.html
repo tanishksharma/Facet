@@ -98,6 +98,7 @@
           <summary><span class="nav-group-name">Layer 3 · Blocks</span><span class="nav-group-desc">The components, assembled into page sections.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#block-card-grid">Card grid &amp; row</a></li>
+          <li><a href="#block-promo-rail">Promo rail</a></li>
           <li><a href="#block-filter-list">Filterable &amp; list cards</a></li>
           <li><a href="#block-product-grid">Product grid &amp; detail</a></li>
           <li><a href="#block-cart">Cart</a></li>
@@ -322,6 +323,20 @@
           the attribute that flips a whole page works on any element, which
           is exactly how these panels are built.
         </p>
+        <p>
+          Beside the ranks sits the vivid palette — five bright decorative
+          colors named by rank, like the accents: red, yellow, green, blue,
+          purple. Decoration only — card tints (mixed into the surface),
+          charts, playful accents — never semantic status; a theme may
+          re-tune them.
+        </p>
+        <ul class="swatch-row">
+          <li><div class="swatch" style="background: var(--color-1)"></div>--color-1</li>
+          <li><div class="swatch" style="background: var(--color-2)"></div>--color-2</li>
+          <li><div class="swatch" style="background: var(--color-3)"></div>--color-3</li>
+          <li><div class="swatch" style="background: var(--color-4)"></div>--color-4</li>
+          <li><div class="swatch" style="background: var(--color-5)"></div>--color-5</li>
+        </ul>
 
         <div class="mode-pair">
           <section class="mode-panel" data-mode="light">
@@ -1821,6 +1836,59 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-block-card-row"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-block-card-row" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- PROMO RAIL -->
+      <article class="element stack" id="block-promo-rail">
+        <h3 data-status="beta">Promo rail</h3>
+        <p>
+          What it is: the promo rail — a full-bleed carousel of wide feature
+          cards, each washed with a different vivid-palette tint, snapping
+          card by card with the next card peeking in from the edge. What it
+          is for: featured content at the top of a launcher or home screen:
+          announcements, highlights, seasonal picks. When to use it: two to
+          six promos; a single promo is just a card. Each card is one real
+          <code>&lt;a&gt;</code> — a <code>.promo-kicker</code> (small icon
+          and muted name), a <code>.promo-line</code> in the heading face,
+          and a <code>.promo-cta</code> with an arrow. The rail's negative
+          side margins mirror the container's responsive padding exactly
+          (space-stack, then space-page from 640px) — change one and you
+          change both, or the page grows a sideways scrollbar. Tints cycle
+          through the vivid palette by position, mixed into the surface so
+          they stay soft in light and dark; the scrollbar hides and the
+          whole card is the tap target.
+        </p>
+        <div class="demo">
+          <div class="promo-scroll" aria-label="Featured" data-tip="Scroll me sideways — cards snap one by one">
+            <a class="promo-card" href="#block-promo-rail">
+              <span class="promo-kicker"><img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>📈</text></svg>" alt="" width="28" height="28"> <span>Inflation calculator</span></span>
+              <span class="promo-line">See what today's money was worth then</span>
+              <span class="promo-cta">Open <svg data-icon="arrow-right" aria-hidden="true"></svg></span>
+            </a>
+            <a class="promo-card" href="#block-promo-rail">
+              <span class="promo-kicker"><img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>🧭</text></svg>" alt="" width="28" height="28"> <span>Real-time explorer</span></span>
+              <span class="promo-line">What's around you, live</span>
+              <span class="promo-cta">Open <svg data-icon="arrow-right" aria-hidden="true"></svg></span>
+            </a>
+            <a class="promo-card" href="#block-promo-rail">
+              <span class="promo-kicker"><img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>⚖️</text></svg>" alt="" width="28" height="28"> <span>Money scale</span></span>
+              <span class="promo-line">From thousands to trillions</span>
+              <span class="promo-cta">Open <svg data-icon="arrow-right" aria-hidden="true"></svg></span>
+            </a>
+            <a class="promo-card" href="#block-promo-rail">
+              <span class="promo-kicker"><img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>💬</text></svg>" alt="" width="28" height="28"> <span>Anime quote quiz</span></span>
+              <span class="promo-line">Guess who said it</span>
+              <span class="promo-cta">Open <svg data-icon="arrow-right" aria-hidden="true"></svg></span>
+            </a>
+            <a class="promo-card" href="#block-promo-rail">
+              <span class="promo-kicker"><img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>✨</text></svg>" alt="" width="28" height="28"> <span>Schedule clock</span></span>
+              <span class="promo-line">Your day at a glance</span>
+              <span class="promo-cta">Open <svg data-icon="arrow-right" aria-hidden="true"></svg></span>
+            </a>
+          </div>
+        </div>
+        <pre id="code-block-promo-rail"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-promo-rail" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- FILTERABLE LIST -->
