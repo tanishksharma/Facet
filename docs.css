@@ -83,20 +83,24 @@
 .docs-index ul { list-style: none; padding: 0; margin: 0 0 var(--space-control); }
 .docs-index a {
   display: block;
-  padding-block: 3px;
+  padding: 0.4rem var(--space-inline);
   text-decoration: none;
   color: var(--text-muted);
   font-size: var(--text-footnote);
-  border-left: var(--border-highlight) solid transparent;
-  padding-left: var(--space-inline);
+  border-radius: var(--radius-control);
+  transition: background var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
 }
-.docs-index a:hover { color: var(--text); }
-/* Scrollspy: the component on screen lights up in the index. */
+.docs-index a:hover { color: var(--text); background: var(--surface-hover); }
+/* Scrollspy: the component on screen lights up in the index — a filled pill. */
 .docs-index a.is-current {
   color: var(--text);
   font-weight: var(--weight-strong);
-  border-left-color: var(--accent-3);
+  background: var(--surface-active);
 }
+/* Items under a sub-group label indent one level, so the group heading reads
+   as a parent and its components sit visibly beneath it. */
+.nav-sub + ul a { padding-left: calc(var(--space-inline) + var(--space-stack)); }
 
 /* Layer groups: each stays contracted until you click its label
    (native <details> toggle). Scroll only marks the layer you are in —

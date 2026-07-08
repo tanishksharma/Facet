@@ -3772,10 +3772,11 @@ button.list-item:active { background: var(--surface-active); }
   height: 80dvh;
   display: flex;
   flex-direction: column;
-  background: color-mix(in srgb, var(--surface) 40%, transparent);
-  -webkit-backdrop-filter: blur(24px) saturate(1.5);
-  backdrop-filter: blur(24px) saturate(1.5);
-  border: var(--border-element) solid color-mix(in srgb, var(--border) 65%, transparent);
+  /* Opaque surface so the panel reads as a clean, high-contrast card (white
+     in Default light), not gray-on-gray. Aero re-declares its own frosted
+     glass; the other themes inherit this solid fill. */
+  background: var(--surface);
+  border: var(--border-element) solid var(--border);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-overlay);
   /* facetSheet drives entry/exit with the tab pill's per-edge springs

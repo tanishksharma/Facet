@@ -39,7 +39,7 @@
           <li><a href="#base">Base styles</a></li>
         </ul>
         </details>
-        <details class="nav-group" data-group="layer3">
+        <details class="nav-group" data-group="layer3" open>
           <summary><span class="nav-group-name">Layer 2 · Components</span><span class="nav-group-desc">Every piece, grouped and filterable.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <p class="nav-sub">Layout primitives</p>
         <ul>
@@ -90,7 +90,7 @@
           <li><a href="#waiting">Skeleton, spinner, empty</a></li>
         </ul>
         </details>
-        <details class="nav-group" data-group="layer4">
+        <details class="nav-group" data-group="layer4" open>
           <summary><span class="nav-group-name">Layer 3 · Blocks</span><span class="nav-group-desc">The components, assembled into page sections.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#block-card-grid">Card grid &amp; row</a></li>
@@ -106,7 +106,7 @@
           <li><a href="#block-article">Article set</a></li>
         </ul>
         </details>
-        <details class="nav-group" data-group="templates">
+        <details class="nav-group" data-group="templates" open>
           <summary><span class="nav-group-name">Layer 4 · Templates</span><span class="nav-group-desc">Whole pages — full app and site layouts.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <ul>
           <li><a href="#template-landing">Landing page</a></li>
@@ -115,7 +115,7 @@
           <li><a href="#templates">Every template</a></li>
         </ul>
         </details>
-        <details class="nav-group" data-group="appfeel">
+        <details class="nav-group" data-group="appfeel" open>
           <summary><span class="nav-group-name">Layer 5 · App feel</span><span class="nav-group-desc">Motion, sound, surfaces and the app kit.</span><span class="nav-caret" aria-hidden="true"></span></summary>
         <p class="nav-sub">Motion &amp; surfaces</p>
         <ul>
@@ -146,8 +146,8 @@
            Not a table of sizes: a real piece of writing, every block
            tagged with the token that sets it.
            ============================== -->
-      <section id="typography" class="stack">
-        <h2>Typography</h2>
+      <article class="element stack" id="typography">
+        <h3>Typography</h3>
         <p>
           The scale in use, as a real page of writing. Every block below is
           a raw HTML tag styled by the base layer; the mono tag under each
@@ -156,6 +156,7 @@
           load.
         </p>
 
+        <div class="demo">
         <article>
           <p style="font-size: var(--text-display); font-weight: var(--weight-heading); line-height: var(--leading-heading); letter-spacing: -0.02em;">
             Money, made concrete
@@ -223,7 +224,8 @@
             <small class="type-label">--text-caption · --text-muted</small>
           </p>
         </article>
-      </section>
+        </div>
+      </article>
 
       <!-- ==============================
            Layer 1 · Fonts
