@@ -141,11 +141,11 @@
     </aside>
 
     <main id="main" class="stack-loose">
-      <!-- =============================================================
-           LAYER 1 · TYPOGRAPHY
+      <!-- ==============================
+           Layer 1 · Typography
            Not a table of sizes: a real piece of writing, every block
            tagged with the token that sets it.
-           ============================================================= -->
+           ============================== -->
       <section id="typography" class="stack">
         <h2>Typography</h2>
         <p>
@@ -156,7 +156,7 @@
           load.
         </p>
 
-        <article class="stack">
+        <article>
           <p style="font-size: var(--text-display); font-weight: var(--weight-heading); line-height: var(--leading-heading); letter-spacing: -0.02em;">
             Money, made concrete
             <small class="type-label">--text-display · hero statements and big numbers</small>
@@ -225,12 +225,12 @@
         </article>
       </section>
 
-      <!-- =============================================================
-           LAYER 1 · FONTS
+      <!-- ==============================
+           Layer 1 · Fonts
            The three type families, each drawn with its live theme token.
            The theme chips switch the whole page; the samples re-render
            because they read var(--font-*) — serif in Velvet and Elegant.
-           ============================================================= -->
+           ============================== -->
       <section id="fonts" class="stack">
         <h2>Fonts</h2>
         <p>
@@ -296,11 +296,11 @@
         </article>
       </section>
 
-      <!-- =============================================================
-           LAYER 1 · COLOR
+      <!-- ==============================
+           Layer 1 · Color
            The same interface twice: light beside dark. The panels carry
            data-mode, which facet.css honours on any subtree.
-           ============================================================= -->
+           ============================== -->
       <section id="color" class="stack">
         <h2>Color</h2>
         <p>
@@ -406,11 +406,11 @@
         <p><button class="btn btn-small" data-copy="#code-custom-accent" data-tip="Copies the CSS override block above">Copy</button></p>
       </section>
 
-      <!-- =============================================================
-           LAYER 1 · SPACING
+      <!-- ==============================
+           Layer 1 · Spacing
            Real components on a tinted ground: the tint you can see
            between and around the solid pieces IS the token.
-           ============================================================= -->
+           ============================== -->
       <section id="spacing" class="stack">
         <h2>Spacing</h2>
         <p>
@@ -468,9 +468,9 @@
         </p>
       </section>
 
-      <!-- =============================================================
-           LAYER 1 · SHAPE, ELEVATION, MOTION
-           ============================================================= -->
+      <!-- ==============================
+           Layer 1 · Shape, elevation, motion
+           ============================== -->
       <section id="shape" class="stack">
         <h2>Shape and elevation</h2>
         <ul class="shape-row">
@@ -490,10 +490,10 @@
         </p>
       </section>
 
-      <!-- =============================================================
-           LAYER 1 · MOTION PERSONALITY
+      <!-- ==============================
+           Layer 1 · Motion personality
            Felt, not described: the chips flip the whole page's motion.
-           ============================================================= -->
+           ============================== -->
       <article class="element stack" id="motion">
         <h3>Motion</h3>
         <p>
@@ -531,9 +531,9 @@
         <p><button class="btn btn-small" data-copy="#code-motion" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- =============================================================
-           LAYER 1 · BASE STYLES
-           ============================================================= -->
+      <!-- ==============================
+           Layer 1 · Base styles
+           ============================== -->
       <section id="base" class="stack">
         <h2>Base styles</h2>
         <p>
@@ -562,14 +562,14 @@
 input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </section>
 
-      <!-- =============================================================
-           LAYER 2 · THE ELEMENT WALL
+      <!-- ==============================
+           Layer 2 · The element wall
            Every component live. Each entry: the canonical description
            (same text as its facet.css header comment and llms.txt),
            chips that flip the live demo, and the exact HTML — the
            snippet is serialized from the demo's actual DOM, so what you
            copy is what renders.
-           ============================================================= -->
+           ============================== -->
       <!-- The Layer 2 band (inserted by docs.js) titles this layer; the
            component groups start straight after it. This stays as the band's
            anchor and holds the search empty-state. -->
@@ -577,7 +577,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p id="wall-empty" hidden>Nothing matches that search. The library grows one component at a time — new ones land here the moment they ship.</p>
       </section>
 
-      <!-- ===== Layout primitives ===== -->
+      <!-- Layout primitives -->
       <h3 class="wall-group" id="cat-layout">Layout primitives</h3>
 
       <!-- CONTAINER -->
@@ -738,7 +738,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-snap-section" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- ===== Forms &amp; controls ===== -->
+      <!-- Forms &amp; controls -->
       <h3 class="wall-group" id="cat-forms">Forms &amp; controls</h3>
 
       <!-- BUTTON -->
@@ -1106,7 +1106,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-choice-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- ===== Content &amp; data ===== -->
+      <!-- Content &amp; data -->
       <h3 class="wall-group" id="cat-content">Content &amp; data</h3>
 
       <!-- CARD -->
@@ -1444,7 +1444,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- ===== Overlays &amp; disclosure ===== -->
+      <!-- Overlays &amp; disclosure -->
       <h3 class="wall-group" id="cat-overlays">Overlays &amp; disclosure</h3>
 
       <!-- MODAL + DRAWER + POPOVER -->
@@ -1568,7 +1568,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-tooltip" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- ===== Navigation ===== -->
+      <!-- Navigation -->
       <h3 class="wall-group" id="cat-nav">Navigation</h3>
 
       <!-- TABS + BREADCRUMB + PAGINATION -->
@@ -1660,7 +1660,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-flagship-link" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- ===== Status ===== -->
+      <!-- Status -->
       <h3 class="wall-group" id="cat-status">Status</h3>
 
       <!-- SKELETON + SPINNER + EMPTY -->
@@ -1700,12 +1700,12 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-waiting" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- =============================================================
-           LAYER 3 · BLOCKS
+      <!-- ==============================
+           Layer 3 · Blocks
            Assemblies of the components above, documented as copyable
            patterns. Most add zero CSS: the primitives already carry
            the design; the block is the arrangement.
-           ============================================================= -->
+           ============================== -->
       <section id="blocks" class="stack">
         <p>
           Ready arrangements of the components above. A block is not a
@@ -2264,9 +2264,10 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-block-article" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- =============================================================
-           TEMPLATES · whole pages, ready to rename
-           ============================================================= -->
+      <!-- ==============================
+           Layer 4 · Templates
+           Whole pages, ready to rename.
+           ============================== -->
       <section id="templates" class="stack">
         <p>
           Layer 4 is the whole page. Where Layer 3 assembles components into
@@ -2348,14 +2349,14 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           <a class="card card-clickable topic-card" href="/templates/card.html"><span class="topic-card-title">Business card</span><span class="topic-card-teaser">3.5×2in, front and back, with a print sheet.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
         </div>
       </section>
-      <!-- =============================================================
-           LAYER 5 · APP FEEL
+      <!-- ==============================
+           Layer 5 · App feel
            The coat that makes a finished page feel like a native app:
            parallax and idle motion, sound and haptics, faint token
            surfaces, and the app kit — tab bar, settings sheet, float
            button, scroll gauge. Applied on top of any template;
            Components stays the catalogue of pieces.
-           ============================================================= -->
+           ============================== -->
       <section id="appfeel" class="stack">
         <p>
           Layer 5 is what you apply to a finished page to make it feel
@@ -2474,7 +2475,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-backgrounds" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
-      <!-- ===== App kit ===== -->
+      <!-- App kit -->
       <h3 class="wall-group" id="cat-appkit">App kit</h3>
 
       <!-- TAB BAR -->
@@ -2798,7 +2799,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
     </main>
   </div>
 
-    <!-- =============================================================
+    <!-- ==============================
          SITE MENU · one floating utility menu per page (kept in sync
          across index / library / build). The bottom-right button opens
          a sheet with the site navigation, the reference files, a
@@ -2806,7 +2807,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
          wires it: the trigger aria-controls the sheet; every
          data-control button self-wires (appearance, motion, sounds,
          haptics, theme). Authored at the end of <body> — controls last.
-         ============================================================= -->
+         ============================== -->
     <button class="float-btn float-btn-right" aria-controls="site-menu" aria-expanded="false"
             aria-label="Open menu" data-tip="Navigation, files and settings" data-event="open-site-menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>

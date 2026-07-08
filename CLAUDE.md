@@ -325,6 +325,15 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 - Every new component passes the full compliance checklist above before it ships.
 - The inventory rule: llms.txt is the exhaustive list of every capability the library ships — if it is not in llms.txt, it does not exist. The homepage Features are a curated human subset. No capability ships without its llms.txt line.
 - When a component or rule changes, update its three descriptions together — the file comment, the library.html wall entry, and llms.txt (full keep-in-sync contract in the project map above).
+- Page section comments (HTML). Mark each page section with a short comment: a rule of ~30 equals, then the heading with its layer on one line, then a one- to two-line description, then the closing rule. Keep the rules SHORT — long equals runs are noise, not structure. Exactly:
+  ```
+  <!-- ==============================
+       Layer 1 · Typography
+       One or two plain lines saying what the section is.
+       ============================== -->
+  ```
+- Prose vs stack (the rhythm rule). Raw prose — a typography specimen, an article, anything meant to read as writing — sits in NORMAL FLOW, never in `.stack`. In flow the `--flow-*` heading/paragraph margins collapse into proper rhythm (a heading's `em`-based top margin is proportional to its own size, so big headings breathe more). `.stack`/`.row` are for APP LAYOUT: they space children with a fixed `gap`. Putting prose in a `.stack` gives you both the gap AND the (non-collapsing) flow margins — visibly too much space. Pick one per context.
+  - Known issue to fix site-wide (assess before doing): the `:where(.stack,…) > * { margin-block: 0 }` reset is meant to be the safety net for prose accidentally placed in a stack, but `:where()` has zero specificity so it loses to `h1..h6`/`p` element rules and never actually zeroes them. Every `.stack` holding a heading or paragraph (most section wrappers) currently double-spaces. Fixing it (give the reset real specificity) tightens spacing wherever prose sits in a stack — needs a visual pass across index/library/templates first.
 
 
 -------------------------------------------------------------------------------

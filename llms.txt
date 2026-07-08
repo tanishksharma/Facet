@@ -372,6 +372,22 @@ between whole sections of a page.
       <p>Content flows down with themed gaps.</p>
     </section>
 
+Prose vs stack: raw prose meant to READ as writing (an article, a
+typography specimen) sits in normal flow, NOT in .stack. In flow the
+heading/paragraph margins (--flow-* tokens) collapse into proper rhythm —
+a heading's em-based top margin scales with its own size, so big headings
+breathe more. .stack/.row are for app layout: they space children with a
+fixed gap. Put prose in a .stack and you get the gap AND the flow margins
+at once (too much space). Pick one per context.
+
+Authoring pages: mark each page section with a short HTML comment — a rule
+of ~30 equals, the heading with its layer on one line, a one- to two-line
+description, then the closing rule (keep the equals runs short):
+    <!-- ==============================
+         Layer 1 · Typography
+         What the section is, in a line or two.
+         ============================== -->
+
 ### Row
 
 What it is: things side by side that wrap when they run out of room,
