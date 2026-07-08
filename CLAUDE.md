@@ -219,7 +219,7 @@ condensed operational version that guides build decisions.)*
 - Pure HTML, CSS and JS. No build step, no framework, never minified. Gzip handles size.
 - One-step theme change: one attribute on the html tag restyles the whole page, layout containers included.
 - Everything explained in place: every interactive element carries a description tooltip.
-- Motion by default: gyroscope parallax and idle animations, with reduced motion honoured. (Shipped as the App-feel layer: parallax, idle motion, sound and haptics.)
+- Motion by default: gyroscope parallax, shine (a specular light that travels with the device) and idle animations, with reduced motion honoured. (Shipped as the App-feel layer: parallax, shine, idle motion, sound and haptics — one engine, facet.motion, normalises the device movement into a single vector and spends it on two channels: move translates parallax elements, light steers the shine; where no input exists the engine falls back to an idle drift every 3s, or to off.)
 - Fully commented: every file self-describes with intros, usage notes and to-dos, so any AI can build products with it.
 - Works without JavaScript. Content, layout, links and forms all work with JS switched off — JavaScript only adds enhancements on top.
 - Accessible, SEO-ready and AI-crawlable by default. Enforced through the compliance checklist, not optional.
@@ -302,7 +302,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 - Gesture law: `touch-action: pan-y` on scrollers, `manipulation` on fixed navigation and controls, `none` on drag surfaces; `gesturestart` preventDefault covers older iOS pinch; never rely on viewport `user-scalable=no`.
 - App shell law: standalone PWAs need `viewport-fit=cover` PLUS the apple-mobile-web-app metas (capable + black-translucent status bar), safe-area env() insets in section padding, and manifest colors that match the shipped theme.
 - Caching law: HTML and unversioned /lib/ files are never cache-first — network first, cache only offline. Cache-first pages hide every deploy until a second refresh; that bug shipped once and is now law.
-- Parallax exclusion: elements carrying their own transform physics (velvet lift/press, the pager's elastic overscroll) never register with facetMotion — two writers on one inline transform collide.
+- Parallax exclusion: elements carrying their own transform physics (velvet lift/press, the pager's elastic overscroll) never register with facetMotion's MOVE channel — two writers on one inline transform collide. The LIGHT channel (shine, data-shine) is exempt: it writes only the --shine-x/--shine-y custom properties, never transform, so it composes with anything.
 - Font-list law: never put `inherit` inside a font-family list; it silently invalidates the whole declaration. Stacks end in a generic family.
 
 

@@ -92,7 +92,10 @@ Adapts to the reader: all sizes in rem, so device/browser text-size
 settings scale the whole interface; fluid hero type via clamp(); 44px
 touch targets; no hover-only interactions; configurable motion —
 Lively springs by default, data-motion="calm" for quiet, "off" for
-none, prefers-reduced-motion above all of it; smooth page
+none, prefers-reduced-motion above all of it; ambient motion from one
+engine (facet.motion) — data-parallax drifts elements and data-shine
+sweeps a specular light across them, both from the device tilt, the
+cursor, or an idle drift when no input exists; smooth page
 transitions — data-transition="page" animates cross-page navigation
 (old page eases away, new one springs in, URL changes normally), with
 a[data-no-transition] per-link opt-out and facet.go(url) for
@@ -122,6 +125,8 @@ title, optional description line, optional trailing value or action; one- or
 two-line; bare with hairlines or .list-boxed; rows can be links or buttons);
 the app-grid launcher (.app-grid of .app-tile links — rounded-square icon,
 name, one-line caption, optional .app-count metric in tabular digits);
+the icon badge (.icon-badge in an .icon-badge-holder — a plasticine
+status dot pinned to an app icon's corner, data-status new/updated/wip);
 the app-identity about-page header (.app-identity: centered icon, name,
 phrase, optional badge row; .app-identity-stats centers .stat cards under
 it); the data-tip description tooltip on one attribute;
@@ -763,6 +768,32 @@ determinate progress needs value and max with words nearby.
     <span class="avatar" aria-label="Tanishk Sharma">TS</span>
     <progress value="70" max="100"></progress>
 
+### Icon badge
+
+What it is: a round status dot pinned to an app icon's top-right
+corner — a 1.25rem plasticine bead, its top edge lit and its underside
+softly shaded, wearing a hairline ring of the page background so it
+pops off any icon, carrying one glyph and no text (the word lives in
+title/aria-label). One attribute sets the tone and glyph:
+data-status="new" (info blue, sparkle), "updated" (success green,
+refresh arrow), "wip" (warning amber, wrench). What it is for: marking
+apps in a launcher grid or a featured card as new, freshly updated, or
+in the works. When to use it: only on icons 3.5rem and larger; smaller
+list-row icons take an inline version chip instead. Which status an
+app gets is the app's own decision — the library ships only the
+visual (a common app-side rule: wip while version < 1, else new if
+published within 30 days, else updated if a release is within 7 days,
+in that priority). Wrap the icon in an .icon-badge-holder (the
+positioning context; it also takes data-shine, sized and rounded to
+the icon) and put the badge beside the img inside it.
+
+    <span class="icon-badge-holder" data-shine style="border-radius: 22.5%;">
+      <img src="/apps/icons/inflation.png" alt="" width="68" height="68"
+           style="display: block; border-radius: 22.5%;">
+      <span class="icon-badge" data-status="new" role="img"
+            aria-label="New" title="New"><svg data-icon="sparkle"></svg></span>
+    </span>
+
 ### Skeleton, spinner, empty state
 
 What it is: three ways to show absence. Skeleton: a
@@ -823,9 +854,14 @@ warning help play pause.
 
 What it is: ambient motion, on by default. data-parallax="depth" registers an
 element with facet.motion — it drifts up to depth pixels behind the
-desktop pointer, the scroll's momentum (a velocity impulse), or the
+desktop pointer, the scroll's momentum (a velocity impulse), the
 device tilt where no permission gate blocks it (iOS gates it;
-facet.motion.setMode("tilt") asks). The idle-* classes (.idle-float,
+facet.motion.setMode("tilt") asks), or the engine's idle drift where
+nothing else drives (modes: off | cursor | tilt | idle — in idle the
+vector sweeps to a fresh point every 3s and eases home, so motion
+keeps living on a still desk; gated touch devices land here by
+default). The same engine's light channel drives the shine effect
+(next entry) from the same vector. The idle-* classes (.idle-float,
 .idle-sway, .idle-pulse) give resting elements a slow pulse; they
 animate the separate translate/rotate/scale properties so they
 compose with the engine's transform instead of colliding — the
@@ -836,6 +872,35 @@ prefers-reduced-motion still everything.
 
     <article class="card" data-parallax="10">Drifts gently</article>
     <img class="idle-float" src="hero.png" alt="…">
+
+### Shine
+
+What it is: the shine effect — a specular light on any element with
+visual depth, the way iOS icons catch light. data-shine lays a soft
+light spot plus a rim over the element: a bright edge toward the
+light, a soft shade away from it. facet.motion's light channel writes
+the light's direction (--shine-x / --shine-y, each -1..1) from the
+device tilt, the cursor, or the idle drift — the same normalised
+vector that drives parallax, so the element that translates and the
+light that sweeps across it always agree on which way the device is
+leaning. At rest the light sits centred above.
+What it is for: app icons, hero cards, any raised or 3D-feeling piece
+that should catch light as the device moves. When to use it: on the
+element that carries the depth; the overlay is a .shine child span
+facet.js injects for you (the pseudo-elements stay free for the
+tooltip; add the span yourself for a static resting shine with JS
+off), it inherits the element's border-radius, and images need a
+wrapper because an <img> cannot hold a child — the .icon-badge-holder
+doubles as one (give the wrapper the icon's radius). Unlike parallax, shine writes no
+transform — only custom properties — so the parallax exclusion does
+not apply; it composes with velvet lift/press, the pager, and
+data-parallax itself. --shine (0..1, default 0.5) tunes the strength.
+
+    <article class="card" data-shine>Catches the light</article>
+    <span class="icon-badge-holder" data-shine style="border-radius: 22.5%;">
+      <img src="/apps/icons/inflation.png" alt="" width="68" height="68"
+           style="display: block; border-radius: 22.5%;">
+    </span>
 
 ### Snap section
 
@@ -1064,9 +1129,14 @@ for calculator apps:
                                returns { moveTo }
     facet.installNudge(el)     the add-to-home-screen flow; returns
                                { standalone, installed, addNow, never }
-    facet.motion               the ambient motion engine:
-                               .register(selector, {xMax, yMax});
-                               .setMode("tilt") asks iOS permission
+    facet.motion               the ambient motion engine, one vector,
+                               two channels: .register(selector,
+                               {xMax, yMax}) moves elements (parallax),
+                               .register(selector, {light: true})
+                               steers their --shine-x/--shine-y light
+                               (shine); .setMode("off"|"cursor"|"tilt"|
+                               "idle") — "tilt" asks iOS permission,
+                               "idle" sweeps the vector every 3s
     facet.sliderScale(wrap)    rebuild a .slider-wrap's tick scale after
                                a range change
     facet.mapStyle()           the active theme as a Google Maps styles
@@ -1245,7 +1315,7 @@ markup + its own data/logic with no library-shaped glue:
 Settings controls: any element carrying data-control self-wires (a
 .menu-icon-btn, a .menu-item row, or a .nav-set pill) — "sounds" and
 "haptics" flip facet.feedback.sound/haptic.enabled, "motion" cycles
-facet.motion (Off/Cursor/Tilt), "appearance" cycles facet.scheme
+facet.motion (Off/Cursor/Tilt/Idle), "appearance" cycles facet.scheme
 (Light/Dark/Auto), and "theme" cycles the shipped themes (Default/Velvet/
 Aero/Elegant). Each writes its .menu-value word and dims via
 data-off. Zero app JS.
@@ -1283,7 +1353,8 @@ the top band and draws a faint "projection" divider where projectFrom
 begins.
 
 Icons added for app UIs: chart, grid, sliders, refresh, undo, volume,
-vibrate, motion, contrast, plus-square, download-cloud (48 -> 59).
+vibrate, motion, contrast, plus-square, download-cloud, and the icon
+badge's status glyphs sparkle and wrench (48 -> 61).
 
 Tooltip on touch: the [data-tip] bubble gains a triangle tail, and on
 touch devices (where iOS makes :hover stick) a tap shows the bubble for
@@ -1387,12 +1458,15 @@ copy button under each demo gives the exact HTML.
 Modules on window.facet: feedback (synthesized UI sounds + haptics, ON
 by default; feedback.sound.enabled / feedback.haptic.enabled are the
 switches), sheet(el, scrim, {onChange}), scrollGauge(scroller, {...}),
-tabIndicator(bar), installNudge(el, {...}), motion (parallax engine:
-register/init/setMode/cycle, modes off|cursor|tilt, reduced-motion
-off). Auto-wiring: .tab-bar finds the page's pager and its sheet; any
+tabIndicator(bar), installNudge(el, {...}), motion (the motion engine
+behind parallax and shine: register/init/setMode/cycle, modes
+off|cursor|tilt|idle, reduced-motion off). Auto-wiring: .tab-bar finds
+the page's pager and its sheet; any
 button[aria-controls] on a .sheet opens it; a .nav-menu upgrades its
 <details> into the floating overlay (facet.navMenu re-runs it). Velvet law: elements with
-velvet lift/press transforms must not register with facet.motion.
+velvet lift/press transforms must not register with facet.motion's
+move channel (the light channel — shine — is exempt: it writes only
+custom properties, never transform).
 
 ## Templates
 
