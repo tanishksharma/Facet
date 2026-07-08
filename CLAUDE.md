@@ -412,6 +412,203 @@ SaaS dashboard (templates/saas.html) and social app (templates/social.html) alre
 
 -------------------------------------------------------------------------------
 
+## Competitor landscape, positioning & candidate features (research digest)
+===============================================================================
+
+
+A standing reference, not a build order. In July 2026 we studied ~150 libraries
+that overlap Facet (full teardowns live in the session's batch docs: leaders,
+copy-paste kits, big design systems, HTML-first behaviour tools, classless CSS).
+This section condenses it: who else is out there, where Facet is genuinely
+different, whether the AI-native bet is real, how to market it, and a menu of
+candidate features to raise one at a time. Nothing here is committed — each
+candidate is brought up, assessed, and either built or dropped on its own.
+
+Writing rule for this section: plain English, so it can be read fast.
+
+
+### A. The competitor map — who else is in this space
+
+No single product does what Facet does. The field splits into camps, each
+sharing 2-4 of Facet's traits, none all of them:
+
+- **Classless CSS** (Pico, Simple.css, Water.css, matcha, MVP, +35): style raw
+  HTML so it looks designed with no classes. Facet's base layer is one of these.
+  But they are CSS-only — no JS behaviours, no named themes, no components, no
+  app scope. Ceiling: raw HTML has no tag for a card, nav bar, tabs or modal.
+- **Copy-paste component kits** (Flowbite, Preline, HyperUI, daisyUI, Tabler):
+  grab a block, paste it in. Almost all Tailwind, so the pasted code is a long
+  wall of utility classes you can't read, and a frozen copy that never gets
+  fixes. "Everything looks the same" is their loudest complaint.
+- **AI-native / registry** (shadcn/ui is the benchmark: ships llms.txt + a code
+  registry + an MCP server + agent skills). This is the one camp that markets
+  "AI-native" — but it's React/Tailwind/build-step, not plain HTML.
+- **Browser-native web-component kits** (Web Awesome/Shoelace): framework-free
+  components over a CDN. But they're custom elements, not plain HTML, and not
+  AI-marketed.
+- **HTML-first behaviour tools** (htmx, Alpine, Stimulus, Unpoly, Datastar):
+  add behaviour via attributes — Facet's DNA. But they're behaviour libraries,
+  not design systems, and none is AI-marketed. These are allies, not rivals
+  (they own data/reactivity; Facet owns look/theming/app-feel).
+- **Design-token systems** (Open Props, Radix, plus the giants — Material,
+  Fluent, Carbon, Primer, Polaris, USWDS, GOV.UK): the token + accessibility
+  gold standard, but tokens only or huge team rulebooks, not a drop-in file.
+
+
+### B. What Facet does that they don't — the niche (the whitespace)
+
+The unique intersection, in one line each — this is what to defend and sell:
+
+1. **AI-native + plain-HTML + a full themed design system + llms.txt, together.**
+   AI-native today means React/registry; HTML-first means classless CSS or
+   hypermedia libs. Nobody sits in both. Facet does.
+2. **JS behaviours shipped with the CSS.** Nearly every classless/CSS rival is
+   CSS-only; Facet ships a small behaviour layer too.
+3. **One-attribute switching across named design-intent themes** (Velvet, Aero,
+   Elegant), layout containers included. Rivals offer at most light/dark + a
+   couple of palettes.
+4. **Token layer + classless base + JS + PWA/app-feel in one CSS + one JS, no
+   build.** No competitor combines all of these.
+5. **App / PWA / deck / print / card scope.** Classless frameworks target a
+   readable blog or docs page; Facet targets whole products.
+
+
+### C. The market question — is this useful for fully automated AI building tasteful products?
+
+The honest thesis (the reason to keep going):
+
+- **Yes, and it's the strongest angle.** An AI that writes UI needs a material
+  it can read, reason about, and get right in one pass. React + Tailwind gives
+  an agent a deep dependency tree, a build step, and walls of utility classes —
+  easy to break, hard to verify. Facet gives it shallow semantic HTML, plain
+  role-named classes, one fetch of llms.txt to learn everything, behaviour by
+  attributes, and every state reachable by URL. That is *made* for an agent.
+- **The taste is pre-baked, which is the point.** The failure mode of AI UI is
+  bland or broken (see Tailwind's "everything is purple"). Facet ships hand-tuned
+  themes and one-glance components, so an agent producing *correct* HTML gets a
+  *tasteful* result for free — it doesn't have to invent the design, only pick
+  the right classes.
+- **The catch to be honest about:** "AI-native" is currently a claim, not proven
+  machinery. shadcn/ui backs its claim with a registry + MCP server + skills.
+  Facet has llms.txt and readable HTML — a real head start — but to *own* the
+  niche it likely needs the described-tokens file, and eventually an MCP server
+  / agent skill, so an agent can pull components and tokens directly. Those are
+  candidate features below, not done deals.
+- **Where it wins now:** agent-built or agent-edited marketing pages, docs,
+  dashboards, decks, PWAs, one-pagers — anything where readable output and
+  built-in taste matter more than a big app's shared state. Where it doesn't:
+  large stateful apps (leave data/state to projects, as the charter already says).
+
+
+### D. How to position & market it (repositioning notes)
+
+Loudest lines first, each backed by the research:
+
+- **"The design library AI can actually read."** The one thing the whole
+  copy-paste/Tailwind camp can't offer. Lead with it.
+- **"Readable, stays-in-sync code."** Pasted Tailwind blocks are unreadable and
+  freeze in time; Facet is plain HTML linked to one shared file, so fixes reach
+  every page. Say it plainly.
+- **"Distinct themes, not one look."** "Every site looks the same" is the
+  category's biggest pain; Facet's named themes are the cure. Never let one look
+  become "the Facet look."
+- **"Works with JavaScript off — really."** Turbo/Unpoly half-degrade; Datastar
+  barely works without JS. Facet's full-content-without-JS promise is stronger
+  than any of them. A rare, checkable differentiator.
+- **"Editable, no lock-in."** The big systems (Adobe, Shopify) forbid
+  customising and people fork them in frustration. Facet is plain, editable HTML.
+- **Borrowable tagline** (US Web Design System): *"Focus on your product, not
+  your markup."*
+- **Name the principle:** *locality of behaviour* (htmx's term) is the known name
+  for Facet's one-glance-HTML belief — cite it as the defense.
+
+
+### E. Candidate features to assess one at a time (from the research)
+
+Grouped by area. Each line: the idea, its main pro, its main con/cost. Raise one,
+decide, then build or drop. None is committed.
+
+**Behaviour engine (facet.js) — highest-value cluster:**
+- [ ] **Re-wire content added after load** (a MutationObserver, the Stimulus
+  model). Pro: behaviours attach to sheets, loaded fragments, cloned rows with
+  no manual call — the single most-cited fix, and what makes Facet pair cleanly
+  with htmx/Alpine. Con: adds a always-on DOM watcher; must not cost the "one
+  attribute, zero setup" simplicity or leak.
+- [ ] **Setup/teardown pair per behaviour** (connect/disconnect). Pro: removes
+  listeners/timers/animations when an element leaves — stops the memory leaks
+  Alpine is infamous for. Con: every behaviour needs a matching teardown written.
+- [ ] **Double-init guard.** Pro: mark elements "already wired" so a re-scan
+  never binds twice (the root of most double-firing bugs). Con: tiny bookkeeping.
+- [ ] **A `me()`-style "this element" helper** (Surreal). Pro: an inline script
+  grabs its own element with no invented ID. Con: risks encouraging inline
+  scripts, which can clutter the one-glance HTML.
+- [ ] **Optional inline scoped styles** (css-scope-inline's 16-line trick). Pro:
+  a component carries a local `<style>` that doesn't leak, still no build. Con:
+  another way to do styling; could fragment where styles live.
+
+**Tokens & theming:**
+- [ ] **Bake the accessibility promise into tokens** (Adobe/Google): "this accent
+  rank on this surface always passes contrast," then verify it. Pro: guarantee,
+  not hope. Con: needs a contrast check in the process.
+- [ ] **A machine-readable described-tokens file** (GitHub Primer): every token
+  with a value + one-line purpose, as a companion to llms.txt. Pro: directly
+  serves the AI-native niche — agents read the system without a human. Con: a new
+  artifact to keep in sync (the keep-in-sync contract grows).
+- [ ] **Numbered layers for nested surfaces** (Carbon `layer-01/02/03`). Pro:
+  foolproof depth when a menu sits on a card on the page. Con: another token axis
+  to learn; may overlap Facet's existing surface ramp.
+- [ ] **`-content` on-color pairing for every role.** Pro: text-on-surface always
+  readable automatically. Con: doubles some token counts.
+- [ ] **Semantic state-color roles** (success/warning/danger/info) + **alpha
+  accent variants** (translucent tints). Pro: components that need status colour
+  stop hardcoding it. Con: more tokens per theme to hand-tune in light + dark.
+
+**Classless base (make the no-class page best-in-class):**
+- [ ] **Auto dark mode on a naked page** — follow the OS setting with no
+  `data-mode` attribute. Pro: matches what Pico/Simple.css users expect. Con:
+  must not fight the explicit `data-mode` toggle.
+- [ ] **Guarantee the reading column + prose rhythm with zero wrappers.** Pro:
+  the top classless trick; Facet has the tokens (`--measure`, flow tokens) —
+  just ensure they fire on unclassed `<main>`/`<article>`. Con: check it doesn't
+  clash with app-layout primitives.
+- [ ] **Polish the forgotten tags** (tables, blockquote, code/pre, forms,
+  details, figure, kbd, mark) to classless-best standard. Pro: most of the "raw
+  HTML looks finished" win. Con: steady detail work.
+- [ ] **A document-grade signature theme** (Tufte-style margin sidenotes, in
+  article.html). Pro: a strong recognisable look, like LaTeX.css/Tufte, for the
+  docs/article audience. Con: sidenotes are layout-heavy; new theme to maintain.
+
+**Components & polish:**
+- [ ] **Align control heights** (button height = input height) inside each theme.
+  Pro: cheap, makes a whole page look designed (Park UI). Con: audit across
+  themes.
+- [ ] **Nail the small data pieces** (stat cards, tables, activity feeds) — what
+  app builders reach for (Tabler). Pro: high-use components. Con: scope.
+- [ ] **One signature moment per template** (a tasteful hero/scroll effect). Pro:
+  finished pages feel designed (HTML5 UP/Cruip). Con: keep it in CSS, no JS bloat.
+
+**Docs & process (mostly the GOV.UK playbook):**
+- [ ] **Plain-language docs everywhere** (short words, explain terms once). Pro:
+  faster for everyone incl. AI; already the house style. Con: none.
+- [ ] **"When NOT to use this"** on each component. Pro: builds trust, stops
+  misuse. Con: more to write per component.
+- [ ] **A tiny pass/fail accessibility list per component** + **a real
+  screen-reader check** (tool scans miss ~70%) + **pin the claim to WCAG 2.1
+  AA**. Pro: turns "accessible" into something checkable. Con: manual testing
+  per component.
+- [ ] **Document the classless→component boundary in llms.txt** (missing.css
+  style): "raw HTML gets you a beautiful document; add these classes for a
+  component." Pro: makes the hand-off feel designed, guides agents. Con: doc work.
+
+**Niche-defining (the AI-native moat — bigger bets):**
+- [ ] **An MCP server + agent skill** so an agent pulls Facet components/tokens
+  directly (shadcn's moat). Pro: turns "AI-readable" into "AI-operable," owns the
+  niche. Con: server/infra — breaks the "two static files" identity, like the
+  theme marketplace; do late and isolated.
+
+
+-------------------------------------------------------------------------------
+
 ## Parked — not scheduled
 ===============================================================================
 
