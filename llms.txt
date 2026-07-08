@@ -767,6 +767,10 @@ What it is: 24x24 line glyphs at a 1.5px stroke with round
 caps, carried as markup inside facet.js — no image files, no sprite
 fetch. Write <svg data-icon="search"></svg> and facet.js fills it;
 icons ride currentColor and scale with the surrounding text.
+In running text add .glyph — it makes the svg sit in the sentence
+like a character (inline-block, sized to the line, baseline-aligned)
+instead of breaking the line, because the base media rule makes
+every svg a block.
 Decorative by default (aria-hidden); an aria-label on the svg makes
 it meaningful. Extend: facet.icons.rocket = '<path d="..."/>' then
 facet.icon(). The set: search close check plus minus arrow-right
@@ -779,6 +783,7 @@ warning help play pause.
     <button class="btn btn-icon" aria-label="Search">
       <svg data-icon="search"></svg>
     </button>
+    <p><svg class="glyph" data-icon="clock"></svg> Updated an hour ago</p>
 
 ### Parallax & idle motion
 
@@ -821,7 +826,9 @@ free-scrolls — a spring (w=11, z=0.9, tuned and final) moves it between
 section tops — sections stay one viewport tall and scroll natively
 inside themselves, pulling past an edge pages to the neighbour with a
 elastic hint, a wheel edge-push advances once with a cooldown, and
-paging up lands at the previous section's bottom. Gestures starting on
+paging up lands at the previous section's bottom. After a transition
+lands, input is swallowed for a beat so residual momentum from the
+same swipe can never page twice. Gestures starting on
 .chart, input or textarea are ignored. The pager dispatches
 "facet:section" ({id, index}) on the .snap and exposes
 element.facetPager {go, toEl, index, settle}. data-pager="off" opts

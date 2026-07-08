@@ -2738,6 +2738,20 @@ svg[data-icon] {
   flex: none;
 }
 
+/* ----- INLINE GLYPH: an icon that sits in a sentence -----
+   What it is: the inline fix for a glyph in a sentence — .glyph makes an
+   svg sit in running text like a character (inline-block, sized to the
+   line, baseline-aligned) instead of breaking the line, because the base
+   media rule makes every svg a block. What it is for: instructional
+   steps and any sentence that names a control by its icon. When to use
+   it: add .glyph to any svg inside text; pairs with data-icon. */
+.glyph {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.15em;
+}
+
 /* ----- FLAGSHIP LINK: the signature way to another page -----
    What it is: the large prominent link — heading type, a strong
    accent underline, and an arrow that shifts forward on
@@ -3348,7 +3362,14 @@ details.dropdown {
     box-shadow var(--duration-fast) var(--ease-out);
 }
 .card-option:hover { border-color: var(--border-strong); background: var(--surface-hover); }
-.card-option-input { position: absolute; width: 1px; height: 1px; opacity: 0; margin: 0; }
+/* The native control hides fully. The selector rides on .card-option so it
+   out-specifies the base input[type="radio"] sizing — with the bare class
+   alone the raw radio ghosts through behind .card-option-mark. */
+.card-option .card-option-input {
+  position: absolute; width: 1px; height: 1px; opacity: 0;
+  margin: 0; padding: 0; border: 0; min-height: 0;
+  appearance: none;
+}
 .card-option:has(.card-option-input:checked) {
   border-color: var(--accent-1);
   box-shadow: 0 0 0 1px var(--accent-1), var(--shadow-raised);
@@ -4237,17 +4258,23 @@ button.list-item:active { background: var(--surface-active); }
   text-overflow: ellipsis;
 }
 
-/* setting pill: a toggle whose state shows in the pill — the value word
-   sits at the trailing edge; the OFF state reads muted and hollow, ON
-   reads filled like the base button, so active/inactive is visible. */
+/* setting pill: a toggle whose state shows IN the pill. The pill itself
+   stays the solid base button in both states — a whole pill going
+   translucent reads as broken next to its solid neighbours. Only the
+   .menu-value chip changes: filled accent = on, outlined muted = off. */
 .nav-set .menu-value {
   margin-left: auto;          /* push the value to the trailing edge */
-  padding-left: var(--space-inline);
-  color: var(--accent-3);
-  font-weight: var(--weight-strong);
   flex: none;                 /* the value never shrinks or truncates */
+  font-size: var(--text-caption);
+  font-weight: var(--weight-strong);
+  line-height: 1.4;
+  padding: 0.1rem 0.6em;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: var(--accent-3);
+  color: var(--on-accent-3);
 }
-.nav-set[aria-pressed="false"] {
+.nav-set[aria-pressed="false"] .menu-value {
   background: transparent;
   border-color: var(--border);
   color: var(--text-muted);

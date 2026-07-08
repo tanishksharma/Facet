@@ -1404,7 +1404,11 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           for: every small symbol a product needs. When to use it:
           write <code>&lt;svg data-icon="search"&gt;&lt;/svg&gt;</code>
           and facet.js fills it; icons ride <code>currentColor</code>
-          and scale with the text around them. Decorative by default
+          and scale with the text around them. In running text add
+          <code>.glyph</code> — it makes the svg sit in the sentence
+          like a character (inline-block, sized to the line,
+          baseline-aligned) instead of breaking the line, because the
+          base media rule makes every svg a block. Decorative by default
           (<code>aria-hidden</code>); give the svg an
           <code>aria-label</code> to make it meaningful. Extend the
           set in one line: <code>facet.icons.rocket = '&lt;path
@@ -1417,7 +1421,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <pre id="code-icons"><code>&lt;button class="btn btn-icon" aria-label="Search" data-tip="Search everything"&gt;
   &lt;svg data-icon="search"&gt;&lt;/svg&gt;
 &lt;/button&gt;
-&lt;p&gt;&lt;svg data-icon="clock"&gt;&lt;/svg&gt; Updated an hour ago&lt;/p&gt;</code></pre>
+&lt;p&gt;&lt;svg class="glyph" data-icon="clock"&gt;&lt;/svg&gt; Updated an hour ago&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-icons" data-tip="Copies the usage example above">Copy</button></p>
       </article>
 
