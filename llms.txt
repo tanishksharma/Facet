@@ -1407,8 +1407,11 @@ mandatory snap — full entry below); filterable card list (an input with
 data-filter="#target" live-hides non-matching children — the markup
 is the data); list cards; product grid; product detail; cart line
 items with a stepper and the result total; full top menu (.top-menu:
-wordmark, .top-menu-links, actions; on phones the links fold behind a
-native details.top-menu-fold); sidebar navigation (sectioned
+wordmark, .top-menu-links, actions; on phones the header stays one
+line — wordmark left, a native details.top-menu-fold "Menu" right —
+and the links open as a full-width dropdown panel under the row; row
+actions hide on phones, so author a copy of them inside the fold's
+links, the same way the links are authored twice); sidebar navigation (sectioned
 nav-links); footer (link columns + legal row); hero (.hero: display
 type, one line, one primary); feature grid; pricing table (the
 recommended plan carries the page's one primary); FAQ list (named

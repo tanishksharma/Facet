@@ -2301,9 +2301,14 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       <article class="element stack" id="block-top-menu">
         <h3 data-status="stable">Full top menu</h3>
         <p>
-          What it is: the site header — wordmark, nav links, actions;
-          on phones the links fold behind a native details disclosure,
-          no hamburger framework. What it is for: every site's first
+          What it is: the site header — wordmark, nav links, actions.
+          On phones the header stays ONE line — wordmark left, a native
+          details "Menu" disclosure right — and the links open as a
+          full-width dropdown panel under the row; no hamburger
+          framework. Row actions (a direct-child button like Sign up)
+          hide on phones — author a copy of them inside the fold's
+          links, the same way the links themselves are authored twice.
+          What it is for: every site's first
           row. When to use it: pages, not installed apps (apps get the
           tab bar). Resize this page to see the fold.
         </p>
@@ -2322,6 +2327,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
                 <a class="nav-link" href="#block-top-menu" aria-current="page">Home</a>
                 <a class="nav-link" href="#block-top-menu">Pricing</a>
                 <a class="nav-link" href="#block-top-menu">Docs</a>
+                <button class="btn btn-primary btn-small" data-event="signup" data-tip="The header's one action, inside the fold on phones">Sign up</button>
               </nav>
             </details>
           </header>

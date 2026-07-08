@@ -2719,9 +2719,14 @@ dialog.drawer[open]::backdrop { animation: facet-fade-in var(--duration-normal) 
   scroll-snap-align: start;
 }
 
-/* Top menu: logo, links, actions; on phones the links fold behind a
-   native details disclosure — no JS, no hamburger framework. */
+/* Top menu: logo, links, actions; on phones the header stays ONE line —
+   wordmark left, a native details "Menu" disclosure right — and the
+   links open as a full-width dropdown panel under the row. No JS, no
+   hamburger framework. Row actions (a direct-child .btn like Sign up)
+   hide on phones: author a copy of them inside the fold's links, the
+   same way the links themselves are authored twice. */
 .top-menu {
+  position: relative;               /* anchors the phone dropdown panel */
   display: flex;
   align-items: center;
   gap: var(--space-stack);
@@ -2737,22 +2742,28 @@ dialog.drawer[open]::backdrop { animation: facet-fade-in var(--duration-normal) 
 .top-menu-links { display: flex; gap: var(--space-tight); flex-wrap: wrap; }
 .top-menu-fold { display: none; }
 @media (max-width: 40rem) {
-  .top-menu-links { display: none; }
-  .top-menu-fold { display: block; width: 100%; }
+  .top-menu-links,
+  .top-menu > .btn { display: none; }   /* row links and row actions both live in the fold on phones */
+  .top-menu-fold { display: block; }    /* a compact flex item on the row's right — never a second row */
   .top-menu-fold summary { list-style: none; cursor: pointer; }
   .top-menu-fold summary::-webkit-details-marker { display: none; }
-  .top-menu-fold[open] .top-menu-links,
-  .top-menu-fold .top-menu-links { display: flex; flex-direction: column; padding-top: var(--space-control); }
-  /* The links expand open rather than snapping in (see accordion). */
-  @supports selector(::details-content) {
-    .top-menu-fold::details-content {
-      block-size: 0;
-      overflow: clip;
-      transition: block-size var(--duration-normal) var(--ease-out),
-                  content-visibility var(--duration-normal) allow-discrete;
-    }
-    .top-menu-fold[open]::details-content { block-size: auto; }
+  /* the open panel: full header width, dropped under the row as a raised
+     surface, arriving with the pop-in the popovers use */
+  .top-menu-fold .top-menu-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 30;
+    padding: var(--space-control);
+    background: var(--surface);
+    border: var(--border-element) solid var(--border);
+    border-radius: var(--radius-panel);
+    box-shadow: var(--shadow-floating);
   }
+  .top-menu-fold[open] .top-menu-links { animation: facet-pop-in var(--duration-fast) var(--ease-out); }
 }
 
 /* Hero: the opening statement — display type, one line under it,
