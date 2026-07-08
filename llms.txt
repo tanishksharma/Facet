@@ -806,7 +806,12 @@ paging up lands at the previous section's bottom. Gestures starting on
 .chart, input or textarea are ignored. The pager dispatches
 "facet:section" ({id, index}) on the .snap and exposes
 element.facetPager {go, toEl, index, settle}. data-pager="off" opts
-out; without JS, plain CSS snapping remains.
+out; without JS, plain CSS snapping remains. Each paged section gets
+generous top/bottom padding (var(--space-section)) plus clearance
+(var(--nav-menu-clearance)) so its centered content never falls behind
+the fixed nav-menu on a short screen, and a hairline divider marks each
+boundary except the last — landing at the viewport's bottom edge as each
+section snaps (sections are 100dvh and border-box).
 
 ### Button
 
@@ -1144,31 +1149,43 @@ wrapping real <a> links, so it works with JavaScript off (the summary opens the
 links inline) and the links sit in the DOM for crawlers and AI; facet.js
 (initNavMenu, re-runnable via facet.navMenu) upgrades both stacks to a floating
 overlay — a dimming scrim, body scroll-lock, a staggered bottom-up reveal,
-Escape to close, and focus moved into the open stack and back. The setting pills
-self-wire through data-control (appearance/motion/sounds/haptics) and
-data-language-cycle, exactly like the settings sheet. Reduced motion drops the
-stagger. It is an overlay control, not content: author it at the end of <body>,
-it is user-select:none, and it prints off.
+Escape to close, and focus moved into the open stack and back. Every item is one
+line, left-aligned, sized to its own content and capped near 300px (never wider
+than the viewport minus the menu's side margins); wrap the label in .nav-label
+and a long one truncates with an ellipsis while the leading icon and any trailing
+.menu-value stay whole. Clicking a nav link or an action button closes the panel;
+a .nav-set toggle leaves it open so several settings can be changed in a row
+(scrim tap and Escape still close). The setting pills self-wire through
+data-control (theme/appearance/motion/sounds/haptics — theme cycles
+Default/Velvet/Aero/Elegant and composes with the separate appearance
+Light/Dark/Auto) and data-language-cycle, exactly like the settings sheet.
+Reduced motion drops the stagger. It is an overlay control, not content: author
+it at the end of <body>, it is user-select:none, and it prints off.
 
     <nav class="nav-menu" aria-label="Site" data-print="off">
       <details class="nav-menu-panel">
         <summary class="btn btn-pill nav-menu-trigger"
                  data-event="nav-menu"><svg data-icon="menu"></svg> Menu</summary>
         <div class="nav-menu-items">
-          <a class="btn btn-pill" href="/"><svg data-icon="home"></svg> Home</a>
-          <a class="btn btn-pill" href="/work"><svg data-icon="grid"></svg> Work</a>
+          <a class="btn btn-pill" href="/"><svg data-icon="home"></svg>
+            <span class="nav-label">Home</span></a>
+          <a class="btn btn-pill" href="/work"><svg data-icon="grid"></svg>
+            <span class="nav-label">Work</span></a>
         </div>
       </details>
       <details class="nav-menu-panel">
         <summary class="btn btn-pill btn-icon nav-menu-trigger"
                  aria-label="Settings"><svg data-icon="settings"></svg></summary>
         <div class="nav-menu-items">
+          <button type="button" class="btn btn-pill nav-set" data-control="theme"
+                  aria-label="Theme"><svg data-icon="contrast"></svg>
+            <span class="nav-label">Theme</span> <span class="menu-value">Default</span></button>
           <button type="button" class="btn btn-pill nav-set" data-control="sounds"
-                  aria-label="Sound"><svg data-icon="volume"></svg> Sound
-            <span class="menu-value">On</span></button>
+                  aria-label="Sound"><svg data-icon="volume"></svg>
+            <span class="nav-label">Sound</span> <span class="menu-value">On</span></button>
           <button type="button" class="btn btn-pill nav-set" data-language-cycle
                   data-languages="en,hi" aria-label="Language"><svg data-icon="globe"></svg>
-            Language <span class="menu-value">EN</span></button>
+            <span class="nav-label">Language</span> <span class="menu-value">EN</span></button>
         </div>
       </details>
     </nav>

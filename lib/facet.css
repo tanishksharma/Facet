@@ -1776,10 +1776,21 @@ figcaption {
   justify-content: flex-start;  /* centering via auto margins below: a
                                    centered flex column would clip the
                                    top of overflowing content */
+  /* More room top and bottom than a flat section, plus clearance so
+     centered content never falls behind the fixed .nav-menu (bottom-left)
+     on a short viewport. Safe-area insets keep it clear of notches/home bars. */
+  padding-top: calc(var(--space-section) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(var(--space-section) + var(--nav-menu-clearance, 3.75rem) + env(safe-area-inset-bottom, 0px));
 }
 .snap.is-paged .snap-section::-webkit-scrollbar { display: none; }
 .snap.is-paged .snap-section > :first-child { margin-top: auto; }
 .snap.is-paged .snap-section > :last-child { margin-bottom: auto; }
+/* A hairline at each boundary. Each paged section is exactly 100dvh and
+   border-box, so the border sits at the viewport's bottom edge when that
+   section is snapped — the page bottom and the divider coincide. */
+.snap.is-paged .snap-section:not(:last-child) {
+  border-bottom: var(--border-hairline) solid var(--border);
+}
 
 /* --------------------------------------------------------------------------
    BUTTON
@@ -4154,6 +4165,12 @@ button.list-item:active { background: var(--surface-active); }
      </nav>
    -------------------------------------------------------------------------- */
 
+/* How much vertical room the fixed nav-menu occupies: its pill height (the
+   44px touch target) plus its own bottom offset. Defined on :root so paged
+   snap-sections can reserve exactly this much clearance and the two never
+   drift apart. */
+:root { --nav-menu-clearance: calc(2.75rem + var(--space-stack)); }
+
 .nav-menu {
   position: fixed;
   left: calc(var(--space-stack) + env(safe-area-inset-left, 0px));
@@ -4190,15 +4207,34 @@ button.list-item:active { background: var(--surface-active); }
   gap: var(--space-tight);
 }
 
+/* Every item is one line, left-aligned, sized to its own content, and
+   capped so a long label can never run off-screen (never wider than ~300px
+   nor than the viewport minus the menu's own side margins). Only the label
+   may shrink and ellipsize (wrap it in .nav-label); the leading icon and any
+   trailing value stay whole. The base .btn centres and wraps — this overrides
+   that inside the nav only. Comfortable right padding comes from the pill. */
+.nav-menu-items > * {
+  justify-content: flex-start;
+  text-align: left;
+  white-space: nowrap;
+  max-width: min(18.75rem, calc(100vw - 2 * var(--space-stack)));
+  overflow: hidden;
+}
+.nav-menu-items .nav-label {
+  min-width: 0;               /* shrink below the text so the ellipsis fires */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* setting pill: a toggle whose state shows in the pill — the value word
    sits at the trailing edge; the OFF state reads muted and hollow, ON
    reads filled like the base button, so active/inactive is visible. */
-.nav-set { justify-content: flex-start; white-space: nowrap; }
 .nav-set .menu-value {
-  margin-left: auto;
+  margin-left: auto;          /* push the value to the trailing edge */
   padding-left: var(--space-inline);
   color: var(--accent-3);
   font-weight: var(--weight-strong);
+  flex: none;                 /* the value never shrinks or truncates */
 }
 .nav-set[aria-pressed="false"] {
   background: transparent;
