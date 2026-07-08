@@ -528,6 +528,106 @@ The requirement, in full: every Facet page must print cleanly, read well in brow
 
 Open decisions to confirm at build time: whether link-URL expansion is opt-in (proposed yes), the exact `@page` margins, and whether the "Copy page as Markdown" export lands in this system or its own later item.
 
+### Component state system — one grammar for every state (cross-cutting)
+
+**The audit (8 Jul 2026).** States are already half-supported, but unevenly, and there
+is no single system a builder or an AI can learn once:
+- Interaction states are solid everywhere: hover, visible focus ring, pressed physics,
+  `:disabled` (the base layer covers input/textarea/select/button in one rule).
+- Selection and navigation states ride ARIA and are styled off the attribute:
+  `aria-pressed` (chip, choice-btn, nav-set, theme switcher), `aria-selected` (tabs),
+  `aria-current` (nav-link, breadcrumb, pagination, tab bar), `aria-expanded` (float
+  button, dropdown, tab settings), `aria-disabled` (pagination edges).
+- Status color exists as four theme tokens (`--success/--warning/--error/--info`) but
+  only three components consume them: badge kinds, toast `data-kind` dots, and the
+  field's error-only validation (`.field-invalid` + `.field-error`).
+- Waiting states exist as standalone pieces (`.skeleton`, `.spinner`, `.empty`) but no
+  component wires them in as its own loading/empty state.
+
+**The gaps this spec closes.**
+1. Validation is error-only: no success or warning field state, no `aria-invalid` or
+   `:user-invalid` selector (class only), no styled readonly.
+2. No busy/loading state anywhere: a submitting button can double-fire; `aria-busy`
+   is unstyled.
+3. Every status consumer hand-rolls its tints with `color-mix` — three private copies
+   of the same recipe (badge, toast, field).
+4. No status or selection states on the data components: card, list row, table row,
+   disabled tab/segment/menu item, stepper at min/max, indeterminate progress and
+   checkbox.
+5. Three different state carriers with no documented rule: classes (`.field-invalid`),
+   ARIA attributes, and `data-kind` (toast).
+
+**The technology: one state grammar, three carriers.** The rule, learned once:
+- **Native pseudo-class** when the platform has one: `:disabled`, `:checked`,
+  `:indeterminate`, `:user-invalid`.
+- **ARIA attribute** when a real semantic exists — CSS keys off the attribute itself,
+  so looks and accessibility can never drift apart: `aria-pressed`, `aria-selected`,
+  `aria-current`, `aria-expanded`, `aria-busy`, `aria-invalid`, `aria-disabled`.
+- **`data-status="success|warning|error|info"`** for statuses with no ARIA
+  equivalent (fields, cards, list rows, table rows). Toast's existing `data-kind`
+  stays as a permanent alias; new work uses `data-status`.
+
+**The token layer.** Define each status's derived pair once in `:root` —
+`--success-tint` (the 14% mix into background) and `--success-edge` (the 38% border
+mix), same for warning/error/info. Badge, toast, field and every new consumer read
+the pair; themes get all of it free because the pairs derive from the four status
+tokens each theme already sets. No new hand-tuned hex anywhere.
+
+**The state matrix — which component gets which states.**
+- **Button (all variants + icon button):** loading via `[aria-busy="true"]` — inline
+  spinner, width kept, pointer-events off; plus `aria-disabled` styling so
+  `<a class="btn">` can disable (a link can't `:disabled`).
+- **Field:** error (existing, extended to `[aria-invalid="true"]` and
+  `:user-invalid`); new success and warning (`.field-valid` / `.field-warning` +
+  matching message lines reusing the `.field-error` reveal); styled readonly.
+- **Checkbox:** `:indeterminate` (the select-all mixed mark). Radio/switch already
+  covered (checked/disabled).
+- **Chip:** disabled.
+- **Tabs / segmented control / choice grid:** disabled tab or option.
+- **Stepper:** minus/plus go `:disabled` at min/max (facet.js sets it; the disabled
+  look already exists).
+- **Dropdown menu:** disabled item (`aria-disabled`).
+- **Card:** selected (`aria-pressed` on the clickable card); `data-status` gives a
+  colored edge + tint for statusful cards; a documented skeleton-card loading pattern.
+- **List:** selected row (`aria-selected` / `aria-current`), disabled row.
+- **Table:** selected row (`aria-selected` on `<tr>`); documented empty pattern (one
+  colspan cell holding `.empty`) and loading pattern (skeleton rows).
+- **Progress:** indeterminate — a `<progress>` without `value` gets a sliding
+  animation.
+- **Regions (result, chart, any data area):** the triad, documented once —
+  `[aria-busy="true"]` fades content and blocks interaction while work runs; empty is
+  `.empty`; failure is `data-status="error"` plus a retry action.
+- **Avatar:** optional presence dot (`data-presence="online|away|offline"`) — assess
+  at build time; drop if it reads as feature creep rather than a state.
+
+**Non-breaking guarantees (the migration promise).**
+- Purely additive: not one existing selector changes; `.field-invalid` and toast
+  `data-kind` keep working forever.
+- Every new state is opt-in markup; a page written yesterday renders pixel-identical.
+- No state needs JS to show: states are attributes in the HTML and CSS renders them
+  (the JS-off law holds). facet.js only helps *set* them (stepper min/max, an optional
+  form-validate behaviour) — one named function each, with teardown.
+- Spinner and shimmer already collapse under `prefers-reduced-motion`; busy states
+  inherit that for free.
+- AA in every theme, light and dark: the tint pairs derive from status tokens that are
+  already AA per theme; verify each theme before shipping.
+
+**Rollout: three commits, each landing its wall entry + llms.txt lines per the
+keep-in-sync contract.**
+1. Grammar + tokens: the tint/edge pairs, the `aria-invalid` / `:user-invalid` /
+   `aria-busy` / `aria-disabled` base rules, the grammar documented in llms.txt.
+2. Form states: field success/warning/readonly, checkbox indeterminate, button
+   loading.
+3. Selection + status: card/list/table selected and `data-status`, disabled
+   tab/segment/menu item, stepper min/max wiring, indeterminate progress, the region
+   triad.
+
+**Compliance-checklist tie-in.** The checklist already demands "hover, focus, active,
+disabled, and where relevant empty, loading, error" — this spec is the concrete
+machinery behind that line. Once shipped, extend that line to name the grammar: state
+rides a native pseudo-class, an ARIA attribute, or `data-status` — never an invented
+class.
+
 ### Theme marketplace + community submissions 
 
 Let visitors build a theme (the Build-a-theme page already does this) and submit it for review and, if approved, shipping as an official theme. Below the builder, a marketplace lists the built-in themes and, under a separate heading, approved community themes. This is the project's first social surface.
