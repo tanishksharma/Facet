@@ -1341,6 +1341,10 @@ html {
   font-weight: var(--weight-body);
   line-height: var(--leading-body);
   -webkit-text-size-adjust: 100%;
+  /* Let height/width transitions animate to and from keyword sizes (auto,
+     max-content). Harmless where unsupported; needed so disclosures expand
+     smoothly to their natural height instead of popping open. */
+  interpolate-size: allow-keywords;
 }
 
 body {
@@ -1963,10 +1967,19 @@ figcaption {
   font-weight: var(--weight-body);
 }
 
+/* The error line expands and fades in the moment it is added, so a
+   validation message reveals itself instead of snapping the field taller.
+   The animation plays on insertion; the max-block-size ceiling only shapes
+   the ramp and is released once it finishes, so a long message never clips. */
 .field-error {
   font-size: var(--text-caption);
   color: var(--error);
   font-weight: var(--weight-body);
+  animation: facet-reveal var(--duration-normal) var(--ease-out);
+}
+@keyframes facet-reveal {
+  from { opacity: 0; max-block-size: 0; }
+  to   { opacity: 1; max-block-size: 4rem; }
 }
 
 .field-invalid input,
@@ -2494,11 +2507,18 @@ dialog.drawer::backdrop {
   background: rgb(0 0 0 / 0.5);
   backdrop-filter: blur(3px);
 }
-/* Arrive with the motion setting; leave instantly. */
-dialog.modal[open] { animation: facet-modal-in var(--duration-normal) var(--ease-spring); }
-dialog.drawer[open] { animation: facet-drawer-in var(--duration-normal) var(--ease-spring); }
-@keyframes facet-modal-in { from { opacity: 0; translate: 0 14px; } }
+/* Arrive with the motion setting: the panel rises (modal) or slides in
+   from the edge (drawer) while its backdrop fades up with it, so nothing
+   hard-cuts onto the screen. Leave instantly — a closing <dialog> hits
+   display:none before an exit could play. */
+dialog.modal[open]  { animation: facet-modal-in  var(--duration-normal) var(--ease-spring); }
+dialog.drawer[open] { animation: facet-drawer-in var(--duration-slow)   var(--ease-spring); }
+dialog.modal[open]::backdrop,
+dialog.drawer[open]::backdrop { animation: facet-fade-in var(--duration-normal) var(--ease-out); }
+@keyframes facet-modal-in  { from { opacity: 0; translate: 0 20px; scale: 0.97; } }
 @keyframes facet-drawer-in { from { translate: 100% 0; } }
+@keyframes facet-fade-in   { from { opacity: 0; } }
+@keyframes facet-pop-in    { from { opacity: 0; translate: 0 6px; scale: 0.97; } }
 
 [popover] {
   margin: auto;                   /* centered fallback where no anchor */
@@ -2509,7 +2529,8 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-normal) var(--ea
   color: var(--text);
   box-shadow: var(--shadow-floating);
 }
-[popover]:popover-open { animation: facet-modal-in var(--duration-fast) var(--ease-out); }
+[popover]:popover-open { animation: facet-pop-in var(--duration-fast) var(--ease-out); }
+[popover]:popover-open::backdrop { animation: facet-fade-in var(--duration-fast) var(--ease-out); }
 /* Layout utilities (display: flex/grid) must never beat the UA's
    closed-popover hiding — re-assert it at author origin. */
 [popover]:not(:popover-open) { display: none; }
@@ -2564,6 +2585,16 @@ dialog.drawer[open] { animation: facet-drawer-in var(--duration-normal) var(--ea
   .top-menu-fold summary::-webkit-details-marker { display: none; }
   .top-menu-fold[open] .top-menu-links,
   .top-menu-fold .top-menu-links { display: flex; flex-direction: column; padding-top: var(--space-control); }
+  /* The links expand open rather than snapping in (see accordion). */
+  @supports selector(::details-content) {
+    .top-menu-fold::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition: block-size var(--duration-normal) var(--ease-out),
+                  content-visibility var(--duration-normal) allow-discrete;
+    }
+    .top-menu-fold[open]::details-content { block-size: auto; }
+  }
 }
 
 /* Hero: the opening statement — display type, one line under it,
@@ -3086,6 +3117,18 @@ details.accordion {
 }
 .accordion[open] summary::after { rotate: 225deg; }
 .accordion > :not(summary) { padding-bottom: var(--space-stack); }
+/* The body expands to its natural height instead of popping open. Uses the
+   ::details-content pseudo (the wrapper the browser puts around everything
+   after the summary); where it is unsupported the row just opens instantly. */
+@supports selector(::details-content) {
+  details.accordion::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition: block-size var(--duration-normal) var(--ease-out),
+                content-visibility var(--duration-normal) allow-discrete;
+  }
+  details.accordion[open]::details-content { block-size: auto; }
+}
 
 /* ----- TOAST: a transient notice that names itself -----
    What it is: a small pill that appears near the bottom, says one
@@ -3163,7 +3206,8 @@ details.dropdown {
   border-radius: var(--radius-panel);
   box-shadow: var(--shadow-floating);
   z-index: 30;
-  animation: facet-toast-in var(--duration-fast) var(--ease-out);
+  transform-origin: top left;
+  animation: facet-pop-in var(--duration-fast) var(--ease-out);
 }
 .dropdown-menu button,
 .dropdown-menu a {
