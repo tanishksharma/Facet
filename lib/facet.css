@@ -2017,6 +2017,15 @@ select {
 /* Search reads as search: a capsule, native clear button kept. */
 input[type="search"] { border-radius: var(--radius-pill); }
 
+/* ----- FILE UPLOAD & DATE INPUT: native controls, themed -----
+   What it is: the native file and date controls, themed and kept native
+   — the file input's button is styled as a secondary action while
+   drag-drop, keyboard and the form value stay the browser's; the date
+   input keeps its native picker with the accent coloring its highlight
+   and color-scheme flipping it in dark mode. When to use it: always
+   these before any custom uploader or calendar, wrapped in the same
+   label.field pattern as every other control. */
+
 /* File upload: the native input stays (drag-drop, keyboard, form
    value all free); only its button is styled like a secondary action
    and the filename text steps back. */

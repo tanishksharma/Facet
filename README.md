@@ -5,11 +5,14 @@ step, never minified. Facet styles a wide range of work: apps, websites, pitch
 decks, documents and business cards.
 
 The repo root is the library's website — its documentation and living demo.
-The library itself is two files in [`/lib`](lib):
+The library itself is two files in [`/lib`](lib), plus a small optional
+service-worker engine:
 
 - [`facet.css`](lib/facet.css) — the whole design system: tokens, base
   styles, components
 - [`facet.js`](lib/facet.js) — small vanilla JS behaviours
+- [`facet-sw.js`](lib/facet-sw.js) — the shared PWA caching engine, pulled
+  in only by projects that want offline/install
 
 ## Use it
 

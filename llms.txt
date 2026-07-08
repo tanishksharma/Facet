@@ -1,8 +1,10 @@
 # Facet
 
-Facet is a plain HTML, CSS and JS design library. It is one CSS file and one
-JS file hosted at a public URL. Any page consumes it with one link tag and
-one script tag. No React, no build step, no npm install, never minified.
+Facet is a plain HTML, CSS and JS design library. It is one CSS file and
+one JS file (plus a small optional service-worker engine, facet-sw.js,
+that powers offline/PWA) hosted at a public URL. Any page consumes it
+with one link tag and one script tag. No React, no build step, no npm
+install, never minified.
 This file is the full usage guide as plain text, for AI crawlers and
 builders — the exhaustive inventory of what Facet does and how to use it.
 The human version is the website (start at the site root); the rules for
@@ -21,13 +23,14 @@ This list is the exhaustive inventory: if a capability is not on it, it
 does not exist. (The Features section on the homepage is a curated,
 human-friendly subset of this list.)
 
-Distribution: two files, one link + one script tag, public URL, no
-framework, no npm, no build step, never minified. Until v1 every project
-always gets the latest straight from the web; from v1, frozen /lib/v1/
-copies pin old projects and cached updates apply only at page
-boundaries. This file (llms.txt) is the exhaustive usage guide, and the
-readable, commented source of lib/facet.css and lib/facet.js is the
-ground truth — an AI reads those directly.
+Distribution: two files, one link + one script tag (plus the small
+optional service-worker engine, facet-sw.js, that powers offline/PWA),
+public URL, no framework, no npm, no build step, never minified. Until
+v1 every project always gets the latest straight from the web; from v1,
+frozen /lib/v1/ copies pin old projects and cached updates apply only
+at page boundaries. This file (llms.txt) is the exhaustive usage
+guide, and the readable, commented source of lib/facet.css and
+lib/facet.js is the ground truth — an AI reads those directly.
 
 App-ready (PWA): a one-line sw.js stub — importScripts of
 /lib/facet-sw.js — gives any project the shared caching strategy:
@@ -497,7 +500,7 @@ label.field pattern as every other control.
 ### Card
 
 What it is: the grouped-surface primitive — a padded, rounded panel
-slightly raised above the page. What it is for: one thing per card: a product,
+one step above the page. What it is for: one thing per card: a product,
 a stat, a setting group, a summary. When to use it: .card for most
 grouping; .card-outlined when many cards sit close and shadows would
 pile up; a clickable card is an <a class="card card-clickable"> — the
@@ -800,8 +803,8 @@ prefers-reduced-motion still everything.
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one
 full screen at a time and each .snap-section centers its content at a
 readable width. What it is for: the calculator page skeleton — intro
-screen, then inputs, then results — and any page presented one
-screen at a time. When to use it: single-purpose pages with a clear
+screen, then inputs, then results — and any page that tells one story
+one screen at a time. When to use it: single-purpose pages with a clear
 screen-by-screen flow. Not for ordinary documents; normal pages just
 scroll. The .snap wrapper exists to enable scrolling, which is the one
 reason the wrapper law allows a container inside a container.
@@ -915,10 +918,37 @@ native element.
              data-tip="Drag, or use the arrow keys">
     </label>
 
+### Detailed slider
+
+What it is: a slider for a wide range, paired with a precise entry. The
+track drags fast in coarse jumps (data-coarse) so you cross a big span in
+one swipe; the −/+ steppers and the number box reach the exact value
+between the jumps (data-fine). All three stay in sync. What it is for:
+values with many gradations where you want both speed and precision — a
+price, a duration in seconds, a token in pixels. When to use it: ranges
+too wide for a plain slider to land precisely. For a small bounded range,
+the plain .slider is enough. facet.js wires it and fires a bubbling
+facet:slide {value} on any change.
+
+    <div class="slider-detail" data-min="0" data-max="1000"
+         data-coarse="20" data-fine="1">
+      <input type="range" class="slider" min="0" max="1000" step="1"
+             value="200" aria-label="Price">
+      <div class="slider-detail-entry">
+        <button type="button" class="btn btn-icon slider-detail-step"
+                data-step="-1" aria-label="Decrease">&minus;</button>
+        <input type="number" class="slider-detail-number" min="0" max="1000"
+               value="200" aria-label="Exact price">
+        <button type="button" class="btn btn-icon slider-detail-step"
+                data-step="1" aria-label="Increase">+</button>
+      </div>
+    </div>
+
 ### Result block
 
 What it is: a verdict-first result card: one plain-language sentence a
-person can repeat, one big number, then the supporting figures.
+person can repeat in conversation, one large number, then the supporting
+figures.
 What it is for: the centrepiece of a results screen — readable at a
 glance, and announced by screen readers on every recalculation when the
 block carries aria-live="polite". When to use it: whenever a calculation
@@ -956,7 +986,7 @@ for calculator apps:
 
     facet.set({...})           apply configuration live: theme, mode,
                                density, language, or any --token override
-    facet.version              the library version string, e.g. "0.2.0"
+    facet.version              the library version string, e.g. "0.2.1"
     facet.scheme               three-way appearance: .get() / .set("auto"
                                |"light"|"dark") / .cycle(); auto follows the
                                OS live, remembered in the URL + localStorage
@@ -979,6 +1009,37 @@ for calculator apps:
     facet.strings              the translation table; extend in place
     facet.install()            show the install prompt when available
     facet.go(url)              navigate with the page transition
+    facet.feedback             the feedback engine (created at load):
+                               .tap/.tick/.snap/.success play sound +
+                               haptics; .sound.enabled / .haptic.enabled
+                               switch them
+    facet.sheet(el, scrim)     the settings-sheet engine; returns
+                               { open, close, toggle, isOpen } (wired
+                               sheets expose it as element.facetSheet)
+    facet.scrollGauge(el)      attach the slim scroll thumb to a
+                               scroller; returns { update } — call it
+                               after content changes
+    facet.tabIndicator(bar)    attach the sliding pill to a .tab-bar;
+                               returns { moveTo }
+    facet.installNudge(el)     the add-to-home-screen flow; returns
+                               { standalone, installed, addNow, never }
+    facet.motion               the ambient motion engine:
+                               .register(selector, {xMax, yMax});
+                               .setMode("tilt") asks iOS permission
+    facet.sliderScale(wrap)    rebuild a .slider-wrap's tick scale after
+                               a range change
+    facet.mapStyle()           the active theme as a Google Maps styles
+                               array
+    facet.toast(msg, kind)     transient pill notice, gone in four
+                               seconds; kinds success|warning|error|info
+    facet.chart(el, opts)      draw the line chart: {points, projectFrom,
+                               events, format}
+    facet.icons                the glyph table; extend it, then re-run
+                               facet.icon()
+    facet.icon()               (re)fill every svg[data-icon] on the page
+    facet.navMenu()            (re)wire floating .nav-menu overlays
+    facet.translate()          (re)apply content-language variants after
+                               inserting markup
 
 ## Page transitions
 
@@ -1306,12 +1367,13 @@ wire any tool to all of them at once:
 Naming: tokens by role, not value. One class prefix and pattern per
 component (.btn, .btn-primary). JS: one small named function per behavior.
 
-Maintaining: docs are demos — a component is not done until the homepage
-shows it live with its code. One component, one commented section in the
-CSS. All changes go through Git commits. Growth by extraction: build a new
-pattern inside a project first, promote it once it repeats. App logic,
-data fetching and state management live in projects, never in the library.
-This file is updated whenever a component or rule changes.
+Maintaining: docs are demos — a component is not done until the Library
+wall (library.html) shows it live with its code. One component, one
+commented section in the CSS. All changes go through Git commits. Growth
+by extraction: build a new pattern inside a project first, promote it
+once it repeats. App logic, data fetching and state management live in
+projects, never in the library. This file is updated whenever a
+component or rule changes.
 
 Distribution: consume by URL only. Releases are Git tags. When a project
 ships, freeze a copy of the current files to /lib/v1/ and leave them
