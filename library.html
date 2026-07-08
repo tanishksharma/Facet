@@ -2303,9 +2303,15 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p>
           What it is: the site header — wordmark, nav links, actions.
           On phones the header stays ONE line — wordmark left, a native
-          details "Menu" disclosure right — and the links open as a
-          full-width dropdown panel under the row; no hamburger
-          framework. Row actions (a direct-child button like Sign up)
+          details "Menu" disclosure right (give its summary
+          <code>.when-closed</code>/<code>.when-open</code> labels so
+          Menu becomes Close). Opening does not float a card: the page
+          behind gradually darkens and blurs, the header's own surface
+          extends downward — its bottom border rides the reveal — and
+          the links arrive one by one. No JS, no hamburger framework;
+          the scrim, the wipe and the stagger are progressive
+          enhancement on a plain <code>&lt;details&gt;</code>. Row
+          actions (a direct-child button like Sign up)
           hide on phones — author a copy of them inside the fold's
           links, the same way the links themselves are authored twice.
           What it is for: every site's first
@@ -2322,7 +2328,10 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             </nav>
             <button class="btn btn-primary btn-small" data-event="signup" data-tip="The header's one action">Sign up</button>
             <details class="top-menu-fold">
-              <summary class="btn btn-ghost btn-small" data-tip="The phone fold"><svg data-icon="menu"></svg> Menu</summary>
+              <summary class="btn btn-ghost btn-small" data-tip="The phone fold">
+                <span class="when-closed"><svg data-icon="menu"></svg> Menu</span>
+                <span class="when-open"><svg data-icon="close"></svg> Close</span>
+              </summary>
               <nav class="top-menu-links" aria-label="Site">
                 <a class="nav-link" href="#block-top-menu" aria-current="page">Home</a>
                 <a class="nav-link" href="#block-top-menu">Pricing</a>
