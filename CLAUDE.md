@@ -945,6 +945,7 @@ The full shipped history is in git and in the live files (facet.css / facet.js /
 
 - No right-to-left layout — translation yes, RTL no.
 - Where truth lives (decided 8 Jul 2026): this file = how to build · llms.txt = what exists · Notion Facet hub = why and direction · Notion All To Dos (Project = Facet) = what to build next, the only backlog. One home per fact; the others link.
+- The vivid palette (decided 8 Jul 2026): five bright decorative colors named by rank, like the accent ranks — `--color-1` red, `--color-2` yellow, `--color-3` green, `--color-4` blue, `--color-5` purple. Defined once in facet.css, overridable per theme. They are decoration — card tints (mixed into the surface), charts, playful accents — never semantic status; a component that means success/danger says so in words, not by leaning on a palette slot.
 - Layer = composition level: a single reusable piece is Layer 2 · Components (in one of the six categories, snap/layout included); motion, sound and app interface are Layer 5 · App feel; an assembly of pieces is a Layer 3 · Block; a whole page is a Layer 4 · Template. Never create a layer that holds only one entry.
 - The site is multi-page. The header nav is Home · Library · Build a theme · GitHub; llms.txt (for AI) and CLAUDE.md (for contributors) are linked from the home page's "How to use Facet" tracks and from the floating menu's Files group, not as top-level nav items. (The old Components and Layouts pages merged into Library.)
 - App logic, data and state live in projects, never in the library.
