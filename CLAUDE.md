@@ -7,11 +7,18 @@
 >
 > Everything below is written as instructions a human or an AI follows to build and extend the library — the requirements the library holds itself to, not a workflow.
 
-Facet is a plain HTML, CSS and JS design library used across everything: apps, websites, pitch decks, documents and business cards. It is one CSS file and one JS file hosted at a public URL. Any project pulls it in with one link tag and one script tag. No React, no build step, no npm install, never minified.
+Facet is a plain HTML, CSS and JS design library used across everything: apps, websites, pitch decks, documents and business cards. It is one CSS file and one JS file (plus a small optional service-worker engine, `facet-sw.js`, for the PWA layer) hosted at a public URL. Any project pulls it in with one link tag and one script tag. No React, no build step, no npm install, never minified.
 
-**This repo is the sole source of truth.** The Facet Notion page is a charter only: vision and requirements, never implementation detail. The backlog lives as a section at the end of this file (see Backlog, below).
+**Where truth lives — the routing table.** Four homes, one job each. When information is added or changed, it goes in exactly one home; the others link to it, never copy it:
 
-The repo root is the library's website, deployed by Vercel as a static site on every push to `main`. It is a small multi-page site: the **home page** (`index.html`) is the pitch — philosophy, a curated feature list, and how to use it — and the **Library** (`library.html`) is the catalogue, where every token, component, block, template and app-feel behaviour is live with its exact copy-paste code. The library itself is the two files in `/lib`.
+- **This file (`CLAUDE.md`)** — HOW to build: rules, the keep-in-sync contract, the compliance checklist, binding decisions, and the deep build specs kept as engineering reference. Never a backlog, never strategy.
+- **`llms.txt`** — WHAT exists: the exhaustive capability inventory and usage guide. If it is not in llms.txt, it does not exist.
+- **The Notion Facet hub** (https://app.notion.com/p/38bb4fa1867c80d2a77cd2f4d318cc15) — WHY and where next: manifesto, positioning, direction, inspiration. Never implementation detail.
+- **The Notion All To Dos board, Project = Facet** (linked on the hub) — WHAT to build next: the only backlog. One row per item, implementation steps inside the row; rows link back to the reference specs in this file. No backlog text lives anywhere else.
+
+The routing rules that follow from it: a new idea becomes a to-do row immediately, even mid-conversation. A strategy or direction shift updates the hub. A rule or decision that binds building updates this file. A shipped capability updates llms.txt and the rest of the keep-in-sync contract below, in the same commit, and flips its to-do row to Done.
+
+The repo root is the library's website, deployed by Vercel as a static site on every push to `main`. It is a small multi-page site: the **home page** (`index.html`) is the pitch — philosophy, a curated feature list, and how to use it — and the **Library** (`library.html`) is the catalogue, where every token, component, block, template and app-feel behaviour is live with its exact copy-paste code. The library itself is the files in `/lib`: `facet.css`, `facet.js`, and the optional `facet-sw.js`.
 
 ```
 /lib
@@ -45,8 +52,8 @@ icons/             PWA: app icon PNGs (180 apple, 192, 512, 512-maskable)
 Projects consume the library by URL, never by copying files in:
 
 ```html
-<link rel="stylesheet" href="https://[domain]/lib/facet.css">
-<script src="https://[domain]/lib/facet.js" defer></script>
+<link rel="stylesheet" href="https://facet-kappa.vercel.app/lib/facet.css">
+<script src="https://facet-kappa.vercel.app/lib/facet.js" defer></script>
 ```
 
 
@@ -94,9 +101,10 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     Truth for: the exhaustive capability + component inventory
 
 `CLAUDE.md  (this file)`
-    What:      the build/maintain charter — and the Backlog section at the end
+    What:      the build/maintain charter, plus deep build specs kept as reference
     Read by:   Claude + contributors
-    Truth for: how to build and add to the library; what to build next
+    Truth for: how to build and add to the library (what to build next lives on
+               the Notion All To Dos board, Project = Facet)
 
 `README.md`
     What:      GitHub front door: what it is, how to consume, how to develop
@@ -118,6 +126,16 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     Read by:   crawlers
     Truth for: -
 
+`favicon.svg`
+    What:      the site favicon; every page and template references it
+    Read by:   browsers
+    Truth for: -
+
+`LICENSE`
+    What:      the license
+    Read by:   people arriving via GitHub
+    Truth for: -
+
 ### Keep-in-sync contract — what one change must touch
 
 Adding or changing a component means updating all of these in the **same commit**, or it drifts:
@@ -127,7 +145,7 @@ Adding or changing a component means updating all of these in the **same commit*
 3. `library.html` — its wall entry: live demo of every variant/state + the exact snippet.
 4. `llms.txt` — its full usage entry, plus its line in the capability inventory. **llms.txt is the source of truth for "does this exist".**
 5. `index.html` — a curated Features card ONLY if it is a headline, user-facing capability. The home Features are the human subset, not the exhaustive list; the exhaustive list is `llms.txt`.
-6. The Backlog section at the end of this file — tick the item.
+6. The Notion to-do row (All To Dos, Project = Facet) — flip it to Done, and add new rows for anything discovered along the way.
 
 The description text is written once and reused word-for-word in three places: the file comment in `facet.css`/`facet.js`, the `library.html` wall entry, and `llms.txt`.
 
@@ -182,8 +200,9 @@ could build. AI now does the building — so we go back to a clean web and good
 principles, and let anyone build.
 
 *(The full manifesto — the frustrations with today's web, articulated at length and
-kept private until the product earns the right to publish them — lives in Notion:
-https://app.notion.com/p/397b4fa1867c8198909dc2fe9fb4c90d. This section is the
+kept private until the product earns the right to publish them — lives on the Notion
+Facet hub's Manifesto sub-page:
+https://app.notion.com/p/397b4fa1867c81dd9594d2c444c30dd1. This section is the
 condensed operational version that guides build decisions.)*
 
 
@@ -303,7 +322,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 ===============================================================================
 
 
-- Tokens named by role, not value: `--surface`, not `--gray-100`. This extends to spacing and type: name them by intent (card spacing, section spacing, heading, body, caption) — never by a bare number a builder has to memorise (`--space-2`, `--text-h3` were the old value-named scale, now retired). Density and type size are one global three-step control (small/medium/large), and both are set BY THE THEME — you never pick a theme and its spacing separately.
+- Tokens named by role, not value: `--surface`, not `--gray-100`. This extends to spacing and type: name them by intent (card spacing, section spacing, heading, body, caption) — never by a bare number a builder has to memorise (`--space-2` was the old value-named spacing scale, now retired; the type sizes keep their `--text-h1`…`--text-h4` names because h1–h4 are heading roles, not bare values). Density and type size are one global three-step control (small/medium/large), and both are set BY THE THEME — you never pick a theme and its spacing separately.
 - Typography is tokenised by role so a theme re-voices the whole library by swapping a handful of variables, never by touching components: weights (`--weight-body/-medium/-strong/-heading`), line-height per role (`--leading-display/-heading/-snug/-body/-ui` — tighter as type grows), tracking per role (`--tracking-display/-heading/-snug/-body/-label/-caps/-wide` — big type tightens, caps micro-labels open up, `-wide` for spaced overlines/eyebrows), reading measure (`--measure`, `--measure-narrow`), and prose rhythm (`--flow-heading-above/-below`, `--flow-paragraph`, `--flow-tight`). The flow tokens are em-based vertical margins that give raw semantic HTML its rhythm; gap-based layout primitives (`.stack`, `.row`) zero child block margins via a `:where()` reset so rhythm governs prose and gap governs app layout, never both at once. These are not user-facing wrappers — they exist so multiple themes can drive one coherent look; a component reads them, it never hardcodes a size, weight, tracking or margin.
 - Fonts are role tokens too: five faces, one per job — `--font-heading` (calligraphic serif), `--font-body` (rounded sans), `--font-mono` (technical monospace), `--font-quote` (editorial serif for quotes and callouts), `--font-numeric` (display serif for big standalone numbers). The Default theme loads them via a single `@import` from Google Fonts at the top of `facet.css` — an accepted external dependency (no extra HTML tag, no build step, still one CSS + one JS), and every stack ends in a system fallback so text renders instantly and survives the fonts failing to load. A theme swaps the five faces; components only ask for a role. New font roles are added only when a face does a genuinely different job — never one per component.
 - One class prefix and pattern for components: `.btn`, `.btn-primary`, predictable everywhere.
@@ -318,6 +337,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 
 
 - Deployment default: push work directly to `main` (the user works on main and wants changes live on each push). Do NOT create feature branches unless the user explicitly asks for one. This overrides any older branch-per-change workflow.
+- The backlog lives on the Notion All To Dos board (Project = Facet) — see the routing table at the top of this file. New ideas become rows immediately; this file never grows a queue. At the start of a build session, read the board for what to build and this file for how.
 - Docs are demos. A component is not done until the Library wall (library.html) shows it live with its code.
 - One component, one clearly commented section in the CSS file. Nothing is scattered.
 - Growth by extraction: build a new pattern inside a project first, promote it once it repeats.
@@ -345,7 +365,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 
 One attribute (`data-theme`) switches the theme, layout containers included; `data-mode="dark"` is separate and composes with any theme. facet.js carries both in the URL (`?theme=`, `?mode=`), wires `data-theme-switch` / `data-mode-toggle` buttons, boots a page from data attributes on its own script tag, and exposes `facet.set({...})` at runtime.
 
-**Where themes live.** A theme is a `[data-theme="…"]` block in `/lib/facet.css` that maps the semantic tokens (the base family + accent ranks, each with hover / pressed / on-colors, in light and dark). That file is the ONLY place raw hex values exist — do not copy them here. See every theme live on the home-page switcher and tune one on the Build-a-theme page.
+**Where themes live.** A theme is a `[data-theme="…"]` block in `/lib/facet.css` that maps the semantic tokens (the base family + accent ranks, each with hover / pressed / on-colors, in light and dark). That file is the ONLY place raw hex values exist — do not copy them here. (Sanctioned exceptions, all theme-neutral by design: the print base's ink-on-paper white/black, scrim and backdrop dims, and the instruction overlay's deliberately fixed dark palette. Nothing else.) See every theme live on the home-page switcher and tune one on the Build-a-theme page.
 
 **Colour is ranked, not named.** Components use `--accent-1/-2/-3` (each with `-hover`, `-pressed`, `--on-accent-N`) and never pick a raw colour. One accent-1 action per screen.
 
@@ -373,35 +393,27 @@ The shipped set, by design intent:
 
 -------------------------------------------------------------------------------
 
-## Backlog — the build queue & upcoming features
+## Build specs — engineering reference (the backlog lives in Notion)
 ===============================================================================
 
 
-> **CANONICAL BACKLOG + STRATEGY NOW LIVE IN NOTION.** Planning, priorities, the
-> full manifesto, the roadmap and the inspiration list have moved to the Notion
-> Facet hub. **At the start of any build session, check Notion for the current
-> backlog and priorities before picking work** — Notion is the source of truth for
-> *what to build next and why*; this file stays the source of truth for *how to
-> build it* (charter, keep-in-sync contract, checklist, decisions).
-> - Hub / strategy: https://app.notion.com/p/38bb4fa1867c80d2a77cd2f4d318cc15
-> - Backlog (canonical): https://app.notion.com/p/397b4fa1867c81ef9a8af52541038356
-> - Manifesto (full): https://app.notion.com/p/397b4fa1867c8198909dc2fe9fb4c90d
-> - Inspiration & resources: https://app.notion.com/p/397b4fa1867c810dab30e4da5d87865a
+> **THE BACKLOG IS THE NOTION TASK BOARD.** What to build next, in what order,
+> lives on the All To Dos board (Project = Facet), embedded on the Notion Facet
+> hub: https://app.notion.com/p/38bb4fa1867c80d2a77cd2f4d318cc15
+> One row per item; each row's body carries its implementation steps and links
+> back to the reference sections below. New ideas become rows immediately.
+> **At the start of any build session, read the board for what to build and this
+> file for how to build it.** When a spec below and the board disagree on
+> priority or scope, the board wins.
 >
-> The sections below are kept as detailed engineering *reference* (specs, digests,
-> porting notes) that the Notion backlog points back to. When the two disagree on
-> priority or scope, Notion wins.
-
-The roadmap: upcoming and in-progress work on the library, plus the decisions that bind future work. Each item carries enough detail to build from this file alone.
-
-Ordering rule: heavy systems before lighter work — cross-cutting machinery outranks single components and polish.
-
-Standing exclusion: no right-to-left layout. Translation yes, RTL no (decided 4 Jul 2026).
+> The sections below are detailed engineering *reference* — specs, digests,
+> porting notes. They are not a queue: nothing here gets ordered, ticked, or
+> treated as the list of pending work.
 
 
 -------------------------------------------------------------------------------
 
-## Queue — pending work
+## Reference specs — the detailed builds the to-do rows point at
 ===============================================================================
 
 
@@ -932,7 +944,8 @@ runtime, against the "one CSS + one JS, no heavy deps" charter. Default: skip.
 The full shipped history is in git and in the live files (facet.css / facet.js / library.html / llms.txt). These are the durable calls that still constrain new work:
 
 - No right-to-left layout — translation yes, RTL no.
+- Where truth lives (decided 8 Jul 2026): this file = how to build · llms.txt = what exists · Notion Facet hub = why and direction · Notion All To Dos (Project = Facet) = what to build next, the only backlog. One home per fact; the others link.
 - Layer = composition level: a single reusable piece is Layer 2 · Components (in one of the six categories, snap/layout included); motion, sound and app interface are Layer 5 · App feel; an assembly of pieces is a Layer 3 · Block; a whole page is a Layer 4 · Template. Never create a layer that holds only one entry.
-- The site is multi-page. The header nav is Home · Library · Build a theme · GitHub; llms.txt (for AI) and CLAUDE.md (for contributors) are linked from the home page's "How to use Facet" tracks rather than the header. (The old Components and Layouts pages merged into Library.)
+- The site is multi-page. The header nav is Home · Library · Build a theme · GitHub; llms.txt (for AI) and CLAUDE.md (for contributors) are linked from the home page's "How to use Facet" tracks and from the floating menu's Files group, not as top-level nav items. (The old Components and Layouts pages merged into Library.)
 - App logic, data and state live in projects, never in the library.
 - (Token, accent, border, spacing/type and theme decisions live in the Naming and Themes sections above — not repeated here.)
