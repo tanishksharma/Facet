@@ -136,6 +136,54 @@ When a page is added, renamed or removed, update three places together: this pro
 
 -------------------------------------------------------------------------------
 
+## The thesis — why Facet exists
+===============================================================================
+
+
+> The one belief everything else hangs off. Read this first; it explains *why*
+> the rules below are the rules. Plain and blunt on purpose.
+
+**React solved a real problem — for its era.** Frameworks like React exist to help
+*humans* manage complexity while coding: reuse components, wrangle state, coordinate
+big teams. That was a fair trade when humans wrote every line.
+
+**But the trade made the web worse.** The price was build steps, npm, bundlers, deep
+dependency trees, and minified output no human can read. The web got heavier, slower,
+and unreadable. A "simple" site now needs a toolchain. That is backwards.
+
+**AI changes the equation completely.** The whole reason frameworks earned their
+complexity — making it easier for *developers* to develop — is exactly the part AI
+now automates. The AI writes the bulk of the code. So "developer ergonomics through
+abstraction" stops being worth its weight. The abstractions become dead weight the
+AI has to fight through, and the human can no longer read what shipped.
+
+**So the bet: go back to the web.** When a machine does the typing, the right material
+is the one that is best for the *web* and best for a *machine to reason about*: clean,
+semantic, native HTML/CSS/JS. No build. Works everywhere. Ages well. Readable by the
+human who wants to check it. React's abstractions were a workaround for a constraint
+that no longer binds.
+
+**Who Facet is for.** Normal "vibe coders" and serious intermediate builders — a PM,
+a founder, anyone with taste and an idea — NOT developers who want ceremony. The
+promise is: *point your AI at Facet and build a real, tasteful product.* Good themes
+and good animations from day one, so the result looks designed without anyone
+hand-tuning it.
+
+**What we refuse.** The install ritual is the enemy. `npx`, "connect an MCP", "copy
+these files", "install these dependencies", a registry CLI — that is developer
+ceremony that overwhelms a normal person and adds nothing when an AI is doing the
+work. Facet has none of it: one `<link>`, one `<script>`, and an `llms.txt` so the
+agent already knows how to use every piece. The competitor lesson is sharp here —
+libraries full of great animations bury them behind React + build + CLI, and a
+normal person bounces off. That is the lost opportunity Facet exists to take.
+
+**The one-line version.** The React generation made the web complex so developers
+could build. AI now does the building — so we go back to a clean web and good
+principles, and let anyone build.
+
+
+-------------------------------------------------------------------------------
+
 ## Manifesto
 ===============================================================================
 
@@ -326,6 +374,68 @@ Standing exclusion: no right-to-left layout. Translation yes, RTL no (decided 4 
 ## Queue — pending work
 ===============================================================================
 
+
+### The AI product-building edition — the headline direction (cross-cutting)
+
+The strategic bet made concrete (see The thesis above). Today Facet is a design
+library an AI *can* read. The next edition makes Facet a thing you *point your AI
+at to build a whole product* — no code ceremony, no install ritual. This is the
+feature that turns "AI-readable" into "AI-buildable," and it is the reason to keep
+going. Nothing here is built yet; this is the plan.
+
+**The core idea.** Facet ships a set of pre-written, product-quality prompts that
+respect good product guidelines. You point your AI agent at Facet, and:
+- it reads the library (llms.txt) so it knows every component, token and theme;
+- it reads the build prompts, then *interviews you* — asking as many questions as it
+  needs about who the users are, what the product is for, the jobs to be done;
+- it establishes an initial feature set with you, agrees scope, then builds it end to
+  end with Facet — a tasteful, working product, not a wireframe.
+
+**The prompts are a series, tiered by the builder.** One size does not fit all:
+- **Vibe coder / non-technical:** plain-language questions, no jargon; the AI picks
+  sensible defaults, keeps everything front-end and static where it can, and never
+  drops the user into tooling.
+- **Technical / intermediate (a PM, a founder who understands tech):** the prompt
+  lets the AI say "this needs a backend, here's why, here's what a backend is and how
+  this one works" — and *teaches as it builds*, so the user stays in control and
+  understands what shipped. The teaching is a feature, not a footnote.
+- Separate prompt tracks for **front-end-only** products vs **products that need a
+  backend/data/auth** (Facet's charter keeps app logic/state in the project — the
+  prompt is where that guidance lives for the builder's AI).
+
+**The transparency angle.** The prompts and the process are not hidden — they are a
+public page (see the site restructure below). The user can read exactly how their AI
+will interrogate and build, which is itself the pitch: "this is how you get a good
+product, and here is the whole method."
+
+**The site restructure this implies (three main pages + AI mirror):**
+- **Home** — the pitch: what Facet is, why it is different (the thesis), the curated
+  headline features. "Point your AI at Facet and build" is the hero.
+- **Library** — the component catalogue (library.html today).
+- **Build a great product** (new) — the prompts and the process on display: the
+  interview method, the tiers, the front-end vs backend tracks, worked examples. This
+  is where the AI-edition lives for humans.
+- (Build-a-theme stays; it is a tool, not a main narrative page.)
+- **The AI mirror + the llms.txt size problem.** Every page has an AI-readable
+  version; llms.txt is that mirror today. But llms.txt is already large and this adds
+  a whole prompt library — it will get too big for one fetch. Decision to make at
+  build time: split the AI surface into focused files (e.g. `llms.txt` = capability
+  index/usage, a separate `build.txt`/prompts file = the product-building prompts,
+  and per-section files an agent fetches on demand), with llms.txt as the small root
+  index that points to them. Keep one small front door; load detail on demand. (Note,
+  not yet decided — flagged as the thing to solve when this lands.)
+
+**Why this is the whitespace (from the competitor research).** No one occupies
+AI-native + plain-HTML + a full themed design system + *built-in product-building
+method* at once. shadcn is AI-native but React + registry + CLI ceremony. Classless
+CSS is plain-web but has no components, themes, or AI method. The behaviour libs
+aren't design systems. Facet + a build-prompt method for non-developers is a genuinely
+unclaimed position: **the design library where AI does the building and a normal
+person ships a tasteful product.** This edition is how Facet takes that ground.
+
+Open questions to settle at build time: the exact prompt set and how it is packaged
+(files in the repo? a page the AI reads? both); how the AI mirror is split so no
+single fetch is too big; whether the build page shows live example runs.
 
 ### Print, reader-view, copy-paste & export system (cross-cutting)
 
@@ -617,6 +727,15 @@ A menu of effects and UI patterns to lift from React Bits (reactbits.dev,
 MIT + no-reselling clause, source public at github.com/DavidHDev/react-bits),
 reimplemented the Facet way. Raise one, assess, build or drop — nothing here is
 committed. Plain English throughout.
+
+> **Standing reminder (recurring practice).** Whenever we do a round of visual /
+> element improvement — polishing the look and feel, adding themes, or adding new
+> animated components — go back to **reactbits.dev and walk every page**. Its
+> animations are unusually rich and it is the best single source of effect ideas
+> for Facet. Treat this as a checklist step for any "make it look better" pass:
+> browse React Bits, pick effects, reimplement the portable ones in vanilla per
+> the tiers below. (The lesson is theirs; the plain-web, no-build implementation
+> is ours.)
 
 **What React Bits is (the verdict).** A React-only library of ~137 animated
 components. Every piece is a React component; there is no plain-HTML or vanilla
