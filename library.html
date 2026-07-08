@@ -51,6 +51,7 @@
           <li><a href="#row">Row</a></li>
           <li><a href="#grid">Grid</a></li>
           <li><a href="#snap-section">Snap section</a></li>
+          <li><a href="#view-stack">View stack</a></li>
         </ul>
         <p class="nav-sub">Forms &amp; controls</p>
         <ul>
@@ -762,6 +763,57 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-snap-section"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-snap-section" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- VIEW STACK -->
+      <article class="element stack" id="view-stack" data-cat="layout">
+        <h3 data-status="beta">View stack</h3>
+        <p>
+          What it is: the app shell for apps with real screens — a
+          <code>&lt;main class="view-stack"&gt;</code> of
+          <code>.view</code> sections where exactly one shows at a
+          time, each scrolling on its own, content centered by auto
+          margins when short. Navigation is plain hash links: any
+          <code>&lt;a href="#result"&gt;</code> switches views,
+          <code>facet.views.go(id)</code> and <code>.back()</code> do
+          it from code, the URL always names the screen, and the
+          browser's own Back walks the trail. Every view pads itself
+          clear of the Dynamic Island (safe-area top) and of the home
+          bar plus the nav menu (safe-area bottom + clearance); opt a
+          view out with <code>.bleed-top</code>. What it is for:
+          screen-to-screen apps — home → question → result →
+          leaderboard — where the paged <code>.snap</code> shell (one
+          long page you page through) is the wrong shape. When to use
+          it: one view-stack per page, as the page's
+          <code>&lt;main&gt;</code>, one <code>.view</code> per screen
+          with a real id. facet.js upgrades it (<code>.is-stacked</code>,
+          like .snap → .is-paged): the page locks to the viewport and
+          one view shows. With JS off the screens simply stack in
+          reading order and the links jump between them — everything
+          stays crawlable. Views keep their scroll positions while
+          hidden, so Back returns exactly where the visitor left. The
+          demo below is the un-upgraded flow (the upgrade takes the
+          whole page's <code>&lt;main&gt;</code>); on a real page each
+          view fills the viewport.
+        </p>
+        <div class="demo">
+          <div class="view-stack" style="border: var(--border-hairline) solid var(--border); border-radius: var(--radius-panel);">
+            <section class="view" id="demo-home" style="border-bottom: var(--border-hairline) solid var(--border);">
+              <h4 style="text-align: center;">Home</h4>
+              <p style="text-align: center;">One screen, one job. <a href="#demo-play">Play</a></p>
+            </section>
+            <section class="view" id="demo-play" style="border-bottom: var(--border-hairline) solid var(--border);">
+              <h4 style="text-align: center;">Question</h4>
+              <p style="text-align: center;">Its own scroll container when it overflows. <a href="#demo-result">Answer</a></p>
+            </section>
+            <section class="view" id="demo-result">
+              <h4 style="text-align: center;">Result</h4>
+              <p style="text-align: center;">facet.views.back() returns along the trail.</p>
+            </section>
+          </div>
+        </div>
+        <pre id="code-view-stack"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-view-stack" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- Forms &amp; controls -->

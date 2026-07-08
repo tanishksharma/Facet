@@ -238,6 +238,17 @@
   --space-section: calc(3rem    * var(--density-scale));  /* 48px · between whole page sections */
   --space-hero:    calc(4rem    * var(--density-scale));  /* 64px · the biggest breaks: hero bands */
 
+  /* ----- Spacing: the safe areas -----
+     The device's own intrusions — Dynamic Island / notch above, home bar
+     below — as role tokens. Every full-viewport surface the library owns
+     pads with these, so content clears the hardware by DEFAULT (with a
+     black-translucent status bar the page runs under the island, so
+     respecting the inset must be the default and bleeding the choice).
+     Opt out per subtree with .bleed-top below — for full-bleed maps and
+     immersive pages that WANT to run up under the island. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
   /* ----- Spacing: container widths ----- */
   --width-narrow: 40rem;      /* prose, forms, calculators */
   --width-default: 64rem;     /* most pages */
@@ -295,6 +306,14 @@
   --focus-ring: var(--border-focus) solid var(--accent-3);
   --focus-offset: 2px;
 }
+
+/* The safe-area opt-out: put .bleed-top on any surface (a view, a snap
+   section, a fixed overlay) whose content should run up UNDER the
+   Dynamic Island / notch — full-bleed maps, immersive pages. Custom
+   properties inherit, so the whole subtree bleeds with it. Respecting
+   the inset stays the default everywhere; bleeding is the deliberate
+   choice. */
+.bleed-top { --safe-top: 0px; }
 
 /*
    Theme · Default (dark). <html data-mode="dark">.
@@ -1791,8 +1810,8 @@ figcaption {
   /* More room top and bottom than a flat section, plus clearance so
      centered content never falls behind the fixed .nav-menu (bottom-left)
      on a short viewport. Safe-area insets keep it clear of notches/home bars. */
-  padding-top: calc(var(--space-section) + env(safe-area-inset-top, 0px));
-  padding-bottom: calc(var(--space-section) + var(--nav-menu-clearance, 3.75rem) + env(safe-area-inset-bottom, 0px));
+  padding-top: calc(var(--space-section) + var(--safe-top));
+  padding-bottom: calc(var(--space-section) + var(--nav-menu-clearance, 3.75rem) + var(--safe-bottom));
 }
 .snap.is-paged .snap-section::-webkit-scrollbar { display: none; }
 .snap.is-paged .snap-section > :first-child { margin-top: auto; }
@@ -1803,6 +1822,87 @@ figcaption {
 .snap.is-paged .snap-section:not(:last-child) {
   border-bottom: var(--border-hairline) solid var(--border);
 }
+
+/* --------------------------------------------------------------------------
+   VIEW STACK
+
+   What it is: the app shell for apps with real screens — a <main
+   class="view-stack"> of .view sections where exactly one shows at a
+   time, each scrolling on its own, content centered by auto margins
+   when short. Navigation is plain hash links: any <a href="#result">
+   switches views, facet.views.go(id) and .back() do it from code, the
+   URL always names the screen, and the browser's own Back walks the
+   trail. Every view pads itself clear of the Dynamic Island
+   (safe-area top) and of the home bar plus the nav menu (safe-area
+   bottom + clearance); opt a view out with .bleed-top.
+   What it is for: screen-to-screen apps — home → question → result →
+   leaderboard — where the paged .snap shell (one long page you page
+   through) is the wrong shape.
+   When to use it: one view-stack per page, as the page's <main>, one
+   .view per screen with a real id. facet.js upgrades it (.is-stacked,
+   like .snap → .is-paged): the page locks to the viewport and one
+   view shows. With JS off the screens simply stack in reading order
+   and the links jump between them — everything stays crawlable. Views
+   keep their scroll positions while hidden, so Back returns exactly
+   where the visitor left.
+
+   Usage:  <main class="view-stack">
+             <section class="view" id="home"> … <a href="#play">Play</a> </section>
+             <section class="view" id="play"> … </section>
+             <section class="view" id="result"> … </section>
+           </main>
+   -------------------------------------------------------------------------- */
+
+/* Without JS: ordinary sections in flow, readable top to bottom. */
+.view {
+  padding: var(--space-page) var(--space-stack);
+}
+.view > * {
+  width: 100%;
+  max-width: var(--width-narrow);
+  margin-inline: auto;
+}
+
+/* With JS (.is-stacked): the shell locks to the viewport and each view
+   becomes its own scroll container. html gets .is-app-shell so the page
+   itself never scrolls or rubber-bands behind the views. */
+.is-app-shell,
+.is-app-shell body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.view-stack.is-stacked {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+}
+.view-stack.is-stacked .view {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;               /* not display:none — keeps each view's scroll position */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;              /* the gesture law: scrollers own their touches */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  justify-content: flex-start;      /* centering via auto margins below: a centered
+                                       flex column would clip overflowing content */
+  /* Clear of the island above; clear of the home bar and the fixed
+     .nav-menu below — the same guarantee as the paged snap shell. */
+  padding-top: calc(var(--space-page) + var(--safe-top));
+  padding-bottom: calc(var(--space-page) + var(--nav-menu-clearance, 3.75rem) + var(--safe-bottom));
+}
+.view-stack.is-stacked .view::-webkit-scrollbar { display: none; }
+.view-stack.is-stacked .view > :first-child { margin-top: auto; }
+.view-stack.is-stacked .view > :last-child { margin-bottom: auto; }
+.view-stack.is-stacked .view.is-active {
+  visibility: visible;
+  animation: facet-view-in var(--duration-normal) var(--ease-spring);
+}
+@keyframes facet-view-in { from { opacity: 0; translate: 0 10px; } }
 
 /* --------------------------------------------------------------------------
    BUTTON
@@ -2534,6 +2634,9 @@ dialog.drawer {
   height: 100dvh;
   max-height: 100dvh;
   border-radius: var(--radius-card) 0 0 var(--radius-card);
+  /* full-height panel: its padding absorbs the island and the home bar */
+  padding-top: calc(var(--space-page) + var(--safe-top));
+  padding-bottom: calc(var(--space-page) + var(--safe-bottom));
 }
 dialog.modal::backdrop,
 dialog.drawer::backdrop {
@@ -3344,7 +3447,7 @@ details.accordion {
    Kinds color the leading dot: success, warning, error, info. */
 .toast-rack {
   position: fixed;
-  bottom: calc(var(--space-card) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--space-card) + var(--safe-bottom));
   left: 50%;
   translate: -50% 0;
   display: flex;
@@ -4025,7 +4128,7 @@ button.list-item:active { background: var(--surface-active); }
    facetTabIndicator) that moves between segments like iOS. */
 .tab-bar {
   position: fixed;
-  bottom: calc(var(--space-inline) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--space-inline) + var(--safe-bottom));
   left: 50%;
   transform: translateX(-50%);
   z-index: 30;
@@ -4137,6 +4240,8 @@ button.list-item:active { background: var(--surface-active); }
   z-index: 41;
   width: min(80vw, 20rem);
   height: 80dvh;
+  /* never taller than the viewport minus the island and the home bar */
+  max-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 2 * var(--space-inline));
   display: flex;
   flex-direction: column;
   /* Opaque surface so the panel reads as a clean, high-contrast card (white
@@ -4432,7 +4537,7 @@ button.list-item:active { background: var(--surface-active); }
 .float-btn {
   position: fixed;
   left: calc(var(--space-stack) + env(safe-area-inset-left, 0px));
-  bottom: calc(var(--space-stack) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--space-stack) + var(--safe-bottom));
   z-index: 30;
   display: inline-flex;
   align-items: center;
@@ -4550,7 +4655,7 @@ button.list-item:active { background: var(--surface-active); }
 .nav-menu {
   position: fixed;
   left: calc(var(--space-stack) + env(safe-area-inset-left, 0px));
-  bottom: calc(var(--space-stack) + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--space-stack) + var(--safe-bottom));
   z-index: 30;
   display: flex;
   align-items: flex-end;
@@ -4856,7 +4961,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
   align-items: flex-end;
   justify-content: center;
   padding: var(--space-card);
-  padding-bottom: calc(var(--space-inline) + 48px + env(safe-area-inset-bottom, 0px) + var(--space-page));
+  padding-bottom: calc(var(--space-inline) + 48px + var(--safe-bottom) + var(--space-page));
   background: rgb(0 0 0 / 0.5);
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
@@ -4932,7 +5037,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
   align-items: center;
   text-align: center;
   gap: var(--space-stack);
-  padding: calc(env(safe-area-inset-top, 0px) + var(--space-hero)) var(--space-card) var(--space-hero);
+  padding: calc(var(--safe-top) + var(--space-hero)) var(--space-card) var(--space-hero);
 }
 .overlay-guide .eyebrow { color: #dcbe8e; }   /* pale gold on black, fixed */
 .overlay-title {
