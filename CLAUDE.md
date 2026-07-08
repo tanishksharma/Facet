@@ -609,6 +609,162 @@ decide, then build or drop. None is committed.
 
 -------------------------------------------------------------------------------
 
+## React Bits — effects & polish inspiration (research digest)
+===============================================================================
+
+
+A menu of effects and UI patterns to lift from React Bits (reactbits.dev,
+MIT + no-reselling clause, source public at github.com/DavidHDev/react-bits),
+reimplemented the Facet way. Raise one, assess, build or drop — nothing here is
+committed. Plain English throughout.
+
+**What React Bits is (the verdict).** A React-only library of ~137 animated
+components. Every piece is a React component; there is no plain-HTML or vanilla
+version (Vue and Svelte exist only as separate sibling repos). You need a React
+project with a build step to use even one. It is distributed by the "copy the
+source into your project" model — `npx shadcn@latest add <url>` (or `jsrepo`)
+fetches a component's files and writes them into your codebase; it only *reuses*
+shadcn's registry/CLI as a delivery pipe, it is not built on shadcn. It is free
+(no paid tier) and MIT-licensed, so we may study and reimplement the effects.
+
+**The Facet angle.** React is only the wrapper. Underneath, each effect is plain
+CSS, a `<canvas>`, or a WebGL shader — none needs React. So we port the *effect*
+into vanilla CSS + one small `facet.js` behaviour, no build step. Our "one link,
+one script, no build, works with JS off" stays the differentiator React Bits
+can't touch. Triage rule: if an effect moves *text, a border, a card, or an
+element in response to scroll/cursor*, it's CSS + a little JS — take it. If it
+simulates *light, fluid, particles, or 3D*, it's a shader — skip or approximate.
+Every ported effect must honour `prefers-reduced-motion` and `data-motion`, ship
+its own teardown, and land as a Layer-2 component or Layer-5 app-feel entry with
+its wall demo + llms.txt line.
+
+
+### Tier A — pure CSS, highest value / lowest cost (copy-paste-ish)
+
+- [ ] **Shine button** (their "Get Pro"). A constant moving gleam + hover lift.
+  Technique: an oversized multi-stop gradient background (`background-size:400%`)
+  slid via an animated `background-position` keyframe, PLUS a `::before` white
+  sweep (`linear-gradient(90deg, transparent→white→transparent)` at 200% width)
+  wiped across on a long loop, PLUS an accent glow that grows on hover. Pure CSS,
+  no JS. Ships cleanly as a `.btn-shine` variant.
+- [ ] **Traveling border** (their "Stop building from scratch" / "Star Border").
+  A bright arc that orbits an element's border. Technique: `@property --angle`
+  (registered so CSS can tween an angle) + a `conic-gradient(from var(--angle),…)`
+  border layer + `mask-composite: exclude` to punch out the middle so only the
+  1px frame shows + a keyframe spinning the angle. Pure CSS; degrades to a static
+  border where `@property` is unsupported. A `.border-glow` / `.star-border` util.
+- [ ] **Glare hover.** A diagonal gloss streak that slides across a card on hover.
+  Pure CSS `::before` sweep. Cheap "premium" feel on any `.card`.
+- [ ] **Shiny Text** and **Gradient Text.** A light sweep / animated multi-colour
+  fill on headings via `background-clip:text` + a moving gradient keyframe. Pure
+  CSS text-treatment utilities (`.text-shiny`, `.text-gradient`).
+- [ ] **Glitch Text.** RGB-split jitter from two `::before/::after` copies +
+  clip-path keyframes. Pure CSS. Optional, louder.
+
+
+### Tier B — small JS (one shared IntersectionObserver / pointer / timer)
+
+- [ ] **Scroll-reveal utility** (best effort-to-coverage ratio). ONE shared
+  IntersectionObserver that fades/slides/blurs elements in as they enter view.
+  The same observer powers Split Text, Count Up, Scroll Float, Scroll Velocity —
+  build this first; the rest are variants. `data-reveal="fade|up|blur"`.
+- [ ] **Split / Blur text.** Reveal per letter or word (fade/slide, or blur→sharp)
+  on scroll-in: wrap chars/words in spans, stagger via CSS transition delay,
+  trigger with the reveal observer. Small JS.
+- [ ] **Count Up.** A number ticks from 0 when it scrolls into view (~15 lines +
+  the observer). Perfect for stat blocks.
+- [ ] **Text Type (typewriter)** and **Rotating Text.** Type/delete phrases on a
+  loop; or cycle words in a fixed slot with a slide/fade. Small JS + a timer.
+- [ ] **Decrypt / Scramble Text.** Letters flicker through random glyphs then
+  settle to the real word; small `setInterval`. High "hacker" wow, cheap.
+- [ ] **Spotlight Card.** A radial glow follows the cursor across a card — a
+  couple of lines writing `--x/--y` custom properties that a `radial-gradient`
+  reads. Very high value, tiny code. `data-spotlight` on any `.card`.
+- [ ] **Magnet.** An element eases toward the cursor when near, springs back on
+  leave. Small `mousemove` → transform. Fun on buttons/icons. (Respect the iOS
+  parallax-exclusion rule: don't double-write a transform the motion engine owns.)
+- [ ] **Click Spark.** Short spark lines burst from the click point; spawn a few
+  absolutely-positioned elements (or one tiny canvas) that fade out. Delightful,
+  light. Pairs with the existing feedback layer (tap/tick).
+- [ ] **Dock magnify.** macOS-style: icons scale by distance from the cursor.
+  Small JS computing scale from pointer position. Iconic, no deps. A Layer-5 piece.
+
+
+### Tier C — self-contained canvas behaviour
+
+- [ ] **Dot-grid field** (their "DotField" — the hero dots that bulge away from the
+  cursor). It is Canvas 2D, NOT WebGL. Mechanics that port ~1:1: build dots on a
+  grid, each storing an anchor + a springy position; each frame clear and draw ALL
+  dots as one batched path (one `beginPath` → loop of `arc` → one `fill`) with a
+  single linear-gradient fill; for dots within a cursor radius, push the target
+  away (strength grows as `t*t` toward the pointer) and ease the drawn position
+  toward it (`sx += (target-sx)*0.15`); ease back to anchor when the cursor
+  leaves; gate on mouse speed so it only reacts while moving; a separate SVG
+  radial-gradient circle follows the pointer for the glow. ~120 lines, drops
+  cleanly into a `facet.js` named behaviour (`data-dot-field`). The most directly
+  reusable "wow" on their page.
+- [ ] **Masonry auto-scroll feed.** Uneven-height tiles in columns, adjacent
+  columns creeping in OPPOSITE directions on an infinite loop, slight hover scale.
+  Vanilla: CSS `columns` (or a JS column-balancer) + duplicate each column's
+  content and run a `translateY` keyframe (opposite sign per column) so it loops
+  seamlessly. Portable, no framework. A Layer-3 block.
+
+
+### Tier D — heavy: skip, or approximate only
+
+WebGL shaders, physics engines, and 3D — porting means shipping a shader/3D
+runtime, against the "one CSS + one JS, no heavy deps" charter. Default: skip.
+
+- **Shader backgrounds** — the purple streaks (their "HeroBand"/"ColorBends"),
+  Aurora, Silk, Threads, Iridescence, Liquid Chrome, Plasma, Prism, Galaxy, etc.
+  All full-screen GLSL via three.js/OGL. *Approximate* the streaks in pure CSS
+  with a few large blurred conic/radial gradients drifting behind the hero
+  (`.bg-aurora`, Easy) — won't match, but stays dependency-free. True WebGL only
+  ever as an OPTIONAL opt-in add-on file, never in core facet.js.
+- **Physics / 3D** — Ballpit (three.js + physics), Lanyard (rope physics), Model
+  Viewer, Meta Balls, fluid cursors. Out of scope.
+
+
+### UI patterns worth adopting (not effects)
+
+- [ ] **Mac-window code block.** Rounded translucent panel, `overflow:hidden`; a
+  title bar with three traffic-light dots on the LEFT (theirs are monochrome) and
+  an action slot on the RIGHT — the natural home for our copy / download / "copy
+  as Markdown" / language-tab buttons; a `<pre><code>` body with token spans.
+  This maps almost 1:1 onto Facet's code block and ties into the Print/export
+  backlog item's per-code-block affordances. High value, Easy.
+- [ ] **Preview-card anatomy** for the library wall: an animated "stage" top half
+  (fixed height, `overflow:hidden`, runs the live effect), a single hairline
+  divider, then a left-aligned title + muted one-line body beneath. Motion above,
+  words below, one crisp line between. Could restyle library.html component cards.
+- [ ] **Loading / splash screen.** A fixed dark overlay with a gently pulsing
+  logo, revealed until `document.fonts.ready` with a minimum on-screen time
+  (~800ms so it doesn't flash), then fade out and stagger the page in. CSS + a few
+  lines of JS, no deps. Ties to the PWA/app-shell story. `data-splash`.
+- [ ] **Type-scale lessons.** Their look is huge, tight display headings (H1
+  `clamp(28px,5.5vw,68px)`, weight 500, `-0.02em` tracking, `line-height:1.1`)
+  against tiny mono UI text (11–14px, often uppercase), with COLOUR carrying
+  hierarchy (white headline → ~60% white body → ~40% captions) on a dark canvas.
+  Three faces, three jobs (display / body / mono-as-UI). Compare against Facet's
+  type tokens — we already tokenise this; the takeaway is the bigger jump from
+  body to display and using mono as a UI voice, not just for code.
+
+
+### Guardrails for anything built from this list
+
+- No build step, no heavy dependency in core. WebGL/3D only as an optional,
+  clearly-isolated opt-in, never required and never in facet.js.
+- Every effect honours `prefers-reduced-motion` and `data-motion="off"/"calm"`,
+  and ships a teardown (connect/disconnect) so nothing leaks — this is the
+  Stimulus/Alpine lesson from the competitor digest.
+- Effects are additive polish on real semantic markup; the page still works with
+  JS off and nothing depends on the effect to read the content.
+- Each lands as a Layer-2 component (a single reusable piece) or Layer-5 app-feel
+  entry, with its library.html wall demo + the keep-in-sync docs trio.
+
+
+-------------------------------------------------------------------------------
+
 ## Parked — not scheduled
 ===============================================================================
 
