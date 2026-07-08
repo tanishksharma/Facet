@@ -181,6 +181,11 @@ normal person bounces off. That is the lost opportunity Facet exists to take.
 could build. AI now does the building — so we go back to a clean web and good
 principles, and let anyone build.
 
+*(The full manifesto — the frustrations with today's web, articulated at length and
+kept private until the product earns the right to publish them — lives in Notion:
+https://app.notion.com/p/397b4fa1867c8198909dc2fe9fb4c90d. This section is the
+condensed operational version that guides build decisions.)*
+
 
 -------------------------------------------------------------------------------
 
@@ -361,6 +366,21 @@ The shipped set, by design intent:
 ## Backlog — the build queue & upcoming features
 ===============================================================================
 
+
+> **CANONICAL BACKLOG + STRATEGY NOW LIVE IN NOTION.** Planning, priorities, the
+> full manifesto, the roadmap and the inspiration list have moved to the Notion
+> Facet hub. **At the start of any build session, check Notion for the current
+> backlog and priorities before picking work** — Notion is the source of truth for
+> *what to build next and why*; this file stays the source of truth for *how to
+> build it* (charter, keep-in-sync contract, checklist, decisions).
+> - Hub / strategy: https://app.notion.com/p/38bb4fa1867c80d2a77cd2f4d318cc15
+> - Backlog (canonical): https://app.notion.com/p/397b4fa1867c81ef9a8af52541038356
+> - Manifesto (full): https://app.notion.com/p/397b4fa1867c8198909dc2fe9fb4c90d
+> - Inspiration & resources: https://app.notion.com/p/397b4fa1867c810dab30e4da5d87865a
+>
+> The sections below are kept as detailed engineering *reference* (specs, digests,
+> porting notes) that the Notion backlog points back to. When the two disagree on
+> priority or scope, Notion wins.
 
 The roadmap: upcoming and in-progress work on the library, plus the decisions that bind future work. Each item carries enough detail to build from this file alone.
 
