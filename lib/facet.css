@@ -136,6 +136,25 @@
   --error: #B3261E;           /* something failed */
   --info: #295FA6;            /* neutral notices */
 
+  /* Each status also ships its derived pair — a soft fill and a border —
+     mixed once here from the base status color, so badges, fields, cards
+     and toasts all tint the same way and every theme (which only re-sets
+     the four bases above) gets the pairs for free. Components read the
+     pair; they never hand-roll their own color-mix recipe. */
+  --success-tint: color-mix(in srgb, var(--success) 14%, var(--background));
+  --success-edge: color-mix(in srgb, var(--success) 38%, var(--background));
+  --warning-tint: color-mix(in srgb, var(--warning) 14%, var(--background));
+  --warning-edge: color-mix(in srgb, var(--warning) 38%, var(--background));
+  --error-tint: color-mix(in srgb, var(--error) 14%, var(--background));
+  --error-edge: color-mix(in srgb, var(--error) 38%, var(--background));
+  --info-tint: color-mix(in srgb, var(--info) 14%, var(--background));
+  --info-edge: color-mix(in srgb, var(--info) 38%, var(--background));
+
+  /* The loading skin's placeholder ink: a shade just darker than the
+     page in light mode, just lighter in dark — derived, so every theme
+     and both modes get it with no extra tuning. */
+  --skeleton: color-mix(in srgb, var(--text) 9%, var(--background));
+
   /* ----- Colors: the vivid palette -----
      Five bright decorative colors named by rank, like the accent ranks.
      Decoration only — card tints (mixed into the surface), charts,
@@ -1821,6 +1840,9 @@ figcaption {
    Variants: .btn-primary  .btn-secondary (default for bare .btn)  .btn-ghost
    Sizes:    .btn-small  .btn (default)  .btn-large
    States:   hover, focus ring, pressed, :disabled — all built in.
+             aria-disabled="true" disables an <a class="btn"> the same way;
+             aria-busy="true" shows a working spinner and blocks re-clicks
+             (see the STATE GRAMMAR section).
    -------------------------------------------------------------------------- */
 
 .btn {
@@ -1955,8 +1977,8 @@ figcaption {
    When to use it: every numeric entry in a calculator. Read the plain
    number in app code by stripping separators —
    parseFloat(input.value.replace(/[^0-9.]/g, "")). For the error state,
-   put .field-invalid on the field and swap the hint for a .field-error
-   line.
+   set data-status="error" on the field and swap the hint for a
+   .field-msg line (.field-invalid + .field-error stay as aliases).
 
    Usage:
      <label class="field">
@@ -2895,6 +2917,252 @@ svg[data-icon] {
 }
 .empty strong { color: var(--text); }
 
+/* ----- STATE GRAMMAR: every state, one of three carriers -----
+   What it is: the library's state system. Every component state is
+   carried one of three ways, never by an invented class: a native
+   pseudo-class where the platform has one (:disabled, :checked,
+   :indeterminate, :user-invalid); an ARIA attribute where a real
+   semantic exists (aria-pressed, aria-selected, aria-current,
+   aria-expanded, aria-busy, aria-invalid, aria-disabled) — the CSS
+   styles the attribute itself, so looks and accessibility can never
+   drift apart; and data-status="success|warning|error|info" for
+   statuses with no ARIA home (fields, cards, rows). What it is for:
+   selected cards and rows, disabled anything, field validation in
+   three colors, working buttons. When to use it: set the attribute
+   and the look follows, in every theme, light and dark. The older
+   hooks (.field-invalid, the toast's data-kind) stay as permanent
+   aliases. */
+
+/* Disabled by attribute: links and ARIA widgets cannot take :disabled,
+   so aria-disabled="true" gets the disabled treatment everywhere. */
+.btn[aria-disabled="true"],
+.chip:disabled,
+.chip[aria-disabled="true"],
+.list-item[aria-disabled="true"],
+.tabs [role="tab"][aria-disabled="true"],
+.dropdown-menu [aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* A disabled segment: the option shows, muted, and takes no pick. */
+.segmented input:disabled + span {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* A picked card: the same accent ring the option card earns when its
+   radio checks — aria-selected (pickers), aria-pressed (toggling
+   cards) and aria-current (the active one of a set) all light it. */
+.card[aria-selected="true"],
+.card[aria-pressed="true"],
+.card[aria-current="true"] {
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 1px var(--accent-1), var(--shadow-raised);
+}
+
+/* A picked row: a quiet fill plus an accent bar at the reading edge. */
+.list-item[aria-selected="true"],
+.list-item[aria-current] {
+  background: var(--surface-active);
+  box-shadow: inset 3px 0 0 var(--accent-1);
+}
+tbody tr[aria-selected="true"] {
+  background: color-mix(in srgb, var(--accent-1) 7%, var(--surface));
+}
+
+/* A statusful card: the status color as an edge at the reading side.
+   The words carry the meaning (pair it with a badge); the edge only
+   points at it. */
+.card[data-status="success"] { border-inline-start: 3px solid var(--success); }
+.card[data-status="warning"] { border-inline-start: 3px solid var(--warning); }
+.card[data-status="error"]   { border-inline-start: 3px solid var(--error); }
+.card[data-status="info"]    { border-inline-start: 3px solid var(--info); }
+
+/* Field validation in three colors. data-status on the .field colors
+   the control's border and the .field-msg line under it. aria-invalid
+   on the control and the native :user-invalid (required, pattern,
+   type) light the error state with no class at all — the old
+   .field-invalid + .field-error pair stays as a permanent alias. */
+:is(input, textarea, select)[aria-invalid="true"],
+:is(input, textarea, select):user-invalid,
+.field[data-status="error"] :is(input, textarea, select) {
+  border-color: var(--error);
+}
+.field[data-status="warning"] :is(input, textarea, select) { border-color: var(--warning); }
+.field[data-status="success"] :is(input, textarea, select) { border-color: var(--success); }
+
+/* The one message line, colored by the field's status; same reveal
+   animation as .field-error. */
+.field-msg {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-body);
+  color: var(--text-muted);
+  animation: facet-reveal var(--duration-normal) var(--ease-out);
+}
+.field[data-status="error"] .field-msg   { color: var(--error); }
+.field[data-status="warning"] .field-msg { color: var(--warning); }
+.field[data-status="success"] .field-msg { color: var(--success); }
+
+/* Readonly reads as fact, not entry: the fill drops to the page, the
+   border keeps the shape, the value stays selectable. */
+input[readonly],
+textarea[readonly] {
+  background: var(--background);
+  color: var(--text-muted);
+  cursor: default;
+}
+
+/* A <progress> with no value attribute is indeterminate: an accent
+   sweep slides the track until the real number arrives. */
+progress:not([value]) {
+  background: var(--accent-2-pressed);
+  background-image: linear-gradient(90deg, transparent, var(--accent-1) 50%, transparent);
+  background-size: 40% 100%;
+  background-repeat: no-repeat;
+  animation: facet-slide 1.4s ease-in-out infinite;
+}
+progress:not([value])::-webkit-progress-bar { background: transparent; }
+progress:not([value])::-moz-progress-bar { background: transparent; }
+@keyframes facet-slide {
+  from { background-position: -66% 0; }
+  to   { background-position: 166% 0; }
+}
+
+/* A working button: aria-busy="true" swaps the label for a spinner in
+   the button's own ink, holds the width, and goes inert — no double
+   submits. Add disabled too when the button should also leave the tab
+   order. */
+.btn[aria-busy="true"] {
+  position: relative;
+  color: transparent;
+  text-shadow: none;         /* velvet's embossed label must vanish too */
+  pointer-events: none;
+}
+/* The spinner reclaims ::after from the tooltip: a busy button is
+   inert (no hover, no tap), so its data-tip bubble can never show —
+   every tooltip property is reset here so the ring wins on tipped
+   buttons too. */
+.btn[aria-busy="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  translate: none;
+  margin: auto;
+  width: 1.1em;
+  height: 1.1em;
+  max-width: none;
+  padding: 0;
+  display: block;
+  opacity: 1;
+  background: transparent;
+  box-shadow: none;
+  border: 2px solid color-mix(in srgb, var(--on-accent-2) 30%, transparent);
+  border-top-color: var(--on-accent-2);
+  border-radius: var(--radius-pill);
+  animation: facet-spin 0.8s linear infinite;
+}
+.btn-primary[aria-busy="true"]::after {
+  border-color: color-mix(in srgb, var(--on-accent-1) 30%, transparent);
+  border-top-color: var(--on-accent-1);
+}
+.btn-ghost[aria-busy="true"]::after {
+  border-color: color-mix(in srgb, var(--text) 25%, transparent);
+  border-top-color: var(--text);
+}
+
+/* ----- LOADING SKIN: aria-busy turns a region into its own skeleton -----
+   What it is: the page-refresh loading state. Put aria-busy="true" on
+   any component or region whose content is being fetched and
+   everything inside turns into quiet pulsing placeholders that trace
+   the shapes already there: text becomes soft bars hugging its own
+   lines, images and icons flatten to gray, controls go quiet and
+   inert. Remove the attribute and the content is back — nothing was
+   replaced, only skinned. What it is for: refreshing live data over a
+   page that has already rendered — lists, cards, dashboards. When to
+   use it: keep the stale content (or placeholder text) in place and
+   skin it, instead of swapping markup for hand-built .skeleton
+   blocks; .skeleton stays for first paint when no content exists yet.
+   facet.busy(el, true|false) does the same and upgrades the bars to
+   per-line pills that hug real text; put data-static on anything
+   inside that is not live data (a section heading, a label) to leave
+   it readable. The pulse animates opacity only, so it never collides
+   with the motion engine's transforms; under prefers-reduced-motion
+   it stands still as a plain placeholder. */
+
+@keyframes facet-pulse {
+  50% { opacity: 0.45; }
+}
+@keyframes facet-pulse-media {
+  0%, 100% { opacity: 0.16; }
+  50% { opacity: 0.08; }
+}
+
+/* The busy scope: work in progress — hands off until it lands. */
+[aria-busy="true"] { cursor: progress; }
+[aria-busy="true"] :is(a, button, input, select, textarea, label):not([data-static], [data-static] *) {
+  pointer-events: none;
+}
+
+/* The per-line pill: invisible ink, a pulsing bar hugging the words.
+   box-decoration-break gives every wrapped line its own rounded ends.
+   facet.busy() wraps text nodes in this; authors can hand-place it. */
+.skeleton-text {
+  color: transparent;
+  text-shadow: none;
+  background: var(--skeleton);
+  border-radius: 0.4em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  animation: facet-pulse 1.3s ease-in-out infinite;
+  user-select: none;
+}
+.skeleton-text * { visibility: hidden; }
+
+/* Block text traces its own shape: the bar hugs the words, not the
+   column. Skipped once facet.busy() has wired the region (data-busy)
+   — the per-line pills take over. */
+[aria-busy="true"]:not([data-busy]) :is(h1, h2, h3, h4, h5, h6, p, li, dt, dd, blockquote, figcaption):not([data-static], [data-static] *) {
+  color: transparent;
+  text-shadow: none;
+  background: var(--skeleton);
+  border-radius: var(--radius-control);
+  max-width: fit-content;
+  animation: facet-pulse 1.3s ease-in-out infinite;
+  user-select: none;
+}
+
+/* Inline text and the small signals hug their own words already. */
+[aria-busy="true"]:not([data-busy]) :is(span, a, strong, em, small, time, code, .badge):not([data-static], [data-static] *) {
+  color: transparent;
+  text-shadow: none;
+  background: var(--skeleton);
+  border-color: transparent;
+  border-radius: 0.4em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  animation: facet-pulse 1.3s ease-in-out infinite;
+  user-select: none;
+}
+
+/* Media flattens to its own gray shape: exact size, no content. */
+[aria-busy="true"] :is(img, svg, video, canvas, iframe):not([data-static], [data-static] *) {
+  filter: grayscale(1) contrast(0);
+  opacity: 0.12;
+  animation: facet-pulse-media 1.3s ease-in-out infinite;
+}
+
+/* Controls go quiet: same shape, placeholder fill, nothing to press. */
+[aria-busy="true"] :is(.btn, .chip, input, select, textarea):not([data-static], [data-static] *) {
+  color: transparent;
+  text-shadow: none;
+  background: var(--skeleton);
+  border-color: transparent;
+  box-shadow: none;
+  animation: facet-pulse 1.3s ease-in-out infinite;
+}
+[aria-busy="true"] :is(input, textarea)::placeholder { color: transparent; }
+
 /* ----- BADGE, CHIP, AVATAR, PROGRESS: the small signals -----
    What it is: four tiny signals. The badge is a status word in a
    tinted pill (kinds success / warning / error / info via a class).
@@ -2920,10 +3188,10 @@ svg[data-icon] {
   color: var(--on-accent-2);
   border: var(--border-element) solid var(--border);
 }
-.badge-success { background: color-mix(in srgb, var(--success) 14%, var(--background)); color: var(--success); border-color: color-mix(in srgb, var(--success) 38%, var(--background)); }
-.badge-warning { background: color-mix(in srgb, var(--warning) 14%, var(--background)); color: var(--warning); border-color: color-mix(in srgb, var(--warning) 38%, var(--background)); }
-.badge-error   { background: color-mix(in srgb, var(--error) 14%, var(--background));   color: var(--error);   border-color: color-mix(in srgb, var(--error) 38%, var(--background)); }
-.badge-info    { background: color-mix(in srgb, var(--info) 14%, var(--background));    color: var(--info);    border-color: color-mix(in srgb, var(--info) 38%, var(--background)); }
+.badge-success { background: var(--success-tint); color: var(--success); border-color: var(--success-edge); }
+.badge-warning { background: var(--warning-tint); color: var(--warning); border-color: var(--warning-edge); }
+.badge-error   { background: var(--error-tint);   color: var(--error);   border-color: var(--error-edge); }
+.badge-info    { background: var(--info-tint);    color: var(--info);    border-color: var(--info-edge); }
 
 .chips { display: flex; flex-wrap: wrap; gap: var(--space-tight); max-width: none; }
 .chip {

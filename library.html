@@ -92,6 +92,8 @@
         <p class="nav-sub">Status</p>
         <ul>
           <li><a href="#waiting">Skeleton, spinner, empty</a></li>
+          <li><a href="#loading-skin">Loading skin</a></li>
+          <li><a href="#states">Component states</a></li>
         </ul>
         </details>
         <details class="nav-group" data-group="layer3" open>
@@ -904,10 +906,13 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           token-colored chevron, no image files), and a capsule search
           field. What it is for: every form. The label is real, so
           clicking it focuses the control and readers announce it; the
-          hint sits under the control; for errors put
-          <code>.field-invalid</code> on the field and swap the hint
-          for a <code>.field-error</code> line. When to use it: any
-          time a control needs a name — which is always.
+          hint sits under the control; for validation set
+          <code>data-status="error|warning|success"</code> on the
+          field and swap the hint for a <code>.field-msg</code> line
+          (<code>.field-invalid</code> + <code>.field-error</code>
+          stay as aliases — see <a href="#states">Component
+          states</a>). When to use it: any time a control needs a
+          name — which is always.
         </p>
         <div class="demo">
           <div class="grid">
@@ -992,8 +997,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           data-number. When to use it: every numeric entry in a calculator.
           The field shows grouped text; read the plain number in app code by
           stripping separators — parseFloat(input.value.replace(/[^0-9.]/g, "")).
-          For the error state, put .field-invalid on the field and swap the
-          hint for a .field-error line.
+          For the error state, set data-status="error" on the field and swap
+          the hint for a .field-msg line (.field-invalid + .field-error stay
+          as aliases).
         </p>
         <p class="chips" role="group" aria-label="Number input states and locale">
           <button class="chip" aria-pressed="true" data-chip-class="" data-chip-group="state">Normal</button>
@@ -1777,6 +1783,133 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-waiting"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-waiting" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- LOADING SKIN -->
+      <article class="element stack" id="loading-skin" data-cat="status">
+        <h3 data-status="stable">Loading skin</h3>
+        <p>
+          What it is: the page-refresh loading state. Put
+          <code>aria-busy="true"</code> on any component or region
+          whose content is being fetched and everything inside turns
+          into quiet pulsing placeholders that trace the shapes
+          already there: text becomes soft bars hugging its own lines,
+          images and icons flatten to gray, controls go quiet and
+          inert. Remove the attribute and the content is back —
+          nothing was replaced, only skinned. What it is for:
+          refreshing live data over a page that has already rendered —
+          lists, cards, dashboards. When to use it: keep the stale
+          content (or placeholder text) in place and skin it, instead
+          of swapping markup for hand-built <code>.skeleton</code>
+          blocks; <code>.skeleton</code> stays for first paint when no
+          content exists yet. <code>facet.busy(el, true|false)</code>
+          does the same and upgrades the bars to per-line pills that
+          hug real text; put <code>data-static</code> on anything
+          inside that is not live data (a section heading, a label) to
+          leave it readable. Under
+          <code>prefers-reduced-motion</code> the pulse stands still.
+        </p>
+        <div class="demo">
+          <div class="grid">
+            <article class="card stack-tight">
+              <strong>Monthly spend</strong>
+              <p class="text-footnote" style="max-width: none;">₹ 48,600 across 31 transactions, most of it rent and groceries.</p>
+              <p><span class="badge badge-success">On budget</span></p>
+              <button class="btn btn-small" data-event="report-open" data-tip="A live, loaded card">Open report</button>
+            </article>
+            <article class="card stack-tight" aria-busy="true">
+              <strong>Monthly spend</strong>
+              <p class="text-footnote" style="max-width: none;">₹ 48,600 across 31 transactions, most of it rent and groceries.</p>
+              <p><span class="badge badge-success">On budget</span></p>
+              <button class="btn btn-small" data-tip="The same card, refreshing">Open report</button>
+            </article>
+          </div>
+        </div>
+        <pre id="code-loading-skin"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-loading-skin" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- COMPONENT STATES -->
+      <article class="element stack" id="states" data-cat="status">
+        <h3 data-status="stable">Component states</h3>
+        <p>
+          What it is: the library's state system. Every component
+          state is carried one of three ways, never by an invented
+          class: a native pseudo-class where the platform has one
+          (<code>:disabled</code>, <code>:checked</code>,
+          <code>:indeterminate</code>, <code>:user-invalid</code>); an
+          ARIA attribute where a real semantic exists
+          (<code>aria-pressed</code>, <code>aria-selected</code>,
+          <code>aria-current</code>, <code>aria-expanded</code>,
+          <code>aria-busy</code>, <code>aria-invalid</code>,
+          <code>aria-disabled</code>) — the CSS styles the attribute
+          itself, so looks and accessibility can never drift apart;
+          and <code>data-status="success|warning|error|info"</code>
+          for statuses with no ARIA home (fields, cards, rows). What
+          it is for: selected cards and rows, disabled anything, field
+          validation in three colors, working buttons. When to use it:
+          set the attribute and the look follows, in every theme,
+          light and dark. The older hooks (<code>.field-invalid</code>,
+          the toast's <code>data-kind</code>) stay as permanent
+          aliases.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <div class="row">
+              <button class="btn btn-primary" aria-busy="true" data-tip="A working button: aria-busy shows the spinner and blocks re-clicks">Saving</button>
+              <button class="btn" aria-busy="true" data-tip="Works on every variant">Loading</button>
+              <a class="btn" href="#states" aria-disabled="true" data-tip="A link styled as a button disables with aria-disabled">Unavailable</a>
+              <button class="chip" aria-disabled="true" data-tip="A disabled chip">Sold out</button>
+            </div>
+            <div class="grid">
+              <label class="field" data-status="error">
+                <span class="field-label">Email</span>
+                <input type="email" value="ada@" aria-invalid="true">
+                <span class="field-msg">That address is missing its domain.</span>
+              </label>
+              <label class="field" data-status="warning">
+                <span class="field-label">Password</span>
+                <input type="text" value="sunshine">
+                <span class="field-msg">Weak — add a number or two.</span>
+              </label>
+              <label class="field" data-status="success">
+                <span class="field-label">Username</span>
+                <input type="text" value="ada">
+                <span class="field-msg">Available.</span>
+              </label>
+            </div>
+            <div class="grid">
+              <article class="card stack-tight" aria-selected="true" data-tip="A picked card: aria-selected lights the accent ring">
+                <strong>Growth plan</strong>
+                <p class="text-footnote" style="max-width: none;">Selected — the accent ring says so.</p>
+              </article>
+              <article class="card stack-tight" data-status="warning" data-tip="A statusful card: data-status colors the reading edge">
+                <p><span class="badge badge-warning">Renewal due</span></p>
+                <p class="text-footnote" style="max-width: none;">The edge points at the badge that says why.</p>
+              </article>
+            </div>
+            <nav class="list list-boxed" aria-label="State demo list">
+              <a class="list-item" href="#states" aria-current="true">
+                <span class="list-content"><span class="list-title">Overview</span></span>
+              </a>
+              <a class="list-item" href="#states">
+                <span class="list-content"><span class="list-title">Transactions</span></span>
+              </a>
+              <a class="list-item" href="#states" aria-disabled="true">
+                <span class="list-content"><span class="list-title">Forecast (soon)</span></span>
+              </a>
+            </nav>
+            <div class="row">
+              <progress data-tip="No value attribute: indeterminate, the sweep slides until the number arrives"></progress>
+            </div>
+            <label class="field">
+              <span class="field-label">Account ID</span>
+              <input type="text" value="FCT-2201-88" readonly data-tip="Readonly reads as fact: page fill, muted ink, still selectable">
+            </label>
+          </div>
+        </div>
+        <pre id="code-states"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-states" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- ==============================

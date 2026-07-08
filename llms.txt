@@ -113,8 +113,15 @@ gauge, and the nav menu (a floating Menu-pill + Settings-button cluster, built
 from .btn.btn-pill, a no-JS <details> of real links upgraded to an overlay);
 the calculator-grade number input (prefilled example, one-tap clear,
 locale-aware grouping, words helper in the active language); labelled
-fields with hints and
-error states; themed sliders with live readouts; the detailed slider
+fields with hints and three-color validation (data-status +
+.field-msg, aria-invalid and native :user-invalid honoured); the
+component state grammar — every state rides a native pseudo-class, an
+ARIA attribute or data-status, giving selected cards and rows,
+disabled anything, readonly fields, indeterminate progress and
+working (aria-busy) buttons in every theme; the loading skin —
+aria-busy="true" on any region skins its content into pulsing
+placeholders that trace the shapes already there (facet.busy upgrades
+text to per-line pills); themed sliders with live readouts; the detailed slider
 (.slider-detail) for wide ranges — coarse drag by data-coarse, −/+ steppers
 and a number box for the fine values between, fires facet:slide; verdict-first
 result blocks with aria-live; list rows (.list / .list-item — leading icon,
@@ -128,7 +135,7 @@ it); the data-tip description tooltip on one attribute;
 all behaviour self-wires to data attributes; built-in context —
 facet.location for the visitor's rough place (IP-based, configurable,
 disablable, off by default); JS API: facet.set, facet.locate,
-facet.groupNumber, facet.numberWords, facet.numberSystem.
+facet.busy, facet.groupNumber, facet.numberWords, facet.numberSystem.
 
 Internationalised: every built-in string comes from one translation
 table (facet.strings), switched with data-language and extendable in one
@@ -477,9 +484,11 @@ What it is: the labelled field family — one pattern (label.field >
 control: text input, textarea, select (with a token-colored chevron,
 no image files), and a capsule search field. What it is for: every
 form. The label is real, so clicking it focuses the control and
-readers announce it; for errors put .field-invalid on the field and
-swap the hint for a .field-error line. When to use it: any time a
-control needs a name — which is always.
+readers announce it; for validation set
+data-status="error|warning|success" on the field and swap the hint
+for a .field-msg line (.field-invalid + .field-error stay as aliases
+— see Component states). When to use it: any time a control needs a
+name — which is always.
 
     <label class="field">
       <span class="field-label">Project name</span>
@@ -785,6 +794,110 @@ is content, not an error.
       <button class="btn btn-primary btn-small">New report</button>
     </div>
 
+### Loading skin
+
+What it is: the page-refresh loading state. Put aria-busy="true" on
+any component or region whose content is being fetched and everything
+inside turns into quiet pulsing placeholders that trace the shapes
+already there: text becomes soft bars hugging its own lines, images
+and icons flatten to gray, controls go quiet and inert. Remove the
+attribute and the content is back — nothing was replaced, only
+skinned. What it is for: refreshing live data over a page that has
+already rendered — lists, cards, dashboards. When to use it: keep the
+stale content (or placeholder text) in place and skin it, instead of
+swapping markup for hand-built .skeleton blocks; .skeleton stays for
+first paint when no content exists yet. facet.busy(el, true|false)
+does the same and upgrades the bars to per-line pills that hug real
+text; an element carrying data-skeleton-lines="n" with no content yet
+gets n lines of generated placeholder words shaped like average text.
+Put data-static on anything inside that is not live data (a section
+heading, a label) to leave it readable. Under prefers-reduced-motion
+the pulse stands still. For table cells, use facet.busy (it wraps the
+text itself); the pure-CSS skin covers headings, paragraphs, list
+items, inline text, media and controls.
+
+    <article class="card stack-tight" aria-busy="true">
+      <strong>Monthly spend</strong>
+      <p>₹ 48,600 across 31 transactions.</p>
+      <button class="btn btn-small">Open report</button>
+    </article>
+
+    // refreshing from the server, the JS way (per-line pills):
+    facet.busy(card, true);
+    const data = await fetch("/api/spend").then(r => r.json());
+    render(card, data);
+    facet.busy(card, false);
+
+### Component states — the grammar
+
+What it is: the library's state system. Every component state is
+carried one of three ways, never by an invented class: a native
+pseudo-class where the platform has one (:disabled, :checked,
+:indeterminate, :user-invalid); an ARIA attribute where a real
+semantic exists (aria-pressed, aria-selected, aria-current,
+aria-expanded, aria-busy, aria-invalid, aria-disabled) — the CSS
+styles the attribute itself, so looks and accessibility can never
+drift apart; and data-status="success|warning|error|info" for
+statuses with no ARIA home (fields, cards, rows). What it is for:
+selected cards and rows, disabled anything, field validation in three
+colors, working buttons. When to use it: set the attribute and the
+look follows, in every theme, light and dark. The older hooks
+(.field-invalid, the toast's data-kind) stay as permanent aliases.
+
+The states, component by component:
+
+- Button: hover, focus, pressed, :disabled built in. aria-disabled
+  disables an <a class="btn"> the same way. aria-busy="true" swaps
+  the label for a spinner in the button's own ink, holds the width
+  and blocks re-clicks — add disabled too if it should leave the tab
+  order.
+- Field: data-status="error|warning|success" on the .field colors the
+  control's border and the .field-msg line under it. aria-invalid on
+  the control, or the native :user-invalid (required, pattern, type),
+  lights the error state with no class at all. input[readonly] reads
+  as fact: page fill, muted ink, still selectable.
+- Card: aria-selected / aria-pressed / aria-current "true" lights the
+  accent ring (a picked card). data-status colors the reading edge —
+  pair it with a badge that says why.
+- List row: aria-selected or aria-current fills the row and adds an
+  accent bar at the reading edge; aria-disabled mutes it.
+- Table row: aria-selected="true" on the <tr> tints it with the
+  accent.
+- Chip: aria-pressed toggles (built in); :disabled or aria-disabled
+  mutes it.
+- Tabs / segmented control: aria-selected marks the open tab (built
+  in); aria-disabled on a tab, or disabled on a segment's radio,
+  mutes the option.
+- Dropdown menu: aria-disabled mutes an item.
+- Stepper: the minus/plus buttons disable themselves at min/max
+  (facet.js sets :disabled live).
+- Checkbox: set el.indeterminate = true in JS for the mixed
+  select-all state — the native mark, themed by accent-color.
+- Progress: a <progress> with no value attribute is indeterminate —
+  an accent sweep slides until the real number arrives.
+- Any region: aria-busy="true" is the loading skin (above); .empty is
+  the empty state; for failure show words — an .empty with the error
+  and a retry button, or a data-status="error" card.
+
+    <button class="btn btn-primary" aria-busy="true">Saving</button>
+
+    <label class="field" data-status="error">
+      <span class="field-label">Email</span>
+      <input type="email" value="ada@" aria-invalid="true">
+      <span class="field-msg">That address is missing its domain.</span>
+    </label>
+
+    <article class="card" aria-selected="true">Picked</article>
+    <article class="card" data-status="warning">Renewal due</article>
+    <a class="list-item" href="/overview" aria-current="true">…</a>
+    <progress></progress>
+
+Status colors: the four theme tokens --success / --warning / --error
+/ --info each ship a derived pair — --success-tint (soft fill) and
+--success-edge (border) — mixed once in facet.css, so badges, fields,
+cards and toasts all tint the same way in every theme. Components
+read the pair; never hand-roll a color-mix recipe.
+
 ### Flagship link
 
 What it is: a large link — heading-sized text, a strong accent
@@ -927,8 +1040,8 @@ behaviours come from facet.js the moment the input carries data-number.
 When to use it: every numeric entry in a calculator. The field shows the
 grouped text; read the plain number in app code by stripping separators —
 parseFloat(input.value.replace(/[^0-9.]/g, "")). For the error state,
-put .field-invalid on the field and swap the hint for a .field-error
-line.
+set data-status="error" on the field and swap the hint for a
+.field-msg line (.field-invalid + .field-error stay as aliases).
 
     <label class="field">
       <span class="field-label">Monthly investment</span>

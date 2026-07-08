@@ -262,6 +262,7 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 - [ ] Semantic tokens only. No raw hex, px sizes outside the scales, or hardcoded fonts.
 - [ ] Works in every theme and in light and dark with zero extra code.
 - [ ] All states covered: hover, focus, active, disabled, and where relevant empty, loading, error.
+- [ ] States ride the grammar (see the Component state system spec): a native pseudo-class, an ARIA attribute, or `data-status` — never an invented class. Status colors read the `-tint`/`-edge` token pairs, never a hand-rolled `color-mix`. Check the component under `aria-busy` — the loading skin should trace it sensibly.
 - [ ] Keyboard operable with a visible focus ring. ARIA roles and labels where semantics fall short.
 - [ ] Interactive elements ship with a description tooltip.
 - [ ] Responsive and mobile-usable: 44px touch targets, no hover-only interactions.
@@ -529,6 +530,19 @@ The requirement, in full: every Facet page must print cleanly, read well in brow
 Open decisions to confirm at build time: whether link-URL expansion is opt-in (proposed yes), the exact `@page` margins, and whether the "Copy page as Markdown" export lands in this system or its own later item.
 
 ### Component state system — one grammar for every state (cross-cutting)
+
+> **SHIPPED (8 Jul 2026)** — the grammar, tokens, loading skin, form states and
+> selection/status states all landed in one pass. Decisions made at build time:
+> field validation rides `data-status` on the `.field` + one `.field-msg` line
+> (`.field-invalid`/`.field-error` stay as permanent aliases); checkbox
+> indeterminate needs no CSS — the native mark is themed by `accent-color`,
+> set `el.indeterminate` in JS; the avatar presence dot was DROPPED as feature
+> creep (revisit only with a real use); the toast keeps `data-kind` as an
+> alias; and the **loading skin** shipped as the headline addition — `aria-busy`
+> on any region skins its content into pulsing shape-tracing placeholders,
+> with `facet.busy()` upgrading text to per-line pills and
+> `data-skeleton-lines` generating statistically text-shaped placeholder words
+> for empty slots. The spec below is kept as the engineering reference.
 
 **The audit (8 Jul 2026).** States are already half-supported, but unevenly, and there
 is no single system a builder or an AI can learn once:
