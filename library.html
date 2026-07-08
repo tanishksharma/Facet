@@ -75,6 +75,7 @@
           <li><a href="#result-block">Result block</a></li>
           <li><a href="#icons">Icons</a></li>
           <li><a href="#map">Themed map</a></li>
+          <li><a href="#app-grid">App grid</a></li>
         </ul>
         <p class="nav-sub">Overlays &amp; disclosure</p>
         <ul>
@@ -105,6 +106,7 @@
           <li><a href="#block-pricing">Pricing, FAQ, CTA</a></li>
           <li><a href="#block-social-proof">Logos &amp; testimonial</a></li>
           <li><a href="#block-data-table">Data table &amp; stats</a></li>
+          <li><a href="#block-app-identity">App identity</a></li>
           <li><a href="#block-settings">Settings &amp; form</a></li>
           <li><a href="#block-article">Article set</a></li>
         </ul>
@@ -1455,6 +1457,57 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- APP GRID -->
+      <article class="element stack" id="app-grid" data-cat="content">
+        <h3 data-status="beta">App grid</h3>
+        <p>
+          What it is: a home-screen launcher — an auto-fill grid of app
+          tiles, each tile one real link: a rounded-square icon, the
+          app's name, a one-line caption, and an optional metric line.
+          What it is for: the front door of a suite of mini apps, a
+          portal, a directory of tools — many small destinations
+          presented as equals. When to use it: when the destinations
+          are apps rather than content — content belongs in the card
+          grid or the list. The grid packs as many tile columns as
+          fit, still two across on a phone, with no breakpoints
+          written. A tile is an <code>&lt;a class="app-tile"&gt;</code>:
+          the whole tile is the hit target, it fills on hover and
+          carries the keyboard focus ring. Put an open count or any
+          live number in <code>.app-count</code> — tabular digits so
+          tiles line up. Reuses the neutral ramp and type tokens, so
+          it restyles with every theme.
+        </p>
+        <div class="demo">
+          <nav class="app-grid" aria-label="Apps">
+            <a class="app-tile" href="#app-grid" data-tip="The whole tile is the link">
+              <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>📈</text></svg>" alt="" width="68" height="68">
+              <strong>Inflation calculator</strong>
+              <span>Time-travel your money</span>
+              <span class="app-count">1,240 opens</span>
+            </a>
+            <a class="app-tile" href="#app-grid" data-tip="The whole tile is the link">
+              <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>🗺️</text></svg>" alt="" width="68" height="68">
+              <strong>Real-time explorer</strong>
+              <span>What's around you, live</span>
+              <span class="app-count">318 opens</span>
+            </a>
+            <a class="app-tile" href="#app-grid" data-tip="The whole tile is the link">
+              <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>⚖️</text></svg>" alt="" width="68" height="68">
+              <strong>Money scale</strong>
+              <span>Thousands to trillions</span>
+              <span class="app-count">96 opens</span>
+            </a>
+            <a class="app-tile" href="#app-grid" data-tip="A tile without the metric line">
+              <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>💬</text></svg>" alt="" width="68" height="68">
+              <strong>Anime quote quiz</strong>
+              <span>Guess who said it</span>
+            </a>
+          </nav>
+        </div>
+        <pre id="code-app-grid"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-app-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
       <!-- Overlays &amp; disclosure -->
       <h3 class="wall-group" id="cat-overlays">Overlays &amp; disclosure</h3>
 
@@ -2187,6 +2240,44 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         </div>
         <pre id="code-block-stat-row"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-block-stat-row" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- APP IDENTITY -->
+      <article class="element stack" id="block-app-identity">
+        <h3 data-status="beta">App identity</h3>
+        <p>
+          What it is: the identity header of an app's about page — a
+          centered rounded-square icon, the app's name, a muted
+          one-line phrase, and an optional badge row;
+          <code>.app-identity-stats</code> centers a row of
+          <code>.stat</code> blocks under it. What it is for: the
+          App-Store-style front matter of an about, release-notes or
+          install page — which app this is, at a glance, before any
+          detail. When to use it: once, at the top of the page, with
+          the name as the page's one h1. The icon wears a hairline
+          border so light icons keep an edge on light surfaces. Pairs
+          with the stat row — opens, version, size — numbers first,
+          prose after. (The demo below substitutes
+          <code>.text-h1</code> for the <code>&lt;h1&gt;</code> — the
+          Library page already has its one h1.)
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <header class="app-identity">
+              <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>💬</text></svg>" alt="" width="96" height="96">
+              <p class="text-h1">Anime quote quiz</p>
+              <p class="text-footnote">Guess who said it</p>
+              <p><span class="badge badge-warning">In development</span></p>
+            </header>
+            <div class="app-identity-stats">
+              <div class="stat"><strong>4,120</strong><span>OPENS</span></div>
+              <div class="stat"><strong>v0.9</strong><span>VERSION</span></div>
+              <div class="stat"><strong>212 KB</strong><span>SIZE</span></div>
+            </div>
+          </div>
+        </div>
+        <pre id="code-block-app-identity"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-app-identity" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- SETTINGS SECTION -->

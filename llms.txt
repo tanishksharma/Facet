@@ -120,7 +120,11 @@ and a number box for the fine values between, fires facet:slide; verdict-first
 result blocks with aria-live; list rows (.list / .list-item — leading icon,
 title, optional description line, optional trailing value or action; one- or
 two-line; bare with hairlines or .list-boxed; rows can be links or buttons);
-the data-tip description tooltip on one attribute;
+the app-grid launcher (.app-grid of .app-tile links — rounded-square icon,
+name, one-line caption, optional .app-count metric in tabular digits);
+the app-identity about-page header (.app-identity: centered icon, name,
+phrase, optional badge row; .app-identity-stats centers .stat cards under
+it); the data-tip description tooltip on one attribute;
 all behaviour self-wires to data attributes; built-in context —
 facet.location for the visitor's rough place (IP-based, configurable,
 disablable, off by default); JS API: facet.set, facet.locate,
@@ -575,6 +579,31 @@ it needs no tokens of its own and restyles with every theme.
         <span class="list-icon"><svg data-icon="settings"></svg></span>
         <span class="list-content"><span class="list-title">Settings</span></span>
         <span class="list-trail"><svg data-icon="chevron-right"></svg></span>
+      </a>
+    </nav>
+
+### App grid
+
+What it is: a home-screen launcher — an auto-fill grid of app tiles,
+each tile one real link: a rounded-square icon, the app's name, a
+one-line caption, and an optional metric line. What it is for: the
+front door of a suite of mini apps, a portal, a directory of tools —
+many small destinations presented as equals. When to use it: when the
+destinations are apps rather than content — content belongs in the
+card grid or the list. The grid packs as many tile columns as fit,
+still two across on a phone, with no breakpoints written. A tile is
+an <a class="app-tile">: the whole tile is the hit target, it fills
+on hover and carries the keyboard focus ring. Put an open count or
+any live number in .app-count — tabular digits so tiles line up.
+Reuses the neutral ramp and type tokens, so it restyles with every
+theme.
+
+    <nav class="app-grid" aria-label="Apps">
+      <a class="app-tile" href="/apps/inflation">
+        <img src="/apps/icons/inflation.png" alt="" width="68" height="68">
+        <strong>Inflation calculator</strong>
+        <span>Time-travel your money</span>
+        <span class="app-count">1,240 opens</span>
       </a>
     </nav>
 
@@ -1128,10 +1157,35 @@ recommended plan carries the page's one primary); FAQ list (named
 accordions); CTA band (.cta-band: ink-filled closing ask); logo row +
 testimonial (.pullquote + .avatar); data table with toolbar (search
 data-filter + chips + actions over .table); stat row (.stat KPI
-cards, tabular digits); settings section (check-rows with switches +
-fields); form section (grouped fields, one submit row); article set
-(header, prose on the narrow container, .media-figure with caption,
-.pullquote).
+cards, tabular digits); app identity (.app-identity: centered icon,
+name, phrase, optional badge row; .app-identity-stats centers .stat
+cards under it — full entry below); settings section (check-rows with
+switches + fields); form section (grouped fields, one submit row);
+article set (header, prose on the narrow container, .media-figure
+with caption, .pullquote).
+
+### App identity
+
+What it is: the identity header of an app's about page — a centered
+rounded-square icon, the app's name, a muted one-line phrase, and an
+optional badge row; .app-identity-stats centers a row of .stat blocks
+under it. What it is for: the App-Store-style front matter of an
+about, release-notes or install page — which app this is, at a
+glance, before any detail. When to use it: once, at the top of the
+page, with the name as the page's one h1. The icon wears a hairline
+border so light icons keep an edge on light surfaces. Pairs with the
+stat row — opens, version, size — numbers first, prose after.
+
+    <header class="app-identity">
+      <img src="/apps/icons/inflation.png" alt="" width="96" height="96">
+      <h1>Inflation calculator</h1>
+      <p class="text-footnote">Time-travel your money</p>
+      <p><span class="badge badge-warning">In development</span></p>
+    </header>
+    <div class="app-identity-stats">
+      <div class="stat"><strong>4,120</strong><span>OPENS</span></div>
+      <div class="stat"><strong>v0.9</strong><span>VERSION</span></div>
+    </div>
 
 ## Themed map
 

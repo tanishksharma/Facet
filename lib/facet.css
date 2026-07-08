@@ -2692,6 +2692,57 @@ dialog.drawer[open]::backdrop { animation: facet-fade-in var(--duration-normal) 
   color: var(--text-muted);
 }
 
+/* ----- APP IDENTITY: the front matter of an app's about page -----
+   What it is: the identity header of an app's about page — a centered
+   rounded-square icon, the app's name, a muted one-line phrase, and an
+   optional badge row; .app-identity-stats centers a row of .stat blocks
+   under it. What it is for: the App-Store-style front matter of an
+   about, release-notes or install page — which app this is, at a
+   glance, before any detail. When to use it: once, at the top of the
+   page, with the name as the page's one h1. The icon wears a hairline
+   border so light icons keep an edge on light surfaces. Pairs with the
+   stat row — opens, version, size — numbers first, prose after.
+   (Promoted by extraction from the shipped apps info page.)
+
+   Usage:
+     <header class="app-identity">
+       <img src="/apps/icons/inflation.png" alt="" width="96" height="96">
+       <h1>Inflation calculator</h1>
+       <p class="text-footnote">Time-travel your money</p>
+       <p><span class="badge badge-warning">In development</span></p>
+     </header>
+     <div class="app-identity-stats">
+       <div class="stat"><strong>4,120</strong><span>OPENS</span></div>
+       <div class="stat"><strong>v0.9</strong><span>VERSION</span></div>
+     </div>
+*/
+.app-identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.app-identity img {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 22.5%;              /* the app-icon corner ratio, as in .app-tile */
+  border: var(--border-hairline) solid var(--border-subtle);
+  margin-bottom: var(--space-stack);
+}
+.app-identity h1,
+.app-identity .text-h1 {             /* .text-h1 pairs like .hero .text-display: same look off the docs page */
+  margin: 0 0 var(--space-tight);
+  color: var(--text);
+}
+.app-identity p { margin: 0; color: var(--text-muted); }
+.app-identity p:has(.badge) { margin-top: var(--space-control); }
+.app-identity-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-page);
+  flex-wrap: wrap;
+}
+
 /* ----- MOTION PACK: parallax depths and idle motion -----
    What it is: subtle motion by default. data-parallax="depth" lets an
    element drift up to that many pixels behind the pointer (desktop),
@@ -3669,6 +3720,73 @@ button.list-item:active { background: var(--surface-active); }
 .grid-wide { grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr)); }
 .grid-tight { gap: var(--space-control); }
 .grid-loose { gap: var(--space-page); }
+
+/* ----- APP GRID: a launcher of app tiles -----
+   What it is: a home-screen launcher — an auto-fill grid of app tiles,
+   each tile one real link: a rounded-square icon, the app's name, a
+   one-line caption, and an optional metric line. What it is for: the
+   front door of a suite of mini apps, a portal, a directory of tools —
+   many small destinations presented as equals. When to use it: when the
+   destinations are apps rather than content — content belongs in the
+   card grid or the list. The grid packs as many tile columns as fit,
+   still two across on a phone, with no breakpoints written. A tile is
+   an <a class="app-tile">: the whole tile is the hit target, it fills
+   on hover and carries the keyboard focus ring. Put an open count or
+   any live number in .app-count — tabular digits so tiles line up.
+   Reuses the neutral ramp and type tokens, so it restyles with every
+   theme. (Promoted by extraction from the shipped apps launcher.)
+
+   Usage:
+     <nav class="app-grid" aria-label="Apps">
+       <a class="app-tile" href="/apps/inflation">
+         <img src="/apps/icons/inflation.png" alt="" width="68" height="68">
+         <strong>Inflation calculator</strong>
+         <span>Time-travel your money</span>
+         <span class="app-count">1,240 opens</span>
+       </a>
+     </nav>
+*/
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(8.75rem, 100%), 1fr));
+  gap: var(--space-stack) var(--space-control);
+}
+.app-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-control) var(--space-tight);
+  border-radius: var(--radius-card);
+  text-decoration: none;
+  color: inherit;
+}
+.app-tile:hover { background: var(--surface-hover); }
+/* The icon: a full-bleed square image, rounded to the home-screen shape.
+   22.5% is the icon's own geometry (the app-icon corner ratio), not a
+   surface radius — the radius tokens stay for surfaces. */
+.app-tile img {
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 22.5%;
+  display: block;
+  margin-bottom: var(--space-inline);
+}
+.app-tile strong {
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-ui);
+  margin-bottom: var(--space-tight);
+}
+.app-tile span {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  line-height: var(--leading-ui);
+}
+.app-tile .app-count {
+  margin-top: var(--space-tight);
+  font-variant-numeric: tabular-nums;
+}
 
 /* --------------------------------------------------------------------------
    APP COMPONENTS — ingested verbatim from the shipped inflation app.
