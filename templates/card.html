@@ -11,7 +11,12 @@
   <title>Acme — business card</title>
   <meta name="description" content="3.5x2in business card, front and back, with a print sheet.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Acme — business card">
+  <meta property="og:description" content="3.5x2in business card, front and back, with a print sheet.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://facet-kappa.vercel.app/templates/card.html">
   <link rel="icon" href="/favicon.svg">
+  <link rel="canonical" href="https://facet-kappa.vercel.app/templates/card.html">
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
   <style>
@@ -50,15 +55,16 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <p class="screen-note container text-footnote" style="padding-block: var(--space-stack); color: var(--text-muted);">
     Front and back below, then the print sheet: five of each per A4,
     exact size, cut on the borders.
   </p>
 
-  <div class="bcard-sheet" aria-label="Print sheet">
+  <div id="main" class="bcard-sheet" aria-label="Print sheet">
     <!-- FRONT x5 / BACK x5, paired so a duplex flip lines up. -->
     <div class="bcard">
-      <strong class="text-h4">Tanishk Sharma</strong>
+      <h1 class="text-h4">Tanishk Sharma</h1>
       <div class="text-caption" style="color: var(--text-muted);">
         FOUNDER · ACME<br>
         tanishk@example.com<br>

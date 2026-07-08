@@ -11,7 +11,12 @@
   <title>Acme — document</title>
   <meta name="description" content="A4 letterhead, invoice and one-pager on Facet.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Acme — document">
+  <meta property="og:description" content="A4 letterhead, invoice and one-pager on Facet.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://facet-kappa.vercel.app/templates/document.html">
   <link rel="icon" href="/favicon.svg">
+  <link rel="canonical" href="https://facet-kappa.vercel.app/templates/document.html">
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
   <style>
@@ -52,8 +57,9 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <!-- 1 · LETTERHEAD -->
-  <section class="page">
+  <section id="main" class="page">
     <header class="page-head">
       <strong class="text-h3">acme</strong>
       <span class="text-caption">42 MG Road, Pune · acme.example.com</span>
