@@ -2780,16 +2780,19 @@ dialog.drawer[open]::backdrop { animation: facet-fade-in var(--duration-normal) 
 /* ----- MOTION PACK: parallax depths and idle motion -----
    What it is: subtle motion by default. data-parallax="depth" lets an
    element drift up to that many pixels behind the pointer (desktop),
-   the scroll's momentum (everywhere) or the device's tilt (where no
-   permission gate blocks it) — facet.motion is the engine. The
-   idle-* classes give key elements a continuous idle motion: a slow float, a
-   faint sway, a soft pulsing scale. What it is for: heroes,
-   illustrations, decorative cards — motion at the edges, never on the
-   reading path. When to use it: sparingly; one or two moving things
-   per screen. Idle classes animate the translate/rotate/scale
-   properties, so they compose with the engine's transform instead of
-   colliding (the parallax exclusion, solved structurally). The Calm
-   motion setting stills idle motion; off and prefers-reduced-motion still
+   the scroll's momentum (everywhere), the device's tilt (where no
+   permission gate blocks it) or the engine's own idle drift (gated
+   touch devices, or setMode("idle")) — facet.motion is the engine,
+   modes off | cursor | tilt | idle, and its light channel drives the
+   shine effect below from the same vector. The idle-* classes give
+   key elements a continuous idle motion: a slow float, a faint sway,
+   a soft pulsing scale. What it is for: heroes, illustrations,
+   decorative cards — motion at the edges, never on the reading path.
+   When to use it: sparingly; one or two moving things per screen.
+   Idle classes animate the translate/rotate/scale properties, so
+   they compose with the engine's transform instead of colliding (the
+   parallax exclusion, solved structurally). The Calm motion setting
+   stills idle motion; off and prefers-reduced-motion still
    everything. */
 .idle-float { animation: facet-idle-float 5s ease-in-out infinite alternate; }
 .idle-sway  { animation: facet-idle-sway 7s ease-in-out infinite alternate; }
@@ -2800,6 +2803,53 @@ dialog.drawer[open]::backdrop { animation: facet-fade-in var(--duration-normal) 
 [data-motion="calm"] .idle-float,
 [data-motion="calm"] .idle-sway,
 [data-motion="calm"] .idle-pulse { animation: none; }
+
+/* ----- SHINE: the moving light on things with depth -----
+   What it is: the shine effect — a specular light on any element with
+   visual depth, the way iOS icons catch light. data-shine lays a soft
+   light spot plus a rim over the element: a bright edge toward the
+   light, a soft shade away from it. facet.motion's light channel
+   writes the light's direction (--shine-x / --shine-y, each -1..1)
+   from the device tilt, the cursor, or the idle drift — the same
+   normalised vector that drives parallax, so the element that
+   translates and the light that sweeps across it always agree on
+   which way the device is leaning; at rest the light sits centred
+   above. What it is for: app icons, hero cards, any raised or
+   3D-feeling piece that should catch light as the device moves. When
+   to use it: on the element that carries the depth; the overlay is a
+   .shine child span facet.js injects for you (the pseudo-elements
+   stay free for the tooltip; add the span yourself for a static
+   resting shine with JS off), it inherits the element's
+   border-radius, and images need a wrapper because an <img> cannot
+   hold a child — the .icon-badge-holder doubles as one (give the
+   wrapper the icon's radius). Unlike parallax, shine writes no
+   transform — only custom properties — so the parallax exclusion
+   does not apply; it composes with velvet lift/press, the pager, and
+   data-parallax itself. --shine (0..1, default 0.5) tunes the
+   strength. */
+[data-shine] {
+  position: relative;
+  /* the resting light: centred, from above — where it returns to */
+  --shine-x: 0;
+  --shine-y: -0.55;
+  --shine: 0.5;
+}
+[data-shine] > .shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  user-select: none;
+  /* the specular spot sits where the light is... */
+  background: radial-gradient(
+    120% 85% at calc(50% + var(--shine-x) * 55%) calc(50% + var(--shine-y) * 55%),
+    rgb(255 255 255 / calc(var(--shine) * 0.5)),
+    rgb(255 255 255 / 0) 60%);
+  /* ...and the rim brightens toward it, shades away from it */
+  box-shadow:
+    inset calc(var(--shine-x) * -2px) calc(var(--shine-y) * -2px) 2px rgb(255 255 255 / calc(var(--shine) * 0.8)),
+    inset calc(var(--shine-x) * 2px) calc(var(--shine-y) * 2px) 3px rgb(0 0 0 / calc(var(--shine) * 0.45));
+}
 
 /* ----- ICONS: thin line glyphs on one attribute -----
    What it is: the icon set — 24x24 line glyphs at a 1.5px
@@ -3247,6 +3297,62 @@ progress {
 progress::-webkit-progress-bar { background: var(--accent-2-pressed); border-radius: var(--radius-pill); }
 progress::-webkit-progress-value { background: var(--accent-1); border-radius: var(--radius-pill); transition: width var(--duration-normal) var(--ease-out); }
 progress::-moz-progress-bar { background: var(--accent-1); border-radius: var(--radius-pill); }
+
+/* ----- ICON BADGE: the status dot on an app icon -----
+   What it is: a round status dot pinned to an app icon's top-right
+   corner — a 1.25rem plasticine bead, its top edge lit and its
+   underside softly shaded, wearing a hairline ring of the page
+   background so it pops off any icon, carrying one glyph and no text
+   (the word lives in title/aria-label). One attribute sets the tone
+   and glyph: data-status="new" (info blue, sparkle), "updated"
+   (success green, refresh arrow), "wip" (warning amber, wrench).
+   What it is for: marking apps in a launcher grid or a featured card
+   as new, freshly updated, or in the works. When to use it: only on
+   icons 3.5rem and larger; smaller list-row icons take an inline
+   version chip instead. Which status an app gets is the app's own
+   decision — the library ships only the visual. Wrap the icon in an
+   .icon-badge-holder (the positioning context; it also takes
+   data-shine, sized and rounded to the icon) and put the badge beside
+   the img inside it.
+
+   Usage:
+     <span class="icon-badge-holder">
+       <img src="/apps/icons/inflation.png" alt="" width="68" height="68">
+       <span class="icon-badge" data-status="new" role="img"
+             aria-label="New" title="New"><svg data-icon="sparkle"></svg></span>
+     </span>
+*/
+.icon-badge-holder { position: relative; display: inline-block; }
+.icon-badge {
+  position: absolute;
+  top: -0.35rem;
+  right: -0.35rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: var(--border-hairline) solid var(--background);
+  color: var(--background);          /* the glyph inks in the page paper: light-on-tone in light, dark-on-tone in dark */
+  user-select: none;
+  -webkit-user-select: none;
+  /* the plasticine: a top-lit sheen over the tone, a soft self-shade
+     along the underside, and a faint cast onto the icon beneath —
+     white/black dims, theme-neutral like the shadow tokens */
+  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.32), rgb(255 255 255 / 0) 58%);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 0.5),
+    inset 0 -2px 3px rgb(0 0 0 / 0.22),
+    0 1px 2.5px rgb(0 0 0 / 0.25);
+}
+.icon-badge svg[data-icon] {
+  width: 0.78rem;
+  height: 0.78rem;
+  stroke-width: 2;                   /* the 1.5px set stroke vanishes this small */
+}
+.icon-badge[data-status="new"]     { background-color: var(--info); }
+.icon-badge[data-status="updated"] { background-color: var(--success); }
+.icon-badge[data-status="wip"]     { background-color: var(--warning); }
 
 /* ----- CHART: the themed SVG line chart -----
    What it is: a line chart drawn by facet.chart(el, {points}) — data
