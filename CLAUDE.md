@@ -317,6 +317,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 ===============================================================================
 
 
+- Deployment default: push work directly to `main` (the user works on main and wants changes live on each push). Do NOT create feature branches unless the user explicitly asks for one. This overrides any older branch-per-change workflow.
 - Docs are demos. A component is not done until the Library wall (library.html) shows it live with its code.
 - One component, one clearly commented section in the CSS file. Nothing is scattered.
 - Growth by extraction: build a new pattern inside a project first, promote it once it repeats.

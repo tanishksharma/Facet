@@ -314,6 +314,13 @@ article.element {
   padding: var(--space-card);
 }
 
+/* Font specimens: a clean column — each role's label hugs its sample line,
+   with a comfortable gap between roles. Kills the runaway em-based paragraph
+   margins that made the display samples drift far apart. */
+#fonts .demo { display: flex; flex-direction: column; gap: var(--space-card); }
+#fonts .demo article { gap: var(--space-tight); }
+#fonts .demo p { margin: 0; }
+
 /* The variant/state chips are the library's own .chip now —
    promoted by extraction. Nothing docs-only left to style. */
 
