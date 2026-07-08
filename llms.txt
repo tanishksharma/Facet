@@ -108,7 +108,10 @@ skip-to-content link, placeholder styling; the hidden attribute always
 wins; tabular figures on numeric UI.
 
 Components and behaviours: themed layout primitives (container in four
-widths, stack in three gaps, full-viewport snap sections); buttons in
+widths, stack in three gaps, full-viewport snap sections); the
+view-stack app shell for screen-to-screen apps (main.view-stack of
+.view screens, hash-routed, facet.views.go/back, safe-area padded);
+buttons in
 three variants and three sizes working on <button> and <a>, plus .btn-pill
 capsule shape (an icon-and-label pill with no extra markup); icon buttons;
 the app-kit floating controls — tab bar, settings sheet, float button, scroll
@@ -295,6 +298,15 @@ role — --border-hairline (faint separators, dividers, row lines),
 
 Elevation: --shadow-flat, --shadow-raised, --shadow-floating,
 --shadow-overlay (very light, all of them)
+
+Safe areas: --safe-top / --safe-bottom carry the device's own
+intrusions (Dynamic Island / notch above, home bar below) as role
+tokens — every full-viewport surface the library owns (snap sections,
+views, sheets, drawers, tab bar, toasts, nav menu, install nudge,
+overlay guide) pads with them, so content clears the hardware by
+default. Opt out per subtree with .bleed-top (sets --safe-top to 0 —
+custom properties inherit) when content should deliberately run up
+under the island: full-bleed maps, immersive pages.
 
 Motion: the motion system. Lively, the default — momentum, weight,
 spring (--ease-spring is a true linear() spring curve where
@@ -577,7 +589,13 @@ card list. A row is one line (icon + title + trailing) or two (add
 .list-desc, which top-aligns the icon on its own). Make a row actionable by
 writing it as <a class="list-item" href> or <button class="list-item"> — it
 fills on hover, presses on click, and is a real keyboard-operable control
-(put a chevron in .list-trail to signal it). Rows are always direct children
+(put a chevron in .list-trail to signal it). Every look is a composition
+of the same slots, never a new component: leave out .list-icon for a
+plain text row; put an avatar image in .list-icon for a person; put a
+.badge in .list-trail for a status; on a static <li> row, put a real
+button in .list-trail (a .btn-icon.btn-small with an aria-label) for a
+dismiss or per-row action — never inside an <a> or <button> row, where a
+nested control is invalid HTML. Rows are always direct children
 of .list, so a <ul> takes <li class="list-item"> and a clickable list is a
 <nav> of <a class="list-item">. Reuses the neutral ramp and type tokens, so
 it needs no tokens of its own and restyles with every theme.
@@ -600,6 +618,23 @@ it needs no tokens of its own and restyles with every theme.
         <span class="list-trail"><svg data-icon="chevron-right"></svg></span>
       </a>
     </nav>
+
+    <!-- slot compositions: no icon + status badge; dismiss button on a static row -->
+    <ul class="list list-boxed">
+      <li class="list-item">
+        <span class="list-content"><span class="list-title">Plain row</span></span>
+        <span class="list-trail"><span class="badge badge-success">Paid</span></span>
+      </li>
+      <li class="list-item">
+        <span class="list-icon"><svg data-icon="file"></svg></span>
+        <span class="list-content">
+          <span class="list-title">report-2026.pdf</span>
+          <span class="list-desc">2.4 MB</span>
+        </span>
+        <span class="list-trail"><button type="button" class="btn btn-icon btn-small"
+              aria-label="Remove report-2026.pdf"><svg data-icon="close"></svg></button></span>
+      </li>
+    </ul>
 
 ### App grid
 
@@ -1051,6 +1086,35 @@ the fixed nav-menu on a short screen, and a hairline divider marks each
 boundary except the last — landing at the viewport's bottom edge as each
 section snaps (sections are 100dvh and border-box).
 
+### View stack
+
+What it is: the app shell for apps with real screens — a <main
+class="view-stack"> of .view sections where exactly one shows at a
+time, each scrolling on its own, content centered by auto margins when
+short. Navigation is plain hash links: any <a href="#result"> switches
+views, facet.views.go(id) and .back() do it from code, the URL always
+names the screen, and the browser's own Back walks the trail (back()
+falls home to the first view when there is nothing left to pop). Every
+view pads itself clear of the Dynamic Island (safe-area top) and of
+the home bar plus the nav menu (safe-area bottom + clearance); opt a
+view out with .bleed-top. What it is for: screen-to-screen apps — home
+→ question → result → leaderboard — where the paged .snap shell (one
+long page you page through) is the wrong shape. When to use it: one
+view-stack per page, as the page's <main>, one .view per screen with a
+real id. facet.js upgrades it (.is-stacked, like .snap → .is-paged):
+html gets .is-app-shell, the page locks to the viewport, one view
+shows. With JS off the screens simply stack in reading order and the
+links jump between them — everything stays crawlable. Views keep their
+scroll positions while hidden, so Back returns exactly where the
+visitor left. Each arrival fires a bubbling "facet:view" CustomEvent
+({view, from}) on the stack and moves focus to the view.
+
+    <main class="view-stack">
+      <section class="view" id="home"> … <a href="#play">Play</a> </section>
+      <section class="view" id="play"> … </section>
+      <section class="view" id="result"> … </section>
+    </main>
+
 ### Button
 
 What it is: the action element, in three variants and three sizes, working
@@ -1242,6 +1306,10 @@ for calculator apps:
                                returns { moveTo }
     facet.installNudge(el)     the add-to-home-screen flow; returns
                                { standalone, installed, addNow, never }
+    facet.views                the view-stack app shell, when the page
+                               has one: .go(id), .back(), .current —
+                               hash-routed, so plain <a href="#id">
+                               links navigate too
     facet.motion               the ambient motion engine, one vector,
                                two channels: .register(selector,
                                {xMax, yMax}) moves elements (parallax),
@@ -1616,6 +1684,60 @@ print sheet: five duplex-aligned pairs per A4 at exact size.
 /templates/manifest.json — the PWA manifest template with the icon
 checklist. robots.txt and sitemap.xml ship at the site root as the
 copyable pattern.
+
+## Build advice — guidance, not components
+
+Some patterns matter but are too thin or context-bound to wrap as a
+component: a few imperative lines beat a class. Those ship here as
+guidance entries — read them like instructions. If advice is not
+written down here, do not assume it; if a pattern below repeats enough
+to earn markup and behaviour, it gets promoted to a real component.
+
+Choosing a shell (one per page):
+- A document, a marketing page, an article: no shell. Normal flow,
+  normal scrolling, a .container for width.
+- One story told one screen at a time (a calculator: intro → inputs →
+  results): <main class="snap"> — the visitor pages through a single
+  flow, top to bottom, and every screen is part of one narrative.
+- Real screen-to-screen navigation (an app: home → question → result →
+  leaderboard, with back): <main class="view-stack"> — one screen
+  visible, hash-routed, the browser's Back works.
+Never nest one shell inside another.
+
+Choosing navigation (one primary navigation per page): the four
+navigation pieces are different components on purpose — they share the
+same pill and token primitives and the same data-control self-wiring,
+but their markup, position and behaviour differ, so they are not
+variants of each other. Pick by the page's shape:
+- A website or document (landing, article, docs): the .top-menu block —
+  the classic in-flow header, wordmark left, links right, folding to a
+  disclosure on phones. Works with no JS.
+- An app-like page or installed PWA: the floating .nav-menu cluster —
+  thumb-reachable Menu and Settings pills in a bottom corner, stacks
+  opening upward as an overlay.
+- An app with three to five top-level sections: the .tab-bar, with the
+  settings sheet on its trailing icon.
+- The .sheet is not navigation itself: it is the right-edge panel any
+  trigger opens — the home of settings rows (data-control) wherever a
+  tab bar or a custom button wants them.
+Never stack two primary navigations on one page (a .top-menu plus a
+.nav-menu): pick the one that matches the page's shape and let it carry
+the settings too.
+
+Safe areas (standalone PWAs, black-translucent status bar):
+- Ship the app-shell metas: viewport-fit=cover on the viewport meta,
+  apple-mobile-web-app-capable and black-translucent status bar (the
+  PWA section below has the exact head block). The page then runs
+  under the Dynamic Island and home bar, so padding must handle both.
+- Facet surfaces already do: they pad with --safe-top / --safe-bottom.
+  When you build your own full-viewport or fixed surface, pad it the
+  same way: padding-top: calc(your-padding + var(--safe-top)) and
+  padding-bottom: calc(your-padding + var(--safe-bottom)); add
+  var(--nav-menu-clearance) to the bottom when a fixed nav menu or tab
+  bar is on the page.
+- Bleeding under the island is a deliberate choice, never a default:
+  put .bleed-top on the one surface that wants it (a full-bleed map,
+  an immersive hero) and keep its controls padded clear.
 
 ## Rules for building on Facet
 
