@@ -167,6 +167,72 @@ function initWallSearch() {
   });
 }
 
+/* Solo mode: on a desktop the wall is a reference, not a scroll. With
+   the sidebar beside the content, exactly ONE entry shows at a time —
+   the sidebar is the master list, the column is the detail. Nobody
+   consumes a library by scrolling the whole wall; select, read, select.
+   Any hash navigation (a sidebar link, a link inside an entry, a shared
+   URL) swaps the visible entry, opens its fold and returns the page to
+   the top; with no hash the first entry shows. A live search suspends
+   solo so matches from every layer can appear together, and the chosen
+   entry restores the moment the box clears. On phones and narrow
+   windows (sidebar above the content) nothing changes: the wall stays
+   one scrollable, foldable page. */
+function initSoloWall() {
+  const main = document.querySelector("main#main");
+  const index = document.querySelector(".docs-index");
+  if (!main || !index) return;             // pages without the wall
+  const narrow = matchMedia("(max-width: 56rem)");   // docs.css sidebar breakpoint
+  let searching = false;
+
+  // The unit an id selects: the wall entry it sits in, else its
+  // top-level section (the Layer-1 token sections, #templates).
+  const unitFor = (id) => {
+    const target = id && document.getElementById(id);
+    if (!target || target === main || !main.contains(target)) return null;
+    return target.closest("article.element")
+      || target.closest("#main > section")
+      || null;
+  };
+  const clearSolo = () => {
+    for (const el of main.querySelectorAll(".solo-hidden")) el.classList.remove("solo-hidden");
+  };
+  const solo = (unit) => {
+    clearSolo();
+    // hide every sibling on the path from the unit up to <main>, so the
+    // unit keeps its wrapping section but nothing else renders
+    for (let node = unit; node !== main; node = node.parentElement) {
+      for (const sib of node.parentElement.children) {
+        if (sib !== node) sib.classList.add("solo-hidden");
+      }
+    }
+    const fold = unit.querySelector("details.fold");
+    if (fold) fold.open = true;
+    scrollTo(0, 0);
+  };
+  const apply = () => {
+    if (narrow.matches || searching) { clearSolo(); return; }
+    const unit = unitFor(decodeURIComponent(location.hash.slice(1)));
+    if (unit) solo(unit);
+    // a hash that selects nothing (none, #main via the skip link) keeps
+    // the current choice; only an unsoloed wall falls to the first entry
+    else if (!main.querySelector(".solo-hidden")) solo(main.querySelector("article.element"));
+  };
+  addEventListener("hashchange", apply);
+  narrow.addEventListener("change", apply);
+  // clicking the already-current link fires no hashchange — re-apply
+  // (covers returning from a search with the same selection)
+  index.addEventListener("click", (e) => {
+    if (e.target.closest("a[href^='#']")) requestAnimationFrame(apply);
+  });
+  const box = document.querySelector("#wall-search");
+  if (box) box.addEventListener("input", () => {
+    searching = !!box.value.trim();
+    apply();
+  });
+  apply();
+}
+
 /* Marking, not collapsing: setActiveGroup only highlights the layer the
    reader is in — it never opens or closes a group. Expanding is the
    reader's job (click a label to toggle it, native <details>), so the
@@ -574,15 +640,25 @@ function initWallFilter() {
    page into an iframe and scales it to fit the column. Desktop / Tablet /
    Phone chips set the frame's logical width; the frame is transform-scaled
    so the template's genuine responsive layout shows at that breakpoint.
+   On a phone the chips hide and the preview just shows the phone layout —
+   a desktop or tablet frame scaled into a phone column is unreadable and
+   claims a truth the visitor cannot check.
    Lazy: the iframe src is only set once the preview nears the viewport. */
 function initDevicePreview() {
   const SIZES = { desktop: [1280, 800], tablet: [834, 1040], phone: [390, 780] };
+  const phoneViewer = matchMedia("(max-width: 34rem)").matches;
   for (const preview of document.querySelectorAll(".device-preview")) {
     const stage = preview.querySelector(".device-stage");
     const frame = preview.querySelector(".device-frame");
     const src = preview.dataset.src;
     if (!stage || !frame || !src) continue;
-    let device = "desktop";
+    let device = phoneViewer ? "phone" : "desktop";
+    if (phoneViewer) {
+      const row = preview.querySelector('[role="group"]');
+      if (row) row.hidden = true;
+      for (const c of preview.querySelectorAll("[data-chip-device]"))
+        c.setAttribute("aria-pressed", String(c.dataset.chipDevice === "phone"));
+    }
     const layout = () => {
       const [w, h] = SIZES[device];
       const avail = stage.clientWidth || preview.clientWidth || w;
@@ -1102,4 +1178,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFoldLinks();
   initSearchKeys();
   initScrollSpy();
+  initSoloWall();     // desktop: the sidebar selects ONE entry at a time
 });

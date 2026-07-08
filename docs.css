@@ -237,6 +237,11 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   background: linear-gradient(to top, var(--surface) 70%, transparent);
 }
 
+/* Solo mode (initSoloWall): on a desktop the sidebar selects ONE wall
+   entry at a time; everything else on the path to <main> is hidden with
+   this class. !important so it beats the layout classes' own display. */
+.solo-hidden { display: none !important; }
+
 /* Collapsible wall entry: each element folds to just its heading and
    a one-line callout, so the wall is scannable at a glance. Opening
    reveals the full description, demo, snippet and reference. */
