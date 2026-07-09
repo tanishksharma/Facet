@@ -361,6 +361,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 ===============================================================================
 
 
+- Reporting a change (how the maintainer wants replies): after pushing, one short reply with what shipped, the live link, and exactly what to check page by page. No process narration.
 - Deployment default: push work directly to `main` (the user works on main and wants changes live on each push). Do NOT create feature branches unless the user explicitly asks for one. This overrides any older branch-per-change workflow.
 - The backlog lives on the Notion All To Dos board (Project = Facet) — see the routing table at the top of this file. New ideas become rows immediately; this file never grows a queue. At the start of a build session, read the board for what to build and this file for how.
 - Docs are demos. A component is not done until the Library wall (library.html) shows it live with its code.

@@ -141,7 +141,7 @@
           <li><a href="#template-landing">Landing page</a></li>
           <li><a href="#template-saas">SaaS dashboard</a></li>
           <li><a href="#template-social">Social app</a></li>
-          <li><a href="#templates">Every template</a></li>
+          <li><a href="#every-template">Every template</a></li>
         </ul>
         </div>
         <div class="nav-group side-index-group" data-group="motionfeel"
@@ -315,6 +315,13 @@
           </p>
         </article>
         </div>
+
+        <pre id="code-typography" data-code-static><code>&lt;h1&gt;A heading that opens the page&lt;/h1&gt;
+&lt;p&gt;Body text at a comfortable measure, holding &lt;strong&gt;strong text&lt;/strong&gt;,
+  &lt;a href="#"&gt;a link&lt;/a&gt;, inline &lt;code&gt;code&lt;/code&gt; and a key like &lt;kbd&gt;Esc&lt;/kbd&gt;.&lt;/p&gt;
+&lt;blockquote&gt;A quote steps aside from the flow.&lt;/blockquote&gt;
+&lt;p&gt;&lt;small&gt;Small text for secondary lines.&lt;/small&gt;&lt;/p&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-typography" data-tip="Copies the raw semantic markup the scale styles">Copy</button></p>
       </article>
 
       <!-- ==============================
@@ -388,6 +395,14 @@
           </p>
         </article>
         </div>
+
+        <pre id="code-fonts" data-code-static><code>/* Components never name a face — they ask for the role. */
+h1, h2, h3 { font-family: var(--font-heading); }
+body        { font-family: var(--font-body); }
+code, kbd   { font-family: var(--font-mono); }
+blockquote  { font-family: var(--font-quote); }
+.big-number { font-family: var(--font-numeric); }</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-fonts" data-tip="Copies the font role tokens">Copy</button></p>
       </article>
 
       <!-- ==============================
@@ -414,7 +429,16 @@
           charts, playful accents — never semantic status; a theme may
           re-tune them.
         </p>
-        <ul class="swatch-row">
+        <p>
+          Every value lives once in <a href="/lib/facet.css">facet.css</a> as
+          a variable named by role — <code>--surface</code>, never
+          <code>--gray-100</code> — so a theme is one block of overrides and
+          nothing downstream changes. Click any swatch below to copy its
+          token.
+        </p>
+
+        <div class="demo">
+          <ul class="swatch-row">
           <li><div class="swatch" style="background: var(--color-1)"></div>--color-1</li>
           <li><div class="swatch" style="background: var(--color-2)"></div>--color-2</li>
           <li><div class="swatch" style="background: var(--color-3)"></div>--color-3</li>
@@ -422,7 +446,7 @@
           <li><div class="swatch" style="background: var(--color-5)"></div>--color-5</li>
         </ul>
 
-        <div class="mode-pair">
+          <div class="mode-pair">
           <section class="mode-panel" data-mode="light">
             <h3>Light</h3>
             <p>Ink on paper. <span style="color: var(--text-muted);">Muted text steps back for hints and captions.</span></p>
@@ -477,34 +501,28 @@
             </p>
           </section>
         </div>
-        <p>
-          Every value lives once in <a href="/lib/facet.css">facet.css</a> as
-          a variable named by role — <code>--surface</code>, never
-          <code>--gray-100</code> — so a theme is one block of overrides and
-          nothing downstream changes.
-        </p>
 
-        <h3 id="custom-accent">Custom accent — the override recipe</h3>
-        <p>
-          What it is: your own brand color on any accent rank, one small
-          block of CSS, a supported feature. What it is for: products
-          that keep the Facet base but carry their own accent — override
-          a rank's four tokens (the color, its hover, its pressed, and
-          the on-color for text sitting on it) and every component using
-          that rank follows, in every state. What to know: override on
-          :root for the whole page or on any element for a subtree;
-          check the on-color still passes AA against your accent; the
-          live example below carries the block on its own container, and
-          facet.set({"--accent-1": "..."}) is the same override applied
-          live at runtime. Ranks are the contract —
-          components never pick raw colors, so this block is the whole
-          theme surface you need.
-        </p>
-        <div class="accent-demo" style="--accent-1: #0F6FDE; --accent-1-hover: #0B5FC2; --accent-1-pressed: #0850A6; --on-accent-1: #FFFFFF; display: flex; gap: var(--space-control); flex-wrap: wrap;">
-          <button class="btn btn-primary" data-tip="A primary action wearing the overridden accent-1">Brand primary</button>
-          <button class="btn" data-tip="Secondary actions keep accent-2, untouched by the override">Secondary</button>
+          <p class="text-caption" style="margin-top: var(--space-stack);">
+            Custom accent — the override recipe below, running live: this row
+            overrides accent-1's four tokens on its own container, and every
+            component using the rank follows.
+          </p>
+          <div style="--accent-1: #0F6FDE; --accent-1-hover: #0B5FC2; --accent-1-pressed: #0850A6; --on-accent-1: #FFFFFF; display: flex; gap: var(--space-control); flex-wrap: wrap;">
+            <button class="btn btn-primary" data-tip="A primary action wearing the overridden accent-1">Brand primary</button>
+            <button class="btn" data-tip="Secondary actions keep accent-2, untouched by the override">Secondary</button>
+          </div>
         </div>
-        <pre id="code-custom-accent"><code>/* Your accent, one block. Rank tokens only — every component follows. */
+
+        <p>
+          The code is the custom-accent recipe: your own brand color on any
+          accent rank, one small block of CSS, a supported feature. Override
+          a rank's four tokens (the color, its hover, its pressed, and the
+          on-color for text sitting on it) on :root for the whole page or on
+          any element for a subtree, and check the on-color still passes AA.
+          facet.set({"--accent-1": "..."}) is the same override applied live
+          at runtime.
+        </p>
+        <pre id="code-custom-accent" data-code-static><code>/* Your accent, one block. Rank tokens only — every component follows. */
 :root {
   --accent-1: #0F6FDE;
   --accent-1-hover: #0B5FC2;
@@ -530,37 +548,6 @@
           real pieces sit on a tinted ground; the tint showing through is the
           token at work.
         </p>
-
-        <h3>Gaps inside a control row · --space-control</h3>
-        <div class="space-viz" style="display: inline-flex; gap: var(--space-control); padding: var(--space-control); flex-wrap: wrap;">
-          <button class="btn btn-primary">Calculate</button>
-          <button class="btn">Start over</button>
-          <button class="btn btn-ghost" style="background: var(--surface);">Skip</button>
-        </div>
-
-        <h3>Card padding · --space-card</h3>
-        <div class="space-viz" style="max-width: var(--width-narrow);">
-          <section style="padding: var(--space-card);">
-            <div class="demo-box" style="background: var(--background);">
-              The card's content box. Everything between this edge and the
-              tinted edge is <code>--space-card</code> of padding.
-            </div>
-          </section>
-        </div>
-
-        <h3>Stack gap between fields · --space-stack</h3>
-        <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-stack); padding: var(--space-stack); max-width: var(--width-narrow);">
-          <div class="demo-box" style="background: var(--background);">Field one</div>
-          <div class="demo-box" style="background: var(--background);">Field two</div>
-          <div class="demo-box" style="background: var(--background);">Field three</div>
-        </div>
-
-        <h3>Between page sections · --space-section</h3>
-        <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-section); padding: var(--space-stack); max-width: var(--width-narrow);">
-          <div class="demo-box" style="background: var(--background);">The end of one section</div>
-          <div class="demo-box" style="background: var(--background);">The start of the next</div>
-        </div>
-
         <p>
           The full set, each named for where it belongs:
           <code>--space-tight</code> (bound pairs like a label and its field),
@@ -568,16 +555,57 @@
           <code>--space-inline</code> (row gaps), <code>--space-stack</code>
           (default gap between blocks), <code>--space-card</code> (card
           padding), <code>--space-page</code> (page margins),
-          <code>--space-section</code> (between sections) and
+          <code>--space-section</code> (between sections),
           <code>--space-hero</code> (the biggest breaks) and
           <code>--space-pin</code> (the fixed 20px inset a viewport-pinned
           panel keeps from the screen edges — exact pixels, never
           density-scaled, so pinned panels fit exactly and never move with
-          the scroll). Container widths cap
-          the horizontal rhythm: <code>--width-narrow</code> 40rem for prose
-          and calculators, <code>--width-default</code> 64rem for most pages,
+          the scroll). Container widths cap the horizontal rhythm:
+          <code>--width-narrow</code> 40rem for prose and calculators,
+          <code>--width-default</code> 64rem for most pages,
           <code>--width-wide</code> 80rem for dashboards.
         </p>
+
+        <div class="demo stack">
+          <p class="text-caption">Gaps inside a control row · <code>--space-control</code></p>
+          <div class="space-viz" style="display: inline-flex; gap: var(--space-control); padding: var(--space-control); flex-wrap: wrap;">
+            <button class="btn btn-primary">Calculate</button>
+            <button class="btn">Start over</button>
+            <button class="btn btn-ghost" style="background: var(--surface);">Skip</button>
+          </div>
+
+          <p class="text-caption">Card padding · <code>--space-card</code></p>
+          <div class="space-viz" style="max-width: var(--width-narrow);">
+            <section style="padding: var(--space-card);">
+              <div class="demo-box" style="background: var(--background);">
+                The card's content box. Everything between this edge and the
+                tinted edge is <code>--space-card</code> of padding.
+              </div>
+            </section>
+          </div>
+
+          <p class="text-caption">Stack gap between fields · <code>--space-stack</code></p>
+          <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-stack); padding: var(--space-stack); max-width: var(--width-narrow);">
+            <div class="demo-box" style="background: var(--background);">Field one</div>
+            <div class="demo-box" style="background: var(--background);">Field two</div>
+            <div class="demo-box" style="background: var(--background);">Field three</div>
+          </div>
+
+          <p class="text-caption">Between page sections · <code>--space-section</code></p>
+          <div class="space-viz" style="display: flex; flex-direction: column; gap: var(--space-section); padding: var(--space-stack); max-width: var(--width-narrow);">
+            <div class="demo-box" style="background: var(--background);">The end of one section</div>
+            <div class="demo-box" style="background: var(--background);">The start of the next</div>
+          </div>
+        </div>
+
+        <pre id="code-spacing" data-code-static><code>&lt;section class="card stack"&gt;      &lt;!-- --space-card padding, --space-stack between blocks --&gt;
+  &lt;h2&gt;Card title&lt;/h2&gt;
+  &lt;p class="row"&gt;                  &lt;!-- --space-inline between the buttons --&gt;
+    &lt;button class="btn btn-primary"&gt;Save&lt;/button&gt;
+    &lt;button class="btn"&gt;Cancel&lt;/button&gt;
+  &lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-spacing" data-tip="Copies a layout using the spacing tokens">Copy</button></p>
       </article>
 
       <!-- ==============================
@@ -585,21 +613,28 @@
            ============================== -->
       <article class="element stack" id="shape">
         <h3>Shape and elevation</h3>
-        <ul class="shape-row">
-          <li><div class="tile" style="border-radius: var(--radius-control)"></div>--radius-control</li>
-          <li><div class="tile" style="border-radius: var(--radius-panel)"></div>--radius-panel</li>
-          <li><div class="tile" style="border-radius: var(--radius-card)"></div>--radius-card</li>
-          <li><div class="tile" style="border-radius: var(--radius-pill)"></div>--radius-pill</li>
-          <li><div class="tile" style="box-shadow: var(--shadow-raised)"></div>--shadow-raised</li>
-          <li><div class="tile" style="box-shadow: var(--shadow-floating)"></div>--shadow-floating</li>
-          <li><div class="tile" style="box-shadow: var(--shadow-overlay)"></div>--shadow-overlay</li>
-        </ul>
         <p>
           Small radii on controls, medium on cards, large on overlays, pill
           for chips and thumbs. Shadows stay subtle and flat in every theme.
           How things move is its own system — see
           <a href="#motion">Motion</a> just below.
         </p>
+        <div class="demo">
+          <ul class="shape-row">
+            <li><div class="tile" style="border-radius: var(--radius-control)"></div>--radius-control</li>
+            <li><div class="tile" style="border-radius: var(--radius-panel)"></div>--radius-panel</li>
+            <li><div class="tile" style="border-radius: var(--radius-card)"></div>--radius-card</li>
+            <li><div class="tile" style="border-radius: var(--radius-pill)"></div>--radius-pill</li>
+            <li><div class="tile" style="box-shadow: var(--shadow-raised)"></div>--shadow-raised</li>
+            <li><div class="tile" style="box-shadow: var(--shadow-floating)"></div>--shadow-floating</li>
+            <li><div class="tile" style="box-shadow: var(--shadow-overlay)"></div>--shadow-overlay</li>
+          </ul>
+        </div>
+        <pre id="code-shape" data-code-static><code>/* Radii and shadows by role — a theme retunes them all at once. */
+.panel   { border-radius: var(--radius-card); box-shadow: var(--shadow-raised); }
+.menu    { border-radius: var(--radius-panel); box-shadow: var(--shadow-overlay); }
+.chip    { border-radius: var(--radius-pill); }</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-shape" data-tip="Copies the shape and elevation tokens in use">Copy</button></p>
       </article>
 
       <!-- ==============================
@@ -655,23 +690,30 @@
           rings, selection colors, scrollbars, a skip-to-content link and a
           print base, all included.
         </p>
+        <div class="demo stack">
+          <table>
+            <thead>
+              <tr><th>Scale step</th><th>Size</th><th>Used for</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>--space-control</td><td>8px</td><td>Gaps inside controls</td></tr>
+              <tr><td>--space-stack</td><td>16px</td><td>Default stack gap</td></tr>
+              <tr><td>--space-section</td><td>48px</td><td>Between page sections</td></tr>
+            </tbody>
+          </table>
+          <label for="demo-raw-input">A raw text input</label>
+          <input id="demo-raw-input" type="text" placeholder="Type here">
+        </div>
+        <pre id="code-base" data-code-static><code>&lt;table&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Scale step&lt;/th&gt;&lt;th&gt;Size&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;--space-stack&lt;/td&gt;&lt;td&gt;16px&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
+&lt;/table&gt;
 
-        <table>
-          <thead>
-            <tr><th>Scale step</th><th>Size</th><th>Used for</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>--space-control</td><td>8px</td><td>Gaps inside controls</td></tr>
-            <tr><td>--space-stack</td><td>16px</td><td>Default stack gap</td></tr>
-            <tr><td>--space-section</td><td>48px</td><td>Between page sections</td></tr>
-          </tbody>
-        </table>
+&lt;label for="amount"&gt;A raw text input&lt;/label&gt;
+&lt;input id="amount" type="text" placeholder="Type here"&gt;
 
-        <label for="demo-raw-input">A raw text input</label>
-        <input id="demo-raw-input" type="text" placeholder="Type here">
-
-        <pre><code>&lt;p&gt;No classes anywhere in this section's table,
-input or this code block — base styles only.&lt;/p&gt;</code></pre>
+&lt;p&gt;No classes anywhere — base styles only.&lt;/p&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-base" data-tip="Copies the raw semantic markup, no classes">Copy</button></p>
       </article>
 
       <!-- PRINT & EXPORT -->
@@ -2924,6 +2966,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             </p>
             <div class="device-stage"><iframe class="device-frame" title="Landing page template preview" loading="lazy"></iframe></div>
           </div>
+          <pre id="code-template-landing" data-code-static><code>&lt;!-- Start from the whole page: save the template and edit the words --&gt;
+https://facet-kappa.vercel.app/templates/landing.html</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-template-landing" data-tip="Copies the landing page template's URL">Copy</button></p>
         </article>
 
         <article class="element stack" id="template-saas" aria-labelledby="template-saas-h">
@@ -2942,6 +2987,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             </p>
             <div class="device-stage"><iframe class="device-frame" title="SaaS dashboard template preview" loading="lazy"></iframe></div>
           </div>
+          <pre id="code-template-saas" data-code-static><code>&lt;!-- Start from the whole page: save the template and edit the words --&gt;
+https://facet-kappa.vercel.app/templates/saas.html</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-template-saas" data-tip="Copies the SaaS dashboard template's URL">Copy</button></p>
         </article>
 
         <article class="element stack" id="template-social" aria-labelledby="template-social-h">
@@ -2960,10 +3008,21 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             </p>
             <div class="device-stage"><iframe class="device-frame" title="Social app template preview" loading="lazy"></iframe></div>
           </div>
+          <pre id="code-template-social" data-code-static><code>&lt;!-- Start from the whole page: save the template and edit the words --&gt;
+https://facet-kappa.vercel.app/templates/social.html</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-template-social" data-tip="Copies the social app template's URL">Copy</button></p>
         </article>
 
-        <h3>Every template</h3>
-        <div class="topic-grid">
+        <article class="element stack" id="every-template" data-llms="Templates">
+          <h3>Every template</h3>
+          <p>
+            The whole starter set — eight page shapes, each a complete file
+            you save, rename and fill in. Every one links the same
+            /lib/facet.css and facet.js this site uses and ships the SEO head
+            pack; the deck, document and card print at exact size.
+          </p>
+          <div class="demo">
+            <div class="topic-grid">
           <a class="card card-clickable topic-card" href="/templates/landing.html"><span class="topic-card-title">Landing</span><span class="topic-card-teaser">A marketing page built from the block layer.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
           <a class="card card-clickable topic-card" href="/templates/saas.html"><span class="topic-card-title">SaaS dashboard</span><span class="topic-card-teaser">Analytics shell: sidebar, KPIs, chart, table.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
           <a class="card card-clickable topic-card" href="/templates/social.html"><span class="topic-card-title">Social app</span><span class="topic-card-teaser">Three-column feed, tab bar and settings sheet.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
@@ -2973,6 +3032,17 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           <a class="card card-clickable topic-card" href="/templates/document.html"><span class="topic-card-title">Document</span><span class="topic-card-teaser">A4 pages: letterhead, invoice, one-pager.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
           <a class="card card-clickable topic-card" href="/templates/card.html"><span class="topic-card-title">Business card</span><span class="topic-card-teaser">3.5×2in, front and back, with a print sheet.</span><span class="topic-card-more" aria-hidden="true">Open →</span></a>
         </div>
+          </div>
+          <pre id="code-every-template" data-code-static><code>https://facet-kappa.vercel.app/templates/landing.html
+https://facet-kappa.vercel.app/templates/saas.html
+https://facet-kappa.vercel.app/templates/social.html
+https://facet-kappa.vercel.app/templates/app.html
+https://facet-kappa.vercel.app/templates/article.html
+https://facet-kappa.vercel.app/templates/deck.html
+https://facet-kappa.vercel.app/templates/document.html
+https://facet-kappa.vercel.app/templates/card.html</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-every-template" data-tip="Copies all eight template URLs">Copy</button></p>
+        </article>
       </section>
       <!-- ==============================
            Layer 5 · App feel
@@ -3560,10 +3630,10 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           <code>facet.install()</code> triggers the prompt from code.
         </p>
         <p class="text-caption" style="color: var(--text-muted);">1 · <code>sw.js</code> at your project root — one line:</p>
-        <pre id="code-pwa-sw"><code>importScripts("https://facet-kappa.vercel.app/lib/facet-sw.js");</code></pre>
+        <pre id="code-pwa-sw" data-code-static><code>importScripts("https://facet-kappa.vercel.app/lib/facet-sw.js");</code></pre>
         <p><button class="btn btn-small" data-copy="#code-pwa-sw" data-tip="Copies the one-line service worker">Copy sw.js</button></p>
         <p class="text-caption" style="color: var(--text-muted);">2 · the head block on the page (manifest, apple metas, worker registration):</p>
-        <pre id="code-pwa-head"><code>&lt;link rel="manifest" href="/manifest.json"&gt;
+        <pre id="code-pwa-head" data-code-static><code>&lt;link rel="manifest" href="/manifest.json"&gt;
 &lt;meta name="theme-color" content="#FFFFFF"&gt;
 &lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
 &lt;meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"&gt;

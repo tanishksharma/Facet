@@ -16,7 +16,9 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 function renderSnippet(article) {
   const demo = article.querySelector(".demo");
   const code = article.querySelector("pre code");
-  if (!demo || !code) return;
+  // a pre marked data-code-static is hand-authored (a recipe, a URL list)
+  // and never overwritten by the demo serializer
+  if (!demo || !code || code.closest("pre").hasAttribute("data-code-static")) return;
   const html = [...demo.children]
     .filter(el => !el.hidden)
     .map(el => el.outerHTML)
@@ -911,7 +913,7 @@ function labelWallParts() {
       if (labelled(chips)) continue;
       chips.before(mk(chips.getAttribute("aria-label") || "Options"));
     }
-    const demo = fold.querySelector(":scope > .demo");
+    const demo = fold.querySelector(":scope > .demo") || fold.querySelector(":scope > .device-preview");
     if (demo && !labelled(demo)) demo.before(mk("Preview"));
     // the code block may be a bare <pre> or already wrapped by
     // overlayCodeTools in a .code-wrap — label whichever is the direct
@@ -1183,11 +1185,17 @@ function initSkinLab() {
 document.addEventListener("DOMContentLoaded", async () => {
   orderEntryParts();   // preview first, options after — the entry structure
   for (const article of document.querySelectorAll("article.element")) {
-    if (article.querySelector(".demo")) { renderSnippet(article); continue; }
-    // No demo (the function pages): the code block is hand-authored —
-    // color it the same way the serialized snippets are.
-    const code = article.querySelector("pre code");
-    if (code && code.textContent.trim()) code.innerHTML = highlightHtml(code.textContent);
+    // Hand-authored code (data-code-static, or any entry without a demo)
+    // gets the same syntax coloring the serialized snippets get.
+    const authored = [...article.querySelectorAll("pre[data-code-static] code")];
+    if (!authored.length && !article.querySelector(".demo")) {
+      const code = article.querySelector("pre code");
+      if (code) authored.push(code);
+    }
+    for (const code of authored) {
+      if (code.textContent.trim()) code.innerHTML = highlightHtml(code.textContent);
+    }
+    renderSnippet(article);
   }
   initChips();
   initConfigChips();
@@ -1248,8 +1256,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Fold, control and spy — after all content and demo wiring, so the
   // injected snippets, demo tools and reference blocks fold in too.
-  labelWallParts();
   await initAiNotes();  // AI instructions come from llms.txt, one source
+  labelWallParts();     // after the notes exist, so every entry gets its AI-instructions label
   initWallSearch();
   initSearchKeys();
   initScrollSpy();
