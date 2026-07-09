@@ -21,7 +21,21 @@ function renderSnippet(article) {
     .filter(el => !el.hidden)
     .map(el => el.outerHTML)
     .join("\n\n");
-  code.textContent = tidySnippet(html);
+  code.innerHTML = highlightHtml(tidySnippet(html));
+}
+
+/* Color the snippet like an HTML file in VS Code's default themes:
+   tags, attribute names, attribute values, comments. Escapes first,
+   then wraps tokens in .hl-* spans (colors in docs.css). */
+function highlightHtml(src) {
+  const esc = src.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return esc
+    .replace(/(&lt;!--[\s\S]*?--&gt;)/g, '<span class="hl-comment">$1</span>')
+    .replace(/(&lt;\/?)([a-zA-Z][\w-]*)([\s\S]*?)(\/?&gt;)/g, (m, open, tag, attrs, close) => {
+      const inner = attrs.replace(/([\w-]+)(=)("[^"]*")/g,
+        '<span class="hl-attr">$1</span><span class="hl-punct">$2</span><span class="hl-value">$3</span>');
+      return `<span class="hl-punct">${open}</span><span class="hl-tag">${tag}</span>${inner}<span class="hl-punct">${close}</span>`;
+    });
 }
 
 /* Strips attributes facet.js adds at runtime and re-levels the
@@ -152,6 +166,42 @@ function initWallSearch() {
     }
     emptyNote.hidden = !(query && shown === 0);
   });
+}
+
+/* AI instructions, pulled live from llms.txt — one source of truth.
+   Each entry's h3 is matched against the file's ## / ### section
+   titles; the matching section's text renders verbatim in the entry's
+   AI-instructions block, so a person reads exactly what an agent
+   reads. Entries whose title has no llms section keep any hand-written
+   .ai-notes as a fallback. */
+async function initAiNotes() {
+  const articles = [...document.querySelectorAll("article.element")];
+  if (!articles.length) return;
+  let text;
+  try { text = await (await fetch("/llms.txt")).text(); } catch { return; }
+  const sections = {};
+  const heads = [...text.matchAll(/^##+ +(.+)$/gm)];
+  heads.forEach((m, i) => {
+    const body = text.slice(m.index + m[0].length, i + 1 < heads.length ? heads[i + 1].index : text.length).trim();
+    sections[m[1].trim().toLowerCase()] = body;
+  });
+  for (const article of articles) {
+    const h3 = article.querySelector(":scope > h3");
+    if (!h3) continue;
+    const body = sections[h3.textContent.trim().toLowerCase()];
+    if (!body) continue;
+    let notes = article.querySelector(":scope > .ai-notes");
+    if (!notes) {
+      notes = document.createElement("div");
+      notes.className = "ai-notes";
+      article.appendChild(notes);
+    }
+    notes.innerHTML = "";
+    const pre = document.createElement("pre");
+    pre.className = "ai-notes-body";
+    pre.textContent = body;
+    notes.appendChild(pre);
+  }
 }
 
 /* The entry structure, enforced everywhere: description, variant row,
@@ -1222,6 +1272,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Fold, control and spy — after all content and demo wiring, so the
   // injected snippets, demo tools and reference blocks fold in too.
   labelWallParts();
+  await initAiNotes();  // AI instructions come from llms.txt, one source
   initWallSearch();
   initSearchKeys();
   initScrollSpy();

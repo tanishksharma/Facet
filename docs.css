@@ -293,6 +293,7 @@ article.element {
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-raised);
   padding: var(--space-card);
+  min-height: 13rem;
 }
 
 /* Font specimens: a clean column — each role's label hugs its sample line,
@@ -617,13 +618,15 @@ article.element {
 .how-files { list-style: none; padding-left: 0; }
 .how-track pre { white-space: pre-wrap; }
 
-/* Code-block action cluster: icons pinned to the snippet's bottom-right,
-   instead of a row of buttons below it. */
+/* Code-block action cluster: icons sitting fully INSIDE the snippet's
+   bottom-left corner; the block reserves room for them, so they never
+   overlap the last lines of code. */
 .code-wrap { position: relative; }
+.code-wrap > pre { padding-bottom: 3.4rem; }
 .code-tools {
   position: absolute;
-  bottom: var(--space-tight);
-  right: var(--space-tight);
+  bottom: var(--space-inline);
+  left: var(--space-inline);
   display: flex;
   gap: var(--space-tight);
 }
@@ -774,4 +777,42 @@ article.element {
 .lab-cell figcaption {
   font-size: var(--text-caption);
   color: var(--text-muted);
+}
+
+/* Syntax color for the snippets: VS Code's default HTML look — Light+
+   on light, Dark+ on dark. Docs-only presentation, raw hex on purpose
+   (these mirror an external palette, not the theme). */
+:root {
+  --hl-tag: #800000;
+  --hl-attr: #E50000;
+  --hl-value: #0000FF;
+  --hl-punct: #800000;
+  --hl-comment: #008000;
+  --hl-text: #000000;
+}
+[data-mode="dark"] {
+  --hl-tag: #569CD6;
+  --hl-attr: #9CDCFE;
+  --hl-value: #CE9178;
+  --hl-punct: #808080;
+  --hl-comment: #6A9955;
+  --hl-text: #D4D4D4;
+}
+article.element pre code { color: var(--hl-text); }
+.hl-tag { color: var(--hl-tag); }
+.hl-attr { color: var(--hl-attr); }
+.hl-value { color: var(--hl-value); }
+.hl-punct { color: var(--hl-punct); }
+.hl-comment { color: var(--hl-comment); }
+
+/* AI instructions pull straight from llms.txt (initAiNotes), so people
+   read exactly what the AI reads. Rendered as the file reads. */
+.ai-notes-body {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-footnote);
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: none;
 }

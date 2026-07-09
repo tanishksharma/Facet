@@ -1399,6 +1399,15 @@ always the latest from the web; versioned freezes start at /lib/v1/.
 
 ## Backgrounds
 
+WHEN TO USE: give one big quiet surface a material — a hero, a landing
+band, a section divider zone, an empty state, or the whole page of a
+document-like product. Use variant GRID when the product should feel
+precise, technical or editorial (notes, tools, calculators; the custom
+glyph makes it a brand mark); use variant FLUID when it should feel
+alive and expressive (landings, launch pages, playful apps). One
+background per surface, never nested and never behind dense data;
+lower --bg-strength before reaching for none.
+
 Very faint page and section backgrounds, in two variants that are
 built differently and tuned separately. Put one class or attribute on
 a section or body; content sits straight on top. Everything fades to

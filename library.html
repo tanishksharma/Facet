@@ -3134,26 +3134,27 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             <button class="chip" aria-pressed="false" data-grid-strength="22%" data-tip="Present, still quiet">Strong</button>
           </p>
           <p class="chips" role="group" aria-label="Grid spacing">
-            <button class="chip" aria-pressed="false" data-grid-cell="1.75rem" data-tip="Tight cells">Tight</button>
-            <button class="chip" aria-pressed="true" data-grid-cell="" data-tip="The default, 2.5rem">Default</button>
-            <button class="chip" aria-pressed="false" data-grid-cell="4rem" data-tip="Airy cells">Airy</button>
+            <button class="chip" aria-pressed="true" data-grid-cell="" data-tip="The default, 2.5rem — the tightest offered">Default</button>
+            <button class="chip" aria-pressed="false" data-grid-cell="4rem" data-tip="4rem cells">Airy</button>
+            <button class="chip" aria-pressed="false" data-grid-cell="5.5rem" data-tip="5.5rem cells">Wide</button>
+            <button class="chip" aria-pressed="false" data-grid-cell="7.5rem" data-tip="7.5rem cells — the pattern becomes an accent">Vast</button>
           </p>
           <div class="stack" id="bg-controls-custom" hidden>
-            <p class="chips" role="group" aria-label="Custom glyph">
+            <p class="chips" role="group" aria-label="Glyph">
               <button class="chip" aria-pressed="true" data-glyph-preset="✦" data-tip="A sparkle character">✦ Sparkle</button>
               <button class="chip" aria-pressed="false" data-glyph-preset="♥" data-tip="A heart character">♥ Heart</button>
               <button class="chip" aria-pressed="false" data-glyph-preset="star" data-tip="The facet icon named star">Icon: star</button>
               <button class="chip" aria-pressed="false" data-glyph-preset="✦ ♥ ✳" data-tip="Several glyphs alternate across the row">Mix of three</button>
             </p>
-            <p class="chips" role="group" aria-label="Glyph size within the cell">
-              <button class="chip" aria-pressed="false" data-glyph-scale="0.3" data-tip="Small symbol, lots of air">Small glyph</button>
-              <button class="chip" aria-pressed="true" data-glyph-scale="" data-tip="The default, 42% of the cell">Default glyph</button>
-              <button class="chip" aria-pressed="false" data-glyph-scale="0.62" data-tip="Large symbol, dense texture">Large glyph</button>
-            </p>
             <label class="field" style="max-width: 24rem;">
-              <span class="field-label">Or type anything — a character, an emoji, a few of them</span>
+              <span class="field-label">Your own — any character or emoji, or several for a mixed grid</span>
               <input id="glyph-input" type="text" placeholder="✦ or 🍜 or A B C" data-tip="The preview redraws as you type">
             </label>
+            <p class="chips" role="group" aria-label="Glyph size">
+              <button class="chip" aria-pressed="false" data-glyph-scale="0.3" data-tip="Small symbol, lots of air">Small</button>
+              <button class="chip" aria-pressed="true" data-glyph-scale="" data-tip="The default, 42% of the cell">Default</button>
+              <button class="chip" aria-pressed="false" data-glyph-scale="0.62" data-tip="Large symbol, dense texture">Large</button>
+            </p>
           </div>
         </div>
 
