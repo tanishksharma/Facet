@@ -3100,20 +3100,21 @@ details .when-closed,
 details[open] .when-open { display: inline-flex; align-items: center; gap: inherit; }
 
 /* ----- SIDE INDEX: the sticky index panel beside long content -----
-   What it is: the index panel this site's own library page uses — a
-   sticky aside on a surface fill with a hairline and rounded corners,
-   holding grouped link lists. Each .side-index-group opens with an
-   uppercase name (make it an <a> to link the group's own page); groups
-   divide with hairlines; .side-index-sub labels caption runs of links;
-   the current link marks itself with aria-current="page" or
-   .is-current and reads as a filled pill. The panel caps to the
-   viewport and scrolls its own content, never the page. What it is
-   for: docs, references, settings hubs — any page with one long or
-   paged content column and a persistent map beside it. When to use
-   it: put the aside and the content in a two-column grid (the grid
-   wrapper is the page's layout job, like the docs-layout on
-   /library.html); on narrow screens stack it or hide the groups and
-   keep a search box. (Promoted by extraction from the docs chrome.)
+   (docs mirror — identical to llms.txt · Side index)
+   WHEN TO USE: docs, references and settings hubs — one long or paged content column with a persistent map beside it.
+
+   What it is: the index panel the library's own docs use — a sticky
+   aside on a surface fill with a hairline and rounded corners, holding
+   grouped link lists. Each .side-index-group opens with an uppercase
+   name (make it an <a> to link the group's own page); groups divide with
+   hairlines; .side-index-sub labels caption runs of links; the current
+   link marks itself with aria-current="page" or .is-current and reads as
+   a filled pill. The panel caps to the viewport and scrolls its own
+   content, never the page. What it is for: docs, references, settings
+   hubs — any page with one long or paged content column and a persistent
+   map beside it. When to use it: put the aside and the content in a
+   two-column grid (the grid wrapper is the page's layout job); on narrow
+   screens stack it or hide the groups and keep a search box.
 
    Usage:
      <aside class="side-index" aria-label="Page index">
@@ -3186,6 +3187,10 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
 .side-index-sub + ul a { padding-left: calc(var(--space-inline) + var(--space-stack)); }
 .side-index-group > ul { padding-block: var(--space-tight) 0; margin-bottom: 0; }
 
+/* (docs mirror — identical to llms.txt · Full top menu)
+   WHEN TO USE: the first row of a website or document — wordmark, links, one action; on phones it stays one line and the links open under a darkening blur. Pages, not installed apps (apps get the tab bar).
+
+   What it is: the site header — wordmark, nav links, actions. On phones the header stays ONE line — wordmark left, a native details "Menu" disclosure right (give its summary .when-closed/.when-open labels so Menu becomes Close). Opening does not float a card: the page behind gradually darkens and blurs, the header's own surface extends downward — its bottom border rides the reveal — and the links arrive one by one. No JS, no hamburger framework; the scrim, the wipe and the stagger are progressive enhancement on a plain <details>. Row actions (a direct-child button like Sign up) hide on phones — author a copy of them inside the fold's links, the same way the links themselves are authored twice. What it is for: every site's first row. When to use it: pages, not installed apps (apps get the tab bar). Resize this page to see the fold. */
 /* Top menu: logo, links, actions; on phones the header stays ONE line —
    wordmark left, a native details "Menu" disclosure right (give its
    summary .when-closed/.when-open labels so Menu becomes Close). Opening
@@ -3371,6 +3376,9 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
 }
 
 /* ----- APP IDENTITY: the front matter of an app's about page -----
+   (docs mirror — identical to llms.txt · App identity)
+   WHEN TO USE: once, at the top of an app's about, release-notes or install page — which app this is, at a glance.
+
    What it is: the identity header of an app's about page — a centered
    rounded-square icon, the app's name, a muted one-line phrase, and an
    optional badge row; .app-identity-stats centers a row of .stat blocks
@@ -3380,7 +3388,6 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
    page, with the name as the page's one h1. The icon wears a hairline
    border so light icons keep an edge on light surfaces. Pairs with the
    stat row — opens, version, size — numbers first, prose after.
-   (Promoted by extraction from the shipped apps info page.)
 
    Usage:
      <header class="app-identity">
@@ -3422,22 +3429,26 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
 }
 
 /* ----- MOTION PACK: parallax depths and idle motion -----
-   What it is: subtle motion by default. data-parallax="depth" lets an
-   element drift up to that many pixels behind the pointer (desktop),
-   the scroll's momentum (everywhere), the device's tilt (where no
-   permission gate blocks it) or the engine's own idle drift (gated
-   touch devices, or setMode("idle")) — facet.motion is the engine,
-   modes off | cursor | tilt | idle, and its light channel drives the
-   shine effect below from the same vector. The idle-* classes give
-   key elements a continuous idle motion: a slow float, a faint sway,
-   a soft pulsing scale. What it is for: heroes, illustrations,
-   decorative cards — motion at the edges, never on the reading path.
-   When to use it: sparingly; one or two moving things per screen.
-   Idle classes animate the translate/rotate/scale properties, so
-   they compose with the engine's transform instead of colliding (the
-   parallax exclusion, solved structurally). The Calm motion setting
-   stills idle motion; off and prefers-reduced-motion still
-   everything. */
+   (docs mirror — identical to llms.txt · Parallax & idle motion)
+   WHEN TO USE: heroes, illustrations, decorative cards — movement at the edges, never on the reading path; one or two moving things per screen.
+
+   What it is: ambient motion, on by default. data-parallax="depth" registers an
+   element with facet.motion — it drifts up to depth pixels behind the
+   desktop pointer, the scroll's momentum (a velocity impulse), the
+   device tilt where no permission gate blocks it (iOS gates it;
+   facet.motion.setMode("tilt") asks), or the engine's idle drift where
+   nothing else drives (modes: off | cursor | tilt | idle — in idle the
+   vector sweeps to a fresh point every 3s and eases home, so motion
+   keeps living on a still desk; gated touch devices land here by
+   default). The same engine's light channel drives the shine effect
+   (next entry) from the same vector. The idle-* classes (.idle-float,
+   .idle-sway, .idle-pulse) give resting elements a slow pulse; they
+   animate the separate translate/rotate/scale properties so they
+   compose with the engine's transform instead of colliding — the
+   parallax exclusion, solved structurally. Never put data-parallax on
+   elements with their own transform physics (velvet lift/press, the
+   pager). Calm stills idle life; data-motion="off" and
+   prefers-reduced-motion still everything.*/
 .idle-float { animation: facet-idle-float 5s ease-in-out infinite alternate; }
 .idle-sway  { animation: facet-idle-sway 7s ease-in-out infinite alternate; }
 .idle-pulse { animation: facet-idle-pulse 4s ease-in-out infinite alternate; }
@@ -3449,28 +3460,29 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
 [data-motion="calm"] .idle-pulse { animation: none; }
 
 /* ----- SHINE: the moving light on things with depth -----
+   (docs mirror — identical to llms.txt · Shine)
+   WHEN TO USE: app icons, hero cards, any raised or 3D-feeling piece that should catch light as the device moves.
+
    What it is: the shine effect — a specular light on any element with
    visual depth, the way iOS icons catch light. data-shine lays a soft
    light spot plus a rim over the element: a bright edge toward the
-   light, a soft shade away from it. facet.motion's light channel
-   writes the light's direction (--shine-x / --shine-y, each -1..1)
-   from the device tilt, the cursor, or the idle drift — the same
-   normalised vector that drives parallax, so the element that
-   translates and the light that sweeps across it always agree on
-   which way the device is leaning; at rest the light sits centred
-   above. What it is for: app icons, hero cards, any raised or
-   3D-feeling piece that should catch light as the device moves. When
-   to use it: on the element that carries the depth; the overlay is a
-   .shine child span facet.js injects for you (the pseudo-elements
-   stay free for the tooltip; add the span yourself for a static
-   resting shine with JS off), it inherits the element's
-   border-radius, and images need a wrapper because an <img> cannot
-   hold a child — the .icon-badge-holder doubles as one (give the
-   wrapper the icon's radius). Unlike parallax, shine writes no
-   transform — only custom properties — so the parallax exclusion
-   does not apply; it composes with velvet lift/press, the pager, and
-   data-parallax itself. --shine (0..1, default 0.5) tunes the
-   strength. */
+   light, a soft shade away from it. facet.motion's light channel writes
+   the light's direction (--shine-x / --shine-y, each -1..1) from the
+   device tilt, the cursor, or the idle drift — the same normalised
+   vector that drives parallax, so the element that translates and the
+   light that sweeps across it always agree on which way the device is
+   leaning. At rest the light sits centred above.
+   What it is for: app icons, hero cards, any raised or 3D-feeling piece
+   that should catch light as the device moves. When to use it: on the
+   element that carries the depth; the overlay is a .shine child span
+   facet.js injects for you (the pseudo-elements stay free for the
+   tooltip; add the span yourself for a static resting shine with JS
+   off), it inherits the element's border-radius, and images need a
+   wrapper because an <img> cannot hold a child — the .icon-badge-holder
+   doubles as one (give the wrapper the icon's radius). Unlike parallax, shine writes no
+   transform — only custom properties — so the parallax exclusion does
+   not apply; it composes with velvet lift/press, the pager, and
+   data-parallax itself. --shine (0..1, default 0.5) tunes the strength.*/
 [data-shine] {
   position: relative;
   /* the resting light: centred, from above — where it returns to */
@@ -4799,6 +4811,9 @@ button.list-item:active { background: var(--surface-active); }
 .grid-loose { gap: var(--space-page); }
 
 /* ----- APP GRID: a launcher of app tiles -----
+   (docs mirror — identical to llms.txt · App grid)
+   WHEN TO USE: the front door of a suite of mini apps, a portal, a directory of tools — every tile one real link.
+
    What it is: a home-screen launcher — an auto-fill grid of app tiles,
    each tile one real link: a rounded-square icon, the app's name, a
    one-line caption, and an optional metric line. What it is for: the
@@ -4811,7 +4826,7 @@ button.list-item:active { background: var(--surface-active); }
    on hover and carries the keyboard focus ring. Put an open count or
    any live number in .app-count — tabular digits so tiles line up.
    Reuses the neutral ramp and type tokens, so it restyles with every
-   theme. (Promoted by extraction from the shipped apps launcher.)
+   theme.
 
    Usage:
      <nav class="app-grid" aria-label="Apps">
@@ -4867,6 +4882,9 @@ button.list-item:active { background: var(--surface-active); }
 
 /* --------------------------------------------------------------------------
    PROMO RAIL
+
+   (docs mirror — identical to llms.txt · Promo rail)
+   WHEN TO USE: featured content at the top of a launcher or home screen — two to six promos; a single promo is just a card.
 
    What it is: the promo rail — a full-bleed carousel of wide feature
    cards, each washed with a different vivid-palette tint, snapping card
@@ -4977,6 +4995,10 @@ button.list-item:active { background: var(--surface-active); }
    -------------------------------------------------------------------------- */
 
 
+/* (docs mirror — identical to llms.txt · Tab bar)
+   WHEN TO USE: section navigation in app-shaped pages with a snap pager — three to five destinations, thumb height.
+
+   What it is: the iOS-style bottom pill — text segments, a hairline divider, a trailing settings button — with one injected .tab-indicator pill moving behind the active segment on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. What it is for: section navigation in app-shaped pages; it wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet) and its settings button opens the sheet it aria-controls. When to use it: any snap-paged product. On a real page it floats fixed above the bottom edge; here it sits in the flow. Frosted and embossed in the base theme; a tuned translucent well with a raised pill under Velvet. */
 /* ----- TAB BAR: iOS-style bottom pill of segments + a trailing icon -----
    Embossed frosted glass: translucent over a backdrop blur, pressed INTO
    the page via inset shadows (dark from the top, faint from the bottom).
@@ -5072,6 +5094,10 @@ button.list-item:active { background: var(--surface-active); }
   transform: rotate(90deg);
 }
 
+/* (docs mirror — identical to llms.txt · Sheet & menu)
+   WHEN TO USE: the app's settings and secondary navigation, behind one button — the right-edge panel every calculator shares.
+
+   What it is: the settings panel — a right-edge slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back; inside it, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the trigger's aria-expanded is managed. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump. */
 /* ----- SHEET: right-edge slide-in panel over a darkening scrim -----
    Vertically centred; caps at 60% of the viewport height and 80% of
    its width on phones. Content taller than the cap scrolls INSIDE
@@ -5372,15 +5398,10 @@ button.list-item:active { background: var(--surface-active); }
 /* --------------------------------------------------------------------------
    FLOAT BUTTON
 
-   What it is: a lone floating round button pinned to the bottom-left of
-   the page — the tab bar's trailing icon without the bar. What it is
-   for: pages that need the settings sheet (or any panel) but not
-   section navigation: give it aria-controls pointing at a .sheet and
-   facet.js wires the open/close, the aria-expanded state and the press
-   feedback exactly like the tab bar's settings button. When to use it: whenever a
-   page has one floating action; .float-btn-right pins it bottom-right
-   instead. Always an aria-label and a data-tip: the icon alone says
-   nothing.
+   (docs mirror — identical to llms.txt · Float button)
+   WHEN TO USE: the one floating control a screen needs — usually the menu or settings trigger the sheet wires itself to.
+
+   What it is: a lone floating round button pinned to the bottom-left of the page — the tab bar's trailing icon without the bar. What it is for: pages that need the settings sheet (or any panel) but not section navigation: give it aria-controls pointing at a .sheet and facet.js wires the open/close, the aria-expanded state and the press feedback exactly like the tab bar's settings button. When to use it: whenever a page has one floating action; .float-btn-right pins it bottom-right instead. Always an aria-label and a data-tip: the icon alone says nothing. On a real page it floats fixed; here it sits in the flow — this one opens the sheet from the entry above.
 
    Usage:
      <button class="float-btn" aria-controls="settings-sheet"
@@ -5454,33 +5475,10 @@ button.list-item:active { background: var(--surface-active); }
 /* --------------------------------------------------------------------------
    NAV MENU
 
-   What it is: a floating navigation cluster pinned bottom-left — a "Menu"
-   pill that opens a stack of page links, and a same-size round Settings
-   button beside it that opens a stack of setting toggles. Both stacks rise
-   ABOVE their own trigger; opening one closes the other, and neither
-   trigger moves when a stack opens (the stacks are positioned out of
-   flow). Every link and the Menu pill are the base .btn.btn-pill (the
-   Settings button is .btn-pill.btn-icon); each setting is a
-   .btn.btn-pill.nav-set whose on/off state shows in the pill itself.
-   What it is for: whole-site navigation on any Facet page, plus the app's
-   own settings (appearance, motion, sound, haptics, language), behind two
-   thumb-reachable floating controls.
-   When to use it: the primary nav for a content site or app. The Menu is a
-   real <details> wrapping real <a> links, so it works with JavaScript off
-   — the summary opens the links inline — and the links sit in the DOM for
-   crawlers and AI. facet.js (initNavMenu) upgrades both stacks to a
-   floating overlay: a dimming scrim, body scroll-lock, a staggered reveal,
-   Escape to close, and focus moved into the open stack and back. The
-   setting pills self-wire through data-control (appearance/motion/sounds/
-   haptics) and data-language-cycle, exactly like the settings sheet.
-   prefers-reduced-motion drops the stagger. It is an overlay control, not
-   page content: authored at the end of <body>, user-select:none, prints off.
-   Variants and slots: .nav-menu-right anchors the whole cluster
-   bottom-right (safe-area aware) and every stack opens right-aligned;
-   left stays the default. An optional .nav-menu-back round pill — a real
-   <a> with a chevron-left — sits on the cluster's outer edge, in the
-   canonical order [back] [Menu] [settings]. The settings trigger's
-   canonical icon is data-icon="sliders", not the gear.
+   (docs mirror — identical to llms.txt · Nav menu)
+   WHEN TO USE: whole-site navigation on app-like pages and PWAs — the thumb-reachable Menu and Settings pills in a bottom corner.
+
+   What it is: a floating navigation cluster pinned bottom-left — a "Menu" pill that opens a stack of page links, and a same-size round Settings button beside it that opens a stack of setting toggles. Both stacks rise above their own trigger; opening one closes the other, and neither trigger moves when a stack opens. Every link and the Menu pill are the base .btn.btn-pill (the Settings button is .btn-pill.btn-icon, canonical icon data-icon="sliders"); each setting is a .btn.btn-pill.nav-set whose on/off state shows in the pill itself: the pill stays solid in both states and only the trailing .menu-value chip changes (filled accent = on, outlined muted = off). What it is for: whole-site navigation on any Facet page, plus the app's own settings — theme, appearance, motion, sound, haptics, language — behind two thumb-reachable floating controls. When to use it: the primary nav for a content site or app. The Menu is a real <details> wrapping real <a> links, so it works with JavaScript off — the summary opens the links inline — and the links sit in the DOM for crawlers and AI. Every item is one line, left-aligned, sized to its own content and capped near 300px; wrap the label in .nav-label and a long one truncates with an ellipsis while the icon and any trailing .menu-value stay whole. facet.js upgrades both stacks to a floating overlay: a dimming scrim, body scroll-lock, a staggered reveal, Escape to close, and focus moved into the open stack and back. The setting pills self-wire through data-control (theme cycles Default/Velvet/Aero/Elegant; appearance is the separate Light/Dark/Auto and the two compose) and data-language-cycle. Clicking a nav link or action closes the panel; a .nav-set toggle leaves it open so several settings can be changed in a row. Reduced motion drops the stagger. Add .nav-menu-right to anchor the cluster bottom-right with right-aligned stacks (left stays the default); an optional .nav-menu-back round pill — a real link with a chevron-left — sits on the cluster's outer edge, in the canonical order [back] [Menu] [settings]. On a real page it floats fixed bottom-left or bottom-right; here it sits in the flow.
 
    Usage:
      <nav class="nav-menu" aria-label="Site" data-print="off">

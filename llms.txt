@@ -394,6 +394,8 @@ labels. @page margins default to 12mm; a template may override
 
 ## Content translation
 
+WHEN TO USE: any page that speaks more than one language — mark the container once and the same switch that translates the UI translates your content.
+
 The data-language switch that localises the library's own strings also
 localises YOUR content, so a multilingual page stays one HTML file. Mark
 the natural container data-i18n and give it one child per language, each
@@ -1076,6 +1078,8 @@ warning help play pause.
 
 ### Parallax & idle motion
 
+WHEN TO USE: heroes, illustrations, decorative cards — movement at the edges, never on the reading path; one or two moving things per screen.
+
 What it is: ambient motion, on by default. data-parallax="depth" registers an
 element with facet.motion — it drifts up to depth pixels behind the
 desktop pointer, the scroll's momentum (a velocity impulse), the
@@ -1098,6 +1102,8 @@ prefers-reduced-motion still everything.
     <img class="idle-float" src="hero.png" alt="…">
 
 ### Shine
+
+WHEN TO USE: app icons, hero cards, any raised or 3D-feeling piece that should catch light as the device moves.
 
 What it is: the shine effect — a specular light on any element with
 visual depth, the way iOS icons catch light. data-shine lays a soft
@@ -1587,7 +1593,135 @@ switches + fields); form section (grouped fields, one submit row);
 article set (header, prose on the narrow container, .media-figure
 with caption, .pullquote).
 
+### Grid of cards
+
+WHEN TO USE: a set of same-shaped cards that should pack themselves — features, products, stats. The grid decides the column count; you never write a breakpoint.
+
+What it is: cards in the auto-fitting grid — as many columns as fit, one on phones, no breakpoints. What it is for: any set of same-shaped things. When to use it: the default way to lay out more than two cards.
+
+### Horizontal card row
+
+WHEN TO USE: more cards than fit, kept on one line — recent items, suggestions — side-scrolling with momentum and a gentle per-card snap.
+
+What it is: cards that scroll sideways with momentum and a gentle per-card snap — proximity snap is safe here; the pager law is about full-page sections. What it is for: browsable shelves: recents, suggestions, categories. When to use it: when the list is long but the screen is not.
+
+### Filterable card list
+
+WHEN TO USE: a long set the visitor narrows by typing or by tapping filter chips — the markup is the data; no app code.
+
+What it is: a search field over a list — the input carries data-filter pointing at the container and facet.js live-hides children that do not match. The markup is the data. What it is for: lists a reader scans by name: projects, contacts, settings. When to use it: from about ten items up.
+
+### List cards
+
+WHEN TO USE: rows that are richer than a list but lighter than cards — each row a bordered card with a leading icon, text and a trailing action.
+
+What it is: stacked full-width rows — an outlined card per record with the fields in a row inside. What it is for: records that read left to right: name, meta, amount, action. When to use it: when each row carries more than a table cell should, but less than a full card grid deserves.
+
+### Product grid
+
+WHEN TO USE: a storefront's shelf — image, name, price per card, the whole card one link.
+
+What it is: clickable cards of image, title, price, action — the whole card is the link, the action is the one button. What it is for: shop shelves and catalogues. When to use it: anything bought or picked. The image slot is a quiet background box until a real image fills it.
+
+### Product detail
+
+WHEN TO USE: one product's page — gallery beside the facts, price, the one buy action.
+
+What it is: gallery beside the info panel — image column and a stack of name, price, chooser and the one primary action. What it is for: the page one product gets. When to use it: after a product grid click. On phones the columns stack.
+
+### Cart line items
+
+WHEN TO USE: a cart or order summary — line items with steppers, then the total row; the result block carries the verdict.
+
+What it is: the order as honest rows — item, stepper for quantity, line total — with the totals block closing it. What it is for: carts and order summaries. When to use it: any purchase review. The verdict line (the grand total) is the biggest thing on it, per the result-block rule.
+
+### Full top menu
+
+WHEN TO USE: the first row of a website or document — wordmark, links, one action; on phones it stays one line and the links open under a darkening blur. Pages, not installed apps (apps get the tab bar).
+
+What it is: the site header — wordmark, nav links, actions. On phones the header stays ONE line — wordmark left, a native details "Menu" disclosure right (give its summary .when-closed/.when-open labels so Menu becomes Close). Opening does not float a card: the page behind gradually darkens and blurs, the header's own surface extends downward — its bottom border rides the reveal — and the links arrive one by one. No JS, no hamburger framework; the scrim, the wipe and the stagger are progressive enhancement on a plain <details>. Row actions (a direct-child button like Sign up) hide on phones — author a copy of them inside the fold's links, the same way the links themselves are authored twice. What it is for: every site's first row. When to use it: pages, not installed apps (apps get the tab bar). Resize this page to see the fold.
+
+### Sidebar navigation
+
+WHEN TO USE: app and docs shells with more destinations than a top row holds — three sections or more; fewer fit the top menu.
+
+What it is: sectioned nav-link groups in an aside — exactly the pattern this page's own index uses. What it is for: app and docs shells with more destinations than a top row holds. When to use it: three sections or more; fewer fit the top menu.
+
+### Footer
+
+WHEN TO USE: every page's last block — link columns and the small print.
+
+What it is: link columns over a legal row. What it is for: the bottom of every site page. When to use it: always — a page that ends abruptly reads as broken.
+
+### Hero
+
+WHEN TO USE: the opening statement of a landing page — display type, one line under it, one primary action.
+
+What it is: the opening statement — display type, one line under it, one primary action (and at most one quiet second). What it is for: the top of a landing page. When to use it: once. A page has one hero the way a screen has one primary.
+
+### Feature grid
+
+WHEN TO USE: the what-you-get section — three to six cards, each an icon, a phrase and a line.
+
+What it is: icon, claim, one sentence — repeated in the auto-fitting grid. What it is for: the "what you get" section of a landing page. When to use it: three to six features; more belong in docs.
+
+### Pricing table
+
+WHEN TO USE: two or three plans side by side, one marked recommended; every plan's action is a real link.
+
+What it is: plan cards side by side — name, price, the differences as a short list, one action each; the recommended plan carries the page's one primary. What it is for: choosing a plan without a spreadsheet. When to use it: two or three plans. More than three is a decision problem, not a layout problem.
+
+### FAQ list
+
+WHEN TO USE: the questions people actually ask, folded behind native details — no JS, printable, crawlable.
+
+What it is: accordions with a shared name — the browser keeps one answer open, no JS. What it is for: the questions people actually ask, at the bottom of a landing or checkout page. When to use it: five to ten questions; more means the page above failed to explain.
+
+### CTA band
+
+WHEN TO USE: the last push before the footer — one line, one button, on the accent wash.
+
+What it is: the closing ask — an ink-filled strip that flips to the on-accent voice, one line and one button. What it is for: the end of a landing page, after the case is made. When to use it: once, last.
+
+### Logo row & testimonial
+
+WHEN TO USE: borrowed trust — a muted logo row, or one strong quote with a name and face; never a carousel of both.
+
+What it is: the proof pair — a muted row of names that trust you, and one quote with a face and a name. What it is for: landing pages between the hero and the features. When to use it: only with real logos and real quotes; invented proof reads as invented.
+
+### Data table with toolbar
+
+WHEN TO USE: a dashboard's working table — a toolbar of filters above, the themed table below, states from the grammar.
+
+What it is: search, filter chips and actions in a row above the data table — the search input filters rows live via data-filter. What it is for: the working screen of any records app. When to use it: whenever a table grows past one screenful.
+
+### Stat row
+
+WHEN TO USE: the numbers that matter, first — three to five stats in a row, each a number over a caption.
+
+What it is: KPI cards — one number that matters with its label under it, tabular digits, in the grid. What it is for: the top of a dashboard. When to use it: three or four numbers; a wall of KPIs is a report, not a dashboard.
+
+### Settings section
+
+WHEN TO USE: an app's settings screen — grouped rows of switches and pickers, each row a label with its control.
+
+What it is: labelled rows with their controls — switches, selects, steppers — in a quiet stack under a section caption. What it is for: preference screens. When to use it: every setting a product has, in one predictable shape.
+
+### Form section
+
+WHEN TO USE: any real form — stacked labelled fields, hints under, one primary submit at the end.
+
+What it is: grouped fields with one submit row — a fieldset per group, the primary action last and alone. What it is for: anything the reader fills in. When to use it: always this shape; forms that scatter their buttons scatter their completion rates.
+
+### Article header, prose, media
+
+WHEN TO USE: editorial pages — the header (kicker, title, byline, time), reading-measure prose, media figures with captions.
+
+What it is: the editorial set — a header of title, byline and meta; long-form prose that is just semantic tags on the narrow container (the base styles are the design); a media figure with its caption attached; and the pull quote for the sentence worth stealing. What it is for: articles, guides, changelogs. When to use it: any page someone reads top to bottom.
+
 ### Promo rail
+
+WHEN TO USE: featured content at the top of a launcher or home screen — two to six promos; a single promo is just a card.
 
 What it is: the promo rail — a full-bleed carousel of wide feature
 cards, each washed with a different vivid-palette tint, snapping card
@@ -1616,6 +1750,8 @@ target.
 
 ### Side index
 
+WHEN TO USE: docs, references and settings hubs — one long or paged content column with a persistent map beside it.
+
 What it is: the index panel the library's own docs use — a sticky
 aside on a surface fill with a hairline and rounded corners, holding
 grouped link lists. Each .side-index-group opens with an uppercase
@@ -1643,6 +1779,8 @@ screens stack it or hide the groups and keep a search box.
 
 ### App grid
 
+WHEN TO USE: the front door of a suite of mini apps, a portal, a directory of tools — every tile one real link.
+
 What it is: a home-screen launcher — an auto-fill grid of app tiles,
 each tile one real link: a rounded-square icon, the app's name, a
 one-line caption, and an optional metric line. What it is for: the
@@ -1667,6 +1805,8 @@ theme.
     </nav>
 
 ### App identity
+
+WHEN TO USE: once, at the top of an app's about, release-notes or install page — which app this is, at a glance.
 
 What it is: the identity header of an app's about page — a centered
 rounded-square icon, the app's name, a muted one-line phrase, and an
@@ -1706,6 +1846,48 @@ every future theme gets its map for free.
 
     <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12"
          data-map-key="YOUR_KEY"></div>
+
+### Sound & haptics
+
+WHEN TO USE: any app-shaped product — leave it on and the components click, tick and snap by themselves; the settings sheet's switches are the user's mute.
+
+What it is: synthesized UI sound and vibration with no audio files — facet.feedback plays short Web Audio blips (tap, tick, snap, toggle, success) and fires navigator.vibrate haptics, both ON by default. What it is for: the physical feel of an app — a tick as a stepper bumps, a soft snap as a pager settles, a tap under every control. When to use it: any app-shaped product; leave it on and it wires itself to the components. There is almost no HTML to write: the user's switches are the settings sheet's Sounds and Haptics toggles (data-control="sounds" / "haptics", self-wired), and the components already call it. To fire it yourself: facet.feedback.tap() / .tick() / .snap() / .success(); mute a channel with facet.feedback.sound.enabled = false or .haptic.enabled = false. Reduced-motion and a muted switch silence it.
+
+### Tab bar
+
+WHEN TO USE: section navigation in app-shaped pages with a snap pager — three to five destinations, thumb height.
+
+What it is: the iOS-style bottom pill — text segments, a hairline divider, a trailing settings button — with one injected .tab-indicator pill moving behind the active segment on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. What it is for: section navigation in app-shaped pages; it wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet) and its settings button opens the sheet it aria-controls. When to use it: any snap-paged product. On a real page it floats fixed above the bottom edge; here it sits in the flow. Frosted and embossed in the base theme; a tuned translucent well with a raised pill under Velvet.
+
+### Sheet & menu
+
+WHEN TO USE: the app's settings and secondary navigation, behind one button — the right-edge panel every calculator shares.
+
+What it is: the settings panel — a right-edge slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back; inside it, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the trigger's aria-expanded is managed. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump.
+
+### Float button
+
+WHEN TO USE: the one floating control a screen needs — usually the menu or settings trigger the sheet wires itself to.
+
+What it is: a lone floating round button pinned to the bottom-left of the page — the tab bar's trailing icon without the bar. What it is for: pages that need the settings sheet (or any panel) but not section navigation: give it aria-controls pointing at a .sheet and facet.js wires the open/close, the aria-expanded state and the press feedback exactly like the tab bar's settings button. When to use it: whenever a page has one floating action; .float-btn-right pins it bottom-right instead. Always an aria-label and a data-tip: the icon alone says nothing. On a real page it floats fixed; here it sits in the flow — this one opens the sheet from the entry above.
+
+### Nav menu
+
+WHEN TO USE: whole-site navigation on app-like pages and PWAs — the thumb-reachable Menu and Settings pills in a bottom corner.
+
+What it is: a floating navigation cluster pinned bottom-left — a "Menu" pill that opens a stack of page links, and a same-size round Settings button beside it that opens a stack of setting toggles. Both stacks rise above their own trigger; opening one closes the other, and neither trigger moves when a stack opens. Every link and the Menu pill are the base .btn.btn-pill (the Settings button is .btn-pill.btn-icon, canonical icon data-icon="sliders"); each setting is a .btn.btn-pill.nav-set whose on/off state shows in the pill itself: the pill stays solid in both states and only the trailing .menu-value chip changes (filled accent = on, outlined muted = off). What it is for: whole-site navigation on any Facet page, plus the app's own settings — theme, appearance, motion, sound, haptics, language — behind two thumb-reachable floating controls. When to use it: the primary nav for a content site or app. The Menu is a real <details> wrapping real <a> links, so it works with JavaScript off — the summary opens the links inline — and the links sit in the DOM for crawlers and AI. Every item is one line, left-aligned, sized to its own content and capped near 300px; wrap the label in .nav-label and a long one truncates with an ellipsis while the icon and any trailing .menu-value stay whole. facet.js upgrades both stacks to a floating overlay: a dimming scrim, body scroll-lock, a staggered reveal, Escape to close, and focus moved into the open stack and back. The setting pills self-wire through data-control (theme cycles Default/Velvet/Aero/Elegant; appearance is the separate Light/Dark/Auto and the two compose) and data-language-cycle. Clicking a nav link or action closes the panel; a .nav-set toggle leaves it open so several settings can be changed in a row. Reduced motion drops the stagger. Add .nav-menu-right to anchor the cluster bottom-right with right-aligned stacks (left stays the default); an optional .nav-menu-back round pill — a real link with a chevron-left — sits on the cluster's outer edge, in the canonical order [back] [Menu] [settings]. On a real page it floats fixed bottom-left or bottom-right; here it sits in the flow.
+
+### Scroll gauge
+
+WHEN TO USE: long scrollers inside app screens — a slim thumb that shows how much is left and drags to scrub.
+
+What it is: a pill thumb inset in an embossed groove beside a scroller — thumb height is the visible share of the content, position is progress, and overscroll momentum slides it out of the groove where the clip swallows it. What it is for: a themed, unobtrusive scrollbar look-alike for panels and whole pages; facet.scrollGauge(scroller) injects it, a metric option reports composite scrolls (the pager's sections laid end to end), and onScrub makes the lane a drag handle. When to use it: sheets and app pages where the native scrollbar is hidden. Auto-hides when nothing overflows. Scroll the box:
+
+### Installable (PWA)
+
+WHEN TO USE: any page that should install to a home screen — three small files at the root and the library's caching engine do the rest.
+
+What it is: the setup that turns any Facet page into an installable, offline-capable app. What it is for: products you want on a phone's home screen — opening full-screen, working offline. When to use it: any app-shaped page. Facet ships the caching engine (/lib/facet-sw.js) plus a working reference set — /sw.js, /manifest.json and /icons/ — that you copy into your own project root. The full step-by-step recipe lives in llms.txt; the app template ships the exact head block below.
 
 ## App-kit self-wiring (apps are markup + data only)
 
@@ -1903,6 +2085,24 @@ print sheet: five duplex-aligned pairs per A4 at exact size.
 /templates/manifest.json — the PWA manifest template with the icon
 checklist. robots.txt and sitemap.xml ship at the site root as the
 copyable pattern.
+
+### Landing page
+
+WHEN TO USE: start a marketing site here — hero, proof, features, pricing, FAQ, CTA, footer, assembled from the block layer. Rename and fill.
+
+A marketing site from the block layer: top menu, hero, social proof, feature grid, pricing, FAQ, CTA band and footer. Swap the words, keep the shape.
+
+### SaaS dashboard
+
+WHEN TO USE: start a dashboard product here — sidebar shell, stat row, chart, working table.
+
+An analytics product — Northstar — with a folding sidebar, a top bar, a KPI stat row, a live chart, and a filterable table beside an activity panel. The everyday shape of a web app.
+
+### Social app
+
+WHEN TO USE: start a feed-shaped app here — three columns on desktop, the tab bar taking over on phones.
+
+A three-column feed — Ripple — that folds to one column with a bottom tab bar on phones, showing off the app-kit tab bar and the settings sheet. Compose box, a live feed, trends and who-to-follow.
 
 ## Build advice — guidance, not components
 
