@@ -900,6 +900,11 @@ function initFontNames() {
     attributes: true, attributeFilter: ["data-theme", "data-mode"],
   });
   render();
+  // Early paint can resolve the stack before the imported fonts CSS
+  // arrives (the caption would read a browser default) — re-read once
+  // everything, fonts included, has landed.
+  addEventListener("load", render);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
 }
 
 /* The Sound & haptics wall entry: its buttons carry data-feedback-demo

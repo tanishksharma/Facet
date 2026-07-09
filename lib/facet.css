@@ -44,31 +44,48 @@
 */
 
 /* (docs mirror — identical to llms.txt · Fonts)
-   WHEN TO USE: never pick a font in a component — ask for a role. Seven
-   faces, one per job: --font-heading (calligraphic serif),
+   WHEN TO USE: never pick a font in a component — ask for a role. The
+   core seven, one per job: --font-heading (calligraphic serif),
    --font-body (rounded sans, the interface voice), --font-mono
    (technical monospace — also the eyebrow voice at --weight-eyebrow,
    always caps), --font-quote (editorial serif, italic, for quotes and
    callouts), --font-reading (editorial serif, upright, for long-form
    article text), --font-numeric (display serif for big standalone
-   numbers), --font-hand (a handwritten pen for margin notes, hand
-   annotations and rough work — a human hand on the interface, never for
-   body text). The Default theme loads them with one @import at the top of
-   facet.css; every stack ends in a system fallback, so text renders
-   instantly and survives the fonts failing. A theme re-voices the whole
-   library by swapping the faces; nothing downstream changes. */
+   numbers), --font-hand (a handwritten pen for margin notes and rough
+   work, never body text). The extended set for special jobs:
+   --font-hero (loud geometric display for one-word heroes and posters),
+   --font-signature (formal cursive for sign-off lines and certificates),
+   --font-typewriter (the typed-document voice for memos and drafts),
+   --font-receipt (dot-matrix for receipts, tickets and counters),
+   --font-barcode (renders text as a real scannable Code 128 barcode),
+   --font-pixel (bitmap for retro screens and badges), --font-children
+   (round and friendly for kids' products), and the script pairings
+   --font-japanese, --font-chinese, --font-korean, --font-devanagari for
+   translated content (Cyrillic ships inside the core faces, so Russian
+   needs no extra family). The Default theme loads them all with one
+   @import at the top of facet.css, served in unicode-range subsets — a
+   page that never uses a face downloads none of its glyphs. Every stack
+   ends in a system fallback; a theme re-voices the library by swapping
+   faces; nothing downstream changes. */
 /* ----- Web fonts -----
    The faces, each loaded for one job (see --font-* in the token layer):
    Cormorant for calligraphic headings, Nunito Sans for friendly body text,
    JetBrains Mono for technical captions, code and the eyebrow voice,
    Newsreader for quotes, callouts and long-form reading, Playfair Display
-   for big standalone numbers, Caveat for hand annotations. Loaded from Google
+   for big standalone numbers, Caveat for hand annotations — plus the
+   extended set: Unbounded (hero display), Great Vibes (signature),
+   Special Elite (typewriter), Doto (receipt), Libre Barcode 128 Text
+   (real scannable barcodes), Silkscreen (pixel), Baloo 2 (children), and
+   the script pairings Noto Sans JP/SC/KR and Mukta. Google serves every
+   family in unicode-range subsets, so a page that never uses a face
+   downloads none of its glyphs — only these rules. Cyrillic ships inside
+   the core faces already, so Russian needs no extra family. Loaded from Google
    Fonts through the stylesheet, so no extra tag in anyone's HTML and it works
    with JavaScript off. Each font stack still ends in a system fallback, so
    text renders instantly and survives the font failing to load. display=swap
    shows fallback text first, then swaps — never a blank flash of text.
    @import must stay at the very top, before any style rule. */
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Cormorant:wght@500;600;700&family=JetBrains+Mono:wght@400;500;800&family=Newsreader:ital,wght@0,400;1,400;1,500&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Caveat:wght@400;600&family=Cormorant:wght@500;600;700&family=Doto:wght@700&family=Great+Vibes&family=JetBrains+Mono:wght@400;500;800&family=Libre+Barcode+128+Text&family=Mukta:wght@400;700&family=Newsreader:ital,wght@0,400;1,400;1,500&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@500;600;700&family=Silkscreen:wght@400;700&family=Special+Elite&family=Unbounded:wght@500;800&display=swap');
 
 
 /* ==========================================================================
@@ -238,6 +255,19 @@
   --font-quote: "Newsreader", Georgia, "Times New Roman", serif;          /* quotes and callouts, set apart */
   --font-reading: "Newsreader", Georgia, "Times New Roman", serif;        /* long-form article text: the editorial reading voice, upright */
   --font-hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;           /* hand annotations: margin notes, rough work, a human pen on the interface */
+  /* The extended faces: display, paper, play and scripts. Same rule as the
+     core seven — components ask for the role, never the font. */
+  --font-hero: "Unbounded", "Arial Black", sans-serif;                     /* the loud one: one-word heroes, posters, launch screens */
+  --font-signature: "Great Vibes", "Snell Roundhand", "Apple Chancery", cursive; /* formal cursive: sign-off lines, letters, certificates */
+  --font-typewriter: "Special Elite", "American Typewriter", "Courier New", monospace; /* the typed-document voice: memos, drafts, screenplays */
+  --font-receipt: "Doto", "Courier New", monospace;                        /* dot-matrix printer: receipts, tickets, counters */
+  --font-barcode: "Libre Barcode 128 Text", monospace;                     /* renders text as a real scannable Code 128 barcode */
+  --font-pixel: "Silkscreen", "Courier New", monospace;                    /* pixel bitmap: retro screens, badges, easter eggs */
+  --font-children: "Baloo 2", "Comic Sans MS", sans-serif;                 /* round and friendly: kids' products, playful moments */
+  --font-japanese: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;   /* Japanese content (data-language variants) */
+  --font-chinese: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;            /* Simplified Chinese content */
+  --font-korean: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;       /* Korean content */
+  --font-devanagari: "Mukta", "Kohinoor Devanagari", sans-serif;           /* Hindi and Devanagari content */
   --font-numeric: "Playfair Display", Georgia, "Times New Roman", serif;  /* big standalone numbers */
 
   /* ----- Typography: type scale, named by role, scaled by size -----

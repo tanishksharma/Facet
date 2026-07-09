@@ -301,19 +301,29 @@ group names and menu labels.
 
 ### Fonts
 
-WHEN TO USE: never pick a font in a component — ask for a role. Seven
-faces, one per job: --font-heading (calligraphic serif),
+WHEN TO USE: never pick a font in a component — ask for a role. The
+core seven, one per job: --font-heading (calligraphic serif),
 --font-body (rounded sans, the interface voice), --font-mono
 (technical monospace — also the eyebrow voice at --weight-eyebrow,
 always caps), --font-quote (editorial serif, italic, for quotes and
 callouts), --font-reading (editorial serif, upright, for long-form
 article text), --font-numeric (display serif for big standalone
-numbers), --font-hand (a handwritten pen for margin notes, hand
-annotations and rough work — a human hand on the interface, never for
-body text). The Default theme loads them with one @import at the top of
-facet.css; every stack ends in a system fallback, so text renders
-instantly and survives the fonts failing. A theme re-voices the whole
-library by swapping the faces; nothing downstream changes.
+numbers), --font-hand (a handwritten pen for margin notes and rough
+work, never body text). The extended set for special jobs:
+--font-hero (loud geometric display for one-word heroes and posters),
+--font-signature (formal cursive for sign-off lines and certificates),
+--font-typewriter (the typed-document voice for memos and drafts),
+--font-receipt (dot-matrix for receipts, tickets and counters),
+--font-barcode (renders text as a real scannable Code 128 barcode),
+--font-pixel (bitmap for retro screens and badges), --font-children
+(round and friendly for kids' products), and the script pairings
+--font-japanese, --font-chinese, --font-korean, --font-devanagari for
+translated content (Cyrillic ships inside the core faces, so Russian
+needs no extra family). The Default theme loads them all with one
+@import at the top of facet.css, served in unicode-range subsets — a
+page that never uses a face downloads none of its glyphs. Every stack
+ends in a system fallback; a theme re-voices the library by swapping
+faces; nothing downstream changes.
 
 ### Color
 
