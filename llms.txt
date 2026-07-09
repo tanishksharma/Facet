@@ -256,97 +256,112 @@ theme surface you need.
 
 ## Tokens
 
-Every design decision is a CSS variable named by its role, never its value.
-Use tokens, never raw hex or px, in anything built on Facet.
+Every design decision is a CSS variable named by its role, never its
+value. Use tokens, never raw hex or px, in anything built on Facet.
+The sections below cover each token area the way the library page
+presents them.
 
-Color: --background, --surface, --text, --text-muted, --border, then
-the accent ranks — components pick ranks, never colors:
---accent-1 / -hover / -pressed / --on-accent-1   the one primary action
---accent-2 / -hover / -pressed / --on-accent-2   secondary action fill
---accent-3 / -hover / -pressed / --on-accent-3   links, labels, focus,
-                                                 quiet affordances
-Status: --success, --warning, --error, --info
-Vivid palette: --color-1 red, --color-2 yellow, --color-3 green,
---color-4 blue, --color-5 purple — five bright decorative colors named
-by rank, like the accents. Decoration only: card tints (mixed into the
-surface), charts, playful accents — never semantic status. A theme may
-re-tune them.
+### Typography
 
-Type (named by role, not size). Font, one face per job:
---font-heading (calligraphic serif), --font-body (rounded sans),
---font-mono (technical monospace), --font-quote (editorial serif for quotes
-and callouts), --font-numeric (display serif for big standalone numbers) —
-every stack ends in a system fallback. Size: --text-display, --text-h1,
---text-h2, --text-h3, --text-h4, --text-body, --text-quote, --text-footnote,
---text-caption. Weight: --weight-body, --weight-medium (UI labels/nav/buttons),
+WHEN TO USE: you rarely set type directly — write semantic HTML
+(h1–h4, p, small, blockquote) and the base layer sets everything. Reach
+for the tokens only when building a component or a special piece (a
+stat, a hero) that needs a size, weight or rhythm by hand; reach for
+the .text-* classes to put a role's look on any element.
+
+Sizes by role: --text-display, --text-h1 … --text-h4, --text-body,
+--text-quote, --text-footnote, --text-caption. Weights:
+--weight-body, --weight-medium (UI labels, nav, buttons),
 --weight-strong, --weight-heading. Line height per role:
---leading-display/-heading/-snug/-body/-ui (tighter as type grows). Tracking
-per role: --tracking-display/-heading/-snug/-body/-label/-caps/-wide (large
-type tightens, caps labels open up, -wide for spaced overlines/eyebrows).
-Measure: --measure, --measure-narrow. Prose
-rhythm (em-based vertical margins): --flow-heading-above/-below,
---flow-paragraph, --flow-tight; gap layouts (.stack, .row) zero these so
-rhythm and gap never stack. Global type size:
-data-text-size="small|medium|large" (theme-defined, independent of density).
+--leading-display/-heading/-snug/-body/-ui — tighter as type grows.
+Tracking per role: --tracking-display/-heading/-snug/-body/-label/
+-caps/-wide — large type tightens, caps micro-labels open up, -wide is
+for spaced overlines. Reading measure: --measure, --measure-narrow.
+Prose rhythm (em-based margins that give raw HTML its flow):
+--flow-heading-above/-below, --flow-paragraph, --flow-tight; gap
+layouts (.stack, .row) zero these so rhythm and gap never stack.
+Global type size: data-text-size="small|medium|large" on html — set by
+the theme, independent of density. Text-role classes (.text-display …
+.text-caption) put the scale on any element.
 
-Spacing (named by intent, not by number): --space-tight (bound pairs, 4px),
---space-control (inside buttons/inputs, 8px), --space-inline (row gaps, 12px),
---space-stack (default block gap, 16px), --space-card (card padding, 24px),
---space-page (page margins, 32px), --space-section (between sections, 48px),
---space-hero (biggest breaks, 64px). Global density:
-data-density="small|medium|large" scales the whole spacing system at once,
-theme-defined. Container widths: --width-narrow 40rem, --width-default 64rem,
---width-wide 80rem.
+### Fonts
 
-Shape: --radius-control (buttons, inputs, chips), --radius-panel (fields,
-mid panels), --radius-card (cards, modals, hero), --radius-pill; borders by
-role — --border-hairline (faint separators, dividers, row lines),
---border-element (the outline of an element), --border-focus (the focus ring),
---border-highlight (active bars, selected emphasis)
+WHEN TO USE: never pick a font in a component — ask for a role. Five
+faces, one per job: --font-heading (calligraphic serif),
+--font-body (rounded sans), --font-mono (technical monospace),
+--font-quote (editorial serif for quotes and callouts), --font-numeric
+(display serif for big standalone numbers). The Default theme loads
+them with one @import at the top of facet.css; every stack ends in a
+system fallback, so text renders instantly and survives the fonts
+failing. A theme re-voices the whole library by swapping the five
+faces; nothing downstream changes.
 
-Elevation: --shadow-flat, --shadow-raised, --shadow-floating,
---shadow-overlay (very light, all of them)
+### Color
 
-Safe areas: --safe-top / --safe-bottom carry the device's own
-intrusions (Dynamic Island / notch above, home bar below) as role
-tokens — every full-viewport surface the library owns (snap sections,
-views, sheets, drawers, tab bar, toasts, nav menu, install nudge,
-overlay guide) pads with them, so content clears the hardware by
-default. Opt out per subtree with .bleed-top (sets --safe-top to 0 —
-custom properties inherit) when content should deliberately run up
-under the island: full-bleed maps, immersive pages.
+WHEN TO USE: components and pages never pick raw colors — they pick
+roles and ranks. The neutral roles: --background (the page),
+--surface (cards and inputs, one step above), --surface-hover /
+--surface-active (interactive fills), --border-subtle / --border /
+--border-strong (three line weights), --text / --text-muted /
+--text-subtle (three text weights). The accent ranks, each with
+-hover, -pressed and an on-color: --accent-1 is the ONE primary action
+per screen, --accent-2 fills every secondary action, --accent-3 is the
+quiet interactive color (links, labels, focus). Status colors say what
+happened: --success, --warning, --error, --info — each with a derived
+-tint and -edge pair for washes and borders. The vivid palette
+(--color-1 red … --color-5 purple) is decoration only — card tints,
+charts, playful accents — never semantic status. Dark mode and every
+theme re-map all of it; your markup does not change.
 
-Motion: the motion system. Lively, the default — momentum, weight,
-spring (--ease-spring is a true linear() spring curve where
-supported): --duration-fast 150ms, --duration-normal 280ms,
---duration-slow 450ms, --ease-out, --ease-in-out, --ease-spring.
-data-motion="calm" swaps the whole set for short, near-linear, slight
-values; data-motion="off" stops animation entirely; both work on any
-subtree and through facet.set({motion}). Every transition in the
-library reads these tokens — no component hardcodes an easing. All
-motion collapses to nothing under prefers-reduced-motion, above any
-page choice.
+### Spacing
 
-Focus: --focus-ring, --focus-offset. One visible ring everywhere,
-keyboard only.
+WHEN TO USE: name the intent, never a number. --space-tight (bound
+pairs, 4px), --space-control (inside buttons and inputs, 8px),
+--space-inline (gaps in a row, 12px), --space-stack (default block
+gap, 16px), --space-card (card padding, 24px), --space-page (page
+margins, 32px), --space-section (between page sections, 48px),
+--space-hero (the biggest breaks, 64px). One global control —
+data-density="small|medium|large" — tightens or opens the whole system
+at once, and the theme sets it; never pick a theme and its spacing
+separately. Container widths: --width-narrow 40rem (prose, forms),
+--width-default 64rem (most pages), --width-wide 80rem (dashboards).
+Safe areas: --safe-top / --safe-bottom carry the notch and home-bar
+insets; every full-viewport surface pads with them, and .bleed-top
+opts a subtree out deliberately.
 
-## Reader adaptation
+### Shape and elevation
 
-The page bends to the reader at the token layer, so every theme and
-component adapts with zero extra code. prefers-contrast: more — muted
-text gives up its gray, borders climb toward the ink, the focus ring
-thickens, in every theme and mode. Forced colors (Windows High
-Contrast) — audited; background-shaped elements keep a real border in
-the system palette. data-density="small|medium|large" on html or any
-subtree (or the density script-tag/config key) scales the whole
-intent-named spacing system; data-text-size does the same for type.
-.visually-hidden is screen-reader-only text. Text roles .text-display,
-.text-h1, .text-h2, .text-h3, .text-h4, .text-body, .text-quote,
-.text-footnote, .text-caption put the type scale on any element by role.
-And rem sizing everywhere means the phone's text-size setting scales
-the entire interface.
+WHEN TO USE: radii by what they round — --radius-control (buttons,
+inputs, chips), --radius-panel (fields, mid panels), --radius-card
+(cards, modals, hero), --radius-pill (pills, sliders, avatars).
+Borders by role: --border-hairline (faint separators),
+--border-element (an element's outline), --border-focus (the focus
+ring), --border-highlight (active bars, selected emphasis). Elevation:
+--shadow-flat, --shadow-raised, --shadow-floating, --shadow-overlay —
+whisper-light layered shadows; themes may trade shadow for carving
+(Elegant) or bevels (Velvet), and your markup does not change.
+
+### Motion
+
+WHEN TO USE: never hardcode a duration or an easing — every transition
+in the library and in your product reads the motion tokens, so one
+attribute can calm or stop everything. Lively is the default: momentum,
+weight, a settle in every arrival — --duration-fast 150ms,
+--duration-normal 280ms, --duration-slow 450ms, --ease-out,
+--ease-in-out, --ease-spring (a true spring curve where supported).
+data-motion="calm" makes everything short and near-linear;
+data-motion="off" stops animation entirely; both work on any subtree
+and through facet.set({motion}). prefers-reduced-motion collapses all
+library motion to nothing, above any page choice. Focus:
+--focus-ring, --focus-offset — one visible ring, keyboard only.
 
 ## Print & export
+
+WHEN TO USE: nothing, usually — every Facet page already prints
+ink-on-paper clean with the interface controls hidden. Reach for the
+roles only to override one element (a letterhead that prints ONLY, a
+hint that never prints), for .page-break, or to give visitors a
+Save-as-PDF button.
 
 Printing is a first-class feature. Three roles name what belongs on
 paper: data-print="off" (alias .print-hide) never prints — page
@@ -405,13 +420,14 @@ re-applies it after you insert markup.
 
 ## Base styles
 
-Raw semantic HTML already looks like Facet: headings, paragraphs, links,
-lists, blockquotes, code and pre, tables, inputs, textareas, selects,
-buttons, fieldsets, figures. Also included: focus rings, selection colors,
-thin scrollbars, a .skip-link class for the skip-to-content link, and a
-print base. Start every page with:
-
-    <a class="skip-link" href="#main">Skip to content</a>
+WHEN TO USE: write raw semantic HTML and it already looks designed —
+this is the layer that makes a bare page presentable before any class.
+Headings, paragraphs, lists, blockquotes, tables, code, forms and
+buttons are all styled; one visible keyboard focus ring everywhere;
+selection colors; thin scrollbars; a skip-to-content link pattern; the
+hidden attribute always wins; tabular figures on numeric UI; images
+are block-level and never overflow. Content, layout, links and forms
+all work with JavaScript off — facet.js only adds enhancements.
 
 ## Components
 

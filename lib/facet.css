@@ -43,6 +43,16 @@
   To-dos are marked "TODO" inline where they sit.
 */
 
+/* (docs mirror — identical to llms.txt · Fonts)
+   WHEN TO USE: never pick a font in a component — ask for a role. Five
+   faces, one per job: --font-heading (calligraphic serif),
+   --font-body (rounded sans), --font-mono (technical monospace),
+   --font-quote (editorial serif for quotes and callouts), --font-numeric
+   (display serif for big standalone numbers). The Default theme loads
+   them with one @import at the top of facet.css; every stack ends in a
+   system fallback, so text renders instantly and survives the fonts
+   failing. A theme re-voices the whole library by swapping the five
+   faces; nothing downstream changes. */
 /* ----- Web fonts -----
    Five families, each loaded for one job (see --font-* in the token layer):
    Cormorant for calligraphic headings, Nunito Sans for friendly body text,
@@ -80,6 +90,21 @@
 :root,
 [data-mode="light"] {
 
+  /* (docs mirror — identical to llms.txt · Color)
+     WHEN TO USE: components and pages never pick raw colors — they pick
+     roles and ranks. The neutral roles: --background (the page),
+     --surface (cards and inputs, one step above), --surface-hover /
+     --surface-active (interactive fills), --border-subtle / --border /
+     --border-strong (three line weights), --text / --text-muted /
+     --text-subtle (three text weights). The accent ranks, each with
+     -hover, -pressed and an on-color: --accent-1 is the ONE primary action
+     per screen, --accent-2 fills every secondary action, --accent-3 is the
+     quiet interactive color (links, labels, focus). Status colors say what
+     happened: --success, --warning, --error, --info — each with a derived
+     -tint and -edge pair for washes and borders. The vivid palette
+     (--color-1 red … --color-5 purple) is decoration only — card tints,
+     charts, playful accents — never semantic status. Dark mode and every
+     theme re-map all of it; your markup does not change. */
   /* ----- Colors: the neutral ramp -----
      Semantic roles, never numbers. One committed temperature (a faint cool
      cast). The page is a soft off-white; surfaces (cards, inputs) are white
@@ -167,6 +192,27 @@
   --color-4: #007AFF;         /* blue */
   --color-5: #AF52DE;         /* purple */
 
+  /* (docs mirror — identical to llms.txt · Typography)
+     WHEN TO USE: you rarely set type directly — write semantic HTML
+     (h1–h4, p, small, blockquote) and the base layer sets everything. Reach
+     for the tokens only when building a component or a special piece (a
+     stat, a hero) that needs a size, weight or rhythm by hand; reach for
+     the .text-* classes to put a role's look on any element.
+
+     Sizes by role: --text-display, --text-h1 … --text-h4, --text-body,
+     --text-quote, --text-footnote, --text-caption. Weights:
+     --weight-body, --weight-medium (UI labels, nav, buttons),
+     --weight-strong, --weight-heading. Line height per role:
+     --leading-display/-heading/-snug/-body/-ui — tighter as type grows.
+     Tracking per role: --tracking-display/-heading/-snug/-body/-label/
+     -caps/-wide — large type tightens, caps micro-labels open up, -wide is
+     for spaced overlines. Reading measure: --measure, --measure-narrow.
+     Prose rhythm (em-based margins that give raw HTML its flow):
+     --flow-heading-above/-below, --flow-paragraph, --flow-tight; gap
+     layouts (.stack, .row) zero these so rhythm and gap never stack.
+     Global type size: data-text-size="small|medium|large" on html — set by
+     the theme, independent of density. Text-role classes (.text-display …
+     .text-caption) put the scale on any element. */
   /* ----- Typography: font stacks, one per job -----
      Five roles, each a different face chosen for what it does, every stack
      ending in a system fallback (never `inherit` — that voids the whole
@@ -242,6 +288,20 @@
   --flow-paragraph: 1em;        /* between paragraphs, lists, quotes, tables */
   --flow-tight: 0.5em;          /* between closely related lines */
 
+  /* (docs mirror — identical to llms.txt · Spacing)
+     WHEN TO USE: name the intent, never a number. --space-tight (bound
+     pairs, 4px), --space-control (inside buttons and inputs, 8px),
+     --space-inline (gaps in a row, 12px), --space-stack (default block
+     gap, 16px), --space-card (card padding, 24px), --space-page (page
+     margins, 32px), --space-section (between page sections, 48px),
+     --space-hero (the biggest breaks, 64px). One global control —
+     data-density="small|medium|large" — tightens or opens the whole system
+     at once, and the theme sets it; never pick a theme and its spacing
+     separately. Container widths: --width-narrow 40rem (prose, forms),
+     --width-default 64rem (most pages), --width-wide 80rem (dashboards).
+     Safe areas: --safe-top / --safe-bottom carry the notch and home-bar
+     insets; every full-viewport surface pads with them, and .bleed-top
+     opts a subtree out deliberately. */
   /* ----- Spacing: named by intent, scaled by density -----
      Pick spacing by role, never by a bare number. Each token says where it
      belongs. --density-scale (data-density small/medium/large) shifts the
@@ -273,6 +333,16 @@
   --width-default: 64rem;     /* most pages */
   --width-wide: 80rem;        /* dashboards, galleries */
 
+  /* (docs mirror — identical to llms.txt · Shape and elevation)
+     WHEN TO USE: radii by what they round — --radius-control (buttons,
+     inputs, chips), --radius-panel (fields, mid panels), --radius-card
+     (cards, modals, hero), --radius-pill (pills, sliders, avatars).
+     Borders by role: --border-hairline (faint separators),
+     --border-element (an element's outline), --border-focus (the focus
+     ring), --border-highlight (active bars, selected emphasis). Elevation:
+     --shadow-flat, --shadow-raised, --shadow-floating, --shadow-overlay —
+     whisper-light layered shadows; themes may trade shadow for carving
+     (Elegant) or bevels (Velvet), and your markup does not change. */
   /* ----- Shape: radii named for what they round ----- */
   --radius-control: 8px;      /* buttons, inputs, chips — the small controls */
   --radius-panel: 12px;       /* fields, result blocks, mid-size panels */
@@ -306,6 +376,18 @@
     0 8px 16px rgb(16 24 40 / 0.06),
     0 16px 32px rgb(16 24 40 / 0.08);
 
+  /* (docs mirror — identical to llms.txt · Motion)
+     WHEN TO USE: never hardcode a duration or an easing — every transition
+     in the library and in your product reads the motion tokens, so one
+     attribute can calm or stop everything. Lively is the default: momentum,
+     weight, a settle in every arrival — --duration-fast 150ms,
+     --duration-normal 280ms, --duration-slow 450ms, --ease-out,
+     --ease-in-out, --ease-spring (a true spring curve where supported).
+     data-motion="calm" makes everything short and near-linear;
+     data-motion="off" stops animation entirely; both work on any subtree
+     and through facet.set({motion}). prefers-reduced-motion collapses all
+     library motion to nothing, above any page choice. Focus:
+     --focus-ring, --focus-offset — one visible ring, keyboard only. */
   /* ----- Motion: timing and easing ----- */
   /* Animated, the default: momentum, weight, a settle in every arrival.
      Color changes use --ease-out; anything that moves or scales uses
@@ -1474,6 +1556,16 @@ canvas {
    Write plain semantic HTML and it already looks like Facet.
    ========================================================================== */
 
+/* (docs mirror — identical to llms.txt · Base styles)
+   WHEN TO USE: write raw semantic HTML and it already looks designed —
+   this is the layer that makes a bare page presentable before any class.
+   Headings, paragraphs, lists, blockquotes, tables, code, forms and
+   buttons are all styled; one visible keyboard focus ring everywhere;
+   selection colors; thin scrollbars; a skip-to-content link pattern; the
+   hidden attribute always wins; tabular figures on numeric UI; images
+   are block-level and never overflow. Content, layout, links and forms
+   all work with JavaScript off — facet.js only adds enhancements. */
+
 /* ----- Page ----- */
 
 html {
@@ -1748,6 +1840,40 @@ figcaption {
   transform: none;
 }
 
+/* (docs mirror — identical to llms.txt · Print & export)
+   WHEN TO USE: nothing, usually — every Facet page already prints
+   ink-on-paper clean with the interface controls hidden. Reach for the
+   roles only to override one element (a letterhead that prints ONLY, a
+   hint that never prints), for .page-break, or to give visitors a
+   Save-as-PDF button.
+
+   Printing is a first-class feature. Three roles name what belongs on
+   paper: data-print="off" (alias .print-hide) never prints — page
+   furniture; data-print="on" (.print-show) always prints, overriding a
+   component that hides by default; data-print="only" (.print-only)
+   prints ONLY — letterheads, "printed from" lines — invisible on screen.
+   Interface controls (navs, the tab bar, float buttons, sheets, toasts,
+   tooltips, gauges) are OFF by default; content (main, articles, cards,
+   tables, figures) is ON — the content IS the paper. The paper
+   stylesheet neutralises every theme to ink on paper, strips shadows and
+   blur, unrolls the app shells (snap pages and view stacks print every
+   screen in order), keeps headings with their text and avoids tearing
+   cards, rows and figures across sheets. .page-break starts an element
+   on a fresh sheet. .print-urls on <body> writes each external link's
+   URL after it (off by default — noisy). facet.js opens every <details>
+   on beforeprint and restores them after, and forces lazy images to
+   load. Any button carrying data-print-action="page" prints the page —
+   the Save-as-PDF affordance; give it data-event="export-pdf" for
+   analytics. Fixed interface controls are user-select: none and are
+   authored at the end of <body>, so a top-to-bottom selection sweeps the
+   content in reading order and a full-page copy contains no control
+   labels. @page margins default to 12mm; a template may override
+   (the deck keeps its exact 1920x1080 sheet, the documents their A4).
+
+       <button class="btn" data-print-action="page"
+               data-event="export-pdf">Save as PDF</button>
+       <header class="letterhead" data-print="only">Acme Ltd — invoice</header>
+       <p class="badge" data-print="off">Screen-only hint</p> */
 /* ----- PRINT & EXPORT: declarative print roles + the paper stylesheet -----
    What it is: printing as a first-class feature. Three roles name what
    belongs on paper: data-print="off" (alias .print-hide) never prints —
