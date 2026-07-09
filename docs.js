@@ -154,35 +154,86 @@ function initWallSearch() {
   });
 }
 
-/* The Backgrounds entry's glyph customizer: presets, sizes and a free
-   input write data-bg-glyph / data-bg-glyph-size on the demo surface —
-   the library's own observer redraws it, which is the whole point of
-   the attribute-driven design. */
-function initGlyphDemo() {
-  const surface = document.querySelector("#glyph-surface");
-  if (!surface) return;
-  const press = (group, chip) => {
-    for (const c of document.querySelectorAll(group)) c.setAttribute("aria-pressed", String(c === chip));
+/* The Backgrounds entry: variant sections (grid | fluid), each with
+   its own controls. Everything writes classes, attributes or custom
+   properties on the demo surfaces — the library's own machinery
+   redraws — and the snippet re-renders to the visible variant. */
+function initBackgroundDemo() {
+  const article = document.querySelector("#backgrounds");
+  const grid = document.querySelector("#bg-variant-grid");
+  const fluid = document.querySelector("#bg-variant-fluid");
+  if (!article || !grid || !fluid) return;
+  const gridControls = document.querySelector("#bg-controls-grid");
+  const customControls = document.querySelector("#bg-controls-custom");
+  const press = (sel, chip) => {
+    for (const c of document.querySelectorAll(sel)) c.setAttribute("aria-pressed", String(c === chip));
   };
+  const refresh = () => renderSnippet(article);
+
+  for (const chip of document.querySelectorAll("[data-bg-variant]")) {
+    chip.addEventListener("click", () => {
+      const isGrid = chip.dataset.bgVariant === "grid";
+      grid.hidden = !isGrid;
+      fluid.hidden = isGrid;
+      gridControls.hidden = !isGrid;
+      if (!isGrid && window.facet) facet.fluidBackground(fluid);
+      press("[data-bg-variant]", chip);
+      refresh();
+    });
+  }
+  for (const chip of document.querySelectorAll("[data-grid-kind]")) {
+    chip.addEventListener("click", () => {
+      const kind = chip.dataset.gridKind;
+      grid.classList.remove("bg-grid", "bg-dots", "bg-ruled", "bg-graph");
+      if (kind === "custom") {
+        if (!grid.dataset.bgGlyph) grid.dataset.bgGlyph = "✦";
+        customControls.hidden = false;
+      } else {
+        delete grid.dataset.bgGlyph;
+        grid.classList.add(kind);
+        customControls.hidden = true;
+      }
+      press("[data-grid-kind]", chip);
+      refresh();
+    });
+  }
+  const setProp = (name, value) => {
+    if (value) grid.style.setProperty(name, value);
+    else grid.style.removeProperty(name);
+    refresh();
+  };
+  for (const chip of document.querySelectorAll("[data-grid-tint]")) {
+    chip.addEventListener("click", () => { setProp("--bg-tint", chip.dataset.gridTint); press("[data-grid-tint]", chip); });
+  }
+  for (const chip of document.querySelectorAll("[data-grid-strength]")) {
+    chip.addEventListener("click", () => { setProp("--bg-strength", chip.dataset.gridStrength); press("[data-grid-strength]", chip); });
+  }
+  for (const chip of document.querySelectorAll("[data-grid-cell]")) {
+    chip.addEventListener("click", () => { setProp("--bg-cell", chip.dataset.gridCell); press("[data-grid-cell]", chip); });
+  }
   for (const chip of document.querySelectorAll("[data-glyph-preset]")) {
     chip.addEventListener("click", () => {
-      surface.dataset.bgGlyph = chip.dataset.glyphPreset;
+      grid.dataset.bgGlyph = chip.dataset.glyphPreset;
       press("[data-glyph-preset]", chip);
       const box = document.querySelector("#glyph-input");
       if (box) box.value = "";
+      refresh();
     });
   }
-  for (const chip of document.querySelectorAll("[data-glyph-size]")) {
+  for (const chip of document.querySelectorAll("[data-glyph-scale]")) {
     chip.addEventListener("click", () => {
-      surface.dataset.bgGlyphSize = chip.dataset.glyphSize;
-      press("[data-glyph-size]", chip);
+      if (chip.dataset.glyphScale) grid.dataset.bgGlyphScale = chip.dataset.glyphScale;
+      else delete grid.dataset.bgGlyphScale;
+      press("[data-glyph-scale]", chip);
+      refresh();
     });
   }
   const box = document.querySelector("#glyph-input");
   if (box) box.addEventListener("input", () => {
     if (box.value.trim()) {
-      surface.dataset.bgGlyph = box.value.trim();
+      grid.dataset.bgGlyph = box.value.trim();
       press("[data-glyph-preset]", null);
+      refresh();
     }
   });
 }
@@ -1100,7 +1151,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initDemoTools();
   overlayCodeTools();              // code actions become a corner icon cluster
   initFeedbackDemo();              // the Sound & haptics wall buttons
-  initGlyphDemo();                 // the Backgrounds entry's glyph customizer
+  initBackgroundDemo();            // the Backgrounds entry: variants + knobs
   initDevicePreview();             // Layer 5 templates in scaled device frames
   initStyleMixer();                // build.html: the scoped theme builder
   initSkinLab();                   // build.html: the theme × mode gallery

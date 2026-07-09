@@ -1399,29 +1399,45 @@ always the latest from the web; versioned freezes start at /lib/v1/.
 
 ## Backgrounds
 
-Very faint page and section backgrounds drawn with CSS gradients
-only, colored by the tokens so every theme and mode gets them for
-free. One class on a section or body; content sits straight on top.
-.bg-grid is the technical drawing (plus marks at grid intersections),
-.bg-dots the dot grid, .bg-ruled writing lines, .bg-graph graph paper
-with minor and major lines. All fade to nothing under
-prefers-contrast: more.
+Very faint page and section backgrounds, in two variants that are
+built differently and tuned separately. Put one class or attribute on
+a section or body; content sits straight on top. Everything fades to
+nothing under prefers-contrast: more and never prints.
 
-    <section class="bg-grid"> ... </section>
+VARIANT GRID — a repeating symbol on a grid:
+- The looks: .bg-grid (technical plus marks), .bg-dots (dot grid),
+  .bg-ruled (writing lines), .bg-graph (graph paper, deliberately the
+  lightest) — or the custom grid: data-bg-glyph="✦" with any character
+  or emoji, a facet icon name, or several tokens separated by spaces
+  for an alternating grid; facet.js draws the tile in the pattern ink
+  and redraws it live whenever the attribute, the theme, the mode or
+  the element's style changes. facet.glyphBackground(el) draws a
+  surface inserted after load.
+- The knobs, on any grid: --bg-tint (ink color, default the muted text
+  token), --bg-strength (ink opacity, default 28%), --bg-cell
+  (spacing, default 2.5rem). The custom grid adds data-bg-glyph-size
+  (spacing override in px) and data-bg-glyph-scale (glyph size as a
+  fraction of the cell, default 0.42).
 
-The fifth background is yours: the glyph grid. Put data-bg-glyph="✦"
-on the surface — any character or emoji, a facet icon name, or several
-tokens separated by spaces for an alternating grid — and facet.js
-draws the repeating tile in the same faint pattern ink, redrawing it
-live whenever the attribute, the theme or the mode changes.
-data-bg-glyph-size sets the cell in px (default 56);
-facet.glyphBackground(el) draws a surface you inserted after load.
-With JS off a glyph surface stays plain background; the pattern fades
-under prefers-contrast: more and never prints.
+VARIANT FLUID — data-bg-fluid: a soft, slowly-breathing field of
+out-of-focus color pools and small drifting bubbles, drawn from the
+theme's accent and vivid tokens, so every theme and mode recolors it
+with no redraw. facet.js mounts three GPU-composited layers whose
+desynced clocks keep the field from visibly repeating;
+facet.fluidBackground(el) mounts a late-added surface. Still under
+data-motion="off" and prefers-reduced-motion; plain background with
+JS off.
 
-    <section data-bg-glyph="✦">…content…</section>
-    <section data-bg-glyph="♥ ✳ ✦" data-bg-glyph-size="72">…</section>
+THE TEXT HALO — on either variant, text placed directly on the
+surface stays readable: the pattern behind the words blurs hard and
+fades toward the page color. Automatic for direct h1–h6/p children;
+add .bg-halo to anything nested deeper.
 
+    <section class="bg-dots" style="--bg-tint: var(--accent-3); --bg-cell: 4rem;">
+      <h2>The halo keeps me readable</h2>
+    </section>
+    <section data-bg-glyph="♥ ✳ ✦" data-bg-glyph-scale="0.3">…</section>
+    <section data-bg-fluid>…</section>
 ## Blocks
 
 Assemblies of the components, documented as copyable patterns in the
