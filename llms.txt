@@ -1117,15 +1117,18 @@ What it is: ambient motion, on by default. data-parallax="depth" registers an
 element with facet.motion — it drifts up to depth pixels behind the
 desktop pointer, the scroll's momentum (a velocity impulse), the
 device tilt where no permission gate blocks it (iOS gates it;
-facet.motion.setMode("tilt") asks), or the engine's idle drift where
-nothing else drives (modes: off | cursor | tilt | idle — in idle the
-vector travels the rim in one slow continuous circle, so motion
-keeps living on a still desk; gated touch devices land here by
-default). The same engine's light channel drives the shine effect
-(next entry) from the same vector. The idle-* classes (.idle-float,
-.idle-sway, .idle-pulse) give resting elements a slow pulse; they
-animate the separate translate/rotate/scale properties so they
-compose with the engine's transform instead of colliding — the
+facet.motion.setMode("tilt") asks), or the engine's idle life where
+nothing else drives (modes: off | cursor | tilt | idle). Cursor and
+tilt mirror the real world directly — just enough smoothing to hide
+jitter, no easing lag — and when the pointer or device goes still the
+vector drifts slowly back to centre, so nothing rests jammed
+off-centre. In idle the vector sweeps one fast full lap of the rim
+(about a second), rests three, and sweeps again; gated touch devices
+land here by default. The same engine's light channel drives the shine
+effect (next entry) from the same vector. The idle-* classes
+(.idle-float, .idle-sway, .idle-pulse) give resting elements a slow
+pulse; they animate the separate translate/rotate/scale properties so
+they compose with the engine's transform instead of colliding — the
 parallax exclusion, solved structurally. Never put data-parallax on
 elements with their own transform physics (velvet lift/press, the
 pager). Calm stills idle life; data-motion="off" and
@@ -1476,7 +1479,8 @@ for calculator apps:
                                steers their --shine-x/--shine-y light
                                (shine); .setMode("off"|"cursor"|"tilt"|
                                "idle") — "tilt" asks iOS permission,
-                               "idle" circles the vector slowly
+                               "idle" sweeps one fast lap of the rim,
+                               then rests three seconds
     facet.sliderScale(wrap)    rebuild a .slider-wrap's tick scale after
                                a range change
     facet.mapStyle()           the active theme as a Google Maps styles
