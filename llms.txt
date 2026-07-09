@@ -605,6 +605,8 @@ label.field pattern as every other control.
 
 ### Card
 
+WHEN TO USE: one thing per card — a product, a stat, a setting group. A clickable card is one <a> and carries at most that one action; specialised jobs (feature, option, inline) are the same primitive with one modifier.
+
 What it is: the grouped-surface primitive — a padded, rounded panel
 one step above the page. What it is for: one thing per card: a product,
 a stat, a setting group, a summary. When to use it: .card for most
@@ -649,6 +651,8 @@ raises cards out of the fabric; Elegant carves them in; Aero glosses them.
     </article>
 
 ### List
+
+WHEN TO USE: any repeated row of items — settings, menus, feeds, search results. It is ONE component: every look is a composition of its slots, never a sibling component.
 
 What it is: a list of rows — each with an optional leading icon or avatar
 (.list-icon), a title (.list-title), an optional description line under it
@@ -709,6 +713,8 @@ it needs no tokens of its own and restyles with every theme.
 
 ### Modal, drawer, popover
 
+WHEN TO USE: a modal for a decision that blocks the page, a drawer for a side task that keeps context, a popover for a small anchored bite. All are the native elements, so focus trapping, Esc and the backdrop come free.
+
 What it is: overlays built on the platform's own machinery — modal and
 drawer are <dialog> (focus trap, Esc, inert page for free), popover is
 the popover attribute (top layer, light dismiss, no JS at all). What
@@ -733,6 +739,8 @@ panel for app pages; the drawer is the document-world sibling.
     <div popover id="note">Light-dismisses on any outside click.</div>
 
 ### Accordion, toast, dropdown menu
+
+WHEN TO USE: the accordion folds long optional reading; the toast confirms an outcome that needs no reply; the dropdown holds a few quiet actions behind one button.
 
 What it is: the accordion is native <details class="accordion">
 styled (hairline rows, rotating chevron; give siblings the same name
@@ -762,6 +770,8 @@ question (dialog) and never a dropdown for navigation (links).
 
 ### Tabs, breadcrumb, pagination
 
+WHEN TO USE: tabs switch views in place; the breadcrumb says where you are in a hierarchy; pagination walks a long set page by page.
+
 What it is: the wayfinding trio. Tabs are real ARIA tabs (role=
 tablist/tab/tabpanel; click or arrow keys; accent underline; facet.js
 wires panels and roving tabindex) for two-to-five in-page views.
@@ -790,6 +800,8 @@ pagination are links, never buttons.
 
 ### Nav link
 
+WHEN TO USE: the one style for links inside navs, sidebars and rails; aria-current="page" marks where you are.
+
 What it is: the navigation link with its three states designed —
 quiet by default, named on hover, plainly marked when it is the page
 you are on (aria-current="page"). What it is for: headers, sidebars,
@@ -802,6 +814,8 @@ content, plain underlined links stay the rule.
     </nav>
 
 ### Table
+
+WHEN TO USE: real tabular data, where rows and columns mean something — comparisons, statements, breakdowns. Never for layout.
 
 What it is: the data table — muted header row, zebra striping, a
 hover that names the row you are reading, right-aligned tabular
@@ -819,6 +833,8 @@ scrolling).
     </div>
 
 ### Chart
+
+WHEN TO USE: one series over time where the shape tells the story — prices, balances, rates. Keep the numbers in a table nearby for readers.
 
 What it is: a line chart drawn by facet.chart(el, {points, projectFrom,
 events, format}) into a .chart div — data line in accent-1 (2.5px,
@@ -843,6 +859,8 @@ update(next) redraws with new data.
 
 ### Badge, chip, avatar, progress
 
+WHEN TO USE: badges state, they never act; chips toggle; an avatar names a person; progress shows completeness with words nearby.
+
 What it is: four tiny signals. Badge: a status word in a tinted pill —
 .badge plus .badge-success / -warning / -error / -info. Chip: a small
 toggleable pill button; aria-pressed carries its state and facet.js
@@ -859,6 +877,8 @@ determinate progress needs value and max with words nearby.
     <progress value="70" max="100"></progress>
 
 ### Icon badge
+
+WHEN TO USE: on app icons 3.5rem and larger — launcher tiles, featured cards — to say new, updated or in the works at a glance; smaller list-row icons take an inline version chip instead.
 
 What it is: a round status dot pinned to an app icon's top-right
 corner — a 1.25rem plasticine bead, its top edge lit and its underside
@@ -886,6 +906,8 @@ the icon) and put the badge beside the img inside it.
 
 ### Skeleton, spinner, empty state
 
+WHEN TO USE: a skeleton when the coming content's shape is known; a spinner when it is not; an empty state when there is nothing yet — that is content, not an error, and it offers the one action that fills it.
+
 What it is: three ways to show absence. Skeleton: a
 shimmering placeholder — put .skeleton on blocks sized like the
 content it stands in for; mark the group aria-hidden. Spinner: a
@@ -907,6 +929,8 @@ is content, not an error.
     </div>
 
 ### Loading skin
+
+WHEN TO USE: any region that waits — set aria-busy="true" on it and its own content becomes the pulsing placeholder; no separate skeleton markup to build.
 
 What it is: the page-refresh loading state. Put aria-busy="true" on
 any component or region whose content is being fetched and everything
@@ -940,7 +964,9 @@ items, inline text, media and controls.
     render(card, data);
     facet.busy(card, false);
 
-### Component states — the grammar
+### Component states
+
+WHEN TO USE: whenever a component needs a state, ride the grammar — a native pseudo-class, an ARIA attribute, or data-status — never an invented class. This section is the whole state system.
 
 What it is: the library's state system. Every component state is
 carried one of three ways, never by an invented class: a native
@@ -1012,6 +1038,8 @@ read the pair; never hand-roll a color-mix recipe.
 
 ### Flagship link
 
+WHEN TO USE: the one onward step at the end of a section — at most one or two per screen; ordinary references stay plain links.
+
 What it is: a large link — heading-sized text, a strong accent
 underline, and an arrow that shifts forward on hover. What it is
 for: the one onward step at the end of a section. When to use it: at
@@ -1021,6 +1049,8 @@ links. Always an <a> to a real URL, never a button styled as a link.
     <a class="flagship-link" href="/report">See the full report</a>
 
 ### Icons
+
+WHEN TO USE: every small symbol a product needs — write <svg data-icon="name"></svg> and facet.js fills it. Never paste icon paths by hand; extend the table instead.
 
 What it is: 24x24 line glyphs at a 1.5px stroke with round
 caps, carried as markup inside facet.js — no image files, no sprite
@@ -1312,6 +1342,8 @@ pair with a hidden input when the form must post.
 
 ### Result block
 
+WHEN TO USE: whenever a calculation produces one headline answer — a verdict a person could repeat at dinner, then the number, then the supporting figures.
+
 What it is: a verdict-first result card: one plain-language sentence a
 person can repeat in conversation, one large number, then the supporting
 figures.
@@ -1332,6 +1364,8 @@ a muted verdict line alone.
     </section>
 
 ### Description tooltip
+
+WHEN TO USE: on every interactive element — one data-tip attribute explains it in place. This is the library's everything-explained-in-place promise; write one for every control you ship.
 
 What it is: a one-attribute explanation bubble: put data-tip on any element
 and the text appears above it on hover and on keyboard focus. Pure CSS, no
@@ -1656,6 +1690,8 @@ stat row — opens, version, size — numbers first, prose after.
     </div>
 
 ## Themed map
+
+WHEN TO USE: a Google map that must look like the page — facet.mapStyle() returns the active theme as a Maps styles array, so the map re-skins when the theme flips.
 
 A Google Map styled with the active theme — ground, water, parks and roads
 derived from the base family, labels from the text family, boundaries
