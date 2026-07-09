@@ -63,7 +63,7 @@
    text renders instantly and survives the font failing to load. display=swap
    shows fallback text first, then swaps — never a blank flash of text.
    @import must stay at the very top, before any style rule. */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;1,400;1,500&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=JetBrains+Mono:wght@400;500;800&family=Newsreader:ital,wght@0,400;1,400;1,500&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@500;600;700&display=swap');
 
 
 /* ==========================================================================
@@ -246,6 +246,7 @@
   --weight-medium: 500;       /* UI labels, nav, buttons, table headers */
   --weight-strong: 600;       /* <strong>, emphasis inside body */
   --weight-heading: 600;      /* headings; suits Cormorant's display cut, falls back to semibold */
+  --weight-eyebrow: 800;      /* the eyebrow voice: micro-labels in the mono face, thick and technical */
 
   /* ----- Typography: line height, named by role -----
      Tighter as type gets larger — big display text needs less leading, body
@@ -3172,10 +3173,11 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
 .side-index a.side-index-name,
 .side-index-name {
   display: block;
+  font-family: var(--font-mono);   /* the eyebrow voice */
   font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-eyebrow);
   color: var(--text);              /* the category reads bright, its links muted */
   padding: var(--space-tight) var(--space-inline);
 }
@@ -5324,7 +5326,9 @@ button.list-item:active { background: var(--surface-active); }
 .menu-label {
   padding: var(--space-control) var(--space-inline) 0;
   margin-bottom: var(--space-control);
+  font-family: var(--font-mono);   /* the eyebrow voice */
   font-size: var(--text-caption);
+  font-weight: var(--weight-eyebrow);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: var(--tracking-caps);
@@ -5812,8 +5816,9 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
    -------------------------------------------------------------------------- */
 
 .eyebrow {
+  font-family: var(--font-mono);
   font-size: var(--text-caption);
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-eyebrow);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   color: var(--accent-3);

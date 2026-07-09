@@ -69,10 +69,11 @@
    .side-index block now (promoted from this chrome — the docs dogfood
    it). Only the docs-specific hooks remain here. */
 .nav-overview {
+  font-family: var(--font-mono);   /* the eyebrow voice, like the group names below it */
   font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-eyebrow);
   margin-bottom: var(--space-stack);
 }
 /* the divider under Overview — the same hairline every category divides with */
@@ -222,10 +223,11 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .layer-grid-sub {
   grid-column: 1 / -1;
   margin: var(--space-control) 0 0;
+  font-family: var(--font-mono);   /* the eyebrow voice */
   font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: var(--tracking-caps);
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-eyebrow);
   color: var(--text-muted);
 }
 .layer-card,
@@ -570,10 +572,11 @@ article.element {
    is and what it does. */
 .part-label {
   display: block;
+  font-family: var(--font-mono);   /* the eyebrow voice */
   font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-weight: var(--weight-strong);
+  font-weight: var(--weight-eyebrow);
   color: var(--text-muted);
   /* hug the region it captions: the negative bottom margin eats most
      of the stack gap, so label and content read as one unit */

@@ -278,7 +278,8 @@ the .text-* classes to put a role's look on any element.
 Sizes by role: --text-display, --text-h1 … --text-h4, --text-body,
 --text-quote, --text-footnote, --text-caption. Weights:
 --weight-body, --weight-medium (UI labels, nav, buttons),
---weight-strong, --weight-heading. Line height per role:
+--weight-strong, --weight-heading, --weight-eyebrow (the mono
+micro-label voice). Line height per role:
 --leading-display/-heading/-snug/-body/-ui — tighter as type grows.
 Tracking per role: --tracking-display/-heading/-snug/-body/-label/
 -caps/-wide — large type tightens, caps micro-labels open up, -wide is
@@ -289,8 +290,10 @@ layouts (.stack, .row) zero these so rhythm and gap never stack.
 Global type size: data-text-size="small|medium|large" on html — set by
 the theme, independent of density. Text-role classes (.text-display …
 .text-caption) put the scale on any element. The eyebrow (.eyebrow) is
-the small thick spaced-caps label above a heading or a menu group —
---text-caption at --weight-strong with --tracking-wide, accent-3 ink.
+the small thick spaced-caps label above a heading or a menu group — the
+mono face (--font-mono) at --text-caption, --weight-eyebrow (800) and
+--tracking-wide, accent-3 ink. The same voice marks the library's own
+group names and menu labels.
 
     <p class="eyebrow">One tap away</p>
     <h2>Install this app</h2>
