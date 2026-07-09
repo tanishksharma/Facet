@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Build a great product — Facet</title>
+  <meta name="description" content="Point your AI at Facet and build a real product: two copy-paste prompts that make the AI interview you, agree a plan, build with the library, and verify like a user. The whole method, in the open.">
+  <meta property="og:title" content="Build a great product — Facet">
+  <meta property="og:description" content="Point your AI at Facet and build a real product: two copy-paste prompts that make the AI interview you, agree a plan, build with the library, and verify like a user.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://facet-kappa.vercel.app/product.html">
+  <meta property="og:image" content="https://facet-kappa.vercel.app/icons/icon-512.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23FFFFFF'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%2317171B'/></svg>">
+  <link rel="canonical" href="https://facet-kappa.vercel.app/product.html">
+  <link rel="alternate" type="text/plain" href="/build.txt" title="The same method, as one file for AI">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+  <link rel="stylesheet" href="/docs.css">
+  <script src="/docs.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page-top container-wide"><a class="wordmark" href="/">facet</a></div>
+
+  <main id="main" class="container stack-loose">
+    <!-- ==============================
+         Hero
+         The pitch: your AI does the building; the method is public.
+         ============================== -->
+    <section class="stack home-section" id="pitch">
+      <p class="home-kicker">Build a great product</p>
+      <h1>Point your AI at Facet. Ship something real.</h1>
+      <p>
+        Facet is a design library an AI can actually read — and this page
+        is the method that turns that into a product. You copy one prompt
+        into your assistant. It reads the library, interviews you about
+        who the product is for and what job it does, agrees a plan with
+        you, builds with real components, and checks its own work like a
+        user before showing you. Nothing here is hidden: the exact
+        prompts are below, and your AI reads the same rules at
+        <a href="/build.txt">/build.txt</a>.
+      </p>
+    </section>
+
+    <!-- ==============================
+         How it works
+         The four moves every prompt enforces.
+         ============================== -->
+    <section class="stack home-section" id="how">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <h3>Copy one prompt</h3>
+            <p>Pick your tier below and paste it into Claude, ChatGPT, Cursor — anything that writes files. Then describe your idea in a sentence.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <h3>It interviews you</h3>
+            <p>Before any code: who is it for, the one job it does, what done looks like, how it should feel. A few questions at a time, in your words.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <h3>You agree the plan</h3>
+            <p>A short v1 list — the screens, what is in, what is deliberately out, which theme and shell — and it waits for your yes.</p>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <h3>It builds and verifies</h3>
+            <p>Plain HTML on Facet's components — no installs, no build step — then it walks every screen like a user, on a phone size, in light and dark, before handing over.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ==============================
+         The prompts
+         The whole method, in the open, with copy buttons.
+         ============================== -->
+    <section class="stack home-section" id="prompts">
+      <h2>The prompts</h2>
+      <p>
+        Two tiers, same method. The difference is who makes the technical
+        calls: Prompt 1 keeps every decision with the AI and speaks plain
+        language only; Prompt 2 keeps you in the decisions and teaches as
+        it builds — including when a real backend is worth it.
+      </p>
+
+      <article class="card stack" id="prompt-simple">
+        <h3>Prompt 1 · I don't write code</h3>
+        <p class="text-footnote" style="color: var(--text-muted);">
+          The AI makes every technical choice, never asks you about
+          frameworks or hosting, keeps everything front-end and static,
+          and parks anything that would need a server.
+        </p>
+        <pre id="code-prompt-simple"><code>You are going to build me a complete product using the Facet design
+library, and I am not a developer — so you make the technical
+decisions and you never hand them to me.
+
+First, read https://facet-kappa.vercel.app/build.txt and follow its
+method exactly. Read https://facet-kappa.vercel.app/llms.txt to learn
+every component, theme and behaviour Facet ships.
+
+Then interview me in plain language, a few questions at a time — who
+the product is for, what one job it must do, what done looks like.
+No jargon: never ask me about frameworks, hosting, databases or file
+formats. When you know enough, show me a short plan — the screens,
+what is in v1, what is not — and wait for my yes.
+
+Build it as plain HTML pages that use Facet from its URL: one link
+tag, one CSS file, one JS file, nothing to install. Keep everything
+front-end and static; if some part truly cannot work without a
+server, park that part, say so in one sentence, and build the rest.
+Pick a Facet theme that fits the product's mood and tell me why in
+one line. Keep every screen reachable by a link I can share.
+
+When you finish, check your own work like a user would — every
+screen, every button, on a phone size and in dark mode — then show
+me the result and tell me: what shipped, what you left out, and the
+one improvement you would make next. Then stop and wait.</code></pre>
+        <p><button class="btn btn-primary" data-copy="#code-prompt-simple" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-simple">Copy this prompt</button></p>
+      </article>
+
+      <article class="card stack" id="prompt-technical">
+        <h3>Prompt 2 · I understand tech</h3>
+        <p class="text-footnote" style="color: var(--text-muted);">
+          The AI teaches as it builds, keeps you in the real decisions,
+          and may propose a backend when the product honestly needs one —
+          smallest option, costs named, only after your yes.
+        </p>
+        <pre id="code-prompt-technical"><code>You are going to build me a complete product using the Facet design
+library. I understand technology — a PM/founder level, not a daily
+coder — so teach me as you build and keep me in the real decisions.
+
+First, read https://facet-kappa.vercel.app/build.txt and follow its
+method exactly. Read https://facet-kappa.vercel.app/llms.txt to learn
+every component, theme and behaviour Facet ships.
+
+Interview me before building: users, the one job, success, feel.
+Then propose a v1 plan — screens, features in and out, which Facet
+shell and theme and why — and wait for my yes.
+
+Build with plain semantic HTML plus Facet's classes and data
+attributes, consumed from its URL with no build step. As you build,
+teach in passing: when you pick a shell, a component or a pattern,
+say in a sentence or two what it is and why it is right here — I
+want to understand what ships. Keep state in the URL so every screen
+and configuration is shareable and testable.
+
+If the product genuinely needs a backend — accounts, shared data,
+anything that must persist beyond one browser — stop and explain:
+what a backend is in this context, the smallest option that works,
+what it costs to run, and what stays impossible without it. Build
+the front end fully either way; wire the backend only after I agree.
+Follow the backend rules in build.txt's addendum.
+
+When you finish, verify like a user — every screen, every action,
+phone size, light and dark — then walk me through what shipped, how
+it works, what you left out, and what you would do next. Then stop.</code></pre>
+        <p><button class="btn btn-primary" data-copy="#code-prompt-technical" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-technical">Copy this prompt</button></p>
+      </article>
+    </section>
+
+    <!-- ==============================
+         Why it works
+         The transparency pitch: the same rules bind both sides.
+         ============================== -->
+    <section class="stack home-section" id="why">
+      <h2>Why this works</h2>
+      <p>
+        Most AI-built products fail one of two ways: the AI builds the
+        wrong thing because nobody asked what the right thing was, or it
+        builds on a framework stack neither of you can read afterwards.
+        This method removes both. The interview comes before the code,
+        and the material is Facet: semantic HTML an AI gets right in one
+        pass and a person can open and follow, with taste — the themes,
+        the spacing, the motion — already built in.
+      </p>
+      <p>
+        And it is all in the open: <a href="/build.txt">build.txt</a> is
+        the same contract your AI reads — the method, the interview
+        question bank, the backend rules, and the quality bar it must
+        pass before calling anything done.
+      </p>
+    </section>
+  </main>
+
+  <!-- SITE MENU · the floating utility menu, kept in sync across
+       index / library / product / build. facet.js wires it. -->
+  <button class="float-btn float-btn-right" aria-controls="site-menu" aria-expanded="false"
+          aria-label="Open menu" data-tip="Navigation, files and settings" data-event="open-site-menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <div class="sheet-scrim" data-open="false"></div>
+  <aside class="sheet" id="site-menu" data-open="false" aria-hidden="true" aria-label="Menu">
+    <div class="sheet-scroll">
+      <a class="wordmark" href="/">facet</a>
+      <span class="menu-label">Navigate</span>
+      <a class="menu-item" href="/" data-event="nav-home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 11 8-7 8 7M6 9.5V20h12V9.5"/></svg> Home</a>
+      <a class="menu-item" href="/library.html" data-event="nav-library"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg> Library</a>
+      <a class="menu-item" href="/product.html" aria-current="page" data-event="nav-product"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 5-8 5-8-5Z"/><path d="M4 13l8 5 8-5"/></svg> Build a product</a>
+      <a class="menu-item" href="/build.html" data-event="nav-build"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2"/><circle cx="8" cy="16" r="2"/></svg> Build a theme</a>
+      <a class="menu-item" href="https://github.com/tanishksharma/Facet" data-event="nav-github"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H5v14h14v-4M13 4h7v7M20 4l-9 9"/></svg> GitHub</a>
+
+      <span class="menu-label">Files</span>
+      <a class="menu-item" href="/build.txt" data-event="ref-buildtxt"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6ZM14 3v4h4"/></svg> build.txt</a>
+      <a class="menu-item" href="/llms.txt" data-event="ref-llms"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6ZM14 3v4h4"/></svg> llms.txt</a>
+    </div>
+  </aside>
+</body>
+</html>

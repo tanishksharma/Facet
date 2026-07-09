@@ -1,0 +1,165 @@
+# Facet — Build a great product (the prompt pack)
+
+This file is the product-building method that ships with the Facet
+design library (https://facet-kappa.vercel.app). It exists so a normal
+person can point an AI agent at Facet and get a real, tasteful,
+working product — not a wireframe — with no build step, no npm, no
+install ritual.
+
+How to use it, as a person: copy ONE of the two prompts below into
+your AI assistant (Claude, ChatGPT, Cursor, anything that can write
+files), answer its questions, and review what it builds. Pick Prompt 1
+if you don't write code; pick Prompt 2 if you understand tech and want
+to stay in control of the decisions.
+
+How to use it, as an agent: if you were sent here by a prompt or a
+link, read this whole file, then fetch /llms.txt for the complete
+component and capability inventory. The prompts below are your
+operating contract; the question bank and the quality bar at the end
+are yours to execute. The human-readable version of this method lives
+at /product.html — you and your person are reading the same rules.
+
+
+## The method (what every prompt below enforces)
+
+1. LEARN THE MATERIAL. Fetch https://facet-kappa.vercel.app/llms.txt
+   and learn what exists: tokens, components, blocks, templates, app
+   shells, themes, behaviours. Never invent a component Facet already
+   ships; never reach for a framework — Facet is one CSS file and one
+   JS file at a URL.
+2. INTERVIEW FIRST. Do not build from the first message. Ask
+   questions in small rounds until you can state: who this is for,
+   the one job it does, what success looks like, and what it should
+   feel like. The question bank below is the checklist.
+3. AGREE THE PLAN. Propose a v1: the screens, the features in, the
+   features explicitly OUT, the theme and the shell. One short list.
+   Wait for a yes before writing code.
+4. BUILD WITH THE LIBRARY. Semantic HTML plus Facet classes and data
+   attributes. Pick the right shell (a plain page, a snap flow, or a
+   view-stack app — llms.txt's Build advice says how to choose), one
+   theme, one accent-1 action per screen. Every state reachable by
+   URL. App logic stays in the project's own small script.
+5. VERIFY LIKE A USER. Open the product. Walk every screen, click
+   every action, resize to a phone, switch light and dark. Fix what
+   you find before showing it.
+6. HAND OVER HONESTLY. Say what shipped, what was left out and why,
+   and the one next thing worth doing.
+
+
+## Prompt 1 — the non-technical builder
+
+Copy everything between the lines into your AI, then describe your
+idea in one sentence.
+
+----------------------------------------------------------------------
+You are going to build me a complete product using the Facet design
+library, and I am not a developer — so you make the technical
+decisions and you never hand them to me.
+
+First, read https://facet-kappa.vercel.app/build.txt and follow its
+method exactly. Read https://facet-kappa.vercel.app/llms.txt to learn
+every component, theme and behaviour Facet ships.
+
+Then interview me in plain language, a few questions at a time — who
+the product is for, what one job it must do, what done looks like.
+No jargon: never ask me about frameworks, hosting, databases or file
+formats. When you know enough, show me a short plan — the screens,
+what is in v1, what is not — and wait for my yes.
+
+Build it as plain HTML pages that use Facet from its URL: one link
+tag, one CSS file, one JS file, nothing to install. Keep everything
+front-end and static; if some part truly cannot work without a
+server, park that part, say so in one sentence, and build the rest.
+Pick a Facet theme that fits the product's mood and tell me why in
+one line. Keep every screen reachable by a link I can share.
+
+When you finish, check your own work like a user would — every
+screen, every button, on a phone size and in dark mode — then show
+me the result and tell me: what shipped, what you left out, and the
+one improvement you would make next. Then stop and wait.
+----------------------------------------------------------------------
+
+
+## Prompt 2 — the technical builder
+
+Copy everything between the lines into your AI, then describe your
+idea. This prompt keeps you in the decisions and teaches as it goes.
+
+----------------------------------------------------------------------
+You are going to build me a complete product using the Facet design
+library. I understand technology — a PM/founder level, not a daily
+coder — so teach me as you build and keep me in the real decisions.
+
+First, read https://facet-kappa.vercel.app/build.txt and follow its
+method exactly. Read https://facet-kappa.vercel.app/llms.txt to learn
+every component, theme and behaviour Facet ships.
+
+Interview me before building: users, the one job, success, feel.
+Then propose a v1 plan — screens, features in and out, which Facet
+shell and theme and why — and wait for my yes.
+
+Build with plain semantic HTML plus Facet's classes and data
+attributes, consumed from its URL with no build step. As you build,
+teach in passing: when you pick a shell, a component or a pattern,
+say in a sentence or two what it is and why it is right here — I
+want to understand what ships. Keep state in the URL so every screen
+and configuration is shareable and testable.
+
+If the product genuinely needs a backend — accounts, shared data,
+anything that must persist beyond one browser — stop and explain:
+what a backend is in this context, the smallest option that works,
+what it costs to run, and what stays impossible without it. Build
+the front end fully either way; wire the backend only after I agree.
+Follow the backend rules in build.txt's addendum.
+
+When you finish, verify like a user — every screen, every action,
+phone size, light and dark — then walk me through what shipped, how
+it works, what you left out, and what you would do next. Then stop.
+----------------------------------------------------------------------
+
+
+## The backend addendum (when the product needs one)
+
+Facet's charter keeps app logic, data and state in the project, never
+in the library — so a backend is the PROJECT's choice. When one is
+truly needed (accounts, shared or persistent data, secrets):
+
+- Prefer the smallest real thing: one managed database with row-level
+  security and a couple of serverless functions beats a server you
+  babysit. Static-first stays the rule: the product must still render
+  and read without the backend where that is honest (cached content,
+  read-only views, clear offline states).
+- Secrets never reach the client. Keys live in the host's environment
+  variables; the browser talks to your functions, not to the database.
+- The front end is not a template for the backend — it is the
+  product. Build it complete first; the backend serves it.
+- Tell the person the running costs in real money before wiring
+  anything billable, and default to the free tier.
+
+## The interview question bank (for the agent)
+
+Ask in rounds of two or three, in the person's own vocabulary. Stop
+when you can write the one-line pitch yourself.
+
+- Who exactly uses this? One kind of person first.
+- What is the one job it does for them? What do they do today instead?
+- What does a successful use look like, start to finish?
+- What must it NEVER do or show? (privacy, tone, complexity)
+- How should it feel — calm document, snappy app, playful toy?
+  (This picks the theme and the shell.)
+- Phone-first, desktop-first, or truly both?
+- What already exists (brand, words, data, links) that it must use?
+- What is out of scope for v1 even if it hurts?
+
+## The quality bar (verify before calling it done)
+
+- Every screen reachable by URL; refresh anywhere and nothing breaks.
+- One accent-1 action per screen; everything keyboard-operable; the
+  focus ring visible; images carry alt text.
+- Reads correctly on a 390px phone and a desktop; safe areas
+  respected in installed/standalone mode.
+- Light and dark both look intentional; the theme is one attribute.
+- With JavaScript off, the content still reads and links still work.
+- Print one key page: it comes out ink-on-paper clean.
+- The HTML stays one-glance readable: semantic tags, Facet classes,
+  no wrapper soup — a person could open the file and follow it.

@@ -17,6 +17,14 @@ page, and not one extra wrapper (a container exists only to enable a real
 feature, like scrolling). The full markup rules are under "Rules for
 building on Facet" below.
 
+## Building a whole product
+
+Facet ships a product-building method, not just parts. To build a
+complete product for a person, fetch /build.txt — the prompt pack:
+interview first, agree a v1 plan, build with the library, verify like
+a user, plus the backend addendum and the quality bar. The
+human-readable version is /product.html; both carry the same rules.
+
 ## Features — the complete capability inventory
 
 This list is the exhaustive inventory: if a capability is not on it, it

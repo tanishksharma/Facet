@@ -90,6 +90,16 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     Read by:   people
     Truth for: -
 
+`product.html`
+    What:      Build a great product: the AI product-building method for humans
+    Read by:   people
+    Truth for: the human-facing pitch of the build method
+
+`build.txt`
+    What:      the prompt pack — the same method as one plain-text fetch
+    Read by:   consumers' AI
+    Truth for: the product-building prompts and their contract
+
 `/templates/*.html`
     What:      whole-page starters (landing, saas, social, app, article, deck, document, card)
     Read by:   people, consumers' AI
@@ -421,6 +431,17 @@ The shipped set, by design intent:
 
 
 ### The AI product-building edition — the headline direction (cross-cutting)
+
+> **SHIPPED, first edition (9 Jul 2026)** — /product.html (the human
+> page: pitch, the four-step method, both prompts in the open) and
+> /build.txt (the prompt pack an agent fetches: the contract, Prompt 1
+> non-technical, Prompt 2 technical, the backend addendum, the
+> interview question bank, the quality bar). The AI-mirror decision
+> landed as: llms.txt stays the capability guide and gains a small
+> pointer section; the prompts live in their own fetch. Still open
+> from the spec: worked example runs on the page, and deeper prompt
+> tracks as real products exercise the method. The spec below stays as
+> the reference.
 
 The strategic bet made concrete (see The thesis above). Today Facet is a design
 library an AI *can* read. The next edition makes Facet a thing you *point your AI
@@ -1074,6 +1095,6 @@ The full shipped history is in git and in the live files (facet.css / facet.js /
 - The vivid palette (decided 8 Jul 2026): five bright decorative colors named by rank, like the accent ranks — `--color-1` red, `--color-2` yellow, `--color-3` green, `--color-4` blue, `--color-5` purple. Defined once in facet.css, overridable per theme. They are decoration — card tints (mixed into the surface), charts, playful accents — never semantic status; a component that means success/danger says so in words, not by leaning on a palette slot.
 - Layer = composition level: a single reusable piece is Layer 2 · Components (in one of the six categories, snap/layout included); motion, sound and app interface are Layer 5 · App feel; an assembly of pieces is a Layer 3 · Block; a whole page is a Layer 4 · Template. Never create a layer that holds only one entry.
 - Variant vs component (decided 8 Jul 2026): a variant flips one class on the SAME markup and behaviour (.btn-primary, .list-boxed, .nav-menu-right); when markup, position or behaviour differ, it is a different component, and the sharing happens through primitives and tokens plus a Build advice entry for choosing between them. Concretely: the four navigations (top-menu block, nav-menu cluster, tab bar, sheet) stay separate components; a list row is ONE component whose looks are slot compositions (icon/avatar, title, description, value/badge/action in the trail), never sibling components.
-- The site is multi-page. The header nav is Home · Library · Build a theme · GitHub; llms.txt (for AI) and CLAUDE.md (for contributors) are linked from the home page's "How to use Facet" tracks and from the floating menu's Files group, not as top-level nav items. (The old Components and Layouts pages merged into Library.)
+- The site is multi-page. The header nav is Home · Library · Build a product · Build a theme · GitHub; llms.txt (for AI) and CLAUDE.md (for contributors) are linked from the home page's "How to use Facet" tracks and from the floating menu's Files group, not as top-level nav items. (The old Components and Layouts pages merged into Library.)
 - App logic, data and state live in projects, never in the library.
 - (Token, accent, border, spacing/type and theme decisions live in the Naming and Themes sections above — not repeated here.)
