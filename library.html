@@ -30,8 +30,9 @@
       <input id="wall-search" type="search" placeholder="Filter the wall"
              data-tip="Type to filter the wall below" data-tip-below>
       <nav aria-label="Sections">
-        <details class="nav-group" data-group="layer1" open>
-          <summary><span class="nav-group-name">Layer 1 · Tokens &amp; base</span><span class="nav-group-desc">Every design decision as a named variable, plus raw semantic HTML already designed.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        <a class="nav-overview" href="#intro">Overview</a>
+        <div class="nav-group" data-group="layer1">
+          <a class="nav-group-name" href="#layer1">Tokens &amp; base</a>
         <ul>
           <li><a href="#typography">Typography</a></li>
           <li><a href="#fonts">Fonts</a></li>
@@ -41,9 +42,9 @@
           <li><a href="#motion">Motion tokens</a></li>
           <li><a href="#base">Base styles</a></li>
         </ul>
-        </details>
-        <details class="nav-group" data-group="layer2" open>
-          <summary><span class="nav-group-name">Layer 2 · Components</span><span class="nav-group-desc">Every piece, grouped and filterable.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        </div>
+        <div class="nav-group" data-group="layer2">
+          <a class="nav-group-name" href="#layer2">Components</a>
         <p class="nav-sub">Layout primitives</p>
         <ul>
           <li><a href="#container">Container</a></li>
@@ -97,9 +98,9 @@
           <li><a href="#loading-skin">Loading skin</a></li>
           <li><a href="#states">Component states</a></li>
         </ul>
-        </details>
-        <details class="nav-group" data-group="layer3" open>
-          <summary><span class="nav-group-name">Layer 3 · Blocks</span><span class="nav-group-desc">The components, assembled into page sections.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        </div>
+        <div class="nav-group" data-group="layer3">
+          <a class="nav-group-name" href="#layer3">Blocks</a>
         <ul>
           <li><a href="#block-card-grid">Card grid &amp; row</a></li>
           <li><a href="#block-promo-rail">Promo rail</a></li>
@@ -115,18 +116,18 @@
           <li><a href="#block-settings">Settings &amp; form</a></li>
           <li><a href="#block-article">Article set</a></li>
         </ul>
-        </details>
-        <details class="nav-group" data-group="templates" open>
-          <summary><span class="nav-group-name">Layer 4 · Templates</span><span class="nav-group-desc">Whole pages — full app and site layouts.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        </div>
+        <div class="nav-group" data-group="templates">
+          <a class="nav-group-name" href="#layer4">Templates</a>
         <ul>
           <li><a href="#template-landing">Landing page</a></li>
           <li><a href="#template-saas">SaaS dashboard</a></li>
           <li><a href="#template-social">Social app</a></li>
           <li><a href="#templates">Every template</a></li>
         </ul>
-        </details>
-        <details class="nav-group" data-group="appfeel" open>
-          <summary><span class="nav-group-name">Layer 5 · App feel</span><span class="nav-group-desc">Motion, sound, surfaces and the app kit.</span><span class="nav-caret" aria-hidden="true"></span></summary>
+        </div>
+        <div class="nav-group" data-group="appfeel">
+          <a class="nav-group-name" href="#layer5">App feel</a>
         <p class="nav-sub">Motion &amp; surfaces</p>
         <ul>
           <li><a href="#motion-pack">Parallax &amp; idle</a></li>
@@ -147,11 +148,54 @@
         <ul>
           <li><a href="#installable">Installable (PWA)</a></li>
         </ul>
-        </details>
+        </div>
       </nav>
     </aside>
 
     <main id="main" class="stack-loose">
+      <!-- ==============================
+           Overview
+           The library's front door: what the five layers are, how each
+           composes the one below, and a card into each layer's page.
+           ============================== -->
+      <section id="intro" class="stack">
+        <h2>The library, in five layers</h2>
+        <p>
+          Everything here is built as five layers, each composed from the
+          one below it: tokens style raw HTML, components are built from
+          tokens, blocks assemble components into page sections, templates
+          assemble blocks into whole pages, and the app-feel layer makes a
+          finished page feel like a native app. Pick a layer to browse its
+          pieces as cards, or jump straight to anything from the index.
+        </p>
+        <div class="layer-grid" role="list">
+          <a class="card card-clickable layer-card" href="#layer1" role="listitem">
+            <span class="layer-card-kicker">Layer 1</span>
+            <strong>Tokens &amp; base</strong>
+            <span>Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed.</span>
+          </a>
+          <a class="card card-clickable layer-card" href="#layer2" role="listitem">
+            <span class="layer-card-kicker">Layer 2</span>
+            <strong>Components</strong>
+            <span>Every reusable piece, live and themed — built from the tokens, grouped by job.</span>
+          </a>
+          <a class="card card-clickable layer-card" href="#layer3" role="listitem">
+            <span class="layer-card-kicker">Layer 3</span>
+            <strong>Blocks</strong>
+            <span>The components, assembled into ready page sections you copy whole.</span>
+          </a>
+          <a class="card card-clickable layer-card" href="#layer4" role="listitem">
+            <span class="layer-card-kicker">Layer 4</span>
+            <strong>Templates</strong>
+            <span>Whole pages — full app and site layouts you rename and fill in.</span>
+          </a>
+          <a class="card card-clickable layer-card" href="#layer5" role="listitem">
+            <span class="layer-card-kicker">Layer 5</span>
+            <strong>App feel</strong>
+            <span>What makes a finished page feel native: motion, sound, surfaces and the app kit.</span>
+          </a>
+        </div>
+      </section>
       <!-- ==============================
            Layer 1 · Typography
            Not a table of sizes: a real piece of writing, every block
@@ -316,8 +360,8 @@
            The same interface twice: light beside dark. The panels carry
            data-mode, which facet.css honours on any subtree.
            ============================== -->
-      <section id="color" class="stack">
-        <h2>Color</h2>
+      <article class="element stack" id="color">
+        <h3>Color</h3>
         <p>
           The base family plus three accent ranks, two modes, shown as the
           same interface twice. Components never pick colors, they pick
@@ -433,15 +477,15 @@
   --on-accent-1: #FFFFFF;
 }</code></pre>
         <p><button class="btn btn-small" data-copy="#code-custom-accent" data-tip="Copies the CSS override block above">Copy</button></p>
-      </section>
+      </article>
 
       <!-- ==============================
            Layer 1 · Spacing
            Real components on a tinted ground: the tint you can see
            between and around the solid pieces IS the token.
            ============================== -->
-      <section id="spacing" class="stack">
-        <h2>Spacing</h2>
+      <article class="element stack" id="spacing">
+        <h3>Spacing</h3>
         <p>
           Spacing is named by intent, not by number: reach for
           <code>--space-card</code> or <code>--space-section</code>, never a
@@ -495,13 +539,13 @@
           and calculators, <code>--width-default</code> 64rem for most pages,
           <code>--width-wide</code> 80rem for dashboards.
         </p>
-      </section>
+      </article>
 
       <!-- ==============================
            Layer 1 · Shape, elevation, motion
            ============================== -->
-      <section id="shape" class="stack">
-        <h2>Shape and elevation</h2>
+      <article class="element stack" id="shape">
+        <h3>Shape and elevation</h3>
         <ul class="shape-row">
           <li><div class="tile" style="border-radius: var(--radius-control)"></div>--radius-control</li>
           <li><div class="tile" style="border-radius: var(--radius-panel)"></div>--radius-panel</li>
@@ -517,7 +561,7 @@
           How things move is its own system — see
           <a href="#motion">Motion</a> just below.
         </p>
-      </section>
+      </article>
 
       <!-- ==============================
            Layer 1 · Motion personality
@@ -563,8 +607,8 @@
       <!-- ==============================
            Layer 1 · Base styles
            ============================== -->
-      <section id="base" class="stack">
-        <h2>Base styles</h2>
+      <article class="element stack" id="base">
+        <h3>Base styles</h3>
         <p>
           Everything below is raw HTML with no classes. Write semantic tags
           and the page already looks like Facet — the typography section
@@ -589,7 +633,7 @@
 
         <pre><code>&lt;p&gt;No classes anywhere in this section's table,
 input or this code block — base styles only.&lt;/p&gt;</code></pre>
-      </section>
+      </article>
 
       <!-- ==============================
            Layer 2 · The element wall

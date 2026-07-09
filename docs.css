@@ -102,56 +102,37 @@
    as a parent and its components sit visibly beneath it. */
 .nav-sub + ul a { padding-left: calc(var(--space-inline) + var(--space-stack)); }
 
-/* Layer groups: each stays contracted until you click its label
-   (native <details> toggle). Scroll only marks the layer you are in —
-   it never opens or collapses one. Ample spacing above and below every
-   layer so the labels read as distinct sections, not a dense list. */
-.nav-group > summary {
-  list-style: none;
-  cursor: pointer;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 3px var(--space-control);
-  padding-block: var(--space-inline);
-  border-radius: var(--radius-control);
+/* Layer groups: always open — no expand/collapse. Each group's name is
+   a link to that layer's card page; a hairline divider and breathing
+   room separate the layers down the index. */
+.nav-overview {
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: var(--weight-strong);
 }
-.nav-group > summary::-webkit-details-marker { display: none; }
-.nav-group > summary:hover .nav-group-name { color: var(--text); }
-.nav-group-name {
-  grid-column: 1;
+.nav-group { padding-block: var(--space-inline); }
+.nav-group + .nav-group { border-top: var(--border-hairline) solid var(--border); }
+a.nav-group-name {
+  display: block;
   font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: var(--weight-strong);
   color: var(--text-muted);
-  transition: color var(--duration-fast) var(--ease-standard);
+  padding: var(--space-tight) var(--space-inline);
 }
-.nav-group-desc {
-  grid-column: 1;
-  font-size: var(--text-caption);
-  color: var(--text-muted);
-  line-height: 1.3;
-  opacity: 0.85;
-}
-.nav-caret {
-  grid-column: 2; grid-row: 1 / span 2;
-  align-self: center;
-  width: 0.42rem; height: 0.42rem;
-  border-right: 2px solid var(--text-muted);
-  border-bottom: 2px solid var(--text-muted);
-  rotate: 45deg;
-  transition: rotate var(--duration-base) var(--ease-spring);
-}
-.nav-group[open] > summary .nav-caret { rotate: 225deg; }
-/* The layer you are reading: its label goes accent and gains a marker. */
-.nav-group.is-active-group > summary .nav-group-name { color: var(--accent-3); }
-.nav-group.is-active-group > summary .nav-caret { border-color: var(--accent-3); }
-.nav-group > ul { padding-block: var(--space-tight) var(--space-control); }
+a.nav-group-name:hover { color: var(--text); }
+/* The layer you are reading: its name goes accent. */
+.nav-group.is-active-group > .nav-group-name { color: var(--accent-3); }
+.nav-group > ul { padding-block: var(--space-tight) 0; margin-bottom: 0; }
 
 @media (max-width: 56rem) {
   .docs-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-card); }
   .docs-index { position: static; max-height: none; }
+  /* On phones the card grids do the navigating — the index keeps only
+     its wordmark and the search box. */
+  .docs-index nav { display: none; }
 }
 
 /* Even spacing between every section and wall entry,
@@ -242,67 +223,93 @@ dialog.topic-modal { width: min(92vw, 44rem); }
    this class. !important so it beats the layout classes' own display. */
 .solo-hidden { display: none !important; }
 
-/* Collapsible wall entry: each element folds to just its heading and
-   a one-line callout, so the wall is scannable at a glance. Opening
-   reveals the full description, demo, snippet and reference. */
-.fold > summary {
-  list-style: none;
-  cursor: pointer;
+/* The library's pages (initLibraryPages). The intro and every layer
+   page lay their cards on one responsive grid; an entry page shows the
+   component fully open — no folds anywhere anymore — under a slim
+   previous/next bar. */
+.layer-grid {
   display: grid;
-  gap: var(--space-control);
-  padding-block: var(--space-control);
+  grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+  gap: var(--space-stack);
 }
-.fold > summary::-webkit-details-marker { display: none; }
-.fold-title { display: flex; align-items: center; gap: var(--space-inline); }
-.fold-title h3 { margin: 0; }
-.fold-chevron {
-  margin-left: auto;
-  width: 0.6rem; height: 0.6rem;
-  border-right: 2px solid var(--text-muted);
-  border-bottom: 2px solid var(--text-muted);
-  rotate: 45deg;
-  transition: rotate var(--duration-base) var(--ease-spring);
-  flex: none;
-}
-.fold[open] > summary .fold-chevron { rotate: 225deg; }
-.fold > summary:hover .fold-chevron { border-color: var(--text); }
-.fold-note {
-  border-left: var(--border-highlight) solid var(--accent-3);
-  padding-left: var(--space-stack);
+.layer-grid-sub {
+  grid-column: 1 / -1;
+  margin: var(--space-control) 0 0;
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  font-weight: var(--weight-strong);
   color: var(--text-muted);
-  font-size: var(--text-footnote);
-  max-width: 68ch;
+}
+.layer-card,
+.entry-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+  text-decoration: none;
+  color: inherit;
+}
+.layer-card-kicker,
+.layer-page-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--text-muted);
   margin: 0;
 }
-/* Open: the callout gives way to the full description inside. */
-.fold[open] > summary .fold-note { display: none; }
-/* The body of an opened fold gets space above it. */
-.fold[open] > :not(summary):first-of-type { margin-top: var(--space-stack); }
-
-/* Collapsible Layer-1 token section: the h2 is the toggle. Starts open,
-   so the content shows straight after the layer band, but can collapse. */
-.fold-section > summary {
-  list-style: none;
-  cursor: pointer;
-  display: grid;
-  gap: var(--space-control);
-  padding-block: var(--space-tight);
+.layer-card strong,
+.entry-card strong { font-size: var(--text-body); }
+.layer-card > span:last-child,
+.entry-card-line {
+  color: var(--text-muted);
+  font-size: var(--text-footnote);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.fold-section > summary::-webkit-details-marker { display: none; }
-.fold-section .fold-title { display: flex; align-items: center; gap: var(--space-inline); }
-.fold-section .fold-title h2 { margin: 0; }
-.fold-section .fold-chevron { margin-left: auto; }
-.fold-section[open] > summary .fold-chevron { rotate: 225deg; }
-.fold-section > summary:hover .fold-chevron { border-color: var(--text); }
-/* Collapsed: the one-line callout shows, like every component fold. Open: it
-   gives way to the full description inside. */
-.fold-section[open] > summary .fold-note { display: none; }
-.fold-section[open] > :not(summary):first-of-type { margin-top: var(--space-stack); }
+.layer-page-lead { color: var(--text-muted); }
+
+/* Previous/next on an entry page: the two neighbours' names at the top
+   corners of the content column. */
+.entry-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-stack);
+  margin-bottom: var(--space-card);
+}
+.entry-nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 46%;
+  text-decoration: none;
+  color: inherit;
+  padding: var(--space-control) var(--space-inline);
+  border-radius: var(--radius-control);
+}
+.entry-nav-link:hover { background: var(--surface-hover); }
+.entry-nav-next { text-align: right; }
+.entry-nav-cue {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+}
+.entry-nav-link strong { font-size: var(--text-footnote); }
+
+/* On phones an opened entry slides in like a screen of its own. */
+@media (max-width: 56rem) {
+  main.is-entry > article.element:not(.solo-hidden),
+  main.is-entry > section:not(.solo-hidden) {
+    animation: facet-modal-in var(--duration-normal) var(--ease-spring);
+  }
+}
 
 /* A hairline divider above every collapsible block — the token sections,
    the component entries and their category headings — so each reads as a
    separate, self-contained section down the page. */
-#main > section > .fold-section,
 article.element {
   border-top: var(--border-hairline) solid var(--border);
   padding-top: var(--space-card);

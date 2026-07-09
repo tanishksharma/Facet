@@ -135,9 +135,6 @@ function initWallSearch() {
   const links = [...document.querySelectorAll(".docs-index a[href^='#']")];
   const emptyNote = document.querySelector("#wall-empty");
 
-  const groups = [...document.querySelectorAll(".nav-group")];
-  let priorOpen = null;                    // remembers fold state before a search
-
   box.addEventListener("input", () => {
     const query = box.value.trim().toLowerCase();
     let shown = 0;
@@ -154,74 +151,171 @@ function initWallSearch() {
       }
     }
     emptyNote.hidden = !(query && shown === 0);
-    // A search reaches across every layer, so open them all while it
-    // runs; remember the reader's fold state first and restore it the
-    // moment the box is cleared.
-    if (query) {
-      if (!priorOpen) priorOpen = groups.map(g => g.open);
-      for (const g of groups) g.open = true;
-    } else if (priorOpen) {
-      groups.forEach((g, i) => { g.open = priorOpen[i]; });
-      priorOpen = null;
-    }
   });
 }
 
-/* Solo mode: on a desktop the wall is a reference, not a scroll. With
-   the sidebar beside the content, exactly ONE entry shows at a time —
-   the sidebar is the master list, the column is the detail. Nobody
-   consumes a library by scrolling the whole wall; select, read, select.
-   Any hash navigation (a sidebar link, a link inside an entry, a shared
-   URL) swaps the visible entry, opens its fold and returns the page to
-   the top; with no hash the first entry shows. A live search suspends
-   solo so matches from every layer can appear together, and the chosen
-   entry restores the moment the box clears. On phones and narrow
-   windows (sidebar above the content) nothing changes: the wall stays
-   one scrollable, foldable page. */
-function initSoloWall() {
+/* The library's pages (initLibraryPages): the wall is a reference, not
+   a scroll. One URL hash = one page:
+     (no hash) / #intro   the front door — the five layer cards
+     #layer1 … #layer5    a layer's page: every entry in it as a card
+     #<entry-id>          one component/section, fully open (no fold),
+                          with previous/next links naming its neighbours
+   The sidebar drives it (group names open the layer pages), any hash
+   link anywhere swaps the page, and browser Back walks the trail. On
+   phones and narrow windows the front door is one browsable scroll —
+   the intro plus every layer's card grid — and opening a card slides
+   the entry in full screen. A live search suspends the paging so
+   matches from every layer can appear together; clearing the box
+   restores the page. With JS off nothing routes: the whole wall renders
+   in reading order, every entry open. */
+function initLibraryPages() {
   const main = document.querySelector("main#main");
   const index = document.querySelector(".docs-index");
-  if (!main || !index) return;             // pages without the wall
-  const narrow = matchMedia("(max-width: 56rem)");   // docs.css sidebar breakpoint
+  const intro = document.querySelector("#intro");
+  if (!main || !index || !intro) return;         // pages without the wall
+  const narrow = matchMedia("(max-width: 56rem)");
   let searching = false;
 
-  // The unit an id selects: the wall entry it sits in, else its
-  // top-level section (the Layer-1 token sections, #templates).
+  // ----- the model: layers and their entries, read from the sidebar
+  const LAYERS = [
+    { hash: "layer1", group: "layer1",    kicker: "Layer 1", title: "Tokens & base", lead: "Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed." },
+    { hash: "layer2", group: "layer2",    kicker: "Layer 2", title: "Components",    lead: "Every reusable piece, live and themed — built from the tokens, grouped by job." },
+    { hash: "layer3", group: "layer3",    kicker: "Layer 3", title: "Blocks",        lead: "The components, assembled into ready page sections you copy whole." },
+    { hash: "layer4", group: "templates", kicker: "Layer 4", title: "Templates",     lead: "Whole pages — full app and site layouts you rename and fill in." },
+    { hash: "layer5", group: "appfeel",   kicker: "Layer 5", title: "App feel",      lead: "What makes a finished page feel native: motion, sound, surfaces and the app kit." },
+  ];
+  const flat = [];                                   // ordered entries for previous/next
   const unitFor = (id) => {
     const target = id && document.getElementById(id);
     if (!target || target === main || !main.contains(target)) return null;
-    return target.closest("article.element")
-      || target.closest("#main > section")
-      || null;
+    return target.closest("article.element") || target.closest("#main > section") || null;
   };
-  const clearSolo = () => {
+
+  // ----- build each layer's card page after the intro
+  let anchor = intro;
+  for (const L of LAYERS) {
+    const groupEl = index.querySelector(`.nav-group[data-group="${L.group}"]`);
+    if (!groupEl) continue;
+    const page = document.createElement("section");
+    page.className = "layer-page stack";
+    page.id = L.hash;
+    const head = document.createElement("header");
+    head.className = "stack-tight";
+    head.innerHTML = `<p class="layer-page-kicker"></p><h2></h2><p class="layer-page-lead"></p>`;
+    head.querySelector(".layer-page-kicker").textContent = L.kicker;
+    head.querySelector("h2").textContent = L.title;
+    head.querySelector(".layer-page-lead").textContent = L.lead;
+    page.append(head);
+    const grid = document.createElement("div");
+    grid.className = "layer-grid";
+    // walk the sidebar group in order: sub-labels become full-row
+    // headings, links become cards
+    for (const child of groupEl.children) {
+      if (child.classList.contains("nav-sub")) {
+        const sub = document.createElement("p");
+        sub.className = "layer-grid-sub";
+        sub.textContent = child.textContent;
+        grid.append(sub);
+      } else if (child.tagName === "UL") {
+        for (const a of child.querySelectorAll("a[href^='#']")) {
+          const id = decodeURIComponent(a.getAttribute("href").slice(1));
+          const unit = unitFor(id);
+          if (!unit) continue;
+          const desc = unit.querySelector(":scope > p");
+          const card = document.createElement("a");
+          card.className = "card card-clickable entry-card";
+          card.href = "#" + id;
+          card.innerHTML = `<strong></strong><span class="entry-card-line"></span>`;
+          card.querySelector("strong").textContent = a.textContent;
+          card.querySelector(".entry-card-line").textContent =
+            desc ? calloutFrom(desc.textContent) : "";
+          grid.append(card);
+          flat.push({ id, unit, title: a.textContent, layer: L });
+        }
+      }
+    }
+    page.append(grid);
+    anchor.after(page);
+    anchor = page;
+  }
+  const layerPages = LAYERS.map(L => document.getElementById(L.hash)).filter(Boolean);
+
+  // ----- previous/next: a slim bar at the top of an entry's page
+  const entryNav = document.createElement("nav");
+  entryNav.className = "entry-nav";
+  entryNav.setAttribute("aria-label", "Neighbouring entries");
+  entryNav.hidden = true;
+  main.prepend(entryNav);
+  const fillEntryNav = (unit) => {
+    const i = flat.findIndex(e => e.unit === unit);
+    entryNav.innerHTML = "";
+    const mk = (e, dir) => {
+      const a = document.createElement("a");
+      a.className = "entry-nav-link entry-nav-" + dir;
+      a.href = "#" + e.id;
+      a.innerHTML = `<span class="entry-nav-cue"></span><strong></strong>`;
+      a.querySelector(".entry-nav-cue").textContent = dir === "prev" ? "← Previous" : "Next →";
+      a.querySelector("strong").textContent = e.title;
+      return a;
+    };
+    entryNav.append(i > 0 ? mk(flat[i - 1], "prev") : document.createElement("span"));
+    entryNav.append(i >= 0 && i < flat.length - 1 ? mk(flat[i + 1], "next") : document.createElement("span"));
+  };
+
+  // ----- visibility: hide/show top-level areas of <main>
+  const clearAll = () => {
     for (const el of main.querySelectorAll(".solo-hidden")) el.classList.remove("solo-hidden");
   };
-  const solo = (unit) => {
-    clearSolo();
-    // hide every sibling on the path from the unit up to <main>, so the
-    // unit keeps its wrapping section but nothing else renders
-    for (let node = unit; node !== main; node = node.parentElement) {
+  const showOnly = (keep) => {          // keep: Set of top-level children to show
+    clearAll();
+    for (const child of main.children) {
+      if (child === entryNav) continue;
+      if (!keep.has(child)) child.classList.add("solo-hidden");
+    }
+  };
+  const showEntry = (unit) => {
+    showOnly(new Set([unit.closest("#main > *")]));
+    // inside a shared section (#components…): hide the unit's siblings too
+    for (let node = unit; node && node !== main; node = node.parentElement) {
+      if (node.parentElement === main) break;
       for (const sib of node.parentElement.children) {
         if (sib !== node) sib.classList.add("solo-hidden");
       }
     }
-    const fold = unit.querySelector("details.fold");
-    if (fold) fold.open = true;
+    fillEntryNav(unit);
+    entryNav.hidden = false;
+    main.classList.add("is-entry");
     scrollTo(0, 0);
   };
+  const showPages = (pages) => {
+    showOnly(new Set(pages));
+    entryNav.hidden = true;
+    main.classList.remove("is-entry");
+    scrollTo(0, 0);
+  };
+
   const apply = () => {
-    if (narrow.matches || searching) { clearSolo(); return; }
-    const unit = unitFor(decodeURIComponent(location.hash.slice(1)));
-    if (unit) solo(unit);
-    // a hash that selects nothing (none, #main via the skip link) keeps
-    // the current choice; only an unsoloed wall falls to the first entry
-    else if (!main.querySelector(".solo-hidden")) solo(main.querySelector("article.element"));
+    if (searching) {                    // search shows matches across layers
+      clearAll();
+      for (const p of [intro, ...layerPages]) p.classList.add("solo-hidden");
+      entryNav.hidden = true;
+      main.classList.remove("is-entry");
+      return;
+    }
+    const id = decodeURIComponent(location.hash.slice(1));
+    const L = LAYERS.find(l => l.hash === id);
+    if (L && !narrow.matches) { showPages([document.getElementById(L.hash)]); return; }
+    if (L) {                            // narrow: one browsable scroll, jump to the layer
+      showPages([intro, ...layerPages]);
+      document.getElementById(L.hash).scrollIntoView();
+      return;
+    }
+    const unit = id && id !== "intro" ? unitFor(id) : null;
+    if (unit) { showEntry(unit); return; }
+    showPages(narrow.matches ? [intro, ...layerPages] : [intro]);
   };
   addEventListener("hashchange", apply);
   narrow.addEventListener("change", apply);
-  // clicking the already-current link fires no hashchange — re-apply
-  // (covers returning from a search with the same selection)
   index.addEventListener("click", (e) => {
     if (e.target.closest("a[href^='#']")) requestAnimationFrame(apply);
   });
@@ -282,7 +376,7 @@ function initScrollSpy() {
     // only the nav, never the page.
     const keep = best && best.offsetParent !== null
       ? best
-      : (group && group.querySelector(":scope > summary"));
+      : (group && group.querySelector(".nav-group-name"));
     if (keep && nav) {
       const nb = nav.getBoundingClientRect(), bb = keep.getBoundingClientRect();
       if (bb.top < nb.top) nav.scrollTop += bb.top - nb.top - 8;
@@ -292,8 +386,6 @@ function initScrollSpy() {
   const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(highlight); } };
   addEventListener("scroll", request, { passive: true });
   addEventListener("resize", request, { passive: true });
-  // Folds opening/closing changes section positions — re-spy after each.
-  for (const fold of document.querySelectorAll(".fold")) fold.addEventListener("toggle", request);
   highlight();
 }
 
@@ -698,125 +790,28 @@ function initFeedbackDemo() {
   }
 }
 
-/* Big layer bands: a strong divider and display-sized heading before
-   each layer, so the page reads as Manual / Layer 1 / 2 / 3 / 4 /
-   Tools instead of one endless scroll. */
-function insertLayerBands() {
-  const bands = [
-    ["typography", "Layer 1", "Tokens & base", "Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed."],
-    ["components", "Layer 2", "Components",  "Every piece of the library, live — grouped and filterable. Each folds to a heading and a line; open one to see it work."],
-    ["blocks",     "Layer 3", "Blocks",     "The components, assembled into ready page sections you copy whole."],
-    ["templates",  "Layer 4", "Templates",  "Whole pages — full app and site layouts you rename and fill in."],
-    ["appfeel",    "Layer 5", "App feel",   "The layer that makes a finished page feel native: parallax, sound, surfaces, and the app kit."],
-  ];
-  for (const [id, kicker, title, blurb] of bands) {
-    const anchor = document.querySelector("#" + id);
-    if (!anchor) continue;
-    const band = document.createElement("header");
-    band.className = "layer-band";
-    band.innerHTML = `<span class="layer-kicker"></span><h2></h2><p></p>`;
-    band.querySelector(".layer-kicker").textContent = kicker;
-    band.querySelector("h2").textContent = title;
-    band.querySelector("p").textContent = blurb;
-    anchor.parentNode.insertBefore(band, anchor);
-  }
-}
 
-/* Fold every wall entry: heading + a one-line callout when collapsed,
-   full description, demo, snippet and reference on open. The callout
-   is the entry's own "what it is / what it's for" text, trimmed — so
-   a glance down the page explains the whole library. */
-function foldWallEntries() {
-  const calloutFrom = (text) => {
-    const t = text.replace(/\s+/g, " ").trim();
-    const isM = /What it is:\s*(.+?)(?:\s*What it is for:|\s*When to use it:|$)/.exec(t);
-    const forM = /What it is for:\s*(.+?)(?:\s*When to use it:|$)/.exec(t);
-    let out = isM ? isM[1].trim() : t.slice(0, 180);
-    if (forM) out += " " + forM[1].trim();
-    if (out.length > 240) {                       // keep it to a glance
-      const cut = out.slice(0, 240).lastIndexOf(". ");
-      out = cut > 80 ? out.slice(0, cut + 1) : out.slice(0, 240).trim() + "…";
-    }
-    return out.charAt(0).toUpperCase() + out.slice(1);   // the clause starts lowercase in source
-  };
-  for (const article of document.querySelectorAll("article.element")) {
-    if (article.querySelector(":scope > .fold")) continue;   // idempotent
-    const h3 = article.querySelector(":scope > h3");
-    const desc = article.querySelector(":scope > p");
-    if (!h3 || !desc) continue;
-    const details = document.createElement("details");
-    details.className = "fold";
-    while (article.firstChild) details.appendChild(article.firstChild);
-    const summary = document.createElement("summary");
-    const titleRow = document.createElement("div");
-    titleRow.className = "fold-title";
-    titleRow.appendChild(h3);                     // move the heading up
-    const chevron = document.createElement("span");
-    chevron.className = "fold-chevron";
-    chevron.setAttribute("aria-hidden", "true");
-    titleRow.appendChild(chevron);
-    const note = document.createElement("p");
-    note.className = "fold-note";
-    note.textContent = calloutFrom(desc.textContent);
-    summary.append(titleRow, note);
-    details.prepend(summary);
-    article.appendChild(details);
-    // Charts and gauges measured 0 while hidden — nudge a redraw on open.
-    details.addEventListener("toggle", () => {
-      if (details.open) requestAnimationFrame(() => dispatchEvent(new Event("resize")));
-    });
+/* The one-line callout for an entry: its own "what it is / what it's
+   for" text, trimmed to a glance. Used by the layer pages' cards. */
+const calloutFrom = (text) => {
+  const t = text.replace(/\s+/g, " ").trim();
+  const isM = /What it is:\s*(.+?)(?:\s*What it is for:|\s*When to use it:|$)/.exec(t);
+  const forM = /What it is for:\s*(.+?)(?:\s*When to use it:|$)/.exec(t);
+  let out = isM ? isM[1].trim() : t.slice(0, 180);
+  if (forM) out += " " + forM[1].trim();
+  if (out.length > 240) {
+    const cut = out.slice(0, 240).lastIndexOf(". ");
+    out = cut > 80 ? out.slice(0, cut + 1) : out.slice(0, 240).trim() + "…";
   }
-}
+  return out.charAt(0).toUpperCase() + out.slice(1);
+};
 
-/* The Layer-1 token sections (Typography, Fonts, Color, Spacing, Shape,
-   Base) fold like the component entries: the h2 becomes a clickable
-   summary with a chevron and the body collapses. They start open, so the
-   content shows straight after the layer band, but each can be collapsed. */
-function foldSections() {
-  const FOLD_IDS = ["typography", "fonts", "color", "spacing", "shape", "base"];
-  const noteFrom = (text) => {
-    const t = text.replace(/\s+/g, " ").trim();
-    if (t.length <= 200) return t;
-    return t.slice(0, 200).replace(/\s+\S*$/, "") + "…";   // trim to a whole word
-  };
-  for (const id of FOLD_IDS) {
-    const section = document.getElementById(id);
-    if (!section || section.querySelector(":scope > .fold-section")) continue;   // idempotent
-    const h2 = section.querySelector(":scope > h2");
-    if (!h2) continue;
-    const desc = section.querySelector(":scope > p");           // the section's own description
-    const noteText = desc ? noteFrom(desc.textContent) : "";
-    const details = document.createElement("details");
-    details.className = "fold-section";
-    details.open = true;
-    while (section.firstChild) details.appendChild(section.firstChild);
-    const summary = document.createElement("summary");
-    const titleRow = document.createElement("div");
-    titleRow.className = "fold-title";
-    const chevron = document.createElement("span");
-    chevron.className = "fold-chevron";
-    chevron.setAttribute("aria-hidden", "true");
-    titleRow.append(h2, chevron);
-    summary.append(titleRow);
-    if (noteText) {                                             // the same one-line callout every component fold has
-      const note = document.createElement("p");
-      note.className = "fold-note";
-      note.textContent = noteText;
-      summary.append(note);
-    }
-    details.prepend(summary);
-    section.appendChild(details);
-    details.addEventListener("toggle", () => {
-      if (details.open) requestAnimationFrame(() => dispatchEvent(new Event("resize")));
-    });
-  }
-}
+
 
 /* Label the parts of an opened wall entry, so it is obvious what each
    region is: every control chip group is captioned by what it changes
    (its aria-label — "Stack gaps", "Device width"…), the live demo is
-   "Preview", and the snippet is "Code". Runs after foldWallEntries, so
-   it labels the moved-in children of each .fold. */
+   "Preview", and the snippet is "Code". */
 function labelWallParts() {
   const mk = (text) => {
     const s = document.createElement("span");
@@ -826,7 +821,7 @@ function labelWallParts() {
   };
   const labelled = (el) => el && el.previousElementSibling
     && el.previousElementSibling.classList.contains("part-label");
-  for (const fold of document.querySelectorAll("article.element > .fold")) {
+  for (const fold of document.querySelectorAll("article.element")) {
     for (const chips of fold.querySelectorAll(":scope > p.chips")) {
       if (labelled(chips)) continue;
       chips.before(mk(chips.getAttribute("aria-label") || "Options"));
@@ -1097,16 +1092,6 @@ function initSkinLab() {
   }
 }
 
-/* A sidebar link to a folded entry opens it before scrolling. */
-function initFoldLinks() {
-  for (const a of document.querySelectorAll(".docs-index a[href^='#']")) {
-    a.addEventListener("click", () => {
-      const target = document.querySelector(a.getAttribute("href"));
-      const fold = target && target.querySelector && target.querySelector(":scope > .fold, :scope > .fold-section");
-      if (fold) fold.open = true;
-    });
-  }
-}
 
 document.addEventListener("DOMContentLoaded", async () => {
   for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
@@ -1120,7 +1105,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   initMarkdownButtons();
   initDemoTools();
   overlayCodeTools();              // code actions become a corner icon cluster
-  insertLayerBands();
   initFeedbackDemo();              // the Sound & haptics wall buttons
   initWallFilter();                // Layer 3 category filter chips
   initDevicePreview();             // Layer 5 templates in scaled device frames
@@ -1171,12 +1155,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Fold, control and spy — after all content and demo wiring, so the
   // injected snippets, demo tools and reference blocks fold in too.
-  foldSections();
-  foldWallEntries();
   labelWallParts();
   initWallSearch();
-  initFoldLinks();
   initSearchKeys();
   initScrollSpy();
-  initSoloWall();     // desktop: the sidebar selects ONE entry at a time
+  initLibraryPages();  // intro → layer card pages → entry pages (see the router)
 });
