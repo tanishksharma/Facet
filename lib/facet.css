@@ -316,6 +316,7 @@
   --space-page:    calc(2rem    * var(--density-scale));  /* 32px · container side padding, page margins */
   --space-section: calc(3rem    * var(--density-scale));  /* 48px · between whole page sections */
   --space-hero:    calc(4rem    * var(--density-scale));  /* 64px · the biggest breaks: hero bands */
+  --space-pin:     20px;   /* the inset a viewport-pinned panel keeps from the screen edges — exact pixels, never density-scaled, so pinned panels fit exactly and never move with the scroll */
 
   /* ----- Spacing: the safe areas -----
      The device's own intrusions — Dynamic Island / notch above, home bar
@@ -3109,8 +3110,9 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
    name (make it an <a> to link the group's own page); groups divide with
    hairlines; .side-index-sub labels caption runs of links; the current
    link marks itself with aria-current="page" or .is-current and reads as
-   a filled pill. The panel caps to the viewport and scrolls its own
-   content, never the page. What it is for: docs, references, settings
+   a filled pill. The panel pins to the viewport — exactly 100dvh minus
+   the --space-pin inset top and bottom — and scrolls its own content,
+   never the page. What it is for: docs, references, settings
    hubs — any page with one long or paged content column and a persistent
    map beside it. When to use it: put the aside and the content in a
    two-column grid (the grid wrapper is the page's layout job); on narrow
@@ -3131,8 +3133,8 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
 */
 .side-index {
   position: sticky;
-  top: var(--space-stack);
-  max-height: calc(100dvh - 2 * var(--space-stack));
+  top: var(--space-pin);
+  height: calc(100dvh - 2 * var(--space-pin));   /* pinned = exact viewport fit, minus the pin inset */
   overflow-y: auto;
   overscroll-behavior: contain;
   display: flex;

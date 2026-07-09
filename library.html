@@ -569,7 +569,11 @@
           (default gap between blocks), <code>--space-card</code> (card
           padding), <code>--space-page</code> (page margins),
           <code>--space-section</code> (between sections) and
-          <code>--space-hero</code> (the biggest breaks). Container widths cap
+          <code>--space-hero</code> (the biggest breaks) and
+          <code>--space-pin</code> (the fixed 20px inset a viewport-pinned
+          panel keeps from the screen edges — exact pixels, never
+          density-scaled, so pinned panels fit exactly and never move with
+          the scroll). Container widths cap
           the horizontal rhythm: <code>--width-narrow</code> 40rem for prose
           and calculators, <code>--width-default</code> 64rem for most pages,
           <code>--width-wide</code> 80rem for dashboards.
@@ -2458,8 +2462,9 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           <code>.side-index-sub</code> labels caption runs of links;
           the current link marks itself with
           <code>aria-current="page"</code> or <code>.is-current</code>
-          and reads as a filled pill. The panel caps to the viewport
-          and scrolls its own content, never the page. What it is for:
+          and reads as a filled pill. The panel pins to the viewport —
+          exactly 100dvh minus the <code>--space-pin</code> inset top and
+          bottom — and scrolls its own content, never the page. What it is for:
           docs, references, settings hubs — any page with one long or
           paged content column and a persistent map beside it. When to
           use it: put the aside and the content in a two-column grid
@@ -2469,7 +2474,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           your left IS this block.
         </p>
         <div class="demo">
-          <aside class="side-index" style="position: static; max-height: 22rem; max-width: 17rem;" aria-label="Example index">
+          <aside class="side-index" style="position: static; height: auto; max-height: 22rem; max-width: 17rem;" aria-label="Example index">
             <nav aria-label="Example sections">
               <div class="side-index-group">
                 <a class="side-index-name" href="#block-side-index">Components</a>

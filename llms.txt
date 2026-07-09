@@ -326,7 +326,11 @@ pairs, 4px), --space-control (inside buttons and inputs, 8px),
 --space-inline (gaps in a row, 12px), --space-stack (default block
 gap, 16px), --space-card (card padding, 24px), --space-page (page
 margins, 32px), --space-section (between page sections, 48px),
---space-hero (the biggest breaks, 64px). One global control —
+--space-hero (the biggest breaks, 64px). --space-pin (20px) is the one
+fixed slot: the inset a viewport-pinned panel keeps from the screen
+edges (height: calc(100dvh - 2 * var(--space-pin))) — exact pixels,
+never density-scaled, so pinned panels fit exactly and never move with
+the scroll. One global control —
 data-density="small|medium|large" — tightens or opens the whole system
 at once, and the theme sets it; never pick a theme and its spacing
 separately. Container widths: --width-narrow 40rem (prose, forms),
@@ -1788,8 +1792,9 @@ grouped link lists. Each .side-index-group opens with an uppercase
 name (make it an <a> to link the group's own page); groups divide with
 hairlines; .side-index-sub labels caption runs of links; the current
 link marks itself with aria-current="page" or .is-current and reads as
-a filled pill. The panel caps to the viewport and scrolls its own
-content, never the page. What it is for: docs, references, settings
+a filled pill. The panel pins to the viewport — exactly 100dvh minus
+the --space-pin inset top and bottom — and scrolls its own content,
+never the page. What it is for: docs, references, settings
 hubs — any page with one long or paged content column and a persistent
 map beside it. When to use it: put the aside and the content in a
 two-column grid (the grid wrapper is the page's layout job); on narrow

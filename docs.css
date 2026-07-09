@@ -57,7 +57,13 @@
   grid-template-columns: 15rem minmax(0, 1fr);
   gap: var(--space-section);
   align-items: start;
-  padding-block: var(--space-page);
+  /* the pin inset all around — full bleed, no centering cap — so the
+     sticky index starts exactly where it pins (top: var(--space-pin)),
+     ends exactly at the page's bottom inset, and never moves a pixel
+     with the scroll */
+  max-width: none;
+  padding-block: var(--space-pin);
+  padding-inline: var(--space-pin);
 }
 /* The index panel, search box and grouped lists are the library's own
    .side-index block now (promoted from this chrome — the docs dogfood
@@ -67,7 +73,10 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: var(--weight-strong);
+  margin-bottom: var(--space-stack);
 }
+/* the divider under Overview — the same hairline every category divides with */
+.docs-index nav > .nav-group:first-of-type { border-top: var(--border-hairline) solid var(--border); }
 
 /* The library sidebar: the search box, then the groups — nothing else.
    Each group carries one of the five vivid palette colors as its thread
@@ -99,7 +108,7 @@
 
 @media (max-width: 56rem) {
   .docs-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-card); }
-  .docs-index { position: static; max-height: none; padding: var(--space-stack); }
+  .docs-index { position: static; height: auto; max-height: none; padding: var(--space-stack); }
   /* On phones the card grids do the navigating — the index keeps only
      the search box. */
   .docs-index nav { display: none; }
