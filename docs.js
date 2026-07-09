@@ -356,12 +356,14 @@ function initLibraryPages() {
 
   // ----- build each layer's card page after the intro
   let anchor = intro;
-  for (const L of LAYERS) {
+  for (const [li, L] of LAYERS.entries()) {
     const groupEl = index.querySelector(`.nav-group[data-group="${L.group}"]`);
     if (!groupEl) continue;
     const page = document.createElement("section");
     page.className = "layer-page stack";
     page.id = L.hash;
+    // the group's vivid thread color — the same one its sidebar dot wears
+    page.style.setProperty("--group-color", `var(--color-${(li % 5) + 1})`);
     const head = document.createElement("header");
     head.className = "stack-tight";
     head.innerHTML = `<p class="layer-page-kicker"></p><h2></h2><p class="layer-page-lead"></p>`;

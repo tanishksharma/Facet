@@ -25,10 +25,8 @@
   <div class="docs-layout container-wide">
 
     <aside class="docs-index side-index" aria-label="Page index">
-      <h1 style="margin: 0; font: inherit;"><a class="wordmark" href="/">facet</a></h1>
-      <label for="wall-search">Search</label>
-      <input id="wall-search" type="search" placeholder="Filter the wall"
-             data-tip="Type to filter the wall below" data-tip-below>
+      <input id="wall-search" type="search" placeholder="Search the library"
+             aria-label="Search the library" data-tip="Type to filter the wall below" data-tip-below>
       <nav aria-label="Sections">
         <a class="nav-overview" href="#intro">Overview</a>
         <div class="nav-group side-index-group" data-group="layer1"
@@ -171,7 +169,7 @@
            composes the one below, and a card into each layer's page.
            ============================== -->
       <section id="intro" class="stack">
-        <h2>The library, in five layers</h2>
+        <h1>The library, in five layers</h1>
         <p>
           Everything here is built as five layers, each composed from the
           one below it: tokens style raw HTML, components are built from

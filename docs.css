@@ -15,7 +15,6 @@
   color: var(--text);
 }
 .page-top { padding-block: var(--space-inline); }
-.docs-index .wordmark { margin-bottom: var(--space-tight); }
 .sheet .wordmark { padding: var(--space-control) var(--space-inline) var(--space-inline); }
 
 /* Landing — one centered column: heading, the two tags, a copy
@@ -70,11 +69,39 @@
   font-weight: var(--weight-strong);
 }
 
+/* The library sidebar: the search box, then the groups — nothing else.
+   Each group carries one of the five vivid palette colors as its thread
+   (decoration, per the palette rule): a dot beside the group name, a
+   tinted pill on the current link. The same thread colors the layer
+   pages' kickers and the entry cards' dots, so sidebar, cards and page
+   headers all read as one colored system. */
+.docs-index { padding: var(--space-card) var(--space-stack); gap: var(--space-inline); }
+.docs-index #wall-search { margin-bottom: var(--space-tight); }
+.docs-index .nav-group { padding-block: var(--space-stack); }
+.docs-index .nav-group:nth-of-type(1) { --group-color: var(--color-1); }
+.docs-index .nav-group:nth-of-type(2) { --group-color: var(--color-2); }
+.docs-index .nav-group:nth-of-type(3) { --group-color: var(--color-3); }
+.docs-index .nav-group:nth-of-type(4) { --group-color: var(--color-4); }
+.docs-index .nav-group:nth-of-type(5) { --group-color: var(--color-5); }
+.docs-index .nav-group-name::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--group-color, var(--accent-3));
+  margin-right: var(--space-control);
+}
+.docs-index .nav-group a.is-current,
+.docs-index .nav-group a[aria-current="page"] {
+  background: color-mix(in srgb, var(--group-color, var(--accent-3)) 14%, var(--surface));
+}
+
 @media (max-width: 56rem) {
   .docs-layout { grid-template-columns: minmax(0, 1fr); gap: var(--space-card); }
-  .docs-index { position: static; max-height: none; }
+  .docs-index { position: static; max-height: none; padding: var(--space-stack); }
   /* On phones the card grids do the navigating — the index keeps only
-     its wordmark and the search box. */
+     the search box. */
   .docs-index nav { display: none; }
 }
 
@@ -173,8 +200,15 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .layer-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
-  gap: var(--space-stack);
+  gap: var(--space-card);
 }
+/* The intro's five cards take the five threads in order; the generated
+   layer pages carry theirs as --group-color set by the router. */
+.layer-grid > .layer-card:nth-child(1) { --group-color: var(--color-1); }
+.layer-grid > .layer-card:nth-child(2) { --group-color: var(--color-2); }
+.layer-grid > .layer-card:nth-child(3) { --group-color: var(--color-3); }
+.layer-grid > .layer-card:nth-child(4) { --group-color: var(--color-4); }
+.layer-grid > .layer-card:nth-child(5) { --group-color: var(--color-5); }
 .layer-grid-sub {
   grid-column: 1 / -1;
   margin: var(--space-control) 0 0;
@@ -198,8 +232,23 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: var(--tracking-caps);
-  color: var(--text-muted);
+  /* the group's thread color, anchored in ink so it stays readable */
+  color: color-mix(in srgb, var(--group-color, var(--accent-3)) 45%, var(--text));
   margin: 0;
+}
+.entry-card strong::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--group-color, var(--border-strong));
+  margin-right: var(--space-control);
+  vertical-align: 0.14em;
+}
+.layer-card:hover,
+.entry-card:hover {
+  border-color: color-mix(in srgb, var(--group-color, var(--accent-3)) 45%, var(--border));
 }
 .layer-card strong,
 .entry-card strong { font-size: var(--text-body); }
