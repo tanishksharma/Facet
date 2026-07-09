@@ -2008,16 +2008,18 @@ figcaption {
 /* --------------------------------------------------------------------------
    CONTAINER
 
+   (docs mirror — identical to llms.txt · Container)
+   WHEN TO USE: on the top-level semantic tag of every ordinary page — it is the page's horizontal rhythm. Pick the width by the content: narrow for prose and forms, default for most pages, wide for dashboards. Never nest one inside another.
+
    What it is: a page-width wrapper with themed padding. It centers content,
    caps its width, and keeps consistent side padding from the spacing tokens.
    What it is for: giving every page the same horizontal rhythm, driven by
    tokens, so a theme flip restyles the layout too, not just the components
-   inside it.
-   When to use it: put it directly on the top-level semantic tag of any
-   ordinary page — main, header, footer, section. Use .container-narrow for
-   prose, forms and calculators, .container for most pages, .container-wide
-   for dashboards, .container-full for edge-to-edge strips that keep side
-   padding. Never nest a container inside a container.
+   inside it. When to use it: put it directly on the top-level semantic tag of
+   any ordinary page — main, header, footer, section. Use .container-narrow
+   for prose, forms and calculators, .container for most pages,
+   .container-wide for dashboards, .container-full for edge-to-edge strips
+   that keep side padding. Never nest a container inside a container.
 
    Usage:  <main class="container"> ... </main>
    Options: .container-narrow  40rem   .container       64rem
@@ -2049,14 +2051,16 @@ figcaption {
 /* --------------------------------------------------------------------------
    STACK
 
+   (docs mirror — identical to llms.txt · Stack)
+   WHEN TO USE: for app-shaped layout — controls, cards, form rows — where children should sit a fixed gap apart. Never for prose meant to read as writing; that sits in normal flow (see the rhythm note below).
+
    What it is: vertical flow with themed gaps. A stack says one thing: these
-   sit above and below each other, this far apart.
-   What it is for: spacing content without per-element margins. The gaps come
-   from the spacing tokens, so a theme change restyles the rhythm of the
-   whole page.
-   When to use it: .stack is the default for content inside a section.
-   Use .stack-tight for lines that belong together, like a label and its
-   field. Use .stack-loose between whole sections of a page.
+   sit above and below each other, this far apart. What it is for: spacing
+   content without per-element margins. The gaps come from the spacing tokens,
+   so a theme change restyles the rhythm of the whole page. When to use it:
+   .stack is the default for content inside a section. Use .stack-tight for
+   lines that belong together, like a label and its field. Use .stack-loose
+   between whole sections of a page.
 
    Usage:  <section class="stack"> ... </section>
    Options: .stack-tight  --space-control    .stack  --space-stack
@@ -2077,15 +2081,17 @@ figcaption {
 /* --------------------------------------------------------------------------
    SNAP SECTION
 
+   (docs mirror — identical to llms.txt · Snap section)
+   WHEN TO USE: a single-purpose page that tells one story one screen at a time — a calculator's intro, inputs, results. Not for documents (they just scroll), and not for apps with real screen-to-screen navigation (that is the view stack).
+
    What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one
    full screen at a time and each .snap-section centers its content at a
-   readable width.
-   What it is for: the calculator page skeleton — intro screen, then inputs,
-   then results — and any page that tells one story one screen at a time.
-   When to use it: single-purpose pages with a clear screen-by-screen flow.
-   Not for ordinary documents; normal pages just scroll. The .snap wrapper
-   exists to enable scrolling, which is the one reason the wrapper law
-   allows a container inside a container.
+   readable width. What it is for: the calculator page skeleton — intro
+   screen, then inputs, then results — and any page that tells one story
+   one screen at a time. When to use it: single-purpose pages with a clear
+   screen-by-screen flow. Not for ordinary documents; normal pages just
+   scroll. The .snap wrapper exists to enable scrolling, which is the one
+   reason the wrapper law allows a container inside a container.
 
    Usage:  <main class="snap">
              <section class="snap-section"> intro </section>
@@ -2165,25 +2171,29 @@ figcaption {
 /* --------------------------------------------------------------------------
    VIEW STACK
 
+   (docs mirror — identical to llms.txt · View stack)
+   WHEN TO USE: an app with real screens and a working Back button — home, question, result. One per page, as the page's <main>. For a one-story scroll, use the snap shell instead.
+
    What it is: the app shell for apps with real screens — a <main
    class="view-stack"> of .view sections where exactly one shows at a
-   time, each scrolling on its own, content centered by auto margins
-   when short. Navigation is plain hash links: any <a href="#result">
-   switches views, facet.views.go(id) and .back() do it from code, the
-   URL always names the screen, and the browser's own Back walks the
-   trail. Every view pads itself clear of the Dynamic Island
-   (safe-area top) and of the home bar plus the nav menu (safe-area
-   bottom + clearance); opt a view out with .bleed-top.
-   What it is for: screen-to-screen apps — home → question → result →
-   leaderboard — where the paged .snap shell (one long page you page
-   through) is the wrong shape.
-   When to use it: one view-stack per page, as the page's <main>, one
-   .view per screen with a real id. facet.js upgrades it (.is-stacked,
-   like .snap → .is-paged): the page locks to the viewport and one
-   view shows. With JS off the screens simply stack in reading order
-   and the links jump between them — everything stays crawlable. Views
-   keep their scroll positions while hidden, so Back returns exactly
-   where the visitor left.
+   time, each scrolling on its own, content centered by auto margins when
+   short. Navigation is plain hash links: any <a href="#result"> switches
+   views, facet.views.go(id) and .back() do it from code, the URL always
+   names the screen, and the browser's own Back walks the trail (back()
+   falls home to the first view when there is nothing left to pop). Every
+   view pads itself clear of the Dynamic Island (safe-area top) and of
+   the home bar plus the nav menu (safe-area bottom + clearance); opt a
+   view out with .bleed-top. What it is for: screen-to-screen apps — home
+   → question → result → leaderboard — where the paged .snap shell (one
+   long page you page through) is the wrong shape. When to use it: one
+   view-stack per page, as the page's <main>, one .view per screen with a
+   real id. facet.js upgrades it (.is-stacked, like .snap → .is-paged):
+   html gets .is-app-shell, the page locks to the viewport, one view
+   shows. With JS off the screens simply stack in reading order and the
+   links jump between them — everything stays crawlable. Views keep their
+   scroll positions while hidden, so Back returns exactly where the
+   visitor left. Each arrival fires a bubbling "facet:view" CustomEvent
+   ({view, from}) on the stack and moves focus to the view.
 
    Usage:  <main class="view-stack">
              <section class="view" id="home"> … <a href="#play">Play</a> </section>
@@ -2246,14 +2256,17 @@ figcaption {
 /* --------------------------------------------------------------------------
    BUTTON
 
+   (docs mirror — identical to llms.txt · Button)
+   WHEN TO USE: any click that does something. At most one primary per screen; navigation dressed as a button is an <a class="btn">.
+
    What it is: the action element, in three variants and three sizes, working
-   identically on <button> and on <a>.
-   What it is for: .btn-primary carries the screen's one main action in the
-   accent color. .btn-secondary is every other action. .btn-ghost is for
-   quiet actions inside busy areas, invisible until hovered.
-   When to use it: any click that does something. One primary per screen at
-   most. Navigation styled as a button is an <a class="btn">. Put the
-   button's key action name in a data-event attribute as the analytics hook.
+   identically on <button> and on <a>. What it is for: .btn-primary carries
+   the screen's one main action in accent-1. .btn-secondary is every other
+   action, on the accent-2 fill. .btn-ghost is for quiet actions inside busy
+   areas, invisible until hovered. When to use it: any click that does something. One primary
+   per screen at most. Navigation styled as a button is an <a class="btn">.
+   Put the button's key action name in a data-event attribute as the
+   analytics hook.
 
    Usage:  <button class="btn btn-primary" data-event="calc-run"
                    data-tip="Runs the calculation">Calculate</button>
@@ -2356,15 +2369,17 @@ figcaption {
 /* --------------------------------------------------------------------------
    ICON BUTTON
 
-   What it is: a square button holding a single icon.
-   What it is for: compact actions whose meaning the icon plus its tooltip
-   carries — the clear cross in a number field, a close button, a share
-   arrow.
-   When to use it: when space is tight and the action is secondary. The icon
-   alone says nothing, so every icon button carries an aria-label for screen
-   readers and a data-tip tooltip for everyone else. Combines with any
-   button variant and size. Icons are inline SVG with stroke="currentColor"
-   so they take the button's text color in every theme.
+   (docs mirror — identical to llms.txt · Icon button)
+   WHEN TO USE: compact, secondary actions where an icon plus its tooltip is enough — close, clear, share. Always with an aria-label.
+
+   What it is: a square button holding a single icon. What it is for: compact
+   actions whose meaning the icon plus its tooltip carries — the clear cross
+   in a number field, a close button, a share arrow. When to use it: when
+   space is tight and the action is secondary. The icon alone says nothing, so
+   every icon button carries an aria-label for screen readers and a data-tip
+   tooltip for everyone else. Combines with any button variant and size.
+   Icons are inline SVG with stroke="currentColor" so they take the button's
+   text color in every theme.
 
    Usage:  <button class="btn btn-icon" aria-label="Close"
                    data-tip="Close this panel"> <svg>...</svg> </button>
@@ -2382,20 +2397,22 @@ figcaption {
 /* --------------------------------------------------------------------------
    FIELD + NUMBER INPUT
 
+   (docs mirror — identical to llms.txt · Number input)
+   WHEN TO USE: every numeric entry in a calculator or money product — it groups digits for the visitor's locale as they type and reads the number back in words.
+
    What it is: a labelled field wrapping the calculator-grade number input,
-   with a clear button inside the field and a words helper under it.
-   What it is for: money and other large numbers, entered the way the
-   visitor says them. The input ships prefilled with an example value,
-   clears fully on the first tap — and never again once the visitor has
-   typed — groups digits for the locale as they are typed (25,00,000 where
-   lakh and crore are the norm, 2,500,000 elsewhere), and reads the number
-   back in words underneath, in the active language: 25 lakh, 2.5 million,
-   25 लाख. The locale follows facet.location and the browser, overridable
-   with data-numbers="indian|western"; the language with data-language.
-   All behaviours come from facet.js the moment the input carries
-   data-number.
-   When to use it: every numeric entry in a calculator. Read the plain
-   number in app code by stripping separators —
+   with a clear button inside the field and a words helper under it. What it
+   is for: money and other large numbers, entered the way the visitor says
+   them. The input ships prefilled with an example value, clears fully on
+   the first tap — and never again once the visitor has typed — groups
+   digits for the locale as they are typed (25,00,000 where lakh and crore
+   are the norm, 2,500,000 elsewhere), and reads the number back in words
+   underneath, in the active language: 25 lakh, 2.5 million, 25 लाख. The
+   locale follows facet.location and the browser, overridable with
+   data-numbers="indian|western"; the language with data-language. All
+   behaviours come from facet.js the moment the input carries data-number.
+   When to use it: every numeric entry in a calculator. The field shows the
+   grouped text; read the plain number in app code by stripping separators —
    parseFloat(input.value.replace(/[^0-9.]/g, "")). For the error state,
    set data-status="error" on the field and swap the hint for a
    .field-msg line (.field-invalid + .field-error stay as aliases).
@@ -2416,6 +2433,19 @@ figcaption {
    input — a real layout job, allowed by the wrapper law.
    -------------------------------------------------------------------------- */
 
+/* (docs mirror — identical to llms.txt · Fields: input, textarea, select, search)
+   WHEN TO USE: any time a control needs a name — which is always. One pattern wraps every kind of control.
+
+   What it is: the labelled field family — one pattern (label.field >
+   .field-label + control + .field-hint) wrapped around every kind of
+   control: text input, textarea, select (with a token-colored chevron,
+   no image files), and a capsule search field. What it is for: every
+   form. The label is real, so clicking it focuses the control and
+   readers announce it; for validation set
+   data-status="error|warning|success" on the field and swap the hint
+   for a .field-msg line (.field-invalid + .field-error stay as aliases
+   — see Component states). When to use it: any time a control needs a
+   name — which is always. */
 .field {
   display: flex;
   flex-direction: column;
@@ -2473,13 +2503,16 @@ select {
 input[type="search"] { border-radius: var(--radius-pill); }
 
 /* ----- FILE UPLOAD & DATE INPUT: native controls, themed -----
+   (docs mirror — identical to llms.txt · File upload & date input)
+   WHEN TO USE: always these before any custom uploader or calendar — native means drag-drop, keyboard, the picker and the form value all work for free, in every theme.
+
    What it is: the native file and date controls, themed and kept native
    — the file input's button is styled as a secondary action while
    drag-drop, keyboard and the form value stay the browser's; the date
    input keeps its native picker with the accent coloring its highlight
    and color-scheme flipping it in dark mode. When to use it: always
    these before any custom uploader or calendar, wrapped in the same
-   label.field pattern as every other control. */
+   label.field pattern as every other control.*/
 
 /* File upload: the native input stays (drag-drop, keyboard, form
    value all free); only its button is styled like a secondary action
@@ -2554,14 +2587,17 @@ input[type="week"] {
 /* --------------------------------------------------------------------------
    SLIDER
 
-   What it is: a real range input styled by the theme — hairline track,
-   accent-3 thumb — paired with a live value readout.
-   What it is for: picking a number inside a known range where the feel of
-   more-and-less matters more than exact digits: years, percentages, counts.
-   When to use it: bounded inputs with sensible ends. When the exact number
-   matters, pair it with or swap it for the number input. Put an <output>
-   in the field label and facet.js keeps it showing the live value. Full
-   keyboard support comes free with the native element.
+   (docs mirror — identical to llms.txt · Slider)
+   WHEN TO USE: a bounded pick where the feel of more-and-less matters more than the exact digit — years, percentages. Pair it with the number input when precision matters.
+
+   What it is: a real, themed range input — hairline track,
+   accent-3 thumb — paired with a live value readout. What it is for: picking a number
+   inside a known range where the feel of more-and-less matters more than
+   exact digits: years, percentages, counts. When to use it: bounded inputs
+   with sensible ends. When the exact number matters, pair it with or swap it
+   for the number input. Put an <output> in the field label and facet.js
+   keeps it showing the live value. Full keyboard support comes free with the
+   native element.
 
    Usage:
      <label class="field">
@@ -2639,14 +2675,18 @@ input[type="week"] {
 /* --------------------------------------------------------------------------
    DETAILED SLIDER
 
+   (docs mirror — identical to llms.txt · Detailed slider)
+   WHEN TO USE: a range too wide for a plain slider to land exactly — a price, a duration in seconds, a token in pixels. Fast coarse drag plus precise fine entry, always in sync.
+
    What it is: a slider for a wide range, paired with a precise entry. The
    track drags fast in coarse jumps (data-coarse) so you cross a big span in
    one swipe; the −/+ steppers and the number box reach the exact value
-   between the jumps (data-fine). All three stay in sync.
-   What it is for: values with many gradations where you want both speed and
-   precision — a price, a duration in seconds, a token in pixels.
-   When to use it: ranges too wide for a plain slider to land precisely. For
-   a small bounded range, the plain .slider is enough.
+   between the jumps (data-fine). All three stay in sync. What it is for:
+   values with many gradations where you want both speed and precision — a
+   price, a duration in seconds, a token in pixels. When to use it: ranges
+   too wide for a plain slider to land precisely. For a small bounded range,
+   the plain .slider is enough. facet.js wires it and fires a bubbling
+   facet:slide {value} on any change.
 
    Usage:
      <div class="slider-detail" data-min="0" data-max="1000"
@@ -2879,15 +2919,18 @@ input[type="week"] {
 [data-tip].tip-on::before { display: block; opacity: 1; translate: -50% 0; }
 
 /* ----- CHOICE CONTROLS: checkbox, radio, switch -----
+   (docs mirror — identical to llms.txt · Switch, checkbox, radio)
+   WHEN TO USE: checkbox for independent yes/nos, radio for one-of-few with every option visible, switch for a setting that takes effect the moment it flips.
+
    What it is: the yes/no and pick-one controls — native checkbox and
-   radio styled by the theme through accent-color, and a switch that is
-   a checkbox upgraded with one class. What it is for: settings,
-   consents, filters — checkbox for independent yes/nos, radio for
-   one-of-few with all options visible, switch for a setting that
-   takes effect immediately. When to use it: wrap control and text in
-   a label.check-row so the whole line is the hit target. The switch
-   keeps checkbox semantics — form value, keyboard, screen readers —
-   the class only changes the appearance. */
+   radio themed through accent-color, and a switch that is a
+   checkbox upgraded with one class. What it is for: settings, consents,
+   filters — checkbox for independent yes/nos, radio for one-of-few with
+   all options visible, switch for a setting that takes effect
+   immediately. When to use it: wrap control and text in a
+   label.check-row so the whole line is the hit target. The switch keeps
+   checkbox semantics — form value, keyboard, screen readers — the class
+   only changes the appearance.*/
 input[type="checkbox"],
 input[type="radio"] {
   accent-color: var(--accent-1);
@@ -4577,13 +4620,20 @@ a.list-item:active,
 button.list-item:active { background: var(--surface-active); }
 
 /* ----- STEPPER: minus, value, plus -----
-   What it is: a quantity control — a real number input between two
-   step buttons, in one pill. What it is for: counts and small
-   adjustments where typing is overkill: guests, quantity, years.
-   When to use it: ranges of a few dozen at most; beyond that use the
-   number input. The input stays typeable; the buttons call the
-   input's own stepUp/stepDown so min, max and step attributes rule.
-   facet.js wires .stepper-down/.stepper-up and fires input+change. */
+   (docs mirror — identical to llms.txt · Stepper & segmented control)
+   WHEN TO USE: the stepper for small counts where typing is overkill; the segmented control for flipping between two to five views of the same thing. Not for settings that act (the switch) or navigation (the tab bar).
+
+   What it is: a quantity control — a real number input between two step
+   buttons in one pill — and a segmented control, a pill of options where
+   exactly one is pressed in, radios underneath. What it is for: the
+   stepper for counts and small adjustments where typing is overkill; the
+   segmented control for switching between 2–5 views or ranges of the
+   same thing. When to use it: stepper for ranges of a few dozen at most
+   (beyond that, the number input); segmented for choices that change
+   what is shown — not settings that act (the switch) and not navigation
+   (the tab bar). The stepper buttons call the input's own
+   stepUp/stepDown so min/max/step rule; the radios keep arrows, form
+   value and announcements native.*/
 .stepper {
   display: inline-flex;
   align-items: center;
@@ -4668,13 +4718,15 @@ button.list-item:active { background: var(--surface-active); }
 }
 
 /* ----- ROW: horizontal flow with wrap and themed gaps -----
-   What it is: things side by side that wrap when they run out of
-   room, with the gap owned by the row. What it is for: button rows,
-   chip sets, meta lines, any run of small pieces. When to use it:
-   whenever things sit beside each other — the row owns the gap, so
-   children stay margin-free, exactly like the stack owns vertical
-   rhythm. Variants: .row-tight for close runs, .row-loose for
-   extra spacing. */
+   (docs mirror — identical to llms.txt · Row)
+   WHEN TO USE: whenever small pieces sit side by side — button rows, chip sets, meta lines. The row owns the gap, so the children stay margin-free.
+
+   What it is: things side by side that wrap when they run out of room,
+   with the gap owned by the row. What it is for: button rows, chip sets,
+   meta lines, any run of small pieces. When to use it: whenever things
+   sit beside each other — the row owns the gap, so children stay
+   margin-free, exactly like the stack owns vertical rhythm. Variants:
+   .row-tight for close runs, .row-loose for more spacing.*/
 .row,
 .row-tight,
 .row-loose {
@@ -4687,13 +4739,15 @@ button.list-item:active { background: var(--surface-active); }
 .row-loose { gap: var(--space-page); }
 
 /* ----- GRID: responsive columns with themed gaps -----
-   What it is: an auto-fitting column grid — as many columns as fit,
-   each at least a card wide, collapsing to one on phones with no
-   breakpoints written. What it is for: card grids, feature grids,
-   galleries, dashboards. When to use it: any set of same-shaped
-   pieces; the grid decides the count, the content decides the size.
-   Variants: .grid-wide for bigger cards, .grid-tight and .grid-loose
-   for gap. */
+   (docs mirror — identical to llms.txt · Grid)
+   WHEN TO USE: any set of same-shaped pieces — cards, features, tiles. It decides the column count itself; you never write a breakpoint.
+
+   What it is: an auto-fitting column grid — as many columns as fit, each
+   at least a card wide, collapsing to one on phones with no breakpoints
+   written. What it is for: card grids, feature grids, galleries,
+   dashboards. When to use it: any set of same-shaped pieces; the grid
+   decides the count, the content decides the size. Variants: .grid-wide
+   for bigger cards, .grid-tight and .grid-loose for gap.*/
 .grid,
 .grid-wide,
 .grid-tight,
@@ -5553,15 +5607,18 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
 /* --------------------------------------------------------------------------
    CHOICE GRID
 
-   What it is: a grid of small square choice buttons — a symbol above a
-   tiny caption, five per row on phones. What it is for: one exclusive
-   pick from up to about ten options where the choices are compact and
-   symbolic — currencies, units, categories; aria-pressed carries the
-   state and facet.js keeps the pick exclusive. When to use it: any
-   single pick too wide for a segmented control; shipped as the
-   inflation app's ten-currency picker. State changes ease — selection
-   must never jump. Velvet: unselected options sit flat in carved
-   wells, the selected one stands raised with its symbol in gold.
+   (docs mirror — identical to llms.txt · Choice grid)
+   WHEN TO USE: one exclusive pick from up to about ten compact, symbolic
+   options — currencies, units, categories — too many for a segmented
+   control, too visual for a select. What it is: a grid of small square
+   choice buttons (.choice-grid of .choice-btn — a .choice-sym symbol
+   above a .choice-cap caption), five per row on phones. aria-pressed
+   carries the state and facet.js keeps the pick exclusive; on change the
+   grid fires a bubbling CustomEvent "facet:choice" {value, button}
+   (value = data-value ?? the button text), and
+   facet.choiceSelect(grid, value) sets a pick from code (URL restore,
+   reset). With JS off the buttons still render and submit nothing —
+   pair with a hidden input when the form must post.
 
    Usage:
      <div class="choice-grid" role="group" aria-labelledby="cur-label">

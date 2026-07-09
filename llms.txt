@@ -436,6 +436,8 @@ copy-paste snippet. The snippet renders in any page that links facet.css.
 
 ### Container
 
+WHEN TO USE: on the top-level semantic tag of every ordinary page — it is the page's horizontal rhythm. Pick the width by the content: narrow for prose and forms, default for most pages, wide for dashboards. Never nest one inside another.
+
 What it is: a page-width wrapper with themed padding. It centers content,
 caps its width, and keeps consistent side padding from the spacing tokens.
 What it is for: giving every page the same horizontal rhythm, driven by
@@ -449,6 +451,8 @@ that keep side padding. Never nest a container inside a container.
     <main class="container"> ... </main>
 
 ### Stack
+
+WHEN TO USE: for app-shaped layout — controls, cards, form rows — where children should sit a fixed gap apart. Never for prose meant to read as writing; that sits in normal flow (see the rhythm note below).
 
 What it is: vertical flow with themed gaps. A stack says one thing: these
 sit above and below each other, this far apart. What it is for: spacing
@@ -481,6 +485,8 @@ description, then the closing rule (keep the equals runs short):
 
 ### Row
 
+WHEN TO USE: whenever small pieces sit side by side — button rows, chip sets, meta lines. The row owns the gap, so the children stay margin-free.
+
 What it is: things side by side that wrap when they run out of room,
 with the gap owned by the row. What it is for: button rows, chip sets,
 meta lines, any run of small pieces. When to use it: whenever things
@@ -494,6 +500,8 @@ margin-free, exactly like the stack owns vertical rhythm. Variants:
     </div>
 
 ### Grid
+
+WHEN TO USE: any set of same-shaped pieces — cards, features, tiles. It decides the column count itself; you never write a breakpoint.
 
 What it is: an auto-fitting column grid — as many columns as fit, each
 at least a card wide, collapsing to one on phones with no breakpoints
@@ -510,6 +518,8 @@ for bigger cards, .grid-tight and .grid-loose for gap.
 
 ### Switch, checkbox, radio
 
+WHEN TO USE: checkbox for independent yes/nos, radio for one-of-few with every option visible, switch for a setting that takes effect the moment it flips.
+
 What it is: the yes/no and pick-one controls — native checkbox and
 radio themed through accent-color, and a switch that is a
 checkbox upgraded with one class. What it is for: settings, consents,
@@ -525,6 +535,8 @@ only changes the appearance.
     <label class="check-row"><input type="radio" name="plan" checked> Monthly</label>
 
 ### Stepper & segmented control
+
+WHEN TO USE: the stepper for small counts where typing is overkill; the segmented control for flipping between two to five views of the same thing. Not for settings that act (the switch) or navigation (the tab bar).
 
 What it is: a quantity control — a real number input between two step
 buttons in one pill — and a segmented control, a pill of options where
@@ -551,6 +563,8 @@ value and announcements native.
 
 ### Fields: input, textarea, select, search
 
+WHEN TO USE: any time a control needs a name — which is always. One pattern wraps every kind of control.
+
 What it is: the labelled field family — one pattern (label.field >
 .field-label + control + .field-hint) wrapped around every kind of
 control: text input, textarea, select (with a token-colored chevron,
@@ -569,6 +583,8 @@ name — which is always.
     </label>
 
 ### File upload & date input
+
+WHEN TO USE: always these before any custom uploader or calendar — native means drag-drop, keyboard, the picker and the form value all work for free, in every theme.
 
 What it is: the native file and date controls, themed and kept native
 — the file input's button is styled as a secondary action while
@@ -1082,6 +1098,8 @@ data-parallax itself. --shine (0..1, default 0.5) tunes the strength.
 
 ### Snap section
 
+WHEN TO USE: a single-purpose page that tells one story one screen at a time — a calculator's intro, inputs, results. Not for documents (they just scroll), and not for apps with real screen-to-screen navigation (that is the view stack).
+
 What it is: full-viewport scroll-snap areas. The .snap wrapper scrolls one
 full screen at a time and each .snap-section centers its content at a
 readable width. What it is for: the calculator page skeleton — intro
@@ -1118,6 +1136,8 @@ section snaps (sections are 100dvh and border-box).
 
 ### View stack
 
+WHEN TO USE: an app with real screens and a working Back button — home, question, result. One per page, as the page's <main>. For a one-story scroll, use the snap shell instead.
+
 What it is: the app shell for apps with real screens — a <main
 class="view-stack"> of .view sections where exactly one shows at a
 time, each scrolling on its own, content centered by auto margins when
@@ -1147,6 +1167,8 @@ visitor left. Each arrival fires a bubbling "facet:view" CustomEvent
 
 ### Button
 
+WHEN TO USE: any click that does something. At most one primary per screen; navigation dressed as a button is an <a class="btn">.
+
 What it is: the action element, in three variants and three sizes, working
 identically on <button> and on <a>. What it is for: .btn-primary carries
 the screen's one main action in accent-1. .btn-secondary is every other
@@ -1168,6 +1190,8 @@ States built in: hover, focus ring, pressed, :disabled
 
 ### Icon button
 
+WHEN TO USE: compact, secondary actions where an icon plus its tooltip is enough — close, clear, share. Always with an aria-label.
+
 What it is: a square button holding a single icon. What it is for: compact
 actions whose meaning the icon plus its tooltip carries — the clear cross
 in a number field, a close button, a share arrow. When to use it: when
@@ -1183,7 +1207,9 @@ text color in every theme.
            aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg>
     </button>
 
-### Field + number input
+### Number input
+
+WHEN TO USE: every numeric entry in a calculator or money product — it groups digits for the visitor's locale as they type and reads the number back in words.
 
 What it is: a labelled field wrapping the calculator-grade number input,
 with a clear button inside the field and a words helper under it. What it
@@ -1216,6 +1242,8 @@ set data-status="error" on the field and swap the hint for a
 
 ### Slider
 
+WHEN TO USE: a bounded pick where the feel of more-and-less matters more than the exact digit — years, percentages. Pair it with the number input when precision matters.
+
 What it is: a real, themed range input — hairline track,
 accent-3 thumb — paired with a live value readout. What it is for: picking a number
 inside a known range where the feel of more-and-less matters more than
@@ -1232,6 +1260,8 @@ native element.
     </label>
 
 ### Detailed slider
+
+WHEN TO USE: a range too wide for a plain slider to land exactly — a price, a duration in seconds, a token in pixels. Fast coarse drag plus precise fine entry, always in sync.
 
 What it is: a slider for a wide range, paired with a precise entry. The
 track drags fast in coarse jumps (data-coarse) so you cross a big span in
@@ -1255,6 +1285,29 @@ facet:slide {value} on any change.
         <button type="button" class="btn btn-icon slider-detail-step"
                 data-step="1" aria-label="Increase">+</button>
       </div>
+    </div>
+
+### Choice grid
+
+WHEN TO USE: one exclusive pick from up to about ten compact, symbolic
+options — currencies, units, categories — too many for a segmented
+control, too visual for a select. What it is: a grid of small square
+choice buttons (.choice-grid of .choice-btn — a .choice-sym symbol
+above a .choice-cap caption), five per row on phones. aria-pressed
+carries the state and facet.js keeps the pick exclusive; on change the
+grid fires a bubbling CustomEvent "facet:choice" {value, button}
+(value = data-value ?? the button text), and
+facet.choiceSelect(grid, value) sets a pick from code (URL restore,
+reset). With JS off the buttons still render and submit nothing —
+pair with a hidden input when the form must post.
+
+    <div class="choice-grid" role="group" aria-label="Currency">
+      <button type="button" class="choice-btn" aria-pressed="true" data-value="inr">
+        <span class="choice-sym">₹</span><span class="choice-cap">INR</span>
+      </button>
+      <button type="button" class="choice-btn" aria-pressed="false" data-value="usd">
+        <span class="choice-sym">$</span><span class="choice-cap">USD</span>
+      </button>
     </div>
 
 ### Result block
