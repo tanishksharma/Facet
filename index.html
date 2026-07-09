@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Facet — a plain HTML, CSS & JS design library</title>
-  <meta name="description" content="Facet is a plain HTML, CSS and JS design library: two tags, no build step, themes included, readable by people and by AI. This page is the pitch — what it is, why it exists, and how to use it.">
+  <meta name="description" content="This is how the web was meant to be. Point your AI at Facet — a plain HTML, CSS and JS design library with themes, app feel and a build method — and build real products. Two tags, no build step, readable by people and by AI.">
   <meta property="og:title" content="Facet — a plain HTML, CSS & JS design library">
-  <meta property="og:description" content="Facet is a plain HTML, CSS and JS design library: two tags, no build step, themes included, readable by people and by AI. This page is the pitch — what it is, why it exists, and how to use it.">
+  <meta property="og:description" content="This is how the web was meant to be. Point your AI at Facet — a plain HTML, CSS and JS design library with themes, app feel and a build method — and build real products. Two tags, no build step, readable by people and by AI.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://facet-kappa.vercel.app/">
   <meta property="og:image" content="https://facet-kappa.vercel.app/icons/icon-512.png">
@@ -29,11 +29,27 @@
        stays automatic (each visitor's system preference); themes are the
        only pick offered here. -->
   <section class="landing container stack" aria-label="Get started">
-    <h1 class="landing-title">A design library in plain HTML, CSS &amp; JS</h1>
+    <h1 class="landing-title">This is how the web was meant to&nbsp;be.</h1>
     <p class="landing-lede">
-      One CSS file and one JS file at a public URL style everything I make.
-      No React, no build step, never minified — this page <em>is</em> the library.
+      Facet is a design library in plain HTML, CSS and JS. One link, one
+      script, no build step, never minified — this page <em>is</em> the library.
     </p>
+
+    <!-- How to use it, whole: one sentence to your AI. The app idea types
+         itself out in the typewriter face and cycles (initHeroTypewriter). -->
+    <div class="hero-ask stack" aria-label="How to use Facet">
+      <p class="eyebrow hero-ask-label">Tell your AI:</p>
+      <blockquote class="hero-quote">
+        “Use the Facet library and help me build
+        <span class="hero-idea" id="hero-idea">an inflation calculator</span>.”
+      </blockquote>
+      <p class="hero-explain">
+        That sentence is the whole workflow. Facet exists to give your AI
+        taste: it teaches it, in its own language, how to build good web
+        apps, good installable apps and good products — every component,
+        every theme, every rule of craft, readable in one fetch.
+      </p>
+    </div>
 
     <pre id="snippet-consume" class="landing-snippet"><code>&lt;link rel="stylesheet" href="https://[domain]/lib/facet.css"&gt;
 &lt;script src="https://[domain]/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
@@ -72,22 +88,26 @@
            Why Facet exists.
            ============================== -->
       <section id="philosophy" class="stack home-section">
-        <p class="home-kicker">Philosophy</p>
-        <h2>Make the web simple again</h2>
+        <p class="home-kicker">Why it hits different</p>
+        <h2>The browser is the framework</h2>
         <p>
-          Modern frontend is a div-soup — minified React machinery you cannot
-          open and understand. Facet bets the other way: plain HTML, CSS and
-          JS, using the browser's own features instead of reaching for a
-          framework. The page you write is the page that ships — readable,
-          commented, and fast because there is no runtime between you and the
-          platform.
+          Facet is extremely powerful because it truly uses your device's
+          potential — the way the internet was designed to be. No runtime
+          sits between you and the platform: pages install to the home
+          screen and work offline, respond to your text size and dark mode,
+          speak the reader's language and number system, move with the
+          device's own tilt and light, click and vibrate like hardware, and
+          print like real documents. Modern frontend rebuilds all of this in
+          minified framework machinery; Facet just switches the browser's
+          own features on.
         </p>
         <p>
-          The point is to make the internet simpler again by making front-end
-          code good again: web pages built on good practices that just work —
-          quick, easy to maintain, accessible, customizable, and at home on
-          your phone's own OS. This library defines those practices and gives
-          you every one of them for free.
+          And it goes one step further than any component kit: <strong>it
+          helps you think the product through</strong>. Point your AI at the
+          <a href="/product.html">build method</a> and it interviews you
+          about the users and the job to be done, agrees a feature set with
+          you, and builds it end to end — teaching as it goes. The page you
+          ship stays plain, readable HTML you can open and understand.
         </p>
       </section>
 
@@ -175,10 +195,158 @@
 
       <!-- ==============================
            Features
-           The curated, human-facing feature wall — the headline capabilities.
-           The exhaustive inventory is llms.txt.
+           The curated feature list: deduplicated, plain language, ordered
+           by impact — headliners first, then the system, then the small
+           conveniences. The exhaustive inventory is llms.txt; the old
+           feature wall is parked in a fold at the bottom of the page.
            ============================== -->
       <section id="features" class="stack home-section">
+        <p class="home-kicker">Features</p>
+        <h2>What you get</h2>
+        <p>
+          The most impactful things first. Every card names its area; the
+          complete technical inventory lives in <a href="/llms.txt">llms.txt</a>
+          and every piece runs live in the
+          <a href="/library.html">Component library</a>.
+        </p>
+
+        <div class="feat-hero-grid">
+          <article class="card feat-hero stack-tight">
+            <span class="feat-tag">For people</span>
+            <h3>Responds to your device</h3>
+            <p>Raise your phone's text size and the whole interface grows.
+            Dark mode follows your system. Reduced motion is honoured
+            everywhere, high-contrast modes strengthen the ink, and layouts
+            clear the notch and home bar.</p>
+          </article>
+          <article class="card feat-hero stack-tight">
+            <span class="feat-tag">For people</span>
+            <h3>Speaks the reader's language</h3>
+            <p>Author content in more than one language and one button flips
+            the page. Numbers group the local way — lakh and crore where
+            that is the norm — and big amounts are spelled out in words.</p>
+          </article>
+          <article class="card feat-hero stack-tight">
+            <span class="feat-tag">Theming</span>
+            <h3>One attribute restyles everything</h3>
+            <p>data-theme swaps the whole look, layout included. Dark mode
+            composes with any theme, a single section can wear its own, and
+            your brand color is one small block of overrides.</p>
+          </article>
+          <article class="card feat-hero stack-tight">
+            <span class="feat-tag">App feel</span>
+            <h3>Any page becomes an installable app</h3>
+            <p>Three small files make a page install to the home screen and
+            work offline. Real screens with a working Back button, a bottom
+            tab bar, a settings sheet and a floating menu — all self-wiring.</p>
+          </article>
+          <article class="card feat-hero stack-tight">
+            <span class="feat-tag">For AI</span>
+            <h3>It helps you think the product through</h3>
+            <p>The <a href="/product.html">build method</a> has your AI
+            interview you about users and the job to be done, agree a
+            feature set, and build end to end — teaching as it goes.</p>
+          </article>
+          <article class="card feat-hero stack-tight">
+            <span class="feat-tag">For AI</span>
+            <h3>An AI learns all of it in one fetch</h3>
+            <p><a href="/llms.txt">llms.txt</a> teaches an assistant every
+            component and rule in one plain-text read. The pages it builds
+            stay operable by agents: real buttons, real links, state in the
+            URL.</p>
+          </article>
+        </div>
+
+        <div class="topic-grid feat-grid">
+          <article class="card feat-card"><span class="feat-tag">Zero setup</span><span class="feat-card-name">Two files, nothing to install</span><span class="feat-card-phrase">One link and one script from a URL. No npm, no build step, never minified, always up to date.</span></article>
+          <article class="card feat-card"><span class="feat-tag">Zero setup</span><span class="feat-card-name">Plain HTML already looks designed</span><span class="feat-card-phrase">Around thirty bare tags are styled before any class: headings, tables, forms, code, focus rings, selection.</span></article>
+          <article class="card feat-card"><span class="feat-tag">Zero setup</span><span class="feat-card-name">Works with JavaScript off</span><span class="feat-card-phrase">Content, layout, links and forms all work without JS. Scripts only add polish on top.</span></article>
+          <article class="card feat-card"><span class="feat-tag">Components</span><span class="feat-card-name">A whole component library</span><span class="feat-card-phrase">Buttons, fields, cards, lists, tables, charts, overlays, navigation, status — live with copy-paste code.</span></article>
+          <article class="card feat-card"><span class="feat-tag">Components</span><span class="feat-card-name">Blocks and whole templates</span><span class="feat-card-phrase">Twenty ready page sections, plus eight full starters: landing, dashboard, social app, deck, documents.</span></article>
+          <article class="card feat-card"><span class="feat-tag">Components</span><span class="feat-card-name">Every state built in</span><span class="feat-card-phrase">Selected, disabled, busy, error, success — one attribute, and loading skins that trace the content's own shape.</span></article>
+          <article class="card feat-card"><span class="feat-tag">App feel</span><span class="feat-card-name">Motion, light, sound and touch</span><span class="feat-card-phrase">Parallax and shine follow the cursor or the phone's tilt; taps click and vibrate like hardware.</span></article>
+          <article class="card feat-card"><span class="feat-tag">App feel</span><span class="feat-card-name">Living backgrounds</span><span class="feat-card-phrase">Faint pattern grids of any glyph you pick, or a fluid field of drifting color.</span></article>
+          <article class="card feat-card"><span class="feat-tag">App feel</span><span class="feat-card-name">Smooth page transitions</span><span class="feat-card-phrase">One attribute and navigation animates — the old page eases away, the new one springs in.</span></article>
+          <article class="card feat-card"><span class="feat-tag">Theming</span><span class="feat-card-name">Eighteen type faces, one per job</span><span class="feat-card-phrase">Headings to barcodes: signature, typewriter, receipt, pixel, hand — plus native faces for four scripts.</span></article>
+          <article class="card feat-card"><span class="feat-tag">Theming</span><span class="feat-card-name">Build your own theme, visually</span><span class="feat-card-phrase">A live builder tunes every token and hands you a paste-ready config; Skin Lab compares all themes at once.</span></article>
+          <article class="card feat-card"><span class="feat-tag">For people</span><span class="feat-card-name">Prints like a document</span><span class="feat-card-phrase">Ink on paper, folds opened, controls stepped aside; one attribute says what belongs on the page.</span></article>
+        </div>
+
+        <ul class="feat-lines">
+          <li><strong>Live library.</strong> Every component runs on its page, and the snippet you copy is the demo itself.</li>
+          <li><strong>AA contrast in every theme,</strong> light and dark, verified — not hoped.</li>
+          <li><strong>Fully keyboard operable</strong> with one clear focus ring everywhere.</li>
+          <li><strong>A serious number input:</strong> digits group as you type and the amount is spelled out in words.</li>
+          <li><strong>Line icons and tooltips on one attribute</strong> — no icon files, no wiring.</li>
+          <li><strong>Themed Google Maps</strong> that wear the active palette.</li>
+          <li><strong>Rough visitor location,</strong> opt-in, with no service to set up.</li>
+          <li><strong>Shareable links keep the look:</strong> theme and mode ride the URL.</li>
+          <li><strong>Headlines scale smoothly</strong> from phone to desktop with no breakpoints.</li>
+          <li><strong>Real scannable barcodes</strong> from plain text, for tickets and invoices.</li>
+        </ul>
+      </section>
+
+      <!-- ==============================
+           What you can count on
+           The principles behind the library.
+           ============================== -->
+      <section id="rules" class="stack home-section">
+        <h2>What you can count on</h2>
+        <p>The promises behind every component — the principles the library holds itself to, so you always know what you are getting.</p>
+        <div class="feat-group">
+          <h3 class="feat-group-name">What you can count on</h3>
+          <div class="topic-grid feat-grid">
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-1" data-tip="Read more"><span class="feat-card-name">The code you ship stays readable</span><span class="feat-card-phrase">No minified soup — the library, and the pages you build with it, stay human-readable.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-2" data-tip="Read more"><span class="feat-card-name">One-glance HTML</span><span class="feat-card-phrase">Semantic tags and self-explanatory class names, so a page reads top to bottom.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-3" data-tip="Read more"><span class="feat-card-name">No wrapper soup</span><span class="feat-card-phrase">A container exists only to do a real job, like scrolling — never decoration.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-4" data-tip="Read more"><span class="feat-card-name">Real controls, always</span><span class="feat-card-phrase">Buttons are buttons, links are links, and every field has a real label.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-5" data-tip="Read more"><span class="feat-card-name">Accessible, SEO-ready and AI-readable</span><span class="feat-card-phrase">Built in from the start, not bolted on later.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-6" data-tip="Read more"><span class="feat-card-name">Battle-tested on iOS</span><span class="feat-card-phrase">The hard-won rules for snap pages, gestures, PWA shells and caching are already baked in.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="bp-7" data-tip="Read more"><span class="feat-card-name">Bring your own analytics</span><span class="feat-card-phrase">Every key action has a stable, named hook — wire any analytics tool in a few lines.</span></button>
+          </div>
+        </div>
+        <dialog class="modal stack topic-modal" id="bp-1"><h3>The code you ship stays readable</h3>
+          <p>Facet exists because modern front-end is often an unreadable pile of machinery. Here the library and the pages you write with it stay clean and legible — that is the whole point.</p>
+          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="bp-2"><h3>One-glance HTML</h3>
+          <p>Structure makes sense on first read: header, nav, main, section, article. You can look at a page and understand it without decoding it.</p>
+          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="bp-3"><h3>No wrapper soup</h3>
+          <p>Facet never nests boxes for the sake of it. An extra container is only there to enable something real, like a scroll area or a sticky region.</p>
+          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="bp-4"><h3>Real controls, always</h3>
+          <p>Every interactive thing is the right HTML element with an accessible name — so it works with the keyboard, with screen readers, and with AI agents, for free.</p>
+          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="bp-5"><h3>Accessible, SEO-ready and AI-readable</h3>
+          <p>Contrast, keyboard support, structured markup and a machine-readable guide are baseline in Facet, so the sites you build inherit them without extra work.</p>
+          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="bp-6"><h3>Battle-tested on iOS</h3>
+          <p>Real app work on iPhone taught some painful lessons — how full-screen pages must scroll, how to tame gestures, what a standalone web app actually needs, and why caching has to be handled just so. Those fixes are built into the library so your app behaves reliably rather than breaking.</p>
+          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
+        </dialog>
+        <dialog class="modal stack topic-modal" id="bp-7"><h3>Bring your own analytics</h3>
+          <p>No tracking vendor is baked in. Instead, important actions carry a documented data-event name, so you can connect whichever analytics tool you use with a short snippet.</p>
+          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
+        </dialog>
+      </section>
+    
+      <hr class="section-rule container-wide" aria-hidden="true">
+
+      <!-- ==============================
+           The old feature wall (archived)
+           The previous exhaustive card wall, kept intact inside a fold
+           until its content is fully absorbed above. Nothing links here.
+           ============================== -->
+      <section id="features-old" class="stack home-section">
+        <details class="home-archive">
+          <summary>The old feature wall — every card, kept for reference</summary>
+          <div class="stack">
+<section id="features-archive" class="stack home-section">
         <h2>Features</h2>
         <p>Everything Facet gives you, grouped by what it is for. Tap any card for the detail. The complete technical inventory also lives in <a href="/llms.txt">llms.txt</a> for AI tools.</p>
         <div class="feat-group">
@@ -242,8 +410,8 @@
           <button type="button" class="card card-clickable feat-card" aria-controls="fx-34" data-tip="Read more"><span class="feat-card-name">Navigation</span><span class="feat-card-phrase">Real tabs, breadcrumbs and pagination — proper ARIA, keyboard-navigable.</span></button>
           <button type="button" class="card card-clickable feat-card" aria-controls="fx-35" data-tip="Read more"><span class="feat-card-name">Data and status</span><span class="feat-card-phrase">Tables, charts, badges, chips, avatars and progress bars.</span></button>
           <button type="button" class="card card-clickable feat-card" aria-controls="fx-36" data-tip="Read more"><span class="feat-card-name">Graceful waiting states</span><span class="feat-card-phrase">Skeletons shaped like your content, a spinner, and honest empty states.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-50" data-tip="Read more"><span class="feat-card-name">A loading skin for live content</span><span class="feat-card-phrase">Mark a card or list busy and everything inside becomes pulsing placeholders tracing its own shape.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-51" data-tip="Read more"><span class="feat-card-name">Every state built in</span><span class="feat-card-phrase">Selected, disabled, loading, error, warning, success — set one attribute and the look follows in every theme.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-52" data-tip="Read more"><span class="feat-card-name">A loading skin for live content</span><span class="feat-card-phrase">Mark a card or list busy and everything inside becomes pulsing placeholders tracing its own shape.</span></button>
+          <button type="button" class="card card-clickable feat-card" aria-controls="fx-53" data-tip="Read more"><span class="feat-card-name">Every state built in</span><span class="feat-card-phrase">Selected, disabled, loading, error, warning, success — set one attribute and the look follows in every theme.</span></button>
           <button type="button" class="card card-clickable feat-card" aria-controls="fx-37" data-tip="Read more"><span class="feat-card-name">Line icons on one attribute</span><span class="feat-card-phrase">A named svg fills itself in, takes the surrounding text color, and needs no files.</span></button>
           <button type="button" class="card card-clickable feat-card" aria-controls="fx-38" data-tip="Read more"><span class="feat-card-name">A description tooltip on one attribute</span><span class="feat-card-phrase">data-tip on anything shows a helpful bubble on hover and on keyboard focus.</span></button>
           <button type="button" class="card card-clickable feat-card" aria-controls="fx-39" data-tip="Read more"><span class="feat-card-name">Parallax, shine and idle motion</span><span class="feat-card-phrase">Elements drift — and catch light — with the pointer, the scroll, or the device tilt; an idle drift keeps it alive.</span></button>
@@ -473,65 +641,20 @@
           <p>Each copy button gives you the real HTML behind the demo you are looking at, generated from the live page so it always matches. You can also copy it as Markdown to paste into an AI prompt.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="fx-50"><h3>A loading skin for live content</h3>
+        <dialog class="modal stack topic-modal" id="fx-52"><h3>A loading skin for live content</h3>
           <p>When a card, list or dashboard is refreshing from a server, mark it busy with one attribute. The text turns into soft pulsing bars that hug its own lines, images flatten to gray, buttons go quiet — and when the data lands, everything comes straight back. No separate skeleton markup to build.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
-        <dialog class="modal stack topic-modal" id="fx-51"><h3>Every state built in</h3>
+        <dialog class="modal stack topic-modal" id="fx-53"><h3>Every state built in</h3>
           <p>Selected cards and rows, disabled buttons and tabs, saving buttons with a spinner, fields that show error, warning or success with a message line — every state is one attribute, styled in every theme, and the accessible semantics come with it because the style rides the attribute itself.</p>
           <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
         </dialog>
         </dialog>
       </section>
-
-      <!-- ==============================
-           What you can count on
-           The principles behind the library.
-           ============================== -->
-      <section id="rules" class="stack home-section">
-        <h2>What you can count on</h2>
-        <p>The promises behind every component — the principles the library holds itself to, so you always know what you are getting.</p>
-        <div class="feat-group">
-          <h3 class="feat-group-name">What you can count on</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-1" data-tip="Read more"><span class="feat-card-name">The code you ship stays readable</span><span class="feat-card-phrase">No minified soup — the library, and the pages you build with it, stay human-readable.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-2" data-tip="Read more"><span class="feat-card-name">One-glance HTML</span><span class="feat-card-phrase">Semantic tags and self-explanatory class names, so a page reads top to bottom.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-3" data-tip="Read more"><span class="feat-card-name">No wrapper soup</span><span class="feat-card-phrase">A container exists only to do a real job, like scrolling — never decoration.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-4" data-tip="Read more"><span class="feat-card-name">Real controls, always</span><span class="feat-card-phrase">Buttons are buttons, links are links, and every field has a real label.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-5" data-tip="Read more"><span class="feat-card-name">Accessible, SEO-ready and AI-readable</span><span class="feat-card-phrase">Built in from the start, not bolted on later.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-6" data-tip="Read more"><span class="feat-card-name">Battle-tested on iOS</span><span class="feat-card-phrase">The hard-won rules for snap pages, gestures, PWA shells and caching are already baked in.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-7" data-tip="Read more"><span class="feat-card-name">Bring your own analytics</span><span class="feat-card-phrase">Every key action has a stable, named hook — wire any analytics tool in a few lines.</span></button>
           </div>
-        </div>
-        <dialog class="modal stack topic-modal" id="bp-1"><h3>The code you ship stays readable</h3>
-          <p>Facet exists because modern front-end is often an unreadable pile of machinery. Here the library and the pages you write with it stay clean and legible — that is the whole point.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-2"><h3>One-glance HTML</h3>
-          <p>Structure makes sense on first read: header, nav, main, section, article. You can look at a page and understand it without decoding it.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-3"><h3>No wrapper soup</h3>
-          <p>Facet never nests boxes for the sake of it. An extra container is only there to enable something real, like a scroll area or a sticky region.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-4"><h3>Real controls, always</h3>
-          <p>Every interactive thing is the right HTML element with an accessible name — so it works with the keyboard, with screen readers, and with AI agents, for free.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-5"><h3>Accessible, SEO-ready and AI-readable</h3>
-          <p>Contrast, keyboard support, structured markup and a machine-readable guide are baseline in Facet, so the sites you build inherit them without extra work.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-6"><h3>Battle-tested on iOS</h3>
-          <p>Real app work on iPhone taught some painful lessons — how full-screen pages must scroll, how to tame gestures, what a standalone web app actually needs, and why caching has to be handled just so. Those fixes are built into the library so your app behaves reliably rather than breaking.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-7"><h3>Bring your own analytics</h3>
-          <p>No tracking vendor is baked in. Instead, important actions carry a documented data-event name, so you can connect whichever analytics tool you use with a short snippet.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
+        </details>
       </section>
+
     </main>
 
     <!-- SITE MENU · the floating utility menu, kept in sync across

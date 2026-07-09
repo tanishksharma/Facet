@@ -874,6 +874,47 @@ function initDevicePreview() {
   }
 }
 
+/* The home hero's typewriter: the app idea in the Tell-your-AI quote
+   types out, holds, deletes, and moves to the next — in the typewriter
+   face, like someone drafting the ask. Reduced motion keeps the first
+   idea, still. */
+function initHeroTypewriter() {
+  const slot = document.querySelector("#hero-idea");
+  if (!slot) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const IDEAS = [
+    "an inflation calculator",
+    "a habit tracker",
+    "a wedding invitation",
+    "a split-the-bill app",
+    "a trip budget planner",
+    "a workout log",
+    "a recipe box for family dishes",
+    "a rent-vs-buy calculator",
+    "a reading list that nags me",
+    "a countdown to launch day",
+  ];
+  let idea = 0;
+  let len = IDEAS[0].length;
+  let deleting = true;
+  const tick = () => {
+    const word = IDEAS[idea];
+    len += deleting ? -1 : 1;
+    slot.textContent = word.slice(0, len);
+    if (deleting && len === 0) {
+      deleting = false;
+      idea = (idea + 1) % IDEAS.length;
+      setTimeout(tick, 400);
+    } else if (!deleting && len === word.length) {
+      deleting = true;
+      setTimeout(tick, 2400);
+    } else {
+      setTimeout(tick, deleting ? 32 : 60 + Math.random() * 55);
+    }
+  };
+  setTimeout(tick, 2200);
+}
+
 /* The Fonts entry: each face card names the actual font the active
    theme resolved for its role — read from the sample's computed stack
    (the first family is the theme's pick) and re-read when the theme or
@@ -1250,6 +1291,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   overlayCodeTools();              // code actions become a corner icon cluster
   initFeedbackDemo();              // the Sound & haptics wall buttons
   initFontNames();                 // the Fonts cards name the resolved face
+  initHeroTypewriter();            // the home hero's cycling app idea
   initBackgroundDemo();            // the Backgrounds entry: variants + knobs
   initDevicePreview();             // Layer 5 templates in scaled device frames
   initStyleMixer();                // build.html: the scoped theme builder
