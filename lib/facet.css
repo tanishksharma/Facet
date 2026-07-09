@@ -3494,7 +3494,7 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
    device tilt where no permission gate blocks it (iOS gates it;
    facet.motion.setMode("tilt") asks), or the engine's idle drift where
    nothing else drives (modes: off | cursor | tilt | idle — in idle the
-   vector sweeps to a fresh point every 3s and eases home, so motion
+   vector travels the rim in one slow continuous circle, so motion
    keeps living on a still desk; gated touch devices land here by
    default). The same engine's light channel drives the shine effect
    (next entry) from the same vector. The idle-* classes (.idle-float,

@@ -241,7 +241,7 @@ condensed operational version that guides build decisions.)*
 - Pure HTML, CSS and JS. No build step, no framework, never minified. Gzip handles size.
 - One-step theme change: one attribute on the html tag restyles the whole page, layout containers included.
 - Everything explained in place: every interactive element carries a description tooltip.
-- Motion by default: gyroscope parallax, shine (a specular light that travels with the device) and idle animations, with reduced motion honoured. (Shipped as the App-feel layer: parallax, shine, idle motion, sound and haptics — one engine, facet.motion, normalises the device movement into a single vector and spends it on two channels: move translates parallax elements, light steers the shine; where no input exists the engine falls back to an idle drift every 3s, or to off.)
+- Motion by default: gyroscope parallax, shine (a specular light that travels with the device) and idle animations, with reduced motion honoured. (Shipped as the App-feel layer: parallax, shine, idle motion, sound and haptics — one engine, facet.motion, normalises the device movement into a single vector and spends it on two channels: move translates parallax elements, light steers the shine; where no input exists the engine falls back to an idle drift that circles the rim in one slow continuous orbit, or to off.)
 - Fully commented: every file self-describes with intros, usage notes and to-dos, so any AI can build products with it.
 - Works without JavaScript. Content, layout, links and forms all work with JS switched off — JavaScript only adds enhancements on top.
 - Accessible, SEO-ready and AI-crawlable by default. Enforced through the compliance checklist, not optional.
