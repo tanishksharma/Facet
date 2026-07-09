@@ -3144,6 +3144,7 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
   border-radius: var(--radius-card);
 }
 .side-index ul { list-style: none; padding: 0; margin: 0 0 var(--space-control); }
+.side-index li + li { margin-top: 0; }   /* an app list, not prose: no flow rhythm between links */
 .side-index a {
   display: block;
   padding: 0.4rem var(--space-inline);
@@ -3170,7 +3171,7 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: var(--weight-strong);
-  color: var(--text-muted);
+  color: var(--text);              /* the category reads bright, its links muted */
   padding: var(--space-tight) var(--space-inline);
 }
 .side-index a.side-index-name:hover { color: var(--text); background: none; }

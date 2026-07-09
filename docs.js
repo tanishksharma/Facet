@@ -367,7 +367,8 @@ function initLibraryPages() {
     const head = document.createElement("header");
     head.className = "stack-tight";
     head.innerHTML = `<p class="layer-page-kicker"></p><h2></h2><p class="layer-page-lead"></p>`;
-    head.querySelector(".layer-page-kicker").textContent = L.kicker;
+    if (L.kicker) head.querySelector(".layer-page-kicker").textContent = L.kicker;
+    else head.querySelector(".layer-page-kicker").remove();
     head.querySelector("h2").textContent = L.title;
     head.querySelector(".layer-page-lead").textContent = L.lead;
     page.append(head);

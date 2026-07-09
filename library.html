@@ -29,10 +29,9 @@
              aria-label="Search the library" data-tip="Type to filter the wall below" data-tip-below>
       <nav aria-label="Sections">
         <a class="nav-overview" href="#intro">Overview</a>
-        <div class="nav-group side-index-group" data-group="layer1"
-             data-page-kicker="Layer 1"
+        <div class="nav-group side-index-group" data-group="tokens"
              data-page-lead="Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed.">
-          <a class="nav-group-name side-index-name" href="#layer1">Tokens &amp; base</a>
+          <a class="nav-group-name side-index-name" href="#cat-tokens">Tokens &amp; base</a>
         <ul>
           <li><a href="#typography">Typography</a></li>
           <li><a href="#fonts">Fonts</a></li>
@@ -44,11 +43,9 @@
           <li><a href="#print">Print &amp; export</a></li>
         </ul>
         </div>
-        <div class="nav-group side-index-group" data-group="layer2"
-             data-page-kicker="Layer 2"
-             data-page-lead="Every reusable piece, live and themed — built from the tokens, grouped by job.">
-          <a class="nav-group-name side-index-name" href="#layer2">Components</a>
-        <p class="nav-sub side-index-sub">Layout primitives</p>
+        <div class="nav-group side-index-group" data-group="layout"
+             data-page-lead="The bones of every page: containers, stacks, rows, grids and the app shells.">
+          <a class="nav-group-name side-index-name" href="#cat-layout">Layout primitives</a>
         <ul>
           <li><a href="#container">Container</a></li>
           <li><a href="#stack">Stack</a></li>
@@ -57,7 +54,10 @@
           <li><a href="#snap-section">Snap section</a></li>
           <li><a href="#view-stack">View stack</a></li>
         </ul>
-        <p class="nav-sub side-index-sub">Forms &amp; controls</p>
+        </div>
+        <div class="nav-group side-index-group" data-group="forms"
+             data-page-lead="Buttons, fields and every control a hand touches.">
+          <a class="nav-group-name side-index-name" href="#cat-forms">Forms &amp; controls</a>
         <ul>
           <li><a href="#button">Button</a></li>
           <li><a href="#icon-button">Icon button</a></li>
@@ -70,7 +70,10 @@
           <li><a href="#slider-detail">Detailed slider</a></li>
           <li><a href="#choice-grid">Choice grid</a></li>
         </ul>
-        <p class="nav-sub side-index-sub">Content &amp; data</p>
+        </div>
+        <div class="nav-group side-index-group" data-group="content"
+             data-page-lead="Cards, lists, tables, charts — the pieces that carry the content.">
+          <a class="nav-group-name side-index-name" href="#cat-content">Content &amp; data</a>
         <ul>
           <li><a href="#card">Card</a></li>
           <li><a href="#list">List</a></li>
@@ -82,29 +85,37 @@
           <li><a href="#icons">Icons</a></li>
           <li><a href="#map">Themed map</a></li>
         </ul>
-        <p class="nav-sub side-index-sub">Overlays &amp; disclosure</p>
+        </div>
+        <div class="nav-group side-index-group" data-group="overlays"
+             data-page-lead="What floats above the page and what folds away.">
+          <a class="nav-group-name side-index-name" href="#cat-overlays">Overlays &amp; disclosure</a>
         <ul>
           <li><a href="#overlays">Modal, drawer, popover</a></li>
           <li><a href="#disclosure">Accordion, toast, dropdown</a></li>
           <li><a href="#tooltip">Tooltip</a></li>
         </ul>
-        <p class="nav-sub side-index-sub">Navigation</p>
+        </div>
+        <div class="nav-group side-index-group" data-group="navigation"
+             data-page-lead="Tabs, breadcrumbs, pagination and links that know where you are.">
+          <a class="nav-group-name side-index-name" href="#cat-navigation">Navigation</a>
         <ul>
           <li><a href="#wayfinding">Tabs, breadcrumb, pagination</a></li>
           <li><a href="#nav-link">Nav link</a></li>
           <li><a href="#flagship-link">Flagship link</a></li>
         </ul>
-        <p class="nav-sub side-index-sub">Status</p>
+        </div>
+        <div class="nav-group side-index-group" data-group="status"
+             data-page-lead="Waiting, loading, empty — every state a screen can wear.">
+          <a class="nav-group-name side-index-name" href="#cat-status">Status</a>
         <ul>
           <li><a href="#waiting">Skeleton, spinner, empty</a></li>
           <li><a href="#loading-skin">Loading skin</a></li>
           <li><a href="#states">Component states</a></li>
         </ul>
         </div>
-        <div class="nav-group side-index-group" data-group="layer3"
-             data-page-kicker="Layer 3"
+        <div class="nav-group side-index-group" data-group="blocks"
              data-page-lead="The components, assembled into ready page sections you copy whole.">
-          <a class="nav-group-name side-index-name" href="#layer3">Blocks</a>
+          <a class="nav-group-name side-index-name" href="#cat-blocks">Blocks</a>
         <ul>
           <li><a href="#block-card-grid">Card grid &amp; row</a></li>
           <li><a href="#block-promo-rail">Promo rail</a></li>
@@ -124,9 +135,8 @@
         </ul>
         </div>
         <div class="nav-group side-index-group" data-group="templates"
-             data-page-kicker="Layer 4"
              data-page-lead="Whole pages — full app and site layouts you rename and fill in.">
-          <a class="nav-group-name side-index-name" href="#layer4">Templates</a>
+          <a class="nav-group-name side-index-name" href="#cat-templates">Templates</a>
         <ul>
           <li><a href="#template-landing">Landing page</a></li>
           <li><a href="#template-saas">SaaS dashboard</a></li>
@@ -134,18 +144,19 @@
           <li><a href="#templates">Every template</a></li>
         </ul>
         </div>
-        <div class="nav-group side-index-group" data-group="appfeel"
-             data-page-kicker="Layer 5"
-             data-page-lead="What makes a finished page feel native: motion, sound, surfaces and the app kit.">
-          <a class="nav-group-name side-index-name" href="#layer5">App feel</a>
-        <p class="nav-sub side-index-sub">Motion &amp; surfaces</p>
+        <div class="nav-group side-index-group" data-group="motionfeel"
+             data-page-lead="Parallax, shine, sound and the living backgrounds.">
+          <a class="nav-group-name side-index-name" href="#cat-motion">Motion &amp; surfaces</a>
         <ul>
           <li><a href="#motion-pack">Parallax &amp; idle</a></li>
           <li><a href="#shine">Shine</a></li>
           <li><a href="#feedback">Sound &amp; haptics</a></li>
           <li><a href="#backgrounds">Backgrounds</a></li>
         </ul>
-        <p class="nav-sub side-index-sub">App kit</p>
+        </div>
+        <div class="nav-group side-index-group" data-group="appkit"
+             data-page-lead="The floating controls and install machinery of an app-shaped page.">
+          <a class="nav-group-name side-index-name" href="#cat-appkit">App kit</a>
         <ul>
           <li><a href="#tab-bar">Tab bar</a></li>
           <li><a href="#sheet">Sheet &amp; menu</a></li>
@@ -153,9 +164,6 @@
           <li><a href="#nav-menu">Nav menu</a></li>
           <li><a href="#translation">Content translation</a></li>
           <li><a href="#scroll-gauge">Scroll gauge</a></li>
-        </ul>
-        <p class="nav-sub side-index-sub">Install</p>
-        <ul>
           <li><a href="#installable">Installable (PWA)</a></li>
         </ul>
         </div>
@@ -165,44 +173,61 @@
     <main id="main" class="stack-loose">
       <!-- ==============================
            Overview
-           The library's front door: what the five layers are, how each
-           composes the one below, and a card into each layer's page.
+           The library's front door: every category as a card, plus the
+           search and the index beside it.
            ============================== -->
       <section id="intro" class="stack">
-        <h1>The library, in five layers</h1>
+        <h1>The component library</h1>
         <p>
-          Everything here is built as five layers, each composed from the
-          one below it: tokens style raw HTML, components are built from
-          tokens, blocks assemble components into page sections, templates
-          assemble blocks into whole pages, and the app-feel layer makes a
-          finished page feel like a native app. Pick a layer to browse its
-          pieces as cards, or jump straight to anything from the index.
+          Everything Facet ships, live: every token, component, block,
+          template and app-feel behaviour, with its exact copy-paste code
+          and the same instructions an AI reads. Pick a category to browse
+          its pieces as cards, or jump straight to anything from the index.
         </p>
         <div class="layer-grid" role="list">
-          <a class="card card-clickable layer-card" href="#layer1" role="listitem">
-            <span class="layer-card-kicker">Layer 1</span>
+          <a class="card card-clickable entry-card" href="#cat-tokens" role="listitem">
             <strong>Tokens &amp; base</strong>
-            <span>Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed.</span>
+            <span class="entry-card-line">Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed.</span>
           </a>
-          <a class="card card-clickable layer-card" href="#layer2" role="listitem">
-            <span class="layer-card-kicker">Layer 2</span>
-            <strong>Components</strong>
-            <span>Every reusable piece, live and themed — built from the tokens, grouped by job.</span>
+          <a class="card card-clickable entry-card" href="#cat-layout" role="listitem">
+            <strong>Layout primitives</strong>
+            <span class="entry-card-line">The bones of every page: containers, stacks, rows, grids and the app shells.</span>
           </a>
-          <a class="card card-clickable layer-card" href="#layer3" role="listitem">
-            <span class="layer-card-kicker">Layer 3</span>
+          <a class="card card-clickable entry-card" href="#cat-forms" role="listitem">
+            <strong>Forms &amp; controls</strong>
+            <span class="entry-card-line">Buttons, fields and every control a hand touches.</span>
+          </a>
+          <a class="card card-clickable entry-card" href="#cat-content" role="listitem">
+            <strong>Content &amp; data</strong>
+            <span class="entry-card-line">Cards, lists, tables, charts — the pieces that carry the content.</span>
+          </a>
+          <a class="card card-clickable entry-card" href="#cat-overlays" role="listitem">
+            <strong>Overlays &amp; disclosure</strong>
+            <span class="entry-card-line">What floats above the page and what folds away.</span>
+          </a>
+          <a class="card card-clickable entry-card" href="#cat-navigation" role="listitem">
+            <strong>Navigation</strong>
+            <span class="entry-card-line">Tabs, breadcrumbs, pagination and links that know where you are.</span>
+          </a>
+          <a class="card card-clickable entry-card" href="#cat-status" role="listitem">
+            <strong>Status</strong>
+            <span class="entry-card-line">Waiting, loading, empty — every state a screen can wear.</span>
+          </a>
+          <a class="card card-clickable entry-card" href="#cat-blocks" role="listitem">
             <strong>Blocks</strong>
-            <span>The components, assembled into ready page sections you copy whole.</span>
+            <span class="entry-card-line">The components, assembled into ready page sections you copy whole.</span>
           </a>
-          <a class="card card-clickable layer-card" href="#layer4" role="listitem">
-            <span class="layer-card-kicker">Layer 4</span>
+          <a class="card card-clickable entry-card" href="#cat-templates" role="listitem">
             <strong>Templates</strong>
-            <span>Whole pages — full app and site layouts you rename and fill in.</span>
+            <span class="entry-card-line">Whole pages — full app and site layouts you rename and fill in.</span>
           </a>
-          <a class="card card-clickable layer-card" href="#layer5" role="listitem">
-            <span class="layer-card-kicker">Layer 5</span>
-            <strong>App feel</strong>
-            <span>What makes a finished page feel native: motion, sound, surfaces and the app kit.</span>
+          <a class="card card-clickable entry-card" href="#cat-motion" role="listitem">
+            <strong>Motion &amp; surfaces</strong>
+            <span class="entry-card-line">Parallax, shine, sound and the living backgrounds.</span>
+          </a>
+          <a class="card card-clickable entry-card" href="#cat-appkit" role="listitem">
+            <strong>App kit</strong>
+            <span class="entry-card-line">The floating controls and install machinery of an app-shaped page.</span>
           </a>
         </div>
       </section>
@@ -704,7 +729,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </section>
 
       <!-- Layout primitives -->
-      <h3 class="wall-group" id="cat-layout">Layout primitives</h3>
+      <h3 class="wall-group">Layout primitives</h3>
 
       <!-- CONTAINER -->
       <article class="element stack" id="container" data-cat="layout">
@@ -916,7 +941,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- Forms &amp; controls -->
-      <h3 class="wall-group" id="cat-forms">Forms &amp; controls</h3>
+      <h3 class="wall-group">Forms &amp; controls</h3>
 
       <!-- BUTTON -->
       <article class="element stack" id="button" data-cat="forms">
@@ -1288,7 +1313,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- Content &amp; data -->
-      <h3 class="wall-group" id="cat-content">Content &amp; data</h3>
+      <h3 class="wall-group">Content &amp; data</h3>
 
       <!-- CARD -->
       <article class="element stack" id="card" data-cat="content">
@@ -1707,7 +1732,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       
 
       <!-- Overlays &amp; disclosure -->
-      <h3 class="wall-group" id="cat-overlays">Overlays &amp; disclosure</h3>
+      <h3 class="wall-group">Overlays &amp; disclosure</h3>
 
       <!-- MODAL + DRAWER + POPOVER -->
       <article class="element stack" id="overlays" data-cat="overlays">
@@ -1831,7 +1856,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- Navigation -->
-      <h3 class="wall-group" id="cat-nav">Navigation</h3>
+      <h3 class="wall-group">Navigation</h3>
 
       <!-- TABS + BREADCRUMB + PAGINATION -->
       <article class="element stack" id="wayfinding" data-cat="nav">
@@ -1923,7 +1948,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- Status -->
-      <h3 class="wall-group" id="cat-status">Status</h3>
+      <h3 class="wall-group">Status</h3>
 
       <!-- SKELETON + SPINNER + EMPTY -->
       <article class="element stack" id="waiting" data-cat="status">
@@ -3213,7 +3238,7 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       </article>
 
       <!-- App kit -->
-      <h3 class="wall-group" id="cat-appkit">App kit</h3>
+      <h3 class="wall-group">App kit</h3>
 
       <!-- TAB BAR -->
       <article class="element stack" id="tab-bar" data-cat="appkit">

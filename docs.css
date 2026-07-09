@@ -78,11 +78,11 @@
 .docs-index { padding: var(--space-card) var(--space-stack); gap: var(--space-inline); }
 .docs-index #wall-search { margin-bottom: var(--space-tight); }
 .docs-index .nav-group { padding-block: var(--space-stack); }
-.docs-index .nav-group:nth-of-type(1) { --group-color: var(--color-1); }
-.docs-index .nav-group:nth-of-type(2) { --group-color: var(--color-2); }
-.docs-index .nav-group:nth-of-type(3) { --group-color: var(--color-3); }
-.docs-index .nav-group:nth-of-type(4) { --group-color: var(--color-4); }
-.docs-index .nav-group:nth-of-type(5) { --group-color: var(--color-5); }
+.docs-index .nav-group:nth-of-type(5n+1) { --group-color: var(--color-1); }
+.docs-index .nav-group:nth-of-type(5n+2) { --group-color: var(--color-2); }
+.docs-index .nav-group:nth-of-type(5n+3) { --group-color: var(--color-3); }
+.docs-index .nav-group:nth-of-type(5n+4) { --group-color: var(--color-4); }
+.docs-index .nav-group:nth-of-type(5n+5) { --group-color: var(--color-5); }
 .docs-index .nav-group-name::before {
   content: "";
   display: inline-block;
@@ -202,13 +202,14 @@ dialog.topic-modal { width: min(92vw, 44rem); }
   grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
   gap: var(--space-card);
 }
-/* The intro's five cards take the five threads in order; the generated
-   layer pages carry theirs as --group-color set by the router. */
-.layer-grid > .layer-card:nth-child(1) { --group-color: var(--color-1); }
-.layer-grid > .layer-card:nth-child(2) { --group-color: var(--color-2); }
-.layer-grid > .layer-card:nth-child(3) { --group-color: var(--color-3); }
-.layer-grid > .layer-card:nth-child(4) { --group-color: var(--color-4); }
-.layer-grid > .layer-card:nth-child(5) { --group-color: var(--color-5); }
+/* The intro's category cards cycle the five threads in sidebar order —
+   the same colors their groups wear; the generated category pages carry
+   theirs as --group-color set by the router. */
+#intro .layer-grid > :nth-child(5n+1) { --group-color: var(--color-1); }
+#intro .layer-grid > :nth-child(5n+2) { --group-color: var(--color-2); }
+#intro .layer-grid > :nth-child(5n+3) { --group-color: var(--color-3); }
+#intro .layer-grid > :nth-child(5n+4) { --group-color: var(--color-4); }
+#intro .layer-grid > :nth-child(5n+5) { --group-color: var(--color-5); }
 .layer-grid-sub {
   grid-column: 1 / -1;
   margin: var(--space-control) 0 0;
