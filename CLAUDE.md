@@ -169,7 +169,7 @@ Adding or changing a component means updating all of these in the **same commit*
 5. `index.html` — a curated Features card ONLY if it is a headline, user-facing capability. The home Features are the human subset, not the exhaustive list; the exhaustive list is `llms.txt`.
 6. The Notion to-do row (All To Dos, Project = Facet) — flip it to Done, and add new rows for anything discovered along the way.
 
-The description text is written once and reused word-for-word in three places: the file comment in `facet.css`/`facet.js`, the `library.html` wall entry, and `llms.txt`.
+The canonical description is written once and reused word-for-word in two homes: the file comment in `facet.css`/`facet.js` and `llms.txt` (each wall entry renders it live in its AI-instructions block). The wall entry's own visible description is separate: one to three plain sentences saying what the piece is, no class names.
 
 When a page is added, renamed or removed, update three places together: this project map, `sitemap.xml`, and the header nav on every page.
 

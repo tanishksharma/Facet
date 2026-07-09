@@ -1794,7 +1794,10 @@ hairlines; .side-index-sub labels caption runs of links; the current
 link marks itself with aria-current="page" or .is-current and reads as
 a filled pill. The panel pins to the viewport — exactly 100dvh minus
 the --space-pin inset top and bottom — and scrolls its own content,
-never the page. What it is for: docs, references, settings
+never the page. When the marked link changes, scroll the panel so that
+link sits at the panel's own middle (links near the ends settle as
+close as the panel allows) — the panel scrolls, never the page. What
+it is for: docs, references, settings
 hubs — any page with one long or paged content column and a persistent
 map beside it. When to use it: put the aside and the content in a
 two-column grid (the grid wrapper is the page's layout job); on narrow

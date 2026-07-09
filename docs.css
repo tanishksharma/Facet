@@ -311,12 +311,12 @@ dialog.topic-modal { width: min(92vw, 44rem); }
    hairline divider under the previous/next row, and the entry's text
    runs the full content column — the reading-measure cap is for prose
    pages, not a reference pane. */
-main.is-entry > article.element:not(.solo-hidden),
+main.is-entry article.element:not(.solo-hidden),
 main.is-entry > section:not(.solo-hidden) {
   border-top: none;
   padding-top: 0;
 }
-main.is-entry > article.element > h3 { font-size: var(--text-h1); line-height: var(--leading-heading); }
+main.is-entry article.element > h3 { font-size: var(--text-h1); line-height: var(--leading-heading); }
 article.element > p { max-width: none; line-height: var(--leading-snug); }
 
 /* AI instructions: the technical half of an entry, addressed to the
@@ -331,7 +331,7 @@ article.element > p { max-width: none; line-height: var(--leading-snug); }
 
 /* On phones an opened entry slides in like a screen of its own. */
 @media (max-width: 56rem) {
-  main.is-entry > article.element:not(.solo-hidden),
+  main.is-entry article.element:not(.solo-hidden),
   main.is-entry > section:not(.solo-hidden) {
     animation: facet-modal-in var(--duration-normal) var(--ease-spring);
   }

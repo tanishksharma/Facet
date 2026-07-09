@@ -539,21 +539,30 @@ function initScrollSpy() {
     // Mark the layer the current section lives in (highlight only).
     const group = best && best.closest(".nav-group");
     if (group) setActiveGroup(group);
-    // Keep where-you-are visible in the sticky sidebar: the active link
-    // when its group is open, otherwise that group's own label. Scroll
-    // only the nav, never the page.
+    // Keep where-you-are centred in the sticky sidebar: whenever the
+    // marked link CHANGES, scroll the panel so that link sits in the
+    // panel's own middle — the panel scrolls, never the page. Links near
+    // the ends settle as close to the middle as the panel allows.
     const keep = best && best.offsetParent !== null
       ? best
       : (group && group.querySelector(".nav-group-name"));
-    if (keep && nav) {
+    if (keep && nav && keep !== centered) {
+      centered = keep;
       const nb = nav.getBoundingClientRect(), bb = keep.getBoundingClientRect();
-      if (bb.top < nb.top) nav.scrollTop += bb.top - nb.top - 8;
-      else if (bb.bottom > nb.bottom) nav.scrollTop += bb.bottom - nb.bottom + 8;
+      const delta = (bb.top + bb.height / 2) - (nb.top + nb.height / 2);
+      if (Math.abs(delta) > 2) nav.scrollTo({
+        top: nav.scrollTop + delta,
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      });
     }
   };
+  let centered = null;
   const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(highlight); } };
   addEventListener("scroll", request, { passive: true });
   addEventListener("resize", request, { passive: true });
+  // Previous/next and any hash link change the visible entry without a
+  // scroll event (the page is already at the top) — re-spy on the change.
+  addEventListener("hashchange", request);
   highlight();
 }
 

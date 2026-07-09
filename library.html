@@ -333,14 +333,7 @@
       <article class="element stack" id="fonts">
         <h3>Fonts</h3>
         <p>
-          Five type families, each chosen for one job and named by role, not
-          by name — so the theme picks the faces and components just ask for
-          "the heading font" or "the number font". The Default theme sets a
-          calligraphic serif for headings, a friendly rounded sans for body,
-          a technical monospace for captions and code, an editorial serif for
-          quotes, and a display serif for big standalone numbers. Every stack
-          ends in a system fallback, so text renders instantly and survives a
-          font failing to load. Switch the theme below and they re-render live.
+          Five type families, one per job: headings, body, code, quotes and big numbers. The theme picks the faces; a page only ever asks for the role. Switch the theme below and the samples re-render.
         </p>
         <p class="chips" role="group" aria-label="Preview theme">
           <button class="chip" data-theme-switch="" data-tip="Default — five roles">Default</button>
@@ -413,14 +406,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="color">
         <h3>Color</h3>
         <p>
-          The base family plus three accent ranks, two modes, shown as the
-          same interface twice. Components never pick colors, they pick
-          ranks: accent-1 is the one primary action on a screen, accent-2
-          fills every secondary action, accent-3 is the quiet interactive
-          color for links, labels and small affordances. Switch themes in
-          the header and both panels re-render in that theme's palette —
-          the attribute that flips a whole page works on any element, which
-          is exactly how these panels are built.
+          The color system: a neutral base plus three accent ranks, shown as the same interface in light and dark. Components pick ranks, never raw colors, so one theme block restyles everything.
         </p>
         <p>
           Beside the ranks sits the vivid palette — five bright decorative
@@ -644,25 +630,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="motion">
         <h3>Motion</h3>
         <p>
-          What it is: the library's motion system — how everything
-          moves, as a system. Two complete motion sets behind one
-          attribute. Lively, the default: momentum, weight and a
-          spring — presses sink and rebound, tooltips and reveals
-          arrive with a settle, thumbs carry momentum. Calm: short,
-          near-linear, slight, for products that should stay subtle. What it
-          is for: every transition in the library reads the motion tokens
-          (<code>--duration-fast/normal/slow</code>,
-          <code>--ease-out</code>, <code>--ease-in-out</code>,
-          <code>--ease-spring</code>), so the motion system applies
-          everywhere at once and no component ever hardcodes an easing.
-          When to use it: nothing to do for Lively. Set
-          <code>data-motion="calm"</code> on the html tag — or
-          <code>facet.set({motion: "calm"})</code> — for the quiet set,
-          <code>data-motion="off"</code> to stop animation entirely. Works
-          on any subtree, like every Facet attribute, and
-          <code>prefers-reduced-motion</code> overrides everything: for
-          those visitors all motion collapses to nothing, whatever the
-          page chose.
+          The motion tokens: two ready-made motion voices — instant and springy — that every component reads. One attribute picks the voice, and reduced motion switches it all off.
         </p>
         <p class="chips" role="group" aria-label="Motion personality">
           <button class="chip" aria-pressed="true" data-config-key="motion" data-config-value="" data-tip="Momentum, weight and spring — the default">Lively</button>
@@ -720,30 +688,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="print">
         <h3 data-status="beta">Print &amp; export</h3>
         <p>
-          What it is: printing as a first-class feature. Three roles
-          name what belongs on paper: <code>data-print="off"</code>
-          (alias <code>.print-hide</code>) never prints — page
-          furniture; <code>"on"</code> (<code>.print-show</code>)
-          always prints, overriding a component that hides by default;
-          <code>"only"</code> (<code>.print-only</code>) prints ONLY —
-          letterheads, "printed from" lines — invisible on screen.
-          Interface controls (navs, the tab bar, float buttons, sheets,
-          toasts, tooltips, gauges) are OFF by default; content is ON —
-          the content IS the paper. The paper stylesheet neutralises
-          every theme to ink on paper, strips shadows and blur, unrolls
-          the app shells so every screen prints in order, keeps
-          headings with their text and avoids tearing cards, rows and
-          figures across sheets. <code>.page-break</code> starts an
-          element on a fresh sheet; <code>.print-urls</code> on
-          <code>&lt;body&gt;</code> writes each external link's URL
-          after it; facet.js opens every <code>&lt;details&gt;</code>
-          while printing; and a button carrying
-          <code>data-print-action="page"</code> prints the page — the
-          Save-as-PDF affordance. What it is for: pages that print
-          cleanly and export to PDF without a print-specific rewrite.
-          When to use it: the defaults cover whole pages already; reach
-          for a role only to override one element. Try the button below
-          on this very page.
+          Printing built in. Mark what belongs on paper and what does not, and every page prints clean: white ground, folds opened, nothing cut in half. A save-as-PDF button is one attribute.
         </p>
         <div class="demo">
           <div class="stack">
@@ -781,16 +726,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="container" data-cat="layout">
         <h3 data-status="stable">Container</h3>
         <p>
-          What it is: a page-width wrapper with themed padding. It centers
-          content, caps its width, and keeps consistent side padding from the
-          spacing tokens. What it is for: giving every page the same
-          horizontal rhythm, driven by tokens, so a theme flip restyles the
-          layout too, not just the components inside it. When to use it: put
-          it directly on the top-level semantic tag of any ordinary page —
-          main, header, footer, section. Use .container-narrow for prose,
-          forms and calculators, .container for most pages, .container-wide
-          for dashboards, .container-full for edge-to-edge strips that keep
-          side padding. Never nest a container inside a container.
+          The page-width wrapper. It centers the content, caps how wide it grows, and keeps the side padding even on every screen.
         </p>
         <p class="chips" role="group" aria-label="Container widths">
           <button class="chip" aria-pressed="false" data-chip-group="width" data-chip-class="container-narrow">Narrow</button>
@@ -809,14 +745,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="stack" data-cat="layout">
         <h3 data-status="stable">Stack</h3>
         <p>
-          What it is: vertical flow with themed gaps. A stack says one thing:
-          these sit above and below each other, this far apart. What it is
-          for: spacing content without per-element margins. The gaps come
-          from the spacing tokens, so a theme change restyles the rhythm of
-          the whole page. When to use it: .stack is the default for content
-          inside a section. Use .stack-tight for lines that belong together,
-          like a label and its field. Use .stack-loose between whole sections
-          of a page.
+          Puts blocks one above the other with an even, themed gap. The default way to space a column of anything.
         </p>
         <p class="chips" role="group" aria-label="Stack gaps">
           <button class="chip" aria-pressed="false" data-chip-group="gap" data-chip-class="stack-tight">Tight</button>
@@ -838,14 +767,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="row" data-cat="layout">
         <h3 data-status="stable">Row</h3>
         <p>
-          What it is: things side by side that wrap when they run out
-          of room, with the gap owned by the row. What it is for:
-          button rows, chip sets, meta lines, any run of small pieces.
-          When to use it: whenever things sit beside each other — the
-          row owns the gap, so children stay margin-free, exactly like
-          the stack owns vertical rhythm. Variants:
-          <code>.row-tight</code> for close runs,
-          <code>.row-loose</code> for looser spacing.
+          Puts things side by side with an even gap, wrapping onto new lines when the room runs out.
         </p>
         <p class="chips" role="group" aria-label="Row gaps">
           <button class="chip" aria-pressed="false" data-chip-group="rowgap" data-chip-class="row-tight">Tight</button>
@@ -868,14 +790,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="grid" data-cat="layout">
         <h3 data-status="stable">Grid</h3>
         <p>
-          What it is: an auto-fitting column grid — as many columns as
-          fit, each at least a card wide, collapsing to one on phones
-          with no breakpoints written. What it is for: card grids,
-          feature grids, galleries, dashboards. When to use it: any
-          set of same-shaped pieces; the grid decides the count, the
-          content decides the size. Variants: <code>.grid-wide</code>
-          for bigger cards, <code>.grid-tight</code> and
-          <code>.grid-loose</code> for gap.
+          A grid of equal columns — as many as fit the screen, one on phones, with no breakpoints to write.
         </p>
         <p class="chips" role="group" aria-label="Grid variants">
           <button class="chip" aria-pressed="true" data-chip-group="gridvar" data-chip-class="grid">Default</button>
@@ -897,23 +812,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="snap-section" data-cat="layout">
         <h3 data-status="stable">Snap section</h3>
         <p>
-          What it is: full-viewport scroll-snap areas. The .snap wrapper
-          scrolls one full screen at a time and each .snap-section centers
-          its content at a readable width. What it is for: the calculator
-          page skeleton — intro screen, then inputs, then results — and any
-          page that tells one story one screen at a time. When to use it:
-          single-purpose pages with a clear screen-by-screen flow. Not for
-          ordinary documents; normal pages just scroll. The .snap wrapper
-          exists to enable scrolling, which is the one reason the wrapper law
-          allows a container inside a container. When facet.js upgrades a
-          full-viewport <code>.snap</code> to the pager (<code>.is-paged</code>),
-          each section gets generous top and bottom room plus clearance so its
-          centered content never falls behind the fixed nav-menu on a short
-          screen, and a hairline divider marks every section boundary — landing
-          exactly at the viewport's bottom edge as each section snaps. On a real
-          page the wrapper is <code>&lt;main class="snap"&gt;</code> and each
-          section fills the viewport; here it is shrunk into a frame — scroll
-          inside it.
+          Full-screen sections that snap one screen at a time as you scroll — the feel of a modern product page, built to work on iPhone.
         </p>
         <div class="demo">
           <div class="snap">
@@ -939,32 +838,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="view-stack" data-cat="layout">
         <h3 data-status="beta">View stack</h3>
         <p>
-          What it is: the app shell for apps with real screens — a
-          <code>&lt;main class="view-stack"&gt;</code> of
-          <code>.view</code> sections where exactly one shows at a
-          time, each scrolling on its own, content centered by auto
-          margins when short. Navigation is plain hash links: any
-          <code>&lt;a href="#result"&gt;</code> switches views,
-          <code>facet.views.go(id)</code> and <code>.back()</code> do
-          it from code, the URL always names the screen, and the
-          browser's own Back walks the trail. Every view pads itself
-          clear of the Dynamic Island (safe-area top) and of the home
-          bar plus the nav menu (safe-area bottom + clearance); opt a
-          view out with <code>.bleed-top</code>. What it is for:
-          screen-to-screen apps — home → question → result →
-          leaderboard — where the paged <code>.snap</code> shell (one
-          long page you page through) is the wrong shape. When to use
-          it: one view-stack per page, as the page's
-          <code>&lt;main&gt;</code>, one <code>.view</code> per screen
-          with a real id. facet.js upgrades it (<code>.is-stacked</code>,
-          like .snap → .is-paged): the page locks to the viewport and
-          one view shows. With JS off the screens simply stack in
-          reading order and the links jump between them — everything
-          stays crawlable. Views keep their scroll positions while
-          hidden, so Back returns exactly where the visitor left. The
-          demo below is the un-upgraded flow (the upgrade takes the
-          whole page's <code>&lt;main&gt;</code>); on a real page each
-          view fills the viewport.
+          The app shell. Each section is a screen, one shows at a time, and plain links move between them — with the browser's back button working.
         </p>
         <div class="demo">
           <div class="view-stack" style="border: var(--border-hairline) solid var(--border); border-radius: var(--radius-panel);">
@@ -993,15 +867,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="button" data-cat="forms">
         <h3 data-status="stable">Button</h3>
         <p>
-          What it is: the action element, in three variants and three sizes,
-          working identically on <code>&lt;button&gt;</code> and on
-          <code>&lt;a&gt;</code>. What it is for: .btn-primary carries the
-          screen's one main action in the accent color. .btn-secondary is
-          every other action. .btn-ghost is for quiet actions inside busy
-          areas, invisible until hovered. When to use it: any click that does
-          something. One primary per screen at most. Navigation dressed as a
-          button is an <code>&lt;a class="btn"&gt;</code>. Put the button's
-          key action name in a data-event attribute as the analytics hook.
+          The action element: three variants and three sizes for primary, secondary and quiet actions. Works identically as a button or a link.
         </p>
         <p class="chips" role="group" aria-label="Button variants, sizes and states">
           <button class="chip" aria-pressed="true" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
@@ -1023,15 +889,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="icon-button" data-cat="forms">
         <h3 data-status="stable">Icon button</h3>
         <p>
-          What it is: a square button holding a single icon. What it is for:
-          compact actions whose meaning the icon plus its tooltip carries —
-          the clear cross in a number field, a close button, a share arrow.
-          When to use it: when space is tight and the action is secondary.
-          The icon alone says nothing, so every icon button carries an
-          aria-label for screen readers and a data-tip tooltip for everyone
-          else. Combines with any button variant and size. Icons are inline
-          SVG with stroke="currentColor" so they take the button's text color
-          in every theme.
+          A square button holding one icon — for compact actions whose meaning the icon and its tooltip carry.
         </p>
         <p class="chips" role="group" aria-label="Icon button variants, sizes and states">
           <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
@@ -1055,17 +913,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="choice-controls" data-cat="forms">
         <h3 data-status="stable">Switch, checkbox, radio</h3>
         <p>
-          What it is: the yes/no and pick-one controls — native
-          checkbox and radio wearing the theme through
-          <code>accent-color</code>, and a switch that is a checkbox
-          upgraded with one class. What it is for: settings, consents,
-          filters — checkbox for independent yes/nos, radio for
-          one-of-few with all options visible, switch for a setting
-          that takes effect immediately. When to use it: wrap control
-          and text in a <code>label.check-row</code> so the whole line
-          is the hit target. The switch keeps checkbox semantics —
-          form value, keyboard, screen readers — the class only
-          changes the clothes.
+          Switches, checkboxes and radios — the native controls wearing the theme, with nothing custom to break.
         </p>
         <div class="demo">
           <div class="stack-tight">
@@ -1084,20 +932,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="stepper" data-cat="forms">
         <h3 data-status="stable">Stepper &amp; segmented control</h3>
         <p>
-          What it is: a quantity control — a real number input between
-          two step buttons in one pill — and a segmented control, a
-          pill of options where exactly one is pressed in, radios
-          underneath. What it is for: the stepper for counts and small
-          adjustments (guests, quantity, years) where typing is
-          overkill; the segmented control for switching between 2–5
-          views or ranges of the same thing. When to use it: stepper
-          for ranges of a few dozen at most (beyond that, the number
-          input); segmented for choices that change what is shown —
-          not settings that act (the switch) and not navigation (the
-          tab bar). The stepper's buttons call the input's own
-          stepUp/stepDown, so min, max and step rule; the segmented
-          control's radios keep arrows, form value and announcements
-          native.
+          A count with minus and plus buttons, and a segmented control for flipping between a few views of the same thing.
         </p>
         <div class="demo">
           <div class="row">
@@ -1121,20 +956,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="fields" data-cat="forms">
         <h3 data-status="stable">Fields: input, textarea, select, search</h3>
         <p>
-          What it is: the labelled field family — one pattern
-          (<code>label.field</code> &gt; <code>.field-label</code> +
-          control + <code>.field-hint</code>) wrapped around every kind
-          of control: text input, textarea, select (with a
-          token-colored chevron, no image files), and a capsule search
-          field. What it is for: every form. The label is real, so
-          clicking it focuses the control and readers announce it; the
-          hint sits under the control; for validation set
-          <code>data-status="error|warning|success"</code> on the
-          field and swap the hint for a <code>.field-msg</code> line
-          (<code>.field-invalid</code> + <code>.field-error</code>
-          stay as aliases — see <a href="#states">Component
-          states</a>). When to use it: any time a control needs a
-          name — which is always.
+          Labelled inputs — text, dropdown, search and more — in one pattern with hints and error lines built in.
         </p>
         <div class="demo">
           <div class="grid">
@@ -1171,16 +993,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="file-date" data-cat="forms">
         <h3 data-status="stable">File upload &amp; date input</h3>
         <p>
-          What it is: the native file and date controls, themed and
-          kept native — the file input's button dresses as a secondary
-          action while drag-drop, keyboard and the form value stay the
-          browser's; the date input keeps its native picker with the
-          accent coloring its highlight and <code>color-scheme</code>
-          flipping it in dark mode. What it is for: uploads and date
-          entry without rebuilding what the platform already does
-          best. When to use it: always these before any custom
-          uploader or calendar — wrap them in the same
-          <code>label.field</code> pattern as every other control.
+          The file picker and the date input, themed but kept native, so the browser's own dialogs do the work.
         </p>
         <div class="demo">
           <div class="grid">
@@ -1204,24 +1017,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="number-input" data-cat="forms">
         <h3 data-status="stable">Number input</h3>
         <p>
-          What it is: a labelled field wrapping the calculator-grade number
-          input, with a clear button inside the field and a words helper
-          under it. What it is for: money and other large numbers, entered
-          the way the visitor says them. The input ships prefilled with an
-          example value, clears fully on the first tap — and never again
-          once the visitor has typed — groups digits for the locale as they
-          are typed (25,00,000 where lakh and crore are the norm, 2,500,000
-          elsewhere), and reads the number back in words underneath, in the
-          active language: 25 lakh, 2.5 million, 25 लाख. The locale follows
-          facet.location and the browser, overridable with
-          data-numbers="indian|western"; the language with data-language.
-          All behaviours come from facet.js the moment the input carries
-          data-number. When to use it: every numeric entry in a calculator.
-          The field shows grouped text; read the plain number in app code by
-          stripping separators — parseFloat(input.value.replace(/[^0-9.]/g, "")).
-          For the error state, set data-status="error" on the field and swap
-          the hint for a .field-msg line (.field-invalid + .field-error stay
-          as aliases).
+          A money-grade number field: digits group as you type, the amount is spelled out in words underneath, and a clear button empties it in one tap.
         </p>
         <p class="chips" role="group" aria-label="Number input states and locale">
           <button class="chip" aria-pressed="true" data-chip-class="" data-chip-group="state">Normal</button>
@@ -1253,15 +1049,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="slider" data-cat="forms">
         <h3 data-status="stable">Slider</h3>
         <p>
-          What it is: a real range input wearing the theme — hairline track,
-          accent-3 thumb — paired with a live value readout. What it is for:
-          picking a number inside a known range where the feel of
-          more-and-less matters more than exact digits: years, percentages,
-          counts. When to use it: bounded inputs with sensible ends. When the
-          exact number matters, pair it with or swap it for the number input.
-          Put an <code>&lt;output&gt;</code> in the field label and facet.js
-          keeps it showing the live value. Full keyboard support comes free
-          with the native element.
+          A range slider with its live value beside it — for small bounded choices you drag to.
         </p>
         <p class="chips" role="group" aria-label="Slider states">
           <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="input">Disabled</button>
@@ -1292,16 +1080,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="slider-detail" data-cat="forms">
         <h3 data-status="stable">Detailed slider</h3>
         <p>
-          What it is: a slider for a wide range, paired with a precise entry.
-          The track drags fast in coarse jumps (<code>data-coarse</code>) so
-          you cross a big span in one swipe; the −/+ steppers and the number
-          box reach the exact value between the jumps (<code>data-fine</code>).
-          All three stay in sync. What it is for: values with many gradations
-          where you want both speed and precision — a price, a duration, a
-          token in pixels. When to use it: ranges too wide for a plain slider
-          to land precisely; for a small bounded range the plain slider is
-          enough. facet.js wires it and fires a bubbling
-          <code>facet:slide</code> with the value.
+          A slider for wide ranges: drag fast across the whole span, then land the exact value with the steppers or the number box.
         </p>
         <div class="demo">
           <label class="field">
@@ -1324,16 +1103,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="choice-grid" data-cat="forms">
         <h3 data-status="beta">Choice grid</h3>
         <p>
-          What it is: a grid of small square choice buttons — a symbol
-          above a tiny caption, five per row on phones. What it is for: one
-          exclusive pick from up to about ten options where the choices are
-          compact and symbolic — currencies, units, categories;
-          aria-pressed carries the state and facet.js keeps the pick
-          exclusive. When to use it: any single pick too wide for a
-          segmented control; shipped as the inflation app's ten-currency
-          picker. State changes ease — selection must never jump. Velvet:
-          unselected options sit flat in carved wells, the selected one
-          stands proud with its symbol in gold.
+          A grid of small picture buttons — a symbol above a tiny caption — for picking one of a few options at a glance.
         </p>
         <div class="demo">
           <div class="choice-grid" role="group" aria-label="Currency">
@@ -1365,24 +1135,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="card" data-cat="content">
         <h3 data-status="stable">Card</h3>
         <p>
-          What it is: the grouped-surface primitive — a padded,
-          rounded panel raised slightly above the page. What it is for: one
-          thing per card: a product, a stat, a setting group, a
-          summary. When to use it: <code>.card</code> for most
-          grouping; <code>.card-outlined</code> when many cards sit
-          close and shadows would pile up; a clickable card is an
-          <code>&lt;a class="card card-clickable"&gt;</code> — the
-          whole surface is the link, it lifts on hover and presses on
-          click. Never put more than one primary action inside a card
-          that is itself clickable. The same primitive carries specialised
-          jobs, each one modifier on <code>.card</code>:
-          <code>.card-feature</code> displays a feature (icon badge,
-          heading, line); <code>.card-option</code> is a selectable choice
-          for quizzes and pickers (a real <code>&lt;label&gt;</code> around
-          a radio or checkbox — lights the whole card when chosen, works
-          with JavaScript off); <code>.card-inline</code> is a compact
-          horizontal item for rich list rows. Velvet raises cards out of
-          the fabric; Elegant carves them in; Aero glosses them.
+          The grouped surface: a padded, rounded panel that lifts content above the page. The building block of most layouts.
         </p>
         <div class="demo">
           <div class="grid">
@@ -1435,33 +1188,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="list" data-cat="content">
         <h3 data-status="stable">List</h3>
         <p>
-          What it is: a list of rows — each with an optional leading icon or
-          avatar, a title, an optional description line under it, and an
-          optional trailing value or action. What it is for: settings, menus,
-          feeds, search results, contact and file lists — any repeated row of
-          items. When to use it: <code>.list</code> for rows on the page
-          separated by hairlines; wrap the same markup in
-          <code>.list-boxed</code> for a bordered card list. A row is one line
-          (icon + title + trailing) or two (add <code>.list-desc</code>, which
-          top-aligns the icon on its own). Make a row actionable by writing it
-          as <code>&lt;a class="list-item" href&gt;</code> or
-          <code>&lt;button class="list-item"&gt;</code> — it fills on hover,
-          presses on click, and is a real keyboard-operable control (put a
-          chevron in <code>.list-trail</code> to signal it). Every look is a
-          composition of the same slots, never a new component: leave out
-          <code>.list-icon</code> for a plain text row; put an avatar image
-          in <code>.list-icon</code> for a person; put a <code>.badge</code>
-          in <code>.list-trail</code> for a status; on a static
-          <code>&lt;li&gt;</code> row, put a real button in
-          <code>.list-trail</code> (a <code>.btn-icon.btn-small</code> with
-          an aria-label) for a dismiss or per-row action — never inside an
-          <code>&lt;a&gt;</code> or <code>&lt;button&gt;</code> row, where a
-          nested control is invalid HTML. Rows are always
-          direct children of <code>.list</code>, so a <code>&lt;ul&gt;</code>
-          takes <code>&lt;li class="list-item"&gt;</code> and a clickable list
-          is a <code>&lt;nav&gt;</code> of <code>&lt;a class="list-item"&gt;</code>.
-          Reuses the neutral ramp and type tokens, so it needs no tokens of
-          its own and restyles with every theme.
+          Rows with a leading icon or picture, a title, and a trailing value or action — the workhorse of feeds, settings and results.
         </p>
         <div class="demo">
           <ul class="list list-boxed">
@@ -1525,14 +1252,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="table" data-cat="content">
         <h3 data-status="stable">Table</h3>
         <p>
-          What it is: the data table — muted header row, zebra
-          striping, a hover that names the row you are reading, and
-          right-aligned tabular numbers via <code>.num</code>. What it
-          is for: real records: transactions, users, line items. When
-          to use it: data with columns; lists of things with one field
-          go in list markup instead. Wrap wide tables in
-          <code>.table-scroll</code> — a wrapper the wrapper law
-          allows because it enables horizontal scrolling on phones.
+          The data table: quiet header, striped rows, and a hover that names the row you are reading. For records, not layout.
         </p>
         <div class="demo">
           <div class="table-scroll">
@@ -1557,21 +1277,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="chart" data-cat="content">
         <h3 data-status="beta">Chart</h3>
         <p>
-          What it is: a line chart drawn by
-          <code>facet.chart(el, {points})</code> — data line in
-          accent-1 (2.5px, dashed for projected spans), dots ringed in
-          the page background, grid on the border token, axis text
-          muted, event markers as faint dashed verticals labelled in a
-          reserved band above the plot, and a crosshair you drag to
-          read values, dropped on pointer lift. What it is for: one
-          series over time: prices, balances, rates. When to use it:
-          whenever the shape of the story matters more than the table
-          of numbers — keep the table nearby for the numbers. The SVG
-          draws at about one unit per rendered pixel so type reads
-          true; every color is a token, so themes — velvet's gold
-          included — restyle a live chart with no redraw. The surface
-          is <code>touch-action: none</code>: dragging reads values,
-          never scrolls.
+          A themed line chart drawn from a list of points — with labels, event markers and an optional dashed projection.
         </p>
         <div class="demo">
           <div class="chart-card">
@@ -1586,20 +1292,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="small-talkers" data-cat="content">
         <h3 data-status="stable">Badge, chip, avatar, progress</h3>
         <p>
-          What it is: four tiny signals. The badge is a status word in
-          a tinted pill (kinds success / warning / error / info via a
-          class). The chip is a small toggleable pill button —
-          <code>aria-pressed</code> carries its state, the quiet
-          accent fills it when on; it is the exact chip this site's
-          own controls use, promoted by extraction. The avatar is a
-          round face: an image, or initials on the quiet fill.
-          Progress is the native <code>&lt;progress&gt;</code> themed
-          — accent-1 fill on a quiet track. What it is for: statuses
-          on rows and cards; filter picks; people; completeness. When
-          to use it: badges state, they never act; chips toggle; an
-          avatar always carries the person's name in alt or
-          aria-label; determinate progress needs value and max, with
-          words nearby for readers.
+          Four tiny signals: the badge for a status word, the chip for a filter, the avatar for a person, the progress bar for a share of done.
         </p>
         <div class="demo">
           <div class="stack">
@@ -1633,24 +1326,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="icon-badge" data-cat="content">
         <h3 data-status="beta">Icon badge</h3>
         <p>
-          What it is: a round status dot pinned to an app icon's
-          top-right corner — a 1.25rem plasticine bead, its top edge
-          lit and its underside softly shaded, wearing a hairline ring
-          of the page background so it pops off any icon, carrying one
-          glyph and no text (the word lives in title/aria-label). One
-          attribute sets the tone and glyph:
-          <code>data-status="new"</code> (info blue, sparkle),
-          <code>"updated"</code> (success green, refresh arrow),
-          <code>"wip"</code> (warning amber, wrench). What it is for:
-          marking apps in a launcher grid or a featured card as new,
-          freshly updated, or in the works. When to use it: only on
-          icons 3.5rem and larger; smaller list-row icons take an
-          inline version chip instead. Which status an app gets is the
-          app's own decision — the library ships only the visual. Wrap
-          the icon in an <code>.icon-badge-holder</code> (the
-          positioning context; it also takes <code>data-shine</code>,
-          sized and rounded to the icon) and put the badge beside the
-          img inside it.
+          A small glossy status dot pinned to an app icon's corner — numbers, ticks or alerts, like a home-screen badge.
         </p>
         <div class="demo">
           <p class="row" style="max-width: none; gap: var(--space-stack);">
@@ -1676,15 +1352,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="result-block" data-cat="content">
         <h3 data-status="stable">Result block</h3>
         <p>
-          What it is: a verdict-first result card: one plain-language
-          sentence a person can repeat at dinner, one big number, then the
-          supporting figures. What it is for: the centrepiece of a results
-          screen — readable at a glance, and announced by screen readers on
-          every recalculation when the block carries aria-live="polite".
-          When to use it: whenever a calculation produces one headline
-          answer. Leave out the figures list when there is nothing to support
-          the verdict. For the empty state before any input, show a muted
-          verdict line alone.
+          The answer card: one plain sentence a person can repeat, with the number large underneath. For calculators and verdicts.
         </p>
         <p class="chips" role="group" aria-label="Result block variants">
           <button class="chip" aria-pressed="true" data-chip-show="#result-full">Full</button>
@@ -1717,22 +1385,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="icons" data-cat="content">
         <h3 data-status="stable">Icons</h3>
         <p>
-          What it is: the icon set — 24×24 line glyphs at a 1.5px
-          stroke with round caps, carried as markup inside facet.js:
-          no image files, no sprite fetch, nothing to host. What it is
-          for: every small symbol a product needs. When to use it:
-          write <code>&lt;svg data-icon="search"&gt;&lt;/svg&gt;</code>
-          and facet.js fills it; icons ride <code>currentColor</code>
-          and scale with the text around them. In running text add
-          <code>.glyph</code> — it makes the svg sit in the sentence
-          like a character (inline-block, sized to the line,
-          baseline-aligned) instead of breaking the line, because the
-          base media rule makes every svg a block. Decorative by default
-          (<code>aria-hidden</code>); give the svg an
-          <code>aria-label</code> to make it meaningful. Extend the
-          set in one line: <code>facet.icons.rocket = '&lt;path
-          d="..."/&gt;'</code> then <code>facet.icon()</code>. Click
-          any glyph below to copy its markup.
+          The icon set: thin line glyphs you place with one attribute and color with the text color. About sixty ship, and you can add your own.
         </p>
         <div class="demo">
           <div class="grid" id="icon-gallery" style="--bg-cell: 0;"></div>
@@ -1748,24 +1401,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="map" data-cat="content">
         <h3 data-status="alpha">Themed map</h3>
         <p>
-          What it is: a Google Map wearing the active theme — ground,
-          water, parks and roads derived from the base family, labels
-          from the text family, boundaries from the quiet accent,
-          recomputed live when the theme or mode switches. What it is
-          for: maps that belong to the product instead of arriving in
-          Google's own colors. When to use it: any embedded map. Bring
-          your own key (like the analytics rule — the library never
-          ships one): put <code>data-map</code> on a div, the key in
-          <code>data-map-key</code> (or <code>data-maps-key</code> on
-          the facet.js script tag), optional <code>data-lat</code> /
-          <code>data-lng</code> / <code>data-zoom</code>. Without a
-          key, or offline, the div stays the quiet themed placeholder
-          you see below — never a broken embed.
-          <code>facet.mapStyle()</code> returns the styles array for
-          anything else. Styles derive from tokens by formula, never
-          hand-tuned per theme, so every future theme gets its map for
-          free. This page carries no key on purpose: the placeholder
-          IS the honest no-key state.
+          A Google Map wearing the active theme, so the map matches the page in every theme, light and dark.
         </p>
         <div class="demo">
           <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12" data-tip="Wears whatever theme this page is in"></div>
@@ -1784,20 +1420,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="overlays" data-cat="overlays">
         <h3 data-status="stable">Modal, drawer, popover</h3>
         <p>
-          What it is: overlays built on the platform's own machinery —
-          modal and drawer are <code>&lt;dialog&gt;</code> (focus
-          trap, Esc, inert page for free), popover is the
-          <code>popover</code> attribute (top layer, light dismiss, no
-          JS at all). What it is for: modal for a decision that blocks
-          the page; drawer for a side panel of details or filters;
-          popover for small floating bits — hints, mini menus. When to
-          use it: open a dialog from any button whose
-          <code>aria-controls</code> names it — facet.js calls
-          showModal; close with a <code>form method="dialog"</code>
-          button inside, Esc, or a backdrop click. Popovers need only
-          <code>popovertarget</code> on the button. The app-kit sheet
-          stays the settings panel for app pages; the drawer is the
-          document-world sibling.
+          Modal, drawer and popover, built on the platform's own dialog machinery — focus, Escape and the backdrop come free.
         </p>
         <div class="demo">
           <div class="row">
@@ -1832,21 +1455,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="disclosure" data-cat="overlays">
         <h3 data-status="stable">Accordion, toast, dropdown menu</h3>
         <p>
-          What it is: three small talkers — the accordion is native
-          <code>&lt;details class="accordion"&gt;</code> dressed
-          (hairline rows, rotating chevron; give siblings the same
-          <code>name</code> and the browser keeps exactly one open);
-          the toast is <code>facet.toast(message, kind)</code> — a
-          transient pill that says one thing and leaves on its own,
-          announced politely to readers; the dropdown is
-          <code>details.dropdown</code> whose summary wears button
-          clothes and whose menu holds real buttons and links, closed
-          by outside clicks, Esc, or picking an item. What it is for:
-          skippable depth (accordion), outcomes that need no reply
-          (toast), and two-to-seven secondary actions behind one
-          trigger (dropdown). When to use it: never a toast for a
-          question — that is a dialog; never a dropdown for navigation
-          — those are links.
+          The accordion for folding content, the toast for a passing notice, and the dropdown menu for a few actions behind a button.
         </p>
         <div class="demo">
           <div class="stack">
@@ -1881,15 +1490,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="tooltip" data-cat="overlays">
         <h3 data-status="stable">Description tooltip</h3>
         <p>
-          What it is: a one-attribute explanation bubble: put data-tip on any
-          element and the text appears above it on hover and on keyboard
-          focus. Pure CSS, no JS involved. What it is for: explaining every
-          interactive element in place — one of the library's core
-          principles. The description doubles as documentation anyone can
-          read by pointing at the thing. When to use it: every interactive
-          element ships with one. Add data-tip-below on elements near the top
-          of the viewport so the bubble drops under them instead of clipping
-          off the screen.
+          A one-attribute explanation bubble: put the text on any element and it appears above it on hover or focus.
         </p>
         <p class="chips" role="group" aria-label="Tooltip position">
           <button class="chip" aria-pressed="false" data-chip-attr="data-tip-below">Flip below</button>
@@ -1908,17 +1509,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="wayfinding" data-cat="nav">
         <h3 data-status="stable">Tabs, breadcrumb, pagination</h3>
         <p>
-          What it is: the wayfinding trio. Tabs are real ARIA tabs
-          (click or arrow keys; the accent underline marks the active
-          one; facet.js wires panels) for two-to-five in-page views of
-          the same subject. The breadcrumb is the path to here — links
-          with quiet separators, the current page unlinked and marked
-          <code>aria-current</code> — for hierarchies three levels
-          deep or more. Pagination is numbered page links in 44px
-          squares, current page filled in accent-1, every page a real
-          URL. When to use which: tabs switch views in place; the tab
-          bar navigates an app; the segmented control is a form value;
-          breadcrumb and pagination are links — never buttons.
+          Tabs for switching views, the breadcrumb for where you are, pagination for long lists — the wayfinding trio.
         </p>
         <div class="demo">
           <div class="stack">
@@ -1952,15 +1543,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="nav-link" data-cat="nav">
         <h3 data-status="stable">Nav link</h3>
         <p>
-          What it is: the navigation link with its three states
-          designed — quiet by default, named on hover, plainly marked
-          when it is the page you are on
-          (<code>aria-current="page"</code>). What it is for: headers,
-          sidebars, footers — anywhere a set of destinations lives.
-          When to use it: every navigational link in navigation and
-          controls. In content, plain underlined links stay the rule;
-          <code>.nav-link</code> is for wayfinding surfaces where
-          underlines would pile up.
+          The navigation link with three designed states: quiet at rest, named on hover, marked when it is the current page.
         </p>
         <div class="demo">
           <nav class="row-tight" aria-label="Example">
@@ -1977,14 +1560,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="flagship-link" data-cat="nav">
         <h3 data-status="stable">Flagship link</h3>
         <p>
-          What it is: the prominent link — heading voice, a strong
-          accent underline, and an arrow that shifts forward
-          on hover. What it is for: the one onward step at the end of
-          a section: "See the full report", "Start a project". When to
-          use it: at most one or two per screen; ordinary references
-          stay plain underlined links. It is always an
-          <code>&lt;a&gt;</code> to a real URL — never a button styled
-          to look like one.
+          The prominent link: heading-sized, a strong underline, and an arrow that leans in on hover. One per section at most.
         </p>
         <div class="demo">
           <a class="flagship-link" href="#flagship-link" data-tip="The arrow shifts forward on hover">See the full report</a>
@@ -2000,17 +1576,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="waiting" data-cat="status">
         <h3 data-status="stable">Skeleton, spinner, empty state</h3>
         <p>
-          What it is: the three honest ways to show absence. The
-          skeleton is a shimmering placeholder shaped like the content
-          it stands in for — put <code>.skeleton</code> on sized
-          blocks. The spinner is a small accent ring for work with no
-          known shape or length; give it <code>role="status"</code>
-          and words. The empty state is a dashed quiet zone that says
-          what would be here and offers the one action that fills it.
-          When to use it: skeletons over spinners whenever the shape
-          is known; always pair a spinner with text — under reduced
-          motion the ring stands still and the words do the talking;
-          an empty state is content, not an error.
+          The three honest ways to show absence: a skeleton while loading, a spinner while working, an empty state when there is nothing.
         </p>
         <div class="demo">
           <div class="grid">
@@ -2037,25 +1603,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="loading-skin" data-cat="status">
         <h3 data-status="stable">Loading skin</h3>
         <p>
-          What it is: the page-refresh loading state. Put
-          <code>aria-busy="true"</code> on any component or region
-          whose content is being fetched and everything inside turns
-          into quiet pulsing placeholders that trace the shapes
-          already there: text becomes soft bars hugging its own lines,
-          images and icons flatten to gray, controls go quiet and
-          inert. Remove the attribute and the content is back —
-          nothing was replaced, only skinned. What it is for:
-          refreshing live data over a page that has already rendered —
-          lists, cards, dashboards. When to use it: keep the stale
-          content (or placeholder text) in place and skin it, instead
-          of swapping markup for hand-built <code>.skeleton</code>
-          blocks; <code>.skeleton</code> stays for first paint when no
-          content exists yet. <code>facet.busy(el, true|false)</code>
-          does the same and upgrades the bars to per-line pills that
-          hug real text; put <code>data-static</code> on anything
-          inside that is not live data (a section heading, a label) to
-          leave it readable. Under
-          <code>prefers-reduced-motion</code> the pulse stands still.
+          The loading state: mark any region busy and its content turns into pulsing placeholders shaped like itself, then comes back.
         </p>
         <div class="demo">
           <div class="grid">
@@ -2081,25 +1629,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="states" data-cat="status">
         <h3 data-status="stable">Component states</h3>
         <p>
-          What it is: the library's state system. Every component
-          state is carried one of three ways, never by an invented
-          class: a native pseudo-class where the platform has one
-          (<code>:disabled</code>, <code>:checked</code>,
-          <code>:indeterminate</code>, <code>:user-invalid</code>); an
-          ARIA attribute where a real semantic exists
-          (<code>aria-pressed</code>, <code>aria-selected</code>,
-          <code>aria-current</code>, <code>aria-expanded</code>,
-          <code>aria-busy</code>, <code>aria-invalid</code>,
-          <code>aria-disabled</code>) — the CSS styles the attribute
-          itself, so looks and accessibility can never drift apart;
-          and <code>data-status="success|warning|error|info"</code>
-          for statuses with no ARIA home (fields, cards, rows). What
-          it is for: selected cards and rows, disabled anything, field
-          validation in three colors, working buttons. When to use it:
-          set the attribute and the look follows, in every theme,
-          light and dark. The older hooks (<code>.field-invalid</code>,
-          the toast's <code>data-kind</code>) stay as permanent
-          aliases.
+          The state system: hover, focus, disabled, selected, busy and status, carried the same three ways on every component.
         </p>
         <div class="demo">
           <div class="stack">
@@ -2180,10 +1710,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-card-grid">
         <h3 data-status="stable">Grid of cards</h3>
         <p>
-          What it is: cards in the auto-fitting grid — as many columns
-          as fit, one on phones, no breakpoints. What it is for: any
-          set of same-shaped things. When to use it: the default way
-          to lay out more than two cards.
+          Cards laid out in the auto-fitting grid — as many columns as fit, one on phones, no breakpoints to write.
         </p>
         <div class="demo">
           <div class="grid">
@@ -2200,11 +1727,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-card-row">
         <h3 data-status="stable">Horizontal card row</h3>
         <p>
-          What it is: cards that scroll sideways with momentum and a
-          gentle per-card snap — proximity snap is safe here; the
-          pager law is about full-page sections. What it is for:
-          browsable shelves: recents, suggestions, categories. When to
-          use it: when the list is long but the screen is not.
+          Cards that scroll sideways with momentum and a gentle snap — a shelf of content on any screen.
         </p>
         <div class="demo">
           <div class="card-row" data-tip="Scroll me sideways">
@@ -2223,21 +1746,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-promo-rail">
         <h3 data-status="beta">Promo rail</h3>
         <p>
-          What it is: the promo rail — a full-bleed carousel of wide feature
-          cards, each washed with a different vivid-palette tint, snapping
-          card by card with the next card peeking in from the edge. What it
-          is for: featured content at the top of a launcher or home screen:
-          announcements, highlights, seasonal picks. When to use it: two to
-          six promos; a single promo is just a card. Each card is one real
-          <code>&lt;a&gt;</code> — a <code>.promo-kicker</code> (small icon
-          and muted name), a <code>.promo-line</code> in the heading face,
-          and a <code>.promo-cta</code> with an arrow. The rail's negative
-          side margins mirror the container's responsive padding exactly
-          (space-stack, then space-page from 640px) — change one and you
-          change both, or the page grows a sideways scrollbar. Tints cycle
-          through the vivid palette by position, mixed into the surface so
-          they stay soft in light and dark; the scrollbar hides and the
-          whole card is the tap target.
+          A full-bleed carousel of wide feature cards, each washed in its own tint, gliding sideways with a snap.
         </p>
         <div class="demo">
           <div class="promo-scroll" aria-label="Featured" data-tip="Scroll me sideways — cards snap one by one">
@@ -2276,12 +1785,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-filter-list">
         <h3 data-status="stable">Filterable card list</h3>
         <p>
-          What it is: a search field over a list — the input carries
-          <code>data-filter</code> pointing at the container and
-          facet.js live-hides children that do not match. The markup
-          is the data. What it is for: lists a reader scans by name:
-          projects, contacts, settings. When to use it: from about ten
-          items up.
+          A search field over a list: type and the rows that do not match disappear, live.
         </p>
         <div class="demo">
           <div class="stack">
@@ -2304,11 +1808,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-list-cards">
         <h3 data-status="stable">List cards</h3>
         <p>
-          What it is: stacked full-width rows — an outlined card per
-          record with the fields in a row inside. What it is for:
-          records that read left to right: name, meta, amount, action.
-          When to use it: when each row carries more than a table cell
-          should, but less than a full card grid deserves.
+          Full-width outlined rows, one card per record, with the fields side by side inside.
         </p>
         <div class="demo">
           <div class="stack-tight">
@@ -2332,11 +1832,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-product-grid">
         <h3 data-status="stable">Product grid</h3>
         <p>
-          What it is: clickable cards of image, title, price, action —
-          the whole card is the link, the action is the one button.
-          What it is for: shop shelves and catalogues. When to use it:
-          anything bought or picked. The image slot is a quiet
-          background box until a real image fills it.
+          Product cards — image, name, price, action — where the whole card is the link.
         </p>
         <div class="demo">
           <div class="grid">
@@ -2360,10 +1856,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-product-detail">
         <h3 data-status="stable">Product detail</h3>
         <p>
-          What it is: gallery beside the info panel — image column and
-          a stack of name, price, chooser and the one primary action.
-          What it is for: the page one product gets. When to use it:
-          after a product grid click. On phones the columns stack.
+          The product page pair: a gallery on one side, with the name, price, options and buy action stacked beside it.
         </p>
         <div class="demo">
           <div class="grid grid-wide">
@@ -2389,11 +1882,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-cart">
         <h3 data-status="stable">Cart line items</h3>
         <p>
-          What it is: the order as honest rows — item, stepper for
-          quantity, line total — with the totals block closing it.
-          What it is for: carts and order summaries. When to use it:
-          any purchase review. The verdict line (the grand total) is
-          the biggest thing on it, per the result-block rule.
+          The order as rows — item, quantity stepper, line total — with the totals and checkout in a card beside it.
         </p>
         <div class="demo">
           <div class="stack-tight">
@@ -2421,22 +1910,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-top-menu">
         <h3 data-status="stable">Full top menu</h3>
         <p>
-          What it is: the site header — wordmark, nav links, actions.
-          On phones the header stays ONE line — wordmark left, a native
-          details "Menu" disclosure right (give its summary
-          <code>.when-closed</code>/<code>.when-open</code> labels so
-          Menu becomes Close). Opening does not float a card: the page
-          behind gradually darkens and blurs, the header's own surface
-          extends downward — its bottom border rides the reveal — and
-          the links arrive one by one. No JS, no hamburger framework;
-          the scrim, the wipe and the stagger are progressive
-          enhancement on a plain <code>&lt;details&gt;</code>. Row
-          actions (a direct-child button like Sign up)
-          hide on phones — author a copy of them inside the fold's
-          links, the same way the links themselves are authored twice.
-          What it is for: every site's first
-          row. When to use it: pages, not installed apps (apps get the
-          tab bar). Resize this page to see the fold.
+          The site header: wordmark, links and one action. On phones it stays one line and the links open under a darkening blur.
         </p>
         <div class="demo">
           <header class="top-menu">
@@ -2469,11 +1943,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-sidebar-nav">
         <h3 data-status="stable">Sidebar navigation</h3>
         <p>
-          What it is: sectioned nav-link groups in an aside — exactly
-          the pattern this page's own index uses. What it is for: app
-          and docs shells with more destinations than a top row holds.
-          When to use it: three sections or more; fewer fit the top
-          menu.
+          Grouped navigation links in a side column — the pattern this page's own index uses.
         </p>
         <div class="demo">
           <aside style="max-width: 16rem;">
@@ -2495,25 +1965,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-side-index">
         <h3 data-status="beta">Side index</h3>
         <p>
-          What it is: the index panel this site's own library page uses
-          — a sticky aside on a surface fill with a hairline and
-          rounded corners, holding grouped link lists. Each
-          <code>.side-index-group</code> opens with an uppercase name
-          (make it an <code>&lt;a&gt;</code> to link the group's own
-          page); groups divide with hairlines;
-          <code>.side-index-sub</code> labels caption runs of links;
-          the current link marks itself with
-          <code>aria-current="page"</code> or <code>.is-current</code>
-          and reads as a filled pill. The panel pins to the viewport —
-          exactly 100dvh minus the <code>--space-pin</code> inset top and
-          bottom — and scrolls its own content, never the page. What it is for:
-          docs, references, settings hubs — any page with one long or
-          paged content column and a persistent map beside it. When to
-          use it: put the aside and the content in a two-column grid
-          (the grid wrapper is the page's layout job); on narrow
-          screens stack it or hide the groups and keep a search box.
-          Promoted by extraction from this docs chrome — the panel on
-          your left IS this block.
+          The pinned index beside long content: a search box and grouped links, with the current item marked and kept centred as you move. This page's left menu is this block.
         </p>
         <div class="demo">
           <aside class="side-index" style="position: static; height: auto; max-height: 22rem; max-width: 17rem;" aria-label="Example index">
@@ -2544,9 +1996,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-footer">
         <h3 data-status="stable">Footer</h3>
         <p>
-          What it is: link columns over a legal row. What it is for:
-          the bottom of every site page. When to use it: always —
-          a page that ends abruptly reads as broken.
+          Link columns over a legal row — the bottom of every site page.
         </p>
         <div class="demo">
           <footer class="stack">
@@ -2567,10 +2017,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-hero">
         <h3 data-status="stable">Hero</h3>
         <p>
-          What it is: the opening statement — display type, one line
-          under it, one primary action (and at most one quiet second).
-          What it is for: the top of a landing page. When to use it:
-          once. A page has one hero the way a screen has one primary.
+          The opening statement: display type, one line under it, one primary action.
         </p>
         <div class="demo">
           <div class="hero bg-grid" style="padding-inline: var(--space-card); border-radius: var(--radius-panel);">
@@ -2588,10 +2035,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-feature-grid">
         <h3 data-status="stable">Feature grid</h3>
         <p>
-          What it is: icon, claim, one sentence — repeated in the
-          auto-fitting grid. What it is for: the "what you get"
-          section of a landing page. When to use it: three to six
-          features; more belong in docs.
+          Icon, claim, one sentence — repeated in the auto-fitting grid. The what-you-get section.
         </p>
         <div class="demo">
           <div class="grid">
@@ -2608,12 +2052,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-pricing">
         <h3 data-status="stable">Pricing table</h3>
         <p>
-          What it is: plan cards side by side — name, price, the
-          differences as a short list, one action each; the
-          recommended plan carries the page's one primary. What it is
-          for: choosing a plan without a spreadsheet. When to use it:
-          two or three plans. More than three is a decision problem,
-          not a layout problem.
+          Plan cards side by side — name, price, the differences, one action each — with the recommended plan lifted.
         </p>
         <div class="demo">
           <div class="grid">
@@ -2639,11 +2078,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-faq">
         <h3 data-status="stable">FAQ list</h3>
         <p>
-          What it is: accordions with a shared <code>name</code> — the
-          browser keeps one answer open, no JS. What it is for: the
-          questions people actually ask, at the bottom of a landing or
-          checkout page. When to use it: five to ten questions; more
-          means the page above failed to explain.
+          Questions as accordions that keep one answer open at a time, with no JS.
         </p>
         <div class="demo">
           <div>
@@ -2659,10 +2094,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-cta">
         <h3 data-status="stable">CTA band</h3>
         <p>
-          What it is: the closing ask — an ink-filled strip that flips
-          to the on-accent voice, one line and one button. What it is
-          for: the end of a landing page, after the case is made. When
-          to use it: once, last.
+          The closing ask: an ink-filled strip with one line and one button.
         </p>
         <div class="demo">
           <div class="cta-band">
@@ -2678,11 +2110,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-social-proof">
         <h3 data-status="stable">Logo row &amp; testimonial</h3>
         <p>
-          What it is: the proof pair — a muted row of names that trust
-          you, and one quote with a face and a name. What it is for:
-          landing pages between the hero and the features. When to use
-          it: only with real logos and real quotes; invented proof
-          reads as invented.
+          A muted row of logos and one quote with a face and a name — the proof pair.
         </p>
         <div class="demo">
           <div class="stack">
@@ -2706,11 +2134,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-data-table">
         <h3 data-status="stable">Data table with toolbar</h3>
         <p>
-          What it is: search, filter chips and actions in a row above
-          the data table — the search input filters rows live via
-          <code>data-filter</code>. What it is for: the working screen
-          of any records app. When to use it: whenever a table grows
-          past one screenful.
+          Search, filter chips and actions in a row above the data table — the working screen of a records app.
         </p>
         <div class="demo">
           <div class="stack">
@@ -2739,10 +2163,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-stat-row">
         <h3 data-status="stable">Stat row</h3>
         <p>
-          What it is: KPI cards — one number that matters with its
-          label under it, tabular digits, in the grid. What it is for:
-          the top of a dashboard. When to use it: three or four
-          numbers; a wall of KPIs is a report, not a dashboard.
+          KPI cards: one number that matters with its label under it, in the auto-fitting grid.
         </p>
         <div class="demo">
           <div class="grid">
@@ -2758,21 +2179,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="app-grid">
         <h3 data-status="beta">App grid</h3>
         <p>
-          What it is: a home-screen launcher — an auto-fill grid of app
-          tiles, each tile one real link: a rounded-square icon, the
-          app's name, a one-line caption, and an optional metric line.
-          What it is for: the front door of a suite of mini apps, a
-          portal, a directory of tools — many small destinations
-          presented as equals. When to use it: when the destinations
-          are apps rather than content — content belongs in the card
-          grid or the list. The grid packs as many tile columns as
-          fit, still two across on a phone, with no breakpoints
-          written. A tile is an <code>&lt;a class="app-tile"&gt;</code>:
-          the whole tile is the hit target, it fills on hover and
-          carries the keyboard focus ring. Put an open count or any
-          live number in <code>.app-count</code> — tabular digits so
-          tiles line up. Reuses the neutral ramp and type tokens, so
-          it restyles with every theme.
+          A home-screen launcher: a grid of app tiles, each one a real link with a rounded icon and a label.
         </p>
         <div class="demo">
           <nav class="app-grid" aria-label="Apps">
@@ -2809,20 +2216,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-app-identity">
         <h3 data-status="beta">App identity</h3>
         <p>
-          What it is: the identity header of an app's about page — a
-          centered rounded-square icon, the app's name, a muted
-          one-line phrase, and an optional badge row;
-          <code>.app-identity-stats</code> centers a row of
-          <code>.stat</code> blocks under it. What it is for: the
-          App-Store-style front matter of an about, release-notes or
-          install page — which app this is, at a glance, before any
-          detail. When to use it: once, at the top of the page, with
-          the name as the page's one h1. The icon wears a hairline
-          border so light icons keep an edge on light surfaces. Pairs
-          with the stat row — opens, version, size — numbers first,
-          prose after. (The demo below substitutes
-          <code>.text-h1</code> for the <code>&lt;h1&gt;</code> — the
-          Library page already has its one h1.)
+          An app's identity header: the centered icon, name and one-line purpose, with the version details in rows below.
         </p>
         <div class="demo">
           <div class="stack">
@@ -2847,10 +2241,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-settings">
         <h3 data-status="stable">Settings section</h3>
         <p>
-          What it is: labelled rows with their controls — switches,
-          selects, steppers — in a quiet stack under a section
-          caption. What it is for: preference screens. When to use it:
-          every setting a product has, in one predictable shape.
+          Settings rows — a label with its switch, select or stepper — in a quiet stack under a group heading.
         </p>
         <div class="demo">
           <div class="stack-tight" style="max-width: 26rem;">
@@ -2871,11 +2262,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-form">
         <h3 data-status="stable">Form section</h3>
         <p>
-          What it is: grouped fields with one submit row — a fieldset
-          per group, the primary action last and alone. What it is
-          for: anything the reader fills in. When to use it: always
-          this shape; forms that scatter their buttons scatter their
-          completion rates.
+          Grouped fields with one submit row: a fieldset per group, the primary action last.
         </p>
         <div class="demo">
           <form class="stack" style="max-width: 26rem;" onsubmit="return false">
@@ -2902,13 +2289,7 @@ blockquote  { font-family: var(--font-quote); }
       <article class="element stack" id="block-article">
         <h3 data-status="stable">Article header, prose, media</h3>
         <p>
-          What it is: the editorial set — a header of title, byline
-          and meta; long-form prose that is just semantic tags on the
-          narrow container (the base styles are the design); a media
-          figure with its caption attached; and the pull quote for the
-          sentence worth stealing. What it is for: articles, guides,
-          changelogs. When to use it: any page someone reads top to
-          bottom.
+          The editorial set: title, byline and meta over long-form semantic text, with the article structured-data slot.
         </p>
         <div class="demo">
           <article class="stack" style="max-width: 44rem;">
@@ -3068,28 +2449,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="motion-pack">
         <h3 data-status="beta">Parallax &amp; idle motion</h3>
         <p>
-          What it is: subtle motion by default.
-          <code>data-parallax="depth"</code> lets an element drift up
-          to that many pixels behind the pointer on desktop, behind
-          the scroll's momentum everywhere, behind the device's
-          tilt where no permission gate blocks it, and behind the
-          engine's own idle drift where nothing else drives —
-          <code>facet.motion</code> is the engine
-          (register/setMode/cycle; off | cursor | tilt | idle; its
-          light channel drives the shine effect below from the same
-          vector). In idle mode the vector sweeps to a fresh point
-          every three seconds and eases home, so motion keeps living
-          on a still desk. The
-          <code>idle-*</code> classes give key elements a resting
-          pulse: a slow float, a faint sway, a soft pulsing scale.
-          What it is for: heroes, illustrations, decorative cards —
-          movement at the edges, never on the reading path. When to use
-          it: sparingly; one or two moving things per screen. The
-          idle classes animate translate/rotate/scale, so they
-          compose with the engine's transform instead of colliding —
-          the parallax exclusion, solved structurally. Calm stills
-          idle motion; off and reduced motion still everything. Move
-          your pointer over this page and watch the cards below.
+          Parallax and idle drift: elements shift gently with the cursor or the phone's tilt, and sweep on their own when nothing moves.
         </p>
         <div class="demo">
           <div class="grid">
@@ -3115,33 +2475,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="shine">
         <h3 data-status="beta">Shine</h3>
         <p>
-          What it is: the shine effect — a specular light on any
-          element with visual depth, the way iOS icons catch light.
-          <code>data-shine</code> lays a soft light spot plus a rim
-          over the element: a bright edge toward the light, a soft
-          shade away from it. <code>facet.motion</code>'s light
-          channel writes the light's direction
-          (<code>--shine-x</code> / <code>--shine-y</code>, each
-          -1..1) from the device tilt, the cursor, or the idle drift —
-          the same normalised vector that drives parallax, so the
-          element that translates and the light that sweeps across it
-          always agree on which way the device is leaning. With JS
-          off, or motion off, the light rests centred above. What it
-          is for: app icons, hero cards, any raised or 3D-feeling
-          piece that should catch light as the device moves. When to
-          use it: on the element that carries the depth; the overlay
-          is a <code>.shine</code> child span facet.js injects for
-          you (the pseudo-elements stay free for the tooltip; add the
-          span yourself for a static resting shine with JS off), it
-          inherits the element's border-radius, and images need a
-          wrapper because an <code>&lt;img&gt;</code> cannot hold a
-          child — the <code>.icon-badge-holder</code> doubles as one
-          (give the wrapper the icon's radius). Unlike parallax, shine writes no
-          transform — only custom properties — so the parallax
-          exclusion does not apply; it composes with velvet
-          lift/press, the pager, and <code>data-parallax</code>
-          itself. <code>--shine</code> (0..1, default 0.5) tunes the
-          strength. Move your pointer and watch the light travel.
+          A specular light that travels across an element as the device moves — the way app icons catch light. One attribute.
         </p>
         <div class="demo">
           <div class="grid">
@@ -3163,23 +2497,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="feedback">
         <h3 data-status="stable">Sound &amp; haptics</h3>
         <p>
-          What it is: synthesized UI sound and vibration with no audio
-          files — <code>facet.feedback</code> plays short Web Audio blips
-          (tap, tick, snap, toggle, success) and fires
-          <code>navigator.vibrate</code> haptics, both ON by default. What
-          it is for: the physical feel of an app — a tick as a stepper
-          bumps, a soft snap as a pager settles, a tap under every control.
-          When to use it: any app-shaped product; leave it on and it wires
-          itself to the components. There is almost no HTML to write: the
-          user's switches are the settings sheet's Sounds and Haptics
-          toggles (<code>data-control="sounds"</code> /
-          <code>"haptics"</code>, self-wired), and the components already
-          call it. To fire it yourself:
-          <code>facet.feedback.tap()</code> / <code>.tick()</code> /
-          <code>.snap()</code> / <code>.success()</code>; mute a channel
-          with <code>facet.feedback.sound.enabled = false</code> or
-          <code>.haptic.enabled = false</code>. Reduced-motion and a muted
-          switch silence it.
+          UI sound and vibration with no audio files: a tap under buttons, a tick on steppers, a snap when a pager lands.
         </p>
         <div class="demo">
           <p class="row">
@@ -3197,14 +2515,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="backgrounds">
         <h3 data-status="beta">Backgrounds</h3>
         <p>
-          Very faint materials for big quiet surfaces — a hero, a
-          section divider zone, a whole page. Two variants: GRID
-          repeats a symbol — plus marks, dots, graph paper, or your own
-          icon, emoji or characters — and FLUID breathes soft
-          out-of-focus color pools and drifting bubbles in the theme's
-          own colors. On either, text placed straight on the surface
-          stays readable: the pattern behind the words blurs and fades
-          into a soft halo.
+          Very faint materials for big quiet surfaces. Two variants: Grid draws a repeating pattern or your own glyph; Fluid drifts soft color like light through glass.
         </p>
 
         <p class="chips variant-row" role="group" aria-label="Variant">
@@ -3319,20 +2630,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="tab-bar" data-cat="appkit">
         <h3 data-status="beta">Tab bar</h3>
         <p>
-          What it is: the iOS-style bottom pill — text segments, a hairline
-          divider, a trailing settings button — with one injected .tab-indicator pill
-          moving behind the active segment on per-edge analytic springs:
-          the leading edge leads with momentum, the trailing edge lags so
-          the pill stretches, and both settle with a small fixed overshoot
-          whatever the jump length. What it is for: section navigation in
-          app-shaped pages; it wires itself to the page's snap pager
-          ([data-section] segments page there, and the pager's moves slide
-          the pill back behind a one-second nav lock so pass-through
-          sections stay quiet) and its settings button opens the sheet it
-          aria-controls. When to use it: any snap-paged product. On a real
-          page it floats fixed above the bottom edge; here it sits in the
-          flow. Frosted and embossed in the base theme; a tuned translucent
-          well with a raised pill under Velvet.
+          The bottom tab bar: a floating pill of sections with a sliding indicator that stretches as it moves.
         </p>
         <div class="demo">
           <nav class="tab-bar" aria-label="Sections">
@@ -3354,19 +2652,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="sheet" data-cat="appkit">
         <h3 data-status="beta">Sheet &amp; menu</h3>
         <p>
-          What it is: the settings panel — a right-edge slab floating clear
-          of the screen over a dark scrim, sliding in as one rigid block on
-          a spring that overshoots slightly and eases back;
-          inside it, menu groups of thin rows (.menu-item under a
-          .menu-label) and a foot row of square icon toggles
-          (.menu-icon-btn) whose ON state stands raised while OFF sinks
-          into a darker well. What it is for: navigation, actions and
-          app-level controls behind one trigger — any button that
-          aria-controls the sheet opens it; scrim tap and Esc close; the
-          trigger's aria-expanded is managed. When to use it: every
-          app-shaped product's settings. Press a row: it sinks INTO the
-          panel with a true bevel, never a dark smear. State changes ease —
-          toggles must never jump.
+          The settings sheet: a panel that slides in over a dark scrim, holding menu rows and setting toggles.
         </p>
         <div class="demo">
           <button type="button" class="btn" aria-controls="demo-sheet" aria-expanded="false"
@@ -3402,17 +2688,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="float-button" data-cat="appkit">
         <h3 data-status="beta">Float button</h3>
         <p>
-          What it is: a lone floating round button pinned to the bottom-left
-          of the page — the tab bar's trailing icon without the bar. What
-          it is for: pages that need the settings sheet (or any panel) but
-          not section navigation: give it aria-controls pointing at a
-          .sheet and facet.js wires the open/close, the aria-expanded state
-          and the press feedback exactly like the tab bar's settings button. When to
-          use it: whenever a page has one floating action; .float-btn-right
-          pins it bottom-right instead. Always an aria-label and a
-          data-tip: the icon alone says nothing. On a real page it floats
-          fixed; here it sits in the flow — this one opens the sheet from
-          the entry above.
+          A lone round button floating at the page's corner — the home for one global action, like opening the menu.
         </p>
         <div class="demo">
           <button class="float-btn" aria-controls="demo-sheet" aria-expanded="false"
@@ -3428,44 +2704,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="nav-menu" data-cat="appkit">
         <h3 data-status="beta">Nav menu</h3>
         <p>
-          What it is: a floating navigation cluster pinned bottom-left — a
-          "Menu" pill that opens a stack of page links, and a same-size
-          round Settings button beside it that opens a stack of setting
-          toggles. Both stacks rise above their own trigger; opening one
-          closes the other, and neither trigger moves when a stack opens.
-          Every link and the Menu pill are the base
-          <code>.btn.btn-pill</code> (the Settings button is
-          <code>.btn-pill.btn-icon</code>, canonical icon
-          <code>data-icon="sliders"</code>); each setting is a
-          <code>.btn.btn-pill.nav-set</code> whose on/off state shows in the
-          pill itself: the pill stays solid in both states and only the
-          trailing <code>.menu-value</code> chip changes (filled accent = on,
-          outlined muted = off). What it is for: whole-site navigation on any Facet
-          page, plus the app's own settings — theme, appearance, motion,
-          sound, haptics, language — behind two thumb-reachable floating
-          controls. When to use it: the primary nav for a content site or
-          app. The Menu is a real <code>&lt;details&gt;</code> wrapping real
-          <code>&lt;a&gt;</code> links, so it works with JavaScript off — the
-          summary opens the links inline — and the links sit in the DOM for
-          crawlers and AI. Every item is one line, left-aligned, sized to its
-          own content and capped near 300px; wrap the label in
-          <code>.nav-label</code> and a long one truncates with an ellipsis
-          while the icon and any trailing <code>.menu-value</code> stay whole.
-          facet.js upgrades both stacks to a floating overlay: a dimming
-          scrim, body scroll-lock, a staggered reveal, Escape to close, and
-          focus moved into the open stack and back. The setting pills self-wire
-          through <code>data-control</code> (<code>theme</code> cycles
-          Default/Velvet/Aero/Elegant; <code>appearance</code> is the separate
-          Light/Dark/Auto and the two compose) and
-          <code>data-language-cycle</code>. Clicking a nav link or action
-          closes the panel; a <code>.nav-set</code> toggle leaves it open so
-          several settings can be changed in a row. Reduced motion drops the
-          stagger. Add <code>.nav-menu-right</code> to anchor the cluster
-          bottom-right with right-aligned stacks (left stays the default);
-          an optional <code>.nav-menu-back</code> round pill — a real link
-          with a chevron-left — sits on the cluster's outer edge, in the
-          canonical order [back] [Menu] [settings]. On a real page it floats
-          fixed bottom-left or bottom-right; here it sits in the flow.
+          The floating site menu: a Menu pill that opens a stack of links, with a settings button beside it.
         </p>
         <div class="demo">
           <nav class="nav-menu" aria-label="Site" data-print="off">
@@ -3537,22 +2776,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="translation" data-cat="appkit">
         <h3 data-status="beta">Content translation</h3>
         <p>
-          What it is: the same <code>data-language</code> switch that
-          translates the library's own strings, extended to the page's own
-          content. What it is for: a multilingual page that stays one HTML
-          file — you write each translated variant inline instead of
-          maintaining parallel pages. When to use it: any content you want
-          offered in more than one language. Mark the natural container
-          <code>data-i18n</code> and give it one child per language, each
-          tagged <code>data-lang="xx"</code>; the active language's variant
-          shows and the rest hide. Author the default-language variant plain
-          and the others <code>hidden</code>, so with JavaScript off exactly
-          one language shows — the page stays readable and crawlable — and
-          this only switches which. Switch with a
-          <code>data-language-switch="xx"</code> button or a single
-          <code>data-language-cycle</code> button; the choice rides the URL
-          (<code>?language=</code>) so a shared link opens in the same
-          tongue. It re-localises the whole page live, this demo included.
+          Content in more than one language: author each variant in the markup and one button flips the page.
         </p>
         <div class="demo">
           <p data-i18n style="font-size: var(--text-h4); font-weight: var(--weight-strong);">
@@ -3577,16 +2801,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="scroll-gauge" data-cat="appkit">
         <h3 data-status="beta">Scroll gauge</h3>
         <p>
-          What it is: a pill thumb inset in an embossed groove beside a
-          scroller — thumb height is the visible share of the content,
-          position is progress, and overscroll momentum slides it out of
-          the groove where the clip swallows it. What it is for: a themed,
-          unobtrusive scrollbar look-alike for panels and whole pages;
-          facet.scrollGauge(scroller) injects it, a metric option reports
-          composite scrolls (the pager's sections laid end to end), and
-          onScrub makes the lane a drag handle. When to use it: sheets and
-          app pages where the native scrollbar is hidden. Auto-hides when
-          nothing overflows. Scroll the box:
+          A slim themed scroll thumb beside a panel — it shows your place where the native scrollbar is hidden.
         </p>
         <div class="demo">
           <div class="demo-scroller stack" data-tip="Scroll me and watch the groove">
@@ -3610,16 +2825,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="installable">
         <h3>Installable (PWA)</h3>
         <p>
-          What it is: the setup that turns any Facet page into an installable,
-          offline-capable app. What it is for: products you want on a phone's
-          home screen — opening full-screen, working offline. When to use it:
-          any app-shaped page. Facet ships the caching engine
-          (<code>/lib/facet-sw.js</code>) plus a working reference set —
-          <code>/sw.js</code>, <code>/manifest.json</code> and
-          <code>/icons/</code> — that you copy into your own project root.
-          The full step-by-step recipe lives in <a href="/llms.txt">llms.txt</a>;
-          the <a href="/templates/app.html">app template</a> ships the exact
-          head block below.
+          Turns a page into an installable app: three small files at your project root, with offline caching from the library.
         </p>
         <div class="demo">
           <button class="btn btn-primary" data-install data-tip="Appears only when the browser offers install — on this demo it may stay hidden">Install app</button>
