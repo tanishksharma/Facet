@@ -1409,6 +1409,19 @@ prefers-contrast: more.
 
     <section class="bg-grid"> ... </section>
 
+The fifth background is yours: the glyph grid. Put data-bg-glyph="✦"
+on the surface — any character or emoji, a facet icon name, or several
+tokens separated by spaces for an alternating grid — and facet.js
+draws the repeating tile in the same faint pattern ink, redrawing it
+live whenever the attribute, the theme or the mode changes.
+data-bg-glyph-size sets the cell in px (default 56);
+facet.glyphBackground(el) draws a surface you inserted after load.
+With JS off a glyph surface stays plain background; the pattern fades
+under prefers-contrast: more and never prints.
+
+    <section data-bg-glyph="✦">…content…</section>
+    <section data-bg-glyph="♥ ✳ ✦" data-bg-glyph-size="72">…</section>
+
 ## Blocks
 
 Assemblies of the components, documented as copyable patterns in the

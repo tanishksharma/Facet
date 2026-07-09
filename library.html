@@ -3097,8 +3097,17 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           sits straight on top. The set: <code>.bg-grid</code>
           (technical drawing: plus marks at the grid intersections),
           <code>.bg-dots</code> (dot grid), <code>.bg-ruled</code>
-          (writing lines), <code>.bg-graph</code> (graph paper). All of
+          (writing lines), <code>.bg-graph</code> (graph paper) — and
+          the glyph grid, the customizable one: put
+          <code>data-bg-glyph="✦"</code> on the surface with any
+          character or emoji, a facet icon name, or several tokens
+          separated by spaces for an alternating grid, and facet.js
+          draws the repeating tile in the same faint pattern ink,
+          redrawing it live whenever the attribute, the theme or the
+          mode changes. <code>data-bg-glyph-size</code> sets the cell
+          in px (default 56). All of
           them fade to nothing under <code>prefers-contrast: more</code>.
+          Try your own below.
         </p>
         <p class="chips" role="group" aria-label="Background patterns">
           <button class="chip" aria-pressed="true" data-chip-group="pattern" data-chip-class="bg-grid">Technical grid</button>
@@ -3106,9 +3115,29 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-ruled">Ruled</button>
           <button class="chip" aria-pressed="false" data-chip-group="pattern" data-chip-class="bg-graph">Graph paper</button>
         </p>
+        <p class="part-label" style="margin-bottom: 0;">Glyph grid — make it yours</p>
+        <p class="chips" role="group" aria-label="Glyph presets">
+          <button class="chip" aria-pressed="true" data-glyph-preset="✦" data-tip="A sparkle character">✦ Sparkle</button>
+          <button class="chip" aria-pressed="false" data-glyph-preset="♥" data-tip="A heart character">♥ Heart</button>
+          <button class="chip" aria-pressed="false" data-glyph-preset="✳" data-tip="An asterisk character">✳ Asterisk</button>
+          <button class="chip" aria-pressed="false" data-glyph-preset="star" data-tip="The facet icon named star">Icon: star</button>
+          <button class="chip" aria-pressed="false" data-glyph-preset="✦ ♥ ✳" data-tip="Several glyphs alternate across the row">Mix of three</button>
+        </p>
+        <p class="chips" role="group" aria-label="Glyph cell size">
+          <button class="chip" aria-pressed="false" data-glyph-size="40" data-tip="Tight cells">Small</button>
+          <button class="chip" aria-pressed="true" data-glyph-size="56" data-tip="The default cell">Medium</button>
+          <button class="chip" aria-pressed="false" data-glyph-size="88" data-tip="Airy cells">Large</button>
+        </p>
+        <label class="field" style="max-width: 24rem;">
+          <span class="field-label">Or type anything — a character, an emoji, a few of them</span>
+          <input id="glyph-input" type="text" placeholder="✦ or 🍜 or A B C" data-tip="The surface below redraws as you type">
+        </label>
         <div class="demo">
           <section class="bg-grid" data-tip="The pattern is tokens: switch theme or mode and it follows">
             <p style="padding: var(--space-card); color: var(--text-muted); max-width: none;">Content sits straight on the pattern.</p>
+          </section>
+          <section id="glyph-surface" data-bg-glyph="✦" data-tip="data-bg-glyph — the pattern is your own symbol" style="margin-top: var(--space-stack);">
+            <p style="padding: var(--space-card); color: var(--text-muted); max-width: none;">Your symbol, as the material.</p>
           </section>
         </div>
         <pre id="code-backgrounds"><code></code></pre>

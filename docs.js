@@ -154,6 +154,39 @@ function initWallSearch() {
   });
 }
 
+/* The Backgrounds entry's glyph customizer: presets, sizes and a free
+   input write data-bg-glyph / data-bg-glyph-size on the demo surface —
+   the library's own observer redraws it, which is the whole point of
+   the attribute-driven design. */
+function initGlyphDemo() {
+  const surface = document.querySelector("#glyph-surface");
+  if (!surface) return;
+  const press = (group, chip) => {
+    for (const c of document.querySelectorAll(group)) c.setAttribute("aria-pressed", String(c === chip));
+  };
+  for (const chip of document.querySelectorAll("[data-glyph-preset]")) {
+    chip.addEventListener("click", () => {
+      surface.dataset.bgGlyph = chip.dataset.glyphPreset;
+      press("[data-glyph-preset]", chip);
+      const box = document.querySelector("#glyph-input");
+      if (box) box.value = "";
+    });
+  }
+  for (const chip of document.querySelectorAll("[data-glyph-size]")) {
+    chip.addEventListener("click", () => {
+      surface.dataset.bgGlyphSize = chip.dataset.glyphSize;
+      press("[data-glyph-size]", chip);
+    });
+  }
+  const box = document.querySelector("#glyph-input");
+  if (box) box.addEventListener("input", () => {
+    if (box.value.trim()) {
+      surface.dataset.bgGlyph = box.value.trim();
+      press("[data-glyph-preset]", null);
+    }
+  });
+}
+
 /* The library's pages (initLibraryPages): the wall is a reference, not
    a scroll. One URL hash = one page:
      (no hash) / #intro   the front door — the five layer cards
@@ -1067,6 +1100,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initDemoTools();
   overlayCodeTools();              // code actions become a corner icon cluster
   initFeedbackDemo();              // the Sound & haptics wall buttons
+  initGlyphDemo();                 // the Backgrounds entry's glyph customizer
   initDevicePreview();             // Layer 5 templates in scaled device frames
   initStyleMixer();                // build.html: the scoped theme builder
   initSkinLab();                   // build.html: the theme × mode gallery

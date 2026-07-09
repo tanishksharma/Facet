@@ -1147,12 +1147,20 @@
    top. All patterns fade to nothing under prefers-contrast: more.
    The set: .bg-grid (technical drawing: plus marks at the grid
    intersections), .bg-dots (dot grid), .bg-ruled (writing lines),
-   .bg-graph (graph paper, minor and major lines). */
+   .bg-graph (graph paper, minor and major lines) — and the glyph
+   grid, the customizable one: put data-bg-glyph="✦" on the surface
+   with any character or emoji, a facet icon name, or several tokens
+   separated by spaces for an alternating grid, and facet.js draws the
+   repeating tile in the same faint pattern ink, redrawing it live
+   whenever the attribute, the theme or the mode changes.
+   data-bg-glyph-size sets the cell in px (default 56). With JS off a
+   glyph surface stays plain background. */
 
 .bg-grid,
 .bg-dots,
 .bg-ruled,
-.bg-graph {
+.bg-graph,
+[data-bg-glyph] {
   --bg-ink: color-mix(in srgb, var(--text-muted) 28%, transparent);
   --bg-ink-faint: color-mix(in srgb, var(--text-muted) 14%, transparent);
   --bg-cell: 2.5rem;
@@ -1214,9 +1222,17 @@
     calc(var(--bg-cell) / 5) calc(var(--bg-cell) / 5);
 }
 
+/* Glyph grid: your symbol as the pattern. facet.js writes the two
+   custom properties from data-bg-glyph / data-bg-glyph-size. */
+[data-bg-glyph] {
+  background-color: var(--background);
+  background-image: var(--bg-glyph);
+  background-size: var(--bg-glyph-tile, 3.5rem 3.5rem);
+}
+
 /* Contrast request: the pattern is removed. */
 @media (prefers-contrast: more) {
-  .bg-grid, .bg-dots, .bg-ruled, .bg-graph { background-image: none; }
+  .bg-grid, .bg-dots, .bg-ruled, .bg-graph, [data-bg-glyph] { background-image: none; }
 }
 
 
@@ -1721,7 +1737,7 @@ figcaption {
     text-shadow: none !important;
     backdrop-filter: none !important;
   }
-  .bg-grid, .bg-dots, .bg-ruled, .bg-graph { background-image: none !important; }
+  .bg-grid, .bg-dots, .bg-ruled, .bg-graph, [data-bg-glyph] { background-image: none !important; }
 
   /* page furniture never prints; an explicit on-role overrides */
   nav, .skip-link, .top-menu,
