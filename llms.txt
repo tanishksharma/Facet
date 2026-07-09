@@ -99,8 +99,8 @@ cursor, or an idle drift when no input exists; smooth page
 transitions — data-transition="page" animates cross-page navigation
 (old page eases away, new one springs in, URL changes normally), with
 a[data-no-transition] per-link opt-out and facet.go(url) for
-programmatic moves, instant fallback where unsupported; print base
-included.
+programmatic moves, instant fallback where unsupported; a full
+print & export system (see its section).
 
 Base layer: raw semantic HTML looks designed with no classes; one visible
 keyboard focus ring everywhere; selection colors, thin scrollbars,
@@ -337,6 +337,37 @@ intent-named spacing system; data-text-size does the same for type.
 .text-footnote, .text-caption put the type scale on any element by role.
 And rem sizing everywhere means the phone's text-size setting scales
 the entire interface.
+
+## Print & export
+
+Printing is a first-class feature. Three roles name what belongs on
+paper: data-print="off" (alias .print-hide) never prints — page
+furniture; data-print="on" (.print-show) always prints, overriding a
+component that hides by default; data-print="only" (.print-only)
+prints ONLY — letterheads, "printed from" lines — invisible on screen.
+Interface controls (navs, the tab bar, float buttons, sheets, toasts,
+tooltips, gauges) are OFF by default; content (main, articles, cards,
+tables, figures) is ON — the content IS the paper. The paper
+stylesheet neutralises every theme to ink on paper, strips shadows and
+blur, unrolls the app shells (snap pages and view stacks print every
+screen in order), keeps headings with their text and avoids tearing
+cards, rows and figures across sheets. .page-break starts an element
+on a fresh sheet. .print-urls on <body> writes each external link's
+URL after it (off by default — noisy). facet.js opens every <details>
+on beforeprint and restores them after, and forces lazy images to
+load. Any button carrying data-print-action="page" prints the page —
+the Save-as-PDF affordance; give it data-event="export-pdf" for
+analytics. Fixed interface controls are user-select: none and are
+authored at the end of <body>, so a top-to-bottom selection sweeps the
+content in reading order and a full-page copy contains no control
+labels. @page margins default to 12mm; a template may override
+(the deck keeps its exact 1920x1080 sheet, the documents their A4).
+
+    <button class="btn" data-print-action="page"
+            data-event="export-pdf">Save as PDF</button>
+    <header class="letterhead" data-print="only">Acme Ltd — invoice</header>
+    <p class="badge" data-print="off">Screen-only hint</p>
+
 
 ## Content translation
 

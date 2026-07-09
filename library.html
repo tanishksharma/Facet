@@ -41,6 +41,7 @@
           <li><a href="#shape">Shape &amp; elevation</a></li>
           <li><a href="#motion">Motion tokens</a></li>
           <li><a href="#base">Base styles</a></li>
+          <li><a href="#print">Print &amp; export</a></li>
         </ul>
         </div>
         <div class="nav-group" data-group="layer2">
@@ -633,6 +634,49 @@
 
         <pre><code>&lt;p&gt;No classes anywhere in this section's table,
 input or this code block — base styles only.&lt;/p&gt;</code></pre>
+      </article>
+
+      <!-- PRINT & EXPORT -->
+      <article class="element stack" id="print">
+        <h3 data-status="beta">Print &amp; export</h3>
+        <p>
+          What it is: printing as a first-class feature. Three roles
+          name what belongs on paper: <code>data-print="off"</code>
+          (alias <code>.print-hide</code>) never prints — page
+          furniture; <code>"on"</code> (<code>.print-show</code>)
+          always prints, overriding a component that hides by default;
+          <code>"only"</code> (<code>.print-only</code>) prints ONLY —
+          letterheads, "printed from" lines — invisible on screen.
+          Interface controls (navs, the tab bar, float buttons, sheets,
+          toasts, tooltips, gauges) are OFF by default; content is ON —
+          the content IS the paper. The paper stylesheet neutralises
+          every theme to ink on paper, strips shadows and blur, unrolls
+          the app shells so every screen prints in order, keeps
+          headings with their text and avoids tearing cards, rows and
+          figures across sheets. <code>.page-break</code> starts an
+          element on a fresh sheet; <code>.print-urls</code> on
+          <code>&lt;body&gt;</code> writes each external link's URL
+          after it; facet.js opens every <code>&lt;details&gt;</code>
+          while printing; and a button carrying
+          <code>data-print-action="page"</code> prints the page — the
+          Save-as-PDF affordance. What it is for: pages that print
+          cleanly and export to PDF without a print-specific rewrite.
+          When to use it: the defaults cover whole pages already; reach
+          for a role only to override one element. Try the button below
+          on this very page.
+        </p>
+        <div class="demo">
+          <div class="stack">
+            <p class="row" style="max-width: none;">
+              <button class="btn" data-print-action="page" data-event="export-pdf" data-tip="Opens the print dialog — Save as PDF is the export">Print this page</button>
+              <span class="badge" data-print="only">Prints only — invisible on screen</span>
+              <span class="badge badge-info" data-print="off">Screen only — never prints</span>
+            </p>
+            <p class="text-footnote" style="color: var(--text-muted);">The two badges demonstrate the roles: open the print preview and they trade places.</p>
+          </div>
+        </div>
+        <pre id="code-print"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-print" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- ==============================

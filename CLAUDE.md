@@ -260,6 +260,8 @@ Everything built with Facet is operable by AI agents through the DOM alone.
 
 
 - [ ] Semantic tokens only. No raw hex, px sizes outside the scales, or hardcoded fonts.
+- [ ] Declares its print role: on paper by default if it is content, `data-print="off"` defaults if it is an interface control; prints cleanly (no shadows, no bad breaks through it).
+- [ ] Authored in reading order; any fixed or reordered positioning applies only to `user-select: none`, print-hidden interface controls.
 - [ ] Works in every theme and in light and dark with zero extra code.
 - [ ] All states covered: hover, focus, active, disabled, and where relevant empty, loading, error.
 - [ ] States ride the grammar (see the Component state system spec): a native pseudo-class, an ARIA attribute, or `data-status` — never an invented class. Status colors read the `-tint`/`-edge` token pairs, never a hand-rolled `color-mix`. Check the component under `aria-busy` — the loading skin should trace it sensibly.
@@ -481,6 +483,15 @@ Open questions to settle at build time: the exact prompt set and how it is packa
 single fetch is too big; whether the build page shows live example runs.
 
 ### Print, reader-view, copy-paste & export system (cross-cutting)
+
+> **SHIPPED (9 Jul 2026)** — the declarative roles (`data-print`
+> off/on/only + class aliases), the paper stylesheet (ink-on-paper
+> neutralisation, shells unrolled, break control, `.page-break`,
+> opt-in `.print-urls`, 12mm `@page`), the beforeprint fold-opener and
+> lazy-image forcing, the `data-print-action="page"` Save-as-PDF
+> affordance, and `user-select: none` on every fixed interface control.
+> Copy-page-as-Markdown and per-template polish remain open. The spec
+> below stays as the engineering reference.
 
 The requirement, in full: every Facet page must print cleanly, read well in browser Reader view, copy in the right order, and export well — and printing must be a first-class, declarative feature where the author says what shows on paper and what does not. This is heavy, cross-cutting machinery: it touches every component, block and template, plus the base layer and the compliance checklist. It ranks near the top of the queue for that reach. Build it as a small number of commits (the CSS system first, then the DOM-order/selection law, then per-template polish), each landing its wall/inventory lines.
 

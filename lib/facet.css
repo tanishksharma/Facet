@@ -1656,18 +1656,113 @@ figcaption {
   transform: none;
 }
 
-/* ----- Print base ----- */
+/* ----- PRINT & EXPORT: declarative print roles + the paper stylesheet -----
+   What it is: printing as a first-class feature. Three roles name what
+   belongs on paper: data-print="off" (alias .print-hide) never prints —
+   page furniture; data-print="on" (alias .print-show) always prints,
+   overriding a component that hides by default; data-print="only"
+   (alias .print-only) prints ONLY — letterheads, "printed from" lines —
+   invisible on screen. Interface controls (navs, the tab bar, float
+   buttons, sheets, toasts, tooltips, gauges, scrims) are OFF by
+   default; content (main, articles, cards, tables, figures) is ON —
+   the content IS the paper. The paper stylesheet neutralises every
+   theme to ink on paper, strips shadows and blur, unrolls the app
+   shells (snap pages and view stacks print all their screens in
+   order), keeps headings with their text and avoids tearing cards,
+   rows and figures across sheets; .page-break starts an element on a
+   fresh sheet; .print-urls on <body> writes each external link's URL
+   after it; and facet.js opens every <details> on beforeprint and
+   wires any button carrying data-print-action="page" to print the
+   page — the Save-as-PDF affordance (give it data-event="export-pdf").
+   What it is for: pages that print cleanly and export to PDF without a
+   print-specific rewrite. When to use it: the defaults cover whole
+   pages already; reach for a role only to override one element.
+   (The ink-on-paper values here are a sanctioned raw-hex exception:
+   paper has no theme and no dark mode.) */
+
+/* The print-only role hides on screen (important: it must beat any
+   component's own display, whatever the specificity)… */
+[data-print="only"], .print-only { display: none !important; }
+
+/* The reading-order and copy law, on screen: fixed interface controls
+   are not content — they never land in a selection sweep or a copy.
+   (They are also authored at the end of <body>, so DOM order stays
+   reading order; layout never reorders content.) */
+.tab-bar, .float-btn, .float-btn-right,
+.scroll-gauge, .scroll-gauge-page,
+.sheet, .sheet-scrim, .toast-rack {
+  user-select: none;
+  -webkit-user-select: none;
+}
 
 @media print {
-  html {
-    background: white;
-    color: black;
+  /* …and shows on paper, at its element's natural display */
+  [data-print="only"], .print-only { display: revert !important; }
+
+  /* ink on paper: no theme, no dark mode, no elevation */
+  :root, [data-mode="dark"] {
+    --background: #FFFFFF;
+    --surface: #FFFFFF;
+    --surface-hover: #FFFFFF;
+    --surface-active: #F2F2F2;
+    --text: #111111;
+    --text-muted: #444444;
+    --text-subtle: #666666;
+    --border: #BBBBBB;
+    --border-subtle: #CCCCCC;
+    --border-strong: #999999;
+    --shadow-flat: none;
+    --shadow-raised: none;
+    --shadow-floating: none;
+    --shadow-overlay: none;
+  }
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .bg-grid, .bg-dots, .bg-ruled, .bg-graph { background-image: none !important; }
+
+  /* page furniture never prints; an explicit on-role overrides */
+  nav, .skip-link, .top-menu,
+  .tab-bar, .float-btn, .float-btn-right,
+  .sheet, .sheet-scrim, .nav-menu,
+  .scroll-gauge, .scroll-gauge-page,
+  .toast-rack, .nudge-scrim, .overlay-guide,
+  [data-print="off"], .print-hide, [data-no-print] { display: none !important; }
+  [data-print="on"], .print-show { display: revert !important; }
+
+  /* tooltips are screen furniture */
+  [data-tip]::before, [data-tip]::after { display: none !important; }
+
+  /* the app shells unroll: every screen prints, in reading order */
+  .is-app-shell, .is-app-shell body { height: auto; overflow: visible; }
+  .snap, .snap.is-paged { height: auto; overflow: visible; scroll-snap-type: none; }
+  .snap-section, .snap.is-paged .snap-section { height: auto; min-height: 0; overflow: visible; }
+  .view-stack.is-stacked { height: auto; overflow: visible; }
+  .view-stack.is-stacked .view {
+    position: static;
+    visibility: visible;
+    height: auto;
+    overflow: visible;
   }
 
-  nav, .skip-link, [data-no-print] {
-    display: none;
+  /* breaks: nothing orphans, nothing tears */
+  .card, .list-item, tr, figure, .result, pre, .field { break-inside: avoid; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+  .page-break { break-before: page; }
+
+  /* links print as ink; .print-urls on <body> spells them out */
+  a { color: inherit; }
+  .print-urls a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #444444;
   }
 }
+/* Sane paper margins; a template may override with its own @page
+   (the deck keeps its exact 1920×1080 sheet, the documents their A4). */
+@page { margin: 12mm; }
 
 /* ----- Reduced motion ----- */
 /* Every transition and animation in the library collapses to nothing. */
