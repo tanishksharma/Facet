@@ -468,7 +468,6 @@ article.element {
   color: var(--text-muted);
 }
 /* Category filter chip row sits above the wall; wraps on narrow screens. */
-.wall-filter { flex-wrap: wrap; }
 /* An article the category filter has excluded (composes with [hidden]). */
 .cat-hidden { display: none !important; }
 /* Sidebar sub-group labels inside a layer's nav group. */

@@ -688,45 +688,6 @@ function initDemoTools() {
   }
 }
 
-/* Component wall category filter: the chip row (.wall-filter) flips which
-   data-cat entries show. Composes with the search box — an article hides
-   when EITHER the category chip or the text search excludes it — and the
-   .wall-group category headings hide when nothing under them is visible. */
-function initWallFilter() {
-  const chips = [...document.querySelectorAll(".wall-filter [data-chip-cat]")];
-  if (!chips.length) return;
-  // Only the six Layer-2 categories are filtered; app-kit (Layer 5) and any
-  // uncategorised article are untouched, so the filter can't reach past its
-  // own layer on the merged page.
-  const catset = new Set(chips.map(c => c.dataset.chipCat).filter(c => c !== "all"));
-  const articles = [...document.querySelectorAll("article.element[data-cat]")].filter(a => catset.has(a.dataset.cat));
-  const groups = [...document.querySelectorAll(".wall-group")];
-
-  const updateGroups = () => {
-    for (const g of groups) {
-      // stop at the next category heading OR the next layer (section / band),
-      // so a category's visibility never depends on another layer's articles.
-      let visible = false, el = g.nextElementSibling;
-      while (el && !el.classList.contains("wall-group") && !el.matches("section, .layer-band")) {
-        if (el.matches("article.element") && !el.classList.contains("cat-hidden") && !el.hidden) { visible = true; break; }
-        el = el.nextElementSibling;
-      }
-      g.hidden = !visible;
-    }
-  };
-  for (const chip of chips) {
-    chip.addEventListener("click", () => {
-      const cat = chip.dataset.chipCat;
-      for (const c of chips) c.setAttribute("aria-pressed", String(c === chip));
-      for (const a of articles) a.classList.toggle("cat-hidden", cat !== "all" && a.dataset.cat !== cat);
-      updateGroups();
-      if (window.facet && facet.feedback) facet.feedback.tick();
-    });
-  }
-  const search = document.querySelector("#wall-search");
-  if (search) search.addEventListener("input", () => setTimeout(updateGroups, 0));
-  updateGroups();
-}
 
 /* Device preview: each .device-preview[data-src] loads a real template
    page into an iframe and scales it to fit the column. Desktop / Tablet /
@@ -1106,7 +1067,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   initDemoTools();
   overlayCodeTools();              // code actions become a corner icon cluster
   initFeedbackDemo();              // the Sound & haptics wall buttons
-  initWallFilter();                // Layer 3 category filter chips
   initDevicePreview();             // Layer 5 templates in scaled device frames
   initStyleMixer();                // build.html: the scoped theme builder
   initSkinLab();                   // build.html: the theme × mode gallery

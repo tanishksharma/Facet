@@ -667,31 +667,6 @@ it needs no tokens of its own and restyles with every theme.
       </li>
     </ul>
 
-### App grid
-
-What it is: a home-screen launcher — an auto-fill grid of app tiles,
-each tile one real link: a rounded-square icon, the app's name, a
-one-line caption, and an optional metric line. What it is for: the
-front door of a suite of mini apps, a portal, a directory of tools —
-many small destinations presented as equals. When to use it: when the
-destinations are apps rather than content — content belongs in the
-card grid or the list. The grid packs as many tile columns as fit,
-still two across on a phone, with no breakpoints written. A tile is
-an <a class="app-tile">: the whole tile is the hit target, it fills
-on hover and carries the keyboard focus ring. Put an open count or
-any live number in .app-count — tabular digits so tiles line up.
-Reuses the neutral ramp and type tokens, so it restyles with every
-theme.
-
-    <nav class="app-grid" aria-label="Apps">
-      <a class="app-tile" href="/apps/inflation">
-        <img src="/apps/icons/inflation.png" alt="" width="68" height="68">
-        <strong>Inflation calculator</strong>
-        <span>Time-travel your money</span>
-        <span class="app-count">1,240 opens</span>
-      </a>
-    </nav>
-
 ### Modal, drawer, popover
 
 What it is: overlays built on the platform's own machinery — modal and
@@ -1488,6 +1463,31 @@ target.
           <svg data-icon="arrow-right" aria-hidden="true"></svg></span>
       </a>
     </div>
+
+### App grid
+
+What it is: a home-screen launcher — an auto-fill grid of app tiles,
+each tile one real link: a rounded-square icon, the app's name, a
+one-line caption, and an optional metric line. What it is for: the
+front door of a suite of mini apps, a portal, a directory of tools —
+many small destinations presented as equals. When to use it: when the
+destinations are apps rather than content — content belongs in the
+card grid or the list. The grid packs as many tile columns as fit,
+still two across on a phone, with no breakpoints written. A tile is
+an <a class="app-tile">: the whole tile is the hit target, it fills
+on hover and carries the keyboard focus ring. Put an open count or
+any live number in .app-count — tabular digits so tiles line up.
+Reuses the neutral ramp and type tokens, so it restyles with every
+theme.
+
+    <nav class="app-grid" aria-label="Apps">
+      <a class="app-tile" href="/apps/inflation">
+        <img src="/apps/icons/inflation.png" alt="" width="68" height="68">
+        <strong>Inflation calculator</strong>
+        <span>Time-travel your money</span>
+        <span class="app-count">1,240 opens</span>
+      </a>
+    </nav>
 
 ### App identity
 
