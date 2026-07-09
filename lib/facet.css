@@ -44,20 +44,23 @@
 */
 
 /* (docs mirror — identical to llms.txt · Fonts)
-   WHEN TO USE: never pick a font in a component — ask for a role. Five
+   WHEN TO USE: never pick a font in a component — ask for a role. Six
    faces, one per job: --font-heading (calligraphic serif),
-   --font-body (rounded sans), --font-mono (technical monospace),
-   --font-quote (editorial serif for quotes and callouts), --font-numeric
-   (display serif for big standalone numbers). The Default theme loads
-   them with one @import at the top of facet.css; every stack ends in a
-   system fallback, so text renders instantly and survives the fonts
-   failing. A theme re-voices the whole library by swapping the five
-   faces; nothing downstream changes. */
+   --font-body (rounded sans, the interface voice), --font-mono
+   (technical monospace — also the eyebrow voice at --weight-eyebrow,
+   always caps), --font-quote (editorial serif, italic, for quotes and
+   callouts), --font-reading (editorial serif, upright, for long-form
+   article text), --font-numeric (display serif for big standalone
+   numbers). The Default theme loads them with one @import at the top of
+   facet.css; every stack ends in a system fallback, so text renders
+   instantly and survives the fonts failing. A theme re-voices the whole
+   library by swapping the faces; nothing downstream changes. */
 /* ----- Web fonts -----
-   Five families, each loaded for one job (see --font-* in the token layer):
+   The faces, each loaded for one job (see --font-* in the token layer):
    Cormorant for calligraphic headings, Nunito Sans for friendly body text,
-   JetBrains Mono for technical captions and code, Newsreader for quotes and
-   callouts, Playfair Display for big standalone numbers. Loaded from Google
+   JetBrains Mono for technical captions, code and the eyebrow voice,
+   Newsreader for quotes, callouts and long-form reading, Playfair Display
+   for big standalone numbers. Loaded from Google
    Fonts through the stylesheet, so no extra tag in anyone's HTML and it works
    with JavaScript off. Each font stack still ends in a system fallback, so
    text renders instantly and survives the font failing to load. display=swap
@@ -202,7 +205,8 @@
      Sizes by role: --text-display, --text-h1 … --text-h4, --text-body,
      --text-quote, --text-footnote, --text-caption. Weights:
      --weight-body, --weight-medium (UI labels, nav, buttons),
-     --weight-strong, --weight-heading. Line height per role:
+     --weight-strong, --weight-heading, --weight-eyebrow (the mono
+     micro-label voice). Line height per role:
      --leading-display/-heading/-snug/-body/-ui — tighter as type grows.
      Tracking per role: --tracking-display/-heading/-snug/-body/-label/
      -caps/-wide — large type tightens, caps micro-labels open up, -wide is
@@ -212,16 +216,25 @@
      layouts (.stack, .row) zero these so rhythm and gap never stack.
      Global type size: data-text-size="small|medium|large" on html — set by
      the theme, independent of density. Text-role classes (.text-display …
-     .text-caption) put the scale on any element. */
+     .text-caption) put the scale on any element. The eyebrow (.eyebrow) is
+     the small thick spaced-caps label above a heading or a menu group — the
+     mono face (--font-mono) at --text-caption, --weight-eyebrow (800) and
+     --tracking-wide, accent-3 ink, ALWAYS caps (the class uppercases
+     whatever case the author wrote). The same voice marks the library's own
+     group names and menu labels.
+
+         <p class="eyebrow">One tap away</p>
+         <h2>Install this app</h2> */
   /* ----- Typography: font stacks, one per job -----
-     Five roles, each a different face chosen for what it does, every stack
+     Six roles, each a face chosen for what it does, every stack
      ending in a system fallback (never `inherit` — that voids the whole
      declaration) so text renders instantly and survives a font failing to
-     load. A theme re-voices the library by swapping these five. */
+     load. A theme re-voices the library by swapping these. */
   --font-heading: "Cormorant", Georgia, "Times New Roman", serif;         /* calligraphic display serif for titles */
   --font-body: "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* friendly, round, readable */
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;   /* technical captions and code */
   --font-quote: "Newsreader", Georgia, "Times New Roman", serif;          /* quotes and callouts, set apart */
+  --font-reading: "Newsreader", Georgia, "Times New Roman", serif;        /* long-form article text: the editorial reading voice, upright */
   --font-numeric: "Playfair Display", Georgia, "Times New Roman", serif;  /* big standalone numbers */
 
   /* ----- Typography: type scale, named by role, scaled by size -----
@@ -5819,7 +5832,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
   font-family: var(--font-mono);
   font-size: var(--text-caption);
   font-weight: var(--weight-eyebrow);
-  text-transform: uppercase;
+  text-transform: uppercase;   /* the eyebrow is ALWAYS caps, whatever case the author wrote */
   letter-spacing: var(--tracking-wide);
   color: var(--accent-3);
   display: block;

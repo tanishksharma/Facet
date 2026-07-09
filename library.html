@@ -240,7 +240,11 @@
       <article class="element stack" id="fonts">
         <h3>Fonts</h3>
         <p>
-          Five type families, one per job: headings, body, code, quotes and big numbers. The theme picks the faces; a page only ever asks for the role. Switch the theme below and the samples re-render.
+          Six type families, one per job: headings, body text, code and
+          labels, quotes, long-form reading and big numbers. The theme picks
+          the actual fonts; a page only ever asks for the role, and each
+          card below names the font the active theme chose. Switch the
+          theme and the samples re-render.
         </p>
         <p class="chips" role="group" aria-label="Preview theme">
           <button class="chip" data-theme-switch="" data-tip="Default — five roles">Default</button>
@@ -274,6 +278,12 @@
           </p>
         </article>
         <article class="stack-tight">
+          <p class="type-label" style="margin: 0;">--font-reading · long-form article text</p>
+          <p style="font-family: var(--font-reading); font-size: var(--text-h3); line-height: var(--leading-snug);">
+            The quick brown fox jumps over the lazy dog 0123456789
+          </p>
+        </article>
+        <article class="stack-tight">
           <p class="type-label" style="margin: 0;">--font-numeric · big standalone figures</p>
           <p style="font-family: var(--font-numeric); font-size: var(--text-h3); line-height: var(--leading-snug); font-variant-numeric: tabular-nums lining-nums;">
             The quick brown fox jumps over the lazy dog 0123456789
@@ -286,6 +296,7 @@ h1, h2, h3 { font-family: var(--font-heading); }
 body        { font-family: var(--font-body); }
 code, kbd   { font-family: var(--font-mono); }
 blockquote  { font-family: var(--font-quote); }
+article p   { font-family: var(--font-reading); }
 .big-number { font-family: var(--font-numeric); }</code></pre>
         <p><button class="btn btn-small" data-copy="#code-fonts" data-tip="Copies the font role tokens">Copy</button></p>
       </article>

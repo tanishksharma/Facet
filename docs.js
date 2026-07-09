@@ -874,6 +874,34 @@ function initDevicePreview() {
   }
 }
 
+/* The Fonts entry: each face card names the actual font the active
+   theme resolved for its role — read from the sample's computed stack
+   (the first family is the theme's pick) and re-read when the theme or
+   mode changes, so the caption always tells the truth. */
+function initFontNames() {
+  const blocks = [...document.querySelectorAll("#fonts .demo > article")];
+  if (!blocks.length) return;
+  const render = () => {
+    for (const block of blocks) {
+      const caption = block.querySelector(".type-label");
+      const sample = block.querySelector("p:not(.type-label)");
+      if (!caption || !sample) continue;
+      let name = caption.querySelector(".font-name");
+      if (!name) {
+        name = document.createElement("strong");
+        name.className = "font-name";
+        caption.append(" · ", name);
+      }
+      name.textContent = getComputedStyle(sample).fontFamily
+        .split(",")[0].trim().replace(/^"|"$/g, "");
+    }
+  };
+  new MutationObserver(render).observe(document.documentElement, {
+    attributes: true, attributeFilter: ["data-theme", "data-mode"],
+  });
+  render();
+}
+
 /* The Sound & haptics wall entry: its buttons carry data-feedback-demo
    naming a facet.feedback method (tap/tick/snap/success). Wired here in
    docs.js — the library never ships demo handlers. Absent on other pages. */
@@ -1216,6 +1244,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initDemoTools();
   overlayCodeTools();              // code actions become a corner icon cluster
   initFeedbackDemo();              // the Sound & haptics wall buttons
+  initFontNames();                 // the Fonts cards name the resolved face
   initBackgroundDemo();            // the Backgrounds entry: variants + knobs
   initDevicePreview();             // Layer 5 templates in scaled device frames
   initStyleMixer();                // build.html: the scoped theme builder
