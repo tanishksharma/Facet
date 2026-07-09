@@ -262,9 +262,11 @@ article.element > p { max-width: none; line-height: var(--leading-snug); }
 
 /* AI instructions: the technical half of an entry, addressed to the
    agent that will build with the component. */
-.ai-notes {
-  border-left: var(--border-highlight) solid var(--accent-3);
-  padding-left: var(--space-stack);
+.ai-notes { max-width: none; }
+#bg-controls-custom .field-label {
+  font-weight: var(--weight-body);
+  font-size: var(--text-caption);
+  color: var(--text-subtle);
 }
 .ai-notes p { max-width: none; color: var(--text-muted); font-size: var(--text-footnote); }
 
@@ -514,8 +516,10 @@ article.element {
   letter-spacing: 0.06em;
   font-weight: var(--weight-strong);
   color: var(--text-muted);
-  margin-top: var(--space-stack);
-  margin-bottom: var(--space-tight);
+  /* hug the region it captions: the negative bottom margin eats most
+     of the stack gap, so label and content read as one unit */
+  margin-top: var(--space-inline);
+  margin-bottom: calc(-1 * var(--space-inline));
 }
 .part-label + * { margin-top: 0; }
 
@@ -618,25 +622,24 @@ article.element {
 .how-files { list-style: none; padding-left: 0; }
 .how-track pre { white-space: pre-wrap; }
 
-/* Code-block action cluster: icons sitting fully INSIDE the snippet's
-   bottom-left corner; the block reserves room for them, so they never
-   overlap the last lines of code. */
+/* The Copy action sits fully INSIDE the snippet's bottom-left corner;
+   the block reserves room below the last line so nothing overlaps. */
 .code-wrap { position: relative; }
-.code-wrap > pre { padding-bottom: 3.4rem; }
+.code-wrap > pre { padding-bottom: 3.6rem; margin-bottom: 0; }
 .code-tools {
   position: absolute;
   bottom: var(--space-inline);
   left: var(--space-inline);
   display: flex;
-  gap: var(--space-tight);
 }
 .code-tools .btn {
   min-height: 0;
-  width: 2.1rem;
+  width: auto;
   height: 2.1rem;
-  padding: 0;
-  display: inline-grid;
-  place-items: center;
+  padding: 0 var(--space-inline);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-tight);
   background: var(--surface);
   border: var(--border-element) solid var(--border);
   color: var(--text-muted);
@@ -644,7 +647,7 @@ article.element {
   font-weight: var(--weight-strong);
 }
 .code-tools .btn:hover { color: var(--text); background: var(--background); }
-.code-tools .btn svg { width: 1.1rem; height: 1.1rem; }
+.code-tools .btn svg { width: 1rem; height: 1rem; }
 
 /* -------------------------------------------------------------------------
    BUILD-A-THEME PAGE — styles for build.html only: the page head, the
