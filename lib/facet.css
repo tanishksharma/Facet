@@ -73,10 +73,12 @@
    JetBrains Mono for technical captions, code and the eyebrow voice,
    Newsreader for quotes, callouts and long-form reading, Playfair Display
    for big standalone numbers, Caveat for hand annotations — plus the
-   extended set: Unbounded (hero display), Great Vibes (signature),
+   extended set: Bungee Shade (hero display), Great Vibes (signature),
    Special Elite (typewriter), Doto (receipt), Libre Barcode 128 Text
-   (real scannable barcodes), Silkscreen (pixel), Baloo 2 (children), and
-   the script pairings Noto Sans JP/SC/KR and Mukta. Google serves every
+   (real scannable barcodes), Pixelify Sans (pixel), Chewy (children), and
+   the calligraphic script pairings Yuji Syuku (Japanese brush), Ma Shan
+   Zheng (Chinese regular-script brush), Nanum Brush Script (Korean brush)
+   and Tiro Devanagari Hindi (traditional, elegant). Google serves every
    family in unicode-range subsets, so a page that never uses a face
    downloads none of its glyphs — only these rules. Cyrillic ships inside
    the core faces already, so Russian needs no extra family. Loaded from Google
@@ -85,7 +87,7 @@
    text renders instantly and survives the font failing to load. display=swap
    shows fallback text first, then swaps — never a blank flash of text.
    @import must stay at the very top, before any style rule. */
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Caveat:wght@400;600&family=Cormorant:wght@500;600;700&family=Doto:wght@700&family=Great+Vibes&family=JetBrains+Mono:wght@400;500;800&family=Libre+Barcode+128+Text&family=Mukta:wght@400;700&family=Newsreader:ital,wght@0,400;1,400;1,500&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@500;600;700&family=Silkscreen:wght@400;700&family=Special+Elite&family=Unbounded:wght@500;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Caveat:wght@400;600&family=Chewy&family=Cormorant:wght@500;600;700&family=Doto:wght@700&family=Great+Vibes&family=JetBrains+Mono:wght@400;500;800&family=Libre+Barcode+128+Text&family=Ma+Shan+Zheng&family=Nanum+Brush+Script&family=Newsreader:ital,wght@0,400;1,400;1,500&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Pixelify+Sans:wght@400;700&family=Playfair+Display:wght@500;600;700&family=Special+Elite&family=Tiro+Devanagari+Hindi&family=Yuji+Syuku&display=swap');
 
 
 /* ==========================================================================
@@ -257,17 +259,17 @@
   --font-hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;           /* hand annotations: margin notes, rough work, a human pen on the interface */
   /* The extended faces: display, paper, play and scripts. Same rule as the
      core seven — components ask for the role, never the font. */
-  --font-hero: "Unbounded", "Arial Black", sans-serif;                     /* the loud one: one-word heroes, posters, launch screens */
+  --font-hero: "Bungee Shade", "Arial Black", sans-serif;                  /* the loud one: one-word heroes, posters, launch screens */
   --font-signature: "Great Vibes", "Snell Roundhand", "Apple Chancery", cursive; /* formal cursive: sign-off lines, letters, certificates */
   --font-typewriter: "Special Elite", "American Typewriter", "Courier New", monospace; /* the typed-document voice: memos, drafts, screenplays */
   --font-receipt: "Doto", "Courier New", monospace;                        /* dot-matrix printer: receipts, tickets, counters */
   --font-barcode: "Libre Barcode 128 Text", monospace;                     /* renders text as a real scannable Code 128 barcode */
-  --font-pixel: "Silkscreen", "Courier New", monospace;                    /* pixel bitmap: retro screens, badges, easter eggs */
-  --font-children: "Baloo 2", "Comic Sans MS", sans-serif;                 /* round and friendly: kids' products, playful moments */
-  --font-japanese: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;   /* Japanese content (data-language variants) */
-  --font-chinese: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;            /* Simplified Chinese content */
-  --font-korean: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;       /* Korean content */
-  --font-devanagari: "Mukta", "Kohinoor Devanagari", sans-serif;           /* Hindi and Devanagari content */
+  --font-pixel: "Pixelify Sans", "Courier New", monospace;                 /* pixel bitmap, fine grid: retro screens, badges, easter eggs */
+  --font-children: "Chewy", "Comic Sans MS", sans-serif;                   /* properly playful: kids' products, stickers, celebration moments */
+  --font-japanese: "Yuji Syuku", "Hiragino Mincho ProN", "Yu Mincho", serif;               /* Japanese: traditional brush calligraphy, formal */
+  --font-chinese: "Ma Shan Zheng", "Kaiti SC", "KaiTi", serif;                             /* Chinese: regular-script brush, traditional and formal */
+  --font-korean: "Nanum Brush Script", "Apple SD Gothic Neo", sans-serif;                  /* Korean: brush calligraphy, traditional */
+  --font-devanagari: "Tiro Devanagari Hindi", "Kohinoor Devanagari", serif; /* Devanagari: traditional book hand, elegant */
   --font-numeric: "Playfair Display", Georgia, "Times New Roman", serif;  /* big standalone numbers */
 
   /* ----- Typography: type scale, named by role, scaled by size -----
