@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Function library — Facet</title>
+  <meta name="description" content="Every facet.js behaviour on one page: what it does, the exact call or data attribute that wires it, and the same AI instructions llms.txt carries — the behaviour twin of the component library.">
+  <meta property="og:title" content="Function library — Facet">
+  <meta property="og:description" content="Every facet.js behaviour on one page: what it does, the exact call or data attribute that wires it, and the same AI instructions llms.txt carries — the behaviour twin of the component library.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://facet-kappa.vercel.app/functions.html">
+  <meta property="og:image" content="https://facet-kappa.vercel.app/icons/icon-512.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23FFFFFF'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%2317171B'/></svg>">
+  <link rel="canonical" href="https://facet-kappa.vercel.app/functions.html">
+  <!-- Machine-discoverable pointer for AI agents and crawlers. -->
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="Facet — how to use it, for AI">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+  <link rel="stylesheet" href="/docs.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <!-- No page header: the floating site menu (bottom-right) carries the
+       navigation. -->
+  <div class="docs-layout container-wide">
+
+    <aside class="docs-index side-index" aria-label="Page index">
+      <h1 style="margin: 0; font: inherit;"><a class="wordmark" href="/">facet</a></h1>
+      <label for="wall-search">Search</label>
+      <input id="wall-search" type="search" placeholder="Filter the functions"
+             data-tip="Type to filter the functions below" data-tip-below>
+      <nav aria-label="Sections">
+        <a class="nav-overview" href="#intro">Overview</a>
+        <div class="nav-group side-index-group" data-group="config"
+             data-page-kicker="Group 1"
+             data-page-lead="Boot the look, change it live, and speak the reader's language, place and number system.">
+          <a class="nav-group-name side-index-name" href="#group-configure">Configure</a>
+        <ul>
+          <li><a href="#fn-set">facet.set</a></li>
+          <li><a href="#fn-script-config">Script-tag boot</a></li>
+          <li><a href="#fn-scheme">facet.scheme</a></li>
+          <li><a href="#fn-translate">facet.translate</a></li>
+          <li><a href="#fn-locate">facet.locate</a></li>
+          <li><a href="#fn-numbers">Number helpers</a></li>
+        </ul>
+        </div>
+        <div class="nav-group side-index-group" data-group="shell"
+             data-page-kicker="Group 2"
+             data-page-lead="Screens, pagers, sheets and the floating menus — the skeleton of an app-shaped page.">
+          <a class="nav-group-name side-index-name" href="#group-shell">App shell &amp; navigation</a>
+        <ul>
+          <li><a href="#fn-views">facet.views</a></li>
+          <li><a href="#fn-go">facet.go</a></li>
+          <li><a href="#fn-pager">Snap pager</a></li>
+          <li><a href="#fn-sheet">facet.sheet</a></li>
+          <li><a href="#fn-nav-menu">facet.navMenu</a></li>
+          <li><a href="#fn-tab-indicator">facet.tabIndicator</a></li>
+          <li><a href="#fn-scroll-gauge">facet.scrollGauge</a></li>
+          <li><a href="#fn-controls">Settings controls</a></li>
+        </ul>
+        </div>
+        <div class="nav-group side-index-group" data-group="forms"
+             data-page-kicker="Group 3"
+             data-page-lead="The wiring behind fields and controls — formatting, ticks, scales and picks.">
+          <a class="nav-group-name side-index-name" href="#group-forms">Forms &amp; inputs</a>
+        <ul>
+          <li><a href="#fn-number-inputs">Number inputs</a></li>
+          <li><a href="#fn-sliders">Sliders</a></li>
+          <li><a href="#fn-slider-scale">facet.sliderScale</a></li>
+          <li><a href="#fn-steppers">Steppers</a></li>
+          <li><a href="#fn-choice-select">facet.choiceSelect</a></li>
+          <li><a href="#fn-copy">Copy buttons</a></li>
+          <li><a href="#fn-filter">Filter inputs</a></li>
+        </ul>
+        </div>
+        <div class="nav-group side-index-group" data-group="content"
+             data-page-kicker="Group 4"
+             data-page-lead="Notices, charts, icons, maps and the waiting states.">
+          <a class="nav-group-name side-index-name" href="#group-content">Content &amp; status</a>
+        <ul>
+          <li><a href="#fn-toast">facet.toast</a></li>
+          <li><a href="#fn-busy">facet.busy</a></li>
+          <li><a href="#fn-chart">facet.chart</a></li>
+          <li><a href="#fn-icon">facet.icon</a></li>
+          <li><a href="#fn-map">facet.mapStyle</a></li>
+          <li><a href="#fn-tabs">Tabs</a></li>
+          <li><a href="#fn-dropdowns">Dropdowns</a></li>
+          <li><a href="#fn-dialogs">Dialog triggers</a></li>
+        </ul>
+        </div>
+        <div class="nav-group side-index-group" data-group="feel"
+             data-page-kicker="Group 5"
+             data-page-lead="The engines that make a page feel physical — motion, light, sound, install and paper.">
+          <a class="nav-group-name side-index-name" href="#group-feel">Motion &amp; app feel</a>
+        <ul>
+          <li><a href="#fn-motion">facet.motion</a></li>
+          <li><a href="#fn-shine">Shine (data-shine)</a></li>
+          <li><a href="#fn-backgrounds">Background engines</a></li>
+          <li><a href="#fn-feedback">facet.feedback</a></li>
+          <li><a href="#fn-install">facet.install &amp; PWA</a></li>
+          <li><a href="#fn-print">Print wiring</a></li>
+        </ul>
+        </div>
+      </nav>
+    </aside>
+
+    <main id="main" class="stack-loose">
+      <!-- ==============================
+           Overview
+           The function library's front door: what facet.js is, how it
+           wires itself, and a card into each group's page.
+           ============================== -->
+      <section id="intro" class="stack">
+        <h2>The functions, in five groups</h2>
+        <p>
+          The component library shows what Facet looks like; this page is
+          its twin for behaviour. facet.js wires itself to data attributes
+          on load — pages opt in by writing HTML, never JS — and exposes a
+          small window.facet API for the moments an app really does need a
+          call. Every entry here names one behaviour: what it does, the
+          exact attribute or call, and the same AI instructions an agent
+          reads in llms.txt.
+        </p>
+        <div class="layer-grid" role="list">
+          <a class="card card-clickable layer-card" href="#group-configure" role="listitem">
+            <span class="layer-card-kicker">Group 1</span>
+            <strong>Configure</strong>
+            <span>Boot the look, change it live, and speak the reader's language, place and number system.</span>
+          </a>
+          <a class="card card-clickable layer-card" href="#group-shell" role="listitem">
+            <span class="layer-card-kicker">Group 2</span>
+            <strong>App shell &amp; navigation</strong>
+            <span>Screens, pagers, sheets and the floating menus — the skeleton of an app-shaped page.</span>
+          </a>
+          <a class="card card-clickable layer-card" href="#group-forms" role="listitem">
+            <span class="layer-card-kicker">Group 3</span>
+            <strong>Forms &amp; inputs</strong>
+            <span>The wiring behind fields and controls — formatting, ticks, scales and picks.</span>
+          </a>
+          <a class="card card-clickable layer-card" href="#group-content" role="listitem">
+            <span class="layer-card-kicker">Group 4</span>
+            <strong>Content &amp; status</strong>
+            <span>Notices, charts, icons, maps and the waiting states.</span>
+          </a>
+          <a class="card card-clickable layer-card" href="#group-feel" role="listitem">
+            <span class="layer-card-kicker">Group 5</span>
+            <strong>Motion &amp; app feel</strong>
+            <span>The engines that make a page feel physical — motion, light, sound, install and paper.</span>
+          </a>
+        </div>
+      </section>
+
+      <p id="wall-empty" hidden>Nothing matches that search. Every facet.js behaviour lands here the moment it ships.</p>
+
+      <!-- ==============================
+           Group 1 · Configure
+           Boot configuration, live settings, appearance, language,
+           place and numbers.
+           ============================== -->
+      <section id="config-fns" class="stack-loose">
+        <h2 class="text-caption">Configure</h2>
+
+        <article class="element stack" id="fn-set" data-llms="Theming">
+          <h3>facet.set</h3>
+          <p>
+            One call applies configuration live, with no reload: the theme,
+            light or dark mode, language, page transitions, or any design
+            token as a direct override. It writes the same html attributes a
+            page would carry statically, so the markup stays the source of
+            truth and anything else reading those attributes keeps working.
+          </p>
+          <pre id="code-fn-set"><code>&lt;script&gt;
+  facet.set({ theme: "velvet" });
+  facet.set({ mode: "dark" });
+  facet.set({ "--accent-1": "#0F6FDE" });
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-set" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-script-config" data-llms="Theming">
+          <h3>Script-tag boot</h3>
+          <p>
+            The facet.js script tag can carry the whole configuration, so a
+            page boots into its look before first paint — no flash, no
+            setup script. Explicit attributes on the html tag win over the
+            script tag, and the URL (?theme=, ?mode=) wins over both, so a
+            shared link opens exactly as it was sent. The same tag also
+            carries the opt-ins: data-service-worker, data-location,
+            data-transition, data-maps-key.
+          </p>
+          <pre id="code-fn-script-config"><code>&lt;script src="https://facet-kappa.vercel.app/lib/facet.js"
+        data-theme="aero" data-mode="dark" data-transition="page" defer&gt;&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-script-config" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-scheme" data-llms="Theming">
+          <h3>facet.scheme</h3>
+          <p>
+            The three-way appearance control: light, dark, or auto — auto
+            follows the operating system live. The choice is remembered in
+            the URL and localStorage, so it survives reloads and travels in
+            shared links. Buttons need no JS: data-mode-toggle flips light
+            and dark, data-theme-switch="velvet" switches the theme, and
+            both write their choice back to the URL.
+          </p>
+          <pre id="code-fn-scheme"><code>&lt;button class="btn" data-mode-toggle&gt;Light / dark&lt;/button&gt;
+
+&lt;script&gt;
+  facet.scheme.set("auto");   // "auto" | "light" | "dark"
+  facet.scheme.cycle();       // step to the next one
+  facet.scheme.get();         // the current setting
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-scheme" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-translate" data-llms="Content translation">
+          <h3>facet.translate</h3>
+          <p>
+            Content translation without a framework: a data-i18n group holds
+            one variant per language and facet.js shows the active one — the
+            default variant is plain markup, so one language renders with JS
+            off and crawlers read it. Buttons with data-language-switch="hi"
+            or one data-language-cycle button flip the page, and the choice
+            rides the URL as ?language=. Call facet.translate() after
+            inserting new markup so late content speaks the active language
+            too; extend facet.strings with your own languages in place.
+          </p>
+          <pre id="code-fn-translate"><code>&lt;p data-i18n&gt;
+  &lt;span&gt;Save your work&lt;/span&gt;
+  &lt;span data-language="hi" hidden&gt;अपना काम सहेजें&lt;/span&gt;
+&lt;/p&gt;
+&lt;button class="btn" data-language-cycle&gt;Language&lt;/button&gt;
+
+&lt;script&gt;
+  facet.translate();   // re-apply after inserting markup
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-translate" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-locate" data-llms="JavaScript API">
+          <h3>facet.locate</h3>
+          <p>
+            A coarse sense of place from an IP lookup — city, region,
+            country, latitude, longitude — used to default the number system
+            and available to your app. Off by default: a page that needs no
+            geography makes no network call. Opt in with data-location on
+            the script tag (or data-location-endpoint for your own service).
+            facet.location is null until the promise resolves; failures are
+            silent. Precise GPS is never requested — that stays your app's
+            call, on a real user gesture.
+          </p>
+          <pre id="code-fn-locate"><code>&lt;script src=".../lib/facet.js" data-location defer&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  facet.locate().then(() =&gt; {
+    if (facet.location) console.log(facet.location.city);
+  });
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-locate" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-numbers" data-llms="JavaScript API">
+          <h3>Number helpers</h3>
+          <p>
+            Numbers grouped and spoken the way the reader expects:
+            facet.groupNumber(n) groups for the active locale — lakh/crore
+            digits where that is the norm, thousands elsewhere — and
+            facet.numberWords(n) reads a big number aloud ("7.43 crore",
+            "74.25 million", "7.43 करोड़"). facet.numberSystem() reports
+            which system resolved. Every helper takes a per-call override:
+            {system: "indian"} or {system: "western"}.
+          </p>
+          <pre id="code-fn-numbers"><code>&lt;script&gt;
+  facet.groupNumber(7430000);                       // "74,30,000" or "7,430,000"
+  facet.numberWords(7430000);                       // "74.3 lakh" or "7.43 million"
+  facet.numberWords(7430000, { system: "western" }); // force one system
+  facet.numberSystem();                             // "indian" | "western"
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-numbers" data-tip="Copies this code">Copy</button></p>
+        </article>
+      </section>
+
+      <!-- ==============================
+           Group 2 · App shell & navigation
+           Screens, pagers, sheets and the floating menus.
+           ============================== -->
+      <section id="shell-fns" class="stack-loose">
+        <h2 class="text-caption">App shell &amp; navigation</h2>
+
+        <article class="element stack" id="fn-views" data-llms="View stack">
+          <h3>facet.views</h3>
+          <p>
+            The app shell behind main.view-stack: each child section is a
+            screen, one shows at a time, and navigation is hash-routed — a
+            plain &lt;a href="#settings"&gt; link changes screens, browser
+            Back walks the trail, and every screen is a URL an agent can
+            construct. facet.views is the programmatic handle: .go(id),
+            .back(), and .current. With JS off the sections render in
+            reading order, all visible.
+          </p>
+          <pre id="code-fn-views"><code>&lt;main class="view-stack"&gt;
+  &lt;section id="home"&gt;…&lt;/section&gt;
+  &lt;section id="settings"&gt;…&lt;/section&gt;
+&lt;/main&gt;
+
+&lt;script&gt;
+  facet.views.go("settings");
+  facet.views.back();
+  facet.views.current;   // "settings"
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-views" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-go" data-llms="Page transitions">
+          <h3>facet.go</h3>
+          <p>
+            Navigates to a URL with the page transition: the old page eases
+            away, the new one springs in, and the address changes normally.
+            The transition itself is opt-in markup — data-transition="page"
+            on the html tag or the script tag — and covers every same-origin
+            link automatically; facet.go(url) is for navigating from code
+            with the same feel. A link with data-no-transition snaps
+            instead. Browsers without view transitions simply navigate.
+          </p>
+          <pre id="code-fn-go"><code>&lt;html data-transition="page"&gt;
+
+&lt;script&gt;
+  facet.go("/settings.html");
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-go" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-pager" data-llms="Snap section">
+          <h3>Snap pager</h3>
+          <p>
+            Full-page snap sections that survive iOS: facet.js upgrades a
+            .snap container of .snap-section children into a pager with
+            momentum, elastic overscroll and per-section scrolling for
+            sections taller than the screen — the machinery CSS scroll-snap
+            cannot deliver on an iPhone. It wires itself: give the container
+            the class and the pager exists. Links and tab segments carrying
+            data-section page to their target.
+          </p>
+          <pre id="code-fn-pager"><code>&lt;main class="snap"&gt;
+  &lt;section class="snap-section" id="one"&gt;…&lt;/section&gt;
+  &lt;section class="snap-section" id="two"&gt;…&lt;/section&gt;
+&lt;/main&gt;
+
+&lt;button class="tab-seg" data-section="two"&gt;Two&lt;/button&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-pager" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-sheet" data-llms="Sheet &amp; menu">
+          <h3>facet.sheet</h3>
+          <p>
+            The settings-sheet engine: open, close, scrim, scroll-lock and
+            focus handling for a bottom sheet. It self-wires — a button
+            whose aria-controls names a .sheet becomes its trigger, the
+            .sheet-scrim dims and closes on tap — so most pages write no JS
+            at all. Call facet.sheet(el, scrim) to wire one yourself; it
+            returns { open, close, toggle, isOpen }, and wired sheets expose
+            the same handle as element.facetSheet.
+          </p>
+          <pre id="code-fn-sheet"><code>&lt;button class="btn" aria-controls="menu" aria-expanded="false"&gt;Menu&lt;/button&gt;
+&lt;div class="sheet-scrim" data-open="false"&gt;&lt;/div&gt;
+&lt;aside class="sheet" id="menu" data-open="false" aria-hidden="true"&gt;…&lt;/aside&gt;
+
+&lt;script&gt;
+  document.getElementById("menu").facetSheet.open();
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-sheet" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-nav-menu" data-llms="Nav menu">
+          <h3>facet.navMenu</h3>
+          <p>
+            Upgrades every floating .nav-menu cluster into an overlay: a
+            dimming scrim, body scroll-lock, a staggered reveal, Escape to
+            close, and focus moved into the open stack and back out. The
+            menu itself is a real &lt;details&gt; wrapping real links, so it
+            works with JS off and its links sit in the DOM for crawlers.
+            Runs at load on its own; call facet.navMenu() again only after
+            inserting a nav-menu into the page late.
+          </p>
+          <pre id="code-fn-nav-menu"><code>&lt;nav class="nav-menu" aria-label="Site" data-print="off"&gt;
+  &lt;details class="nav-menu-panel"&gt;
+    &lt;summary class="btn btn-pill"&gt;Menu&lt;/summary&gt;
+    &lt;div class="nav-menu-items"&gt;
+      &lt;a class="btn btn-pill" href="/"&gt;Home&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/details&gt;
+&lt;/nav&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-nav-menu" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-tab-indicator" data-llms="Tab bar">
+          <h3>facet.tabIndicator</h3>
+          <p>
+            Injects the sliding pill behind a .tab-bar's active segment and
+            animates it on per-edge springs — the leading edge leads, the
+            trailing edge stretches, both settle with a small overshoot.
+            Every .tab-bar on the page gets this at load, wired to the snap
+            pager when one exists ([data-section] segments page there).
+            facet.tabIndicator(bar) attaches it to a late-added bar and
+            returns { moveTo } for driving the pill yourself.
+          </p>
+          <pre id="code-fn-tab-indicator"><code>&lt;nav class="tab-bar" aria-label="Sections" data-print="off"&gt;
+  &lt;button class="tab-seg" aria-current="page" data-section="home"&gt;Home&lt;/button&gt;
+  &lt;button class="tab-seg" data-section="stats"&gt;Stats&lt;/button&gt;
+&lt;/nav&gt;
+
+&lt;script&gt;
+  const bar = facet.tabIndicator(document.querySelector(".tab-bar"));
+  bar.moveTo(1);
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-tab-indicator" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-scroll-gauge" data-llms="Scroll gauge">
+          <h3>facet.scrollGauge</h3>
+          <p>
+            Attaches the slim themed scroll thumb to any scroller: thumb
+            height is the visible share of the content, position is
+            progress, and it fades out entirely when nothing overflows. It
+            returns { update } — call that after content changes so the
+            thumb resizes. A metric option reports composite scrolls (the
+            pager's sections laid end to end) and onScrub turns the groove
+            into a drag handle.
+          </p>
+          <pre id="code-fn-scroll-gauge"><code>&lt;script&gt;
+  const gauge = facet.scrollGauge(document.querySelector(".sheet-scroll"));
+  gauge.update();   // after adding or removing content
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-scroll-gauge" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-controls" data-llms="App-kit self-wiring (apps are markup + data only)">
+          <h3>Settings controls</h3>
+          <p>
+            The app's settings need no JS: any element carrying data-control
+            self-wires. Theme cycles the shipped themes, appearance cycles
+            light/dark/auto, motion cycles the motion modes, sounds and
+            haptics flip their channels — and each control's .menu-value
+            span shows the live state. Sheet menu rows with data-section
+            page the snap pager. This is the app-kit rule: apps are markup
+            plus data, the wiring is the library's job.
+          </p>
+          <pre id="code-fn-controls"><code>&lt;button type="button" class="menu-item" data-control="theme"&gt;
+  Theme &lt;span class="menu-value"&gt;Default&lt;/span&gt;
+&lt;/button&gt;
+&lt;button type="button" class="menu-item" data-control="sounds"&gt;
+  Sounds &lt;span class="menu-value"&gt;On&lt;/span&gt;
+&lt;/button&gt;
+&lt;button type="button" class="menu-item" data-section="stats"&gt;Open stats&lt;/button&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-controls" data-tip="Copies this code">Copy</button></p>
+        </article>
+      </section>
+
+      <!-- ==============================
+           Group 3 · Forms & inputs
+           Formatting, ticks, scales and picks behind the controls.
+           ============================== -->
+      <section id="forms-fns" class="stack-loose">
+        <h2 class="text-caption">Forms &amp; inputs</h2>
+
+        <article class="element stack" id="fn-number-inputs" data-llms="Number input">
+          <h3>Number inputs</h3>
+          <p>
+            An input carrying data-number formats itself as you type:
+            digits group live per the active number system (12,34,567 or
+            1,234,567), a .number-words line under the field reads the
+            amount aloud in the active language, the example value clears
+            on first touch, and a .number-clear button empties it in one
+            tap. Grouping re-renders automatically when the language or
+            place changes.
+          </p>
+          <pre id="code-fn-number-inputs"><code>&lt;label class="field"&gt;
+  Amount
+  &lt;span class="number-wrap"&gt;
+    &lt;input type="text" inputmode="numeric" data-number value="1250000"&gt;
+    &lt;button type="button" class="number-clear" aria-label="Clear"&gt;&lt;/button&gt;
+  &lt;/span&gt;
+  &lt;span class="number-words"&gt;&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-number-inputs" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-sliders" data-llms="Slider">
+          <h3>Sliders</h3>
+          <p>
+            The plain slider's one piece of wiring: an input.slider inside a
+            .field keeps its &lt;output&gt; in sync, so the number beside
+            the track always matches the thumb — including on load, when
+            the HTML and the value attribute can disagree. Everything else
+            about the slider is native range behaviour and theme CSS.
+          </p>
+          <pre id="code-fn-sliders"><code>&lt;label class="field"&gt;
+  Volume &lt;output&gt;40&lt;/output&gt;
+  &lt;input type="range" class="slider" min="0" max="100" value="40"&gt;
+&lt;/label&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-sliders" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-slider-scale" data-llms="Detailed slider">
+          <h3>facet.sliderScale</h3>
+          <p>
+            The detailed slider (.slider-detail) wires itself: coarse drag
+            on the track, −/+ steppers and a number box for the exact value,
+            all in sync, firing a bubbling facet:slide {value} on any
+            change. facet.sliderScale(wrap) is the one manual piece —
+            rebuild a .slider-wrap's tick scale after you change the
+            range's min, max or step from code.
+          </p>
+          <pre id="code-fn-slider-scale"><code>&lt;script&gt;
+  const wrap = document.querySelector(".slider-wrap");
+  wrap.querySelector("input").max = 500;
+  facet.sliderScale(wrap);   // redraw the ticks for the new range
+
+  document.addEventListener("facet:slide", (e) =&gt; {
+    console.log(e.detail.value);
+  });
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-slider-scale" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-steppers" data-llms="Stepper &amp; segmented control">
+          <h3>Steppers</h3>
+          <p>
+            A .stepper's − and + buttons call the input's own stepUp and
+            stepDown, so the native min, max and step attributes rule, and
+            each bump fires input and change events as if the user had
+            typed. At the edges the matching button disables itself — the
+            state grammar's :disabled look, set live — and a feedback tick
+            marks each step.
+          </p>
+          <pre id="code-fn-steppers"><code>&lt;div class="stepper"&gt;
+  &lt;button type="button" class="stepper-down" aria-label="Fewer"&gt;−&lt;/button&gt;
+  &lt;input type="number" value="2" min="1" max="9" aria-label="Guests"&gt;
+  &lt;button type="button" class="stepper-up" aria-label="More"&gt;+&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-steppers" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-choice-select" data-llms="Choice grid">
+          <h3>facet.choiceSelect</h3>
+          <p>
+            Choice grids wire themselves — every .choice-btn in a
+            .choice-grid toggles aria-pressed as a radio group and fires a
+            bubbling facet:choice event with the pick. facet.choiceSelect
+            (grid, value) makes the pick from code — restoring a saved
+            answer, or building a wizard that pre-fills — and fires the same
+            event, so one listener serves both paths.
+          </p>
+          <pre id="code-fn-choice-select"><code>&lt;script&gt;
+  const grid = document.querySelector(".choice-grid");
+  facet.choiceSelect(grid, "monthly");
+
+  grid.addEventListener("facet:choice", (e) =&gt; {
+    console.log(e.detail.value);
+  });
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-choice-select" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-copy" data-llms="Copy buttons">
+          <h3>Copy buttons</h3>
+          <p>
+            A button carrying data-copy="#id" copies that element's text to
+            the clipboard on click and confirms with the library's own
+            toast — never by relabelling the button, which would shift
+            layout and lose the button's name to assistive tech mid-press.
+            One attribute, no JS to write.
+          </p>
+          <pre id="code-fn-copy"><code>&lt;pre id="snippet"&gt;&lt;code&gt;the text to take away&lt;/code&gt;&lt;/pre&gt;
+&lt;button class="btn btn-small" data-copy="#snippet"&gt;Copy&lt;/button&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-copy" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-filter" data-llms="Filterable card list">
+          <h3>Filter inputs</h3>
+          <p>
+            A search input carrying data-filter="#target" live-hides the
+            target's children that do not match what is typed — the markup
+            is the data, nothing is re-rendered. It powers the filterable
+            card list and the data table's toolbar search, and works on any
+            container whose children are the rows.
+          </p>
+          <pre id="code-fn-filter"><code>&lt;input type="search" placeholder="Filter projects" data-filter="#projects"&gt;
+&lt;ul class="list" id="projects"&gt;
+  &lt;li&gt;Alpha&lt;/li&gt;
+  &lt;li&gt;Beacon&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-filter" data-tip="Copies this code">Copy</button></p>
+        </article>
+      </section>
+
+      <!-- ==============================
+           Group 4 · Content & status
+           Notices, charts, icons, maps and the waiting states.
+           ============================== -->
+      <section id="content-fns" class="stack-loose">
+        <h2 class="text-caption">Content &amp; status</h2>
+
+        <article class="element stack" id="fn-toast" data-llms="Accordion, toast, dropdown menu">
+          <h3>facet.toast</h3>
+          <p>
+            A transient pill notice that announces itself politely and is
+            gone in four seconds — for outcomes that need no reply. The kind
+            sets the status dot: success, warning, error or info. One call,
+            no markup to prepare; the library owns the container and the
+            live region.
+          </p>
+          <pre id="code-fn-toast"><code>&lt;script&gt;
+  facet.toast("Report saved", "success");
+  facet.toast("Couldn't reach the server", "error");
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-toast" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-busy" data-llms="Loading skin">
+          <h3>facet.busy</h3>
+          <p>
+            The loading skin: set aria-busy="true" on any region and its
+            content skins into pulsing shape-tracing placeholders; remove it
+            and the content returns. facet.busy(el, true|false) does both
+            and upgrades text to per-line pills; slots carrying
+            data-skeleton-lines generate statistically text-shaped
+            placeholder words while empty. States are attributes, so the
+            busy look needs no JS to show — the call just sets it for you.
+          </p>
+          <pre id="code-fn-busy"><code>&lt;section id="report" aria-busy="true"&gt;…&lt;/section&gt;
+
+&lt;script&gt;
+  const region = document.querySelector("#report");
+  facet.busy(region, true);
+  await load();
+  facet.busy(region, false);
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-busy" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-chart" data-llms="Chart">
+          <h3>facet.chart</h3>
+          <p>
+            Draws the themed line chart into a host element: points with
+            labels, an optional projection (dashed from projectFrom on),
+            event markers pinned to the line, and a format option for the
+            value axis. It reads the theme's tokens, so the chart restyles
+            itself when the theme or mode changes.
+          </p>
+          <pre id="code-fn-chart"><code>&lt;div id="growth"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  facet.chart(document.querySelector("#growth"), {
+    points: [{ x: 2024, y: 120, label: "2024" },
+             { x: 2025, y: 180, label: "2025" },
+             { x: 2026, y: 260, label: "2026" }],
+    projectFrom: 2,
+    events: [{ x: 2025, label: "Launch" }],
+  });
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-chart" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-icon" data-llms="Icons">
+          <h3>facet.icon</h3>
+          <p>
+            The icon system's two handles: facet.icons is the glyph table —
+            every thin line icon by name — and facet.icon() fills every
+            svg[data-icon] on the page from it. Icons in the original markup
+            fill at load; call facet.icon() again after inserting markup, or
+            after adding your own glyphs to the table.
+          </p>
+          <pre id="code-fn-icon"><code>&lt;svg data-icon="search" aria-hidden="true"&gt;&lt;/svg&gt;
+
+&lt;script&gt;
+  facet.icons.wave = '&lt;path d="M2 12c3-4 5 4 8 0s5 4 8 0"/&gt;';
+  facet.icon();   // fill new and late-added svgs
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-icon" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-map" data-llms="Themed map">
+          <h3>facet.mapStyle</h3>
+          <p>
+            Maps that wear the theme: a div carrying data-map becomes a
+            Google Map styled from the active theme's tokens, restyled live
+            when the theme or mode changes, centered on data-lat/data-lng or
+            the visitor's coarse location. The API key rides the script tag
+            (data-maps-key) or the div (data-map-key); without one the div
+            stays a themed placeholder. facet.mapStyle() returns the styles
+            array for wiring a map yourself.
+          </p>
+          <pre id="code-fn-map"><code>&lt;div data-map data-lat="28.61" data-lng="77.21" style="height: 20rem;"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  new google.maps.Map(el, { styles: facet.mapStyle() });
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-map" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-tabs" data-llms="Tabs, breadcrumb, pagination">
+          <h3>Tabs</h3>
+          <p>
+            In-page tabs wire themselves: inside a .tabs list, the buttons
+            carrying role="tab" get the full keyboard pattern — arrow keys
+            walk the set, Home and End jump, aria-selected moves — and each
+            tab shows the panel its aria-controls names while hiding its
+            siblings. No call to make; the roles in the markup are the
+            wiring.
+          </p>
+          <pre id="code-fn-tabs"><code>&lt;div class="tabs" role="tablist" aria-label="Report"&gt;
+  &lt;button role="tab" aria-selected="true" aria-controls="panel-summary"&gt;Summary&lt;/button&gt;
+  &lt;button role="tab" aria-selected="false" aria-controls="panel-detail"&gt;Detail&lt;/button&gt;
+&lt;/div&gt;
+&lt;div id="panel-summary" role="tabpanel"&gt;…&lt;/div&gt;
+&lt;div id="panel-detail" role="tabpanel" hidden&gt;…&lt;/div&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-tabs" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-dropdowns" data-llms="Accordion, toast, dropdown menu">
+          <h3>Dropdowns</h3>
+          <p>
+            A details.dropdown is a native disclosure that facet.js polishes
+            into a menu: clicking outside closes it, Escape closes it and
+            returns focus to the summary, and choosing any button or link in
+            the .dropdown-menu closes it too. Being a real &lt;details&gt;,
+            it opens and closes with JS off.
+          </p>
+          <pre id="code-fn-dropdowns"><code>&lt;details class="dropdown"&gt;
+  &lt;summary class="btn"&gt;Actions&lt;/summary&gt;
+  &lt;div class="dropdown-menu"&gt;
+    &lt;button type="button"&gt;Rename&lt;/button&gt;
+    &lt;button type="button"&gt;Duplicate&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/details&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-dropdowns" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-dialogs" data-llms="Modal, drawer, popover">
+          <h3>Dialog triggers</h3>
+          <p>
+            One attribute opens a modal: a button whose aria-controls names
+            a &lt;dialog&gt; shows it modally on click, with a tap on the
+            backdrop closing it. Escape and &lt;form method="dialog"&gt;
+            buttons are the platform's own close paths — the library adds
+            the trigger and the outside-click, nothing more.
+          </p>
+          <pre id="code-fn-dialogs"><code>&lt;button class="btn btn-primary" aria-controls="confirm"&gt;Delete…&lt;/button&gt;
+
+&lt;dialog id="confirm" class="modal"&gt;
+  &lt;p&gt;Delete this report?&lt;/p&gt;
+  &lt;form method="dialog"&gt;
+    &lt;button class="btn"&gt;Cancel&lt;/button&gt;
+    &lt;button class="btn btn-primary" value="yes"&gt;Delete&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-dialogs" data-tip="Copies this code">Copy</button></p>
+        </article>
+      </section>
+
+      <!-- ==============================
+           Group 5 · Motion & app feel
+           The engines: motion, light, sound, install and paper.
+           ============================== -->
+      <section id="feel-fns" class="stack-loose">
+        <h2 class="text-caption">Motion &amp; app feel</h2>
+
+        <article class="element stack" id="fn-motion" data-llms="Parallax &amp; idle motion">
+          <h3>facet.motion</h3>
+          <p>
+            The ambient motion engine: one vector from the cursor, the
+            device tilt, or an idle sweep every three seconds, spent on two
+            channels. The move channel translates registered elements
+            (parallax); the light channel steers registered elements'
+            --shine-x/--shine-y custom properties (shine). Elements carrying
+            data-parallax or data-shine register themselves;
+            facet.motion.register adds more, and setMode switches the
+            source. Reduced motion collapses it all to nothing.
+          </p>
+          <pre id="code-fn-motion"><code>&lt;img src="hero.png" data-parallax alt=""&gt;
+
+&lt;script&gt;
+  facet.motion.register(".hero-art", { xMax: 12, yMax: 8 });
+  facet.motion.register(".card", { light: true });
+  facet.motion.setMode("idle");   // "off" | "cursor" | "tilt" | "idle"
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-motion" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-shine" data-llms="Shine">
+          <h3>Shine (data-shine)</h3>
+          <p>
+            A specular light that travels with the device: mark any element
+            data-shine and a gleam tracks the motion vector across it —
+            cursor on desktop, tilt on a phone, a slow idle sweep otherwise.
+            The engine writes only the --shine-x/--shine-y custom
+            properties, never transform, so shine composes with any
+            component's own physics. One attribute, no call to make.
+          </p>
+          <pre id="code-fn-shine"><code>&lt;span class="icon-badge" data-shine&gt;
+  &lt;svg data-icon="star" aria-hidden="true"&gt;&lt;/svg&gt;
+&lt;/span&gt;
+
+&lt;button class="btn btn-primary" data-shine&gt;Get started&lt;/button&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-shine" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-backgrounds" data-llms="Backgrounds">
+          <h3>Background engines</h3>
+          <p>
+            The two background variants' JS halves. Glyph grids: an element
+            carrying data-bg-glyph draws its repeating character or icon
+            pattern and redraws itself when the glyph, size, theme or mode
+            changes — facet.glyphBackground(el) forces one redraw by hand.
+            Fluid: data-bg-fluid mounts the drifting bokeh layers at load —
+            facet.fluidBackground(el) mounts a surface added later. Both
+            engines are otherwise hands-off.
+          </p>
+          <pre id="code-fn-backgrounds"><code>&lt;section data-bg-glyph="sparkle" data-bg-glyph-size="28"&gt;…&lt;/section&gt;
+&lt;section data-bg-fluid&gt;…&lt;/section&gt;
+
+&lt;script&gt;
+  facet.glyphBackground(document.querySelector("[data-bg-glyph]"));
+  facet.fluidBackground(lateAddedSection);
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-backgrounds" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-feedback" data-llms="Sound &amp; haptics">
+          <h3>facet.feedback</h3>
+          <p>
+            Synthesized UI sound and vibration with no audio files: short
+            Web Audio blips plus navigator.vibrate haptics, both on by
+            default and already wired into the components — a tick as a
+            stepper bumps, a soft snap as a pager settles. Fire it yourself
+            with .tap(), .tick(), .snap() or .success(); mute a channel by
+            setting .sound.enabled or .haptic.enabled to false (the settings
+            sheet's data-control="sounds"/"haptics" toggles do exactly
+            that).
+          </p>
+          <pre id="code-fn-feedback"><code>&lt;script&gt;
+  facet.feedback.success();            // after a save lands
+  facet.feedback.sound.enabled = false;
+  facet.feedback.haptic.enabled = true;
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-feedback" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-install" data-llms="Make a page installable (PWA) — offline, install and updates">
+          <h3>facet.install &amp; PWA</h3>
+          <p>
+            The install machinery: data-service-worker="/sw.js" on the
+            script tag registers your one-line worker stub (which loads the
+            library's caching engine), buttons carrying data-install stay
+            hidden until the browser offers installation and then show the
+            real prompt, and facet.install() does the same from code.
+            facet.installNudge(el) runs the add-to-home-screen flow on a
+            .nudge-scrim and returns { standalone, installed, addNow,
+            never }.
+          </p>
+          <pre id="code-fn-install"><code>&lt;script src=".../lib/facet.js" data-service-worker="/sw.js" defer&gt;&lt;/script&gt;
+
+&lt;button class="btn btn-primary" data-install hidden&gt;Install the app&lt;/button&gt;
+
+&lt;script&gt;
+  facet.install();   // the same prompt, from code
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-install" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-print" data-llms="Print &amp; export">
+          <h3>Print wiring</h3>
+          <p>
+            The JS half of the print system: before printing, every closed
+            fold and accordion opens (a &lt;details&gt; cannot be opened
+            from CSS alone) and lazy images load so nothing prints blank;
+            after printing, exactly what was opened closes again. Any button
+            carrying data-print-action="page" prints the page — the
+            documented Save-as-PDF affordance. Everything else about paper
+            (roles, ink, page breaks) is the CSS print stylesheet's job.
+          </p>
+          <pre id="code-fn-print"><code>&lt;button class="btn" data-print-action="page" data-event="export-pdf"&gt;
+  Save as PDF
+&lt;/button&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-print" data-tip="Copies this code">Copy</button></p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==============================
+       Site menu (float button + sheet)
+       The one navigation surface, shared across the docs pages: pages,
+       files, theme cycling and the app controls. Authored at the end of
+       <body> — controls last, per the reading-order law.
+       ============================== -->
+    <button class="float-btn float-btn-right" aria-controls="site-menu" aria-expanded="false"
+            aria-label="Open menu" data-tip="Navigation, files and settings" data-event="open-site-menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="sheet-scrim" data-open="false"></div>
+    <aside class="sheet" id="site-menu" data-open="false" aria-hidden="true" aria-label="Menu">
+      <div class="sheet-scroll">
+        <a class="wordmark" href="/">facet</a>
+        <span class="menu-label">Navigate</span>
+        <a class="menu-item" href="/" data-event="nav-home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 11 8-7 8 7M6 9.5V20h12V9.5"/></svg> Home</a>
+        <a class="menu-item" href="/library.html" data-event="nav-library"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg> Component library</a>
+        <a class="menu-item" href="/functions.html" aria-current="page" data-event="nav-functions"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> Function library</a>
+        <a class="menu-item" href="/product.html" data-event="nav-product"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 5-8 5-8-5Z"/><path d="M4 13l8 5 8-5"/></svg> Build a product</a>
+        <a class="menu-item" href="/build.html" data-event="nav-build"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2"/><circle cx="8" cy="16" r="2"/></svg> Build a theme</a>
+        <a class="menu-item" href="https://github.com/tanishksharma/Facet" data-event="nav-github"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H5v14h14v-4M13 4h7v7M20 4l-9 9"/></svg> GitHub</a>
+
+        <span class="menu-label">Files</span>
+        <a class="menu-item" href="/llms.txt" data-event="ref-llms"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6ZM14 3v4h4"/></svg> llms.txt</a>
+        <a class="menu-item" href="/CLAUDE.md" data-event="ref-claude"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6ZM14 3v4h4"/></svg> CLAUDE.md</a>
+        <a class="menu-item" href="/lib/facet.css" data-event="ref-css"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> facet.css</a>
+        <a class="menu-item" href="/lib/facet.js" data-event="ref-js"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> facet.js</a>
+
+        <span class="menu-label">Theme</span>
+        <button type="button" class="menu-item" data-control="theme" aria-label="Theme: tap to cycle" data-tip="Cycles the palette: Default, Velvet, Aero, Elegant" data-event="cycle-theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z"/></svg>
+          Theme <span class="menu-value">Default</span>
+        </button>
+      </div>
+      <div class="sheet-foot">
+        <div class="sheet-group menu-icon-row">
+          <button type="button" class="menu-icon-btn" data-control="appearance" aria-label="Appearance: light, dark or auto" data-tip="Cycles facet.scheme — Light, Dark, Auto">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
+            <span class="menu-value">Auto</span>
+          </button>
+          <button type="button" class="menu-icon-btn" data-control="motion" aria-label="Motion, parallax and shine: off, cursor, tilt or idle" data-tip="Cycles facet.motion — the motion engine behind parallax and shine: Off, Cursor, Tilt, Idle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="10" height="12" rx="2"/><path d="M16 8l4 4-4 4M11 12h9"/></svg>
+            <span class="menu-value">Cursor</span>
+          </button>
+          <button type="button" class="menu-icon-btn" data-control="sounds" aria-label="Sounds: on or off" data-tip="Flips facet.feedback.sound.enabled">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8 8 0 0 1 0 12"/></svg>
+            <span class="menu-value">On</span>
+          </button>
+          <button type="button" class="menu-icon-btn" data-control="haptics" aria-label="Haptics: on or off" data-tip="Flips facet.feedback.haptic.enabled">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="8" height="18" rx="2"/><path d="M4 9v6M20 9v6"/></svg>
+            <span class="menu-value">On</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+  <script src="/docs.js" defer></script>
+</body>
+</html>

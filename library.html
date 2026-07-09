@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Library — Facet</title>
-  <meta name="description" content="The whole Facet library on one page: tokens and base styles, every component grouped and filterable, the block layer, whole-page templates with live device previews, and the app-feel layer — motion, sound and the app kit.">
-  <meta property="og:title" content="Library — Facet">
-  <meta property="og:description" content="The whole Facet library on one page: tokens and base styles, every component grouped and filterable, the block layer, whole-page templates with live device previews, and the app-feel layer — motion, sound and the app kit.">
+  <title>Component library — Facet</title>
+  <meta name="description" content="The whole Facet library, live: tokens and base styles, every component grouped and filterable, the block layer, whole-page templates with live device previews, and the app-feel layer — motion, sound and the app kit.">
+  <meta property="og:title" content="Component library — Facet">
+  <meta property="og:description" content="The whole Facet library, live: tokens and base styles, every component grouped and filterable, the block layer, whole-page templates with live device previews, and the app-feel layer — motion, sound and the app kit.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://facet-kappa.vercel.app/library.html">
   <meta property="og:image" content="https://facet-kappa.vercel.app/icons/icon-512.png">
@@ -31,7 +31,9 @@
              data-tip="Type to filter the wall below" data-tip-below>
       <nav aria-label="Sections">
         <a class="nav-overview" href="#intro">Overview</a>
-        <div class="nav-group side-index-group" data-group="layer1">
+        <div class="nav-group side-index-group" data-group="layer1"
+             data-page-kicker="Layer 1"
+             data-page-lead="Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed.">
           <a class="nav-group-name side-index-name" href="#layer1">Tokens &amp; base</a>
         <ul>
           <li><a href="#typography">Typography</a></li>
@@ -44,7 +46,9 @@
           <li><a href="#print">Print &amp; export</a></li>
         </ul>
         </div>
-        <div class="nav-group side-index-group" data-group="layer2">
+        <div class="nav-group side-index-group" data-group="layer2"
+             data-page-kicker="Layer 2"
+             data-page-lead="Every reusable piece, live and themed — built from the tokens, grouped by job.">
           <a class="nav-group-name side-index-name" href="#layer2">Components</a>
         <p class="nav-sub side-index-sub">Layout primitives</p>
         <ul>
@@ -99,7 +103,9 @@
           <li><a href="#states">Component states</a></li>
         </ul>
         </div>
-        <div class="nav-group side-index-group" data-group="layer3">
+        <div class="nav-group side-index-group" data-group="layer3"
+             data-page-kicker="Layer 3"
+             data-page-lead="The components, assembled into ready page sections you copy whole.">
           <a class="nav-group-name side-index-name" href="#layer3">Blocks</a>
         <ul>
           <li><a href="#block-card-grid">Card grid &amp; row</a></li>
@@ -119,7 +125,9 @@
           <li><a href="#block-article">Article set</a></li>
         </ul>
         </div>
-        <div class="nav-group side-index-group" data-group="templates">
+        <div class="nav-group side-index-group" data-group="templates"
+             data-page-kicker="Layer 4"
+             data-page-lead="Whole pages — full app and site layouts you rename and fill in.">
           <a class="nav-group-name side-index-name" href="#layer4">Templates</a>
         <ul>
           <li><a href="#template-landing">Landing page</a></li>
@@ -128,7 +136,9 @@
           <li><a href="#templates">Every template</a></li>
         </ul>
         </div>
-        <div class="nav-group side-index-group" data-group="appfeel">
+        <div class="nav-group side-index-group" data-group="appfeel"
+             data-page-kicker="Layer 5"
+             data-page-lead="What makes a finished page feel native: motion, sound, surfaces and the app kit.">
           <a class="nav-group-name side-index-name" href="#layer5">App feel</a>
         <p class="nav-sub side-index-sub">Motion &amp; surfaces</p>
         <ul>
@@ -3557,7 +3567,8 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
         <a class="wordmark" href="/">facet</a>
         <span class="menu-label">Navigate</span>
         <a class="menu-item" href="/" data-event="nav-home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 11 8-7 8 7M6 9.5V20h12V9.5"/></svg> Home</a>
-        <a class="menu-item" href="/library.html" data-event="nav-library"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg> Library</a>
+        <a class="menu-item" href="/library.html" data-event="nav-library"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg> Component library</a>
+        <a class="menu-item" href="/functions.html" data-event="nav-functions"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> Function library</a>
         <a class="menu-item" href="/product.html" data-event="nav-product"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 5-8 5-8-5Z"/><path d="M4 13l8 5 8-5"/></svg> Build a product</a>
         <a class="menu-item" href="/build.html" data-event="nav-build"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2"/><circle cx="8" cy="16" r="2"/></svg> Build a theme</a>
         <a class="menu-item" href="https://github.com/tanishksharma/Facet" data-event="nav-github"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H5v14h14v-4M13 4h7v7M20 4l-9 9"/></svg> GitHub</a>

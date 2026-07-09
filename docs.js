@@ -172,8 +172,11 @@ function initWallSearch() {
    Each entry's h3 is matched against the file's ## / ### section
    titles; the matching section's text renders verbatim in the entry's
    AI-instructions block, so a person reads exactly what an agent
-   reads. Entries whose title has no llms section keep any hand-written
-   .ai-notes as a fallback. */
+   reads. An entry whose title differs from its llms section (the
+   function pages name the API, the file names the component) points
+   at the section with data-llms="Section title" on the article.
+   Entries with no llms section keep any hand-written .ai-notes as a
+   fallback. */
 async function initAiNotes() {
   const articles = [...document.querySelectorAll("article.element")];
   if (!articles.length) return;
@@ -188,7 +191,7 @@ async function initAiNotes() {
   for (const article of articles) {
     const h3 = article.querySelector(":scope > h3");
     if (!h3) continue;
-    const body = sections[h3.textContent.trim().toLowerCase()];
+    const body = sections[(article.dataset.llms || h3.textContent).trim().toLowerCase()];
     if (!body) continue;
     let notes = article.querySelector(":scope > .ai-notes");
     if (!notes) {
@@ -328,14 +331,22 @@ function initLibraryPages() {
   const narrow = matchMedia("(max-width: 56rem)");
   let searching = false;
 
-  // ----- the model: layers and their entries, read from the sidebar
-  const LAYERS = [
-    { hash: "layer1", group: "layer1",    kicker: "Layer 1", title: "Tokens & base", lead: "Every design decision as a named variable — type, color, space, shape, motion — plus raw semantic HTML already designed." },
-    { hash: "layer2", group: "layer2",    kicker: "Layer 2", title: "Components",    lead: "Every reusable piece, live and themed — built from the tokens, grouped by job." },
-    { hash: "layer3", group: "layer3",    kicker: "Layer 3", title: "Blocks",        lead: "The components, assembled into ready page sections you copy whole." },
-    { hash: "layer4", group: "templates", kicker: "Layer 4", title: "Templates",     lead: "Whole pages — full app and site layouts you rename and fill in." },
-    { hash: "layer5", group: "appfeel",   kicker: "Layer 5", title: "App feel",      lead: "What makes a finished page feel native: motion, sound, surfaces and the app kit." },
-  ];
+  // ----- the model: the page's groups, read from the sidebar. Each
+  // .nav-group is one card page: its label link names the page and its
+  // #hash, and the group carries the page's kicker and lead as data
+  // attributes — so this router serves any catalogue page (the component
+  // library's five layers, the function library's groups) unchanged.
+  const LAYERS = [...index.querySelectorAll(".nav-group[data-group]")].map((g) => {
+    const name = g.querySelector(".nav-group-name");
+    if (!name) return null;
+    return {
+      hash: (name.getAttribute("href") || "#").slice(1),
+      group: g.dataset.group,
+      kicker: g.dataset.pageKicker || "",
+      title: name.textContent.trim(),
+      lead: g.dataset.pageLead || "",
+    };
+  }).filter(Boolean);
   const flat = [];                                   // ordered entries for previous/next
   const unitFor = (id) => {
     const target = id && document.getElementById(id);
@@ -1168,7 +1179,13 @@ function initSkinLab() {
 
 document.addEventListener("DOMContentLoaded", async () => {
   orderEntryParts();   // preview first, options after — the entry structure
-  for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
+  for (const article of document.querySelectorAll("article.element")) {
+    if (article.querySelector(".demo")) { renderSnippet(article); continue; }
+    // No demo (the function pages): the code block is hand-authored —
+    // color it the same way the serialized snippets are.
+    const code = article.querySelector("pre code");
+    if (code && code.textContent.trim()) code.innerHTML = highlightHtml(code.textContent);
+  }
   initChips();
   initConfigChips();
   initModePanels();

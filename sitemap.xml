@@ -7,6 +7,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://facet-kappa.vercel.app/</loc></url>
   <url><loc>https://facet-kappa.vercel.app/library.html</loc></url>
+  <url><loc>https://facet-kappa.vercel.app/functions.html</loc></url>
   <url><loc>https://facet-kappa.vercel.app/product.html</loc></url>
   <url><loc>https://facet-kappa.vercel.app/build.html</loc></url>
   <url><loc>https://facet-kappa.vercel.app/llms.txt</loc></url>

@@ -37,9 +37,12 @@ The repo root is the library's website, deployed by Vercel as a static site on e
   card.html        3.5x2in business card, front/back + print sheet
   manifest.json    the PWA manifest template
 index.html         home: philosophy, curated features, how-to (people vs AI), principles
-library.html       the whole library on one page — one growing ladder:
+library.html       the Component library — one growing ladder:
                    Layer 1 Tokens & base, 2 Components (grouped + filterable),
                    3 Blocks, 4 Templates (with live device previews), 5 App feel
+functions.html     the Function library — the behaviour twin: one entry per
+                   facet.js feature (name, description, code, AI instructions
+                   pulled live from llms.txt); same chrome, no previews
 build.html         theme builder + Skin Lab
 docs.css           docs-site styles (NOT part of /lib)
 docs.js            docs-site behaviour (NOT part of /lib)
@@ -81,9 +84,17 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     Truth for: the human pitch
 
 `library.html`
-    What:      the catalogue — Layers 1-5 live, with exact snippets + reference blocks
+    What:      the Component library — Layers 1-5 live, with exact snippets + reference blocks
     Read by:   people
     Truth for: the live component wall (demos + copy-paste HTML)
+
+`functions.html`
+    What:      the Function library — one entry per facet.js feature: name,
+               plain description, the exact call or attribute as code, and AI
+               instructions pulled live from llms.txt (data-llms names the
+               section when the entry title differs). No previews or options.
+    Read by:   people
+    Truth for: the behaviour catalogue (what each facet.js feature does + how to call it)
 
 `build.html`
     What:      visual theme builder + Skin Lab
@@ -153,6 +164,7 @@ Adding or changing a component means updating all of these in the **same commit*
 1. `/lib/facet.css` — the component's own commented section.
 2. `/lib/facet.js` — its behaviour, if any (one named function).
 3. `library.html` — its wall entry: live demo of every variant/state + the exact snippet.
+   If the change ships or alters a facet.js behaviour, `functions.html` gets (or updates) its entry too: name, plain description, the exact call or attribute as code, data-llms pointing at the llms.txt section.
 4. `llms.txt` — its full usage entry, plus its line in the capability inventory. **llms.txt is the source of truth for "does this exist".**
 5. `index.html` — a curated Features card ONLY if it is a headline, user-facing capability. The home Features are the human subset, not the exhaustive list; the exhaustive list is `llms.txt`.
 6. The Notion to-do row (All To Dos, Project = Facet) — flip it to Done, and add new rows for anything discovered along the way.
@@ -1097,6 +1109,6 @@ The full shipped history is in git and in the live files (facet.css / facet.js /
 - The entry structure (decided 9 Jul 2026): every wall entry reads, in order — title · description (plain words only: what it is, no class names) · variant row (when variants exist) · PREVIEW · customization rows (each chip row labeled by its aria-label) · code (live, following the visible variant) · AI instructions (.ai-notes — pulled LIVE from llms.txt by docs.js: each entry's h3 is matched to the file's ##/### section and its text renders verbatim, so a person reads exactly what an agent reads; hand-written .ai-notes markup is only the JS-off fallback; llms.txt component sections should open with a WHEN TO USE line for this reason). docs.js enforces preview-before-options for older markup.
 - Variant sections on the wall (decided 9 Jul 2026): when one component ships variants that differ in machinery, not just a class flip (the background's grid vs fluid), it stays ONE wall entry — a leading "Variant:" chip row switches between variant sections, each with its own demo surface and its own control cluster, and the copy snippet always serializes the visible variant. First user: Backgrounds (Variant: Grid | Fluid). This is how any future multi-variant component presents.
 - Variant vs component (decided 8 Jul 2026): a variant flips one class on the SAME markup and behaviour (.btn-primary, .list-boxed, .nav-menu-right); when markup, position or behaviour differ, it is a different component, and the sharing happens through primitives and tokens plus a Build advice entry for choosing between them. Concretely: the four navigations (top-menu block, nav-menu cluster, tab bar, sheet) stay separate components; a list row is ONE component whose looks are slot compositions (icon/avatar, title, description, value/badge/action in the trail), never sibling components.
-- The site is multi-page. The header nav is Home · Library · Build a product · Build a theme · GitHub; llms.txt (for AI) and CLAUDE.md (for contributors) are linked from the home page's "How to use Facet" tracks and from the floating menu's Files group, not as top-level nav items. (The old Components and Layouts pages merged into Library.)
+- The site is multi-page. The header nav is Home · Component library · Function library · Build a product · Build a theme · GitHub; llms.txt (for AI) and CLAUDE.md (for contributors) are linked from the home page's "How to use Facet" tracks and from the floating menu's Files group, not as top-level nav items. (The old Components and Layouts pages merged into Library.)
 - App logic, data and state live in projects, never in the library.
 - (Token, accent, border, spacing/type and theme decisions live in the Naming and Themes sections above — not repeated here.)

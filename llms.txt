@@ -175,9 +175,12 @@ URL; stable IDs and data-event action names; this file as the one-fetch
 manual; docs descriptions written as AI instructions, identical to source
 file comments.
 
-The Library page: every component live, with variant/state
-chips; copy buttons serve the exact HTML serialized from the live DOM;
-search, scrollspy sidebar, live theme switching.
+The Component library page (/library.html): every component live, with
+variant/state chips; copy buttons serve the exact HTML serialized from
+the live DOM; search, scrollspy sidebar, live theme switching. The
+Function library page (/functions.html) is its twin for behaviour: one
+entry per facet.js feature — what it does, the exact call or attribute,
+and the same AI instructions this file carries.
 
 ## Consume it
 
@@ -190,6 +193,9 @@ when the library does. (If the library moves to another domain, swap the
 host; everything is served from /lib on whatever domain hosts it.)
 
 ## Theming
+
+WHEN TO USE: to pick or change the whole look — one attribute for the
+theme, one for dark mode, and one call to change either live.
 
 One attribute on the html tag switches the theme, layout containers
 included. Dark mode is a second attribute and composes with every theme.
@@ -1386,6 +1392,9 @@ clipping off the screen.
 
 ## JavaScript API
 
+WHEN TO USE: the few moments an app really needs a call — everything
+else wires itself from data attributes in the markup.
+
 facet.js wires itself to data attributes on DOMContentLoaded; pages opt in
 by writing HTML, never JS. A tiny public API is exposed as window.facet
 for calculator apps:
@@ -1456,7 +1465,25 @@ for calculator apps:
     facet.translate()          (re)apply content-language variants after
                                inserting markup
 
+### Copy buttons
+
+WHEN TO USE: any button that copies text on click — a snippet, a share
+link, a result. One attribute, no JS to write.
+
+What it is: a button carrying data-copy="#id" copies that element's
+text to the clipboard on click and confirms with the library's own
+toast — never by relabelling the button, which would shift layout and
+lose the button's name to assistive tech mid-press. What it is for:
+"Copy" actions beside code blocks, generated links and results. When
+to use it: wherever a reader takes text away with one tap.
+
+    <pre id="snippet"><code>the text to take away</code></pre>
+    <button class="btn btn-small" data-copy="#snippet">Copy</button>
+
 ## Page transitions
+
+WHEN TO USE: multi-page sites and apps that should feel continuous —
+one attribute and every same-origin navigation animates.
 
 Put data-transition="page" on the html tag (or the facet.js script tag,
 or facet.set({transition: "page"})) and every same-origin navigation
@@ -1468,6 +1495,9 @@ cross-document view transitions; browsers without support simply
 navigate. data-motion="off" and prefers-reduced-motion make pages snap.
 
 ## Make a page installable (PWA) — offline, install and updates
+
+WHEN TO USE: any page that should open from a home screen and work
+offline — three small files at the root and the library does the rest.
 
 Three small files at your project ROOT turn any Facet page into an
 installable, offline-capable app. Facet ships the caching engine
@@ -1890,6 +1920,9 @@ WHEN TO USE: any page that should install to a home screen — three small files
 What it is: the setup that turns any Facet page into an installable, offline-capable app. What it is for: products you want on a phone's home screen — opening full-screen, working offline. When to use it: any app-shaped page. Facet ships the caching engine (/lib/facet-sw.js) plus a working reference set — /sw.js, /manifest.json and /icons/ — that you copy into your own project root. The full step-by-step recipe lives in llms.txt; the app template ships the exact head block below.
 
 ## App-kit self-wiring (apps are markup + data only)
+
+WHEN TO USE: any app-shaped page — write the markup, the library
+wires the behaviour; there is no per-app glue code to write.
 
 The app kit wires the whole app shell from markup, so a calculator is
 markup + its own data/logic with no library-shaped glue:
