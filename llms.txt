@@ -1122,9 +1122,10 @@ nothing else drives (modes: off | cursor | tilt | idle). Cursor and
 tilt mirror the real world directly — just enough smoothing to hide
 jitter, no easing lag — and when the pointer or device goes still the
 vector drifts slowly back to centre, so nothing rests jammed
-off-centre. In idle the vector sweeps one fast full lap of the rim
-(about a second), rests three, and sweeps again; gated touch devices
-land here by default. The same engine's light channel drives the shine
+off-centre. Idle rests at that same centre and, every few seconds,
+takes one fast smooth loop — down out of the centre, once around, and
+back up into it (about 0.8s) — so idle starts and ends exactly where
+everything else rests; gated touch devices land here by default. The same engine's light channel drives the shine
 effect (next entry) from the same vector. The idle-* classes
 (.idle-float, .idle-sway, .idle-pulse) give resting elements a slow
 pulse; they animate the separate translate/rotate/scale properties so
@@ -1479,8 +1480,8 @@ for calculator apps:
                                steers their --shine-x/--shine-y light
                                (shine); .setMode("off"|"cursor"|"tilt"|
                                "idle") — "tilt" asks iOS permission,
-                               "idle" sweeps one fast lap of the rim,
-                               then rests three seconds
+                               "idle" loops out of the centre and back
+                               (~0.8s), then rests three seconds
     facet.sliderScale(wrap)    rebuild a .slider-wrap's tick scale after
                                a range change
     facet.mapStyle()           the active theme as a Google Maps styles
