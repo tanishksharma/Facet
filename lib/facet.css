@@ -495,8 +495,8 @@
 [data-theme="velvet"] {
   --background: #e4e4e9;
   --surface: #d6d6db;         /* the well: carved things sit on this */
-  --text: #636367;
-  --text-muted: #56565C;      /* deepened: AA even on the carved wells */
+  --text: #56565C;            /* deepened: AA even on the carved wells (4.13 before) */
+  --text-muted: #5c5c61;      /* one step softer, still AA on the wells */
   --border: #cfcfd4;
 
   --accent-1: #8a6c26;        /* the gold */
@@ -507,7 +507,7 @@
   --accent-2: #e6e6ea;        /* the raised face family */
   --accent-2-hover: #dfdfe3;
   --accent-2-pressed: #d6d6db;
-  --on-accent-2: #636367;
+  --on-accent-2: #5c5c61;     /* the button ink: AA on the whole face gradient */
 
   --accent-3: #6B531C;        /* gold ink deepened: AA as link text on the wells */
   --accent-3-hover: #5F4A19;
@@ -535,8 +535,8 @@
   --v-face-accent:
     radial-gradient(120% 90% at 50% 0%, rgba(255,255,255,0.6), transparent 68%),
     linear-gradient(180deg, #ecd8b2, #d1bb91);
-  --v-ink: #8c8c90;
-  --v-ink-strong: #636367;
+  --v-ink: #5c5c61;         /* deepened from the reference's #8c8c90: control labels must be AA on the face; the emboss shadow keeps the soft look */
+  --v-ink-strong: #56565C;
   --v-ink-accent: #5C4A18;
   --v-gold: #8a6c26;
   --v-weight: 750;
