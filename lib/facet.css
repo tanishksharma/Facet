@@ -2829,6 +2829,93 @@ details[open] .when-closed { display: none; }
 details .when-closed,
 details[open] .when-open { display: inline-flex; align-items: center; gap: inherit; }
 
+/* ----- SIDE INDEX: the sticky index panel beside long content -----
+   What it is: the index panel this site's own library page uses — a
+   sticky aside on a surface fill with a hairline and rounded corners,
+   holding grouped link lists. Each .side-index-group opens with an
+   uppercase name (make it an <a> to link the group's own page); groups
+   divide with hairlines; .side-index-sub labels caption runs of links;
+   the current link marks itself with aria-current="page" or
+   .is-current and reads as a filled pill. The panel caps to the
+   viewport and scrolls its own content, never the page. What it is
+   for: docs, references, settings hubs — any page with one long or
+   paged content column and a persistent map beside it. When to use
+   it: put the aside and the content in a two-column grid (the grid
+   wrapper is the page's layout job, like the docs-layout on
+   /library.html); on narrow screens stack it or hide the groups and
+   keep a search box. (Promoted by extraction from the docs chrome.)
+
+   Usage:
+     <aside class="side-index" aria-label="Page index">
+       <nav aria-label="Sections">
+         <div class="side-index-group">
+           <a class="side-index-name" href="#layer2">Components</a>
+           <p class="side-index-sub">Forms &amp; controls</p>
+           <ul>
+             <li><a href="#button" aria-current="page">Button</a></li>
+           </ul>
+         </div>
+       </nav>
+     </aside>
+*/
+.side-index {
+  position: sticky;
+  top: var(--space-stack);
+  max-height: calc(100dvh - 2 * var(--space-stack));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-control);
+  padding: var(--space-card) var(--space-inline);
+  background: var(--surface);
+  border: var(--border-hairline) solid var(--border);
+  border-radius: var(--radius-card);
+}
+.side-index ul { list-style: none; padding: 0; margin: 0 0 var(--space-control); }
+.side-index a {
+  display: block;
+  padding: 0.4rem var(--space-inline);
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: var(--text-footnote);
+  border-radius: var(--radius-control);
+  transition: background var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+.side-index a:hover { color: var(--text); background: var(--surface-hover); }
+.side-index a.is-current,
+.side-index a[aria-current="page"] {
+  color: var(--text);
+  font-weight: var(--weight-strong);
+  background: var(--surface-active);
+}
+.side-index-group { padding-block: var(--space-inline); }
+.side-index-group + .side-index-group { border-top: var(--border-hairline) solid var(--border); }
+.side-index a.side-index-name,
+.side-index-name {
+  display: block;
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: var(--weight-strong);
+  color: var(--text-muted);
+  padding: var(--space-tight) var(--space-inline);
+}
+.side-index a.side-index-name:hover { color: var(--text); background: none; }
+.side-index-sub {
+  margin: var(--space-inline) 0 var(--space-tight);
+  padding-inline: var(--space-inline);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-strong);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.side-index-sub:first-of-type { margin-top: var(--space-tight); }
+.side-index-sub + ul a { padding-left: calc(var(--space-inline) + var(--space-stack)); }
+.side-index-group > ul { padding-block: var(--space-tight) 0; margin-bottom: 0; }
+
 /* Top menu: logo, links, actions; on phones the header stays ONE line —
    wordmark left, a native details "Menu" disclosure right (give its
    summary .when-closed/.when-open labels so Menu becomes Close). Opening
