@@ -301,14 +301,16 @@ group names and menu labels.
 
 ### Fonts
 
-WHEN TO USE: never pick a font in a component — ask for a role. Six
+WHEN TO USE: never pick a font in a component — ask for a role. Seven
 faces, one per job: --font-heading (calligraphic serif),
 --font-body (rounded sans, the interface voice), --font-mono
 (technical monospace — also the eyebrow voice at --weight-eyebrow,
 always caps), --font-quote (editorial serif, italic, for quotes and
 callouts), --font-reading (editorial serif, upright, for long-form
 article text), --font-numeric (display serif for big standalone
-numbers). The Default theme loads them with one @import at the top of
+numbers), --font-hand (a handwritten pen for margin notes, hand
+annotations and rough work — a human hand on the interface, never for
+body text). The Default theme loads them with one @import at the top of
 facet.css; every stack ends in a system fallback, so text renders
 instantly and survives the fonts failing. A theme re-voices the whole
 library by swapping the faces; nothing downstream changes.

@@ -240,8 +240,9 @@
       <article class="element stack" id="fonts">
         <h3>Fonts</h3>
         <p>
-          Six type families, one per job: headings, body text, code and
-          labels, quotes, long-form reading and big numbers. The theme picks
+          Seven type families, one per job: headings, body text, code and
+          labels, quotes, long-form reading, big numbers and a handwritten
+          pen for annotations. The theme picks
           the actual fonts; a page only ever asks for the role, and each
           card below names the font the active theme chose. Switch the
           theme and the samples re-render.
@@ -284,6 +285,12 @@
           </p>
         </article>
         <article class="stack-tight">
+          <p class="type-label" style="margin: 0;">--font-hand · hand annotations and rough work</p>
+          <p style="font-family: var(--font-hand); font-size: clamp(2.75rem, 6vw, 4.25rem); line-height: var(--leading-display);">
+            The quick brown fox jumps over the lazy dog 0123456789
+          </p>
+        </article>
+        <article class="stack-tight">
           <p class="type-label" style="margin: 0;">--font-numeric · big standalone figures</p>
           <p style="font-family: var(--font-numeric); font-size: clamp(2.75rem, 6vw, 4.25rem); line-height: var(--leading-display); font-variant-numeric: tabular-nums lining-nums;">
             The quick brown fox jumps over the lazy dog 0123456789
@@ -297,7 +304,8 @@ body        { font-family: var(--font-body); }
 code, kbd   { font-family: var(--font-mono); }
 blockquote  { font-family: var(--font-quote); }
 article p   { font-family: var(--font-reading); }
-.big-number { font-family: var(--font-numeric); }</code></pre>
+.big-number { font-family: var(--font-numeric); }
+.margin-note { font-family: var(--font-hand); }</code></pre>
         <p><button class="btn btn-small" data-copy="#code-fonts" data-tip="Copies the font role tokens">Copy</button></p>
       </article>
 
