@@ -355,7 +355,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
        ============================== -->
   ```
 - Prose vs stack (the rhythm rule). Raw prose — a typography specimen, an article, anything meant to read as writing — sits in NORMAL FLOW, never in `.stack`. In flow the `--flow-*` heading/paragraph margins collapse into proper rhythm (a heading's `em`-based top margin is proportional to its own size, so big headings breathe more). `.stack`/`.row` are for APP LAYOUT: they space children with a fixed `gap`. Putting prose in a `.stack` gives you both the gap AND the (non-collapsing) flow margins — visibly too much space. Pick one per context.
-  - Known issue to fix site-wide (assess before doing): the `:where(.stack,…) > * { margin-block: 0 }` reset is meant to be the safety net for prose accidentally placed in a stack, but `:where()` has zero specificity so it loses to `h1..h6`/`p` element rules and never actually zeroes them. Every `.stack` holding a heading or paragraph (most section wrappers) currently double-spaces. Fixing it (give the reset real specificity) tightens spacing wherever prose sits in a stack — needs a visual pass across index/library/templates first.
+  - (Resolved 9 Jul 2026: the reset now carries real class specificity — `.stack > *` etc. — so stacks genuinely zero their children's flow margins; component rules that set a child margin by class still win by file order. If a stacked block suddenly reads too tight, that block wanted normal flow, not a stack.)
 
 
 -------------------------------------------------------------------------------

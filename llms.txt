@@ -1748,6 +1748,37 @@ Safe areas (standalone PWAs, black-translucent status bar):
   put .bleed-top on the one surface that wants it (a full-bleed map,
   an immersive hero) and keep its controls padded clear.
 
+Standalone PWA head pack (copy this whole set together — each line
+fixes a real shipped bug):
+- <meta name="viewport" content="width=device-width, initial-scale=1,
+  viewport-fit=cover"> — cover is what lets safe-area insets exist.
+- <meta name="apple-mobile-web-app-capable" content="yes"> and
+  <meta name="apple-mobile-web-app-status-bar-style"
+  content="black-translucent"> — the installed app runs edge to edge.
+- manifest theme_color/background_color must match the shipped theme,
+  or the installed app's chrome flashes the wrong color.
+- The full install recipe (manifest, sw.js, icons) is in the PWA
+  section below; this pack is the part pages get wrong on their own.
+
+Text inputs on iOS:
+- Keep input font-size at 16px or larger or iOS zooms the page on
+  focus (Facet's base inputs already are; do not shrink them).
+- Say what the keyboard should be: inputmode="decimal" for numbers,
+  "email"/"url"/"search" where true, autocapitalize="none" for
+  usernames and codes, enterkeyhint for the return key's word.
+- Never rely on placeholder as the label; the label element is what
+  readers and autofill use.
+
+Where app state lives (URL first):
+- Any state a person could want to share, restore or crawl belongs in
+  the URL: inputs read and write the query string, screens ride the
+  hash (the view stack does this for you), and facet.js already
+  carries theme/mode/language there. An agent should be able to
+  construct any state from a link alone.
+- localStorage is only for device-private preferences that make no
+  sense in a link (sound off, dismissed nudges). Never put content or
+  answers there.
+
 ## Rules for building on Facet
 
 Core principles: readability is the product. One-glance HTML. Not one

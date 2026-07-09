@@ -1461,13 +1461,19 @@ blockquote {
 figure, table, pre { margin: 0 0 var(--flow-paragraph); }
 
 /* Prose rhythm, contained. The margins above give raw semantic HTML its
-   vertical flow; these three rules keep that flow from fighting anything:
+   vertical flow; these rules keep that flow from fighting anything:
    a container never opens with a top margin or closes with a trailing one,
    and gap-based layout primitives (.stack, .row) own their spacing outright
-   so margins and gap never stack. :where() keeps specificity at zero. */
+   so margins and gap never stack. The child reset carries real class
+   specificity ON PURPOSE: it must beat the h1–h6/p element margins above
+   (a zero-specificity :where() version shipped first and silently lost,
+   so every stack holding prose double-spaced). Component rules that set
+   a child margin by class still win — they tie on specificity and come
+   later in the file. */
 :where(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table, figure):first-child { margin-top: 0; }
 :where(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table, figure):last-child { margin-bottom: 0; }
-:where(.stack, .stack-tight, .stack-loose, .row, .row-tight, .row-loose) > * { margin-block: 0; }
+.stack > *, .stack-tight > *, .stack-loose > *,
+.row > *, .row-tight > *, .row-loose > * { margin-block: 0; }
 
 hr {
   border: none;
