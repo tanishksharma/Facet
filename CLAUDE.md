@@ -14,7 +14,7 @@ Facet is a plain HTML, CSS and JS design library used across everything: apps, w
 - **This file (`CLAUDE.md`)** — HOW to build: rules, the keep-in-sync contract, the compliance checklist, binding decisions, and the deep build specs kept as engineering reference. Never a backlog, never strategy.
 - **`llms.txt`** — WHAT exists: the exhaustive capability inventory and usage guide. If it is not in llms.txt, it does not exist.
 - **The Notion Facet hub** (https://app.notion.com/p/38bb4fa1867c80d2a77cd2f4d318cc15) — WHY and where next: manifesto, positioning, direction, inspiration. Never implementation detail.
-- **The Notion All To Dos board, Project = Facet** (linked on the hub) — WHAT to build next: the only backlog. One row per item, implementation steps inside the row; rows link back to the reference specs in this file. No backlog text lives anywhere else.
+- **The Notion All To Dos board, Project = Facet** (linked on the hub) — WHAT to build next, the LARGE items: one row per page rework, rename or cross-cutting system, implementation steps inside the row; rows link back to the reference specs in this file. SMALL items (an element to build, a bug to fix, a polish line) live as the inline backlog list on the Facet hub page itself; a line graduates to a row if it grows. No backlog text lives in the repo.
 
 The routing rules that follow from it: a new idea becomes a to-do row immediately, even mid-conversation. A strategy or direction shift updates the hub. A rule or decision that binds building updates this file. A shipped capability updates llms.txt and the rest of the keep-in-sync contract below, in the same commit, and flips its to-do row to Done.
 
@@ -363,7 +363,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 
 - Reporting a change (how the maintainer wants replies): after pushing, one short reply with what shipped, the live link, and exactly what to check page by page. No process narration.
 - Deployment default: push work directly to `main` (the user works on main and wants changes live on each push). Do NOT create feature branches unless the user explicitly asks for one. This overrides any older branch-per-change workflow.
-- The backlog lives on the Notion All To Dos board (Project = Facet) — see the routing table at the top of this file. New ideas become rows immediately; this file never grows a queue. At the start of a build session, read the board for what to build and this file for how.
+- The backlog is two-level (see the routing table): large items are rows on the Notion All To Dos board (Project = Facet); small builds and bugs are the inline backlog list on the Facet hub page. New ideas land at the right level immediately; this file never grows a queue. At the start of a build session, read the board and the inline list for what to build and this file for how.
 - Docs are demos. A component is not done until the Library wall (library.html) shows it live with its code.
 - One component, one clearly commented section in the CSS file. Nothing is scattered.
 - Growth by extraction: build a new pattern inside a project first, promote it once it repeats.

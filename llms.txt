@@ -288,7 +288,12 @@ Prose rhythm (em-based margins that give raw HTML its flow):
 layouts (.stack, .row) zero these so rhythm and gap never stack.
 Global type size: data-text-size="small|medium|large" on html — set by
 the theme, independent of density. Text-role classes (.text-display …
-.text-caption) put the scale on any element.
+.text-caption) put the scale on any element. The eyebrow (.eyebrow) is
+the small thick spaced-caps label above a heading or a menu group —
+--text-caption at --weight-strong with --tracking-wide, accent-3 ink.
+
+    <p class="eyebrow">One tap away</p>
+    <h2>Install this app</h2>
 
 ### Fonts
 

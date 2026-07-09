@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eyebrow lab — pick the face</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/lib/facet.css">
+  <script src="/lib/facet.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@800&family=Azeret+Mono:wght@900&family=JetBrains+Mono:wght@800&family=Space+Mono:wght@700&family=IBM+Plex+Mono:wght@700&family=Chivo+Mono:wght@900&family=Reddit+Mono:wght@900&family=Geist+Mono:wght@900&family=Silkscreen:wght@700&family=Doto:wght@900&display=swap" rel="stylesheet">
+  <style>
+    /* A throwaway lab page: pick the eyebrow face, then this file is deleted.
+       Each card shows the SAME strings the real chrome uses, in one candidate
+       font, at the eyebrow recipe (caption size, heavy, spaced caps). */
+    .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr)); gap: var(--space-card); }
+    .lab-card { display: flex; flex-direction: column; gap: var(--space-stack); }
+    .lab-num {
+      font-size: var(--text-caption);
+      color: var(--text-muted);
+      letter-spacing: var(--tracking-caps);
+      text-transform: uppercase;
+    }
+    .lab-eyebrow {
+      font-family: var(--lab-font);
+      font-weight: var(--lab-weight, 800);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wide);
+      margin: 0;
+    }
+    .lab-eyebrow + .lab-eyebrow { color: var(--text-muted); }
+    .lab-big {
+      font-family: var(--lab-font);
+      font-weight: var(--lab-weight, 800);
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0;
+    }
+    .lab-menu {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-tight);
+      border-top: var(--border-hairline) solid var(--border);
+      padding-top: var(--space-stack);
+    }
+  </style>
+</head>
+<body>
+  <main class="container stack-loose" style="padding-block: var(--space-page);">
+    <h1>Eyebrow lab</h1>
+    <p style="max-width: 60ch;">
+      Ten candidate faces for the eyebrow role: the small, thick, spaced-caps
+      label used by the library sidebar's group names, the sheet's Navigate /
+      Files / Theme labels, and the .eyebrow class. Every card shows the same
+      real strings at the real size. Reply with a number.
+    </p>
+    <div class="lab-grid">
+      <section class="card lab-card" style="--lab-font: 'Martian Mono', monospace;">
+        <span class="lab-num">1 · Martian Mono 800 — wide, industrial, NASA-console</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+      <section class="card lab-card" style="--lab-font: 'Azeret Mono', monospace; --lab-weight: 900;">
+        <span class="lab-num">2 · Azeret Mono 900 — heavy, blocky, poster-like</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+      <section class="card lab-card" style="--lab-font: 'JetBrains Mono', monospace;">
+        <span class="lab-num">3 · JetBrains Mono 800 — the coder classic, sharpened</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+      <section class="card lab-card" style="--lab-font: 'Space Mono', monospace; --lab-weight: 700;">
+        <span class="lab-num">4 · Space Mono 700 — retro-futurist, quirky terminals</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+      <section class="card lab-card" style="--lab-font: 'IBM Plex Mono', monospace; --lab-weight: 700;">
+        <span class="lab-num">5 · IBM Plex Mono 700 — engineering heritage, calm</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+      <section class="card lab-card" style="--lab-font: 'Chivo Mono', monospace; --lab-weight: 900;">
+        <span class="lab-num">6 · Chivo Mono 900 — grotesque-turned-mono, punchy</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+      <section class="card lab-card" style="--lab-font: 'Reddit Mono', monospace; --lab-weight: 900;">
+        <span class="lab-num">7 · Reddit Mono 900 — rounded corners, friendly-technical</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+      <section class="card lab-card" style="--lab-font: 'Geist Mono', monospace; --lab-weight: 900;">
+        <span class="lab-num">8 · Geist Mono 900 — modern, tight, Vercel-school</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+      <section class="card lab-card" style="--lab-font: 'Silkscreen', monospace; --lab-weight: 700;">
+        <span class="lab-num">9 · Silkscreen 700 — pixel bitmap, very blocky</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+      <section class="card lab-card" style="--lab-font: 'Doto', monospace; --lab-weight: 900;">
+        <span class="lab-num">10 · Doto 900 — dot-matrix departure board</span>
+        <p class="lab-big">Tokens &amp; base</p>
+        <div class="lab-menu">
+          <p class="lab-eyebrow">Layout primitives</p>
+          <p class="lab-eyebrow">Navigate · Files · Theme</p>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

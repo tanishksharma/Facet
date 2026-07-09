@@ -372,6 +372,11 @@ blockquote  { font-family: var(--font-quote); }
             <small class="type-label">surface + accent border, tokens only</small>
           </aside>
 
+          <p class="eyebrow">
+            The eyebrow label
+            <small class="type-label" style="text-transform: none; letter-spacing: normal;">.eyebrow · --text-caption, --weight-strong, --tracking-wide caps — the small thick label above a heading or a menu group</small>
+          </p>
+
           <p><small>
             Small text handles secondary lines: bylines, helper notes, legal
             asides that still deserve reading.
@@ -655,11 +660,13 @@ blockquote  { font-family: var(--font-quote); }
           the whole form family — labels, text inputs, selects, textareas,
           file and date pickers, checkboxes, radios and buttons. One visible
           focus ring, selection colors, thin scrollbars and the print base
-          come with it. The text tags are shown on the Typography page; the
-          working tags are below. If a page only carries writing and simple
-          forms, it may need no classes at all.
+          come with it. The working tags are below; the text tags — headings,
+          paragraphs, lists, quotes, small print — are shown as a full page
+          of writing on the Typography page. If a page only carries writing
+          and simple forms, it may need no classes at all.
         </p>
         <div class="demo stack">
+          <p class="type-label" style="margin: 0;">A raw table</p>
           <table>
             <thead>
               <tr><th>Scale step</th><th>Size</th><th>Used for</th></tr>
@@ -676,6 +683,17 @@ blockquote  { font-family: var(--font-quote); }
           <select id="demo-raw-select"><option>Monthly</option><option>Yearly</option></select>
           <label for="demo-raw-area">A raw textarea</label>
           <textarea id="demo-raw-area" rows="2" placeholder="A few lines"></textarea>
+          <label for="demo-raw-file">A raw file input</label>
+          <input id="demo-raw-file" type="file">
+          <label for="demo-raw-date">A raw date input</label>
+          <input id="demo-raw-date" type="date">
+          <p class="type-label" style="margin: 0;">Raw checks and radios</p>
+          <p style="display: flex; gap: var(--space-stack); flex-wrap: wrap; align-items: center;">
+            <label style="display: inline-flex; gap: var(--space-control); align-items: center; margin: 0;"><input type="checkbox" checked> Email me</label>
+            <label style="display: inline-flex; gap: var(--space-control); align-items: center; margin: 0;"><input type="radio" name="raw-radio" checked> Monthly</label>
+            <label style="display: inline-flex; gap: var(--space-control); align-items: center; margin: 0;"><input type="radio" name="raw-radio"> Yearly</label>
+          </p>
+          <p class="type-label" style="margin: 0;">A raw button, inline styles and the focus ring</p>
           <p><button>A raw button</button></p>
           <p>
             Inline <code>code</code>, a key like <kbd>Esc</kbd> and
