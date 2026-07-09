@@ -761,23 +761,78 @@ article p   { font-family: var(--font-reading); }
            Layer 1 · Motion personality
            Felt, not described: the chips flip the whole page's motion.
            ============================== -->
-      <article class="element stack" id="motion">
-        <h3>Motion</h3>
+      <article class="element stack" id="motion" data-llms="Motion">
+        <h3>Motion tokens</h3>
         <p>
-          The motion tokens: two ready-made motion voices — instant and springy — that every component reads. One attribute picks the voice, and reduced motion switches it all off.
+          How everything moves, as one system: three durations and three
+          easing curves that every component reads, plus one personality
+          switch — Lively, Calm or Off — that retunes them all at once.
+          The parallax, shine and idle drift ride the same engine, and
+          reduced motion always wins.
         </p>
         <p class="chips" role="group" aria-label="Motion personality">
           <button class="chip" aria-pressed="true" data-config-key="motion" data-config-value="" data-tip="Momentum, weight and spring — the default">Lively</button>
           <button class="chip" aria-pressed="false" data-config-key="motion" data-config-value="calm" data-tip="Short, near-linear, slight">Calm</button>
           <button class="chip" aria-pressed="false" data-config-key="motion" data-config-value="off" data-tip="No animation at all">Off</button>
         </p>
-        <div class="demo" style="display: flex; flex-wrap: wrap; gap: var(--space-inline); align-items: center;">
-          <button class="btn btn-primary" data-tip="Press and hold, then release">Press me</button>
-          <button class="btn" data-tip="The spring is in the release">And me</button>
-          <button class="btn btn-icon" aria-label="Feel the press" data-tip="Weight, then bounce">&times;</button>
+        <div class="demo stack">
+          <p class="type-label" style="margin: 0;">The six tokens, raced — press Replay, then switch the personality above and race again</p>
+          <div class="race stack-tight" id="motion-race">
+            <p class="text-caption" style="margin: 0;">--duration-fast · --ease-out</p>
+            <div class="race-track"><span class="race-dot" style="transition: left var(--duration-fast) var(--ease-out);"></span></div>
+            <p class="text-caption" style="margin: 0;">--duration-normal · --ease-in-out</p>
+            <div class="race-track"><span class="race-dot" style="transition: left var(--duration-normal) var(--ease-in-out);"></span></div>
+            <p class="text-caption" style="margin: 0;">--duration-slow · --ease-spring</p>
+            <div class="race-track"><span class="race-dot" style="transition: left var(--duration-slow) var(--ease-spring);"></span></div>
+          </div>
+          <p style="margin: 0;"><button class="btn btn-small" id="motion-race-replay" data-tip="Runs the three dots again">Replay</button></p>
+
+          <p class="type-label" style="margin: 0;">Press physics — hold, then release</p>
+          <p style="display: flex; flex-wrap: wrap; gap: var(--space-inline); align-items: center; margin: 0;">
+            <button class="btn btn-primary" data-tip="Press and hold, then release">Press me</button>
+            <button class="btn" data-tip="The spring is in the release">And me</button>
+            <button class="btn btn-icon" aria-label="Feel the press" data-tip="Weight, then bounce">&times;</button>
+            <button class="btn" id="motion-toast" data-tip="A toast arriving and leaving is the same system">Show a toast</button>
+          </p>
+
+          <p class="type-label" style="margin: 0;">Ambient animations — always moving, honestly</p>
+          <p style="display: flex; flex-wrap: wrap; gap: var(--space-stack); align-items: center; margin: 0;">
+            <span class="spinner" role="status" aria-label="Working"></span>
+            <span class="skeleton" style="width: 12rem; height: 1rem;"></span>
+          </p>
+
+          <p class="type-label" style="margin: 0;">Parallax, shine and idle — set the source, or pick Idle and just watch</p>
+          <p class="chips" role="group" aria-label="Motion source" style="margin: 0;">
+            <button class="chip" data-motion-mode="off" data-tip="Everything rests">Off</button>
+            <button class="chip" aria-pressed="true" data-motion-mode="cursor" data-tip="Follows the pointer">Cursor</button>
+            <button class="chip" data-motion-mode="idle" data-tip="Sweeps on its own every few seconds">Idle</button>
+          </p>
+          <div class="grid" style="margin: 0;">
+            <article class="card stack-tight" data-parallax="10">
+              <p class="text-caption" style="margin: 0;">data-parallax="10"</p>
+              <strong>I drift with the motion</strong>
+            </article>
+            <article class="card stack-tight" data-parallax="22">
+              <p class="text-caption" style="margin: 0;">data-parallax="22"</p>
+              <strong>I drift further</strong>
+            </article>
+            <article class="card stack-tight" data-shine>
+              <p class="text-caption" style="margin: 0;">data-shine</p>
+              <strong>Light travels across me</strong>
+            </article>
+          </div>
         </div>
-        <pre id="code-motion"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-motion" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+        <pre id="code-motion" data-code-static><code>/* Anything you animate reads the same tokens the library uses. */
+.panel { transition: box-shadow var(--duration-fast) var(--ease-out); }
+.sheet { transition: translate var(--duration-slow) var(--ease-spring); }
+
+&lt;!-- One attribute retunes the whole system --&gt;
+&lt;html data-motion="calm"&gt;   &lt;!-- or "off"; reduced motion always wins --&gt;
+
+&lt;!-- The same engine moves and lights elements --&gt;
+&lt;img src="hero.png" data-parallax="12" alt=""&gt;
+&lt;button class="btn btn-primary" data-shine&gt;Get started&lt;/button&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-motion" data-tip="Copies the motion tokens in use">Copy</button></p>
       </article>
 
       <!-- ==============================

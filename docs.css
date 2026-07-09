@@ -956,3 +956,26 @@ article.element pre code { color: var(--hl-text); }
   padding: var(--space-control) 0;
 }
 .home-archive[open] summary { margin-bottom: var(--space-card); }
+
+
+/* Motion tokens entry: three dots race their duration and easing across
+   a track; Replay re-runs them. The dots read the live tokens, so the
+   personality chips retune the race itself. */
+.race-track {
+  position: relative;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-hover);
+  border: var(--border-hairline) solid var(--border);
+}
+.race-dot {
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  translate: 0 -50%;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--accent-1);
+}
+.race.is-running .race-dot { left: calc(100% - 1.25rem); }

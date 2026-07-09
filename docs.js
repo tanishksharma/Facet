@@ -874,6 +874,32 @@ function initDevicePreview() {
   }
 }
 
+/* The Motion tokens entry: Replay races the token dots, the toast
+   button fires a real toast, and the source chips drive the ambient
+   engine through facet.motion.setMode — the same call apps use. */
+function initMotionDemo() {
+  const race = document.querySelector("#motion-race");
+  const replay = document.querySelector("#motion-race-replay");
+  if (race && replay) {
+    replay.addEventListener("click", () => {
+      race.classList.remove("is-running");
+      void race.offsetWidth;               // restart the transitions
+      race.classList.add("is-running");
+    });
+  }
+  document.querySelector("#motion-toast")?.addEventListener("click", () => {
+    facet.toast("Motion feels like this", "info");
+  });
+  for (const chip of document.querySelectorAll("[data-motion-mode]")) {
+    chip.addEventListener("click", () => {
+      if (window.facet && facet.motion) facet.motion.setMode(chip.dataset.motionMode);
+      for (const c of document.querySelectorAll("[data-motion-mode]")) {
+        c.setAttribute("aria-pressed", String(c === chip));
+      }
+    });
+  }
+}
+
 /* The home hero's typewriter: the app idea in the Tell-your-AI quote
    types out, holds, deletes, and moves to the next — in the typewriter
    face, like someone drafting the ask. Reduced motion keeps the first
@@ -1292,6 +1318,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFeedbackDemo();              // the Sound & haptics wall buttons
   initFontNames();                 // the Fonts cards name the resolved face
   initHeroTypewriter();            // the home hero's cycling app idea
+  initMotionDemo();                // the Motion tokens entry: race, toast, modes
   initBackgroundDemo();            // the Backgrounds entry: variants + knobs
   initDevicePreview();             // Layer 5 templates in scaled device frames
   initStyleMixer();                // build.html: the scoped theme builder
