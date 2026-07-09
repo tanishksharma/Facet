@@ -1175,7 +1175,7 @@
 .bg-graph,
 [data-bg-glyph] {
   --bg-tint: var(--text-muted);      /* the ink color — any token or color */
-  --bg-strength: 28%;                /* the ink opacity */
+  --bg-strength: 12%;                /* the ink opacity — whisper-quiet by default */
   --bg-cell: 2.5rem;                 /* the grid spacing */
   --bg-ink: color-mix(in srgb, var(--bg-tint) var(--bg-strength), transparent);
   --bg-ink-faint: color-mix(in srgb, var(--bg-tint) calc(var(--bg-strength) / 2), transparent);

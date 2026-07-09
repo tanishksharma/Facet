@@ -1414,7 +1414,7 @@ VARIANT GRID — a repeating symbol on a grid:
   the element's style changes. facet.glyphBackground(el) draws a
   surface inserted after load.
 - The knobs, on any grid: --bg-tint (ink color, default the muted text
-  token), --bg-strength (ink opacity, default 28%), --bg-cell
+  token), --bg-strength (ink opacity, default 12% — whisper-quiet), --bg-cell
   (spacing, default 2.5rem). The custom grid adds data-bg-glyph-size
   (spacing override in px) and data-bg-glyph-scale (glyph size as a
   fraction of the cell, default 0.42).

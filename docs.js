@@ -154,6 +154,24 @@ function initWallSearch() {
   });
 }
 
+/* The entry structure, enforced everywhere: description, variant row,
+   PREVIEW, customization, code, AI instructions. Entries are authored
+   with controls above the demo in older markup — move every option row
+   (chips, fields, control clusters) that is not a .variant-row to just
+   after the demo, so the preview always comes first. */
+function orderEntryParts() {
+  for (const article of document.querySelectorAll("article.element")) {
+    const demo = article.querySelector(":scope > .demo");
+    if (!demo) continue;
+    const movers = [];
+    for (const child of [...article.children]) {
+      if (child === demo) break;
+      if (child.matches("p.chips:not(.variant-row), label.field, .entry-controls")) movers.push(child);
+    }
+    for (const mover of movers.reverse()) demo.after(mover);
+  }
+}
+
 /* The Backgrounds entry: variant sections (grid | fluid), each with
    its own controls. Everything writes classes, attributes or custom
    properties on the demo surfaces — the library's own machinery
@@ -734,7 +752,7 @@ function initDemoTools() {
       });
       widths.appendChild(chip);
     }
-    demo.before(widths);
+    demo.after(widths);   // customization sits below the preview
 
     const pen = document.createElement("button");
     pen.type = "button";
@@ -867,7 +885,7 @@ function labelWallParts() {
   const labelled = (el) => el && el.previousElementSibling
     && el.previousElementSibling.classList.contains("part-label");
   for (const fold of document.querySelectorAll("article.element")) {
-    for (const chips of fold.querySelectorAll(":scope > p.chips")) {
+    for (const chips of fold.querySelectorAll(":scope > p.chips, :scope > .entry-controls p.chips")) {
       if (labelled(chips)) continue;
       chips.before(mk(chips.getAttribute("aria-label") || "Options"));
     }
@@ -878,6 +896,8 @@ function labelWallParts() {
     // child, so every entry gets a "Code" heading and its gap above it.
     const code = fold.querySelector(":scope > pre, :scope > .code-wrap");
     if (code && !labelled(code)) code.before(mk("Code"));
+    const notes = fold.querySelector(":scope > .ai-notes");
+    if (notes && !labelled(notes)) notes.before(mk("AI instructions"));
   }
 }
 
@@ -1139,6 +1159,7 @@ function initSkinLab() {
 
 
 document.addEventListener("DOMContentLoaded", async () => {
+  orderEntryParts();   // preview first, options after — the entry structure
   for (const article of document.querySelectorAll("article.element")) renderSnippet(article);
   initChips();
   initConfigChips();

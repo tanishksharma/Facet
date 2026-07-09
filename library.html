@@ -3089,37 +3089,34 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
       <article class="element stack" id="backgrounds">
         <h3 data-status="beta">Backgrounds</h3>
         <p>
-          What it is: very faint page and section backgrounds, in two
-          variants that are built differently and tuned separately.
-          Variant GRID is a repeating symbol on a grid: technical plus
-          marks (<code>.bg-grid</code>), dots (<code>.bg-dots</code>),
-          ruled lines (<code>.bg-ruled</code>), graph paper
-          (<code>.bg-graph</code>, deliberately the lightest) — or the
-          custom grid, <code>data-bg-glyph="✦"</code> with any
-          character, emoji, facet icon name, or several tokens for an
-          alternating grid. Every grid tunes with
-          <code>--bg-tint</code> (ink color), <code>--bg-strength</code>
-          (opacity) and <code>--bg-cell</code> (spacing); the custom
-          grid adds <code>data-bg-glyph-scale</code> (glyph size as a
-          fraction of the cell). Variant FLUID is
-          <code>data-bg-fluid</code>: a soft, slowly-breathing field of
+          Very faint materials for big quiet surfaces — a hero, a
+          section divider zone, a whole page. Two variants: GRID
+          repeats a symbol — plus marks, dots, graph paper, or your own
+          icon, emoji or characters — and FLUID breathes soft
           out-of-focus color pools and drifting bubbles in the theme's
-          own colors, never visibly repeating, still under reduced
-          motion. On either variant, text placed directly on the
-          surface gets a halo — the pattern behind the words blurs and
-          fades (automatic for direct text children;
-          <code>.bg-halo</code> opts in anything deeper). All of it
-          fades under <code>prefers-contrast: more</code> and never
-          prints. Explore each variant below.
+          own colors. On either, text placed straight on the surface
+          stays readable: the pattern behind the words blurs and fades
+          into a soft halo.
         </p>
 
-        <p class="chips" role="group" aria-label="Background variant">
-          <button class="chip" aria-pressed="true" data-bg-variant="grid" data-tip="The repeating-symbol variant">Variant: Grid</button>
-          <button class="chip" aria-pressed="false" data-bg-variant="fluid" data-tip="The breathing color-pool variant">Variant: Fluid</button>
+        <p class="chips variant-row" role="group" aria-label="Variant">
+          <button class="chip" aria-pressed="true" data-bg-variant="grid" data-tip="The repeating-symbol variant">Grid</button>
+          <button class="chip" aria-pressed="false" data-bg-variant="fluid" data-tip="The breathing color-pool variant">Fluid</button>
         </p>
 
-        <div class="stack" id="bg-controls-grid">
-          <p class="chips" role="group" aria-label="Grid pattern">
+        <div class="demo">
+          <section id="bg-variant-grid" class="bg-grid">
+            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">Text gets a halo</h4>
+            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">The pattern blurs and fades behind the words alone.</p>
+          </section>
+          <section id="bg-variant-fluid" data-bg-fluid hidden style="min-height: 16rem;">
+            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The fluid field</h4>
+            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Color pools breathe and bubbles drift, in this theme's own colors.</p>
+          </section>
+        </div>
+
+        <div class="stack entry-controls" id="bg-controls-grid">
+          <p class="chips" role="group" aria-label="Pattern">
             <button class="chip" aria-pressed="true" data-grid-kind="bg-grid" data-tip="Plus marks at the intersections">Technical</button>
             <button class="chip" aria-pressed="false" data-grid-kind="bg-dots" data-tip="A dot at every half cell">Dots</button>
             <button class="chip" aria-pressed="false" data-grid-kind="bg-graph" data-tip="Graph paper, the lightest look">Graph paper</button>
@@ -3127,14 +3124,14 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
           </p>
           <p class="chips" role="group" aria-label="Ink color">
             <button class="chip" aria-pressed="true" data-grid-tint="" data-tip="The muted text token — the default">Ink</button>
-            <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-3)" data-tip="The quiet accent">Accent</button>
-            <button class="chip" aria-pressed="false" data-grid-tint="var(--info)" data-tip="The info status color">Info</button>
-            <button class="chip" aria-pressed="false" data-grid-tint="var(--success)" data-tip="The success status color">Success</button>
+            <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-1)" data-tip="Accent rank 1 — the primary-action color">Accent 1</button>
+            <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-2)" data-tip="Accent rank 2 — the secondary fill">Accent 2</button>
+            <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-3)" data-tip="Accent rank 3 — the quiet interactive color">Accent 3</button>
           </p>
           <p class="chips" role="group" aria-label="Ink opacity">
-            <button class="chip" aria-pressed="false" data-grid-strength="14%" data-tip="Whisper">Faint</button>
-            <button class="chip" aria-pressed="true" data-grid-strength="" data-tip="The default, 28%">Default</button>
-            <button class="chip" aria-pressed="false" data-grid-strength="48%" data-tip="Assertive">Strong</button>
+            <button class="chip" aria-pressed="false" data-grid-strength="5%" data-tip="Barely there — you have to look for it">Faint</button>
+            <button class="chip" aria-pressed="true" data-grid-strength="" data-tip="The default, 12%">Default</button>
+            <button class="chip" aria-pressed="false" data-grid-strength="22%" data-tip="Present, still quiet">Strong</button>
           </p>
           <p class="chips" role="group" aria-label="Grid spacing">
             <button class="chip" aria-pressed="false" data-grid-cell="1.75rem" data-tip="Tight cells">Tight</button>
@@ -3155,23 +3152,55 @@ input or this code block — base styles only.&lt;/p&gt;</code></pre>
             </p>
             <label class="field" style="max-width: 24rem;">
               <span class="field-label">Or type anything — a character, an emoji, a few of them</span>
-              <input id="glyph-input" type="text" placeholder="✦ or 🍜 or A B C" data-tip="The surface redraws as you type">
+              <input id="glyph-input" type="text" placeholder="✦ or 🍜 or A B C" data-tip="The preview redraws as you type">
             </label>
           </div>
         </div>
 
-        <div class="demo">
-          <section id="bg-variant-grid" class="bg-grid">
-            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">Text gets a halo</h4>
-            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">The pattern blurs and fades behind the words alone.</p>
-          </section>
-          <section id="bg-variant-fluid" data-bg-fluid hidden style="min-height: 16rem;">
-            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The fluid field</h4>
-            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Color pools breathe and bubbles drift, in this theme's own colors.</p>
-          </section>
-        </div>
         <pre id="code-backgrounds"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-backgrounds" data-tip="Copies the exact HTML of the visible variant">Copy</button></p>
+
+        <div class="ai-notes stack">
+          <p>
+            Variant GRID: <code>.bg-grid</code> (technical plus marks),
+            <code>.bg-dots</code> (dot grid), <code>.bg-ruled</code>
+            (writing lines), <code>.bg-graph</code> (graph paper,
+            deliberately the lightest) — or the custom grid,
+            <code>data-bg-glyph="✦"</code> with any character or emoji,
+            a facet icon name, or several tokens separated by spaces
+            for an alternating grid; facet.js draws the tile in the
+            pattern ink and redraws live whenever the attribute, the
+            theme, the mode or the element's style changes. Every grid
+            tunes with <code>--bg-tint</code> (ink color, default the
+            muted text token; the accent ranks
+            <code>--accent-1/-2/-3</code> are the sanctioned choices),
+            <code>--bg-strength</code> (ink opacity, default 12%) and
+            <code>--bg-cell</code> (spacing, default 2.5rem); the
+            custom grid adds <code>data-bg-glyph-size</code> (spacing
+            override, px) and <code>data-bg-glyph-scale</code> (glyph
+            size as a fraction of the cell, default 0.42).
+            <code>facet.glyphBackground(el)</code> draws a late-added
+            surface.
+          </p>
+          <p>
+            Variant FLUID: <code>data-bg-fluid</code> — facet.js mounts
+            three GPU-composited layers (ground, breathing pools,
+            drifting bubbles) colored by the accent and vivid tokens,
+            so themes and modes recolor with no redraw; desynced clocks
+            keep it from repeating; still under
+            <code>data-motion="off"</code> and reduced motion; plain
+            surface with JS off. <code>facet.fluidBackground(el)</code>
+            mounts a late-added surface.
+          </p>
+          <p>
+            The halo applies automatically to direct
+            <code>h1–h6</code>/<code>p</code> children of any
+            background surface; add <code>.bg-halo</code> to anything
+            nested deeper. Use ONE background per surface, never
+            nested; all patterns fade under
+            <code>prefers-contrast: more</code> and never print.
+          </p>
+        </div>
       </article>
 
       <!-- App kit -->

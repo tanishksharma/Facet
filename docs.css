@@ -215,32 +215,58 @@ dialog.topic-modal { width: min(92vw, 44rem); }
 .layer-page-lead { color: var(--text-muted); }
 
 /* Previous/next on an entry page: the two neighbours' names at the top
-   corners of the content column. */
+   corners of the content column, each on ONE line. */
 .entry-nav {
   display: flex;
   justify-content: space-between;
   gap: var(--space-stack);
-  margin-bottom: var(--space-card);
+  margin-bottom: var(--space-control);
 }
 .entry-nav-link {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-control);
   max-width: 46%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-decoration: none;
   color: inherit;
   padding: var(--space-control) var(--space-inline);
   border-radius: var(--radius-control);
 }
 .entry-nav-link:hover { background: var(--surface-hover); }
-.entry-nav-next { text-align: right; }
 .entry-nav-cue {
   font-size: var(--text-caption);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: var(--tracking-caps);
 }
-.entry-nav-link strong { font-size: var(--text-footnote); }
+.entry-nav-link strong {
+  font-size: var(--text-footnote);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The entry page itself: the title carries the page (display-sized), no
+   hairline divider under the previous/next row, and the entry's text
+   runs the full content column — the reading-measure cap is for prose
+   pages, not a reference pane. */
+main.is-entry > article.element:not(.solo-hidden),
+main.is-entry > section:not(.solo-hidden) {
+  border-top: none;
+  padding-top: 0;
+}
+main.is-entry > article.element > h3 { font-size: var(--text-h1); line-height: var(--leading-heading); }
+article.element > p { max-width: none; line-height: var(--leading-snug); }
+
+/* AI instructions: the technical half of an entry, addressed to the
+   agent that will build with the component. */
+.ai-notes {
+  border-left: var(--border-highlight) solid var(--accent-3);
+  padding-left: var(--space-stack);
+}
+.ai-notes p { max-width: none; color: var(--text-muted); font-size: var(--text-footnote); }
 
 /* On phones an opened entry slides in like a screen of its own. */
 @media (max-width: 56rem) {
