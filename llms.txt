@@ -1630,13 +1630,8 @@ facet.fluidBackground(el) mounts a late-added surface. Still under
 data-motion="off" and prefers-reduced-motion; plain background with
 JS off.
 
-THE TEXT HALO — on either variant, text placed directly on the
-surface stays readable: the pattern behind the words blurs hard and
-fades toward the page color. Automatic for direct h1–h6/p children;
-add .bg-halo to anything nested deeper.
-
     <section class="bg-dots" style="--bg-tint: var(--accent-3); --bg-cell: 4rem;">
-      <h2>The halo keeps me readable</h2>
+      <h2>A quiet dotted surface</h2>
     </section>
     <section data-bg-glyph="♥ ✳ ✦" data-bg-glyph-scale="0.3">…</section>
     <section data-bg-fluid>…</section>

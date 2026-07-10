@@ -1292,10 +1292,7 @@
    facet.js mounts three GPU-composited layers whose desynced clocks
    keep it from ever repeating. Still under data-motion="off" and
    reduced motion; plain background with JS off.
-   ON TOP OF EITHER: text placed directly on a background surface gets
-   a halo — the pattern behind the words blurs and fades to keep them
-   readable (direct text children automatically; add .bg-halo to
-   anything deeper). What it is for: giving big quiet surfaces a
+   What it is for: giving big quiet surfaces a
    material — a hero, a section divider zone, a whole page. When to
    use it: one class or attribute on a section or body; content sits
    straight on top. All of it fades to nothing under
@@ -1423,19 +1420,6 @@
   to { transform: translate3d(-4%, -9%, 0) scale(1.12) rotate(-5deg); }
 }
 
-/* The text halo: words sitting directly on a background surface stay
-   readable — the pattern behind them blurs hard and fades toward the
-   page color. Automatic for direct text children; .bg-halo opts in
-   anything nested deeper. */
-:where(.bg-grid, .bg-dots, .bg-ruled, .bg-graph, [data-bg-glyph], [data-bg-fluid]) >
-  :where(h1, h2, h3, h4, h5, h6, p),
-.bg-halo {
-  background: color-mix(in srgb, var(--background) 55%, transparent);
-  backdrop-filter: blur(7px);
-  border-radius: var(--radius-panel);
-  width: fit-content;
-  max-width: 100%;
-}
 
 /* Contrast request: the pattern is removed. */
 @media (prefers-contrast: more) {
