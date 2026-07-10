@@ -366,7 +366,13 @@ the scroll. One global control —
 data-density="small|medium|large" — tightens or opens the whole system
 at once, and the theme sets it; never pick a theme and its spacing
 separately. Container widths: --width-narrow 40rem (prose, forms),
---width-default 64rem (most pages), --width-wide 80rem (dashboards).
+--width-default 64rem (most pages — the safe centered standard),
+--width-wide 80rem (dashboards), --width-xwide 96rem (the super-wide
+tier for ultrawide screens). The page picks its width once with
+data-width="narrow|wide|xwide|full" on <html> (or facet.set({width:
+"wide"}), or the script tag): it re-maps what the standard .container
+means, so the whole page widens or narrows and everything resizes;
+--width-page is the token behind it, settable to any measure.
 Safe areas: --safe-top / --safe-bottom carry the notch and home-bar
 insets; every full-viewport surface pads with them, and .bleed-top
 opts a subtree out deliberately.
@@ -492,10 +498,17 @@ tokens, so a theme flip restyles the layout too, not just the components
 inside it. When to use it: put it directly on the top-level semantic tag of
 any ordinary page — main, header, footer, section. Use .container-narrow
 for prose, forms and calculators, .container for most pages,
-.container-wide for dashboards, .container-full for edge-to-edge strips
-that keep side padding. Never nest a container inside a container.
+.container-wide for dashboards, .container-xwide for ultrawide screens,
+.container-full for edge-to-edge strips that keep side padding. Never
+nest a container inside a container. The page can also choose its width
+ONCE: data-width="narrow|wide|xwide|full" on <html> re-maps what the
+standard .container means (also via facet.set({width: "wide"}) or the
+script tag), so the whole page widens and everything resizes; the
+suffixed containers stay absolute.
 
     <main class="container"> ... </main>
+    <!-- or, page-wide: -->
+    <html data-width="wide">
 
 ### Stack
 

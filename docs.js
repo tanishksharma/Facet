@@ -1386,6 +1386,21 @@ function initSettingsSkin() {
     });
   }
 
+  // page width: the content column, from reading width to edge to edge
+  const width = sheet.querySelector("[data-width-cycle]");
+  if (width) {
+    const value = width.querySelector(".menu-value");
+    const TIERS = [[null, "Default"], ["wide", "Wide"], ["xwide", "Extra wide"], ["full", "Full"], ["narrow", "Narrow"]];
+    width.addEventListener("click", () => {
+      const cur = document.documentElement.dataset.width || null;
+      const at = TIERS.findIndex(([v]) => v === cur);
+      const [next, word] = TIERS[(at + 1) % TIERS.length];
+      facet.set({ width: next });
+      value.textContent = word;
+      if (facet.feedback) facet.feedback.tick();
+    });
+  }
+
   // reset: back to the theme's own look
   sheet.querySelector("[data-skin-reset]")?.addEventListener("click", () => {
     facet.set({ accent1: null, accent2: null, accent3: null,

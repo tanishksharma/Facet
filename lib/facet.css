@@ -397,8 +397,9 @@
 
   /* ----- Spacing: container widths ----- */
   --width-narrow: 40rem;      /* prose, forms, calculators */
-  --width-default: 64rem;     /* most pages */
+  --width-default: 64rem;     /* most pages — the safe centered standard */
   --width-wide: 80rem;        /* dashboards, galleries */
+  --width-xwide: 96rem;       /* the super-wide tier, at home on ultrawide screens */
 
   /* (docs mirror — identical to llms.txt · Shape and elevation)
      WHEN TO USE: radii by what they round — --radius-control (buttons,
@@ -2111,12 +2112,19 @@ input, textarea, [contenteditable] {
    inside it. When to use it: put it directly on the top-level semantic tag of
    any ordinary page — main, header, footer, section. Use .container-narrow
    for prose, forms and calculators, .container for most pages,
-   .container-wide for dashboards, .container-full for edge-to-edge strips
-   that keep side padding. Never nest a container inside a container.
+   .container-wide for dashboards, .container-xwide for ultrawide screens,
+   .container-full for edge-to-edge strips that keep side padding. Never
+   nest a container inside a container. The page can also choose its width
+   ONCE: data-width="narrow|wide|xwide|full" on <html> re-maps what the
+   standard .container means (also via facet.set({width: "wide"}) or the
+   script tag), so the whole page widens and everything resizes; the
+   suffixed containers stay absolute.
 
    Usage:  <main class="container"> ... </main>
    Options: .container-narrow  40rem   .container       64rem
-            .container-wide    80rem   .container-full  edge to edge
+            .container-wide    80rem   .container-xwide 96rem
+            .container-full    edge to edge
+            data-width on html: narrow | wide | xwide | full
    -------------------------------------------------------------------------- */
 
 .container,
@@ -2128,9 +2136,20 @@ input, textarea, [contenteditable] {
   padding-inline: var(--space-stack);
 }
 
-.container { max-width: var(--width-default); }
+.container { max-width: var(--width-page, var(--width-default)); }
 .container-narrow { max-width: var(--width-narrow); }
 .container-wide { max-width: var(--width-wide); }
+.container-xwide { max-width: var(--width-xwide); }
+
+/* Page width, chosen once: data-width on <html> (or any subtree) re-maps
+   what the standard .container means, so one attribute widens or narrows
+   the whole page and everything inside resizes. The suffixed containers
+   stay absolute — an explicit .container-wide means wide whatever the
+   page says. --width-page can also be set directly to any measure. */
+[data-width="narrow"] { --width-page: var(--width-narrow); }
+[data-width="wide"]   { --width-page: var(--width-wide); }
+[data-width="xwide"]  { --width-page: var(--width-xwide); }
+[data-width="full"]   { --width-page: none; }
 
 @media (min-width: 640px) {
   .container,
