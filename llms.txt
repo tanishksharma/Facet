@@ -659,7 +659,10 @@ pickers — a real <label> wrapping a radio (single-pick) or a checkbox
 (add data-multi) plus a .card-option-mark, so :has(:checked) lights the
 whole card with no JavaScript and it stays keyboard operable;
 .card-inline is a compact horizontal row (.card-inline-media,
-.card-inline-body with -title/-meta, .card-inline-trailing). Variants use
+.card-inline-body with -title/-meta, .card-inline-trailing). A card may
+also be a stack: class="card stack" (or stack-tight / stack-loose) lays
+the card's children out with the stack's gap — the pairing is supported
+directly, no extra rule needed. Variants use
 the neutral ramp's own roles (--surface-hover, --border-strong). Velvet
 raises cards out of the fabric; Elegant carves them in; Aero glosses them.
 
@@ -668,6 +671,10 @@ raises cards out of the fabric; Elegant carves them in; Aero glosses them.
       <p>One thing per card.</p>
     </article>
     <a class="card card-clickable" href="/report">Open the report →</a>
+    <article class="card stack-tight">
+      <strong>Card as a stack</strong>
+      <p>Children spaced by the stack's gap.</p>
+    </article>
 
     <article class="card card-feature">
       <span class="card-feature-icon"><svg data-icon="bolt"></svg></span>
@@ -903,7 +910,8 @@ What it is: four tiny signals. Badge: a status word in a tinted pill —
 .badge plus .badge-success / -warning / -error / -info. Chip: a small
 toggleable pill button; aria-pressed carries its state and facet.js
 toggles a bare chip on click (chips wired to data attributes keep
-their own handlers). Avatar: a round face — an image or initials on
+their own handlers); an svg glyph inside a chip sits beside the label
+on its own. Avatar: a round face — an image or initials on
 the quiet fill; .avatar-large for bigger. Progress: the native
 <progress> themed, accent-1 fill on a quiet track. Badges state, they
 never act; avatars carry the person's name in alt or aria-label;
@@ -921,7 +929,7 @@ WHEN TO USE: on app icons 3.5rem and larger — launcher tiles, featured cards �
 What it is: a round status dot pinned to an app icon's top-right
 corner — a 1.25rem plasticine bead, its top edge lit and its underside
 softly shaded, wearing a hairline ring of the page background so it
-pops off any icon, carrying one glyph and no text (the word lives in
+pops off any icon, carrying one solid white glyph and no text (the word lives in
 title/aria-label). One attribute sets the tone and glyph:
 data-status="new" (info blue, sparkle), "updated" (success green,
 refresh arrow), "wip" (warning amber, wrench). What it is for: marking
@@ -1121,7 +1129,10 @@ element with facet.motion — it drifts up to depth pixels behind the
 desktop pointer, the scroll's momentum (a velocity impulse), the
 device tilt where no permission gate blocks it (iOS gates it;
 facet.motion.setMode("tilt") asks), or the engine's idle life where
-nothing else drives (modes: off | cursor | tilt | idle). Cursor and
+nothing else drives (modes: off | cursor | tilt | idle). The engine
+boots on demand — registering a mover at runtime or switching the mode
+wakes it even on a page that loaded with none — and registering an
+element twice is safe; the second registration is ignored. Cursor and
 tilt mirror the real world directly — just enough smoothing to hide
 jitter, no easing lag — and the moment the pointer or device stops,
 the vector eases back to centre (in and out, about half a second), so
@@ -1489,7 +1500,10 @@ for calculator apps:
                                (shine); .setMode("off"|"cursor"|"tilt"|
                                "idle") — "tilt" asks iOS permission,
                                "idle" loops out of the centre and back
-                               (~1.1s), then rests three seconds
+                               (~1.1s), then rests three seconds.
+                               register() and setMode() boot the engine
+                               on demand, and registering an element
+                               twice is safe (the second is ignored)
     facet.sliderScale(wrap)    rebuild a .slider-wrap's tick scale after
                                a range change
     facet.mapStyle()           the active theme as a Google Maps styles
@@ -2192,6 +2206,13 @@ component: a few imperative lines beat a class. Those ship here as
 guidance entries — read them like instructions. If advice is not
 written down here, do not assume it; if a pattern below repeats enough
 to earn markup and behaviour, it gets promoted to a real component.
+
+Reserved class names: every class facet.css ships is reserved — the
+short generic ones are the silent-collision traps: .card, .stack, .row,
+.grid, .list, .chip, .badge, .avatar, .field, .fold, .snap, .empty,
+.shine, .glyph (the inline-svg fix). Before inventing a class in your
+own project, search this file for the name; if it exists, pick another
+or prefix yours.
 
 Choosing a shell (one per page):
 - A document, a marketing page, an article: no shell. Normal flow,
