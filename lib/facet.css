@@ -144,7 +144,12 @@
      happened: --success, --warning, --error, --info — each with a derived
      -tint and -edge pair for washes and borders. The vivid palette
      (--color-1 red … --color-5 purple) is decoration only — card tints,
-     charts, playful accents — never semantic status. Dark mode and every
+     charts, playful accents — never semantic status. The raw vivids are
+     fills-only (yellow on white fails contrast); when the palette must
+     WRITE — a tinted label, a stat, a link on a washed card — use the
+     -text companion (--color-1-text … --color-5-text): the same hue
+     carried to AA contrast on the page, darkened per color in light mode
+     and lifted toward white in dark. Dark mode and every
      theme re-map all of it; your markup does not change. */
   /* ----- Colors: the neutral ramp -----
      Semantic roles, never numbers. One committed temperature (a faint cool
@@ -232,6 +237,19 @@
   --color-3: #34C759;         /* green */
   --color-4: #007AFF;         /* blue */
   --color-5: #AF52DE;         /* purple */
+
+  /* Each vivid color's -text companion: the same hue carried down to AA
+     contrast (≥4.5) on the page and on surfaces, for the moments the
+     palette must WRITE — a tinted label, a stat, a link on a washed card.
+     The raw colors above stay fills-only (yellow on white fails hard).
+     Derived per color (yellow needs far more darkening than red), so a
+     theme that re-tunes the palette keeps the pairing; dark mode
+     re-derives toward white below. */
+  --color-1-text: color-mix(in srgb, var(--color-1) 78%, black);
+  --color-2-text: color-mix(in srgb, var(--color-2) 54%, black);
+  --color-3-text: color-mix(in srgb, var(--color-3) 58%, black);
+  --color-4-text: color-mix(in srgb, var(--color-4) 84%, black);
+  --color-5-text: color-mix(in srgb, var(--color-5) 82%, black);
 
   /* (docs mirror — identical to llms.txt · Typography)
      WHEN TO USE: you rarely set type directly — write semantic HTML
@@ -516,6 +534,16 @@
   --accent-3-hover: #FFFFFF;
   --accent-3-pressed: #D4D6D8;
   --on-accent-3: #11181C;
+
+  /* The vivid -text companions flip: on a near-black page the hue is
+     carried UP toward white instead (the raw brights mostly pass here;
+     one uniform lift puts all five comfortably past AA). Set on
+     [data-mode="dark"] so every theme's dark twin inherits them. */
+  --color-1-text: color-mix(in srgb, var(--color-1) 88%, white);
+  --color-2-text: color-mix(in srgb, var(--color-2) 88%, white);
+  --color-3-text: color-mix(in srgb, var(--color-3) 88%, white);
+  --color-4-text: color-mix(in srgb, var(--color-4) 88%, white);
+  --color-5-text: color-mix(in srgb, var(--color-5) 88%, white);
 
   --success: #56B87A;
   --warning: #D8A23E;
@@ -1335,6 +1363,13 @@
    facet.js mounts three GPU-composited layers whose desynced clocks
    keep it from ever repeating. Still under data-motion="off" and
    reduced motion; plain background with JS off.
+   FIXED TO THE SCREEN — .bg-fixed on any grid look makes it the
+   page's one still backdrop (body's first child, content floats over
+   it, its own --bg-strength default raised to 22%);
+   data-bg-fluid-fixed beside data-bg-fluid pins the pools to the
+   viewport while the surface scrolls over them like a window,
+   clipping with a clip-path rounded to the card radius
+   (--bg-fluid-radius overrides).
    What it is for: giving big quiet surfaces a
    material — a hero, a section divider zone, a whole page. When to
    use it: one class or attribute on a section or body; content sits
@@ -1473,6 +1508,33 @@
 @keyframes facet-fluid-rise {
   to { transform: translate3d(-4%, -9%, 0) scale(1.12) rotate(-5deg); }
 }
+
+/* FIXED, WHOLE-PAGE: .bg-fixed turns any grid look into the page's one
+   still backdrop — <div class="bg-dots bg-fixed"></div> as the body's
+   first child, content floats over it with no wrapper, and the pattern
+   holds still while the page scrolls. Fixed full-page use is exactly
+   where the whisper default disappears on dim phone panels, so this
+   variant speaks up a little; tune with --bg-strength as usual. */
+.bg-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  --bg-strength: 22%;
+}
+
+/* VARIANT FLUID, FIXED TO THE SCREEN: add data-bg-fluid-fixed beside
+   data-bg-fluid and the pools pin to the VIEWPORT while the surface
+   scrolls over them like a window — a hero card gliding over a still
+   wash. overflow can't clip fixed children, so the surface clips its
+   window with a clip-path instead (rounded to the card radius;
+   --bg-fluid-radius overrides). The base rule's isolation keeps the
+   fixed layers painting inside this surface, which is what lets the
+   clip bite. */
+[data-bg-fluid][data-bg-fluid-fixed] {
+  clip-path: inset(0 round var(--bg-fluid-radius, var(--radius-card)));
+}
+[data-bg-fluid-fixed] > .bg-fluid-layer { position: fixed; }
 
 
 /* Contrast request: the pattern is removed. */
@@ -2079,7 +2141,7 @@ input, textarea, [contenteditable] {
   .bg-fluid-layer { display: none !important; }
 
   /* page furniture never prints; an explicit on-role overrides */
-  nav, .skip-link, .top-menu,
+  nav, .skip-link, .top-menu, .bg-fixed,
   .tab-bar, .float-btn, .float-btn-right,
   .sheet, .sheet-scrim, .nav-menu,
   .scroll-gauge, .scroll-gauge-page,
@@ -5321,7 +5383,7 @@ button.list-item:active { background: var(--surface-active); }
 /* (docs mirror — identical to llms.txt · Tab bar)
    WHEN TO USE: the main navigation of an app-shaped page — a floating pill of three to five sections with the menu on its left and settings on its right; phones get it at the bottom, wide screens can move it to the top.
 
-   What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost — and never re-centring once the reader scrolls the pill themselves. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one condenses the other away first, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. A tapped link segment glides the highlight onto itself before the page changes; coming back through the browser's back-forward cache puts the highlight back on the returning page's own tab. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost; the round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow. */
+   What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost — and never re-centring once the reader scrolls the pill themselves. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one condenses the other away first, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. A tapped link segment glides the highlight onto itself before the page changes; coming back through the browser's back-forward cache puts the highlight back on the returning page's own tab. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost; the round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. Clearing the bar: the page never hand-measures it — put .page-under-bar on <main> (or body) with the .tab-bar-top site bar and it pads the top on wide screens and the bottom on phones, where the same bar folds back to the bottom pill; a page with the plain bottom .tab-bar pads itself with padding-bottom: var(--bar-clearance-bottom). The tokens behind it: --bar-height (48px, what the pill and corner buttons stand), --bar-clearance-top and --bar-clearance-bottom (height + the bar's edge inset + one card of air). What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow. */
 /* ----- TAB BAR: the floating command bar (Photos-style pill) -----
    Embossed frosted glass: translucent over a backdrop blur, pressed INTO
    the page via inset shadows (dark from the top, faint from the bottom).
@@ -5358,6 +5420,29 @@ button.list-item:active { background: var(--surface-active); }
   padding: var(--space-tight);
   white-space: nowrap;
   max-width: calc(100vw - 2 * var(--space-inline));   /* never wider than the screen */
+}
+/* The bar's footprint, as tokens — so a page clears the fixed bar
+   without hand-measuring it. --bar-height is what the pill and the
+   round corner buttons stand (48px); each clearance is that height
+   plus the bar's inset at its edge plus one card of breathing room.
+   Use them in your own padding, or take .page-under-bar below. */
+:root {
+  --bar-height: 48px;
+  --bar-clearance-top: calc(var(--space-pin) + var(--safe-top) + var(--bar-height) + var(--space-card));
+  --bar-clearance-bottom: calc(var(--space-inline) + var(--safe-bottom) + var(--bar-height) + var(--space-card));
+}
+/* Put .page-under-bar on the page's <main> (or body) when the page
+   carries the .tab-bar-top site bar: it pads the top on wide screens
+   (where the bar pins to the top edge) and the bottom on phones (where
+   the same bar folds back to the bottom pill) — no more guessing bar
+   heights per page. A page with the plain bottom .tab-bar pads itself
+   with the token instead: padding-bottom: var(--bar-clearance-bottom). */
+.page-under-bar { padding-bottom: var(--bar-clearance-bottom); }
+@media (min-width: 40rem) {
+  .page-under-bar {
+    padding-top: var(--bar-clearance-top);
+    padding-bottom: 0;
+  }
 }
 /* When the tabs outgrow a narrow screen, the pill scrolls sideways
    inside itself instead of pushing the corner buttons off the edge. */

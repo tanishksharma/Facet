@@ -159,10 +159,16 @@
             token as a direct override. It writes the same html attributes a
             page would carry statically, so the markup stays the source of
             truth and anything else reading those attributes keeps working.
-            The skin keys go further and persist for the session: accent1,
-            accent2 and accent3 re-ink an accent rank and derive its hover,
-            pressed and on- companions; ink recolors the text ramp;
+            The skin keys go further and persist for the session: accent1
+            and accent3 re-ink an accent rank and derive its hover,
+            pressed and on- companions; accent2 re-tints the pale
+            secondary rank by mixing the color into the page background
+            (pale in light mode, deep in dark), because every theme ships
+            accent-2 as a pale fill; ink recolors the text ramp;
             fontHeading and fontBody swap the faces. Null clears a key.
+            A second argument, { persist: false }, restyles the page now
+            but writes nothing to storage — for per-load color cycles and
+            session-only previews.
           </p>
           <pre id="code-fn-set"><code>&lt;script&gt;
   facet.set({ theme: "velvet" });
@@ -170,6 +176,7 @@
   facet.set({ "--accent-1": "#0F6FDE" });   // one token, this visit
   facet.set({ accent1: "#0F6FDE" });        // whole rank, remembered
   facet.set({ ink: "#1A2E1A", fontHeading: "Playfair Display" });
+  facet.set({ accent1: c, accent3: c }, { persist: false });  // now, not remembered
 &lt;/script&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-set" data-tip="Copies this code">Copy</button></p>
         </article>

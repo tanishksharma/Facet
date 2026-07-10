@@ -58,7 +58,9 @@ theme and mode ride the URL (?theme=, ?mode=) so shared links open
 identically; one-line switcher buttons via data-theme-switch and
 data-mode-toggle; setup by configuration — data attributes on the
 facet.js script tag boot a page into its look, and facet.set() changes
-theme, mode or any token live at runtime; native scrollbars and form
+theme, mode or any token live at runtime (skin keys persist across
+visits; a {persist: false} second argument applies them for this load
+only — per-load color cycles, session previews); native scrollbars and form
 controls follow via color-scheme and facet.js keeps the theme-color
 meta synced so the browser's UI follows the theme; custom accent
 as a supported recipe — override
@@ -76,7 +78,9 @@ page), --surface (cards/inputs, one step above), --surface-hover and
 --surface-active (interactive fills), --border-subtle / --border /
 --border-strong (three line weights), and --text / --text-muted /
 --text-subtle (three text weights) — so a component picks the exact
-neutral it needs. Plus per-theme status colors, type and spacing named by
+neutral it needs. Plus per-theme status colors, the vivid decorative palette
+(--color-1 … --color-5) with an AA text-safe -text companion per color,
+and type and spacing named by
 intent and each scaled by a global small/medium/large control. Typography
 is fully tokenised by role: four weights (--weight-body/-medium/-strong/
 -heading), line-height per role (--leading-display/-heading/-snug/-body/
@@ -121,7 +125,10 @@ Components and behaviours: themed layout primitives (container in four
 widths, stack in three gaps, full-viewport snap sections); one-attribute
 page width — data-width="narrow|wide|xwide|full" on <html> remaps every
 container from reading column to edge to edge, with a matching control
-in the settings panel; the
+in the settings panel; background
+materials in two variants (the grid looks and the breathing fluid
+field), pinnable to the viewport — .bg-fixed for a whole-page still
+backdrop, data-bg-fluid-fixed for pools the surface scrolls over; the
 view-stack app shell for screen-to-screen apps (main.view-stack of
 .view screens, hash-routed, facet.views.go/back, safe-area padded);
 buttons in
@@ -132,7 +139,9 @@ bar: a bottom pill on phones, the top site bar on wide screens, its
 corner panels condensing into and rising out of their own buttons),
 settings sheet, float button, scroll
 gauge, and the nav menu (a floating Menu-pill + Settings-button cluster, built
-from .btn.btn-pill, a no-JS <details> of real links upgraded to an overlay);
+from .btn.btn-pill, a no-JS <details> of real links upgraded to an overlay),
+with .page-under-bar and the --bar-clearance tokens so pages clear the
+fixed bar without hand-measuring it;
 the calculator-grade number input (prefilled example, one-tap clear,
 locale-aware grouping, words helper in the active language); labelled
 fields with hints and three-color validation (data-status +
@@ -247,12 +256,22 @@ facet.set({...}) applies key-value pairs live with no reload:
 facet.set({theme: "velvet"}), facet.set({mode: "dark"}),
 facet.set({"--accent-1": "#5F9E44"}) to override any token. The skin
 keys go further and persist for the session (sessionStorage facet-skin,
-like every setting: restored before paint, reset when the tab closes): accent1/accent2/accent3 re-ink an accent rank
-and derive its hover, pressed and on- companions so buttons stay
-whole; ink recolors the text ramp (muted derives); fontHeading and
-fontBody swap the faces by family name. A null value clears a key back
-to the theme's own tokens: facet.set({accent1: "#0F6FDE", ink: null}). Attributes
-on html stay the source of truth, so custom scripts keep working.
+like every setting: restored before paint, reset when the tab closes):
+accent1/accent3 re-ink an accent rank and
+derive its hover, pressed and on- companions so buttons stay whole;
+accent2 re-tints the pale secondary rank — the picked color mixes INTO
+the page background (a pale tint in light mode, a deep one in dark,
+page ink on top), because every theme ships accent-2 as a pale fill
+and a solid would break the rank's job; ink recolors the text ramp
+(muted derives); fontHeading and fontBody swap the faces by family
+name. A null value clears a key back to the theme's own tokens:
+facet.set({accent1: "#0F6FDE", ink: null}). A second argument opts out
+of persistence — facet.set({accent1: c, accent3: c}, {persist: false})
+restyles the page now but writes nothing to storage, for per-load
+color cycles and one-page previews (brand theming commonly wears
+ONE color on both accent-1 and accent-3, exactly like that call).
+Attributes on html stay the source of truth, so custom scripts keep
+working.
 
 The same attributes work on any element, not just html: put
 data-mode="dark" (or "light", or data-theme="velvet") on a section and only
@@ -358,8 +377,13 @@ quiet interactive color (links, labels, focus). Status colors say what
 happened: --success, --warning, --error, --info — each with a derived
 -tint and -edge pair for washes and borders. The vivid palette
 (--color-1 red … --color-5 purple) is decoration only — card tints,
-charts, playful accents — never semantic status. Dark mode and every
-theme re-map all of it; your markup does not change.
+charts, playful accents — never semantic status. The raw vivids are
+fills-only (yellow on white fails contrast); when the palette must
+WRITE — a tinted label, a stat, a link on a washed card — use the
+-text companion (--color-1-text … --color-5-text): the same hue
+carried to AA contrast on the page, darkened per color in light mode
+and lifted toward white in dark. Dark mode and every theme re-map all
+of it; your markup does not change.
 
 ### Spacing
 
@@ -1708,12 +1732,27 @@ facet.fluidBackground(el) mounts a late-added surface. Still under
 data-motion="off" and prefers-reduced-motion; plain background with
 JS off.
 
+FIXED TO THE SCREEN — two opt-ins pin a background to the viewport:
+- .bg-fixed on any grid look makes it the page's one still backdrop —
+  <div class="bg-dots bg-fixed"></div> as the body's first child,
+  content floats over it with no wrapper, the pattern holds still
+  while the page scrolls. It raises its own --bg-strength default to
+  22% (whole-page fixed use is where the 12% whisper disappears on
+  dim phone panels); tune as usual. Never prints.
+- data-bg-fluid-fixed beside data-bg-fluid pins the POOLS to the
+  screen while the surface scrolls over them like a window — a hero
+  card gliding over a still wash. The surface clips its window with a
+  clip-path rounded to the card radius; set --bg-fluid-radius to
+  match a different rounding.
+
     <section class="bg-dots" style="--bg-tint: var(--accent-3); --bg-cell: 4rem;">
       <h2>A quiet dotted surface</h2>
     </section>
     <section class="bg-dots" data-bg-scatter="✦ ❋" data-bg-scatter-rate="10">…</section>
     <section data-bg-glyph="♥ ✳ ✦" data-bg-glyph-scale="0.3">…</section>
     <section data-bg-fluid>…</section>
+    <div class="bg-dots bg-fixed"></div>            <!-- whole-page still backdrop -->
+    <section data-bg-fluid data-bg-fluid-fixed>…</section>  <!-- pools fixed, surface scrolls over them -->
 ## Blocks
 
 Assemblies of the components, documented as copyable patterns in the
@@ -2042,7 +2081,7 @@ What it is: synthesized UI sound and vibration with no audio files — facet.fee
 
 WHEN TO USE: the main navigation of an app-shaped page — a floating pill of three to five sections with the menu on its left and settings on its right; phones get it at the bottom, wide screens can move it to the top.
 
-What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost — and never re-centring once the reader scrolls the pill themselves. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one condenses the other away first, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. A tapped link segment glides the highlight onto itself before the page changes; coming back through the browser's back-forward cache puts the highlight back on the returning page's own tab. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost; the round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow.
+What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost — and never re-centring once the reader scrolls the pill themselves. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one condenses the other away first, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. A tapped link segment glides the highlight onto itself before the page changes; coming back through the browser's back-forward cache puts the highlight back on the returning page's own tab. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost; the round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. Clearing the bar: the page never hand-measures it — put .page-under-bar on <main> (or body) with the .tab-bar-top site bar and it pads the top on wide screens and the bottom on phones, where the same bar folds back to the bottom pill; a page with the plain bottom .tab-bar pads itself with padding-bottom: var(--bar-clearance-bottom). The tokens behind it: --bar-height (48px, what the pill and corner buttons stand), --bar-clearance-top and --bar-clearance-bottom (height + the bar's edge inset + one card of air). What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow.
 
     <nav class="tab-bar tab-bar-top" aria-label="Sections">
       <button type="button" class="tab-menu" aria-controls="nav-sheet"

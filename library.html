@@ -551,7 +551,10 @@ article p   { font-family: var(--font-reading); }
           colors named by rank, like the accents: red, yellow, green, blue,
           purple. Decoration only — card tints (mixed into the surface),
           charts, playful accents — never semantic status; a theme may
-          re-tune them.
+          re-tune them. The raw brights are fills-only; when the palette
+          must write — a tinted label, a stat on a washed card — each color
+          carries a text-safe companion, the same hue at readable contrast
+          in light and dark.
         </p>
         <p>
           Every value lives once in <a href="/lib/facet.css">facet.css</a> as
@@ -568,6 +571,13 @@ article p   { font-family: var(--font-reading); }
           <li><div class="swatch" style="background: var(--color-3)"></div>--color-3</li>
           <li><div class="swatch" style="background: var(--color-4)"></div>--color-4</li>
           <li><div class="swatch" style="background: var(--color-5)"></div>--color-5</li>
+        </ul>
+          <ul class="swatch-row">
+          <li><div class="swatch" style="background: var(--color-1-text)"></div>--color-1-text</li>
+          <li><div class="swatch" style="background: var(--color-2-text)"></div>--color-2-text</li>
+          <li><div class="swatch" style="background: var(--color-3-text)"></div>--color-3-text</li>
+          <li><div class="swatch" style="background: var(--color-4-text)"></div>--color-4-text</li>
+          <li><div class="swatch" style="background: var(--color-5-text)"></div>--color-5-text</li>
         </ul>
 
           <div class="mode-pair">
@@ -2970,6 +2980,20 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
             mounts a late-added surface.
           </p>
           <p>
+            Fixed to the screen: <code>.bg-fixed</code> on any grid look
+            makes it the page's one still backdrop —
+            <code>&lt;div class="bg-dots bg-fixed"&gt;&lt;/div&gt;</code>
+            as the body's first child, content floats over it with no
+            wrapper; it raises its own <code>--bg-strength</code>
+            default to 22% because whole-page fixed use is where the
+            whisper default disappears on dim phone panels.
+            <code>data-bg-fluid-fixed</code> beside
+            <code>data-bg-fluid</code> pins the POOLS to the screen
+            while the surface scrolls over them like a window; the
+            surface clips with a clip-path rounded to the card radius
+            (<code>--bg-fluid-radius</code> overrides).
+          </p>
+          <p>
             Use ONE background per surface, never
             nested; all patterns fade under
             <code>prefers-contrast: more</code> and never print.
@@ -3091,7 +3115,12 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
        aria-hidden="true" aria-label="Settings"&gt;…&lt;/aside&gt;
 
 &lt;!-- .sheet-rise: on phones the panel rises out of the bar in the
-     bar's own glass; on wide screens it stays an edge sheet. --&gt;</code></pre>
+     bar's own glass; on wide screens it stays an edge sheet. --&gt;
+
+&lt;!-- the page clears the fixed bar with one class, no hand-measured
+     padding: top on wide screens, bottom on phones. (A page with the
+     plain bottom bar pads with var(--bar-clearance-bottom) instead.) --&gt;
+&lt;main class="page-under-bar"&gt;…&lt;/main&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the markup for both shapes">Copy</button></p>
       </article>
 

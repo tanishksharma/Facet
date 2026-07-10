@@ -88,15 +88,13 @@
 /* The site bar (the tab bar pinned top on wide screens): the page and
    the pinned index clear it. On phones the same bar floats at the
    bottom, so the page gets bottom room instead. */
+body { padding-bottom: var(--bar-clearance-bottom); }
 @media (min-width: 40rem) {
-  body { padding-top: calc(48px + var(--space-pin)); }
+  body { padding-top: var(--bar-clearance-top); padding-bottom: 0; }
   .docs-index.side-index {
-    top: calc(48px + 2 * var(--space-pin));
-    height: calc(100dvh - 48px - 3 * var(--space-pin));
+    top: calc(var(--bar-height) + 2 * var(--space-pin));
+    height: calc(100dvh - var(--bar-height) - 3 * var(--space-pin));
   }
-}
-@media (max-width: 40rem) {
-  body { padding-bottom: calc(48px + 2 * var(--space-inline) + var(--safe-bottom)); }
 }
 
 /* The sidebar + wall layout. The grid wrapper exists to put the index
