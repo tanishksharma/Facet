@@ -776,7 +776,23 @@ article p   { font-family: var(--font-reading); }
           <button class="chip" aria-pressed="false" data-config-key="motion" data-config-value="off" data-tip="No animation at all">Off</button>
         </p>
         <div class="demo stack">
-          <p class="type-label" style="margin: 0;">Speed and easing — the three duration tokens racing their easing curves. Press Replay; switch the personality above and the same dots run differently</p>
+          <p class="motion-part">Button press</p>
+          <p class="text-footnote motion-note">
+            Hold a button down, then let go — it sinks under the finger and
+            springs back on release. The second one also fires a toast, so
+            you can watch an arrival and exit.
+          </p>
+          <p style="display: flex; flex-wrap: wrap; gap: var(--space-inline); align-items: center; margin: 0;">
+            <button class="btn btn-primary" data-tip="Hold, then release">Press and hold me</button>
+            <button class="btn" id="motion-toast" data-tip="A toast arriving and leaving rides the same tokens">Show a toast</button>
+          </p>
+
+          <p class="motion-part">Speed &amp; easing</p>
+          <p class="text-footnote motion-note">
+            Three dots, one per duration token, each on its own easing
+            curve — fast is 150ms, normal 300ms, slow 600ms. Press Replay;
+            switch the personality above and the same dots run differently.
+          </p>
           <div class="race stack-tight" id="motion-race">
             <p class="text-caption" style="margin: 0;">--duration-fast · --ease-out</p>
             <div class="race-track"><span class="race-dot" style="transition: left var(--duration-fast) var(--ease-out);"></span></div>
@@ -787,25 +803,26 @@ article p   { font-family: var(--font-reading); }
           </div>
           <p style="margin: 0;"><button class="btn btn-small" id="motion-race-replay" data-tip="Runs the three dots again">Replay</button></p>
 
-          <p class="type-label" style="margin: 0;">Button physics — hold any button down, then let go: it sinks under the finger and springs back on release</p>
-          <p style="display: flex; flex-wrap: wrap; gap: var(--space-inline); align-items: center; margin: 0;">
-            <button class="btn btn-primary" data-tip="Press and hold, then release">Press me</button>
-            <button class="btn" data-tip="The spring is in the release">And me</button>
-            <button class="btn btn-icon" aria-label="Feel the press" data-tip="Weight, then bounce">&times;</button>
-            <button class="btn" id="motion-toast" data-tip="A toast arriving and leaving is the same system">Show a toast</button>
+          <p class="motion-part">Always looping</p>
+          <p class="text-footnote motion-note">
+            The spinner and the loading shimmer never stop, by design.
           </p>
-
-          <p class="type-label" style="margin: 0;">The two looping animations — the spinner and the loading shimmer run forever by design</p>
           <p style="display: flex; flex-wrap: wrap; gap: var(--space-stack); align-items: center; margin: 0;">
             <span class="spinner" role="status" aria-label="Working"></span>
             <span class="skeleton" style="width: 12rem; height: 1rem;"></span>
           </p>
 
-          <p class="type-label" style="margin: 0;">Parallax and shine — the ambient engine. Pick the source that drives the cards below</p>
+          <p class="motion-part">The ambient engine</p>
+          <p class="text-footnote motion-note">
+            Parallax and shine on the cards below, driven by one source.
+            Idle loops on its own every few seconds; Cursor mirrors the
+            pointer and eases home the moment it stops; Tilt follows the
+            device and asks permission on iPhone and iPad.
+          </p>
           <p class="chips" role="group" aria-label="Motion source" style="margin: 0;">
             <button class="chip" data-motion-mode="off" data-tip="Everything rests">Off</button>
-            <button class="chip" data-motion-mode="idle" data-tip="Loops on its own: out of the centre, around, and back — every few seconds">Idle</button>
-            <button class="chip" data-motion-mode="cursor" data-tip="Mirrors the pointer, and drifts home when it stops">Cursor</button>
+            <button class="chip" data-motion-mode="idle" data-tip="Loops on its own: out of the centre, around, and back">Idle</button>
+            <button class="chip" data-motion-mode="cursor" data-tip="Mirrors the pointer, eases home when it stops">Cursor</button>
             <button class="chip" data-motion-mode="tilt" data-tip="Follows the device's tilt — asks permission on iPhone and iPad">Tilt</button>
           </p>
           <div class="grid" style="margin: 0;">

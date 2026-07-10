@@ -431,7 +431,7 @@
      in the library and in your product reads the motion tokens, so one
      attribute can calm or stop everything. Lively is the default: momentum,
      weight, a settle in every arrival — --duration-fast 150ms,
-     --duration-normal 280ms, --duration-slow 450ms, --ease-out,
+     --duration-normal 300ms, --duration-slow 600ms, --ease-out,
      --ease-in-out, --ease-spring (a true spring curve where supported).
      data-motion="calm" makes everything short and near-linear;
      data-motion="off" stops animation entirely; both work on any subtree
@@ -446,8 +446,8 @@
      with data-motion="off" — one attribute, page-wide or per subtree.
      prefers-reduced-motion sits above all of it. */
   --duration-fast: 150ms;     /* hovers, color changes */
-  --duration-normal: 280ms;   /* presses, reveals, toggles */
-  --duration-slow: 450ms;     /* overlays, page-level moves */
+  --duration-normal: 300ms;   /* presses, reveals, toggles */
+  --duration-slow: 600ms;     /* overlays, page-level moves — deliberately unhurried */
   --ease-out: cubic-bezier(0.2, 0, 0, 1);       /* things arriving */
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);  /* things moving */
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);  /* bouncy back-out;

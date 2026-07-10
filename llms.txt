@@ -380,7 +380,7 @@ WHEN TO USE: never hardcode a duration or an easing — every transition
 in the library and in your product reads the motion tokens, so one
 attribute can calm or stop everything. Lively is the default: momentum,
 weight, a settle in every arrival — --duration-fast 150ms,
---duration-normal 280ms, --duration-slow 450ms, --ease-out,
+--duration-normal 300ms, --duration-slow 600ms, --ease-out,
 --ease-in-out, --ease-spring (a true spring curve where supported).
 data-motion="calm" makes everything short and near-linear;
 data-motion="off" stops animation entirely; both work on any subtree
@@ -1123,9 +1123,9 @@ device tilt where no permission gate blocks it (iOS gates it;
 facet.motion.setMode("tilt") asks), or the engine's idle life where
 nothing else drives (modes: off | cursor | tilt | idle). Cursor and
 tilt mirror the real world directly — just enough smoothing to hide
-jitter, no easing lag — and when the pointer or device goes still the
-vector drifts slowly back to centre, so nothing rests jammed
-off-centre. Idle rests at that same centre and, every few seconds,
+jitter, no easing lag — and the moment the pointer or device stops,
+the vector eases back to centre (in and out, about half a second), so
+nothing rests jammed off-centre. Idle rests at that same centre and, every few seconds,
 takes one fast smooth loop — down out of the centre, once around, and
 back up into it (about 1.1s) — so idle starts and ends exactly where
 everything else rests; gated touch devices land here by default. The same engine's light channel drives the shine
