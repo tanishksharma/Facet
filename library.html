@@ -3040,7 +3040,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
           </nav>
 
           <div class="sheet-scrim" data-open="false"></div>
-          <aside class="sheet sheet-left" id="tabbar-nav-sheet" data-open="false" aria-hidden="true" aria-label="Navigation">
+          <aside class="sheet sheet-left sheet-rise" id="tabbar-nav-sheet" data-open="false" aria-hidden="true" aria-label="Navigation">
             <div class="sheet-scroll">
               <p class="menu-label">Go to</p>
               <a class="menu-item" href="#tab-bar"><svg data-icon="home"></svg> Home</a>
@@ -3049,7 +3049,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
             </div>
           </aside>
           <div class="sheet-scrim" data-open="false"></div>
-          <aside class="sheet" id="tabbar-settings-sheet" data-open="false" aria-hidden="true" aria-label="Settings">
+          <aside class="sheet sheet-rise" id="tabbar-settings-sheet" data-open="false" aria-hidden="true" aria-label="Settings">
             <div class="sheet-scroll">
               <p class="menu-label">Settings</p>
               <button type="button" class="menu-item" data-control="theme" data-tip="Cycles the theme">Theme <span class="menu-value"></span></button>
@@ -3082,11 +3082,14 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
 &lt;!-- each edge panel is a scrim + sheet pair --&gt;
 &lt;div class="sheet-scrim" data-open="false"&gt;&lt;/div&gt;
-&lt;aside class="sheet sheet-left" id="nav-sheet" data-open="false"
+&lt;aside class="sheet sheet-left sheet-rise" id="nav-sheet" data-open="false"
        aria-hidden="true" aria-label="Navigation"&gt;…&lt;/aside&gt;
 &lt;div class="sheet-scrim" data-open="false"&gt;&lt;/div&gt;
-&lt;aside class="sheet" id="settings-sheet" data-open="false"
-       aria-hidden="true" aria-label="Settings"&gt;…&lt;/aside&gt;</code></pre>
+&lt;aside class="sheet sheet-rise" id="settings-sheet" data-open="false"
+       aria-hidden="true" aria-label="Settings"&gt;…&lt;/aside&gt;
+
+&lt;!-- .sheet-rise: on phones the panel rises out of the bar in the
+     bar's own glass; on wide screens it stays an edge sheet. --&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the markup for both shapes">Copy</button></p>
       </article>
 
@@ -3320,7 +3323,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       </button>
     </nav>
     <div class="sheet-scrim" data-open="false"></div>
-    <aside class="sheet sheet-left" id="site-nav" data-open="false" aria-hidden="true" aria-label="Navigation">
+    <aside class="sheet sheet-left sheet-rise" id="site-nav" data-open="false" aria-hidden="true" aria-label="Navigation">
       <div class="sheet-scroll">
         <a class="wordmark" href="/">facet</a>
         <span class="menu-label">Navigate</span>
@@ -3339,7 +3342,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       </div>
     </aside>
     <div class="sheet-scrim" data-open="false"></div>
-    <aside class="sheet" id="site-settings" data-open="false" aria-hidden="true" aria-label="Settings">
+    <aside class="sheet sheet-rise" id="site-settings" data-open="false" aria-hidden="true" aria-label="Settings">
       <div class="sheet-scroll">
         <fieldset class="segmented" id="settings-depth" aria-label="Settings depth">
           <label><input type="radio" name="settings-depth" value="simple" checked data-tip="Theme, colors and fonts"><span>Simple</span></label>

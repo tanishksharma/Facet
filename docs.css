@@ -217,7 +217,7 @@ section[id], article[id] { scroll-margin-top: var(--space-card); }
    hidden from a crawler — it is just folded behind a grid. */
 .topic-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
   gap: var(--space-inline);
 }
 .topic-card {
@@ -437,7 +437,7 @@ article.element {
 }
 .icon-cell:hover { border-color: var(--text-muted); }
 .icon-cell svg { width: 1.5rem; height: 1.5rem; }
-#icon-gallery { grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); }
+#icon-gallery { grid-template-columns: repeat(auto-fill, minmax(min(6.5rem, 100%), 1fr)); }
 
 /* Typography specimen: a real article, each block tagged with its token. */
 .type-label {
@@ -674,7 +674,7 @@ article.element {
 .feat-group { display: grid; gap: var(--space-stack); margin-top: var(--space-section); }
 .feat-group-name { font-size: var(--text-h4); margin: 0; }
 .feat-grid {
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 17rem));
+  grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 17rem));
   justify-content: center;
 }
 /* Feature/rule card: a button that reads as a small card, centered content. */
@@ -693,7 +693,7 @@ article.element {
 /* How-to on the home page: a centered 3×2 grid of borderless steps —
    a numbered circle, a centered title and a centered line, no card. */
 #how-to .steps {
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
   max-width: 62rem;
   margin-inline: auto;
   gap: var(--space-section) var(--space-stack);
@@ -711,13 +711,14 @@ article.element {
    inside the centred home section, stacking to one column on phones. */
 .how-tracks {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   gap: var(--space-stack);
   max-width: 60rem;
   margin-inline: auto;
   text-align: left;
 }
-.how-track { align-items: stretch; }
+.how-track { align-items: stretch; min-width: 0; }   /* long code lines scroll inside, never widen the page */
+.how-track pre { overflow-x: auto; max-width: 100%; }
 .how-track-who {
   margin: 0;
   font-size: var(--text-caption);
@@ -778,7 +779,7 @@ article.element {
 /* Token pickers. */
 .mixer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr));
   gap: var(--space-inline);
 }
 .mixer-grid label {
@@ -888,7 +889,7 @@ article.element {
    itself, .lab-frame, is a shared docs style above). */
 .lab-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
   gap: var(--space-stack);
 }
 .lab-cell { display: grid; gap: var(--space-tight); }
