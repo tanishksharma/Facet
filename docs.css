@@ -64,7 +64,8 @@
 .menu-color input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
 .menu-color input[type="color"]::-webkit-color-swatch { border: none; border-radius: var(--radius-pill); }
 /* The settings panel's own mini tab bar: in flow at the panel's top,
-   full width, its pill scrolling sideways when the tabs outgrow it. */
+   its groove hugging the tabs it holds — never a panel-wide trench for
+   two pills — and scrolling sideways if the tabs ever outgrow it. */
 .sheet-tabs {
   position: static;
   transform: none;
@@ -73,7 +74,8 @@
   padding: 0;
 }
 .sheet-tabs .tab-set {
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   overflow-x: auto;
   scrollbar-width: none;
 }

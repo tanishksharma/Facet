@@ -5297,7 +5297,7 @@ button.list-item:active { background: var(--surface-active); }
 /* (docs mirror — identical to llms.txt · Tab bar)
    WHEN TO USE: the main navigation of an app-shaped page — a floating pill of three to five sections with the menu on its left and settings on its right; phones get it at the bottom, wide screens can move it to the top.
 
-   What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one closes the other, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost; the round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow. */
+   What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost — and never re-centring once the reader scrolls the pill themselves. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one condenses the other away first, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost; the round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow. */
 /* ----- TAB BAR: the floating command bar (Photos-style pill) -----
    Embossed frosted glass: translucent over a backdrop blur, pressed INTO
    the page via inset shadows (dark from the top, faint from the bottom).
@@ -5509,21 +5509,15 @@ button.list-item:active { background: var(--surface-active); }
   color: var(--text-muted);
   transition: color var(--duration-fast) var(--ease-out);
 }
-/* The settings icon turns a quarter with the panel: in on open, back on close. */
-.tab-settings svg {
-  transition: transform var(--duration-slow) var(--ease-in-out);
-}
+/* The open state shows in the ink alone — the glyph never spins. */
 .tab-settings[aria-expanded="true"] {
   color: var(--accent-pressed);
-}
-.tab-settings[aria-expanded="true"] svg {
-  transform: rotate(90deg);
 }
 
 /* (docs mirror — identical to llms.txt · Sheet & menu)
    WHEN TO USE: the app's edge panels, each behind one button — settings on the right (the default), navigation on the left (.sheet-left).
 
-   What it is: the app's edge panel — a slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back. The right edge is the settings side (the default); .sheet-left is the same panel sliding from the LEFT edge — the navigation side — and opening either closes the other. Add .sheet-rise and on phones the panel rises out of the tab bar instead: the bar's own frosted glass, rising off its own corner as a narrow card — the menu slimmer on the left, settings wider on the right — standing only as tall as its options need — capped at half the screen so nothing sits out of thumb reach, taller content scrolling inside — mostly opaque so the options read, options left-aligned under eyebrow group names, a slim position thumb riding the panel's OUTER edge (left on the left panel, so that corner reads as the page's corner), and a foot of bare icons with the smallest captions that never scrolls away. On wide screens the same panel becomes a corner DROPDOWN instead: it hangs from the top bar with its outer edge lined up with the bar's own corner button — a slim panel for the menu on the left, a wider one for settings on the right — options left-aligned, in the same glass, and the page does not dim (a click anywhere still closes it). Inside, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the page behind locks still while a panel is open; the trigger's aria-expanded is managed, a floating trigger stays visible above the open sheet as its close toggle, and a sheet left open never survives the browser's back-forward cache — it closes itself on return. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump. */
+   What it is: the app's edge panel — a slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back. The right edge is the settings side (the default); .sheet-left is the same panel sliding from the LEFT edge — the navigation side — and opening either closes the other first — never two panels moving at once. Add .sheet-rise and on phones the panel rises out of the tab bar instead: the bar's own frosted glass, condensing into and rising out of its own corner button as a narrow card — the menu slimmer on the left, settings wider on the right — standing only as tall as its options need — capped at half the screen so nothing sits out of thumb reach, taller content scrolling inside — mostly opaque so the options read, options left-aligned under eyebrow group names, a slim position thumb riding the panel's OUTER edge (left on the left panel, so that corner reads as the page's corner), and a condensed foot of bare icons that never scrolls away. On wide screens the same panel becomes a corner DROPDOWN instead: it hangs from the top bar with its outer edge lined up with the bar's own corner button — a slim panel for the menu on the left, a wider one for settings on the right — options left-aligned, in the same glass, and the page does not dim (a click anywhere still closes it). Inside, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the page behind locks still while a panel is open; the trigger's aria-expanded is managed, a floating trigger stays visible above the open sheet as its close toggle, and a sheet left open never survives the browser's back-forward cache — it closes itself on return. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump. */
 /* ----- SHEET: right-edge slide-in panel over a darkening scrim -----
    Vertically centred; caps at 60% of the viewport height and 80% of
    its width on phones. Content taller than the cap scrolls INSIDE
@@ -5544,10 +5538,11 @@ button.list-item:active { background: var(--surface-active); }
    the menu (.sheet-left) and from its right edge for settings. Both
    shapes share everything else: the bar's glass made mostly opaque so
    the options read, only as tall as the options need capped at half the
-   screen (taller content scrolls inside), options centred, group names
-   in the small eyebrow voice. facet.js reveals it with a clip wipe over
-   its final layout (up from the bar on phones, down from the bar on
-   desktop) — nothing reflows mid-motion, which is what keeps it smooth.
+   screen (taller content scrolls inside), options left-aligned, group
+   names in the small eyebrow voice. facet.js reveals it with a clip
+   wipe over its final layout — a CORNER wipe, condensing into and
+   rising out of its own trigger button — so nothing reflows mid-motion,
+   which is what keeps it smooth.
    Two classes on purpose: the base .sheet block sits later in the file
    and must lose here. */
 .sheet.sheet-rise,
@@ -5575,7 +5570,13 @@ button.list-item:active { background: var(--surface-active); }
   width: 100%;
   margin-left: 0;
 }
-.sheet.sheet-rise .sheet-scroll { overflow-y: auto; }   /* taller content scrolls inside */
+.sheet.sheet-rise .sheet-scroll {
+  overflow-y: auto;                  /* taller content scrolls inside */
+  /* rows pack tight — no gaps: their own 40px min-heights carry the
+     rhythm, and each group name brings its own air in its padding */
+  gap: 0;
+}
+.sheet.sheet-rise .sheet-scroll .sheet-group { gap: 0; }
 /* group names read as eyebrows in both shapes */
 .sheet-rise .menu-label {
   font-family: var(--font-mono);      /* the eyebrow voice */
@@ -5584,10 +5585,12 @@ button.list-item:active { background: var(--surface-active); }
   letter-spacing: var(--tracking-caps);
   font-weight: var(--weight-eyebrow);
   color: var(--text-muted);
-  /* one quiet rule under each group name */
-  padding-bottom: var(--space-tight);
-  border-bottom: var(--border-hairline) solid color-mix(in srgb, var(--border) 45%, transparent);
+  /* one clear rule under each group name, with air above it */
+  padding-bottom: var(--space-control);
+  border-bottom: var(--border-hairline) solid color-mix(in srgb, var(--border) 70%, transparent);
 }
+/* icons carry the same ink as their labels */
+.sheet-rise .menu-item svg { color: currentColor; }
 /* phones: the panel rises from just above the bottom bar off its own
    corner as a narrow card — the menu slimmer on the left, settings
    wider on the right. Options stay left-aligned in both shapes. */
@@ -5609,31 +5612,34 @@ button.list-item:active { background: var(--surface-active); }
     width: min(17rem, calc(100vw - 2 * var(--space-inline)));
   }
 }
-/* The position gauge: a slim scrollbar pinned to the panel's OUTER
-   edge — the LEFT edge on the left panel, so that corner reads as the
-   page's own corner and the options shift toward the reader; the
-   right edge on the right panel. */
-.sheet.sheet-rise .sheet-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--text-muted) 55%, transparent) transparent;
+/* The position gauge: facet.js injects the library's own scroll gauge
+   into a risen panel (iOS never shows a styled native scrollbar under
+   the glass, so the thumb is ours). It rides the panel's OUTER edge —
+   the LEFT edge on the left panel, so that corner reads as the page's
+   own corner and the options shift toward the reader; the right edge
+   on the right panel. */
+.sheet.sheet-rise .scroll-gauge {
+  top: var(--space-card);
+  height: 30%;
 }
-.sheet.sheet-rise .sheet-scroll::-webkit-scrollbar { display: block; width: 4px; }
-.sheet.sheet-rise .sheet-scroll::-webkit-scrollbar-track { background: transparent; }
-.sheet.sheet-rise .sheet-scroll::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--text-muted) 55%, transparent);
-  border-radius: var(--radius-pill);
+.sheet.sheet-rise.sheet-left .scroll-gauge {
+  left: var(--space-control);
+  right: auto;
 }
-.sheet.sheet-rise.sheet-left .sheet-scroll { direction: rtl; }   /* the gauge rides the left edge */
-.sheet.sheet-rise.sheet-left .sheet-scroll > * { direction: ltr; }
-/* The foot: bare icons with the smallest caption beneath, one quiet
-   rule above, pinned outside the scroll so it never moves. */
+.sheet.sheet-rise.sheet-left .sheet-scroll {
+  /* the options step clear of the left-edge gauge */
+  padding-left: calc(var(--space-control) + 8px + var(--space-tight));
+}
+/* The foot: a condensed row of bare icons, one clear rule above,
+   pinned outside the scroll so it never moves. */
 .sheet-rise .sheet-foot {
-  border-top: var(--border-hairline) solid color-mix(in srgb, var(--border) 45%, transparent);
+  border-top: var(--border-hairline) solid color-mix(in srgb, var(--border) 70%, transparent);
+  padding: var(--space-tight) var(--space-inline);
 }
 .sheet-rise .menu-icon-btn {
   min-height: 0;
   padding: var(--space-tight);
-  gap: 0.15rem;
+  gap: 0;
   background: none;
   border: none;
   box-shadow: none;
@@ -5642,10 +5648,6 @@ button.list-item:active { background: var(--surface-active); }
   width: 22px;
   height: 22px;
   stroke-width: 2.2;                 /* heavier stroke reads filled at this size */
-}
-.sheet-rise .menu-icon-btn .menu-value {
-  font-size: var(--text-caption);    /* the smallest step in the type scale */
-  color: var(--text-muted);
 }
 /* wide screens: a corner dropdown hanging from the top bar, its outer
    edge lined up with the bar's own corner button (the bar's cluster is
