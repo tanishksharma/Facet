@@ -1019,9 +1019,14 @@
 /* Panels get the faint gloss too — interface controls and cards read as plastic. */
 [data-theme="aero"] .result,
 [data-theme="aero"] .tab-bar,
+[data-theme="aero"] .tab-set,
+[data-theme="aero"] .tab-menu,
+[data-theme="aero"] .tab-bar:has(.tab-set) > .tab-settings,
 [data-theme="aero"] .sheet,
 [data-theme="aero"] .float-btn,
 [data-theme="aero"] .card {
+  /* the invisible-row bar stays invisible: it is excluded from this list
+     and re-stripped below the fallback */
   background-color: var(--a-glass-bg);        /* translucent, so the blur shows through */
   background-image: var(--a-gloss);
   border-color: var(--a-glass-border);
@@ -1041,9 +1046,22 @@
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   [data-theme="aero"] .result,
   [data-theme="aero"] .tab-bar,
+  [data-theme="aero"] .tab-set,
+  [data-theme="aero"] .tab-menu,
+  [data-theme="aero"] .tab-bar:has(.tab-set) > .tab-settings,
   [data-theme="aero"] .sheet,
   [data-theme="aero"] .float-btn,
   [data-theme="aero"] .card { background-color: var(--surface); }
+}
+
+/* Aero gave the tab pieces its glass; the invisible-row bar itself must
+   stay invisible in every anatomy. */
+[data-theme="aero"] .tab-bar:has(.tab-set) {
+  background: none;
+  background-image: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: none;
 }
 
 /*
@@ -5240,23 +5258,21 @@ button.list-item:active { background: var(--surface-active); }
 
 
 /* (docs mirror — identical to llms.txt · Tab bar)
-   WHEN TO USE: section navigation in app-shaped pages with a snap pager — three to five destinations, thumb height.
+   WHEN TO USE: the main navigation of an app-shaped page — a floating pill of three to five sections with the menu on its left and settings on its right; phones get it at the bottom, wide screens can move it to the top.
 
-   What it is: the iOS-style bottom pill — text segments, a hairline divider, a trailing settings button — with one injected .tab-indicator pill moving behind the active segment on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. What it is for: section navigation in app-shaped pages; it wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet) and its settings button opens the sheet it aria-controls. When to use it: any snap-paged product. On a real page it floats fixed above the bottom edge; here it sits in the flow. Frosted and embossed in the base theme; a tuned translucent well with a raised pill under Velvet. */
-/* ----- TAB BAR: iOS-style bottom pill of segments + a trailing icon -----
+   What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one closes the other, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. Add .tab-bar-top and wide screens pin the same bar to the TOP edge, stretched between the page margins — menu left, tabs centred, settings right — while phones keep the bottom pill; the markup does not change. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow. */
+/* ----- TAB BAR: the floating command bar (Photos-style pill) -----
    Embossed frosted glass: translucent over a backdrop blur, pressed INTO
    the page via inset shadows (dark from the top, faint from the bottom).
+   The skin is shared by the legacy one-pill bar, the .tab-set pill and
+   the detached round corner buttons; when the bar holds a .tab-set the
+   bar itself becomes an invisible row and each piece wears the glass.
    The active highlight is one .tab-indicator pill (injected by
    facetTabIndicator) that moves between segments like iOS. */
-.tab-bar {
-  position: fixed;
-  bottom: calc(var(--space-inline) + var(--safe-bottom));
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  padding: var(--space-tight);
+.tab-bar,
+.tab-set,
+.tab-menu,
+.tab-bar:has(.tab-set) > .tab-settings {
   /* Light blur only: content should visibly move behind the glass. */
   background: color-mix(in srgb, var(--surface) 32%, transparent);
   -webkit-backdrop-filter: blur(5px) saturate(1.4);
@@ -5267,7 +5283,67 @@ button.list-item:active { background: var(--surface-active); }
     inset 0 2px 5px color-mix(in srgb, var(--text) 22%, transparent),
     inset 0 -1px 3px color-mix(in srgb, var(--text) 9%, transparent),
     0 1px 0 color-mix(in srgb, var(--surface) 55%, transparent);
+}
+.tab-bar {
+  position: fixed;
+  bottom: calc(var(--space-inline) + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  padding: var(--space-tight);
   white-space: nowrap;
+}
+/* New anatomy: the bar is an invisible row; the pieces carry the glass. */
+.tab-bar:has(.tab-set) {
+  padding: 0;
+  gap: var(--space-tight);
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+}
+/* While one of its panels is open, the bar rises above the sheet's scrim
+   (40) and the sheet (41), so the opener stays visible as the close
+   toggle — the same law as the float button. */
+.tab-bar:has([aria-expanded="true"]) { z-index: 42; }
+.tab-set {
+  position: relative;                 /* anchors the indicator */
+  display: flex;
+  align-items: center;
+  padding: var(--space-tight);
+}
+/* The round corner buttons: menu on the left edge, settings on the
+   right — 48px, the same height the pill stands. */
+.tab-menu,
+.tab-bar:has(.tab-set) > .tab-settings {
+  width: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: var(--text-muted);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.tab-menu[aria-expanded="true"] { color: var(--accent-pressed); }
+/* Top placement: on wide screens the same bar pins to the top edge and
+   stretches between the page margins — menu left, tabs centred,
+   settings right. Phones below keep the bottom pill untouched. */
+@media (min-width: 40rem) {
+  .tab-bar-top {
+    top: calc(var(--space-pin) + var(--safe-top));
+    bottom: auto;
+    left: var(--space-pin);
+    right: var(--space-pin);
+    transform: none;
+  }
+  .tab-bar-top .tab-set { margin-inline: auto; }
 }
 .tab-indicator {
   position: absolute;
@@ -5339,13 +5415,21 @@ button.list-item:active { background: var(--surface-active); }
 }
 
 /* (docs mirror — identical to llms.txt · Sheet & menu)
-   WHEN TO USE: the app's settings and secondary navigation, behind one button — the right-edge panel every calculator shares.
+   WHEN TO USE: the app's edge panels, each behind one button — settings on the right (the default), navigation on the left (.sheet-left).
 
-   What it is: the settings panel — a right-edge slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back; inside it, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the trigger's aria-expanded is managed, a floating trigger stays visible above the open sheet as its close toggle, and a sheet left open never survives the browser's back-forward cache — it closes itself on return. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump. */
+   What it is: the app's edge panel — a slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back. The right edge is the settings side (the default); .sheet-left is the same panel sliding from the LEFT edge — the navigation side — and opening either closes the other. Inside, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the trigger's aria-expanded is managed, a floating trigger stays visible above the open sheet as its close toggle, and a sheet left open never survives the browser's back-forward cache — it closes itself on return. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump. */
 /* ----- SHEET: right-edge slide-in panel over a darkening scrim -----
    Vertically centred; caps at 60% of the viewport height and 80% of
    its width on phones. Content taller than the cap scrolls INSIDE
    .sheet-body. Toggle via data-open on both elements. */
+/* The left-edge twin: .sheet-left slides the same panel in from the
+   LEFT — the navigation side; settings stay on the right. Its closed
+   resting spot is off the LEFT edge. */
+.sheet-left {
+  left: var(--space-inline);
+  right: auto;
+  transform: translate(calc(-100% - var(--space-stack)), -50%);
+}
 .sheet-scrim {
   position: fixed;
   inset: 0;

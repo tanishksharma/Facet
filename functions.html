@@ -344,11 +344,12 @@
         <article class="element stack" id="fn-sheet" data-llms="Sheet &amp; menu">
           <h3>facet.sheet</h3>
           <p>
-            The settings-sheet engine: open, close, scrim, scroll-lock and
-            focus handling for a bottom sheet. It self-wires — a button
-            whose aria-controls names a .sheet becomes its trigger, the
-            .sheet-scrim dims and closes on tap — so most pages write no JS
-            at all. Call facet.sheet(el, scrim) to wire one yourself; it
+            The edge-panel engine: open, close, scrim and state handling
+            for the app's sheets — settings from the right edge, navigation
+            from the left (.sheet-left). It self-wires — a button whose
+            aria-controls names a .sheet becomes its trigger, the
+            .sheet-scrim dims and closes on tap, and opening one sheet
+            closes any other — so most pages write no JS at all. Call facet.sheet(el, scrim) to wire one yourself; it
             returns { open, close, toggle, isOpen }, and wired sheets expose
             the same handle as element.facetSheet.
           </p>

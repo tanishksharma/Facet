@@ -2896,20 +2896,51 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="tab-bar" data-cat="appkit">
         <h3 data-status="beta">Tab bar</h3>
         <p>
-          The bottom tab bar: a floating pill of sections with a sliding indicator that stretches as it moves.
+          The app's floating command bar, like the pill in Apple's Photos app: a round menu button on the left that slides the navigation in from the left edge, the pill of sections with its gliding highlight, and a round settings button on the right that slides the settings panel in from the right. Every piece is optional — a simple app writes just the pill. On phones it floats at the bottom; add one class and wide screens pin it to the top, stretched across the page.
         </p>
         <div class="demo">
           <nav class="tab-bar" aria-label="Sections">
-            <button type="button" class="tab-seg" data-section="intro" aria-current="true">Intro</button>
-            <button type="button" class="tab-seg" data-section="inputs" aria-current="false">Inputs</button>
-            <button type="button" class="tab-seg" data-section="results" aria-current="false">Results</button>
-            <span class="tab-divider" aria-hidden="true"></span>
-            <button type="button" class="tab-settings" aria-expanded="false" aria-label="Open settings" data-tip="Opens the settings sheet">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+            <button type="button" class="tab-menu" aria-controls="tabbar-nav-sheet" aria-expanded="false" aria-label="Open menu" data-tip="Slides the navigation in from the left" data-event="open-nav">
+              <svg width="20" height="20" data-icon="menu" aria-hidden="true"></svg>
+            </button>
+            <div class="tab-set">
+              <button type="button" class="tab-seg" data-section="intro" aria-current="true">Intro</button>
+              <button type="button" class="tab-seg" data-section="inputs" aria-current="false">Inputs</button>
+              <button type="button" class="tab-seg" data-section="results" aria-current="false">Results</button>
+            </div>
+            <button type="button" class="tab-settings" aria-controls="tabbar-settings-sheet" aria-expanded="false" aria-label="Open settings" data-tip="Slides the settings in from the right">
+              <svg width="20" height="20" data-icon="sliders" aria-hidden="true"></svg>
             </button>
           </nav>
+          <div class="sheet-scrim" data-open="false"></div>
+          <aside class="sheet sheet-left" id="tabbar-nav-sheet" data-open="false" aria-hidden="true" aria-label="Navigation">
+            <div class="sheet-scroll">
+              <p class="menu-label">Go to</p>
+              <a class="menu-item" href="#tab-bar"><svg data-icon="home"></svg> Home</a>
+              <a class="menu-item" href="#tab-bar"><svg data-icon="chart"></svg> Reports</a>
+              <a class="menu-item" href="#tab-bar"><svg data-icon="user"></svg> Profile</a>
+            </div>
+          </aside>
+          <div class="sheet-scrim" data-open="false"></div>
+          <aside class="sheet" id="tabbar-settings-sheet" data-open="false" aria-hidden="true" aria-label="Settings">
+            <div class="sheet-scroll">
+              <p class="menu-label">Settings</p>
+              <button type="button" class="menu-item" data-control="theme" data-tip="Cycles the theme">Theme <span class="menu-value"></span></button>
+              <button type="button" class="menu-item" data-control="appearance" data-tip="Light, dark or follow the system">Appearance <span class="menu-value"></span></button>
+            </div>
+          </aside>
         </div>
-        <p>Tap the segments: the pill stretches and settles between them, live.</p>
+        <p>Tap the segments: the highlight stretches and settles between them. The corner buttons open the two edge panels — menu left, settings right — and swap each other out.</p>
+        <div class="stack entry-controls">
+          <p class="text-footnote" style="margin: 0;">Tabs only, for a simple app — leave the corners out:</p>
+          <nav class="tab-bar" aria-label="Sections (simple)">
+            <div class="tab-set">
+              <button type="button" class="tab-seg" aria-current="true">Today</button>
+              <button type="button" class="tab-seg" aria-current="false">History</button>
+            </div>
+          </nav>
+          <p class="text-footnote" style="margin: 0;">Add <code>tab-bar-top</code> and wide screens pin the same markup to the top edge, stretched between the margins — phones keep the bottom pill.</p>
+        </div>
         <pre id="code-tab-bar"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>

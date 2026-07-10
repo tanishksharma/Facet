@@ -481,7 +481,7 @@ article.element {
    are position:fixed; here they sit in the flow so the page reads. */
 .element .demo .tab-bar,
 .element .demo .float-btn,
-.element .demo .nav-menu { position: static; transform: none; }
+.element .demo .nav-menu { position: relative; inset: auto; transform: none; }
 /* the fixed cluster is shown in the flow here: it sits at the bottom-left
    of a tall box and both stacks rise ABOVE their own trigger (their real
    position), so opening one shifts nothing — exactly like the real thing
