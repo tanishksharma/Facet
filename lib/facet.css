@@ -3466,6 +3466,29 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
 }
 .top-menu .nav-link svg { flex: none; }
 
+/* ----- HEADING BAR: the accent stroke under a heading -----
+   (docs mirror — identical to llms.txt · Heading bar)
+   WHEN TO USE: the recommended treatment under a page or section heading — one short accent stroke, once or twice per page; never under every heading.
+
+   What it is: a short thick accent stroke under a heading — add
+   .heading-bar to any h1–h3 and a small pill-shaped bar in accent-3
+   draws beneath the text. .heading-bar-center centers the heading and
+   its bar. What it is for: section titles on list pages, launchers and
+   landing sections — the designed look between plain text and a font
+   change. When to use it: on the page's main headings, once or twice
+   per page; never under every heading. */
+.heading-bar::after {
+  content: "";
+  display: block;
+  width: 2.6rem;
+  height: 0.3rem;
+  margin-top: calc(var(--space-tight) + 4px);
+  background: var(--accent-3);
+  border-radius: var(--radius-pill);
+}
+.heading-bar-center { text-align: center; }
+.heading-bar-center::after { margin-inline: auto; }
+
 /* Hero: the opening statement — display type, one line under it,
    one primary action. */
 .hero {

@@ -1094,6 +1094,21 @@ links. Always an <a> to a real URL, never a button styled as a link.
 
     <a class="flagship-link" href="/report">See the full report</a>
 
+### Heading bar
+
+WHEN TO USE: the recommended treatment under a page or section heading — one short accent stroke, once or twice per page; never under every heading.
+
+What it is: a short thick accent stroke under a heading — add
+.heading-bar to any h1–h3 and a small pill-shaped bar in accent-3
+draws beneath the text. .heading-bar-center centers the heading and
+its bar. What it is for: section titles on list pages, launchers and
+landing sections — the designed look between plain text and a font
+change. When to use it: on the page's main headings, once or twice
+per page; never under every heading.
+
+    <h2 class="heading-bar">Latest articles</h2>
+    <h2 class="heading-bar heading-bar-center">Pricing</h2>
+
 ### Icons
 
 WHEN TO USE: every small symbol a product needs — write <svg data-icon="name"></svg> and facet.js fills it. Never paste icon paths by hand; extend the table instead.
