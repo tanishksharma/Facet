@@ -2896,9 +2896,10 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="tab-bar" data-cat="appkit">
         <h3 data-status="beta">Tab bar</h3>
         <p>
-          The app's floating command bar, like the pill in Apple's Photos app: a round menu button on the left that slides the navigation in from the left edge, the pill of sections with its gliding highlight, and a round settings button on the right that slides the settings panel in from the right. Every piece is optional — a simple app writes just the pill. On phones it floats at the bottom; add one class and wide screens pin it to the top, stretched across the page.
+          The app's floating command bar, like the pill in Apple's Photos app: a round menu button that slides the navigation in from the left edge, the pill of sections with its gliding highlight, and a round settings button that slides the settings panel in from the right. Every piece is optional, and one extra class turns the same bar into a desktop site bar pinned to the top.
         </p>
-        <div class="demo">
+        <div class="demo stack">
+          <p class="eyebrow" style="margin: 0;">Phone · the app bar — floats at the bottom</p>
           <nav class="tab-bar" aria-label="Sections">
             <button type="button" class="tab-menu" aria-controls="tabbar-nav-sheet" aria-expanded="false" aria-label="Open menu" data-tip="Slides the navigation in from the left" data-event="open-nav">
               <svg width="20" height="20" data-icon="menu" aria-hidden="true"></svg>
@@ -2912,6 +2913,44 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
               <svg width="20" height="20" data-icon="sliders" aria-hidden="true"></svg>
             </button>
           </nav>
+
+          <p class="eyebrow" style="margin: var(--space-stack) 0 0;">Desktop · the site bar — floats at the top; the same markup folds back to the phone pill on small screens</p>
+          <nav class="tab-bar tab-bar-top" aria-label="Site">
+            <button type="button" class="tab-menu" aria-controls="tabbar-nav-sheet" aria-expanded="false" aria-label="Open menu" data-tip="Slides the navigation in from the left">
+              <svg width="20" height="20" data-icon="menu" aria-hidden="true"></svg>
+            </button>
+            <div class="tab-set">
+              <a class="tab-brand" href="#tab-bar"><svg width="18" height="18" data-icon="sparkle" aria-hidden="true"></svg>acme</a>
+              <button type="button" class="tab-seg" aria-current="true">Home</button>
+              <button type="button" class="tab-seg" aria-current="false">Pricing</button>
+              <button type="button" class="tab-seg" aria-current="false">Docs</button>
+              <a class="btn btn-primary btn-small tab-action" href="#tab-bar" data-event="signup" data-tip="The bar's one action">Start free</a>
+            </div>
+            <button type="button" class="tab-settings" aria-controls="tabbar-settings-sheet" aria-expanded="false" aria-label="Open settings" data-tip="Slides the settings in from the right">
+              <svg width="20" height="20" data-icon="sliders" aria-hidden="true"></svg>
+            </button>
+          </nav>
+
+          <p class="eyebrow" style="margin: var(--space-stack) 0 0;">Fewer options · tabs only, for a simple app</p>
+          <nav class="tab-bar" aria-label="Sections (simple)">
+            <div class="tab-set">
+              <button type="button" class="tab-seg" aria-current="true">Today</button>
+              <button type="button" class="tab-seg" aria-current="false">History</button>
+            </div>
+          </nav>
+
+          <p class="eyebrow" style="margin: var(--space-stack) 0 0;">More options · tabs and settings, no menu</p>
+          <nav class="tab-bar" aria-label="Sections (no menu)">
+            <div class="tab-set">
+              <button type="button" class="tab-seg" aria-current="true">Feed</button>
+              <button type="button" class="tab-seg" aria-current="false">Search</button>
+              <button type="button" class="tab-seg" aria-current="false">Saved</button>
+            </div>
+            <button type="button" class="tab-settings" aria-controls="tabbar-settings-sheet" aria-expanded="false" aria-label="Open settings" data-tip="Slides the settings in from the right">
+              <svg width="20" height="20" data-icon="sliders" aria-hidden="true"></svg>
+            </button>
+          </nav>
+
           <div class="sheet-scrim" data-open="false"></div>
           <aside class="sheet sheet-left" id="tabbar-nav-sheet" data-open="false" aria-hidden="true" aria-label="Navigation">
             <div class="sheet-scroll">
@@ -2930,19 +2969,37 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
             </div>
           </aside>
         </div>
-        <p>Tap the segments: the highlight stretches and settles between them. The corner buttons open the two edge panels — menu left, settings right — and swap each other out.</p>
-        <div class="stack entry-controls">
-          <p class="text-footnote" style="margin: 0;">Tabs only, for a simple app — leave the corners out:</p>
-          <nav class="tab-bar" aria-label="Sections (simple)">
-            <div class="tab-set">
-              <button type="button" class="tab-seg" aria-current="true">Today</button>
-              <button type="button" class="tab-seg" aria-current="false">History</button>
-            </div>
-          </nav>
-          <p class="text-footnote" style="margin: 0;">Add <code>tab-bar-top</code> and wide screens pin the same markup to the top edge, stretched between the margins — phones keep the bottom pill.</p>
-        </div>
-        <pre id="code-tab-bar"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+        <p>Tap the segments: the highlight stretches and settles between them. The corner buttons open the two edge panels — menu left, settings right — and swap each other out. The desktop bar's logo and CTA slots hide on phones, so the one markup serves both shapes.</p>
+        <pre id="code-tab-bar" data-code-static><code>&lt;!-- the app bar (phone: floats at the bottom). Add class
+     "tab-bar-top" and wide screens pin it to the top as the
+     site bar; the brand and CTA slots show only there. --&gt;
+&lt;nav class="tab-bar tab-bar-top" aria-label="Sections"&gt;
+  &lt;button type="button" class="tab-menu" aria-controls="nav-sheet"
+          aria-expanded="false" aria-label="Open menu"
+          data-tip="Opens the navigation"&gt;
+    &lt;svg width="20" height="20" data-icon="menu"&gt;&lt;/svg&gt;
+  &lt;/button&gt;
+  &lt;div class="tab-set"&gt;
+    &lt;a class="tab-brand" href="/"&gt;&lt;svg width="18" height="18" data-icon="sparkle"&gt;&lt;/svg&gt;acme&lt;/a&gt;
+    &lt;button type="button" class="tab-seg" data-section="intro" aria-current="true"&gt;Intro&lt;/button&gt;
+    &lt;button type="button" class="tab-seg" data-section="inputs" aria-current="false"&gt;Inputs&lt;/button&gt;
+    &lt;a class="btn btn-primary btn-small tab-action" href="/start"&gt;Start free&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;button type="button" class="tab-settings" aria-controls="settings-sheet"
+          aria-expanded="false" aria-label="Open settings"
+          data-tip="Opens the settings"&gt;
+    &lt;svg width="20" height="20" data-icon="sliders"&gt;&lt;/svg&gt;
+  &lt;/button&gt;
+&lt;/nav&gt;
+
+&lt;!-- each edge panel is a scrim + sheet pair --&gt;
+&lt;div class="sheet-scrim" data-open="false"&gt;&lt;/div&gt;
+&lt;aside class="sheet sheet-left" id="nav-sheet" data-open="false"
+       aria-hidden="true" aria-label="Navigation"&gt;…&lt;/aside&gt;
+&lt;div class="sheet-scrim" data-open="false"&gt;&lt;/div&gt;
+&lt;aside class="sheet" id="settings-sheet" data-open="false"
+       aria-hidden="true" aria-label="Settings"&gt;…&lt;/aside&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-tab-bar" data-tip="Copies the markup for both shapes">Copy</button></p>
       </article>
 
       <!-- SHEET & MENU -->

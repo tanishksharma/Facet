@@ -5260,7 +5260,7 @@ button.list-item:active { background: var(--surface-active); }
 /* (docs mirror — identical to llms.txt · Tab bar)
    WHEN TO USE: the main navigation of an app-shaped page — a floating pill of three to five sections with the menu on its left and settings on its right; phones get it at the bottom, wide screens can move it to the top.
 
-   What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one closes the other, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. Add .tab-bar-top and wide screens pin the same bar to the TOP edge, stretched between the page margins — menu left, tabs centred, settings right — while phones keep the bottom pill; the markup does not change. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow. */
+   What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one closes the other, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at the standard content width (the .container measure) and gains two desktop-only slots — a .tab-brand logo lockup on its left and one .tab-action CTA on its right, with the page tabs in the middle — while the round menu and settings buttons sit just off the pill's left and right edges. Phones keep the bottom pill: the brand and CTA slots hide themselves, so the same markup folds back to the plain app bar; nothing changes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow. */
 /* ----- TAB BAR: the floating command bar (Photos-style pill) -----
    Embossed frosted glass: translucent over a backdrop blur, pressed INTO
    the page via inset shadows (dark from the top, faint from the bottom).
@@ -5332,9 +5332,18 @@ button.list-item:active { background: var(--surface-active); }
   transition: color var(--duration-fast) var(--ease-out);
 }
 .tab-menu[aria-expanded="true"] { color: var(--accent-pressed); }
-/* Top placement: on wide screens the same bar pins to the top edge and
-   stretches between the page margins — menu left, tabs centred,
-   settings right. Phones below keep the bottom pill untouched. */
+/* The pill's desktop-only slots: .tab-brand (the logo lockup, leftmost
+   inside the pill) and .tab-action (the one CTA, rightmost inside it).
+   Hidden on phones, so one markup serves both shapes: the same bar
+   degrades to the plain bottom pill when the screen narrows. */
+.tab-brand,
+.tab-action { display: none; }
+/* Top placement: on wide screens the same bar pins to the top edge as
+   the site bar — the round menu just off the pill's left, the round
+   settings just off its right, and the pill itself capped at the
+   standard content width (the same measure .container uses): logo on
+   its left, the page tabs in the middle, the one CTA on its right.
+   Phones below keep the bottom pill untouched. */
 @media (min-width: 40rem) {
   .tab-bar-top {
     top: calc(var(--space-pin) + var(--safe-top));
@@ -5342,8 +5351,33 @@ button.list-item:active { background: var(--surface-active); }
     left: var(--space-pin);
     right: var(--space-pin);
     transform: none;
+    justify-content: center;          /* the pill caps; the corners hug it */
   }
-  .tab-bar-top .tab-set { margin-inline: auto; }
+  .tab-bar-top .tab-set {
+    flex: 1 1 auto;
+    max-width: var(--width-default);  /* the standard content width */
+    justify-content: center;          /* tabs centre when the slots are absent */
+  }
+  .tab-bar-top .tab-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-control);
+    margin-right: auto;               /* pushes the tabs to the middle */
+    padding-inline: var(--space-stack) var(--space-inline);
+    position: relative;
+    z-index: 1;                       /* above the gliding indicator */
+    font-weight: var(--weight-heading);
+    text-decoration: none;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .tab-bar-top .tab-brand svg { flex: none; }
+  .tab-bar-top .tab-action {
+    display: inline-flex;
+    margin-left: auto;                /* pushes itself to the pill's right */
+    position: relative;
+    z-index: 1;
+  }
 }
 .tab-indicator {
   position: absolute;
