@@ -846,19 +846,25 @@
         <article class="element stack" id="fn-backgrounds" data-llms="Backgrounds">
           <h3>Background engines</h3>
           <p>
-            The two background variants' JS halves. Glyph grids: an element
+            The background variants' JS halves. Glyph grids: an element
             carrying data-bg-glyph draws its repeating character or icon
             pattern and redraws itself when the glyph, size, theme or mode
             changes — facet.glyphBackground(el) forces one redraw by hand.
-            Fluid: data-bg-fluid mounts the drifting bokeh layers at load —
-            facet.fluidBackground(el) mounts a surface added later. Both
-            engines are otherwise hands-off.
+            The scatter: data-bg-scatter on a technical or dot grid sows
+            your characters across the lattice, replacing one point in ten
+            (data-bg-scatter-rate tunes it) — facet.scatterBackground(el)
+            forces one redraw by hand. Fluid: data-bg-fluid mounts the
+            drifting bokeh layers at load — facet.fluidBackground(el)
+            mounts a surface added later. All engines are otherwise
+            hands-off.
           </p>
           <pre id="code-fn-backgrounds"><code>&lt;section data-bg-glyph="sparkle" data-bg-glyph-size="28"&gt;…&lt;/section&gt;
+&lt;section class="bg-dots" data-bg-scatter="✦ ❋" data-bg-scatter-rate="10"&gt;…&lt;/section&gt;
 &lt;section data-bg-fluid&gt;…&lt;/section&gt;
 
 &lt;script&gt;
   facet.glyphBackground(document.querySelector("[data-bg-glyph]"));
+  facet.scatterBackground(document.querySelector("[data-bg-scatter]"));
   facet.fluidBackground(lateAddedSection);
 &lt;/script&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-backgrounds" data-tip="Copies this code">Copy</button></p>
