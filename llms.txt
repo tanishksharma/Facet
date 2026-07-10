@@ -461,8 +461,11 @@ Headings, paragraphs, lists, blockquotes, tables, code, forms and
 buttons are all styled; one visible keyboard focus ring everywhere;
 selection colors; thin scrollbars; a skip-to-content link pattern; the
 hidden attribute always wins; tabular figures on numeric UI; images
-are block-level and never overflow. Content, layout, links and forms
-all work with JavaScript off — facet.js only adds enhancements.
+are block-level and never overflow. Controls refuse accidental text
+selection (buttons, labels, chips, tabs, navigation) while all content
+stays selectable — never turn selection off page-wide. Content,
+layout, links and forms all work with JavaScript off — facet.js only
+adds enhancements.
 
 ## Components
 
