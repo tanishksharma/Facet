@@ -2015,9 +2015,10 @@ vibrate, motion, contrast, plus-square, download-cloud, and the icon
 badge's status glyphs sparkle and wrench (48 -> 61).
 
 Tooltip on touch: the [data-tip] bubble gains a triangle tail, and on
-touch devices (where iOS makes :hover stick) a tap shows the bubble for
-five seconds instead — automatic, nothing to wire. Pinch zoom is
-blocked at the gesture level.
+touch screens a tap opens a floating bubble instead — placed above,
+below or beside the element by available room, staying until the page
+scrolls, a tap lands elsewhere, or the same element is tapped again —
+automatic, nothing to wire. Pinch zoom is blocked at the gesture level.
 
 Choice grid: a grid of small square choice buttons (.choice-grid of
 .choice-btn — a .choice-sym above a .choice-cap), five per row on

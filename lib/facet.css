@@ -3027,14 +3027,12 @@ input[type="week"] {
 }
 
 /* Touch: iOS applies a STICKY :hover on tap that never clears, so on
-   touch devices the hover bubble is forced off and facet.js peeks the
-   tip via .tip-on for a few seconds instead (initTouchPolish). */
+   touch devices the hover bubble is forced off — the tap bubble is the
+   floating .tip-bubble that initTouchTooltips owns. */
 @media (hover: none) {
   [data-tip]:hover::after,
   [data-tip]:hover::before { display: none; opacity: 0; }
 }
-[data-tip].tip-on::after,
-[data-tip].tip-on::before { display: block; opacity: 1; translate: -50% 0; }
 
 /* ----- CHOICE CONTROLS: checkbox, radio, switch -----
    (docs mirror — identical to llms.txt · Switch, checkbox, radio)
