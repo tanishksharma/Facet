@@ -1718,7 +1718,30 @@ What it is: the order as honest rows — item, stepper for quantity, line total 
 
 WHEN TO USE: the first row of a website or document — wordmark, links, one action; on phones it stays one line and the links open under a darkening blur. Pages, not installed apps (apps get the tab bar).
 
-What it is: the site header — wordmark, nav links, actions. On phones the header stays ONE line — wordmark left, a native details "Menu" disclosure right (give its summary .when-closed/.when-open labels so Menu becomes Close). Opening does not float a card: the page behind gradually darkens and blurs, the header's own surface extends downward — its bottom border rides the reveal — and the links arrive one by one. No JS, no hamburger framework; the scrim, the wipe and the stagger are progressive enhancement on a plain <details>. Row actions (a direct-child button like Sign up) hide on phones — author a copy of them inside the fold's links, the same way the links themselves are authored twice. What it is for: every site's first row. When to use it: pages, not installed apps (apps get the tab bar). Resize this page to see the fold.
+What it is: the site header — wordmark, nav links, actions. Add .top-menu-sticky on a wrapper around the header to pin it to the viewport top as a translucent, blurred, full-bleed strip (the blur lives on the wrapper, so the strip goes opaque while the fold is open and the header never darkens). Fill the wordmark slot with a .brand-lockup to put a logo chip beside the name. Nav links may carry a leading icon — an <svg data-icon> inside the .nav-link sits beside the label on its own. On phones the header stays ONE line — brand left, an icon-only details fold right (summary.fold-trigger with a data-icon="menu"/"close" pair on .when-closed/.when-open). Tapping it grows the panel down from the header's bottom edge in one clean motion (about 0.4s) while the page behind fades and blurs; tapping the trigger again, tapping anywhere outside, or Escape shrinks it back (about 0.3s) and the scrim leaves with it — the scrim never outlives the fold. Interrupting mid-motion continues from the current height. The engine is facet.js progressive enhancement on a plain <details>: with JS off or reduced motion the fold opens and closes instantly, no scrim. Row actions (a direct-child button like Sign up) hide on phones — author a copy of them inside the fold's links, the same way the links themselves are authored twice. What it is for: every site's first row. When to use it: pages, not installed apps (apps get the tab bar). Resize this page to see the fold.
+
+    <div class="top-menu-sticky">
+      <header class="top-menu">
+        <a class="brand-lockup" href="/">
+          <img src="/icons/icon-192.png" alt="" width="28" height="28" style="border-radius: 22.5%;">
+          <span class="wordmark-slot">acme</span>
+        </a>
+        <nav class="top-menu-links" aria-label="Site">
+          <a class="nav-link" href="/" aria-current="page"><svg width="14" height="14" data-icon="home"></svg>Home</a>
+          <a class="nav-link" href="/pricing"><svg width="14" height="14" data-icon="star"></svg>Pricing</a>
+        </nav>
+        <details class="top-menu-fold">
+          <summary class="fold-trigger" aria-label="Menu">
+            <svg width="20" height="20" data-icon="menu" class="when-closed" aria-hidden="true"></svg>
+            <svg width="20" height="20" data-icon="close" class="when-open" aria-hidden="true"></svg>
+          </summary>
+          <nav class="top-menu-links" aria-label="Site">
+            <a class="nav-link" href="/" aria-current="page"><svg width="14" height="14" data-icon="home"></svg>Home</a>
+            <a class="nav-link" href="/pricing"><svg width="14" height="14" data-icon="star"></svg>Pricing</a>
+          </nav>
+        </details>
+      </header>
+    </div>
 
 ### Sidebar navigation
 

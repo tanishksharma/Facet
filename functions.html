@@ -52,6 +52,7 @@
           <li><a href="#fn-go">facet.go</a></li>
           <li><a href="#fn-pager">Snap pager</a></li>
           <li><a href="#fn-sheet">facet.sheet</a></li>
+          <li><a href="#fn-fold">Top menu fold</a></li>
           <li><a href="#fn-nav-menu">facet.navMenu</a></li>
           <li><a href="#fn-tab-indicator">facet.tabIndicator</a></li>
           <li><a href="#fn-scroll-gauge">facet.scrollGauge</a></li>
@@ -359,6 +360,29 @@
   document.getElementById("menu").facetSheet.open();
 &lt;/script&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-sheet" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-fold" data-llms="Full top menu">
+          <h3>Top menu fold</h3>
+          <p>
+            The phone header's menu engine. Tapping the fold icon grows
+            the link panel down from the header in one clean motion while
+            the page behind fades and blurs; tapping again, tapping
+            outside, or Escape shrinks it back and the scrim leaves with
+            it. Interrupting mid-motion continues from where it is.
+            Wired automatically to every details.top-menu-fold; with JS
+            off the fold still opens, just without the motion.
+          </p>
+          <pre id="code-fn-fold"><code>&lt;details class="top-menu-fold"&gt;
+  &lt;summary class="fold-trigger" aria-label="Menu"&gt;
+    &lt;svg width="20" height="20" data-icon="menu" class="when-closed" aria-hidden="true"&gt;&lt;/svg&gt;
+    &lt;svg width="20" height="20" data-icon="close" class="when-open" aria-hidden="true"&gt;&lt;/svg&gt;
+  &lt;/summary&gt;
+  &lt;nav class="top-menu-links" aria-label="Site"&gt;…&lt;/nav&gt;
+&lt;/details&gt;
+
+&lt;!-- Nothing to call — the engine owns every details.top-menu-fold. --&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-fold" data-tip="Copies this code">Copy</button></p>
         </article>
 
         <article class="element stack" id="fn-nav-menu" data-llms="Nav menu">

@@ -2156,30 +2156,35 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="block-top-menu">
         <h3 data-status="stable">Full top menu</h3>
         <p>
-          The site header: wordmark, links and one action. On phones it stays one line and the links open under a darkening blur.
+          The site header: a brand lockup, links with small icons and one action. It can stick to the top of the page as a blurred translucent strip; on phones the links fold behind an icon that grows the panel open under a darkening blur.
         </p>
         <div class="demo">
-          <header class="top-menu">
-            <span class="wordmark-slot">acme</span>
-            <nav class="top-menu-links" aria-label="Site">
-              <a class="nav-link" href="#block-top-menu" aria-current="page">Home</a>
-              <a class="nav-link" href="#block-top-menu">Pricing</a>
-              <a class="nav-link" href="#block-top-menu">Docs</a>
-            </nav>
-            <button class="btn btn-primary btn-small" data-event="signup" data-tip="The header's one action">Sign up</button>
-            <details class="top-menu-fold">
-              <summary class="btn btn-ghost btn-small" data-tip="The phone fold">
-                <span class="when-closed"><svg data-icon="menu"></svg> Menu</span>
-                <span class="when-open"><svg data-icon="close"></svg> Close</span>
-              </summary>
+          <div class="top-menu-sticky">
+            <header class="top-menu">
+              <a class="brand-lockup" href="#block-top-menu">
+                <svg width="22" height="22" data-icon="sparkle" aria-hidden="true"></svg>
+                <span class="wordmark-slot">acme</span>
+              </a>
               <nav class="top-menu-links" aria-label="Site">
-                <a class="nav-link" href="#block-top-menu" aria-current="page">Home</a>
-                <a class="nav-link" href="#block-top-menu">Pricing</a>
-                <a class="nav-link" href="#block-top-menu">Docs</a>
-                <button class="btn btn-primary btn-small" data-event="signup" data-tip="The header's one action, inside the fold on phones">Sign up</button>
+                <a class="nav-link" href="#block-top-menu" aria-current="page"><svg width="14" height="14" data-icon="home"></svg>Home</a>
+                <a class="nav-link" href="#block-top-menu"><svg width="14" height="14" data-icon="star"></svg>Pricing</a>
+                <a class="nav-link" href="#block-top-menu"><svg width="14" height="14" data-icon="file"></svg>Docs</a>
               </nav>
-            </details>
-          </header>
+              <button class="btn btn-primary btn-small" data-event="signup" data-tip="The header's one action">Sign up</button>
+              <details class="top-menu-fold">
+                <summary class="fold-trigger" aria-label="Menu" data-tip="The phone fold">
+                  <svg width="20" height="20" data-icon="menu" class="when-closed" aria-hidden="true"></svg>
+                  <svg width="20" height="20" data-icon="close" class="when-open" aria-hidden="true"></svg>
+                </summary>
+                <nav class="top-menu-links" aria-label="Site">
+                  <a class="nav-link" href="#block-top-menu" aria-current="page"><svg width="14" height="14" data-icon="home"></svg>Home</a>
+                  <a class="nav-link" href="#block-top-menu"><svg width="14" height="14" data-icon="star"></svg>Pricing</a>
+                  <a class="nav-link" href="#block-top-menu"><svg width="14" height="14" data-icon="file"></svg>Docs</a>
+                  <button class="btn btn-primary btn-small" data-event="signup" data-tip="The header's one action, inside the fold on phones">Sign up</button>
+                </nav>
+              </details>
+            </header>
+          </div>
         </div>
         <pre id="code-block-top-menu"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-block-top-menu" data-tip="Copies the exact HTML of the demo above">Copy</button></p>

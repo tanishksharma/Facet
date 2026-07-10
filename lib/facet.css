@@ -3304,17 +3304,15 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
 /* (docs mirror — identical to llms.txt · Full top menu)
    WHEN TO USE: the first row of a website or document — wordmark, links, one action; on phones it stays one line and the links open under a darkening blur. Pages, not installed apps (apps get the tab bar).
 
-   What it is: the site header — wordmark, nav links, actions. On phones the header stays ONE line — wordmark left, a native details "Menu" disclosure right (give its summary .when-closed/.when-open labels so Menu becomes Close). Opening does not float a card: the page behind gradually darkens and blurs, the header's own surface extends downward — its bottom border rides the reveal — and the links arrive one by one. No JS, no hamburger framework; the scrim, the wipe and the stagger are progressive enhancement on a plain <details>. Row actions (a direct-child button like Sign up) hide on phones — author a copy of them inside the fold's links, the same way the links themselves are authored twice. What it is for: every site's first row. When to use it: pages, not installed apps (apps get the tab bar). Resize this page to see the fold. */
+   What it is: the site header — wordmark, nav links, actions. Add .top-menu-sticky on a wrapper around the header to pin it to the viewport top as a translucent, blurred, full-bleed strip (the blur lives on the wrapper, so the strip goes opaque while the fold is open and the header never darkens). Fill the wordmark slot with a .brand-lockup to put a logo chip beside the name. Nav links may carry a leading icon — an <svg data-icon> inside the .nav-link sits beside the label on its own. On phones the header stays ONE line — brand left, an icon-only details fold right (summary.fold-trigger with a data-icon="menu"/"close" pair on .when-closed/.when-open). Tapping it grows the panel down from the header's bottom edge in one clean motion (about 0.4s) while the page behind fades and blurs; tapping the trigger again, tapping anywhere outside, or Escape shrinks it back (about 0.3s) and the scrim leaves with it — the scrim never outlives the fold. Interrupting mid-motion continues from the current height. The engine is facet.js progressive enhancement on a plain <details>: with JS off or reduced motion the fold opens and closes instantly, no scrim. Row actions (a direct-child button like Sign up) hide on phones — author a copy of them inside the fold's links, the same way the links themselves are authored twice. What it is for: every site's first row. When to use it: pages, not installed apps (apps get the tab bar). Resize this page to see the fold. */
 /* Top menu: logo, links, actions; on phones the header stays ONE line —
-   wordmark left, a native details "Menu" disclosure right (give its
-   summary .when-closed/.when-open labels so Menu becomes Close). Opening
-   does not float a card: the page behind gradually darkens and blurs, the
-   header's own surface extends downward — its bottom border rides the
-   reveal — and the links arrive one by one. No JS, no hamburger
-   framework; the scrim, the wipe and the stagger are progressive
-   enhancement on a plain <details>. Row actions (a direct-child .btn like
-   Sign up) hide on phones: author a copy of them inside the fold's links,
-   the same way the links themselves are authored twice. */
+   brand left, an icon-only details fold right. facet.js owns the fold's
+   motion (initTopMenuFold): it intercepts the summary click and animates
+   the panel's height in the same task — the native toggle paints the
+   panel at full height before the async toggle event fires, so anything
+   hooked there starts a frame late and flashes. The scrim is a real
+   element (.fold-scrim) the engine injects, so it rides the exact
+   open/close timeline and layers under the sticky strip. */
 .top-menu {
   position: relative;               /* anchors the phone fold panel */
   display: flex;
@@ -3341,7 +3339,7 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
      scrim) and hands its bottom border to the panel — the border reads
      as moving down with the reveal. */
   .top-menu:has(.top-menu-fold[open]) {
-    z-index: 30;
+    z-index: 40;                      /* above the injected .fold-scrim (39) */
     border-bottom-color: transparent;
   }
   /* the header row's own surface, bled to the viewport edges so no dark
@@ -3357,33 +3355,15 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
     z-index: -1;
     background: var(--background);
   }
-  /* The scrim: fixed behind the header's layer (z -1 inside it), fading
-     the page to dark and blurring it at a gradual pace. It swallows taps
-     so the dimmed page is inert; Close (the transformed Menu) is the way
-     out. Closing drops it instantly — the house rule for leaving. */
-  .top-menu::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: rgb(0 0 0 / 0);
-    backdrop-filter: blur(0px);
-    transition:
-      background var(--duration-slow) var(--ease-out),
-      backdrop-filter var(--duration-slow) var(--ease-out);
-  }
-  .top-menu:has(.top-menu-fold[open])::before {
-    pointer-events: auto;
-    background: rgb(0 0 0 / 0.45);
-    backdrop-filter: blur(5px);
-  }
   /* The open panel: the header's own surface extending down — same
      background, full width, hairline at its foot where the header's
-     border now sits. The wipe reveals it downward from the header. */
+     border now sits. facet.js grows its height from 0; the height is
+     constrained mid-animation, so the column must never wrap sideways
+     and the overflow must clip. */
   .top-menu-fold .top-menu-links {
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     gap: var(--space-tight);
     position: absolute;
     left: 50%;
@@ -3394,26 +3374,97 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
     padding: var(--space-control) var(--space-stack) var(--space-stack);
     background: var(--background);
     border-bottom: var(--border-hairline) solid var(--border);
-    clip-path: inset(0 0 0 0);
-    transition: clip-path var(--duration-slow) var(--ease-out);
+    overflow: hidden;
   }
-  @starting-style {
-    .top-menu-fold[open] .top-menu-links { clip-path: inset(0 0 100% 0); }
-  }
-  /* ...and the options inside arrive one by one. */
-  .top-menu-fold[open] .top-menu-links > * {
-    animation: facet-menu-item-in var(--duration-normal) var(--ease-out) backwards;
-  }
-  .top-menu-fold[open] .top-menu-links > :nth-child(1) { animation-delay: 70ms; }
-  .top-menu-fold[open] .top-menu-links > :nth-child(2) { animation-delay: 130ms; }
-  .top-menu-fold[open] .top-menu-links > :nth-child(3) { animation-delay: 190ms; }
-  .top-menu-fold[open] .top-menu-links > :nth-child(4) { animation-delay: 250ms; }
-  .top-menu-fold[open] .top-menu-links > :nth-child(5) { animation-delay: 310ms; }
-  .top-menu-fold[open] .top-menu-links > :nth-child(6) { animation-delay: 370ms; }
-  .top-menu-fold[open] .top-menu-links > :nth-child(7) { animation-delay: 430ms; }
-  .top-menu-fold[open] .top-menu-links > :nth-child(8) { animation-delay: 490ms; }
 }
-@keyframes facet-menu-item-in { from { opacity: 0; translate: 0 -8px; } }
+
+/* The fold scrim: injected by facet.js while the phone fold is open —
+   a real element (not a pseudo) so it can ride the exact open/close
+   timeline and layer UNDER the sticky strip. */
+.fold-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 39;                          /* under the open header (40) */
+  background: rgb(0 0 0 / 0.45);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+/* Sticky variant: wrap the header in .top-menu-sticky to pin it to the
+   viewport top as a translucent, blurred, full-bleed strip. The blur
+   lives on the WRAPPER's pseudo — backdrop-filter on the nav itself
+   would turn any fixed descendant into a nav-sized box (a filter
+   creates a containing block). While the fold is open the strip goes
+   opaque, so the scrim cannot darken the header through it. */
+.top-menu-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.top-menu-sticky::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 50%;
+  width: 100vw;
+  translate: -50%;
+  z-index: -1;
+  background: color-mix(in srgb, var(--background) 82%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: var(--border-hairline) solid var(--border);
+  transition: background var(--duration-normal) var(--ease-out);
+}
+.top-menu-sticky:has(.top-menu-fold[open])::before { background: var(--background); }
+.top-menu-sticky .top-menu { border-bottom-color: transparent; }  /* the strip carries the rule */
+
+/* Brand lockup: the canonical wordmark-slot filling — a logo chip
+   beside the name. The lockup owns the row's left push, so the
+   anchor's own auto margin is handed over. */
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-control);
+  margin-right: auto;
+  min-width: 0;
+}
+.brand-lockup .wordmark-slot {
+  margin-right: 0;                      /* the lockup owns the auto margin */
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--text);
+}
+
+/* Icon-only fold trigger: a bare glyph, no button box. The focus ring
+   is keyboard-only — a touch tap never leaves one painted. */
+.fold-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;                          /* touch target */
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.fold-trigger::-webkit-details-marker { display: none; }
+.fold-trigger:focus { outline: none; }
+.fold-trigger:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-pill);
+}
+
+/* Nav links with icons: a leading svg sits beside the label. */
+.top-menu .nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-control);
+}
+.top-menu .nav-link svg { flex: none; }
 
 /* Hero: the opening statement — display type, one line under it,
    one primary action. */
