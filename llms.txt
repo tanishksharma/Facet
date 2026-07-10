@@ -1414,13 +1414,17 @@ a muted verdict line alone.
 WHEN TO USE: on every interactive element — one data-tip attribute explains it in place. This is the library's everything-explained-in-place promise; write one for every control you ship.
 
 What it is: a one-attribute explanation bubble: put data-tip on any element
-and the text appears above it on hover and on keyboard focus. Pure CSS, no
-JS involved. What it is for: explaining every interactive element in
-place — one of the library's core principles. The description doubles as
-documentation anyone can read by pointing at the thing. When to use it:
-every interactive element ships with one. Add data-tip-below on elements
-near the top of the viewport so the bubble drops under them instead of
-clipping off the screen.
+and the text appears above it on hover and on keyboard focus. On touch
+screens a tap opens it instead — placed above, below or beside the
+element, wherever there is room, always inside the viewport — and it
+stays until the page scrolls, a tap lands anywhere else, or the same
+element is tapped again. The tap still performs the element's own
+action; the bubble explains, it never blocks. What it is for: explaining
+every interactive element in place — one of the library's core
+principles. The description doubles as documentation anyone can read by
+pointing at the thing. When to use it: every interactive element ships
+with one. Add data-tip-below on elements near the top of the viewport so
+the hover bubble drops under them instead of clipping off the screen.
 
     <button class="btn" data-tip="Runs the calculation">Calculate</button>
 

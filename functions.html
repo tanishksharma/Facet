@@ -80,6 +80,7 @@
           <li><a href="#fn-tabs">Tabs</a></li>
           <li><a href="#fn-dropdowns">Dropdowns</a></li>
           <li><a href="#fn-dialogs">Dialog triggers</a></li>
+          <li><a href="#fn-tooltips">Touch tooltips</a></li>
         </ul>
         </div>
         <div class="nav-group side-index-group" data-group="feel"
@@ -744,6 +745,23 @@
   &lt;/form&gt;
 &lt;/dialog&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-dialogs" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-tooltips" data-llms="Description tooltip">
+          <h3>Touch tooltips</h3>
+          <p>
+            The tap half of the description tooltip. Hover and keyboard
+            focus are pure CSS; on touch screens facet.js opens the bubble
+            on tap instead — placed above, below or beside the element,
+            wherever there is room — and keeps it until the page scrolls,
+            a tap lands anywhere else, or the same element is tapped again.
+            Delegated, so late-added markup needs no wiring.
+          </p>
+          <pre id="code-fn-tooltips"><code>&lt;button class="btn" data-tip="Runs the calculation"&gt;Calculate&lt;/button&gt;
+
+&lt;!-- Desktop: hover or focus shows it. Touch: tap shows it,
+     scroll or a tap elsewhere hides it. Nothing to call. --&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-tooltips" data-tip="Copies this code">Copy</button></p>
         </article>
       </section>
 

@@ -2890,18 +2890,23 @@ input[type="week"] {
    WHEN TO USE: on every interactive element — one data-tip attribute explains it in place. This is the library's everything-explained-in-place promise; write one for every control you ship.
 
    What it is: a one-attribute explanation bubble: put data-tip on any element
-   and the text appears above it on hover and on keyboard focus. Pure CSS, no
-   JS involved. What it is for: explaining every interactive element in
-   place — one of the library's core principles. The description doubles as
-   documentation anyone can read by pointing at the thing. When to use it:
-   every interactive element ships with one. Add data-tip-below on elements
-   near the top of the viewport so the bubble drops under them instead of
-   clipping off the screen.
+   and the text appears above it on hover and on keyboard focus. On touch
+   screens a tap opens it instead — placed above, below or beside the
+   element, wherever there is room, always inside the viewport — and it
+   stays until the page scrolls, a tap lands anywhere else, or the same
+   element is tapped again. The tap still performs the element's own
+   action; the bubble explains, it never blocks. What it is for: explaining
+   every interactive element in place — one of the library's core
+   principles. The description doubles as documentation anyone can read by
+   pointing at the thing. When to use it: every interactive element ships
+   with one. Add data-tip-below on elements near the top of the viewport so
+   the hover bubble drops under them instead of clipping off the screen.
 
    Usage:  <button class="btn" data-tip="Runs the calculation">Calculate</button>
 
-   Limits (fine for v1): single line, clipped by overflow:hidden ancestors.
-   TODO: JS-positioned tooltips once a real page hits the clipping limit.
+   Limits: the hover bubble can be clipped by overflow:hidden ancestors;
+   the touch bubble (initTouchTooltips in facet.js) floats free of any
+   clipping and places itself by available space.
    -------------------------------------------------------------------------- */
 
 [data-tip] {
@@ -2949,6 +2954,39 @@ input[type="week"] {
     translate: -50% 2px;
   }
 }
+
+/* On touch screens the JS bubble owns the job — the hover/focus pseudo
+   bubble would double up under the tap focus, so it stands down. */
+@media (pointer: coarse) {
+  [data-tip]:hover::after,
+  [data-tip]:focus-visible::after,
+  [data-tip]:hover::before,
+  [data-tip]:focus-visible::before { display: none; }
+}
+
+/* The floating touch bubble (one per page, created by facet.js):
+   the same skin as the hover bubble, positioned by script. */
+.tip-bubble {
+  position: fixed;
+  z-index: 80;
+  width: max-content;
+  max-width: 16rem;
+  padding: var(--space-tight) var(--space-inline);
+  background: var(--text);
+  color: var(--background);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-body);
+  text-align: center;
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-floating);
+  pointer-events: none;
+  opacity: 0;
+  translate: 0 2px;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    translate var(--duration-normal) var(--ease-spring);
+}
+.tip-bubble.is-open { opacity: 1; translate: 0 0; }
 
 /* Elements near the top of the viewport add data-tip-below, so the tip
    drops under them instead of clipping off the screen. */
