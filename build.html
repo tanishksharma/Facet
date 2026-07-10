@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Build a theme — Facet</title>
-  <meta name="description" content="Build your own Facet theme: tune the semantic color tokens with a live preview of real layouts, then copy the config into your project. Plus Skin Lab — every theme in light and dark, side by side.">
-  <meta property="og:title" content="Build a theme — Facet">
-  <meta property="og:description" content="Tune the semantic tokens with a live preview, then copy the config. Plus Skin Lab.">
+  <title>Themes — Facet</title>
+  <meta name="description" content="The Facet theme studio: every component composed into real product scenes — a landing page, a dashboard, a shop, a feed, an article, a form, an app — restyled live by the token rail beside them. Tune any token, copy the config. Plus Skin Lab: every theme in light and dark, side by side.">
+  <meta property="og:title" content="Themes — Facet">
+  <meta property="og:description" content="Real product scenes on the left, every theme token on the right. Tune it live, copy the config.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://facet-kappa.vercel.app/build.html">
   <meta property="og:image" content="https://facet-kappa.vercel.app/icons/icon-512.png">
@@ -20,20 +20,594 @@
 </head>
 <body>
   <a class="skip-link" href="#build-main">Skip to content</a>
-  <!-- No page header: the "facet" wordmark sits top-left in the flow; the
-       floating site menu (bottom-right) carries the navigation. -->
 
-  <main id="build-main" class="container-wide stack-loose" style="padding-block: var(--space-stack) var(--space-hero);">
-    <header class="page-head stack">
-      <h1>Build a theme</h1>
-    </header>
+  <!-- ==============================
+       The theme studio
+       Content left: the whole library composed into real product scenes,
+       one live canvas the build restyles. Rail right: every theme token,
+       searchable, in tabs — pinned like the library's own index.
+       ============================== -->
+  <div class="studio-layout">
 
-    <section id="style-mixer" class="stack">
-      <h2>Pick your tokens</h2>
-      <div class="builder">
-        <details class="builder-inspector" id="inspector" open>
-          <summary>Theme controls <span class="inspector-caret" aria-hidden="true"></span></summary>
-          <div class="inspector-body">
+    <main id="build-main" class="stack-loose">
+      <header class="page-head stack">
+        <h1>Themes</h1>
+        <p>
+          One page of real products — a landing page, a dashboard, a shop, a
+          community feed, an article, a form, an app — every piece a live
+          Facet component. Pick a base theme in the rail, move any token, and
+          watch the whole wall restyle at once. When it looks right, copy the
+          config.
+        </p>
+      </header>
+
+      <!-- The live canvas: the build writes its tokens as custom properties
+           on this element alone, so the scenes restyle while the site chrome
+           and the rail hold still. -->
+      <div class="builder-canvas" id="builder-canvas" aria-label="Live preview">
+
+        <!-- ==============================
+             Scene 01 · Landing page
+             "Driftwood", a sea-kayak rental side project: top menu, hero,
+             proof, features, pricing, FAQ.
+             ============================== -->
+        <section class="scene" aria-label="Landing page scene">
+          <p class="scene-tag">01 · Landing page — Driftwood, sea-kayak rentals</p>
+
+          <header class="top-menu">
+              <a class="brand-lockup" href="#build-main">
+                <svg width="22" height="22" data-icon="globe" aria-hidden="true"></svg>
+                <span class="wordmark-slot">driftwood</span>
+              </a>
+              <nav class="top-menu-links" aria-label="Driftwood">
+                <a class="nav-link" href="#build-main" aria-current="page"><svg width="14" height="14" data-icon="home"></svg>Home</a>
+                <a class="nav-link" href="#build-main"><svg width="14" height="14" data-icon="star"></svg>Routes</a>
+                <a class="nav-link" href="#build-main"><svg width="14" height="14" data-icon="file"></svg>Journal</a>
+              </nav>
+              <button class="btn btn-primary btn-small" data-event="driftwood-book" data-tip="The header's one action">Book a paddle</button>
+              <details class="top-menu-fold">
+                <summary class="fold-trigger" aria-label="Menu" data-tip="The phone fold">
+                  <svg width="20" height="20" data-icon="menu" class="when-closed" aria-hidden="true"></svg>
+                  <svg width="20" height="20" data-icon="close" class="when-open" aria-hidden="true"></svg>
+                </summary>
+                <nav class="top-menu-links" aria-label="Driftwood">
+                  <a class="nav-link" href="#build-main" aria-current="page"><svg width="14" height="14" data-icon="home"></svg>Home</a>
+                  <a class="nav-link" href="#build-main"><svg width="14" height="14" data-icon="star"></svg>Routes</a>
+                  <a class="nav-link" href="#build-main"><svg width="14" height="14" data-icon="file"></svg>Journal</a>
+                  <button class="btn btn-primary btn-small" data-event="driftwood-book" data-tip="The header's one action, inside the fold on phones">Book a paddle</button>
+                </nav>
+              </details>
+          </header>
+
+          <div class="hero bg-grid" style="padding-inline: var(--space-card); border-radius: var(--radius-panel);">
+            <p style="margin: 0;"><span class="badge badge-info">New for 2026 · night paddles</span></p>
+            <p class="text-display" style="margin: 0;">The sea, at your own pace.</p>
+            <p class="text-footnote" style="color: var(--text-muted);">Guided sea-kayak trips out of a small boathouse in Anjuna. No experience needed, no crowds allowed.</p>
+            <p class="row"><a class="btn btn-primary" href="#build-main" data-event="hero-book">Book a paddle</a>
+            <a class="flagship-link" href="#build-main" style="font-size: var(--text-body);">See the routes</a></p>
+          </div>
+
+          <p class="row-loose text-footnote" style="color: var(--text-muted); max-width: none;">
+            <strong>OUTLOOK TRAVELLER</strong><strong>CONDÉ NAST</strong><strong>THE KAYAK SESSION</strong><strong>LONELY PLANET</strong>
+          </p>
+
+          <div class="grid">
+            <div class="stack-tight"><svg data-icon="sun"></svg><strong>Dawn departures</strong><p class="text-footnote">On the water before the wind wakes up — glassy sea, empty coast.</p></div>
+            <div class="stack-tight"><svg data-icon="users"></svg><strong>Six boats, ever</strong><p class="text-footnote">Every trip caps at six paddlers and one guide. That is the whole company.</p></div>
+            <div class="stack-tight"><svg data-icon="heart"></svg><strong>No experience needed</strong><p class="text-footnote">Twenty minutes of shore practice and you are seaworthy for the day.</p></div>
+          </div>
+
+          <div class="grid">
+            <article class="card stack">
+              <p class="text-caption" style="margin:0;">DAY PASS</p>
+              <p class="text-h2" style="margin:0;"><strong>₹ 1,400</strong></p>
+              <ul class="text-footnote" style="margin:0;"><li>One guided trip</li><li>Boat, paddle and dry bag</li><li>Chai on the beach after</li></ul>
+              <button class="btn" data-event="plan-day">Book a day</button>
+            </article>
+            <article class="card stack" style="border-color: var(--accent-3);">
+              <p class="text-caption" style="margin:0;">SEASON · RECOMMENDED</p>
+              <p class="text-h2" style="margin:0;"><strong>₹ 8,000</strong><span class="text-caption">/season</span></p>
+              <ul class="text-footnote" style="margin:0;"><li>Unlimited trips, October to May</li><li>Priority on night paddles</li><li>Your name on a paddle hook</li></ul>
+              <button class="btn btn-primary" data-event="plan-season" data-tip="The scene's one primary action">Join the season</button>
+            </article>
+          </div>
+
+          <div>
+            <details class="accordion" name="driftwood-faq"><summary>What if I cannot swim?</summary><p class="text-footnote">You wear a life jacket the whole time and we never go past the reef line. Half our regulars cannot swim.</p></details>
+            <details class="accordion" name="driftwood-faq"><summary>What happens if the weather turns?</summary><p class="text-footnote">We call it by 6am and your booking moves to any other day, no questions.</p></details>
+            <details class="accordion" name="driftwood-faq"><summary>Can kids come?</summary><p class="text-footnote">From eight years up, in a double kayak with an adult.</p></details>
+          </div>
+        </section>
+
+        <!-- ==============================
+             Scene 02 · Dashboard
+             "Paisa", a personal-finance tracker: wayfinding, KPIs, the live
+             chart, a working table, states and the result block.
+             ============================== -->
+        <section class="scene" aria-label="Dashboard scene">
+          <p class="scene-tag">02 · Dashboard — Paisa, a personal-finance tracker</p>
+
+          <nav class="breadcrumb" aria-label="You are here">
+            <ol><li><a href="#build-main">Paisa</a></li><li><a href="#build-main">Reports</a></li><li><span aria-current="page">June 2026</span></li></ol>
+          </nav>
+
+          <div class="row" style="justify-content: space-between; align-items: center;">
+            <h2 class="heading-bar" style="margin: 0;">June at a glance</h2>
+            <div class="row-tight">
+              <button class="btn btn-small" id="demo-toast" data-event="report-save" data-tip="Fires a real toast">Save report</button>
+              <button class="btn btn-small btn-primary" aria-busy="true" data-tip="A button mid-work: aria-busy swaps the label for a spinner">Syncing</button>
+              <details class="dropdown">
+                <summary class="btn btn-small">More</summary>
+                <div class="dropdown-menu">
+                  <button type="button" data-event="report-export">Export CSV</button>
+                  <button type="button" data-event="report-share">Share a link</button>
+                  <button type="button" class="dropdown-danger" data-event="report-delete">Delete report</button>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="stat"><strong>₹&nbsp;91,680</strong><span>SPENT · JUNE</span></div>
+            <div class="stat"><strong>₹&nbsp;10,400</strong><span>SAVED · JUNE</span></div>
+            <div class="stat"><strong>6.2%</strong><span>INFLATION · YOY</span></div>
+            <div class="stat"><strong>31</strong><span>TRANSACTIONS</span></div>
+          </div>
+
+          <div class="chart-card"><div class="chart" id="demo-chart"></div></div>
+          <p class="text-caption" style="color: var(--text-muted); margin: 0;">₹ 1,00,000 of 2014 money, inflated year by year — drag the chart to read a value.</p>
+
+          <div class="row">
+            <input type="search" data-filter="#paisa-rows" placeholder="Filter entries" aria-label="Filter entries" style="flex: 1; min-width: 10rem;" data-tip="Live-filters the rows below">
+            <button class="chip" aria-pressed="true" data-tip="A filter chip">June</button>
+            <button class="chip" aria-pressed="false" data-tip="A filter chip">Recurring</button>
+            <button class="btn btn-small" data-event="table-export" data-tip="An action on the whole table">Export</button>
+          </div>
+          <div class="table-scroll">
+            <table class="table">
+              <thead><tr><th scope="col">Entry</th><th scope="col">Category</th><th scope="col" class="num">Amount</th></tr></thead>
+              <tbody id="paisa-rows">
+                <tr><td>Rent, Indiranagar</td><td>Home</td><td class="num">48,000</td></tr>
+                <tr aria-selected="true"><td>Groceries, month</td><td>Food</td><td class="num">12,480</td></tr>
+                <tr><td>Goa bus, both ways</td><td>Travel</td><td class="num">3,150</td></tr>
+                <tr><td>Power + internet</td><td>Home</td><td class="num">4,320</td></tr>
+                <tr><td>Weekend eating out</td><td>Food</td><td class="num">6,940</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid">
+            <section class="result" aria-live="polite">
+              <p class="result-verdict">Your spending outran inflation this month</p>
+              <p class="result-number">₹ 91,680</p>
+              <dl class="result-figures">
+                <div><dt>vs May</dt><dd>+9.4%</dd></div>
+                <div><dt>Biggest line</dt><dd>Rent · 52%</dd></div>
+              </dl>
+            </section>
+            <article class="card stack-tight" aria-busy="true">
+              <strong data-static>Live rates</strong>
+              <p>Repo 6.5% · CPI 6.2% · USD 84.10 — refreshing from the exchange…</p>
+              <button class="btn btn-small">Open rates</button>
+            </article>
+          </div>
+        </section>
+
+        <!-- ==============================
+             Scene 03 · Storefront
+             "Kilnworks", a two-person ceramics studio: filterable product
+             grid, product detail, the cart.
+             ============================== -->
+        <section class="scene" aria-label="Storefront scene">
+          <p class="scene-tag">03 · Storefront — Kilnworks, small-batch ceramics</p>
+
+          <h2 style="margin: 0;">This month's firing</h2>
+          <p class="text-footnote" style="color: var(--text-muted); margin: 0;">Thrown in Pondicherry, glazed in small batches. When a piece sells out it is gone — we do not rerun glazes.</p>
+
+          <div class="row">
+            <input type="search" data-filter="#kiln-grid" placeholder="Search the shelf" aria-label="Search the shelf" style="flex: 1; min-width: 10rem;" data-tip="Live-filters the pieces below">
+            <button class="chip" aria-pressed="false" data-tip="Toggles a category">Mugs</button>
+            <button class="chip" aria-pressed="false" data-tip="Toggles a category">Bowls</button>
+            <button class="chip" aria-pressed="false" data-tip="Toggles a category">Vases</button>
+          </div>
+
+          <div class="grid" id="kiln-grid">
+            <a class="card card-clickable stack-tight" href="#build-main">
+              <span class="bg-dots" style="display:block; aspect-ratio: 4/3; border-radius: var(--radius-panel);" aria-hidden="true"></span>
+              <strong>Monsoon mug</strong>
+              <span class="row" style="justify-content: space-between;"><span class="text-footnote">₹ 850</span><span class="badge badge-success">In stock</span></span>
+            </a>
+            <a class="card card-clickable stack-tight" href="#build-main">
+              <span class="bg-dots" style="display:block; aspect-ratio: 4/3; border-radius: var(--radius-panel);" aria-hidden="true"></span>
+              <strong>Ash-glaze bowl</strong>
+              <span class="row" style="justify-content: space-between;"><span class="text-footnote">₹ 1,600</span><span class="badge badge-warning">2 left</span></span>
+            </a>
+            <a class="card card-clickable stack-tight" href="#build-main">
+              <span class="bg-dots" style="display:block; aspect-ratio: 4/3; border-radius: var(--radius-panel);" aria-hidden="true"></span>
+              <strong>Bud vase, tall</strong>
+              <span class="row" style="justify-content: space-between;"><span class="text-footnote">₹ 1,150</span><span class="badge badge-error">Sold out</span></span>
+            </a>
+          </div>
+
+          <div class="grid grid-wide">
+            <span class="bg-graph" style="display:block; aspect-ratio: 1; border-radius: var(--radius-panel);" aria-hidden="true"></span>
+            <div class="stack">
+              <h3 style="margin: 0;">Monsoon mug</h3>
+              <p class="text-footnote">340 ml, holds heat like a thermos, glazed the grey-blue of a July sky over the Bay.</p>
+              <p class="text-h3" style="margin: 0;"><strong>₹ 850</strong></p>
+              <fieldset class="segmented" aria-label="Glaze">
+                <label><input type="radio" name="kiln-glaze" checked><span>Monsoon</span></label>
+                <label><input type="radio" name="kiln-glaze"><span>Bone</span></label>
+                <label><input type="radio" name="kiln-glaze"><span>Tamarind</span></label>
+              </fieldset>
+              <p class="row"><button class="btn btn-primary" data-event="cart-add" data-tip="The scene's one primary action">Add to cart</button>
+              <button class="btn btn-icon" aria-label="Save for later" data-tip="Save for later"><svg data-icon="heart"></svg></button></p>
+            </div>
+          </div>
+
+          <div class="stack-tight" style="max-width: 30rem;">
+            <div class="row" style="justify-content: space-between;">
+              <span><strong>Monsoon mug</strong> <span class="text-caption">Monsoon glaze</span></span>
+              <span class="row-tight">
+                <span class="stepper" role="group" aria-label="Quantity">
+                  <button type="button" class="stepper-down" aria-label="Fewer">&minus;</button>
+                  <input type="number" value="2" min="1" max="9" aria-label="Quantity">
+                  <button type="button" class="stepper-up" aria-label="More">+</button>
+                </span>
+                <strong style="font-variant-numeric: tabular-nums;">₹ 1,700</strong>
+              </span>
+            </div>
+            <hr>
+            <div class="row" style="justify-content: space-between;"><span class="text-footnote">Shipping, padded double box</span><span class="text-footnote">₹ 120</span></div>
+            <div class="result"><span>Total</span><strong>₹ 1,820</strong></div>
+          </div>
+
+          <details class="accordion" name="kiln-faq"><summary>What if it arrives broken?</summary><p class="text-footnote">Send a photo within a week and we remake or refund it — kiln time is on us. It has happened four times in three years.</p></details>
+        </section>
+
+        <!-- ==============================
+             Scene 04 · Community feed
+             "Perch", a birdwatching log: tabs, a live feed list, topics,
+             the empty state and pagination.
+             ============================== -->
+        <section class="scene" aria-label="Community feed scene">
+          <p class="scene-tag">04 · Community — Perch, a birdwatching log</p>
+
+          <div class="row" style="justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0;">This morning on Perch</h2>
+            <button class="btn btn-ghost btn-small" popovertarget="sighting-note" data-tip="A popover: light-dismisses on any outside click">What counts as a sighting?</button>
+            <div popover id="sighting-note" style="padding: var(--space-inline) var(--space-stack); max-width: 24rem;">
+              Seen or clearly heard, wild and unrestrained, by you, today. Feeder birds count. Zoo birds never do.
+            </div>
+          </div>
+
+          <p class="chips" role="group" aria-label="Topics">
+            <button class="chip" aria-pressed="true" data-tip="Toggles a topic">Waders</button>
+            <button class="chip" aria-pressed="false" data-tip="Toggles a topic">Raptors</button>
+            <button class="chip" aria-pressed="false" data-tip="Toggles a topic">Warblers</button>
+            <button class="chip" aria-pressed="false" data-tip="Toggles a topic">Lifers only</button>
+          </p>
+
+          <div class="tabs" role="tablist" aria-label="Feed views">
+            <button type="button" role="tab" aria-selected="true" aria-controls="perch-pane-feed" id="perch-t-feed">Feed</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="perch-pane-following" id="perch-t-following">Following</button>
+          </div>
+          <div role="tabpanel" id="perch-pane-feed" aria-labelledby="perch-t-feed" class="stack">
+            <ul class="list list-boxed">
+              <li class="list-item">
+                <span class="list-icon"><span class="avatar" aria-label="Meera G">MG</span></span>
+                <span class="list-content">
+                  <span class="list-title">Painted stork, 40+ at Vedanthangal</span>
+                  <span class="list-desc">Meera G · the whole north tank is white with them right now</span>
+                </span>
+                <span class="list-trail"><span class="badge badge-info">Lifer</span></span>
+              </li>
+              <li class="list-item">
+                <span class="list-icon"><span class="avatar" aria-label="Arjun T">AT</span></span>
+                <span class="list-content">
+                  <span class="list-title">Shikra taking a drongo, mid-air</span>
+                  <span class="list-desc">Arjun T · Cubbon Park, near the bamboo grove, 6:40am</span>
+                </span>
+                <span class="list-trail">12 min</span>
+              </li>
+              <li class="list-item">
+                <span class="list-icon"><svg data-icon="bell"></svg></span>
+                <span class="list-content">
+                  <span class="list-title">Big Year check-in: 212 of 300 species</span>
+                  <span class="list-desc">You are three weeks ahead of last year's pace</span>
+                </span>
+                <span class="list-trail"><progress value="212" max="300" aria-label="Big Year progress"></progress></span>
+              </li>
+            </ul>
+            <nav class="pagination" aria-label="Feed pages">
+              <span aria-disabled="true">←</span>
+              <a href="#build-main" aria-current="page">1</a>
+              <a href="#build-main">2</a>
+              <a href="#build-main">3</a>
+              <a href="#build-main">→</a>
+            </nav>
+          </div>
+          <div role="tabpanel" id="perch-pane-following" aria-labelledby="perch-t-following" class="stack" hidden>
+            <div class="empty">
+              <strong>You are not following anyone yet</strong>
+              <button class="btn btn-primary btn-small" data-event="perch-find">Find birders near you</button>
+            </div>
+            <p class="row" role="status" style="margin: 0;"><span class="spinner" aria-hidden="true"></span> Looking for members within 25 km…</p>
+          </div>
+        </section>
+
+        <!-- ==============================
+             Scene 05 · Article
+             "The Slow Web", a newsletter issue: editorial header, prose in
+             normal flow, the pull quote and a media figure.
+             ============================== -->
+        <section class="scene" aria-label="Article scene">
+          <p class="scene-tag">05 · Editorial — The Slow Web, a newsletter</p>
+
+          <article style="max-width: var(--measure);">
+            <header class="stack-tight">
+              <p class="text-caption" style="margin: 0;">THE SLOW WEB · ISSUE 14 · 7 MIN</p>
+              <h2 style="margin: 0;">Why slow software feels fast</h2>
+              <p class="text-footnote" style="color: var(--text-muted);">Naledi M · 4 July 2026</p>
+            </header>
+            <p>The fastest app I use all day is a plain HTML page that a friend
+            never finished. It has no spinner because it has nothing to spin
+            about: the page arrives whole, the numbers are already there, and
+            the only thing left to do is read.</p>
+            <p>We spent a decade teaching people that software breathes — that
+            a moment of skeleton screens is the price of anything happening at
+            all. But the waiting was never physics. Most of it was ceremony:
+            a bundle asking for another bundle, a client rebuilding what the
+            server already knew.</p>
+            <blockquote class="pullquote">A page that arrives whole is not retro. It is what fast always looked like.<footer>from issue 14</footer></blockquote>
+            <figure class="media-figure">
+              <span class="bg-ruled" style="display:block; aspect-ratio: 16/7; border-radius: var(--radius-panel);" aria-hidden="true"></span>
+              <figcaption>Time-to-read, measured across forty sites: the plain pages win before the frameworks finish parsing.</figcaption>
+            </figure>
+            <p>None of this is an argument against ambition. It is an argument
+            about where the ambition goes — into the words and the numbers,
+            or into the machinery that delays them.</p>
+            <p><a class="flagship-link" href="#build-main">Read the archive</a></p>
+          </article>
+        </section>
+
+        <!-- ==============================
+             Scene 06 · Form
+             "Getaway", a trip-budget planner: every field kind, live states,
+             the number input, sliders, choices and one submit.
+             ============================== -->
+        <section class="scene" aria-label="Form scene">
+          <p class="scene-tag">06 · Onboarding — Getaway, a trip-budget planner</p>
+
+          <h2 class="heading-bar" style="margin: 0;">Plan the trip</h2>
+
+          <form class="stack" style="max-width: 30rem;" onsubmit="return false">
+            <label class="field" data-status="success">
+              <span class="field-label">Trip name</span>
+              <input type="text" value="Gokarna, long weekend">
+              <span class="field-msg">Saved to your drafts.</span>
+            </label>
+            <label class="field" data-status="error">
+              <span class="field-label">Email for the itinerary</span>
+              <input type="email" value="asha@" aria-invalid="true">
+              <span class="field-msg">That address is missing its domain.</span>
+            </label>
+            <label class="field">
+              <span class="field-label">Trip budget</span>
+              <span class="number-input">
+                <input type="text" inputmode="numeric" value="60000" data-number
+                       data-tip="Groups digits for your locale as you type. First tap clears the example.">
+                <button type="button" class="btn btn-ghost btn-icon btn-small number-clear"
+                        aria-label="Clear" data-tip="Clear this field">&times;</button>
+              </span>
+              <span class="number-words" aria-live="polite"></span>
+              <span class="field-hint">Everything in, travel to chai</span>
+            </label>
+            <div class="choice-grid" role="group" aria-label="Currency">
+              <button type="button" class="choice-btn" aria-pressed="true" data-value="inr">
+                <span class="choice-sym">₹</span><span class="choice-cap">INR</span>
+              </button>
+              <button type="button" class="choice-btn" aria-pressed="false" data-value="usd">
+                <span class="choice-sym">$</span><span class="choice-cap">USD</span>
+              </button>
+              <button type="button" class="choice-btn" aria-pressed="false" data-value="eur">
+                <span class="choice-sym">€</span><span class="choice-cap">EUR</span>
+              </button>
+              <button type="button" class="choice-btn" aria-pressed="false" data-value="gbp">
+                <span class="choice-sym">£</span><span class="choice-cap">GBP</span>
+              </button>
+            </div>
+            <label class="field">
+              <span class="field-label">Days <output>6</output></span>
+              <input type="range" class="slider" min="2" max="30" value="6" data-tip="Drag, or use the arrow keys">
+            </label>
+            <label class="field">
+              <span class="field-label">Nightly cap</span>
+              <div class="slider-detail" data-min="500" data-max="20000" data-coarse="500" data-fine="50">
+                <input type="range" class="slider" min="500" max="20000" step="50" value="4500" aria-label="Nightly cap">
+                <div class="slider-detail-entry">
+                  <button type="button" class="btn btn-icon slider-detail-step" data-step="-1" aria-label="Decrease nightly cap">&minus;</button>
+                  <input type="number" class="slider-detail-number" min="500" max="20000" value="4500" aria-label="Exact nightly cap">
+                  <button type="button" class="btn btn-icon slider-detail-step" data-step="1" aria-label="Increase nightly cap">+</button>
+                </div>
+              </div>
+            </label>
+            <fieldset class="segmented" aria-label="Travellers">
+              <label><input type="radio" name="getaway-party" checked><span>Solo</span></label>
+              <label><input type="radio" name="getaway-party"><span>Duo</span></label>
+              <label><input type="radio" name="getaway-party"><span>Family</span></label>
+            </fieldset>
+            <div class="grid">
+              <label class="card card-option">
+                <input type="radio" name="getaway-style" class="card-option-input" checked>
+                <span class="card-option-mark" aria-hidden="true"></span>
+                <span class="card-option-body"><span class="card-option-title">Coast</span></span>
+              </label>
+              <label class="card card-option">
+                <input type="radio" name="getaway-style" class="card-option-input">
+                <span class="card-option-mark" aria-hidden="true"></span>
+                <span class="card-option-body"><span class="card-option-title">Mountains</span></span>
+              </label>
+              <label class="card card-option">
+                <input type="radio" name="getaway-style" class="card-option-input">
+                <span class="card-option-mark" aria-hidden="true"></span>
+                <span class="card-option-body"><span class="card-option-title">City</span></span>
+              </label>
+            </div>
+            <label class="field">
+              <span class="field-label">Departure</span>
+              <input type="date">
+            </label>
+            <label class="field">
+              <span class="field-label">Packing list PDF</span>
+              <input type="file" accept=".pdf">
+            </label>
+            <p class="row" role="status" style="margin: 0;"><progress aria-label="Upload progress"></progress> <span class="text-footnote">Uploading last year's list…</span></p>
+            <label class="check-row"><input type="checkbox" class="switch" checked> Warn me when a day busts the cap</label>
+            <label class="check-row"><input type="checkbox"> Email me the plan as a PDF</label>
+            <p class="row" style="margin-top: var(--space-control);">
+              <button class="btn btn-primary" data-event="getaway-save" data-tip="The one submit">Build the plan</button>
+              <button class="btn btn-ghost" type="button" aria-controls="discard-draft" data-tip="Opens a real dialog">Discard draft…</button>
+            </p>
+          </form>
+          <dialog class="modal" id="discard-draft">
+            <p>Throw away the Gokarna draft? The budget and packing list go with it.</p>
+            <form method="dialog" class="row">
+              <button class="btn btn-primary">Discard it</button>
+              <button class="btn">Keep planning</button>
+            </form>
+          </dialog>
+        </section>
+
+        <!-- ==============================
+             Scene 07 · App suite
+             "Fieldkit", a personal toolbox: identity header, the launcher
+             grid with a shine-lit badge, and the settings screen.
+             ============================== -->
+        <section class="scene" aria-label="App suite scene">
+          <p class="scene-tag">07 · App suite — Fieldkit, a personal toolbox</p>
+
+          <header class="app-identity">
+            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>🧭</text></svg>" alt="" width="96" height="96">
+            <h2 style="margin: 0;">Fieldkit</h2>
+            <p class="text-footnote">Small tools for being outside</p>
+            <p><span class="badge badge-success">Updated this week</span></p>
+          </header>
+          <div class="app-identity-stats">
+            <div class="stat"><strong>9,340</strong><span>OPENS</span></div>
+            <div class="stat"><strong>v2.1</strong><span>VERSION</span></div>
+            <div class="stat"><strong>196 KB</strong><span>SIZE</span></div>
+          </div>
+
+          <nav class="app-grid" aria-label="Fieldkit apps">
+            <a class="app-tile" href="#build-main" data-tip="The whole tile is the link">
+              <span class="icon-badge-holder" data-shine style="border-radius: 22.5%;">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>🌊</text></svg>" alt="" width="68" height="68" style="display: block; border-radius: 22.5%;">
+                <span class="icon-badge" data-status="new" role="img" aria-label="New" title="New"><svg data-icon="sparkle"></svg></span>
+              </span>
+              <strong>Tide tables</strong>
+              <span>This week's water, hour by hour</span>
+              <span class="app-count">2,180 opens</span>
+            </a>
+            <a class="app-tile" href="#build-main" data-tip="The whole tile is the link">
+              <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>🌤️</text></svg>" alt="" width="68" height="68">
+              <strong>Sky window</strong>
+              <span>Will tonight be clear enough</span>
+              <span class="app-count">1,020 opens</span>
+            </a>
+            <a class="app-tile" href="#build-main" data-tip="The whole tile is the link">
+              <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23808080' opacity='0.18'/><text x='50' y='64' font-size='48' text-anchor='middle'>🥾</text></svg>" alt="" width="68" height="68">
+              <strong>Trail log</strong>
+              <span>Every walk, mapped and kept</span>
+            </a>
+          </nav>
+
+          <div class="stack-tight" style="max-width: 26rem;">
+            <p class="text-caption" style="margin: 0;">NOTIFICATIONS</p>
+            <label class="check-row" style="justify-content: space-between;">Tide alerts <input type="checkbox" class="switch" checked data-event="setting-tides"></label>
+            <label class="check-row" style="justify-content: space-between;">Clear-sky nights <input type="checkbox" class="switch" data-event="setting-sky"></label>
+            <label class="check-row" style="justify-content: space-between;">Weekly recap <input type="checkbox" class="switch" checked data-event="setting-recap"></label>
+            <label class="field">
+              <span class="field-label">Units</span>
+              <select><option>Metric</option><option>Imperial</option></select>
+            </label>
+          </div>
+        </section>
+
+        <!-- ==============================
+             Scene 08 · The close
+             Every page ends: the CTA band and the footer.
+             ============================== -->
+        <section class="scene" aria-label="Closing scene">
+          <p class="scene-tag">08 · The close — CTA band and footer</p>
+
+          <div class="cta-band">
+            <p class="text-h3" style="margin: 0;"><strong>Build it in your theme.</strong></p>
+            <button class="btn" style="background: var(--on-accent-1); color: var(--accent-1); border-color: transparent;" data-event="cta-start" data-tip="The closing action">Start free</button>
+          </div>
+
+          <footer class="stack">
+            <div class="grid">
+              <nav class="stack-tight" aria-label="Product"><p class="text-caption" style="margin:0;">PRODUCT</p><a class="nav-link" href="#build-main">Pricing</a><a class="nav-link" href="#build-main">Changelog</a><a class="nav-link" href="#build-main">Roadmap</a></nav>
+              <nav class="stack-tight" aria-label="Company"><p class="text-caption" style="margin:0;">COMPANY</p><a class="nav-link" href="#build-main">About</a><a class="nav-link" href="#build-main">Journal</a><a class="nav-link" href="#build-main">Contact</a></nav>
+              <nav class="stack-tight" aria-label="Legal"><p class="text-caption" style="margin:0;">LEGAL</p><a class="nav-link" href="#build-main">Privacy</a><a class="nav-link" href="#build-main">Terms</a></nav>
+            </div>
+            <hr>
+            <p class="text-caption">© 2026 Driftwood Supply Co. Built on Facet.</p>
+          </footer>
+        </section>
+      </div>
+
+      <!-- ==============================
+           Skin Lab
+           Every theme in light and dark, side by side — identical markup,
+           one attribute apart. Frames built by docs.js.
+           ============================== -->
+      <section id="skin-lab" class="stack">
+        <h2>Skin Lab</h2>
+        <p>
+          Every theme in light and dark, side by side, all rendering the same
+          real slice of interface — heading, text with a link, both button
+          ranks, a labelled field, a result row. Choose a skin by looking, and
+          see the library's central idea at a glance: identical markup, ten
+          different results. Each panel is a real page pulling the same
+          <code>facet.css</code> this site uses.
+        </p>
+        <div class="lab-grid" id="lab-grid"></div>
+      </section>
+    </main>
+
+    <!-- ==============================
+         The theme rail
+         The full control panel, pinned right like the library's index:
+         search, base theme, then every token in tabs, then the config.
+         Interface control: reordered by the grid, never printed.
+         ============================== -->
+    <aside class="side-index theme-rail" aria-label="Theme controls" data-print="off">
+      <details class="rail-fold" id="inspector" open>
+        <summary>Theme controls <span class="inspector-caret" aria-hidden="true"></span></summary>
+        <div class="rail-body stack">
+          <div class="side-search">
+            <input id="control-search" type="search" placeholder="Search the controls"
+                   aria-label="Search the theme controls" data-tip="Type to find any token across the tabs" data-tip-below>
+          </div>
+          <p class="side-index-empty" id="control-search-empty" hidden>No matching controls.</p>
+
+          <div class="rail-group stack-tight">
+            <span class="side-index-name">Base</span>
+            <p class="chips" role="group" aria-label="Base theme">
+              <button type="button" class="chip" data-config-key="theme" data-config-value="" aria-pressed="true" data-tip="The neutral base: ink on near-white">Default</button>
+              <button type="button" class="chip" data-config-key="theme" data-config-value="velvet" aria-pressed="false" data-tip="Neumorphic matte, gold ink, serif display">Velvet</button>
+              <button type="button" class="chip" data-config-key="theme" data-config-value="aero" aria-pressed="false" data-tip="Frutiger Aero glass gloss, sky aqua">Aero</button>
+              <button type="button" class="chip" data-config-key="theme" data-config-value="elegant" aria-pressed="false" data-tip="Cream and gold, carved elevation">Elegant</button>
+            </p>
+            <p class="chips" role="group" aria-label="Appearance">
+              <button type="button" class="chip" data-config-key="mode" data-config-value="" aria-pressed="true" data-tip="Follow the system">Auto</button>
+              <button type="button" class="chip" data-config-key="mode" data-config-value="light" aria-pressed="false" data-tip="Always light">Light</button>
+              <button type="button" class="chip" data-config-key="mode" data-config-value="dark" aria-pressed="false" data-tip="Always dark">Dark</button>
+            </p>
+          </div>
+
           <div class="tabs" role="tablist" aria-label="Token category">
             <button type="button" role="tab" aria-selected="true" aria-controls="tab-colors" id="t-colors" data-tip="The palette">Colors</button>
             <button type="button" role="tab" aria-selected="false" aria-controls="tab-fonts" id="t-fonts" data-tip="The five type roles">Fonts</button>
@@ -147,82 +721,15 @@
             </div>
           </div>
 
-          <p style="display: flex; gap: var(--space-control); flex-wrap: wrap; max-width: none;">
+          <p class="row rail-actions">
             <button class="btn btn-small" id="mixer-reset" data-event="mixer-reset" data-tip="Clears the build: back to the active theme's own tokens">Reset</button>
             <button class="btn btn-small" data-copy="#code-style-mixer" data-tip="Copies the config block for your own page">Copy the config</button>
           </p>
           <pre id="code-style-mixer"><code></code></pre>
-          </div>
-        </details>
-
-        <!-- Live preview: four real layouts stacked full-width. The build sets
-             the token custom properties on this canvas only, so everything
-             inside restyles while the rest of the page stays put. -->
-        <div class="builder-canvas" id="builder-canvas" aria-label="Live preview">
-          <div class="bc-panel">
-            <span class="part-label">Landing</span>
-            <div class="stack">
-              <!-- Not a real heading: the page's one h1 is "Build a theme".
-                   .text-h1 gives this sample line the same look. -->
-              <p class="text-h1" style="margin:0; max-width:none;">Your product, in a line</p>
-              <h2 style="margin:0;">A promise worth the click</h2>
-              <p class="text-body" style="margin:0; color: var(--text-muted);">A calm subheading in body text that explains the promise in one breath — the size the reader actually reads at.</p>
-              <p class="row" style="margin:0;">
-                <button class="btn btn-primary">Get started</button>
-                <button class="btn">Learn more</button>
-                <a href="#style-mixer" data-tip="Accent-3 links">See how →</a>
-              </p>
-            </div>
-          </div>
-          <div class="bc-panel">
-            <span class="part-label">Form</span>
-            <div class="stack">
-              <h3 style="margin:0;">Sign up</h3>
-              <label class="field"><span class="field-label">Email</span><input type="email" placeholder="you@studio.com"></label>
-              <label class="check-row"><input type="checkbox" checked> Send me product updates</label>
-              <p style="margin:0;"><button class="btn btn-primary">Save changes</button></p>
-            </div>
-          </div>
-          <div class="bc-panel">
-            <span class="part-label">Cards</span>
-            <div class="grid">
-              <div class="card stack-tight">
-                <strong>Reports</strong>
-                <p style="margin:0; font-size: var(--text-footnote); color: var(--text-muted);">12 this month</p>
-                <span class="badge badge-success">Live</span>
-              </div>
-              <div class="card stack-tight">
-                <strong>Ledger</strong>
-                <p style="margin:0; font-size: var(--text-footnote); color: var(--text-muted);">Up to date</p>
-                <span class="badge badge-info">Synced</span>
-              </div>
-            </div>
-          </div>
-          <div class="bc-panel">
-            <span class="part-label">Editorial</span>
-            <div class="stack">
-              <span class="eyebrow">Annual report</span>
-              <p class="bc-figure" style="margin:0;">₹ 74,25,000</p>
-              <blockquote class="bc-quote">Good design is as little design as possible — the quote face, set apart from the headings.</blockquote>
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
-
-    <section id="skin-lab" class="stack">
-      <h2>Skin Lab</h2>
-      <p>
-        Every theme in light and dark, side by side, all rendering the same
-        real slice of interface — heading, prose with a link, both button
-        ranks, a labelled field, a result row. Choose a skin by looking, and
-        see the library's central idea at a glance: identical markup, ten
-        different results. Each panel is a real page pulling the same
-        <code>facet.css</code> this site uses.
-      </p>
-      <div class="lab-grid" id="lab-grid"></div>
-    </section>
-  </main>
+      </details>
+    </aside>
+  </div>
 
     <!-- SITE MENU · the floating utility menu, kept in sync across
          index / library / build. facet.js wires it. -->

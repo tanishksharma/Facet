@@ -668,10 +668,13 @@ function initTokenCopy() {
   }
 }
 
-/* Keyboard-first search: "/" or Cmd/Ctrl+K focuses the wall
-   search; arrows walk the visible sidebar links from there. */
+/* Keyboard-first search: "/" or Cmd/Ctrl+K focuses the page's search box
+   (the library wall's, or the themes page's control search); arrows walk
+   the visible sidebar links from there where a sidebar exists. */
 function initSearchKeys() {
-  const search = document.querySelector("#wall-search") || document.querySelector(".docs-index input");
+  const search = document.querySelector("#wall-search")
+    || document.querySelector("#control-search")
+    || document.querySelector(".docs-index input");
   if (!search) return;
   addEventListener("keydown", (e) => {
     const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
@@ -681,11 +684,13 @@ function initSearchKeys() {
       search.select();
     }
   });
-  const links = () => [...document.querySelectorAll(".docs-index a")].filter(a => !a.parentElement.hidden);
+  const index = document.querySelector(".docs-index");
+  if (!index) return;                     // no link list to walk (themes page)
+  const links = () => [...index.querySelectorAll("a")].filter(a => !a.parentElement.hidden);
   search.addEventListener("keydown", (e) => {
     if (e.key === "ArrowDown") { e.preventDefault(); links()[0]?.focus(); }
   });
-  document.querySelector(".docs-index").addEventListener("keydown", (e) => {
+  index.addEventListener("keydown", (e) => {
     if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
     const list = links();
     const i = list.indexOf(document.activeElement);
@@ -1044,10 +1049,126 @@ function labelWallParts() {
 }
 
 /* -------------------------------------------------------------------------
-   BUILD-A-THEME PAGE — the theme builder and Skin Lab (build.html only).
-   Each init guards on its own root element (#builder-canvas / #lab-grid),
-   so both are inert on every other page.
+   THEMES PAGE — the theme studio (build.html only): the token rail, the
+   scene canvas the mixer restyles, and Skin Lab. Each init guards on its
+   own root element (.theme-rail / #builder-canvas / #lab-grid), so all of
+   it is inert on every other page.
    ------------------------------------------------------------------------- */
+
+/* The theme rail: the pinned control panel beside the scenes. Three jobs.
+   The Base chips tell the truth — the chip matching the live data-theme /
+   data-mode is pressed, on load and whenever the attribute changes (the
+   settings sheet and ?theme= links change it too). On narrow screens the
+   rail is a folding bottom sheet, so it arrives folded instead of covering
+   the page. And the control search finds any token across the tabs: while
+   a query is live every panel opens and only matching rows stay, each row
+   matched by its own label plus its subgroup and tab names; clearing the
+   box restores the tab that was open. */
+function initThemeStudio() {
+  const rail = document.querySelector(".theme-rail");
+  if (!rail) return;                       // every page but build.html
+  const root = document.documentElement;
+
+  // Base chips follow the live attributes.
+  const syncBase = () => {
+    for (const chip of rail.querySelectorAll('[data-config-key="theme"]')) {
+      chip.setAttribute("aria-pressed", String((root.dataset.theme || "") === chip.dataset.configValue));
+    }
+    for (const chip of rail.querySelectorAll('[data-config-key="mode"]')) {
+      chip.setAttribute("aria-pressed", String((root.dataset.mode || "") === chip.dataset.configValue));
+    }
+  };
+  new MutationObserver(syncBase).observe(root, {
+    attributes: true, attributeFilter: ["data-theme", "data-mode"],
+  });
+  syncBase();
+
+  // A bottom sheet arrives folded.
+  const fold = rail.querySelector(".rail-fold");
+  if (fold && matchMedia("(max-width: 56rem)").matches) fold.open = false;
+
+  // The control search.
+  const box = rail.querySelector("#control-search");
+  const emptyNote = rail.querySelector("#control-search-empty");
+  const tablist = rail.querySelector('[role="tablist"]');
+  const panels = [...rail.querySelectorAll('[role="tabpanel"]')];
+  if (!box || !tablist || !panels.length) return;
+
+  // A row is one control: a labelled field, a color picker or a chip
+  // group. Its haystack is its own text plus the subgroup heading above
+  // it and the name of the tab it lives in, so "weight" finds the weight
+  // sliders and "shape" finds the whole Shape tab.
+  const subheadOf = (el) => {
+    for (let n = el.previousElementSibling; n; n = n.previousElementSibling) {
+      if (n.classList.contains("build-subhead")) return n.textContent;
+    }
+    return "";
+  };
+  const tabNameOf = (panel) => {
+    const tab = rail.querySelector(`[role="tab"][aria-controls="${panel.id}"]`);
+    return tab ? tab.textContent : "";
+  };
+  const rows = [
+    ...rail.querySelectorAll('[role="tabpanel"] label, [role="tabpanel"] p.chips, .rail-group p.chips'),
+  ];
+  const hays = new Map(rows.map((row) => {
+    const panel = row.closest('[role="tabpanel"]');
+    const hay = [
+      row.textContent,
+      row.getAttribute("aria-label") || "",
+      subheadOf(row),
+      panel ? tabNameOf(panel) : "Base theme appearance",
+    ].join(" ").toLowerCase();
+    return [row, hay];
+  }));
+  const subheads = [...rail.querySelectorAll(".build-subhead")];
+  const groups = [...rail.querySelectorAll(".rail-group")];
+  const remember = new Map();              // panel -> hidden before the search
+  let searching = false;
+
+  box.addEventListener("input", () => {
+    const q = box.value.trim().toLowerCase();
+    if (q && !searching) {                 // entering a search: open every tab
+      searching = true;
+      for (const p of panels) { remember.set(p, p.hidden); p.hidden = false; }
+      tablist.hidden = true;
+    }
+    if (!q) {                              // cleared: back to the open tab
+      if (searching) {
+        searching = false;
+        for (const p of panels) p.hidden = remember.get(p) ?? p.hidden;
+        tablist.hidden = false;
+      }
+      for (const row of rows) row.hidden = false;
+      for (const h of subheads) h.hidden = false;
+      for (const g of groups) g.hidden = false;
+      if (emptyNote) emptyNote.hidden = true;
+      return;
+    }
+    let shown = 0;
+    for (const row of rows) {
+      const hit = hays.get(row).includes(q);
+      row.hidden = !hit;
+      if (hit) shown++;
+    }
+    // A subgroup heading stays only while one of its rows shows.
+    for (const h of subheads) {
+      let any = false;
+      for (let n = h.nextElementSibling; n && !n.classList.contains("build-subhead"); n = n.nextElementSibling) {
+        if (!n.hidden) { any = true; break; }
+      }
+      h.hidden = !any;
+    }
+    // A panel or the Base group with nothing left collapses whole.
+    for (const p of panels) {
+      p.hidden = ![...p.querySelectorAll("label, p.chips")].some((r) => !r.hidden);
+    }
+    for (const g of groups) {
+      g.hidden = ![...g.querySelectorAll("p.chips")].some((r) => !r.hidden);
+    }
+    if (emptyNote) emptyNote.hidden = shown > 0;
+  });
+}
 
 /* Theme builder: build on the active theme, one token category at a time
    (colors, spacing, type, shape), previewed live on a scoped canvas —
@@ -1451,6 +1572,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initSettingsSkin();              // the settings sheet's live theme-builder rows
   initBackgroundDemo();            // the Backgrounds entry: variants + knobs
   initDevicePreview();             // Layer 5 templates in scaled device frames
+  initThemeStudio();               // build.html: the token rail — chips, fold, search
   initStyleMixer();                // build.html: the scoped theme builder
   initSkinLab();                   // build.html: the theme × mode gallery
   const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");

@@ -43,7 +43,8 @@ library.html       the Component library — one growing ladder:
 functions.html     the Function library — the behaviour twin: one entry per
                    facet.js feature (name, description, code, AI instructions
                    pulled live from llms.txt); same chrome, no previews
-build.html         theme builder + Skin Lab
+build.html         the Themes page: real product scenes as the live preview,
+                   the token rail (search + tabs) pinned beside them, + Skin Lab
 docs.css           docs-site styles (NOT part of /lib)
 docs.js            docs-site behaviour (NOT part of /lib)
 llms.txt           the full usage guide as plain text for AI crawlers
@@ -99,7 +100,11 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     Truth for: the behaviour catalogue (what each facet.js feature does + how to call it)
 
 `build.html`
-    What:      visual theme builder + Skin Lab
+    What:      the Themes page — the theme studio: every component composed
+               into real product scenes on the left (the live preview the
+               build restyles), the full token rail (search, base theme,
+               Colors/Fonts/Type/Spacing/Shape tabs, copyable config) pinned
+               on the right, plus Skin Lab
     Read by:   people
     Truth for: -
 
