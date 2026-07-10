@@ -64,6 +64,10 @@
 .menu-color input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
 .menu-color input[type="color"]::-webkit-color-swatch { border: none; border-radius: var(--radius-pill); }
 #settings-depth { margin: 0 0 var(--space-tight); }
+/* in the phone riser the rows centre — the swatch sits beside its label */
+@media (max-width: 40rem) {
+  .sheet-rise .menu-color input[type="color"] { margin-left: var(--space-tight); }
+}
 
 /* The site bar (the tab bar pinned top on wide screens): the page and
    the pinned index clear it. On phones the same bar floats at the

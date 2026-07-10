@@ -5501,7 +5501,7 @@ button.list-item:active { background: var(--surface-active); }
 /* (docs mirror — identical to llms.txt · Sheet & menu)
    WHEN TO USE: the app's edge panels, each behind one button — settings on the right (the default), navigation on the left (.sheet-left).
 
-   What it is: the app's edge panel — a slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back. The right edge is the settings side (the default); .sheet-left is the same panel sliding from the LEFT edge — the navigation side — and opening either closes the other. Add .sheet-rise and on phones the panel rises out of the tab bar instead: the bar's own frosted glass, as wide as the bar, growing up from just above it to its natural height (capped near 500px, taller content scrolls inside) with hairline dividers between the options; on wide screens it falls back to its edge-sheet self. Inside, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the trigger's aria-expanded is managed, a floating trigger stays visible above the open sheet as its close toggle, and a sheet left open never survives the browser's back-forward cache — it closes itself on return. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump. */
+   What it is: the app's edge panel — a slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back. The right edge is the settings side (the default); .sheet-left is the same panel sliding from the LEFT edge — the navigation side — and opening either closes the other. Add .sheet-rise and on phones the panel rises out of the tab bar instead: the bar's own frosted glass, as wide as the bar, standing only as tall as its options need — capped at half the screen so nothing sits out of thumb reach, taller content scrolling inside — with the options centred and divided by whisper-light hairlines; on wide screens it falls back to its edge-sheet self. Inside, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the trigger's aria-expanded is managed, a floating trigger stays visible above the open sheet as its close toggle, and a sheet left open never survives the browser's back-forward cache — it closes itself on return. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump. */
 /* ----- SHEET: right-edge slide-in panel over a darkening scrim -----
    Vertically centred; caps at 60% of the viewport height and 80% of
    its width on phones. Content taller than the cap scrolls INSIDE
@@ -5517,23 +5517,28 @@ button.list-item:active { background: var(--surface-active); }
 
 /* The riser: add .sheet-rise and on phones the panel stops being an
    edge sheet — it RISES out of the tab bar instead, wearing the bar's
-   own frosted glass, as wide as the bar, growing up from just above it
-   to its natural height (capped near 500px; taller content scrolls
-   inside). Options divide with hairlines. facet.js drives the growth;
-   on wide screens the same element falls back to its edge-sheet self. */
+   own frosted glass, as wide as the bar. It stands only as tall as its
+   options need, capped at half the screen so nothing sits out of thumb
+   reach; taller content scrolls inside. Options centre, divided by
+   whisper-light hairlines. facet.js reveals it with a clip wipe (the
+   panel's layout never changes mid-motion — that is what keeps it
+   smooth); on wide screens the same element falls back to its
+   edge-sheet self. */
 @media (max-width: 40rem) {
-  .sheet-rise,
-  .sheet-rise.sheet-left {
+  /* .sheet.sheet-rise: two classes on purpose — the base .sheet block
+     sits later in the file, and its 80dvh height must lose here */
+  .sheet.sheet-rise,
+  .sheet.sheet-rise.sheet-left {
     top: auto;
     /* just above the bar: its bottom inset + its 48px + one gap */
     bottom: calc(48px + 2 * var(--space-inline) + var(--safe-bottom));
     left: var(--space-inline);
     right: var(--space-inline);
     width: auto;
-    height: auto;
-    max-height: min(31rem, calc(100dvh - 48px - 2 * var(--space-inline) - var(--safe-bottom) - var(--safe-top) - var(--space-inline)));
+    height: auto;                      /* only as tall as the options need... */
+    max-height: 50dvh;                 /* ...never past half the screen */
     transform: none;
-    overflow: hidden;                  /* the growing edge clips the content */
+    overflow: hidden;
     /* the tab bar's own glass */
     background: color-mix(in srgb, var(--surface) 32%, transparent);
     -webkit-backdrop-filter: blur(5px) saturate(1.4);
@@ -5545,10 +5550,22 @@ button.list-item:active { background: var(--surface-active); }
       inset 0 -1px 3px color-mix(in srgb, var(--text) 9%, transparent),
       0 1px 0 color-mix(in srgb, var(--surface) 55%, transparent);
   }
-  /* hairline dividers between the options, tuned for the glass */
+  .sheet-rise .sheet-scroll { overflow-y: auto; }   /* taller content scrolls inside */
+  /* every option centres in the panel */
+  .sheet-rise .menu-item {
+    justify-content: center;
+    text-align: center;
+  }
+  .sheet-rise .menu-item .menu-value { margin-left: var(--space-tight); }
+  .sheet-rise .menu-label,
+  .sheet-rise .wordmark {
+    display: block;
+    text-align: center;
+  }
+  /* whisper-light hairlines between the options */
   .sheet-rise :is(.menu-item, .menu-label) + .menu-item,
   .sheet-rise .menu-item + .menu-label {
-    border-top: var(--border-hairline) solid color-mix(in srgb, var(--border) 65%, transparent);
+    border-top: var(--border-hairline) solid color-mix(in srgb, var(--border) 30%, transparent);
     border-radius: 0;
   }
 }
