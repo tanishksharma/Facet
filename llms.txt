@@ -100,7 +100,9 @@ Adapts to the reader: all sizes in rem, so device/browser text-size
 settings scale the whole interface; fluid hero type via clamp(); 44px
 touch targets; no hover-only interactions; configurable motion —
 Lively springs by default, data-motion="calm" for quiet, "off" for
-none, prefers-reduced-motion above all of it; ambient motion from one
+none, prefers-reduced-motion above all of it; color eases by default —
+a base rule cross-fades paint-only properties on every element, so
+hover tints, status flips and whole theme or mode switches never snap; ambient motion from one
 engine (facet.motion) — data-parallax drifts elements and data-shine
 sweeps a specular light across them, both from the device tilt, the
 cursor, or an idle drift when no input exists; smooth page
@@ -116,13 +118,19 @@ skip-to-content link, placeholder styling; the hidden attribute always
 wins; tabular figures on numeric UI.
 
 Components and behaviours: themed layout primitives (container in four
-widths, stack in three gaps, full-viewport snap sections); the
+widths, stack in three gaps, full-viewport snap sections); one-attribute
+page width — data-width="narrow|wide|xwide|full" on <html> remaps every
+container from reading column to edge to edge, with a matching control
+in the settings panel; the
 view-stack app shell for screen-to-screen apps (main.view-stack of
 .view screens, hash-routed, facet.views.go/back, safe-area padded);
 buttons in
 three variants and three sizes working on <button> and <a>, plus .btn-pill
 capsule shape (an icon-and-label pill with no extra markup); icon buttons;
-the app-kit floating controls — tab bar, settings sheet, float button, scroll
+the app-kit floating controls — the tab bar (the Photos-style command
+bar: a bottom pill on phones, the top site bar on wide screens, its
+corner panels condensing into and rising out of their own buttons),
+settings sheet, float button, scroll
 gauge, and the nav menu (a floating Menu-pill + Settings-button cluster, built
 from .btn.btn-pill, a no-JS <details> of real links upgraded to an overlay);
 the calculator-grade number input (prefilled example, one-tap clear,
@@ -232,7 +240,9 @@ URL.
 Setup by configuration: the facet.js script tag can carry the look —
 <script src=".../facet.js" data-theme="velvet" data-mode="dark" defer>
 boots the page into that configuration before first paint (explicit html
-attributes win over it; the URL wins over both). At runtime,
+attributes win over it; the URL wins over both). The tag takes every
+config key: data-theme, data-mode, data-density, data-text-size,
+data-language, data-numbers, data-motion, data-transition, data-width. At runtime,
 facet.set({...}) applies key-value pairs live with no reload:
 facet.set({theme: "velvet"}), facet.set({mode: "dark"}),
 facet.set({"--accent-1": "#5F9E44"}) to override any token. The skin
@@ -1632,7 +1642,10 @@ service worker must be served from your own site root:
    set ships at /icons/; replace them with your own.
 
 Then wire them on the page: put data-service-worker="/sw.js" on the
-facet.js script tag (this registers the worker), and add
+facet.js script tag (this registers the worker with updateViaCache:
+"none", so the engine your one-line sw.js imports is re-checked on
+every load and engine updates reach installed apps without you
+versioning anything), and add
 <link rel="manifest" href="/manifest.json"> plus the apple-mobile-web-app
 metas in the head — copy the exact head block from /templates/app.html.
 
@@ -2023,7 +2036,7 @@ every future theme gets its map for free.
 
 WHEN TO USE: any app-shaped product — leave it on and the components click, tick and snap by themselves; the settings sheet's switches are the user's mute.
 
-What it is: synthesized UI sound and vibration with no audio files — facet.feedback plays short Web Audio blips (tap, tick, snap, toggle, success) and fires navigator.vibrate haptics, both ON by default. What it is for: the physical feel of an app — a tick as a stepper bumps, a soft snap as a pager settles, a tap under every control. When to use it: any app-shaped product; leave it on and it wires itself to the components. There is almost no HTML to write: the user's switches are the settings sheet's Sounds and Haptics toggles (data-control="sounds" / "haptics", self-wired), and the components already call it. To fire it yourself: facet.feedback.tap() / .tick() / .snap() / .success(); mute a channel with facet.feedback.sound.enabled = false or .haptic.enabled = false. Reduced-motion and a muted switch silence it.
+What it is: synthesized UI sound and vibration with no audio files — facet.feedback plays short Web Audio blips (tap, tick, snap, toggle, success) and fires navigator.vibrate haptics, both ON by default. What it is for: the physical feel of an app — a tick as a stepper bumps, a soft snap as a pager settles, a tap under every control. When to use it: any app-shaped product; leave it on and it wires itself to the components. There is almost no HTML to write: the user's switches are the settings sheet's Sounds and Haptics toggles (data-control="sounds" / "haptics", self-wired), and the components already call it. To fire it yourself: facet.feedback.tap() / .tick() / .snap() / .success(); mute a channel with facet.feedback.sound.enabled = false or .haptic.enabled = false. Reduced-motion and a muted switch silence it. A mute holds for the session (sessionStorage, like every setting): it sticks across page navigations and resets when the tab closes.
 
 ### Tab bar
 
@@ -2084,7 +2097,7 @@ What it is: a floating navigation cluster pinned bottom-left — a "Menu" pill t
 
 WHEN TO USE: long scrollers inside app screens — a slim thumb that shows how much is left and drags to scrub.
 
-What it is: a pill thumb inset in an embossed groove beside a scroller — thumb height is the visible share of the content, position is progress, and overscroll momentum slides it out of the groove where the clip swallows it. What it is for: a themed, unobtrusive scrollbar look-alike for panels and whole pages; facet.scrollGauge(scroller) injects it, a metric option reports composite scrolls (the pager's sections laid end to end), and onScrub makes the lane a drag handle. When to use it: sheets and app pages where the native scrollbar is hidden. Auto-hides when nothing overflows. Scroll the box:
+What it is: a pill thumb inset in an embossed groove beside a scroller — thumb height is the visible share of the content, position is progress, and overscroll momentum slides it out of the groove where the clip swallows it. What it is for: a themed, unobtrusive scrollbar look-alike for panels and whole pages; facet.scrollGauge(scroller) injects it, a metric option reports composite scrolls (the pager's sections laid end to end), and onScrub makes the lane a drag handle; risen sheet panels (.sheet-rise) inject their own automatically, riding the panel's outer edge. When to use it: sheets and app pages where the native scrollbar is hidden. Auto-hides when nothing overflows. Scroll the box:
 
 ### Installable (PWA)
 
@@ -2407,9 +2420,11 @@ Where app state lives (URL first):
   hash (the view stack does this for you), and facet.js already
   carries theme/mode/language there. An agent should be able to
   construct any state from a link alone.
-- localStorage is only for device-private preferences that make no
-  sense in a link (sound off, dismissed nudges). Never put content or
-  answers there.
+- sessionStorage is for device-private preferences that make no sense
+  in a link (sound off, a dismissed panel) — session-scoped, so nothing
+  follows a reader forever; every setting facet.js stores lives there.
+  Reserve localStorage for durable device facts (the installed-app
+  stamp). Never put content or answers in either store.
 
 ## Rules for building on Facet
 

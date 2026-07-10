@@ -352,10 +352,16 @@
           <p>
             The edge-panel engine: open, close, scrim and state handling
             for the app's sheets — settings from the right edge, navigation
-            from the left (.sheet-left). It self-wires — a button whose
+            from the left (.sheet-left). Add .sheet-rise and the same panel
+            becomes the tab bar's corner card instead: it condenses into
+            and rises out of its own trigger button (phones grow it up
+            from the bottom bar, wide screens drop it from the top bar's
+            corner), and the library's scroll thumb is injected on its
+            outer edge automatically. It self-wires — a button whose
             aria-controls names a .sheet becomes its trigger, the
-            .sheet-scrim dims and closes on tap, and opening one sheet
-            closes any other — so most pages write no JS at all. Call facet.sheet(el, scrim) to wire one yourself; it
+            .sheet-scrim dims and closes on tap, and opening one panel
+            closes any other FIRST, then opens, so two panels never move
+            at once — most pages write no JS at all. Call facet.sheet(el, scrim) to wire one yourself; it
             returns { open, close, toggle, isOpen }, and wired sheets expose
             the same handle as element.facetSheet.
           </p>
@@ -421,7 +427,12 @@
             animates it on per-edge springs — the leading edge leads, the
             trailing edge stretches, both settle with a small overshoot.
             Every .tab-bar on the page gets this at load, wired to the snap
-            pager when one exists ([data-section] segments page there).
+            pager when one exists ([data-section] segments page there). A
+            scrolling pill starts with the current tab centred and stops
+            auto-centring the moment the reader scrolls it themselves; a
+            tapped link segment glides the highlight before the page
+            changes, and coming back through the back-forward cache puts
+            it back on the returning page's own tab.
             facet.tabIndicator(bar) attaches it to a late-added bar and
             returns { moveTo } for driving the pill yourself.
           </p>
@@ -444,7 +455,8 @@
             height is the visible share of the content, position is
             progress, and it fades out entirely when nothing overflows. It
             returns { update } — call that after content changes so the
-            thumb resizes. A metric option reports composite scrolls (the
+            thumb resizes. Risen sheet panels get one automatically on
+            their outer edge, no call needed. A metric option reports composite scrolls (the
             pager's sections laid end to end) and onScrub turns the groove
             into a drag handle.
           </p>
@@ -886,7 +898,8 @@
             with .tap(), .tick(), .snap() or .success(); mute a channel by
             setting .sound.enabled or .haptic.enabled to false (the settings
             sheet's data-control="sounds"/"haptics" toggles do exactly
-            that).
+            that). A mute holds for the session — it sticks across page
+            navigations and resets when the tab closes.
           </p>
           <pre id="code-fn-feedback"><code>&lt;script&gt;
   facet.feedback.success();            // after a save lands
