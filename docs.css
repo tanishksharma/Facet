@@ -85,23 +85,25 @@
    tinted pill on the current link. The same thread colors the layer
    pages' kickers and the entry cards' dots, so sidebar, cards and page
    headers all read as one colored system. */
-/* Top padding lives on the search box's margin instead of the panel, so
-   the sticky search can pin FLUSH to the panel's top edge — otherwise
-   links scroll through the padding band above it. */
+/* The panel keeps no top padding of its own: the sticky search wrapper
+   below carries it, so the pinned search sits an equal distance from the
+   panel's top, left and right edges with nothing scrolling above it. */
 .docs-index { padding: 0 var(--space-stack) var(--space-card); gap: var(--space-inline); }
-/* The search box: compact, and stuck to the top while the menu scrolls
-   (the surface-colored halo hides links sliding beneath it). */
-.docs-index #wall-search {
+/* The search wrapper sticks to the top while the menu scrolls; its own
+   padding is the breathing room and its surface background masks the
+   links sliding beneath. */
+.docs-index .side-search {
   position: sticky;
   top: 0;
   z-index: 2;
-  margin-top: var(--space-stack);
-  margin-bottom: var(--space-tight);
-  padding: var(--space-tight) var(--space-inline);
-  min-height: 34px;             /* thinner than the 44px field default */
-  font-size: var(--text-footnote);
+  padding: var(--space-stack) 0 var(--space-tight);
   background: var(--surface);
-  box-shadow: 0 0 0 10px var(--surface);
+}
+/* The search box itself: compact, thinner than the 44px field default. */
+.docs-index #wall-search {
+  min-height: 34px;
+  padding: var(--space-tight) var(--space-inline);
+  font-size: var(--text-footnote);
 }
 .side-index-empty {
   margin: 0;
