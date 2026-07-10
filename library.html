@@ -2784,66 +2784,144 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <article class="element stack" id="backgrounds">
         <h3 data-status="beta">Backgrounds</h3>
         <p>
-          Very faint materials for big quiet surfaces. Two variants: Grid draws a repeating pattern or your own glyph; Fluid drifts soft color like light through glass.
+          Very faint materials for big quiet surfaces. Two variants: Grid shows its four looks stacked below — the technical grid, the dot grid, graph paper and the custom grid of your own symbols — and each area carries its own controls, so every look tunes independently; Fluid drifts soft color like light through glass. The technical and dot grids can also scatter your own characters across the pattern.
         </p>
 
         <p class="chips variant-row" role="group" aria-label="Variant">
-          <button class="chip" aria-pressed="true" data-bg-variant="grid" data-tip="The repeating-symbol variant">Grid</button>
+          <button class="chip" aria-pressed="true" data-bg-variant="grid" data-tip="The repeating-symbol variant, all four looks">Grid</button>
           <button class="chip" aria-pressed="false" data-bg-variant="fluid" data-tip="The breathing color-pool variant">Fluid</button>
         </p>
 
-        <div class="demo">
-          <section id="bg-variant-grid" class="bg-grid">
-            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">A quiet material</h4>
-            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">The pattern stays faint enough to read straight over.</p>
+        <div class="demo stack">
+          <section class="bg-grid" id="bg-surface-technical" data-bg-surface>
+            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">Technical</h4>
+            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Plus marks at every intersection — the drawing-board look.</p>
+            <div class="stack" data-demo-chrome style="padding: 0 var(--space-card) var(--space-card);">
+              <p class="chips" role="group" aria-label="Ink color" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-grid-tint="" data-tip="The muted text token — the default">Ink</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-1)" data-tip="Accent rank 1 — the primary-action color">Accent 1</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-2)" data-tip="Accent rank 2 — the secondary fill">Accent 2</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-3)" data-tip="Accent rank 3 — the quiet interactive color">Accent 3</button>
+              </p>
+              <p class="chips" role="group" aria-label="Ink opacity" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-grid-strength="5%" data-tip="Barely there — you have to look for it">Faint</button>
+                <button class="chip" aria-pressed="true" data-grid-strength="" data-tip="The default, 12%">Default</button>
+                <button class="chip" aria-pressed="false" data-grid-strength="22%" data-tip="Present, still quiet">Strong</button>
+              </p>
+              <p class="chips" role="group" aria-label="Grid spacing" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-grid-cell="" data-tip="The default, 2.5rem — the tightest offered">Default</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="4rem" data-tip="4rem cells">Airy</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="5.5rem" data-tip="5.5rem cells">Wide</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="7.5rem" data-tip="7.5rem cells — the pattern becomes an accent">Vast</button>
+              </p>
+              <label class="field" style="max-width: 24rem;">
+                <span class="field-label">Scatter characters</span>
+                <input type="text" data-scatter-input placeholder="✦ ❋ 🍜" data-tip="Replaces scattered plus marks with your characters as you type">
+              </label>
+              <p class="chips" role="group" aria-label="Scatter frequency" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-scatter-rate="20" data-tip="One character per twenty points">Sparse</button>
+                <button class="chip" aria-pressed="true" data-scatter-rate="" data-tip="The default — one character per ten points">Default</button>
+                <button class="chip" aria-pressed="false" data-scatter-rate="5" data-tip="One character per five points">Dense</button>
+              </p>
+            </div>
+          </section>
+          <section class="bg-dots" id="bg-surface-dots" data-bg-surface>
+            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">Dots</h4>
+            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">A dot at every half cell — the quiet default.</p>
+            <div class="stack" data-demo-chrome style="padding: 0 var(--space-card) var(--space-card);">
+              <p class="chips" role="group" aria-label="Ink color" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-grid-tint="" data-tip="The muted text token — the default">Ink</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-1)" data-tip="Accent rank 1 — the primary-action color">Accent 1</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-2)" data-tip="Accent rank 2 — the secondary fill">Accent 2</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-3)" data-tip="Accent rank 3 — the quiet interactive color">Accent 3</button>
+              </p>
+              <p class="chips" role="group" aria-label="Ink opacity" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-grid-strength="5%" data-tip="Barely there — you have to look for it">Faint</button>
+                <button class="chip" aria-pressed="true" data-grid-strength="" data-tip="The default, 12%">Default</button>
+                <button class="chip" aria-pressed="false" data-grid-strength="22%" data-tip="Present, still quiet">Strong</button>
+              </p>
+              <p class="chips" role="group" aria-label="Grid spacing" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-grid-cell="" data-tip="The default, 2.5rem — the tightest offered">Default</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="4rem" data-tip="4rem cells">Airy</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="5.5rem" data-tip="5.5rem cells">Wide</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="7.5rem" data-tip="7.5rem cells — the pattern becomes an accent">Vast</button>
+              </p>
+              <label class="field" style="max-width: 24rem;">
+                <span class="field-label">Scatter characters</span>
+                <input type="text" data-scatter-input placeholder="✦ ❋ 🍜" data-tip="Replaces scattered dots with your characters as you type">
+              </label>
+              <p class="chips" role="group" aria-label="Scatter frequency" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-scatter-rate="20" data-tip="One character per twenty points">Sparse</button>
+                <button class="chip" aria-pressed="true" data-scatter-rate="" data-tip="The default — one character per ten points">Default</button>
+                <button class="chip" aria-pressed="false" data-scatter-rate="5" data-tip="One character per five points">Dense</button>
+              </p>
+            </div>
+          </section>
+          <section class="bg-graph" id="bg-surface-graph" data-bg-surface>
+            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">Graph paper</h4>
+            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Minor and major squares, deliberately the lightest.</p>
+            <div class="stack" data-demo-chrome style="padding: 0 var(--space-card) var(--space-card);">
+              <p class="chips" role="group" aria-label="Ink color" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-grid-tint="" data-tip="The muted text token — the default">Ink</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-1)" data-tip="Accent rank 1 — the primary-action color">Accent 1</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-2)" data-tip="Accent rank 2 — the secondary fill">Accent 2</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-3)" data-tip="Accent rank 3 — the quiet interactive color">Accent 3</button>
+              </p>
+              <p class="chips" role="group" aria-label="Ink opacity" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-grid-strength="5%" data-tip="Barely there — you have to look for it">Faint</button>
+                <button class="chip" aria-pressed="true" data-grid-strength="" data-tip="The default, 12%">Default</button>
+                <button class="chip" aria-pressed="false" data-grid-strength="22%" data-tip="Present, still quiet">Strong</button>
+              </p>
+              <p class="chips" role="group" aria-label="Grid spacing" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-grid-cell="" data-tip="The default, 2.5rem — the tightest offered">Default</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="4rem" data-tip="4rem cells">Airy</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="5.5rem" data-tip="5.5rem cells">Wide</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="7.5rem" data-tip="7.5rem cells — the pattern becomes an accent">Vast</button>
+              </p>
+            </div>
+          </section>
+          <section data-bg-glyph="sparkle" id="bg-surface-custom" data-bg-surface>
+            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">Custom grid</h4>
+            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Your own symbols as the pattern — pick icons, or type anything.</p>
+            <div class="stack" data-demo-chrome style="padding: 0 var(--space-card) var(--space-card);">
+              <p class="chips" role="group" aria-label="Glyphs — pick one or several" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-glyph-icon="sparkle" data-tip="The sparkle line icon — combine freely"><svg class="glyph" data-icon="sparkle"></svg> Sparkle</button>
+                <button class="chip" aria-pressed="false" data-glyph-icon="star" data-tip="The star line icon — combine freely"><svg class="glyph" data-icon="star"></svg> Star</button>
+                <button class="chip" aria-pressed="false" data-glyph-icon="plus" data-tip="The plus line icon — combine freely"><svg class="glyph" data-icon="plus"></svg> Plus</button>
+                <button class="chip" aria-pressed="false" data-glyph-icon="heart" data-tip="The heart line icon — combine freely"><svg class="glyph" data-icon="heart"></svg> Heart</button>
+              </p>
+              <label class="field" style="max-width: 24rem;">
+                <span class="field-label">Or type your own characters</span>
+                <input type="text" data-glyph-input placeholder="✦ or 🍜 or A B C" data-tip="The pattern redraws as you type; mixes with the picked icons">
+              </label>
+              <p class="chips" role="group" aria-label="Glyph size" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-glyph-scale="0.3" data-tip="Small symbol, lots of air">Small</button>
+                <button class="chip" aria-pressed="true" data-glyph-scale="" data-tip="The default, 42% of the cell">Default</button>
+                <button class="chip" aria-pressed="false" data-glyph-scale="0.62" data-tip="Large symbol, dense texture">Large</button>
+              </p>
+              <p class="chips" role="group" aria-label="Ink color" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-grid-tint="" data-tip="The muted text token — the default">Ink</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-1)" data-tip="Accent rank 1 — the primary-action color">Accent 1</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-2)" data-tip="Accent rank 2 — the secondary fill">Accent 2</button>
+                <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-3)" data-tip="Accent rank 3 — the quiet interactive color">Accent 3</button>
+              </p>
+              <p class="chips" role="group" aria-label="Ink opacity" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-grid-strength="5%" data-tip="Barely there — you have to look for it">Faint</button>
+                <button class="chip" aria-pressed="true" data-grid-strength="" data-tip="The default, 12%">Default</button>
+                <button class="chip" aria-pressed="false" data-grid-strength="22%" data-tip="Present, still quiet">Strong</button>
+              </p>
+              <p class="chips" role="group" aria-label="Grid spacing" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-grid-cell="" data-tip="The default, 2.5rem — the tightest offered">Default</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="4rem" data-tip="4rem cells">Airy</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="5.5rem" data-tip="5.5rem cells">Wide</button>
+                <button class="chip" aria-pressed="false" data-grid-cell="7.5rem" data-tip="7.5rem cells — the pattern becomes an accent">Vast</button>
+              </p>
+            </div>
           </section>
           <section id="bg-variant-fluid" data-bg-fluid hidden style="min-height: 16rem;">
             <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The fluid field</h4>
             <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Color pools breathe and bubbles drift, in this theme's own colors.</p>
           </section>
-        </div>
-
-        <div class="stack entry-controls" id="bg-controls-grid">
-          <p class="chips" role="group" aria-label="Pattern">
-            <button class="chip" aria-pressed="true" data-grid-kind="bg-grid" data-tip="Plus marks at the intersections">Technical</button>
-            <button class="chip" aria-pressed="false" data-grid-kind="bg-dots" data-tip="A dot at every half cell">Dots</button>
-            <button class="chip" aria-pressed="false" data-grid-kind="bg-graph" data-tip="Graph paper, the lightest look">Graph paper</button>
-            <button class="chip" aria-pressed="false" data-grid-kind="custom" data-tip="Your own symbol as the pattern">Custom</button>
-          </p>
-          <p class="chips" role="group" aria-label="Ink color">
-            <button class="chip" aria-pressed="true" data-grid-tint="" data-tip="The muted text token — the default">Ink</button>
-            <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-1)" data-tip="Accent rank 1 — the primary-action color">Accent 1</button>
-            <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-2)" data-tip="Accent rank 2 — the secondary fill">Accent 2</button>
-            <button class="chip" aria-pressed="false" data-grid-tint="var(--accent-3)" data-tip="Accent rank 3 — the quiet interactive color">Accent 3</button>
-          </p>
-          <p class="chips" role="group" aria-label="Ink opacity">
-            <button class="chip" aria-pressed="false" data-grid-strength="5%" data-tip="Barely there — you have to look for it">Faint</button>
-            <button class="chip" aria-pressed="true" data-grid-strength="" data-tip="The default, 12%">Default</button>
-            <button class="chip" aria-pressed="false" data-grid-strength="22%" data-tip="Present, still quiet">Strong</button>
-          </p>
-          <p class="chips" role="group" aria-label="Grid spacing">
-            <button class="chip" aria-pressed="true" data-grid-cell="" data-tip="The default, 2.5rem — the tightest offered">Default</button>
-            <button class="chip" aria-pressed="false" data-grid-cell="4rem" data-tip="4rem cells">Airy</button>
-            <button class="chip" aria-pressed="false" data-grid-cell="5.5rem" data-tip="5.5rem cells">Wide</button>
-            <button class="chip" aria-pressed="false" data-grid-cell="7.5rem" data-tip="7.5rem cells — the pattern becomes an accent">Vast</button>
-          </p>
-          <div class="stack" id="bg-controls-custom" hidden>
-            <p class="chips" role="group" aria-label="Glyph">
-              <button class="chip" aria-pressed="true" data-glyph-preset="sparkle" data-tip="The sparkle line icon"><svg class="glyph" data-icon="sparkle"></svg> Sparkle</button>
-              <button class="chip" aria-pressed="false" data-glyph-preset="star" data-tip="The star line icon"><svg class="glyph" data-icon="star"></svg> Star</button>
-              <button class="chip" aria-pressed="false" data-glyph-preset="plus" data-tip="The plus line icon"><svg class="glyph" data-icon="plus"></svg> Plus</button>
-              <button class="chip" aria-pressed="false" data-glyph-preset="sparkle star plus" data-tip="The three icons alternate across the row"><svg class="glyph" data-icon="sparkle"></svg><svg class="glyph" data-icon="star"></svg><svg class="glyph" data-icon="plus"></svg> Mix</button>
-            </p>
-            <label class="field" style="max-width: 24rem;">
-              <span class="field-label">Or add your own character</span>
-              <input id="glyph-input" type="text" placeholder="✦ or 🍜 or A B C" data-tip="The preview redraws as you type">
-            </label>
-            <p class="chips" role="group" aria-label="Glyph size">
-              <button class="chip" aria-pressed="false" data-glyph-scale="0.3" data-tip="Small symbol, lots of air">Small</button>
-              <button class="chip" aria-pressed="true" data-glyph-scale="" data-tip="The default, 42% of the cell">Default</button>
-              <button class="chip" aria-pressed="false" data-glyph-scale="0.62" data-tip="Large symbol, dense texture">Large</button>
-            </p>
-          </div>
         </div>
 
         <pre id="code-backgrounds"><code></code></pre>
@@ -2869,6 +2947,16 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
             override, px) and <code>data-bg-glyph-scale</code> (glyph
             size as a fraction of the cell, default 0.42).
             <code>facet.glyphBackground(el)</code> draws a late-added
+            surface.
+          </p>
+          <p>
+            The scatter: <code>data-bg-scatter="✦ ❋"</code> on
+            <code>.bg-grid</code> or <code>.bg-dots</code> replaces
+            roughly one lattice point in ten with one of your
+            characters (any character or emoji, or a facet icon name);
+            <code>data-bg-scatter-rate</code> tunes the frequency (one
+            character per N points, default 10).
+            <code>facet.scatterBackground(el)</code> draws a late-added
             surface.
           </p>
           <p>

@@ -1672,6 +1672,13 @@ VARIANT GRID — a repeating symbol on a grid:
   (spacing, default 2.5rem). The custom grid adds data-bg-glyph-size
   (spacing override in px) and data-bg-glyph-scale (glyph size as a
   fraction of the cell, default 0.42).
+- The scatter: data-bg-scatter="✦ ❋" on .bg-grid or .bg-dots replaces
+  roughly one lattice point in ten with one of your characters (any
+  character or emoji, or a facet icon name); data-bg-scatter-rate
+  tunes the frequency — one character per N points, default 10. The
+  layout is seeded by the input, so themes and modes re-ink the same
+  arrangement; facet.scatterBackground(el) draws a surface inserted
+  after load.
 
 VARIANT FLUID — data-bg-fluid: a soft, slowly-breathing field of
 out-of-focus color pools and small drifting bubbles, drawn from the
@@ -1685,6 +1692,7 @@ JS off.
     <section class="bg-dots" style="--bg-tint: var(--accent-3); --bg-cell: 4rem;">
       <h2>A quiet dotted surface</h2>
     </section>
+    <section class="bg-dots" data-bg-scatter="✦ ❋" data-bg-scatter-rate="10">…</section>
     <section data-bg-glyph="♥ ✳ ✦" data-bg-glyph-scale="0.3">…</section>
     <section data-bg-fluid>…</section>
 ## Blocks

@@ -1322,6 +1322,13 @@
    spacing, default 2.5rem); the custom grid adds data-bg-glyph-size
    (spacing override, px), data-bg-glyph-scale (glyph size as a
    fraction of the cell, default 0.42).
+   THE SCATTER — data-bg-scatter="✦ ❋" on .bg-grid or .bg-dots sows
+   the given characters (any character or emoji, or a facet icon
+   name) across the lattice: roughly one point in ten loses its plus
+   or dot and wears a character instead. data-bg-scatter-rate tunes
+   the frequency (one character per N lattice points, default 10).
+   facet.js draws the scatter tile in the same pattern ink and
+   redraws it with the glyph engine.
    VARIANT FLUID — data-bg-fluid: a soft, slowly-breathing field of
    out-of-focus color pools and drifting bubbles, drawn from the
    accent and vivid tokens so every theme recolors it for free;
@@ -1356,6 +1363,8 @@
   --bg-plus: 0.75rem;
   background-color: var(--background);
   background-image:
+    /* the character scatter rides on top when facet.js sets it */
+    var(--bg-scatter, none),
     /* cover with vertical windows (bounds the horizontal arms) */
     linear-gradient(90deg,
       var(--background) 0 calc(50% - var(--bg-plus) / 2),
@@ -1371,14 +1380,23 @@
       transparent 0 calc(50% - 0.5px), var(--bg-ink) 0 calc(50% + 0.5px), transparent 0),
     linear-gradient(90deg,
       transparent 0 calc(50% - 0.5px), var(--bg-ink) 0 calc(50% + 0.5px), transparent 0);
-  background-size: var(--bg-cell) var(--bg-cell);
+  background-size:
+    var(--bg-scatter-tile, auto),
+    var(--bg-cell) var(--bg-cell),
+    var(--bg-cell) var(--bg-cell),
+    var(--bg-cell) var(--bg-cell),
+    var(--bg-cell) var(--bg-cell);
 }
 
 /* Dot grid: one soft dot per half cell. */
 .bg-dots {
   background-color: var(--background);
-  background-image: radial-gradient(circle, var(--bg-ink) 1px, transparent 1.5px);
-  background-size: calc(var(--bg-cell) / 2) calc(var(--bg-cell) / 2);
+  background-image:
+    var(--bg-scatter, none),
+    radial-gradient(circle, var(--bg-ink) 1px, transparent 1.5px);
+  background-size:
+    var(--bg-scatter-tile, auto),
+    calc(var(--bg-cell) / 2) calc(var(--bg-cell) / 2);
 }
 
 /* Ruled: writing lines, generous leading. */
