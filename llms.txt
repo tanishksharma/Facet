@@ -1129,17 +1129,27 @@ element with facet.motion — it drifts up to depth pixels behind the
 desktop pointer, the scroll's momentum (a velocity impulse), the
 device tilt where no permission gate blocks it (iOS gates it;
 facet.motion.setMode("tilt") asks), or the engine's idle life where
-nothing else drives (modes: off | cursor | tilt | idle). The engine
+nothing else drives. Three modes: off | idle | responsive — idle is
+the DEFAULT, so nothing ever follows the device uninvited. Responsive
+resolves itself to the device — cursor on fine pointers (a desktop
+mouse, an iPad trackpad), tilt on touch — and the UI shows the
+resolved word (Cursor or Tilt), never "responsive"; switching to it
+from a tap asks the iOS orientation permission right there, and a
+denial drops honestly back to idle. The choice persists (localStorage
+motion-mode; parallax-enabled mirrors it as "true" only while
+responsive, and an external "true" upgrades the mode on the next
+load); every change fires a facet:motion event on document. The engine
 boots on demand — registering a mover at runtime or switching the mode
 wakes it even on a page that loaded with none — and registering an
 element twice is safe; the second registration is ignored. Cursor and
 tilt mirror the real world directly — just enough smoothing to hide
-jitter, no easing lag — and the moment the pointer or device stops,
-the vector eases back to centre (in and out, about half a second), so
-nothing rests jammed off-centre. Idle rests at that same centre and, every few seconds,
-takes one fast smooth loop — down out of the centre, once around, and
-back up into it (about 1.1s) — so idle starts and ends exactly where
-everything else rests; gated touch devices land here by default. The same engine's light channel drives the shine
+jitter, no easing lag, and a two-degree dead zone so hand tremor reads
+as stillness — and the moment the pointer or device stops, the vector
+eases back to centre (in and out, about half a second) and the idle
+life plays until real input returns. Idle rests at that same centre
+and, every few seconds, takes one fast smooth loop — down out of the
+centre, once around, and back up into it (about 1.1s) — so idle starts
+and ends exactly where everything else rests. The same engine's light channel drives the shine
 effect (next entry) from the same vector. The idle-* classes
 (.idle-float, .idle-sway, .idle-pulse) give resting elements a slow
 pulse; they animate the separate translate/rotate/scale properties so
@@ -1497,13 +1507,18 @@ for calculator apps:
                                {xMax, yMax}) moves elements (parallax),
                                .register(selector, {light: true})
                                steers their --shine-x/--shine-y light
-                               (shine); .setMode("off"|"cursor"|"tilt"|
-                               "idle") — "tilt" asks iOS permission,
-                               "idle" loops out of the centre and back
-                               (~1.1s), then rests three seconds.
-                               register() and setMode() boot the engine
-                               on demand, and registering an element
-                               twice is safe (the second is ignored)
+                               (shine). Modes off | idle | responsive:
+                               .setMode(m) / .set(m, fromGesture) /
+                               .cycle() switch and persist them, .get()
+                               and .mode read, .label() gives the UI
+                               word (Off/Idle and the resolved
+                               Cursor/Tilt for responsive); every
+                               change fires facet:motion on document.
+                               Legacy "cursor"/"tilt" still accepted as
+                               aliases of responsive. register() and
+                               setMode() boot the engine on demand, and
+                               registering an element twice is safe
+                               (the second is ignored)
     facet.sliderScale(wrap)    rebuild a .slider-wrap's tick scale after
                                a range change
     facet.mapStyle()           the active theme as a Google Maps styles
@@ -2005,8 +2020,11 @@ markup + its own data/logic with no library-shaped glue:
 
 Settings controls: any element carrying data-control self-wires (a
 .menu-icon-btn, a .menu-item row, or a .nav-set pill) — "sounds" and
-"haptics" flip facet.feedback.sound/haptic.enabled, "motion" cycles
-facet.motion (Off/Cursor/Tilt/Idle), "appearance" cycles facet.scheme
+"haptics" flip facet.feedback.sound/haptic.enabled (the haptics row
+hides itself where the Vibration API doesn't exist, e.g. iPhones),
+"motion" cycles facet.motion Off → Idle → Responsive and shows the
+resolved flavour word (Cursor or Tilt), repainting live when the mode
+changes anywhere else, "appearance" cycles facet.scheme
 (Light/Dark/Auto), and "theme" cycles the shipped themes (Default/Velvet/
 Aero/Elegant). Each writes its .menu-value word and dims via
 data-off. Zero app JS.

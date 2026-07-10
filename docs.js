@@ -893,14 +893,19 @@ function initMotionDemo() {
     const press = (m) => {
       for (const c of chips) c.setAttribute("aria-pressed", String(c.dataset.motionMode === m));
     };
+    // the Responsive chip wears its resolved word — Cursor on a fine
+    // pointer, Tilt on touch — never the word "responsive"
+    const rChip = chips.find((c) => c.dataset.motionMode === "responsive");
+    if (rChip) rChip.textContent = matchMedia("(pointer: fine)").matches ? "Cursor" : "Tilt";
     for (const chip of chips) {
       chip.addEventListener("click", async () => {
-        // setMode resolves to what the engine actually landed on — tilt
-        // falls back to idle when the device has no gyro or says no
-        press(await facet.motion.setMode(chip.dataset.motionMode));
+        // set resolves to what the engine actually landed on — responsive
+        // falls back to idle when iOS says no to the orientation permission
+        press(await facet.motion.set(chip.dataset.motionMode));
       });
     }
     press(facet.motion.mode);   // the pressed chip tells the truth from the start
+    document.addEventListener("facet:motion", (e) => press(e.detail.mode));
   }
 }
 
