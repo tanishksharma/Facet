@@ -1439,7 +1439,7 @@ and the text appears above it on hover and on keyboard focus. On touch
 screens a tap opens it instead — placed above, below or beside the
 element, wherever there is room, always inside the viewport, with a
 tail pointing at it — and it stays until the page scrolls, a tap
-lands anywhere else, or the same element is tapped again. A tablet's
+lands anywhere else, or the same element is tapped again. A control that opens something else (a sheet, a menu, a dialog) acts without pinning a bubble over what it opened. A tablet's
 trackpad cursor shows it on hover too. The tap still performs the element's own
 action; the bubble explains, it never blocks. What it is for: explaining
 every interactive element in place — one of the library's core
@@ -1984,7 +1984,7 @@ What it is: the iOS-style bottom pill — text segments, a hairline divider, a t
 
 WHEN TO USE: the app's settings and secondary navigation, behind one button — the right-edge panel every calculator shares.
 
-What it is: the settings panel — a right-edge slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back; inside it, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the trigger's aria-expanded is managed. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump.
+What it is: the settings panel — a right-edge slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back; inside it, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the trigger's aria-expanded is managed, a floating trigger stays visible above the open sheet as its close toggle, and a sheet left open never survives the browser's back-forward cache — it closes itself on return. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump.
 
 ### Float button
 
@@ -2068,8 +2068,9 @@ badge's status glyphs sparkle and wrench (48 -> 61).
 Tooltip on touch: the [data-tip] bubble gains a triangle tail, and on
 touch screens a tap opens a floating bubble instead — placed above,
 below or beside the element by available room, staying until the page
-scrolls, a tap lands elsewhere, or the same element is tapped again —
-automatic, nothing to wire. Pinch zoom is blocked at the gesture level.
+scrolls, a tap lands elsewhere, or the same element is tapped again
+(a control that opens a sheet, menu or dialog acts without pinning a
+bubble over it) — automatic, nothing to wire. Pinch zoom is blocked at the gesture level.
 
 Choice grid: a grid of small square choice buttons (.choice-grid of
 .choice-btn — a .choice-sym above a .choice-cap), five per row on
