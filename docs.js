@@ -251,24 +251,18 @@ function orderEntryParts() {
 
 /* The Backgrounds entry: variant Grid shows all four looks stacked —
    technical, dots, graph paper and the custom grid — variant Fluid
-   its breathing field. The shared knobs (ink, opacity, spacing) write
-   onto every grid surface at once; the scatter field feeds the
-   technical and dot grids; the custom grid's own picker (multi-select
-   icons plus a free-type field) lives on its surface. Everything
-   writes classes, attributes or custom properties — the library's own
-   machinery redraws — and the snippet re-renders to what is visible. */
+   its breathing field. Every surface carries its OWN control cluster
+   (marked data-demo-chrome, stripped from the snippet): ink, opacity
+   and spacing on all four; the scatter field on the technical and dot
+   grids; the glyph picker (multi-select icons plus a free-type field)
+   on the custom grid. Each cluster writes only onto its own surface —
+   the library's own machinery redraws — and the snippet re-renders to
+   what is visible. */
 function initBackgroundDemo() {
   const article = document.querySelector("#backgrounds");
   const fluid = document.querySelector("#bg-variant-fluid");
   const surfaces = [...document.querySelectorAll("[data-bg-surface]")];
   if (!article || !fluid || !surfaces.length) return;
-  const technical = document.querySelector("#bg-surface-technical");
-  const dots = document.querySelector("#bg-surface-dots");
-  const custom = document.querySelector("#bg-surface-custom");
-  const gridControls = document.querySelector("#bg-controls-grid");
-  const press = (sel, chip) => {
-    for (const c of document.querySelectorAll(sel)) c.setAttribute("aria-pressed", String(c === chip));
-  };
   const refresh = () => renderSnippet(article);
 
   for (const chip of document.querySelectorAll("[data-bg-variant]")) {
@@ -276,83 +270,91 @@ function initBackgroundDemo() {
       const isGrid = chip.dataset.bgVariant === "grid";
       for (const s of surfaces) s.hidden = !isGrid;
       fluid.hidden = isGrid;
-      gridControls.hidden = !isGrid;
       if (!isGrid && window.facet) facet.fluidBackground(fluid);
-      press("[data-bg-variant]", chip);
+      for (const c of document.querySelectorAll("[data-bg-variant]")) {
+        c.setAttribute("aria-pressed", String(c === chip));
+      }
       refresh();
     });
   }
 
-  // the shared knobs paint every grid surface at once
-  const setProp = (name, value) => {
-    for (const s of surfaces) {
+  // each surface's cluster drives that surface alone
+  for (const s of surfaces) {
+    const cluster = s.querySelector("[data-demo-chrome]");
+    if (!cluster) continue;
+    const press = (sel, chip) => {
+      for (const c of cluster.querySelectorAll(sel)) c.setAttribute("aria-pressed", String(c === chip));
+    };
+    const setProp = (name, value) => {
       if (value) s.style.setProperty(name, value);
       else s.style.removeProperty(name);
+      refresh();
+    };
+    for (const chip of cluster.querySelectorAll("[data-grid-tint]")) {
+      chip.addEventListener("click", () => { setProp("--bg-tint", chip.dataset.gridTint); press("[data-grid-tint]", chip); });
     }
-    refresh();
-  };
-  for (const chip of document.querySelectorAll("[data-grid-tint]")) {
-    chip.addEventListener("click", () => { setProp("--bg-tint", chip.dataset.gridTint); press("[data-grid-tint]", chip); });
-  }
-  for (const chip of document.querySelectorAll("[data-grid-strength]")) {
-    chip.addEventListener("click", () => { setProp("--bg-strength", chip.dataset.gridStrength); press("[data-grid-strength]", chip); });
-  }
-  for (const chip of document.querySelectorAll("[data-grid-cell]")) {
-    chip.addEventListener("click", () => { setProp("--bg-cell", chip.dataset.gridCell); press("[data-grid-cell]", chip); });
-  }
+    for (const chip of cluster.querySelectorAll("[data-grid-strength]")) {
+      chip.addEventListener("click", () => { setProp("--bg-strength", chip.dataset.gridStrength); press("[data-grid-strength]", chip); });
+    }
+    for (const chip of cluster.querySelectorAll("[data-grid-cell]")) {
+      chip.addEventListener("click", () => { setProp("--bg-cell", chip.dataset.gridCell); press("[data-grid-cell]", chip); });
+    }
 
-  // the scatter: typed characters sow themselves across the technical
-  // and dot grids; the frequency chips set how often
-  const scatterBox = document.querySelector("#scatter-input");
-  const scatter = () => {
-    const rateChip = document.querySelector("[data-scatter-rate][aria-pressed='true']");
-    const rate = rateChip ? rateChip.dataset.scatterRate : "";
-    for (const s of [technical, dots]) {
-      if (scatterBox && scatterBox.value.trim()) {
-        s.dataset.bgScatter = scatterBox.value.trim();
-        if (rate) s.dataset.bgScatterRate = rate;
-        else delete s.dataset.bgScatterRate;
-      } else {
-        delete s.dataset.bgScatter;
-        delete s.dataset.bgScatterRate;
+    // the scatter: typed characters sow themselves across this grid;
+    // the frequency chips set how often
+    const scatterBox = cluster.querySelector("[data-scatter-input]");
+    if (scatterBox) {
+      const scatter = () => {
+        const rateChip = cluster.querySelector("[data-scatter-rate][aria-pressed='true']");
+        const rate = rateChip ? rateChip.dataset.scatterRate : "";
+        if (scatterBox.value.trim()) {
+          s.dataset.bgScatter = scatterBox.value.trim();
+          if (rate) s.dataset.bgScatterRate = rate;
+          else delete s.dataset.bgScatterRate;
+        } else {
+          delete s.dataset.bgScatter;
+          delete s.dataset.bgScatterRate;
+        }
+        refresh();
+      };
+      scatterBox.addEventListener("input", scatter);
+      for (const chip of cluster.querySelectorAll("[data-scatter-rate]")) {
+        chip.addEventListener("click", () => { press("[data-scatter-rate]", chip); scatter(); });
       }
     }
-    refresh();
-  };
-  if (scatterBox) scatterBox.addEventListener("input", scatter);
-  for (const chip of document.querySelectorAll("[data-scatter-rate]")) {
-    chip.addEventListener("click", () => { press("[data-scatter-rate]", chip); scatter(); });
-  }
 
-  // the custom grid's picker: icons toggle on and off independently,
-  // the field mixes in anything typed; empty falls back to the sparkle
-  const glyphBox = document.querySelector("#glyph-input");
-  const glyphs = () => {
-    const picked = [...document.querySelectorAll("[data-glyph-icon][aria-pressed='true']")]
-      .map(c => c.dataset.glyphIcon);
-    const typed = glyphBox && glyphBox.value.trim() ? glyphBox.value.trim().split(/\s+/) : [];
-    const tokens = [...picked, ...typed];
-    if (!tokens.length) {
-      tokens.push("sparkle");
-      const first = document.querySelector("[data-glyph-icon='sparkle']");
-      if (first) first.setAttribute("aria-pressed", "true");
+    // the custom grid's picker: icons toggle on and off independently,
+    // the field mixes in anything typed; empty falls back to the sparkle
+    const glyphBox = cluster.querySelector("[data-glyph-input]");
+    if (glyphBox) {
+      const glyphs = () => {
+        const picked = [...cluster.querySelectorAll("[data-glyph-icon][aria-pressed='true']")]
+          .map(c => c.dataset.glyphIcon);
+        const typed = glyphBox.value.trim() ? glyphBox.value.trim().split(/\s+/) : [];
+        const tokens = [...picked, ...typed];
+        if (!tokens.length) {
+          tokens.push("sparkle");
+          const first = cluster.querySelector("[data-glyph-icon='sparkle']");
+          if (first) first.setAttribute("aria-pressed", "true");
+        }
+        s.dataset.bgGlyph = tokens.join(" ");
+        refresh();
+      };
+      // the icon chips are true toggles — facet.js's own chip behavior
+      // already flips aria-pressed on click, so this only recomputes
+      for (const chip of cluster.querySelectorAll("[data-glyph-icon]")) {
+        chip.addEventListener("click", glyphs);
+      }
+      glyphBox.addEventListener("input", glyphs);
+      for (const chip of cluster.querySelectorAll("[data-glyph-scale]")) {
+        chip.addEventListener("click", () => {
+          if (chip.dataset.glyphScale) s.dataset.bgGlyphScale = chip.dataset.glyphScale;
+          else delete s.dataset.bgGlyphScale;
+          press("[data-glyph-scale]", chip);
+          refresh();
+        });
+      }
     }
-    custom.dataset.bgGlyph = tokens.join(" ");
-    refresh();
-  };
-  // the icon chips are true toggles — facet.js's own chip behavior
-  // already flips aria-pressed on click, so this only recomputes
-  for (const chip of document.querySelectorAll("[data-glyph-icon]")) {
-    chip.addEventListener("click", glyphs);
-  }
-  if (glyphBox) glyphBox.addEventListener("input", glyphs);
-  for (const chip of document.querySelectorAll("[data-glyph-scale]")) {
-    chip.addEventListener("click", () => {
-      if (chip.dataset.glyphScale) custom.dataset.bgGlyphScale = chip.dataset.glyphScale;
-      else delete custom.dataset.bgGlyphScale;
-      press("[data-glyph-scale]", chip);
-      refresh();
-    });
   }
 }
 
@@ -1067,7 +1069,7 @@ function labelWallParts() {
   const labelled = (el) => el && el.previousElementSibling
     && el.previousElementSibling.classList.contains("part-label");
   for (const fold of document.querySelectorAll("article.element")) {
-    for (const chips of fold.querySelectorAll(":scope > p.chips, :scope > .entry-controls p.chips")) {
+    for (const chips of fold.querySelectorAll(":scope > p.chips, :scope > .entry-controls p.chips, .demo [data-demo-chrome] p.chips")) {
       if (labelled(chips)) continue;
       chips.before(mk(chips.getAttribute("aria-label") || "Options"));
     }
