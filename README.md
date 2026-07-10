@@ -43,8 +43,9 @@ python3 -m http.server 8000
 **[`CLAUDE.md`](CLAUDE.md) is the build charter** — the project map (every
 file and what it is the source of truth for), the keep-in-sync contract, the
 markup rules, the compliance checklist every new component goes through, and
-the deep build specs kept as reference. The backlog itself lives on the
-project's Notion task board (linked from the charter's routing table). Vercel
+the deep build specs kept as reference. The backlog lives in Notion — a task
+board for large items, an inline list for small ones (linked from the
+charter's routing table). Vercel
 deploys `main` on every push.
 
 Two audiences, two docs: **to *use* Facet, read `llms.txt`; to *build* Facet,

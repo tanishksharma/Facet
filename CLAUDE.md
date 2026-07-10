@@ -16,7 +16,7 @@ Facet is a plain HTML, CSS and JS design library used across everything: apps, w
 - **The Notion Facet hub** (https://app.notion.com/p/38bb4fa1867c80d2a77cd2f4d318cc15) — WHY and where next: manifesto, positioning, direction, inspiration. Never implementation detail.
 - **The Notion All To Dos board, Project = Facet** (linked on the hub) — WHAT to build next, the LARGE items: one row per page rework, rename or cross-cutting system, implementation steps inside the row; rows link back to the reference specs in this file. SMALL items (an element to build, a bug to fix, a polish line) live as the inline backlog list on the Facet hub page itself; a line graduates to a row if it grows. No backlog text lives in the repo.
 
-The routing rules that follow from it: a new idea becomes a to-do row immediately, even mid-conversation. A strategy or direction shift updates the hub. A rule or decision that binds building updates this file. A shipped capability updates llms.txt and the rest of the keep-in-sync contract below, in the same commit, and flips its to-do row to Done.
+The routing rules that follow from it: a new idea lands at the right backlog level immediately, even mid-conversation — a board row if it is large, an inline backlog line on the hub if it is small. A strategy or direction shift updates the hub. A rule or decision that binds building updates this file. A shipped capability updates llms.txt and the rest of the keep-in-sync contract below, in the same commit, and flips its board row to Done (or deletes its inline backlog line).
 
 The repo root is the library's website, deployed by Vercel as a static site on every push to `main`. It is a small multi-page site: the **home page** (`index.html`) is the pitch — philosophy, a curated feature list, and how to use it — and the **Library** (`library.html`) is the catalogue, where every token, component, block, template and app-feel behaviour is live with its exact copy-paste code. The library itself is the files in `/lib`: `facet.css`, `facet.js`, and the optional `facet-sw.js`.
 
@@ -124,8 +124,9 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
 `CLAUDE.md  (this file)`
     What:      the build/maintain charter, plus deep build specs kept as reference
     Read by:   Claude + contributors
-    Truth for: how to build and add to the library (what to build next lives on
-               the Notion All To Dos board, Project = Facet)
+    Truth for: how to build and add to the library (what to build next lives
+               in Notion: All To Dos board rows for large items, the hub's
+               inline backlog list for small ones)
 
 `README.md`
     What:      GitHub front door: what it is, how to consume, how to develop
@@ -167,7 +168,7 @@ Adding or changing a component means updating all of these in the **same commit*
    If the change ships or alters a facet.js behaviour, `functions.html` gets (or updates) its entry too: name, plain description, the exact call or attribute as code, data-llms pointing at the llms.txt section.
 4. `llms.txt` — its full usage entry, plus its line in the capability inventory. **llms.txt is the source of truth for "does this exist".**
 5. `index.html` — a curated Features card ONLY if it is a headline, user-facing capability. The home Features are the human subset, not the exhaustive list; the exhaustive list is `llms.txt`.
-6. The Notion to-do row (All To Dos, Project = Facet) — flip it to Done, and add new rows for anything discovered along the way.
+6. The Notion backlog — flip the board row to Done (large items) or delete the inline backlog line (small ones), and file anything discovered along the way at the right level.
 
 The canonical description is written once and reused word-for-word in two homes: the file comment in `facet.css`/`facet.js` and `llms.txt` (each wall entry renders it live in its AI-instructions block). The wall entry's own visible description is separate: one to three plain sentences saying what the piece is, no class names.
 
@@ -423,14 +424,18 @@ The shipped set, by design intent:
 ===============================================================================
 
 
-> **THE BACKLOG IS THE NOTION TASK BOARD.** What to build next, in what order,
-> lives on the All To Dos board (Project = Facet), embedded on the Notion Facet
-> hub: https://app.notion.com/p/38bb4fa1867c80d2a77cd2f4d318cc15
-> One row per item; each row's body carries its implementation steps and links
-> back to the reference sections below. New ideas become rows immediately.
-> **At the start of any build session, read the board for what to build and this
-> file for how to build it.** When a spec below and the board disagree on
-> priority or scope, the board wins.
+> **THE BACKLOG LIVES IN NOTION, ON TWO LEVELS.** LARGE items — page reworks,
+> renames, cross-cutting systems, whole components — are rows on the All To Dos
+> board (Project = Facet): one row per item, implementation steps inside the
+> row, linking back to the reference sections below. SMALL items — bugs, single
+> elements, polish lines, the daily-level work — are one line each on the Facet
+> hub's inline backlog list. Both live on the hub:
+> https://app.notion.com/p/38bb4fa1867c80d2a77cd2f4d318cc15
+> New ideas land at the right level immediately; a line graduates to a row if
+> it grows.
+> **At the start of any build session, read the board and the inline list for
+> what to build and this file for how to build it.** When a spec below and the
+> board disagree on priority or scope, the board wins.
 >
 > The sections below are detailed engineering *reference* — specs, digests,
 > porting notes. They are not a queue: nothing here gets ordered, ticked, or
@@ -1104,7 +1109,7 @@ The full shipped history is in git and in the live files (facet.css / facet.js /
 
 - No right-to-left layout — translation yes, RTL no.
 - The library ships guidance as well as components (decided 8 Jul 2026): when a pattern matters but is too thin or context-bound to wrap as a component, it ships as a guidance entry — a few imperative lines in llms.txt's "Build advice" section (the inventory rule covers guidance too: unwritten advice does not exist). Wrap a component only when the pattern carries real markup or behaviour; promote a guidance entry to a component when it repeats enough to earn one. First entries: choosing a shell (none / snap / view-stack), safe areas.
-- Where truth lives (decided 8 Jul 2026): this file = how to build · llms.txt = what exists · Notion Facet hub = why and direction · Notion All To Dos (Project = Facet) = what to build next, the only backlog. One home per fact; the others link.
+- Where truth lives (decided 8 Jul 2026): this file = how to build · llms.txt = what exists · Notion Facet hub = why and direction · Notion backlog, two levels = what to build next (All To Dos board rows for large items; the hub's inline backlog list for small ones). One home per fact; the others link.
 - The vivid palette (decided 8 Jul 2026): five bright decorative colors named by rank, like the accent ranks — `--color-1` red, `--color-2` yellow, `--color-3` green, `--color-4` blue, `--color-5` purple. Defined once in facet.css, overridable per theme. They are decoration — card tints (mixed into the surface), charts, playful accents — never semantic status; a component that means success/danger says so in words, not by leaning on a palette slot.
 - Layer = composition level: a single reusable piece is Layer 2 · Components (in one of the six categories, snap/layout included); motion, sound and app interface are Layer 5 · App feel; an assembly of pieces is a Layer 3 · Block; a whole page is a Layer 4 · Template. Never create a layer that holds only one entry.
 - The entry structure (decided 9 Jul 2026): every wall entry reads, in order — title · description (plain words only: what it is, no class names) · variant row (when variants exist) · PREVIEW · customization rows (each chip row labeled by its aria-label) · code (live, following the visible variant) · AI instructions (.ai-notes — pulled LIVE from llms.txt by docs.js: each entry's h3 is matched to the file's ##/### section and its text renders verbatim, so a person reads exactly what an agent reads; hand-written .ai-notes markup is only the JS-off fallback; llms.txt component sections should open with a WHEN TO USE line for this reason). docs.js enforces preview-before-options for older markup.
