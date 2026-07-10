@@ -50,6 +50,8 @@ llms.txt           the full usage guide as plain text for AI crawlers
 sw.js              PWA: one-line service worker at the root (loads facet-sw.js)
 manifest.json      PWA: the site's install manifest (also the copy reference)
 icons/             PWA: app icon PNGs (180 apple, 192, 512, 512-maskable)
+fonts/             self-hosted faces: Gadey.woff2 (the hero face, not on Google Fonts)
+vercel.json        Vercel headers: CORS + long cache for /fonts
 ```
 
 Projects consume the library by URL, never by copying files in:
@@ -151,6 +153,16 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
 `favicon.svg`
     What:      the site favicon; every page and template references it
     Read by:   browsers
+    Truth for: -
+
+`/fonts/Gadey.woff2`
+    What:      the self-hosted hero display face (not on Google Fonts; loaded by the @font-face in facet.css)
+    Read by:   browsers
+    Truth for: -
+
+`vercel.json`
+    What:      Vercel config — CORS and cache headers for /fonts, so cross-origin consumers can load the self-hosted face
+    Read by:   Vercel
     Truth for: -
 
 `LICENSE`
@@ -350,7 +362,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 
 - Tokens named by role, not value: `--surface`, not `--gray-100`. This extends to spacing and type: name them by intent (card spacing, section spacing, heading, body, caption) — never by a bare number a builder has to memorise (`--space-2` was the old value-named spacing scale, now retired; the type sizes keep their `--text-h1`…`--text-h4` names because h1–h4 are heading roles, not bare values). Density and type size are one global three-step control (small/medium/large), and both are set BY THE THEME — you never pick a theme and its spacing separately.
 - Typography is tokenised by role so a theme re-voices the whole library by swapping a handful of variables, never by touching components: weights (`--weight-body/-medium/-strong/-heading/-eyebrow`), line-height per role (`--leading-display/-heading/-snug/-body/-ui` — tighter as type grows), tracking per role (`--tracking-display/-heading/-snug/-body/-label/-caps/-wide` — big type tightens, caps micro-labels open up, `-wide` for spaced overlines/eyebrows), reading measure (`--measure`, `--measure-narrow`), and prose rhythm (`--flow-heading-above/-below`, `--flow-paragraph`, `--flow-tight`). The flow tokens are em-based vertical margins that give raw semantic HTML its rhythm; gap-based layout primitives (`.stack`, `.row`) zero child block margins via a `:where()` reset so rhythm governs prose and gap governs app layout, never both at once. These are not user-facing wrappers — they exist so multiple themes can drive one coherent look; a component reads them, it never hardcodes a size, weight, tracking or margin.
-- Fonts are role tokens too: a core seven, one per job — `--font-heading`, `--font-body`, `--font-mono` (also the always-caps eyebrow voice at `--weight-eyebrow`), `--font-quote`, `--font-reading`, `--font-numeric`, `--font-hand` — plus the extended special-job faces `--font-hero/-signature/-typewriter/-receipt/-barcode/-pixel/-children` and the script pairings `--font-japanese/-chinese/-korean/-devanagari` (Cyrillic ships inside the core faces). All load from the one Google Fonts @import in unicode-range subsets, so unused faces cost no glyph bytes. The Default theme loads them via a single `@import` from Google Fonts at the top of `facet.css` — an accepted external dependency (no extra HTML tag, no build step, still one CSS + one JS), and every stack ends in a system fallback so text renders instantly and survives the fonts failing to load. A theme swaps the faces; components only ask for a role. New font roles are added only when a face does a genuinely different job — never one per component.
+- Fonts are role tokens too: a core seven, one per job — `--font-heading`, `--font-body`, `--font-mono` (also the always-caps eyebrow voice at `--weight-eyebrow`), `--font-quote`, `--font-reading`, `--font-numeric`, `--font-hand` — plus the extended special-job faces `--font-hero/-signature/-typewriter/-receipt/-barcode/-pixel/-children` and the script pairings `--font-japanese/-chinese/-korean/-devanagari` (Cyrillic ships inside the core faces). All load from the one Google Fonts @import in unicode-range subsets, so unused faces cost no glyph bytes (one exception: the hero face Gadey is not on Google Fonts and is self-hosted from the repo's `/fonts` folder via @font-face, with a vercel.json CORS header so cross-origin consumers can load it). The Default theme loads them via a single `@import` from Google Fonts at the top of `facet.css` — an accepted external dependency (no extra HTML tag, no build step, still one CSS + one JS), and every stack ends in a system fallback so text renders instantly and survives the fonts failing to load. A theme swaps the faces; components only ask for a role. New font roles are added only when a face does a genuinely different job — never one per component.
 - One class prefix and pattern for components: `.btn`, `.btn-primary`, predictable everywhere.
 - JS: one small named function per behavior. The name says what it does.
 - Never minify. The shipped files are the readable, commented source.
