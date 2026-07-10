@@ -881,22 +881,34 @@ function initMotionDemo() {
   const race = document.querySelector("#motion-race");
   const replay = document.querySelector("#motion-race-replay");
   if (race && replay) {
-    replay.addEventListener("click", () => {
+    const run = () => {
+      // snap the dots back to the start with transitions off, THEN race —
+      // without the reset, a second Replay has nowhere to go
       race.classList.remove("is-running");
-      void race.offsetWidth;               // restart the transitions
-      race.classList.add("is-running");
-    });
+      race.classList.add("race-reset");
+      void race.offsetWidth;
+      race.classList.remove("race-reset");
+      requestAnimationFrame(() => requestAnimationFrame(() => race.classList.add("is-running")));
+    };
+    replay.addEventListener("click", run);
+    setTimeout(run, 800);                  // one run on arrival, so the tracks explain themselves
   }
   document.querySelector("#motion-toast")?.addEventListener("click", () => {
     facet.toast("Motion feels like this", "info");
   });
-  for (const chip of document.querySelectorAll("[data-motion-mode]")) {
-    chip.addEventListener("click", () => {
-      if (window.facet && facet.motion) facet.motion.setMode(chip.dataset.motionMode);
-      for (const c of document.querySelectorAll("[data-motion-mode]")) {
-        c.setAttribute("aria-pressed", String(c === chip));
-      }
-    });
+  const chips = [...document.querySelectorAll("[data-motion-mode]")];
+  if (chips.length && window.facet && facet.motion) {
+    const press = (m) => {
+      for (const c of chips) c.setAttribute("aria-pressed", String(c.dataset.motionMode === m));
+    };
+    for (const chip of chips) {
+      chip.addEventListener("click", async () => {
+        // setMode resolves to what the engine actually landed on — tilt
+        // falls back to idle when the device has no gyro or says no
+        press(await facet.motion.setMode(chip.dataset.motionMode));
+      });
+    }
+    press(facet.motion.mode);   // the pressed chip tells the truth from the start
   }
 }
 

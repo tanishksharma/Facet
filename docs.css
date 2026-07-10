@@ -979,3 +979,7 @@ article.element pre code { color: var(--hl-text); }
   background: var(--accent-1);
 }
 .race.is-running .race-dot { left: calc(100% - 1.25rem); }
+.race.race-reset .race-dot { transition: none !important; left: 4px; }
+
+/* Demos read left to right whatever chrome surrounds them. */
+.element .demo { text-align: left; }
