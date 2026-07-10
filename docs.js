@@ -1583,6 +1583,28 @@ function initSettingsSkin() {
   });
 }
 
+/* The navigation sheet's foot actions: Share hands the page to the
+   system share sheet (copies the link where sharing isn't available),
+   Link copies the address; the PDF button is the library's own
+   data-print-action wiring. */
+function initSiteActions() {
+  document.querySelector("[data-site-share]")?.addEventListener("click", async () => {
+    try {
+      if (navigator.share) { await navigator.share({ title: document.title, url: location.href }); return; }
+    } catch { return; }                     // the user dismissed the share sheet
+    try {
+      await navigator.clipboard.writeText(location.href);
+      facet.toast("Link copied", "success");
+    } catch {}
+  });
+  document.querySelector("[data-site-copy-link]")?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      facet.toast("Link copied", "success");
+    } catch {}
+  });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   orderEntryParts();   // preview first, options after — the entry structure
   for (const article of document.querySelectorAll("article.element")) {
@@ -1612,6 +1634,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initHeroTypewriter();            // the home hero's cycling app idea
   initMotionDemo();                // the Motion tokens entry: race, toast, modes
   initSettingsSkin();              // the settings sheet's live theme-builder rows
+  initSiteActions();               // share / PDF / copy-link in the nav sheet
   initBackgroundDemo();            // the Backgrounds entry: variants + knobs
   initDevicePreview();             // Layer 5 templates in scaled device frames
   initThemeStudio();               // build.html: the token rail — chips, fold, search
