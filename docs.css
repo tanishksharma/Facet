@@ -48,6 +48,23 @@
   margin-block: var(--space-control) 0;
 }
 
+/* The settings sheet's theme-builder rows: a small round swatch on the
+   row's right edge; the native color input is the control. */
+.menu-color input[type="color"] {
+  width: 1.9rem;
+  height: 1.9rem;
+  min-height: 0;
+  margin-left: auto;
+  padding: 0;
+  border: var(--border-hairline) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: none;
+  cursor: pointer;
+}
+.menu-color input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.menu-color input[type="color"]::-webkit-color-swatch { border: none; border-radius: var(--radius-pill); }
+#settings-depth { margin: 0 0 var(--space-tight); }
+
 /* The site bar (the tab bar pinned top on wide screens): the page and
    the pinned index clear it. On phones the same bar floats at the
    bottom, so the page gets bottom room instead. */

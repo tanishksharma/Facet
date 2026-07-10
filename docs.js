@@ -1300,6 +1300,111 @@ function initSkinLab() {
 }
 
 
+
+/* The site settings sheet doubles as a live theme builder. Simple mode:
+   the theme cycler, four color rows (the accent ranks and the ink —
+   facet.set skin keys, so hover/pressed/on- derive and the choice
+   persists), and two font cycles. Advanced mode: the deeper surface
+   tokens, density, and the door to the full builder page. Inputs read
+   their starting values from the live computed tokens. */
+function initSettingsSkin() {
+  const sheet = document.querySelector("#site-settings");
+  if (!sheet || !window.facet) return;
+
+  // Simple | Advanced
+  const depth = sheet.querySelector("#settings-depth");
+  const panels = [...sheet.querySelectorAll("[data-settings-panel]")];
+  if (depth) depth.addEventListener("change", () => {
+    const mode = depth.querySelector("input:checked")?.value || "simple";
+    for (const p of panels) p.hidden = p.dataset.settingsPanel !== mode;
+  });
+
+  // resolve any token to a hex value through a probe element
+  const probe = document.createElement("span");
+  probe.style.display = "none";
+  document.body.appendChild(probe);
+  const toHex = (rgb) => {
+    const m = String(rgb).match(/\d+/g);
+    return m ? "#" + m.slice(0, 3).map((n) => (+n).toString(16).padStart(2, "0")).join("") : "#000000";
+  };
+  const resolve = (token) => {
+    probe.style.color = `var(${token})`;
+    return toHex(getComputedStyle(probe).color);
+  };
+
+  const SKIN_TOKEN = { accent1: "--accent-1", accent2: "--accent-2", accent3: "--accent-3", ink: "--text" };
+  const colorInputs = [...sheet.querySelectorAll('input[type="color"]')];
+  const syncColors = () => {
+    for (const input of colorInputs)
+      input.value = resolve(input.dataset.token || SKIN_TOKEN[input.dataset.skin]);
+  };
+  syncColors();
+  for (const input of colorInputs) {
+    input.addEventListener("input", () => {
+      if (input.dataset.skin) facet.set({ [input.dataset.skin]: input.value });
+      else facet.set({ [input.dataset.token]: input.value });
+    });
+  }
+  // a theme change re-inks everything — the swatches follow
+  sheet.querySelector('[data-control="theme"]')
+    ?.addEventListener("click", () => setTimeout(syncColors, 50));
+
+  // font cycles: a short list per role, applied through the skin keys
+  const FACES = {
+    fontHeading: ["Cormorant", "Playfair Display", "Newsreader", "Nunito Sans", "JetBrains Mono"],
+    fontBody: ["Nunito Sans", "Newsreader", "Cormorant", "JetBrains Mono"],
+  };
+  for (const btn of sheet.querySelectorAll("[data-font-cycle]")) {
+    const role = btn.dataset.fontCycle;
+    const value = btn.querySelector(".menu-value");
+    const current = () => {
+      const face = getComputedStyle(document.documentElement)
+        .getPropertyValue(role === "fontHeading" ? "--font-heading" : "--font-body");
+      return face.split(",")[0].replace(/["']/g, "").trim();
+    };
+    value.textContent = current();
+    btn.addEventListener("click", () => {
+      const list = FACES[role];
+      const next = list[(list.indexOf(current()) + 1) % list.length];
+      facet.set({ [role]: next });
+      value.textContent = next;
+      if (facet.feedback) facet.feedback.tick();
+    });
+  }
+
+  // density: the three-step spacing scale, this visit
+  const density = sheet.querySelector("[data-density-cycle]");
+  if (density) {
+    const value = density.querySelector(".menu-value");
+    const STEPS = ["small", "medium", "large"];
+    density.addEventListener("click", () => {
+      const cur = document.documentElement.dataset.density || "medium";
+      const next = STEPS[(STEPS.indexOf(cur) + 1) % STEPS.length];
+      facet.set({ density: next === "medium" ? null : next });
+      value.textContent = next[0].toUpperCase() + next.slice(1);
+      if (facet.feedback) facet.feedback.tick();
+    });
+  }
+
+  // reset: back to the theme's own look
+  sheet.querySelector("[data-skin-reset]")?.addEventListener("click", () => {
+    facet.set({ accent1: null, accent2: null, accent3: null,
+                ink: null, fontHeading: null, fontBody: null });
+    for (const input of colorInputs)
+      if (input.dataset.token) document.documentElement.style.removeProperty(input.dataset.token);
+    facet.set({ density: null });
+    syncColors();
+    for (const btn of sheet.querySelectorAll("[data-font-cycle]")) {
+      const role = btn.dataset.fontCycle;
+      const face = getComputedStyle(document.documentElement)
+        .getPropertyValue(role === "fontHeading" ? "--font-heading" : "--font-body");
+      btn.querySelector(".menu-value").textContent = face.split(",")[0].replace(/["']/g, "").trim();
+    }
+    if (density) density.querySelector(".menu-value").textContent = "Medium";
+    if (facet.feedback) facet.feedback.snap();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   orderEntryParts();   // preview first, options after — the entry structure
   for (const article of document.querySelectorAll("article.element")) {
@@ -1328,6 +1433,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFontNames();                 // the Fonts cards name the resolved face
   initHeroTypewriter();            // the home hero's cycling app idea
   initMotionDemo();                // the Motion tokens entry: race, toast, modes
+  initSettingsSkin();              // the settings sheet's live theme-builder rows
   initBackgroundDemo();            // the Backgrounds entry: variants + knobs
   initDevicePreview();             // Layer 5 templates in scaled device frames
   initStyleMixer();                // build.html: the scoped theme builder
