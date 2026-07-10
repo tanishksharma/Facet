@@ -27,6 +27,7 @@
     <aside class="docs-index side-index" aria-label="Page index">
       <input id="wall-search" type="search" placeholder="Search the library"
              aria-label="Search the library" data-tip="Type to filter the wall below" data-tip-below>
+      <p class="side-index-empty" id="side-search-empty" hidden>No matches.</p>
       <nav aria-label="Sections">
         <a class="nav-overview" href="#intro">Overview</a>
         <div class="nav-group side-index-group" data-group="tokens"
@@ -957,7 +958,6 @@ article p   { font-family: var(--font-reading); }
            component groups start straight after it. This stays as the band's
            anchor and holds the search empty-state. -->
       <section id="components">
-        <p id="wall-empty" hidden>Nothing matches that search. The library grows one component at a time — new ones land here the moment they ship.</p>
       </section>
 
       <!-- Layout primitives -->

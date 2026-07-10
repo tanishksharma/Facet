@@ -85,8 +85,30 @@
    tinted pill on the current link. The same thread colors the layer
    pages' kickers and the entry cards' dots, so sidebar, cards and page
    headers all read as one colored system. */
-.docs-index { padding: var(--space-card) var(--space-stack); gap: var(--space-inline); }
-.docs-index #wall-search { margin-bottom: var(--space-tight); }
+/* Top padding lives on the search box's margin instead of the panel, so
+   the sticky search can pin FLUSH to the panel's top edge — otherwise
+   links scroll through the padding band above it. */
+.docs-index { padding: 0 var(--space-stack) var(--space-card); gap: var(--space-inline); }
+/* The search box: compact, and stuck to the top while the menu scrolls
+   (the surface-colored halo hides links sliding beneath it). */
+.docs-index #wall-search {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin-top: var(--space-stack);
+  margin-bottom: var(--space-tight);
+  padding: var(--space-tight) var(--space-inline);
+  min-height: 34px;             /* thinner than the 44px field default */
+  font-size: var(--text-footnote);
+  background: var(--surface);
+  box-shadow: 0 0 0 10px var(--surface);
+}
+.side-index-empty {
+  margin: 0;
+  padding-inline: var(--space-inline);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
 .docs-index .nav-group { padding-block: var(--space-stack); }
 .docs-index .nav-group:nth-of-type(5n+1) { --group-color: var(--color-1); }
 .docs-index .nav-group:nth-of-type(5n+2) { --group-color: var(--color-2); }

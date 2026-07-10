@@ -1416,9 +1416,10 @@ WHEN TO USE: on every interactive element — one data-tip attribute explains it
 What it is: a one-attribute explanation bubble: put data-tip on any element
 and the text appears above it on hover and on keyboard focus. On touch
 screens a tap opens it instead — placed above, below or beside the
-element, wherever there is room, always inside the viewport — and it
-stays until the page scrolls, a tap lands anywhere else, or the same
-element is tapped again. The tap still performs the element's own
+element, wherever there is room, always inside the viewport, with a
+tail pointing at it — and it stays until the page scrolls, a tap
+lands anywhere else, or the same element is tapped again. A tablet's
+trackpad cursor shows it on hover too. The tap still performs the element's own
 action; the bubble explains, it never blocks. What it is for: explaining
 every interactive element in place — one of the library's core
 principles. The description doubles as documentation anyone can read by

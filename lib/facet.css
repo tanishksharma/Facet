@@ -2892,9 +2892,10 @@ input[type="week"] {
    What it is: a one-attribute explanation bubble: put data-tip on any element
    and the text appears above it on hover and on keyboard focus. On touch
    screens a tap opens it instead — placed above, below or beside the
-   element, wherever there is room, always inside the viewport — and it
-   stays until the page scrolls, a tap lands anywhere else, or the same
-   element is tapped again. The tap still performs the element's own
+   element, wherever there is room, always inside the viewport, with a
+   tail pointing at it — and it stays until the page scrolls, a tap
+   lands anywhere else, or the same element is tapped again. A tablet's
+   trackpad cursor shows it on hover too. The tap still performs the element's own
    action; the bubble explains, it never blocks. What it is for: explaining
    every interactive element in place — one of the library's core
    principles. The description doubles as documentation anyone can read by
@@ -2987,6 +2988,19 @@ input[type="week"] {
     translate var(--duration-normal) var(--ease-spring);
 }
 .tip-bubble.is-open { opacity: 1; translate: 0 0; }
+/* The tail: a small triangle pointing back at the element, on the side
+   facet.js placed the bubble (data-place above/below/left/right). */
+.tip-bubble::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+}
+.tip-bubble[data-place="above"]::after { top: 100%; left: 50%; translate: -50% 0; border-top-color: var(--text); }
+.tip-bubble[data-place="below"]::after { bottom: 100%; left: 50%; translate: -50% 0; border-bottom-color: var(--text); }
+.tip-bubble[data-place="left"]::after  { left: 100%; top: 50%; translate: 0 -50%; border-left-color: var(--text); }
+.tip-bubble[data-place="right"]::after { right: 100%; top: 50%; translate: 0 -50%; border-right-color: var(--text); }
 
 /* Elements near the top of the viewport add data-tip-below, so the tip
    drops under them instead of clipping off the screen. */

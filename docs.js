@@ -143,30 +143,35 @@ function initConfigChips() {
   }
 }
 
-/* The search box filters the wall and the sidebar together. */
+/* The search filters the MENU, never the content: matching entries'
+   links stay, groups with no matches disappear whole (Overview too),
+   and the page on the right holds still — click a result and that one
+   entry opens, as always. Matching reads each entry's full text, so a
+   search for "tooltip" also finds entries that merely mention one. */
 function initWallSearch() {
   const box = document.querySelector("#wall-search");
   if (!box) return;                       // pages without the wall (home)
-  const articles = [...document.querySelectorAll("article.element")];
-  const links = [...document.querySelectorAll(".docs-index a[href^='#']")];
-  const emptyNote = document.querySelector("#wall-empty");
+  const links = [...document.querySelectorAll(".docs-index .nav-group ul a[href^='#']")];
+  const groups = [...document.querySelectorAll(".docs-index .nav-group")];
+  const overview = document.querySelector(".docs-index .nav-overview");
+  const empty = document.querySelector("#side-search-empty");
+  const targetOf = (a) => document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1)));
 
   box.addEventListener("input", () => {
-    const query = box.value.trim().toLowerCase();
+    const q = box.value.trim().toLowerCase();
     let shown = 0;
-
-    for (const article of articles) {
-      const hit = !query || article.textContent.toLowerCase().includes(query);
-      article.hidden = !hit;
+    for (const a of links) {
+      const t = targetOf(a);
+      const hay = (a.textContent + " " + (t ? t.textContent : "")).toLowerCase();
+      const hit = !q || hay.includes(q);
+      a.parentElement.hidden = !hit;
       if (hit) shown++;
     }
-    for (const link of links) {
-      const section = document.querySelector(link.getAttribute("href"));
-      if (section && section.matches("article.element")) {
-        link.parentElement.hidden = section.hidden;
-      }
+    for (const g of groups) {
+      g.hidden = !!q && ![...g.querySelectorAll("ul li")].some(li => !li.hidden);
     }
-    emptyNote.hidden = !(query && shown === 0);
+    if (overview) overview.hidden = !!q;
+    if (empty) empty.hidden = !q || shown > 0;
   });
 }
 
@@ -331,7 +336,6 @@ function initLibraryPages() {
   const intro = document.querySelector("#intro");
   if (!main || !index || !intro) return;         // pages without the wall
   const narrow = matchMedia("(max-width: 56rem)");
-  let searching = false;
 
   // ----- the model: the page's groups, read from the sidebar. Each
   // .nav-group is one card page: its label link names the page and its
@@ -463,13 +467,6 @@ function initLibraryPages() {
   };
 
   const apply = () => {
-    if (searching) {                    // search shows matches across layers
-      clearAll();
-      for (const p of [intro, ...layerPages]) p.classList.add("solo-hidden");
-      entryNav.hidden = true;
-      main.classList.remove("is-entry");
-      return;
-    }
     const id = decodeURIComponent(location.hash.slice(1));
     const L = LAYERS.find(l => l.hash === id);
     if (L && !narrow.matches) { showPages([document.getElementById(L.hash)]); return; }
@@ -486,11 +483,6 @@ function initLibraryPages() {
   narrow.addEventListener("change", apply);
   index.addEventListener("click", (e) => {
     if (e.target.closest("a[href^='#']")) requestAnimationFrame(apply);
-  });
-  const box = document.querySelector("#wall-search");
-  if (box) box.addEventListener("input", () => {
-    searching = !!box.value.trim();
-    apply();
   });
   apply();
 }
