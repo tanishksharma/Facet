@@ -1475,11 +1475,21 @@ function initSettingsSkin() {
   if (!sheet || !window.facet) return;
 
   // Options | Style | Advanced — the panel's own mini tab bar; the
-  // indicator and aria-current come from the library's tab wiring
+  // indicator and aria-current come from the library's tab wiring.
+  // Panels differ in height, so the sheet EASES between its two heights
+  // instead of jumping: measure before and after the swap, then animate
+  // between the real values (height: auto cannot transition in CSS).
   const panels = [...sheet.querySelectorAll("[data-settings-panel]")];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   for (const tab of sheet.querySelectorAll("[data-settings-tab]"))
     tab.addEventListener("click", () => {
+      const before = sheet.offsetHeight;
       for (const p of panels) p.hidden = p.dataset.settingsPanel !== tab.dataset.settingsTab;
+      const after = sheet.offsetHeight;
+      if (sheet.animate && !reduce && Math.abs(after - before) > 1)
+        sheet.animate(
+          [{ height: `${before}px` }, { height: `${after}px` }],
+          { duration: 260, easing: "cubic-bezier(0.22, 1, 0.36, 1)" });
     });
 
   // resolve any token to a hex value through a probe element

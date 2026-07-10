@@ -159,7 +159,7 @@
             token as a direct override. It writes the same html attributes a
             page would carry statically, so the markup stays the source of
             truth and anything else reading those attributes keeps working.
-            The skin keys go further and persist across visits: accent1,
+            The skin keys go further and persist for the session: accent1,
             accent2 and accent3 re-ink an accent rank and derive its hover,
             pressed and on- companions; ink recolors the text ramp;
             fontHeading and fontBody swap the faces. Null clears a key.
@@ -195,7 +195,7 @@
           <p>
             The three-way appearance control: light, dark, or auto — auto
             follows the operating system live. The choice is remembered in
-            the URL and localStorage, so it survives reloads and travels in
+            the URL and sessionStorage, so it survives reloads and travels in
             shared links. Buttons need no JS: data-mode-toggle flips light
             and dark, data-theme-switch="velvet" switches the theme, and
             both write their choice back to the URL.
@@ -978,14 +978,11 @@
       </div>
       <div class="sheet-foot">
         <div class="sheet-group menu-icon-row">
-          <button type="button" class="menu-icon-btn" data-site-share aria-label="Share this page" data-tip="Shares this page - copies the link where sharing isn't available" data-event="share-page">
-            <svg width="20" height="20" data-icon="share" aria-hidden="true"></svg>
+          <button type="button" class="menu-icon-btn" data-site-share data-tip="Shares this page - copies the link where sharing isn't available" data-event="share-page">
+            <svg width="16" height="16" data-icon="share" aria-hidden="true"></svg>Share
           </button>
-          <button type="button" class="menu-icon-btn" data-print-action="page" aria-label="Save as PDF" data-tip="Prints the page or saves it as a PDF" data-event="export-pdf">
-            <svg width="20" height="20" data-icon="download" aria-hidden="true"></svg>
-          </button>
-          <button type="button" class="menu-icon-btn" data-site-copy-link aria-label="Copy the link" data-tip="Copies this page's address" data-event="copy-link">
-            <svg width="20" height="20" data-icon="link" aria-hidden="true"></svg>
+          <button type="button" class="menu-icon-btn" data-print-action="page" data-tip="Prints the page or saves it as a PDF" data-event="export-pdf">
+            <svg width="16" height="16" data-icon="print" aria-hidden="true"></svg>Save PDF
           </button>
         </div>
       </div>

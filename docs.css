@@ -64,14 +64,15 @@
 .menu-color input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
 .menu-color input[type="color"]::-webkit-color-swatch { border: none; border-radius: var(--radius-pill); }
 /* The settings panel's own mini tab bar: in flow at the panel's top,
-   its groove hugging the tabs it holds — never a panel-wide trench for
-   two pills — and scrolling sideways if the tabs ever outgrow it. */
+   centred, its groove hugging the tabs it holds — never a panel-wide
+   trench for two pills — and scrolling sideways if they outgrow it. */
 .sheet-tabs {
   position: static;
   transform: none;
   z-index: auto;
   max-width: none;
   padding: 0;
+  justify-content: center;
 }
 .sheet-tabs .tab-set {
   width: fit-content;
