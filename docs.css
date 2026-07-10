@@ -63,11 +63,24 @@
 }
 .menu-color input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
 .menu-color input[type="color"]::-webkit-color-swatch { border: none; border-radius: var(--radius-pill); }
-#settings-depth { margin: 0 0 var(--space-tight); }
-/* in the phone riser the rows centre — the swatch sits beside its label */
-@media (max-width: 40rem) {
-  .sheet-rise .menu-color input[type="color"] { margin-left: var(--space-tight); }
+/* The settings panel's own mini tab bar: in flow at the panel's top,
+   full width, its pill scrolling sideways when the tabs outgrow it. */
+.sheet-tabs {
+  position: static;
+  transform: none;
+  z-index: auto;
+  max-width: none;
+  padding: 0;
 }
+.sheet-tabs .tab-set {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sheet-tabs .tab-set::-webkit-scrollbar { display: none; }
+/* Advanced is a desktop concern — phones never see the tab */
+.tab-seg-desktop { display: none; }
+@media (min-width: 40rem) { .tab-seg-desktop { display: inline-flex; } }
 
 /* The site bar (the tab bar pinned top on wide screens): the page and
    the pinned index clear it. On phones the same bar floats at the

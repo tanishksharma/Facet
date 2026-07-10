@@ -955,8 +955,8 @@
         <a class="tab-seg" href="/product.html" aria-current="false" data-event="nav-product">Product</a>
         <a class="tab-seg" href="/build.html" aria-current="false" data-event="nav-build">Themes</a>
       </div>
-      <button type="button" class="tab-settings" aria-controls="site-settings" aria-expanded="false" aria-label="Open settings" data-tip="Theme, appearance, motion, sound and haptics" data-event="open-site-settings">
-        <svg width="20" height="20" data-icon="sliders" aria-hidden="true"></svg>
+      <button type="button" class="tab-settings" aria-controls="site-settings" aria-expanded="false" aria-label="Open appearance settings" data-tip="Appearance: theme, colors, fonts, motion, sound" data-event="open-site-settings">
+        <svg width="20" height="20" data-icon="eye" aria-hidden="true"></svg>
       </button>
     </nav>
     <div class="sheet-scrim" data-open="false"></div>
@@ -980,12 +980,15 @@
         <div class="sheet-group menu-icon-row">
           <button type="button" class="menu-icon-btn" data-site-share aria-label="Share this page" data-tip="Shares this page - copies the link where sharing isn't available" data-event="share-page">
             <svg width="20" height="20" data-icon="share" aria-hidden="true"></svg>
+            <span class="menu-value">Share</span>
           </button>
           <button type="button" class="menu-icon-btn" data-print-action="page" aria-label="Save as PDF" data-tip="Prints the page or saves it as a PDF" data-event="export-pdf">
             <svg width="20" height="20" data-icon="download" aria-hidden="true"></svg>
+            <span class="menu-value">PDF</span>
           </button>
           <button type="button" class="menu-icon-btn" data-site-copy-link aria-label="Copy the link" data-tip="Copies this page's address" data-event="copy-link">
             <svg width="20" height="20" data-icon="link" aria-hidden="true"></svg>
+            <span class="menu-value">Link</span>
           </button>
         </div>
       </div>
@@ -993,17 +996,39 @@
     <div class="sheet-scrim" data-open="false"></div>
     <aside class="sheet sheet-rise" id="site-settings" data-open="false" aria-hidden="true" aria-label="Settings">
       <div class="sheet-scroll">
-        <fieldset class="segmented" id="settings-depth" aria-label="Settings depth">
-          <label><input type="radio" name="settings-depth" value="simple" checked data-tip="Theme, colors and fonts"><span>Simple</span></label>
-          <label><input type="radio" name="settings-depth" value="advanced" data-tip="The deeper tokens, live"><span>Advanced</span></label>
-        </fieldset>
+        <nav class="tab-bar sheet-tabs" aria-label="Settings sections">
+          <div class="tab-set">
+            <button type="button" class="tab-seg" data-settings-tab="options" aria-current="true" data-tip="Theme, appearance, motion, sound and haptics">Options</button>
+            <button type="button" class="tab-seg" data-settings-tab="style" aria-current="false" data-tip="Colors and fonts, changed live">Style</button>
+            <button type="button" class="tab-seg tab-seg-desktop" data-settings-tab="advanced" aria-current="false" data-tip="The deeper tokens and the full builder">Advanced</button>
+          </div>
+        </nav>
 
-        <div class="sheet-group" data-settings-panel="simple">
-          <span class="menu-label">Theme</span>
+        <div class="sheet-group" data-settings-panel="options">
+          <span class="menu-label">Options</span>
           <button type="button" class="menu-item" data-control="theme" aria-label="Theme: tap to cycle" data-tip="Cycles the palette: Default, Velvet, Aero, Elegant" data-event="cycle-theme">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z"/></svg>
-          Theme <span class="menu-value">Default</span>
-        </button>
+            <svg width="18" height="18" data-icon="contrast" aria-hidden="true"></svg>
+            Theme <span class="menu-value">Default</span>
+          </button>
+          <button type="button" class="menu-item" data-control="appearance" aria-label="Appearance: light, dark or auto" data-tip="Light, dark, or follow the system" data-event="cycle-appearance">
+            <svg width="18" height="18" data-icon="sun" aria-hidden="true"></svg>
+            Appearance <span class="menu-value">Auto</span>
+          </button>
+          <button type="button" class="menu-item" data-control="motion" aria-label="Motion, parallax and shine: off, idle or responsive" data-tip="The motion engine behind parallax and shine: Off, Idle, then following your cursor or tilt" data-event="cycle-motion">
+            <svg width="18" height="18" data-icon="motion" aria-hidden="true"></svg>
+            Motion <span class="menu-value">Idle</span>
+          </button>
+          <button type="button" class="menu-item" data-control="sounds" aria-label="Sounds: on or off" data-tip="The synthesized interface sounds" data-event="toggle-sounds">
+            <svg width="18" height="18" data-icon="volume" aria-hidden="true"></svg>
+            Sounds <span class="menu-value">On</span>
+          </button>
+          <button type="button" class="menu-item" data-control="haptics" aria-label="Haptics: on or off" data-tip="The vibration feedback, where the device has it" data-event="toggle-haptics">
+            <svg width="18" height="18" data-icon="vibrate" aria-hidden="true"></svg>
+            Haptics <span class="menu-value">On</span>
+          </button>
+        </div>
+
+        <div class="sheet-group" data-settings-panel="style" hidden>
           <span class="menu-label">Colors</span>
           <label class="menu-item menu-color" data-tip="The primary action color — hover and pressed follow along">
             Accent 1 <input type="color" data-skin="accent1" aria-label="Accent 1 color">
@@ -1041,30 +1066,10 @@
           </label>
           <span class="menu-label">Layout</span>
           <button type="button" class="menu-item" data-density-cycle data-tip="Tightens or opens every spacing step" data-event="cycle-density"><svg width="18" height="18" data-icon="grid" aria-hidden="true"></svg> Density <span class="menu-value">Medium</span></button>
-          <button type="button" class="menu-item" data-width-cycle data-tip="How wide the page's content runs — from a reading column to edge to edge" data-event="cycle-width"><svg width="18" height="18" data-icon="arrow-right" aria-hidden="true"></svg> Page width <span class="menu-value">Default</span></button>
+          <button type="button" class="menu-item" data-width-cycle data-tip="How wide the page runs, from a reading column to edge to edge" data-event="cycle-width"><svg width="18" height="18" data-icon="arrow-right" aria-hidden="true"></svg> Page width <span class="menu-value">Default</span></button>
           <a class="menu-item" href="/build.html" data-event="open-builder" data-tip="Every token, with live preview and copyable config">
             <svg width="18" height="18" data-icon="sliders" aria-hidden="true"></svg> Open the full theme builder
           </a>
-        </div>
-      </div>
-      <div class="sheet-foot">
-        <div class="sheet-group menu-icon-row">
-          <button type="button" class="menu-icon-btn" data-control="appearance" aria-label="Appearance: light, dark or auto" data-tip="Cycles facet.scheme — Light, Dark, Auto">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></svg>
-            <span class="menu-value">Auto</span>
-          </button>
-          <button type="button" class="menu-icon-btn" data-control="motion" aria-label="Motion, parallax and shine: off, cursor, tilt or idle" data-tip="Cycles facet.motion — the motion engine behind parallax and shine: Off, Cursor, Tilt, Idle">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="10" height="12" rx="2"/><path d="M16 8l4 4-4 4M11 12h9"/></svg>
-            <span class="menu-value">Cursor</span>
-          </button>
-          <button type="button" class="menu-icon-btn" data-control="sounds" aria-label="Sounds: on or off" data-tip="Flips facet.feedback.sound.enabled">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8 8 0 0 1 0 12"/></svg>
-            <span class="menu-value">On</span>
-          </button>
-          <button type="button" class="menu-icon-btn" data-control="haptics" aria-label="Haptics: on or off" data-tip="Flips facet.feedback.haptic.enabled">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="8" height="18" rx="2"/><path d="M4 9v6M20 9v6"/></svg>
-            <span class="menu-value">On</span>
-          </button>
         </div>
       </div>
     </aside>

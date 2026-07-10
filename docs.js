@@ -1474,13 +1474,13 @@ function initSettingsSkin() {
   const sheet = document.querySelector("#site-settings");
   if (!sheet || !window.facet) return;
 
-  // Simple | Advanced
-  const depth = sheet.querySelector("#settings-depth");
+  // Options | Style | Advanced — the panel's own mini tab bar; the
+  // indicator and aria-current come from the library's tab wiring
   const panels = [...sheet.querySelectorAll("[data-settings-panel]")];
-  if (depth) depth.addEventListener("change", () => {
-    const mode = depth.querySelector("input:checked")?.value || "simple";
-    for (const p of panels) p.hidden = p.dataset.settingsPanel !== mode;
-  });
+  for (const tab of sheet.querySelectorAll("[data-settings-tab]"))
+    tab.addEventListener("click", () => {
+      for (const p of panels) p.hidden = p.dataset.settingsPanel !== tab.dataset.settingsTab;
+    });
 
   // resolve any token to a hex value through a probe element
   const probe = document.createElement("span");
