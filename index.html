@@ -23,7 +23,6 @@
   <!-- No page header: the "facet" wordmark sits top-left in the flow and
        scrolls with the page; the floating site menu (bottom-right) carries
        the navigation. -->
-  <div class="page-top container-wide"><a class="wordmark" href="/">facet</a></div>
   <!-- Landing: one calm, centered block. The two tags are the hero — copy
        them, pick a look, scroll on into the two-panel library below. Mode
        stays automatic (each visitor's system preference); themes are the
@@ -659,12 +658,24 @@
 
     <!-- SITE MENU · the floating utility menu, kept in sync across
          index / library / build. facet.js wires it. -->
-    <button class="float-btn float-btn-right" aria-controls="site-menu" aria-expanded="false"
-            aria-label="Open menu" data-tip="Navigation, files and settings" data-event="open-site-menu">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-    </button>
+    <nav class="tab-bar tab-bar-top" aria-label="Site">
+      <button type="button" class="tab-menu" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu" data-tip="Navigation and files" data-event="open-site-nav">
+        <svg width="20" height="20" data-icon="menu" aria-hidden="true"></svg>
+      </button>
+      <div class="tab-set">
+        <a class="tab-brand" href="/"><svg width="18" height="18" data-icon="gem" aria-hidden="true"></svg>facet</a>
+        <a class="tab-seg" href="/" aria-current="page" data-event="nav-home">Home</a>
+        <a class="tab-seg" href="/library.html" aria-current="false" data-event="nav-library">Components</a>
+        <a class="tab-seg" href="/functions.html" aria-current="false" data-event="nav-functions">Functions</a>
+        <a class="tab-seg" href="/product.html" aria-current="false" data-event="nav-product">Product</a>
+        <a class="tab-seg" href="/build.html" aria-current="false" data-event="nav-build">Themes</a>
+      </div>
+      <button type="button" class="tab-settings" aria-controls="site-settings" aria-expanded="false" aria-label="Open settings" data-tip="Theme, appearance, motion, sound and haptics" data-event="open-site-settings">
+        <svg width="20" height="20" data-icon="sliders" aria-hidden="true"></svg>
+      </button>
+    </nav>
     <div class="sheet-scrim" data-open="false"></div>
-    <aside class="sheet" id="site-menu" data-open="false" aria-hidden="true" aria-label="Menu">
+    <aside class="sheet sheet-left" id="site-nav" data-open="false" aria-hidden="true" aria-label="Navigation">
       <div class="sheet-scroll">
         <a class="wordmark" href="/">facet</a>
         <span class="menu-label">Navigate</span>
@@ -680,7 +691,11 @@
         <a class="menu-item" href="/CLAUDE.md" data-event="ref-claude"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6ZM14 3v4h4"/></svg> CLAUDE.md</a>
         <a class="menu-item" href="/lib/facet.css" data-event="ref-css"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> facet.css</a>
         <a class="menu-item" href="/lib/facet.js" data-event="ref-js"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> facet.js</a>
-
+      </div>
+    </aside>
+    <div class="sheet-scrim" data-open="false"></div>
+    <aside class="sheet" id="site-settings" data-open="false" aria-hidden="true" aria-label="Settings">
+      <div class="sheet-scroll">
         <span class="menu-label">Theme</span>
         <button type="button" class="menu-item" data-control="theme" aria-label="Theme: tap to cycle" data-tip="Cycles the palette: Default, Velvet, Aero, Elegant" data-event="cycle-theme">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z"/></svg>

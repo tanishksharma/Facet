@@ -3,9 +3,8 @@
    The page header was removed — the floating site menu (bottom-right)
    carries the navigation now. */
 
-/* The "facet" wordmark. It sits top-left in the flow on the home and
-   build pages (scrolls with the page), tops the library index panel, and
-   heads the site menu. */
+/* The "facet" wordmark: heads the site navigation sheet. The bar's
+   .tab-brand carries the brand on the pages themselves. */
 .wordmark {
   display: inline-block;
   font-weight: var(--weight-heading);
@@ -14,7 +13,6 @@
   letter-spacing: -0.02em;
   color: var(--text);
 }
-.page-top { padding-block: var(--space-inline); }
 .sheet .wordmark { padding: var(--space-control) var(--space-inline) var(--space-inline); }
 
 /* Landing — one centered column: heading, the two tags, a copy
@@ -48,6 +46,20 @@
   border: none;
   border-top: var(--border-hairline) solid var(--border);
   margin-block: var(--space-control) 0;
+}
+
+/* The site bar (the tab bar pinned top on wide screens): the page and
+   the pinned index clear it. On phones the same bar floats at the
+   bottom, so the page gets bottom room instead. */
+@media (min-width: 40rem) {
+  body { padding-top: calc(48px + var(--space-pin)); }
+  .docs-index.side-index {
+    top: calc(48px + 2 * var(--space-pin));
+    height: calc(100dvh - 48px - 3 * var(--space-pin));
+  }
+}
+@media (max-width: 40rem) {
+  body { padding-bottom: calc(48px + 2 * var(--space-inline) + var(--safe-bottom)); }
 }
 
 /* The sidebar + wall layout. The grid wrapper exists to put the index
