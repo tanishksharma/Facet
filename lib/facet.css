@@ -1337,6 +1337,30 @@
 .text-caption { font-size: var(--text-caption); line-height: var(--leading-ui); color: var(--text-muted); }
 
 
+/* ----- TEXT CLAMP: hold a long block to N lines with a fade -----
+   What it is: a line clamp with a fade-out instead of an ellipsis —
+   add .text-clamp to any text block and it shows the first
+   --clamp-lines lines (default 3) and fades the last of them out at
+   the bottom. Set the count per instance with --clamp-lines. The clamp
+   is purely visual: the full text stays in the DOM, so screen readers,
+   reader view, search crawlers and print get all of it (paper
+   un-clamps automatically). What it is for: keeping cards and rows the
+   same height when their copy runs long. When to use it: on long
+   supporting text, never on a heading or the one line a reader must
+   finish. */
+.text-clamp {
+  --clamp-lines: 3;
+  display: block;
+  overflow: hidden;
+  max-height: calc(var(--clamp-lines) * var(--leading-body) * 1em);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.15em), transparent);
+          mask-image: linear-gradient(to bottom, #000 calc(100% - 1.15em), transparent);
+}
+@media print {
+  .text-clamp { max-height: none; -webkit-mask-image: none; mask-image: none; }
+}
+
+
 /* ----- BACKGROUNDS: quiet materials in two variants, any theme -----
    What it is: very faint page and section backgrounds, in two
    variants that are built differently and tuned separately.

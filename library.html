@@ -83,6 +83,7 @@
           <li><a href="#table">Table</a></li>
           <li><a href="#chart">Chart</a></li>
           <li><a href="#heading-bar">Heading bar</a></li>
+          <li><a href="#text-clamp">Text clamp</a></li>
           <li><a href="#small-talkers">Badge, chip, avatar, progress</a></li>
           <li><a href="#icon-badge">Icon badge</a></li>
           <li><a href="#result-block">Result block</a></li>
@@ -1557,6 +1558,21 @@ article p   { font-family: var(--font-reading); }
         </div>
         <pre id="code-heading-bar"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-heading-bar" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <article class="element stack" id="text-clamp" data-cat="content">
+        <h3 data-status="dev">Text clamp</h3>
+        <p>
+          Holds a long block of text to a set number of lines and fades the last one out instead of cutting it with an ellipsis, so cards and rows stay the same height when their copy runs long. The full text stays in the page for screen readers, reader view and print.
+        </p>
+        <div class="demo">
+          <div class="stack" style="max-width: 34rem;">
+            <p class="text-clamp" style="margin: 0;">Facet is a plain HTML, CSS and JS design library, and this paragraph runs well past three lines so the clamp has something to hold: the first lines read in full and the last fades softly away at the foot, with no ellipsis and no hard edge. Every word here is still in the page — a screen reader, reader view, a search crawler and a printed page all get the whole thing, because the clamp is only a visual limit on screen.</p>
+            <p class="text-clamp" style="margin: 0; --clamp-lines: 2;">Set the line count per instance with --clamp-lines; this one holds two lines. The rest of the sentence keeps going so the fade has copy to act on and you can see this block clamp tighter than the one above it.</p>
+          </div>
+        </div>
+        <pre id="code-text-clamp"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-text-clamp" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- BADGE + CHIP + AVATAR + PROGRESS -->

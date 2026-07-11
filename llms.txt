@@ -164,6 +164,9 @@ and a number box for the fine values between, fires facet:slide; verdict-first
 result blocks with aria-live; list rows (.list / .list-item — leading icon,
 title, optional description line, optional trailing value or action; one- or
 two-line; bare with hairlines or .list-boxed; rows can be links or buttons);
+the text clamp (.text-clamp — holds a long block to --clamp-lines lines,
+default 3, with a soft bottom fade and no ellipsis, the full text kept in
+the DOM for assistive tech, reader view and print);
 the app-grid launcher (.app-grid of .app-tile links — rounded-square icon,
 name, one-line caption, optional .app-count metric in tabular digits);
 the icon badge (.icon-badge in an .icon-badge-holder — a plasticine
@@ -1176,6 +1179,23 @@ per page; never under every heading.
 
     <h2 class="heading-bar">Latest articles</h2>
     <h2 class="heading-bar heading-bar-center">Pricing</h2>
+
+### Text clamp
+
+WHEN TO USE: to hold a long block — a card or list description, a feed excerpt — to a fixed number of lines with a soft fade at the foot, when a hard cut with an ellipsis would read as abrupt. Not for headings or anything a reader must finish on screen.
+
+What it is: a line clamp with a fade-out instead of an ellipsis — add
+.text-clamp to any text block and it shows the first --clamp-lines
+lines (default 3) and fades the last of them out at the bottom. Set the
+count per instance with --clamp-lines. The clamp is purely visual: the
+full text stays in the DOM, so screen readers, reader view, search
+crawlers and print get all of it (paper un-clamps automatically). What
+it is for: keeping cards and rows the same height when their copy runs
+long. When to use it: on long supporting text, never on a heading or
+the one line a reader must finish.
+
+    <p class="text-clamp">A long description held to three lines…</p>
+    <p class="text-clamp" style="--clamp-lines: 2">Held to two lines…</p>
 
 ### Icons
 
