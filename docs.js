@@ -451,6 +451,10 @@ function initLibraryPages() {
           const card = document.createElement("a");
           card.className = "card card-clickable entry-card";
           card.href = "#" + id;
+          // carry the entry's status tag (live / dev) onto its card, so
+          // the maturity shows before the entry is opened
+          const status = unit.querySelector(":scope > h3")?.dataset.status;
+          if (status) card.dataset.status = status;
           card.innerHTML = `<strong></strong><span class="entry-card-line"></span>`;
           card.querySelector("strong").textContent = a.textContent;
           card.querySelector(".entry-card-line").textContent =
