@@ -2369,11 +2369,7 @@ chart, filterable signups table beside an activity panel.
 /templates/social.html — social app (Ripple): three-column feed on
 desktop that folds to one column with the app-kit bottom tab bar on
 phones; compose box, feed of post cards, trends and who-to-follow, and
-the settings sheet behind the tab bar's settings button. The feed is
-live: likes, comments and view counts are shared by every visitor,
-stored in a small Supabase backend the page calls directly (the
-template's script shows the pattern — app logic lives in the project,
-never in the library); offline, the static numbers stand.
+the settings sheet behind the tab bar's settings button.
 /templates/app.html — app shell (sidebar + top bar) with a working
 dashboard: stat row, live chart, data table with toolbar;
 installable: manifest link, apple metas, the one-line sw stub wired.

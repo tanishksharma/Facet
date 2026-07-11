@@ -8,10 +8,6 @@
   sheet (opened by the tab bar's gear). Everything is real semantic markup:
   the feed is a <section> of <article> posts, every action is a <button>
   or <a> with an accessible name, and every state is reachable by the DOM.
-  The feed is live: likes, comments and view counts are shared by every
-  visitor, stored in a small Supabase backend the page calls directly
-  (see the script at the bottom for the pattern); when the backend is
-  unreachable the static numbers in the markup simply stand.
 -->
 <head>
   <meta charset="utf-8">
@@ -90,11 +86,8 @@
 
     <!-- CENTER · the one h1, the compose card, then the feed. -->
     <main id="main" class="stack">
-      <header class="row" style="justify-content: space-between; align-items: baseline;">
+      <header>
         <h1 class="text-h3">Home</h1>
-        <!-- Filled by the backend: how many times this feed has been opened.
-             Hidden until the number arrives, so the page reads clean offline. -->
-        <span class="text-caption" id="feed-views" data-tip="Times this feed has been opened" hidden></span>
       </header>
 
       <!-- Compose: avatar beside a labelled textarea, then an action row. -->
@@ -119,7 +112,7 @@
            the body, and a footer of reply / like / repost / save actions. -->
       <section class="stack" aria-label="Feed">
 
-        <article class="card stack-tight" data-post-id="offline-mode">
+        <article class="card stack-tight">
           <header class="row-tight">
             <span class="avatar">MR</span>
             <strong>Maya Rao</strong>
@@ -127,25 +120,14 @@
           </header>
           <p class="text-body">Shipped offline mode today. The whole feed now survives a dead tunnel. Turns out cache-first was the wrong call — network-first, cache as the fallback, and every deploy shows up on the first refresh.</p>
           <footer class="row-tight">
-            <button class="btn btn-ghost btn-small comment" aria-expanded="false" aria-controls="comments-offline-mode" aria-label="Comments" data-event="post-comments" data-tip="Read and write comments"><svg data-icon="message"></svg><span class="comment-count">0</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
             <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">214</span></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
-            <span class="post-views text-caption" data-tip="Times this post has been seen" style="margin-left: auto; display: inline-flex; align-items: center; gap: 0.35em;" hidden><svg data-icon="eye"></svg><span class="view-count">0</span></span>
           </footer>
-          <section class="comments stack-tight" id="comments-offline-mode" hidden aria-label="Comments">
-            <div class="comment-list stack-tight"></div>
-            <form class="comment-form row-tight">
-              <label class="field" style="flex: 1;">
-                <span class="field-label">Add a comment</span>
-                <input name="body" maxlength="500" placeholder="Add a comment" data-tip="Write a public comment — everyone sees it">
-              </label>
-              <button class="btn btn-small" data-event="comment-post" data-tip="Publish your comment">Post</button>
-            </form>
-          </section>
         </article>
 
-        <article class="card stack-tight" data-post-id="docs-next-to-component">
+        <article class="card stack-tight">
           <header class="row-tight">
             <span class="avatar">DK</span>
             <strong>Dev Kapoor</strong>
@@ -153,25 +135,14 @@
           </header>
           <p class="text-body">Hot take: most design systems die because nobody writes the docs next to the component. Keep the live demo and the exact snippet in the same file and the library documents itself.</p>
           <footer class="row-tight">
-            <button class="btn btn-ghost btn-small comment" aria-expanded="false" aria-controls="comments-docs-next-to-component" aria-label="Comments" data-event="post-comments" data-tip="Read and write comments"><svg data-icon="message"></svg><span class="comment-count">0</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
             <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">512</span></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
-            <span class="post-views text-caption" data-tip="Times this post has been seen" style="margin-left: auto; display: inline-flex; align-items: center; gap: 0.35em;" hidden><svg data-icon="eye"></svg><span class="view-count">0</span></span>
           </footer>
-          <section class="comments stack-tight" id="comments-docs-next-to-component" hidden aria-label="Comments">
-            <div class="comment-list stack-tight"></div>
-            <form class="comment-form row-tight">
-              <label class="field" style="flex: 1;">
-                <span class="field-label">Add a comment</span>
-                <input name="body" maxlength="500" placeholder="Add a comment" data-tip="Write a public comment — everyone sees it">
-              </label>
-              <button class="btn btn-small" data-event="comment-post" data-tip="Publish your comment">Post</button>
-            </form>
-          </section>
         </article>
 
-        <article class="card stack-tight" data-post-id="first-thousand">
+        <article class="card stack-tight">
           <header class="row-tight">
             <span class="avatar">PN</span>
             <strong>Priya Nair</strong>
@@ -179,25 +150,14 @@
           </header>
           <p class="text-body">First 1,000 people on Ripple. No ads, no growth hacks — a fast feed and a bottom tab bar that actually feels native on iOS. Word of mouth is still undefeated.</p>
           <footer class="row-tight">
-            <button class="btn btn-ghost btn-small comment" aria-expanded="false" aria-controls="comments-first-thousand" aria-label="Comments" data-event="post-comments" data-tip="Read and write comments"><svg data-icon="message"></svg><span class="comment-count">0</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
             <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">1,203</span></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
-            <span class="post-views text-caption" data-tip="Times this post has been seen" style="margin-left: auto; display: inline-flex; align-items: center; gap: 0.35em;" hidden><svg data-icon="eye"></svg><span class="view-count">0</span></span>
           </footer>
-          <section class="comments stack-tight" id="comments-first-thousand" hidden aria-label="Comments">
-            <div class="comment-list stack-tight"></div>
-            <form class="comment-form row-tight">
-              <label class="field" style="flex: 1;">
-                <span class="field-label">Add a comment</span>
-                <input name="body" maxlength="500" placeholder="Add a comment" data-tip="Write a public comment — everyone sees it">
-              </label>
-              <button class="btn btn-small" data-event="comment-post" data-tip="Publish your comment">Post</button>
-            </form>
-          </section>
         </article>
 
-        <article class="card stack-tight" data-post-id="button-is-a-button">
+        <article class="card stack-tight">
           <header class="row-tight">
             <span class="avatar">LM</span>
             <strong>Leo Martins</strong>
@@ -205,25 +165,14 @@
           </header>
           <p class="text-body">Reminder that a button should be a &lt;button&gt;. Spent the morning making an agent operate our app through the DOM alone, and every div-with-onclick was a wall it couldn't climb.</p>
           <footer class="row-tight">
-            <button class="btn btn-ghost btn-small comment" aria-expanded="false" aria-controls="comments-button-is-a-button" aria-label="Comments" data-event="post-comments" data-tip="Read and write comments"><svg data-icon="message"></svg><span class="comment-count">0</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
             <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">88</span></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
-            <span class="post-views text-caption" data-tip="Times this post has been seen" style="margin-left: auto; display: inline-flex; align-items: center; gap: 0.35em;" hidden><svg data-icon="eye"></svg><span class="view-count">0</span></span>
           </footer>
-          <section class="comments stack-tight" id="comments-button-is-a-button" hidden aria-label="Comments">
-            <div class="comment-list stack-tight"></div>
-            <form class="comment-form row-tight">
-              <label class="field" style="flex: 1;">
-                <span class="field-label">Add a comment</span>
-                <input name="body" maxlength="500" placeholder="Add a comment" data-tip="Write a public comment — everyone sees it">
-              </label>
-              <button class="btn btn-small" data-event="comment-post" data-tip="Publish your comment">Post</button>
-            </form>
-          </section>
         </article>
 
-        <article class="card stack-tight" data-post-id="no-onboarding">
+        <article class="card stack-tight">
           <header class="row-tight">
             <span class="avatar">SI</span>
             <strong>Sana Iqbal</strong>
@@ -231,22 +180,11 @@
           </header>
           <p class="text-body">The best onboarding is no onboarding. If your app needs a guided tour, the layout is doing too much. Make the first screen legible and let people poke it.</p>
           <footer class="row-tight">
-            <button class="btn btn-ghost btn-small comment" aria-expanded="false" aria-controls="comments-no-onboarding" aria-label="Comments" data-event="post-comments" data-tip="Read and write comments"><svg data-icon="message"></svg><span class="comment-count">0</span></button>
+            <button class="btn btn-ghost btn-small btn-icon" aria-label="Reply" data-event="post-reply" data-tip="Reply to this post"><svg data-icon="message"></svg></button>
             <button class="btn btn-ghost btn-small like" aria-pressed="false" aria-label="Like" data-event="post-like" data-tip="Like this post"><svg data-icon="heart"></svg><span class="like-count">340</span></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Repost" data-event="post-repost" data-tip="Repost to your feed"><svg data-icon="share"></svg></button>
             <button class="btn btn-ghost btn-small btn-icon" aria-label="Save" data-event="post-save" data-tip="Save for later"><svg data-icon="bookmark"></svg></button>
-            <span class="post-views text-caption" data-tip="Times this post has been seen" style="margin-left: auto; display: inline-flex; align-items: center; gap: 0.35em;" hidden><svg data-icon="eye"></svg><span class="view-count">0</span></span>
           </footer>
-          <section class="comments stack-tight" id="comments-no-onboarding" hidden aria-label="Comments">
-            <div class="comment-list stack-tight"></div>
-            <form class="comment-form row-tight">
-              <label class="field" style="flex: 1;">
-                <span class="field-label">Add a comment</span>
-                <input name="body" maxlength="500" placeholder="Add a comment" data-tip="Write a public comment — everyone sees it">
-              </label>
-              <button class="btn btn-small" data-event="comment-post" data-tip="Publish your comment">Post</button>
-            </form>
-          </section>
         </article>
 
       </section>
@@ -312,16 +250,7 @@
 
        The tab bar and the settings sheet wire themselves from facet.js:
        the sliding pill, the active section and the gear-to-sheet open all
-       work with no code here. Everything below is feed-specific behaviour.
-
-       This feed is LIVE: likes, comments and view counts are shared by
-       every visitor, stored in a Supabase database and read/written
-       straight from the page over its REST API. The publishable key is
-       safe to ship — row-level security makes the data world-readable
-       and comments world-writable, and the counters can only move
-       through two SQL functions (ripple_visit, ripple_like) that clamp
-       what a caller can do. If the backend is unreachable the static
-       numbers below simply stand: the page never depends on it. */
+       work with no code here. Everything below is feed-specific behaviour. */
     addEventListener("DOMContentLoaded", () => {
       // Give the reply action a proper speech-bubble glyph, then re-render
       // every icon on the page. facet.icons is the live glyph table.
@@ -330,104 +259,14 @@
         facet.icon();
       }
 
-      const API = "https://ndgzwmyqnldlkmjwlmwr.supabase.co/rest/v1";
-      const KEY = "sb_publishable_LjeE01pqWyGU812QGVpePw_OGedPJyW";
-      const call = (path, options = {}) =>
-        fetch(API + path, { ...options, headers: { apikey: KEY, "Content-Type": "application/json", ...(options.headers || {}) } })
-          .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
-
-      const posts = [...document.querySelectorAll("[data-post-id]")];
-      const fmt = n => Number(n).toLocaleString();
-      const readCount = el => Number(el.textContent.replace(/,/g, ""));
-      // Likes this device has given: a durable device fact, so localStorage.
-      const liked = new Set(JSON.parse(localStorage.getItem("ripple-likes") || "[]"));
-
-      // Visiting the feed IS the view: one call bumps the page's count and
-      // every post's count, and returns all live numbers. A back/forward
-      // restore only re-reads the numbers — it never counts a second visit.
-      function hydrate(countVisit) {
-        const request = countVisit
-          ? call("/rpc/ripple_visit", { method: "POST", body: JSON.stringify({ page_slug: "feed", post_ids: posts.map(p => p.dataset.postId) }) })
-          : call("/ripple_posts?select=id,likes,views&order=sort").then(rows => ({ posts: rows }));
-        request.then(data => {
-          for (const post of posts) {
-            const row = data.posts.find(r => r.id === post.dataset.postId);
-            if (!row) continue;
-            post.querySelector(".like-count").textContent = fmt(row.likes);
-            post.querySelector(".view-count").textContent = fmt(row.views);
-            post.querySelector(".post-views").hidden = false;
-          }
-          if (data.page_views != null) {
-            const views = document.getElementById("feed-views");
-            views.textContent = fmt(data.page_views) + " views";
-            views.hidden = false;
-          }
-        }).catch(() => {});   // offline or blocked: the static numbers stand
-      }
-      hydrate(true);
-      addEventListener("pageshow", e => { if (e.persisted) hydrate(false); });
-
-      // Comments arrive in one fetch, grouped per post, rendered as text —
-      // always via textContent, never markup, because anyone can write one.
-      function renderComment(list, comment) {
-        const line = document.createElement("p");
-        const who = document.createElement("strong");
-        who.textContent = comment.author;
-        line.className = "text-body";
-        line.append(who, " " + comment.body);
-        list.append(line);
-      }
-      call("/ripple_comments?select=post_id,author,body&order=created_at.asc").then(rows => {
-        for (const post of posts) {
-          const mine = rows.filter(r => r.post_id === post.dataset.postId);
-          mine.forEach(c => renderComment(post.querySelector(".comment-list"), c));
-          post.querySelector(".comment-count").textContent = fmt(mine.length);
-        }
-      }).catch(() => {});
-
-      for (const post of posts) {
-        const id = post.dataset.postId;
-
-        // Like: flip instantly, remember it on this device, then let the
-        // server's returned count settle the number for everyone.
-        const likeBtn = post.querySelector(".like");
-        if (liked.has(id)) likeBtn.setAttribute("aria-pressed", "true");
-        likeBtn.addEventListener("click", () => {
-          const unlike = liked.has(id);
-          unlike ? liked.delete(id) : liked.add(id);
-          localStorage.setItem("ripple-likes", JSON.stringify([...liked]));
-          likeBtn.setAttribute("aria-pressed", String(!unlike));
-          const count = likeBtn.querySelector(".like-count");
-          count.textContent = fmt(readCount(count) + (unlike ? -1 : 1));
-          call("/rpc/ripple_like", { method: "POST", body: JSON.stringify({ post_id: id, unlike }) })
-            .then(n => { count.textContent = fmt(n); })
-            .catch(() => {});
-        });
-
-        // The comment button folds the thread open and closed.
-        const commentBtn = post.querySelector(".comment");
-        const thread = post.querySelector(".comments");
-        commentBtn.addEventListener("click", () => {
-          const open = commentBtn.getAttribute("aria-expanded") === "true";
-          commentBtn.setAttribute("aria-expanded", String(!open));
-          thread.hidden = open;
-          if (!open) post.querySelector(".comment-form input").focus();
-        });
-
-        // Posting a comment: store it, append it, bump the count.
-        post.querySelector(".comment-form").addEventListener("submit", event => {
-          event.preventDefault();
-          const input = post.querySelector(".comment-form input");
-          const body = input.value.trim();
-          if (!body) return;
-          call("/ripple_comments", { method: "POST", headers: { Prefer: "return=representation" }, body: JSON.stringify({ post_id: id, body }) })
-            .then(rows => {
-              renderComment(post.querySelector(".comment-list"), rows[0]);
-              const count = post.querySelector(".comment-count");
-              count.textContent = fmt(readCount(count) + 1);
-              input.value = "";
-            })
-            .catch(() => { if (window.facet && facet.toast) facet.toast("Couldn't post the comment — try again", "error"); });
+      // Optimistic like: toggle the pressed state and nudge the count.
+      for (const btn of document.querySelectorAll(".like")) {
+        btn.addEventListener("click", () => {
+          const count = btn.querySelector(".like-count");
+          const liked = btn.getAttribute("aria-pressed") === "true";
+          const n = Number(count.textContent.replace(/,/g, ""));
+          btn.setAttribute("aria-pressed", liked ? "false" : "true");
+          count.textContent = (liked ? n - 1 : n + 1).toLocaleString();
         });
       }
     });
