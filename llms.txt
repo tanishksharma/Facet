@@ -1703,7 +1703,10 @@ nothing under prefers-contrast: more and never prints.
 
 VARIANT GRID — a repeating symbol on a grid:
 - The looks: .bg-grid (technical plus marks), .bg-dots (dot grid),
-  .bg-ruled (writing lines), .bg-graph (graph paper, deliberately the
+  .bg-circles (circle grid: outlined rings on the dots' half-cell
+  rhythm, noticeably bigger than a dot; --bg-ring sets the ring
+  diameter, default 15px), .bg-ruled (writing lines), .bg-graph
+  (graph paper, deliberately the
   lightest) — or the custom grid: data-bg-glyph="✦" with any character
   or emoji, a facet icon name, or several tokens separated by spaces
   for an alternating grid; facet.js draws the tile in the pattern ink
@@ -1715,12 +1718,16 @@ VARIANT GRID — a repeating symbol on a grid:
   (spacing, default 2.5rem). The custom grid adds data-bg-glyph-size
   (spacing override in px) and data-bg-glyph-scale (glyph size as a
   fraction of the cell, default 0.42).
-- The scatter: data-bg-scatter="✦ ❋" on .bg-grid or .bg-dots replaces
+- The scatter: data-bg-scatter="✦ ❋" on .bg-grid, .bg-dots or
+  .bg-circles replaces
   roughly one lattice point in ten with one of your characters (any
   character or emoji, or a facet icon name); data-bg-scatter-rate
-  tunes the frequency — one character per N points, default 10. The
-  layout is seeded by the input, so themes and modes re-ink the same
-  arrangement; facet.scatterBackground(el) draws a surface inserted
+  tunes the frequency — one character per N points, default 10 — and
+  data-bg-scatter-scale multiplies the character size (0.1–2, default
+  1). The arrangement is seeded fresh on every page load — each visit
+  scatters differently — but holds within the load, so themes and
+  modes re-ink the same arrangement instead of reshuffling;
+  facet.scatterBackground(el) draws a surface inserted
   after load.
 
 VARIANT FLUID — data-bg-fluid: a soft, slowly-breathing field of
@@ -1748,7 +1755,8 @@ FIXED TO THE SCREEN — two opt-ins pin a background to the viewport:
     <section class="bg-dots" style="--bg-tint: var(--accent-3); --bg-cell: 4rem;">
       <h2>A quiet dotted surface</h2>
     </section>
-    <section class="bg-dots" data-bg-scatter="✦ ❋" data-bg-scatter-rate="10">…</section>
+    <section class="bg-circles" style="--bg-ring: 20px;">…</section>
+    <section class="bg-dots" data-bg-scatter="✦ ❋" data-bg-scatter-rate="10" data-bg-scatter-scale="1.5">…</section>
     <section data-bg-glyph="♥ ✳ ✦" data-bg-glyph-scale="0.3">…</section>
     <section data-bg-fluid>…</section>
     <div class="bg-dots bg-fixed"></div>            <!-- whole-page still backdrop -->

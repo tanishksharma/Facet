@@ -249,15 +249,16 @@ function orderEntryParts() {
   }
 }
 
-/* The Backgrounds entry: variant Grid shows all four looks stacked —
-   technical, dots, graph paper and the custom grid — variant Fluid
-   its breathing field. Every surface carries its OWN control cluster
-   (marked data-demo-chrome, stripped from the snippet): ink, opacity
-   and spacing on all four; the scatter field on the technical and dot
-   grids; the glyph picker (multi-select icons plus a free-type field)
-   on the custom grid. Each cluster writes only onto its own surface —
-   the library's own machinery redraws — and the snippet re-renders to
-   what is visible. */
+/* The Backgrounds entry: variant Grid shows all five looks stacked —
+   technical, dots, circles, graph paper and the custom grid — variant
+   Fluid its breathing field. Every surface carries its OWN control
+   cluster (marked data-demo-chrome, stripped from the snippet): ink,
+   opacity and spacing on all five; the ring-size chips on the circle
+   grid; the scatter field (with frequency and size chips) on the
+   technical, dot and circle grids; the glyph picker (multi-select
+   icons plus a free-type field) on the custom grid. Each cluster
+   writes only onto its own surface — the library's own machinery
+   redraws — and the snippet re-renders to what is visible. */
 function initBackgroundDemo() {
   const article = document.querySelector("#backgrounds");
   const fluid = document.querySelector("#bg-variant-fluid");
@@ -299,27 +300,38 @@ function initBackgroundDemo() {
     for (const chip of cluster.querySelectorAll("[data-grid-cell]")) {
       chip.addEventListener("click", () => { setProp("--bg-cell", chip.dataset.gridCell); press("[data-grid-cell]", chip); });
     }
+    for (const chip of cluster.querySelectorAll("[data-grid-ring]")) {
+      chip.addEventListener("click", () => { setProp("--bg-ring", chip.dataset.gridRing); press("[data-grid-ring]", chip); });
+    }
 
     // the scatter: typed characters sow themselves across this grid;
-    // the frequency chips set how often
+    // the frequency chips set how often, the size chips how big
     const scatterBox = cluster.querySelector("[data-scatter-input]");
     if (scatterBox) {
       const scatter = () => {
         const rateChip = cluster.querySelector("[data-scatter-rate][aria-pressed='true']");
         const rate = rateChip ? rateChip.dataset.scatterRate : "";
+        const scaleChip = cluster.querySelector("[data-scatter-scale][aria-pressed='true']");
+        const scale = scaleChip ? scaleChip.dataset.scatterScale : "";
         if (scatterBox.value.trim()) {
           s.dataset.bgScatter = scatterBox.value.trim();
           if (rate) s.dataset.bgScatterRate = rate;
           else delete s.dataset.bgScatterRate;
+          if (scale) s.dataset.bgScatterScale = scale;
+          else delete s.dataset.bgScatterScale;
         } else {
           delete s.dataset.bgScatter;
           delete s.dataset.bgScatterRate;
+          delete s.dataset.bgScatterScale;
         }
         refresh();
       };
       scatterBox.addEventListener("input", scatter);
       for (const chip of cluster.querySelectorAll("[data-scatter-rate]")) {
         chip.addEventListener("click", () => { press("[data-scatter-rate]", chip); scatter(); });
+      }
+      for (const chip of cluster.querySelectorAll("[data-scatter-scale]")) {
+        chip.addEventListener("click", () => { press("[data-scatter-scale]", chip); scatter(); });
       }
     }
 

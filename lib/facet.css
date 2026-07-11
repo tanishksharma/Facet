@@ -1339,8 +1339,10 @@
    variants that are built differently and tuned separately.
    VARIANT GRID — a repeating symbol on a grid. The looks: .bg-grid
    (technical drawing: plus marks at the intersections), .bg-dots
-   (dot grid), .bg-ruled (writing lines), .bg-graph (graph paper,
-   deliberately the lightest), or the custom grid — data-bg-glyph="✦"
+   (dot grid), .bg-circles (circle grid: outlined rings on the dots'
+   half-cell rhythm, noticeably bigger than a dot; --bg-ring sets the
+   ring diameter, default 15px), .bg-ruled (writing lines), .bg-graph
+   (graph paper, deliberately the lightest), or the custom grid — data-bg-glyph="✦"
    with any character or emoji, a facet icon name, or several tokens
    separated by spaces for an alternating grid; facet.js draws the
    tile in the pattern ink and redraws it live whenever the attribute,
@@ -1350,13 +1352,17 @@
    spacing, default 2.5rem); the custom grid adds data-bg-glyph-size
    (spacing override, px), data-bg-glyph-scale (glyph size as a
    fraction of the cell, default 0.42).
-   THE SCATTER — data-bg-scatter="✦ ❋" on .bg-grid or .bg-dots sows
-   the given characters (any character or emoji, or a facet icon
-   name) across the lattice: roughly one point in ten loses its plus
-   or dot and wears a character instead. data-bg-scatter-rate tunes
-   the frequency (one character per N lattice points, default 10).
-   facet.js draws the scatter tile in the same pattern ink and
-   redraws it with the glyph engine.
+   THE SCATTER — data-bg-scatter="✦ ❋" on .bg-grid, .bg-dots or
+   .bg-circles sows the given characters (any character or emoji, or
+   a facet icon name) across the lattice: roughly one point in ten
+   loses its plus, dot or ring and wears a character instead.
+   data-bg-scatter-rate tunes the frequency (one character per N
+   lattice points, default 10); data-bg-scatter-scale multiplies the
+   character size (0.1–2, default 1). The arrangement is seeded fresh
+   on every page load — each visit scatters differently — but holds
+   within the load, so a theme or mode change re-inks the same
+   arrangement instead of reshuffling. facet.js draws the scatter
+   tile in the same pattern ink and redraws it with the glyph engine.
    VARIANT FLUID — data-bg-fluid: a soft, slowly-breathing field of
    out-of-focus color pools and drifting bubbles, drawn from the
    accent and vivid tokens so every theme recolors it for free;
@@ -1378,6 +1384,7 @@
 
 .bg-grid,
 .bg-dots,
+.bg-circles,
 .bg-ruled,
 .bg-graph,
 [data-bg-glyph] {
@@ -1429,6 +1436,25 @@
   background-image:
     var(--bg-scatter, none),
     radial-gradient(circle, var(--bg-ink) 1px, transparent 1.5px);
+  background-size:
+    var(--bg-scatter-tile, auto),
+    calc(var(--bg-cell) / 2) calc(var(--bg-cell) / 2);
+}
+
+/* Circle grid: an outlined ring per half cell — the dots' rhythm, but
+   each lattice point is a stroked ring (no fill), noticeably bigger
+   than a dot. A ring is a radial gradient that stays transparent to
+   just inside the stroke, inks a hairline band, then fades back out.
+   --bg-ring is the ring diameter, tunable per surface. */
+.bg-circles {
+  --bg-ring: 15px;
+  background-color: var(--background);
+  background-image:
+    var(--bg-scatter, none),
+    radial-gradient(circle,
+      transparent calc(var(--bg-ring) / 2 - 2px),
+      var(--bg-ink) calc(var(--bg-ring) / 2 - 1.5px) calc(var(--bg-ring) / 2 - 0.5px),
+      transparent calc(var(--bg-ring) / 2));
   background-size:
     var(--bg-scatter-tile, auto),
     calc(var(--bg-cell) / 2) calc(var(--bg-cell) / 2);
@@ -1539,7 +1565,7 @@
 
 /* Contrast request: the pattern is removed. */
 @media (prefers-contrast: more) {
-  .bg-grid, .bg-dots, .bg-ruled, .bg-graph, [data-bg-glyph] { background-image: none; }
+  .bg-grid, .bg-dots, .bg-circles, .bg-ruled, .bg-graph, [data-bg-glyph] { background-image: none; }
   .bg-fluid-layer { display: none; }
 }
 
@@ -2137,7 +2163,7 @@ input, textarea, [contenteditable] {
     text-shadow: none !important;
     backdrop-filter: none !important;
   }
-  .bg-grid, .bg-dots, .bg-ruled, .bg-graph, [data-bg-glyph] { background-image: none !important; }
+  .bg-grid, .bg-dots, .bg-circles, .bg-ruled, .bg-graph, [data-bg-glyph] { background-image: none !important; }
   .bg-fluid-layer { display: none !important; }
 
   /* page furniture never prints; an explicit on-role overrides */
