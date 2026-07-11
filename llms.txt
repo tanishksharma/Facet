@@ -82,14 +82,20 @@ neutral it needs. Plus per-theme status colors, the vivid decorative palette
 (--color-1 … --color-5) with an AA text-safe -text companion per color,
 and type and spacing named by
 intent and each scaled by a global small/medium/large control. Typography
-is fully tokenised by role: four weights (--weight-body/-medium/-strong/
--heading), line-height per role (--leading-display/-heading/-snug/-body/
+is fully tokenised by role: five weights (--weight-body/-medium/-strong/
+-heading/-eyebrow), line-height per role (--leading-display/-heading/-snug/-body/
 -ui, tighter as type grows), tracking per role (--tracking-display/
 -heading/-snug/-body/-label/-caps/-wide — large type tightens, caps labels open
 up), reading measure (--measure, --measure-narrow), and prose rhythm
 (--flow-heading-above/-below, --flow-paragraph, --flow-tight — em-based
 vertical margins that give raw semantic HTML its flow; gap layouts zero
-them so rhythm and gap never stack). Plus
+them so rhythm and gap never stack). Eighteen font roles, one face per
+job: the core seven (--font-heading/-body/-mono/-quote/-reading/
+-numeric/-hand), the special-job faces (--font-hero/-signature/
+-typewriter/-receipt/-barcode/-pixel/-children) and the script pairings
+(--font-japanese/-chinese/-korean/-devanagari) — all loaded by
+facet.css itself, every stack ending in a system fallback (full detail
+under Fonts below). Plus
 container widths, radii by role (--radius-control/-panel/-card/-pill),
 border WIDTHS by role (--border-hairline for separators, --border-element
 for outlines, --border-focus for the focus ring, --border-highlight for

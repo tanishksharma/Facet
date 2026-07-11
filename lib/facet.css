@@ -64,7 +64,10 @@
    translated content (Cyrillic ships inside the core faces, so Russian
    needs no extra family). The Default theme loads them all with one
    @import at the top of facet.css, served in unicode-range subsets — a
-   page that never uses a face downloads none of its glyphs. Every stack
+   page that never uses a face downloads none of its glyphs. The one
+   exception is the hero face: it is not on Google Fonts, so facet.css
+   self-hosts it from the library's own /fonts folder via @font-face —
+   still nothing for a consumer to add. Every stack
    ends in a system fallback; a theme re-voices the library by swapping
    faces; nothing downstream changes. */
 /* ----- Web fonts -----
