@@ -599,7 +599,15 @@ article.element {
 }
 
 /* Site polish: status chips, permalinks, token copy, badges. */
-.element h3[data-status]::after {
+/* Entry status tag. Every wall entry's h3 carries data-status with one
+   of two values: "live" — the maintainer has personally reviewed and
+   validated the piece, ready to rely on — or "dev" (rendered as
+   "in development") — shipped and usable, but not yet signed off.
+   New entries always land as dev; only the maintainer flips one to live.
+   docs.js copies the value onto each entry card, so the tag shows on
+   the closed card in the layer grid as well as in the opened entry. */
+.element h3[data-status]::after,
+.entry-card[data-status] strong::after {
   content: attr(data-status);
   margin-left: var(--space-control);
   font-size: var(--text-caption);
@@ -611,6 +619,21 @@ article.element {
   border-radius: var(--radius-pill);
   padding: 1px var(--space-control);
   vertical-align: middle;
+  white-space: nowrap;
+}
+.element h3[data-status="live"]::after,
+.entry-card[data-status="live"] strong::after {
+  content: "live";
+  background: var(--success-tint);
+  color: var(--success);
+  border-color: var(--success-edge);
+}
+.element h3[data-status="dev"]::after,
+.entry-card[data-status="dev"] strong::after {
+  content: "in development";
+  background: var(--warning-tint);
+  color: var(--warning);
+  border-color: var(--warning-edge);
 }
 .token-copy {
   display: inline-flex;

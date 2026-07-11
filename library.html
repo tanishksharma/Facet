@@ -242,7 +242,7 @@
            because they read var(--font-*) — serif in Velvet and Elegant.
            ============================== -->
       <article class="element stack" id="fonts">
-        <h3>Fonts</h3>
+        <h3 data-status="dev">Fonts</h3>
         <p>
           Eighteen type families, one per job. The core seven: headings,
           body text, code and labels, quotes, long-form reading, big numbers
@@ -444,7 +444,7 @@ article p   { font-family: var(--font-reading); }
            tagged with the token that sets it.
            ============================== -->
       <article class="element stack" id="typography">
-        <h3>Typography</h3>
+        <h3 data-status="dev">Typography</h3>
         <p>
           The scale in use, as a real page of writing. Every block below is
           a raw HTML tag styled by the base layer; the mono tag under each
@@ -542,7 +542,7 @@ article p   { font-family: var(--font-reading); }
            data-mode, which facet.css honours on any subtree.
            ============================== -->
       <article class="element stack" id="color">
-        <h3>Color</h3>
+        <h3 data-status="dev">Color</h3>
         <p>
           The color system: a neutral base plus three accent ranks, shown as the same interface in light and dark. Components pick ranks, never raw colors, so one theme block restyles everything.
         </p>
@@ -672,7 +672,7 @@ article p   { font-family: var(--font-reading); }
            between and around the solid pieces IS the token.
            ============================== -->
       <article class="element stack" id="spacing">
-        <h3>Spacing</h3>
+        <h3 data-status="dev">Spacing</h3>
         <p>
           Spacing is named by intent, not by number: reach for
           <code>--space-card</code> or <code>--space-section</code>, never a
@@ -746,7 +746,7 @@ article p   { font-family: var(--font-reading); }
            Layer 1 · Shape, elevation, motion
            ============================== -->
       <article class="element stack" id="shape">
-        <h3>Shape and elevation</h3>
+        <h3 data-status="dev">Shape and elevation</h3>
         <p>
           Small radii on controls, medium on cards, large on overlays, pill
           for chips and thumbs. Shadows stay subtle and flat in every theme.
@@ -776,7 +776,7 @@ article p   { font-family: var(--font-reading); }
            Felt, not described: the chips flip the whole page's motion.
            ============================== -->
       <article class="element stack" id="motion" data-llms="Motion">
-        <h3>Motion tokens</h3>
+        <h3 data-status="dev">Motion tokens</h3>
         <p>
           How everything moves, as one system: three durations and three
           easing curves that every component reads, plus one personality
@@ -872,7 +872,7 @@ article p   { font-family: var(--font-reading); }
            Layer 1 · Base styles
            ============================== -->
       <article class="element stack" id="base">
-        <h3>Base styles</h3>
+        <h3 data-status="dev">Base styles</h3>
         <p>
           The look of raw HTML itself. Around thirty bare tags are already
           designed before any class is added: headings, paragraphs, links,
@@ -942,7 +942,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- PRINT & EXPORT -->
       <article class="element stack" id="print">
-        <h3 data-status="beta">Print &amp; export</h3>
+        <h3 data-status="dev">Print &amp; export</h3>
         <p>
           Printing built in. Mark what belongs on paper and what does not, and every page prints clean: white ground, folds opened, nothing cut in half. A save-as-PDF button is one attribute.
         </p>
@@ -979,7 +979,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- CONTAINER -->
       <article class="element stack" id="container" data-cat="layout">
-        <h3 data-status="stable">Container</h3>
+        <h3 data-status="dev">Container</h3>
         <p>
           The page-width wrapper. It centers the content, caps how wide it grows, and keeps the side padding even on every screen.
         </p>
@@ -998,7 +998,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- STACK -->
       <article class="element stack" id="stack" data-cat="layout">
-        <h3 data-status="stable">Stack</h3>
+        <h3 data-status="dev">Stack</h3>
         <p>
           Puts blocks one above the other with an even, themed gap. The default way to space a column of anything.
         </p>
@@ -1020,7 +1020,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- ROW -->
       <article class="element stack" id="row" data-cat="layout">
-        <h3 data-status="stable">Row</h3>
+        <h3 data-status="dev">Row</h3>
         <p>
           Puts things side by side with an even gap, wrapping onto new lines when the room runs out.
         </p>
@@ -1043,7 +1043,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- GRID -->
       <article class="element stack" id="grid" data-cat="layout">
-        <h3 data-status="stable">Grid</h3>
+        <h3 data-status="dev">Grid</h3>
         <p>
           A grid of equal columns — as many as fit the screen, one on phones, with no breakpoints to write.
         </p>
@@ -1065,7 +1065,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- SNAP SECTION -->
       <article class="element stack" id="snap-section" data-cat="layout">
-        <h3 data-status="stable">Snap section</h3>
+        <h3 data-status="dev">Snap section</h3>
         <p>
           Full-screen sections that snap one screen at a time as you scroll — the feel of a modern product page, built to work on iPhone.
         </p>
@@ -1091,7 +1091,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- VIEW STACK -->
       <article class="element stack" id="view-stack" data-cat="layout">
-        <h3 data-status="beta">View stack</h3>
+        <h3 data-status="dev">View stack</h3>
         <p>
           The app shell. Each section is a screen, one shows at a time, and plain links move between them — with the browser's back button working.
         </p>
@@ -1120,7 +1120,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- BUTTON -->
       <article class="element stack" id="button" data-cat="forms">
-        <h3 data-status="stable">Button</h3>
+        <h3 data-status="dev">Button</h3>
         <p>
           The action element: three variants and three sizes for primary, secondary and quiet actions. Works identically as a button or a link.
         </p>
@@ -1142,7 +1142,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- ICON BUTTON -->
       <article class="element stack" id="icon-button" data-cat="forms">
-        <h3 data-status="stable">Icon button</h3>
+        <h3 data-status="dev">Icon button</h3>
         <p>
           A square button holding one icon — for compact actions whose meaning the icon and its tooltip carry.
         </p>
@@ -1166,7 +1166,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- CHOICE CONTROLS -->
       <article class="element stack" id="choice-controls" data-cat="forms">
-        <h3 data-status="stable">Switch, checkbox, radio</h3>
+        <h3 data-status="dev">Switch, checkbox, radio</h3>
         <p>
           Switches, checkboxes and radios — the native controls wearing the theme, with nothing custom to break.
         </p>
@@ -1185,7 +1185,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- STEPPER + SEGMENTED -->
       <article class="element stack" id="stepper" data-cat="forms">
-        <h3 data-status="stable">Stepper &amp; segmented control</h3>
+        <h3 data-status="dev">Stepper &amp; segmented control</h3>
         <p>
           A count with minus and plus buttons, and a segmented control for flipping between a few views of the same thing.
         </p>
@@ -1209,7 +1209,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- FIELDS -->
       <article class="element stack" id="fields" data-cat="forms">
-        <h3 data-status="stable">Fields: input, textarea, select, search</h3>
+        <h3 data-status="dev">Fields: input, textarea, select, search</h3>
         <p>
           Labelled inputs — text, dropdown, search and more — in one pattern with hints and error lines built in.
         </p>
@@ -1246,7 +1246,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- FILE + DATE -->
       <article class="element stack" id="file-date" data-cat="forms">
-        <h3 data-status="stable">File upload &amp; date input</h3>
+        <h3 data-status="dev">File upload &amp; date input</h3>
         <p>
           The file picker and the date input, themed but kept native, so the browser's own dialogs do the work.
         </p>
@@ -1270,7 +1270,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- NUMBER INPUT -->
       <article class="element stack" id="number-input" data-cat="forms">
-        <h3 data-status="stable">Number input</h3>
+        <h3 data-status="dev">Number input</h3>
         <p>
           A money-grade number field: digits group as you type, the amount is spelled out in words underneath, and a clear button empties it in one tap.
         </p>
@@ -1302,7 +1302,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- SLIDER -->
       <article class="element stack" id="slider" data-cat="forms">
-        <h3 data-status="stable">Slider</h3>
+        <h3 data-status="dev">Slider</h3>
         <p>
           A range slider with its live value beside it — for small bounded choices you drag to.
         </p>
@@ -1333,7 +1333,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- DETAILED SLIDER -->
       <article class="element stack" id="slider-detail" data-cat="forms">
-        <h3 data-status="stable">Detailed slider</h3>
+        <h3 data-status="dev">Detailed slider</h3>
         <p>
           A slider for wide ranges: drag fast across the whole span, then land the exact value with the steppers or the number box.
         </p>
@@ -1356,7 +1356,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- CHOICE GRID -->
       <article class="element stack" id="choice-grid" data-cat="forms">
-        <h3 data-status="beta">Choice grid</h3>
+        <h3 data-status="dev">Choice grid</h3>
         <p>
           A grid of small picture buttons — a symbol above a tiny caption — for picking one of a few options at a glance.
         </p>
@@ -1388,7 +1388,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- CARD -->
       <article class="element stack" id="card" data-cat="content">
-        <h3 data-status="stable">Card</h3>
+        <h3 data-status="dev">Card</h3>
         <p>
           The grouped surface: a padded, rounded panel that lifts content above the page. The building block of most layouts.
         </p>
@@ -1441,7 +1441,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- LIST -->
       <article class="element stack" id="list" data-cat="content">
-        <h3 data-status="stable">List</h3>
+        <h3 data-status="dev">List</h3>
         <p>
           Rows with a leading icon or picture, a title, and a trailing value or action — the workhorse of feeds, settings and results.
         </p>
@@ -1505,7 +1505,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- TABLE -->
       <article class="element stack" id="table" data-cat="content">
-        <h3 data-status="stable">Table</h3>
+        <h3 data-status="dev">Table</h3>
         <p>
           The data table: quiet header, striped rows, and a hover that names the row you are reading. For records, not layout.
         </p>
@@ -1530,7 +1530,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- CHART -->
       <article class="element stack" id="chart" data-cat="content">
-        <h3 data-status="beta">Chart</h3>
+        <h3 data-status="dev">Chart</h3>
         <p>
           A themed line chart drawn from a list of points — with labels, event markers and an optional dashed projection.
         </p>
@@ -1545,7 +1545,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- HEADING BAR -->
       <article class="element stack" id="heading-bar" data-cat="content">
-        <h3 data-status="stable">Heading bar</h3>
+        <h3 data-status="dev">Heading bar</h3>
         <p>
           A short thick accent stroke under a heading — the designed look for a section title, between plain text and a font change.
         </p>
@@ -1561,7 +1561,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- BADGE + CHIP + AVATAR + PROGRESS -->
       <article class="element stack" id="small-talkers" data-cat="content">
-        <h3 data-status="stable">Badge, chip, avatar, progress</h3>
+        <h3 data-status="dev">Badge, chip, avatar, progress</h3>
         <p>
           Four tiny signals: the badge for a status word, the chip for a filter, the avatar for a person, the progress bar for a share of done.
         </p>
@@ -1595,7 +1595,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- ICON BADGE -->
       <article class="element stack" id="icon-badge" data-cat="content">
-        <h3 data-status="beta">Icon badge</h3>
+        <h3 data-status="dev">Icon badge</h3>
         <p>
           A small glossy status dot pinned to an app icon's corner — numbers, ticks or alerts, like a home-screen badge.
         </p>
@@ -1621,7 +1621,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- RESULT BLOCK -->
       <article class="element stack" id="result-block" data-cat="content">
-        <h3 data-status="stable">Result block</h3>
+        <h3 data-status="dev">Result block</h3>
         <p>
           The answer card: one plain sentence a person can repeat, with the number large underneath. For calculators and verdicts.
         </p>
@@ -1654,7 +1654,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- ICONS -->
       <article class="element stack" id="icons" data-cat="content">
-        <h3 data-status="stable">Icons</h3>
+        <h3 data-status="dev">Icons</h3>
         <p>
           The icon set: thin line glyphs you place with one attribute and color with the text color. About sixty ship, and you can add your own.
         </p>
@@ -1670,7 +1670,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- THEMED MAP -->
       <article class="element stack" id="map" data-cat="content">
-        <h3 data-status="alpha">Themed map</h3>
+        <h3 data-status="dev">Themed map</h3>
         <p>
           A Google Map wearing the active theme, so the map matches the page in every theme, light and dark.
         </p>
@@ -1689,7 +1689,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- MODAL + DRAWER + POPOVER -->
       <article class="element stack" id="overlays" data-cat="overlays">
-        <h3 data-status="stable">Modal, drawer, popover</h3>
+        <h3 data-status="dev">Modal, drawer, popover</h3>
         <p>
           Modal, drawer and popover, built on the platform's own dialog machinery — focus, Escape and the backdrop come free.
         </p>
@@ -1724,7 +1724,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- ACCORDION + TOAST + DROPDOWN -->
       <article class="element stack" id="disclosure" data-cat="overlays">
-        <h3 data-status="stable">Accordion, toast, dropdown menu</h3>
+        <h3 data-status="dev">Accordion, toast, dropdown menu</h3>
         <p>
           The accordion for folding content, the toast for a passing notice, and the dropdown menu for a few actions behind a button.
         </p>
@@ -1759,7 +1759,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- DESCRIPTION TOOLTIP -->
       <article class="element stack" id="tooltip" data-cat="overlays">
-        <h3 data-status="stable">Description tooltip</h3>
+        <h3 data-status="dev">Description tooltip</h3>
         <p>
           A one-attribute explanation bubble: put the text on any element
           and it appears on hover or keyboard focus. On touch screens a tap
@@ -1781,7 +1781,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- TABS + BREADCRUMB + PAGINATION -->
       <article class="element stack" id="wayfinding" data-cat="nav">
-        <h3 data-status="stable">Tabs, breadcrumb, pagination</h3>
+        <h3 data-status="dev">Tabs, breadcrumb, pagination</h3>
         <p>
           Tabs for switching views, the breadcrumb for where you are, pagination for long lists — the wayfinding trio.
         </p>
@@ -1815,7 +1815,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- NAV LINK -->
       <article class="element stack" id="nav-link" data-cat="nav">
-        <h3 data-status="stable">Nav link</h3>
+        <h3 data-status="dev">Nav link</h3>
         <p>
           The navigation link with three designed states: quiet at rest, named on hover, marked when it is the current page.
         </p>
@@ -1832,7 +1832,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- FLAGSHIP LINK -->
       <article class="element stack" id="flagship-link" data-cat="nav">
-        <h3 data-status="stable">Flagship link</h3>
+        <h3 data-status="dev">Flagship link</h3>
         <p>
           The prominent link: heading-sized, a strong underline, and an arrow that leans in on hover. One per section at most.
         </p>
@@ -1848,7 +1848,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- SKELETON + SPINNER + EMPTY -->
       <article class="element stack" id="waiting" data-cat="status">
-        <h3 data-status="stable">Skeleton, spinner, empty state</h3>
+        <h3 data-status="dev">Skeleton, spinner, empty state</h3>
         <p>
           The three honest ways to show absence: a skeleton while loading, a spinner while working, an empty state when there is nothing.
         </p>
@@ -1875,7 +1875,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- LOADING SKIN -->
       <article class="element stack" id="loading-skin" data-cat="status">
-        <h3 data-status="stable">Loading skin</h3>
+        <h3 data-status="dev">Loading skin</h3>
         <p>
           The loading state: mark any region busy and its content turns into pulsing placeholders shaped like itself, then comes back.
         </p>
@@ -1901,7 +1901,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- COMPONENT STATES -->
       <article class="element stack" id="states" data-cat="status">
-        <h3 data-status="stable">Component states</h3>
+        <h3 data-status="dev">Component states</h3>
         <p>
           The state system: hover, focus, disabled, selected, busy and status, carried the same three ways on every component.
         </p>
@@ -1982,7 +1982,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- CARD GRID -->
       <article class="element stack" id="block-card-grid">
-        <h3 data-status="stable">Grid of cards</h3>
+        <h3 data-status="dev">Grid of cards</h3>
         <p>
           Cards laid out in the auto-fitting grid — as many columns as fit, one on phones, no breakpoints to write.
         </p>
@@ -1999,7 +1999,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- CARD ROW -->
       <article class="element stack" id="block-card-row">
-        <h3 data-status="stable">Horizontal card row</h3>
+        <h3 data-status="dev">Horizontal card row</h3>
         <p>
           Cards that scroll sideways with momentum and a gentle snap — a shelf of content on any screen.
         </p>
@@ -2018,7 +2018,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- PROMO RAIL -->
       <article class="element stack" id="block-promo-rail">
-        <h3 data-status="beta">Promo rail</h3>
+        <h3 data-status="dev">Promo rail</h3>
         <p>
           A full-bleed carousel of wide feature cards, each washed in its own tint, gliding sideways with a snap.
         </p>
@@ -2057,7 +2057,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- FILTERABLE LIST -->
       <article class="element stack" id="block-filter-list">
-        <h3 data-status="stable">Filterable card list</h3>
+        <h3 data-status="dev">Filterable card list</h3>
         <p>
           A search field over a list: type and the rows that do not match disappear, live.
         </p>
@@ -2080,7 +2080,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- LIST CARDS -->
       <article class="element stack" id="block-list-cards">
-        <h3 data-status="stable">List cards</h3>
+        <h3 data-status="dev">List cards</h3>
         <p>
           Full-width outlined rows, one card per record, with the fields side by side inside.
         </p>
@@ -2104,7 +2104,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- PRODUCT GRID -->
       <article class="element stack" id="block-product-grid">
-        <h3 data-status="stable">Product grid</h3>
+        <h3 data-status="dev">Product grid</h3>
         <p>
           Product cards — image, name, price, action — where the whole card is the link.
         </p>
@@ -2128,7 +2128,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- PRODUCT DETAIL -->
       <article class="element stack" id="block-product-detail">
-        <h3 data-status="stable">Product detail</h3>
+        <h3 data-status="dev">Product detail</h3>
         <p>
           The product page pair: a gallery on one side, with the name, price, options and buy action stacked beside it.
         </p>
@@ -2154,7 +2154,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- CART -->
       <article class="element stack" id="block-cart">
-        <h3 data-status="stable">Cart line items</h3>
+        <h3 data-status="dev">Cart line items</h3>
         <p>
           The order as rows — item, quantity stepper, line total — with the totals and checkout in a card beside it.
         </p>
@@ -2182,7 +2182,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- TOP MENU -->
       <article class="element stack" id="block-top-menu">
-        <h3 data-status="stable">Full top menu</h3>
+        <h3 data-status="dev">Full top menu</h3>
         <p>
           The site header: a brand lockup, links with small icons and one action. It can stick to the top of the page as a blurred translucent strip; on phones the links fold behind an icon that grows the panel open under a darkening blur.
         </p>
@@ -2220,7 +2220,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- SIDEBAR NAV -->
       <article class="element stack" id="block-sidebar-nav">
-        <h3 data-status="stable">Sidebar navigation</h3>
+        <h3 data-status="dev">Sidebar navigation</h3>
         <p>
           Grouped navigation links in a side column — the pattern this page's own index uses.
         </p>
@@ -2242,7 +2242,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- SIDE INDEX -->
       <article class="element stack" id="block-side-index">
-        <h3 data-status="beta">Side index</h3>
+        <h3 data-status="dev">Side index</h3>
         <p>
           The pinned index beside long content: a search box and grouped links, with the current item marked and kept centred as you move. This page's left menu is this block.
         </p>
@@ -2273,7 +2273,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- FOOTER -->
       <article class="element stack" id="block-footer">
-        <h3 data-status="stable">Footer</h3>
+        <h3 data-status="dev">Footer</h3>
         <p>
           Link columns over a legal row — the bottom of every site page.
         </p>
@@ -2294,7 +2294,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- HERO -->
       <article class="element stack" id="block-hero">
-        <h3 data-status="stable">Hero</h3>
+        <h3 data-status="dev">Hero</h3>
         <p>
           The opening statement: display type, one line under it, one primary action.
         </p>
@@ -2312,7 +2312,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- FEATURE GRID -->
       <article class="element stack" id="block-feature-grid">
-        <h3 data-status="stable">Feature grid</h3>
+        <h3 data-status="dev">Feature grid</h3>
         <p>
           Icon, claim, one sentence — repeated in the auto-fitting grid. The what-you-get section.
         </p>
@@ -2329,7 +2329,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- PRICING -->
       <article class="element stack" id="block-pricing">
-        <h3 data-status="stable">Pricing table</h3>
+        <h3 data-status="dev">Pricing table</h3>
         <p>
           Plan cards side by side — name, price, the differences, one action each — with the recommended plan lifted.
         </p>
@@ -2355,7 +2355,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- FAQ -->
       <article class="element stack" id="block-faq">
-        <h3 data-status="stable">FAQ list</h3>
+        <h3 data-status="dev">FAQ list</h3>
         <p>
           Questions as accordions that keep one answer open at a time, with no JS.
         </p>
@@ -2371,7 +2371,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- CTA BAND -->
       <article class="element stack" id="block-cta">
-        <h3 data-status="stable">CTA band</h3>
+        <h3 data-status="dev">CTA band</h3>
         <p>
           The closing ask: an ink-filled strip with one line and one button.
         </p>
@@ -2387,7 +2387,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- LOGO ROW + TESTIMONIAL -->
       <article class="element stack" id="block-social-proof">
-        <h3 data-status="stable">Logo row &amp; testimonial</h3>
+        <h3 data-status="dev">Logo row &amp; testimonial</h3>
         <p>
           A muted row of logos and one quote with a face and a name — the proof pair.
         </p>
@@ -2411,7 +2411,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- DATA TABLE WITH TOOLBAR -->
       <article class="element stack" id="block-data-table">
-        <h3 data-status="stable">Data table with toolbar</h3>
+        <h3 data-status="dev">Data table with toolbar</h3>
         <p>
           Search, filter chips and actions in a row above the data table — the working screen of a records app.
         </p>
@@ -2440,7 +2440,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- STAT ROW -->
       <article class="element stack" id="block-stat-row">
-        <h3 data-status="stable">Stat row</h3>
+        <h3 data-status="dev">Stat row</h3>
         <p>
           KPI cards: one number that matters with its label under it, in the auto-fitting grid.
         </p>
@@ -2456,7 +2456,7 @@ article p   { font-family: var(--font-reading); }
       </article>
 
       <article class="element stack" id="app-grid">
-        <h3 data-status="beta">App grid</h3>
+        <h3 data-status="dev">App grid</h3>
         <p>
           A home-screen launcher: a grid of app tiles, each one a real link with a rounded icon and a label.
         </p>
@@ -2493,7 +2493,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- APP IDENTITY -->
       <article class="element stack" id="block-app-identity">
-        <h3 data-status="beta">App identity</h3>
+        <h3 data-status="dev">App identity</h3>
         <p>
           An app's identity header: the centered icon, name and one-line purpose, with the version details in rows below.
         </p>
@@ -2518,7 +2518,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- SETTINGS SECTION -->
       <article class="element stack" id="block-settings">
-        <h3 data-status="stable">Settings section</h3>
+        <h3 data-status="dev">Settings section</h3>
         <p>
           Settings rows — a label with its switch, select or stepper — in a quiet stack under a group heading.
         </p>
@@ -2539,7 +2539,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- FORM SECTION -->
       <article class="element stack" id="block-form">
-        <h3 data-status="stable">Form section</h3>
+        <h3 data-status="dev">Form section</h3>
         <p>
           Grouped fields with one submit row: a fieldset per group, the primary action last.
         </p>
@@ -2566,7 +2566,7 @@ article p   { font-family: var(--font-reading); }
 
       <!-- ARTICLE HEADER + PROSE + MEDIA -->
       <article class="element stack" id="block-article">
-        <h3 data-status="stable">Article header, prose, media</h3>
+        <h3 data-status="dev">Article header, prose, media</h3>
         <p>
           The editorial set: title, byline and meta over long-form semantic text, with the article structured-data slot.
         </p>
@@ -2611,7 +2611,7 @@ article p   { font-family: var(--font-reading); }
         <!-- Flagship previews: each iframe loads the real template page and
              is transform-scaled to fit this column (initDevicePreview). -->
         <article class="element stack" id="template-landing" aria-labelledby="template-landing-h">
-          <h3 id="template-landing-h">Landing page</h3>
+          <h3 id="template-landing-h" data-status="dev">Landing page</h3>
           <p>
             A marketing site from the block layer: top menu, hero, social
             proof, feature grid, pricing, FAQ, CTA band and footer. Swap the
@@ -2632,7 +2632,7 @@ https://facet-kappa.vercel.app/templates/landing.html</code></pre>
         </article>
 
         <article class="element stack" id="template-saas" aria-labelledby="template-saas-h">
-          <h3 id="template-saas-h">SaaS dashboard</h3>
+          <h3 id="template-saas-h" data-status="dev">SaaS dashboard</h3>
           <p>
             An analytics product — Northstar — with a folding sidebar, a top
             bar, a KPI stat row, a live chart, and a filterable table beside an
@@ -2653,7 +2653,7 @@ https://facet-kappa.vercel.app/templates/saas.html</code></pre>
         </article>
 
         <article class="element stack" id="template-social" aria-labelledby="template-social-h">
-          <h3 id="template-social-h">Social app</h3>
+          <h3 id="template-social-h" data-status="dev">Social app</h3>
           <p>
             A three-column feed — Ripple — that folds to one column with a
             bottom tab bar on phones, showing off the app-kit tab bar and the
@@ -2674,7 +2674,7 @@ https://facet-kappa.vercel.app/templates/social.html</code></pre>
         </article>
 
         <article class="element stack" id="every-template" data-llms="Templates">
-          <h3>Every template</h3>
+          <h3 data-status="dev">Every template</h3>
           <p>
             The whole starter set — eight page shapes, each a complete file
             you save, rename and fill in. Every one links the same
@@ -2726,7 +2726,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- MOTION PACK -->
       <article class="element stack" id="motion-pack">
-        <h3 data-status="beta">Parallax &amp; idle motion</h3>
+        <h3 data-status="dev">Parallax &amp; idle motion</h3>
         <p>
           Parallax and idle drift: elements shift gently with the cursor or the phone's tilt, and sweep on their own when nothing moves.
         </p>
@@ -2752,7 +2752,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- SHINE -->
       <article class="element stack" id="shine">
-        <h3 data-status="beta">Shine</h3>
+        <h3 data-status="dev">Shine</h3>
         <p>
           A specular light that travels across an element as the device moves — the way app icons catch light. One attribute.
         </p>
@@ -2774,7 +2774,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- SOUND & HAPTICS -->
       <article class="element stack" id="feedback">
-        <h3 data-status="stable">Sound &amp; haptics</h3>
+        <h3 data-status="dev">Sound &amp; haptics</h3>
         <p>
           UI sound and vibration with no audio files: a tap under buttons, a tick on steppers, a snap when a pager lands.
         </p>
@@ -2792,7 +2792,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- BACKGROUNDS -->
       <article class="element stack" id="backgrounds">
-        <h3 data-status="beta">Backgrounds</h3>
+        <h3 data-status="live">Backgrounds</h3>
         <p>
           Very faint materials for big quiet surfaces. Two variants: Grid shows its four looks stacked below — the technical grid, the dot grid, graph paper and the custom grid of your own symbols — and each area carries its own controls, so every look tunes independently; Fluid drifts soft color like light through glass. The technical and dot grids can also scatter your own characters across the pattern.
         </p>
@@ -3006,7 +3006,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- TAB BAR -->
       <article class="element stack" id="tab-bar" data-cat="appkit">
-        <h3 data-status="beta">Tab bar</h3>
+        <h3 data-status="live">Tab bar</h3>
         <p>
           The app's floating command bar, like the pill in Apple's Photos app: a round menu button that slides the navigation in from the left edge, the pill of sections with its gliding highlight, and a round settings button that slides the settings panel in from the right. Every piece is optional, and one extra class turns the same bar into a desktop site bar pinned to the top. This site's own bar — with its corner panels condensing in and out of their buttons — is the whole system running live.
         </p>
@@ -3126,7 +3126,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- SHEET & MENU -->
       <article class="element stack" id="sheet" data-cat="appkit">
-        <h3 data-status="beta">Sheet &amp; menu</h3>
+        <h3 data-status="dev">Sheet &amp; menu</h3>
         <p>
           The settings sheet: a panel that slides in over a dark scrim, holding menu rows and setting toggles. The same panel can instead rise out of the tab bar's corner as a glass card on phones, or hang from the top bar's corner on wide screens — the menu and settings panels running this site, opened from the bar below, are that shape live.
         </p>
@@ -3162,7 +3162,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- FLOAT BUTTON -->
       <article class="element stack" id="float-button" data-cat="appkit">
-        <h3 data-status="beta">Float button</h3>
+        <h3 data-status="dev">Float button</h3>
         <p>
           A lone round button floating at the page's corner — the home for one global action, like opening the menu.
         </p>
@@ -3178,7 +3178,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- NAV MENU -->
       <article class="element stack" id="nav-menu" data-cat="appkit">
-        <h3 data-status="beta">Nav menu</h3>
+        <h3 data-status="dev">Nav menu</h3>
         <p>
           The floating site menu: a Menu pill that opens a stack of links, with a settings button beside it.
         </p>
@@ -3250,7 +3250,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- CONTENT TRANSLATION -->
       <article class="element stack" id="translation" data-cat="appkit">
-        <h3 data-status="beta">Content translation</h3>
+        <h3 data-status="dev">Content translation</h3>
         <p>
           Content in more than one language: author each variant in the markup and one button flips the page.
         </p>
@@ -3275,7 +3275,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
 
       <!-- SCROLL GAUGE -->
       <article class="element stack" id="scroll-gauge" data-cat="appkit">
-        <h3 data-status="beta">Scroll gauge</h3>
+        <h3 data-status="dev">Scroll gauge</h3>
         <p>
           A slim themed scroll thumb beside a panel — it shows your place where the native scrollbar is hidden.
         </p>
@@ -3299,7 +3299,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
       <!-- INSTALLABLE (PWA) · a recipe, not a live component, so it is a plain
            article (no serialized-snippet machinery) with copyable code. -->
       <article class="element stack" id="installable">
-        <h3>Installable (PWA)</h3>
+        <h3 data-status="dev">Installable (PWA)</h3>
         <p>
           Turns a page into an installable app: three small files at your project root, with offline caching from the library.
         </p>
