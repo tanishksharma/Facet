@@ -1762,12 +1762,10 @@ article p   { font-family: var(--font-reading); }
         <h3 data-status="stable">Description tooltip</h3>
         <p>
           A one-attribute explanation bubble: put the text on any element
-          and it appears on hover or keyboard focus. On touch screens a tap
-          opens it — placed wherever there is room — and it stays until you
-          scroll or tap anywhere else.
-        </p>
-        <p class="chips" role="group" aria-label="Tooltip position">
-          <button class="chip" aria-pressed="false" data-chip-attr="data-tip-below">Flip below</button>
+          and it appears on hover, keyboard focus, or a tap on touch
+          screens. It measures the screen each time it opens — above,
+          below or beside the element, wherever it fits, the tail always
+          pointing at it — and gets out of the way the moment you act.
         </p>
         <div class="demo" style="padding-block: var(--space-hero);">
           <button class="btn" data-tip="This text is the data-tip attribute">Hover, tab or tap me</button>

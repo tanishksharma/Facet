@@ -84,7 +84,7 @@
           <li><a href="#fn-tabs">Tabs</a></li>
           <li><a href="#fn-dropdowns">Dropdowns</a></li>
           <li><a href="#fn-dialogs">Dialog triggers</a></li>
-          <li><a href="#fn-tooltips">Touch tooltips</a></li>
+          <li><a href="#fn-tooltips">Tooltips</a></li>
         </ul>
         </div>
         <div class="nav-group side-index-group" data-group="feel"
@@ -799,19 +799,24 @@
         </article>
 
         <article class="element stack" id="fn-tooltips" data-llms="Description tooltip">
-          <h3>Touch tooltips</h3>
+          <h3>Tooltips</h3>
           <p>
-            The tap half of the description tooltip. Hover and keyboard
-            focus are pure CSS; on touch screens facet.js opens the bubble
-            on tap instead — placed above, below or beside the element,
-            wherever there is room — and keeps it until the page scrolls,
-            a tap lands anywhere else, or the same element is tapped again. A control that opens something else (a sheet, a menu, a dialog) acts without pinning a bubble over what it opened.
-            Delegated, so late-added markup needs no wiring.
+            The engine behind the description tooltip. facet.js measures
+            the screen on every show and places the bubble above the
+            element, below when above would clip, slid along an edge with
+            the tail still pointing at the element, or beside it against a
+            corner. Hover shows it after a beat, keyboard focus at once,
+            and clicking the element hides it instantly. On touch a tap
+            opens it alongside the element's own action and any next
+            interaction closes it — a scroll, a tap elsewhere, the element
+            opening something, or a few seconds passing. Delegated, so
+            late-added markup needs no wiring.
           </p>
           <pre id="code-fn-tooltips"><code>&lt;button class="btn" data-tip="Runs the calculation"&gt;Calculate&lt;/button&gt;
 
-&lt;!-- Desktop: hover or focus shows it. Touch: tap shows it,
-     scroll or a tap elsewhere hides it. Nothing to call. --&gt;</code></pre>
+&lt;!-- Desktop: hover or focus shows it; clicking hides it.
+     Touch: tap shows it; any next interaction hides it.
+     Placement is measured on every show. Nothing to call. --&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-tooltips" data-tip="Copies this code">Copy</button></p>
         </article>
       </section>

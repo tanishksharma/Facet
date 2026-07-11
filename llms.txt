@@ -1512,18 +1512,25 @@ a muted verdict line alone.
 WHEN TO USE: on every interactive element — one data-tip attribute explains it in place. This is the library's everything-explained-in-place promise; write one for every control you ship.
 
 What it is: a one-attribute explanation bubble: put data-tip on any element
-and the text appears above it on hover and on keyboard focus. On touch
-screens a tap opens it instead — placed above, below or beside the
-element, wherever there is room, always inside the viewport, with a
-tail pointing at it — and it stays until the page scrolls, a tap
-lands anywhere else, or the same element is tapped again. A control that opens something else (a sheet, a menu, a dialog) acts without pinning a bubble over what it opened. A tablet's
-trackpad cursor shows it on hover too. The tap still performs the element's own
-action; the bubble explains, it never blocks. What it is for: explaining
-every interactive element in place — one of the library's core
-principles. The description doubles as documentation anyone can read by
-pointing at the thing. When to use it: every interactive element ships
-with one. Add data-tip-below on elements near the top of the viewport so
-the hover bubble drops under them instead of clipping off the screen.
+and the text appears in a small bubble with a tail pointing at it.
+Placement measures the screen on every show: above the element when
+there is room, below when above would clip, slid sideways from a screen
+edge with the tail still pointing at the element, and beside it when a
+corner allows neither — never clipped, never over the safe areas, never
+blocking what is under it. On desktop it shows on hover after a short
+beat and on keyboard focus at once; clicking the element hides it
+instantly — the visitor has acted, the hint gets out of the way — and it
+does not return until the pointer leaves and re-enters. On touch screens
+a tap opens it alongside the element's own action, never instead of it,
+and any next interaction closes it: the first scroll, a tap anywhere
+else, the element opening something of its own (a sheet, a menu, a
+dialog), turning the device, or on its own after a few seconds. A
+disabled control still shows its bubble — often the explanation for why
+it is disabled. What it is for: explaining every interactive element in
+place — one of the library's core principles. The description doubles as
+documentation anyone can read by pointing at the thing. When to use it:
+every interactive element ships with one. data-tip-below steers only the
+JS-off fallback bubble; with facet.js running, placement is automatic.
 
     <button class="btn" data-tip="Runs the calculation">Calculate</button>
 
@@ -2200,12 +2207,12 @@ Icons added for app UIs: chart, grid, sliders, refresh, undo, volume,
 vibrate, motion, contrast, plus-square, download-cloud, and the icon
 badge's status glyphs sparkle and wrench, and the faceted gem (48 -> 62).
 
-Tooltip on touch: the [data-tip] bubble gains a triangle tail, and on
-touch screens a tap opens a floating bubble instead — placed above,
-below or beside the element by available room, staying until the page
-scrolls, a tap lands elsewhere, or the same element is tapped again
-(a control that opens a sheet, menu or dialog acts without pinning a
-bubble over it) — automatic, nothing to wire. Pinch zoom is blocked at the gesture level.
+Tooltip on touch: a tap opens the floating [data-tip] bubble alongside
+the element's own action — measured against the screen and the safe
+areas on every show, with the tail always pointing at the element — and
+any next interaction closes it: the first scroll, a tap elsewhere, the
+element opening a sheet, menu or dialog, turning the device, or a few
+seconds passing. Automatic, nothing to wire. Pinch zoom is blocked at the gesture level.
 
 Choice grid: a grid of small square choice buttons (.choice-grid of
 .choice-btn — a .choice-sym above a .choice-cap), five per row on

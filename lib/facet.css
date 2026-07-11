@@ -1289,7 +1289,7 @@
   .nudge-card,
   .float-btn { border: 1px solid ButtonText; }
   .slider { border: 1px solid ButtonText; border-radius: var(--radius-pill); }
-  [data-tip]::after { border: 1px solid CanvasText; }
+  [data-tip]::after, .tip-bubble { border: 1px solid CanvasText; }
 }
 
 /* Density: one attribute scales the whole spacing system at once. Small
@@ -2150,7 +2150,7 @@ input, textarea, [contenteditable] {
   [data-print="on"], .print-show { display: revert !important; }
 
   /* tooltips are screen furniture */
-  [data-tip]::before, [data-tip]::after { display: none !important; }
+  [data-tip]::before, [data-tip]::after, .tip-bubble { display: none !important; }
 
   /* the app shells unroll: every screen prints, in reading order */
   .is-app-shell, .is-app-shell body { height: auto; overflow: visible; }
@@ -3032,24 +3032,33 @@ input[type="week"] {
    WHEN TO USE: on every interactive element — one data-tip attribute explains it in place. This is the library's everything-explained-in-place promise; write one for every control you ship.
 
    What it is: a one-attribute explanation bubble: put data-tip on any element
-   and the text appears above it on hover and on keyboard focus. On touch
-   screens a tap opens it instead — placed above, below or beside the
-   element, wherever there is room, always inside the viewport, with a
-   tail pointing at it — and it stays until the page scrolls, a tap
-   lands anywhere else, or the same element is tapped again. A control that opens something else (a sheet, a menu, a dialog) acts without pinning a bubble over what it opened. A tablet's
-   trackpad cursor shows it on hover too. The tap still performs the element's own
-   action; the bubble explains, it never blocks. What it is for: explaining
-   every interactive element in place — one of the library's core
-   principles. The description doubles as documentation anyone can read by
-   pointing at the thing. When to use it: every interactive element ships
-   with one. Add data-tip-below on elements near the top of the viewport so
-   the hover bubble drops under them instead of clipping off the screen.
+   and the text appears in a small bubble with a tail pointing at it.
+   Placement measures the screen on every show: above the element when
+   there is room, below when above would clip, slid sideways from a screen
+   edge with the tail still pointing at the element, and beside it when a
+   corner allows neither — never clipped, never over the safe areas, never
+   blocking what is under it. On desktop it shows on hover after a short
+   beat and on keyboard focus at once; clicking the element hides it
+   instantly — the visitor has acted, the hint gets out of the way — and it
+   does not return until the pointer leaves and re-enters. On touch screens
+   a tap opens it alongside the element's own action, never instead of it,
+   and any next interaction closes it: the first scroll, a tap anywhere
+   else, the element opening something of its own (a sheet, a menu, a
+   dialog), turning the device, or on its own after a few seconds. A
+   disabled control still shows its bubble — often the explanation for why
+   it is disabled. What it is for: explaining every interactive element in
+   place — one of the library's core principles. The description doubles as
+   documentation anyone can read by pointing at the thing. When to use it:
+   every interactive element ships with one. data-tip-below steers only the
+   JS-off fallback bubble; with facet.js running, placement is automatic.
 
    Usage:  <button class="btn" data-tip="Runs the calculation">Calculate</button>
 
-   Limits: the hover bubble can be clipped by overflow:hidden ancestors;
-   the touch bubble (initTouchTooltips in facet.js) floats free of any
-   clipping and places itself by available space.
+   Limits: without facet.js a pure-CSS hover bubble stands in — it can be
+   clipped by overflow:hidden ancestors and only flips below via
+   data-tip-below. With facet.js running (initTooltips), the floating
+   .tip-bubble owns every device and places itself by measurement; the
+   CSS bubble stands down via data-tip-js on <html>.
    -------------------------------------------------------------------------- */
 
 [data-tip] {
@@ -3098,8 +3107,14 @@ input[type="week"] {
   }
 }
 
-/* On touch screens the JS bubble owns the job — the hover/focus pseudo
-   bubble would double up under the tap focus, so it stands down. */
+/* facet.js takes over: it stamps data-tip-js on <html> and its measured
+   floating bubble owns hover, focus and tap on every device — the pseudo
+   bubble above is the JS-off fallback and stands down. */
+:root[data-tip-js] [data-tip]::after,
+:root[data-tip-js] [data-tip]::before { display: none !important; }
+
+/* JS-off fallback on touch screens: there is no hover, and iOS applies
+   a sticky :hover on tap — the pseudo bubble stands down there too. */
 @media (pointer: coarse) {
   [data-tip]:hover::after,
   [data-tip]:focus-visible::after,
@@ -3107,8 +3122,10 @@ input[type="week"] {
   [data-tip]:focus-visible::before { display: none; }
 }
 
-/* The floating touch bubble (one per page, created by facet.js):
-   the same skin as the hover bubble, positioned by script. */
+/* The floating bubble (one per page, created by facet.js): the same
+   skin as the fallback bubble, positioned by measurement. The safe-area
+   custom properties below exist to be READ by facet.js — env() only
+   resolves in CSS, so the bubble carries the insets for the script. */
 .tip-bubble {
   position: fixed;
   z-index: 80;
@@ -3128,10 +3145,16 @@ input[type="week"] {
   transition:
     opacity var(--duration-fast) var(--ease-out),
     translate var(--duration-normal) var(--ease-spring);
+  --tip-safe-top: env(safe-area-inset-top, 0px);
+  --tip-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --tip-safe-left: env(safe-area-inset-left, 0px);
+  --tip-safe-right: env(safe-area-inset-right, 0px);
 }
 .tip-bubble.is-open { opacity: 1; translate: 0 0; }
 /* The tail: a small triangle pointing back at the element, on the side
-   facet.js placed the bubble (data-place above/below/left/right). */
+   facet.js placed the bubble (data-place above/below/left/right).
+   --tip-arrow is set by the script so the tail stays anchored to the
+   element's centre even when the bubble has slid along a screen edge. */
 .tip-bubble::after {
   content: "";
   position: absolute;
@@ -3139,13 +3162,15 @@ input[type="week"] {
   height: 0;
   border: 6px solid transparent;
 }
-.tip-bubble[data-place="above"]::after { top: 100%; left: 50%; translate: -50% 0; border-top-color: var(--text); }
-.tip-bubble[data-place="below"]::after { bottom: 100%; left: 50%; translate: -50% 0; border-bottom-color: var(--text); }
-.tip-bubble[data-place="left"]::after  { left: 100%; top: 50%; translate: 0 -50%; border-left-color: var(--text); }
-.tip-bubble[data-place="right"]::after { right: 100%; top: 50%; translate: 0 -50%; border-right-color: var(--text); }
+.tip-bubble[data-place="above"]::after { top: 100%; left: var(--tip-arrow, 50%); translate: -50% 0; border-top-color: var(--text); }
+.tip-bubble[data-place="below"]::after { bottom: 100%; left: var(--tip-arrow, 50%); translate: -50% 0; border-bottom-color: var(--text); }
+.tip-bubble[data-place="left"]::after  { left: 100%; top: var(--tip-arrow, 50%); translate: 0 -50%; border-left-color: var(--text); }
+.tip-bubble[data-place="right"]::after { right: 100%; top: var(--tip-arrow, 50%); translate: 0 -50%; border-right-color: var(--text); }
 
-/* Elements near the top of the viewport add data-tip-below, so the tip
-   drops under them instead of clipping off the screen. */
+/* JS-off fallback steering: elements near the top of the viewport add
+   data-tip-below, so the pseudo bubble drops under them instead of
+   clipping off the screen. With facet.js running, placement measures
+   itself and this attribute is not needed. */
 [data-tip][data-tip-below]::after {
   bottom: auto;
   top: calc(100% + var(--space-control));
@@ -3184,7 +3209,7 @@ input[type="week"] {
 
 /* Touch: iOS applies a STICKY :hover on tap that never clears, so on
    touch devices the hover bubble is forced off — the tap bubble is the
-   floating .tip-bubble that initTouchTooltips owns. */
+   floating .tip-bubble that initTooltips owns. */
 @media (hover: none) {
   [data-tip]:hover::after,
   [data-tip]:hover::before { display: none; opacity: 0; }
