@@ -1830,7 +1830,9 @@ WHEN TO USE: one exclusive pick from up to about ten compact, symbolic
 options — currencies, units, categories — too many for a segmented
 control, too visual for a select. What it is: a grid of small square
 choice buttons (.choice-grid of .choice-btn — a .choice-sym symbol
-above a .choice-cap caption), five per row on phones. aria-pressed
+above a .choice-cap caption — the symbol can be a glyph or an SVG icon)
+that wraps to fit its width, about five per row on phones. A disabled
+button greys out and takes no pick. aria-pressed
 carries the state and facet.js keeps the pick exclusive; on change the
 grid fires a bubbling CustomEvent "facet:choice" {value, button}
 (value = data-value ?? the button text), and

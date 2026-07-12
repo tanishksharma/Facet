@@ -1544,29 +1544,48 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="choice-grid" data-cat="forms">
         <h3 data-status="dev">Choice grid</h3>
         <p>
-          A grid of small picture buttons — a symbol above a tiny caption — for picking one of a few options at a glance.
+          A grid of small picture buttons — a symbol or icon above a tiny caption — for picking one of up to about ten options at a glance: currencies, units, categories. It wraps to fit its width; the pick stays exclusive; a disabled button greys out. Too many for a segmented control, too visual for a select.
         </p>
-        <div class="demo">
-          <div class="choice-grid" role="group" aria-label="Currency">
-            <button type="button" class="choice-btn" aria-pressed="true" data-tip="Indian rupee" data-event="cur-inr">
+        <div class="demo stack">
+          <!-- Glyph symbols: one exclusive pick, one option disabled -->
+          <div class="choice-grid" role="group" aria-label="Currency" data-demo-unwrap>
+            <button type="button" class="choice-btn" aria-pressed="true" data-value="inr" data-tip="Indian rupee" data-event="cur-inr">
               <span class="choice-sym" aria-hidden="true">&#8377;</span><span class="choice-cap">INR</span>
             </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="US dollar" data-event="cur-usd">
+            <button type="button" class="choice-btn" aria-pressed="false" data-value="usd" data-tip="US dollar" data-event="cur-usd">
               <span class="choice-sym" aria-hidden="true">$</span><span class="choice-cap">USD</span>
             </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Euro" data-event="cur-eur">
+            <button type="button" class="choice-btn" aria-pressed="false" data-value="eur" data-tip="Euro" data-event="cur-eur">
               <span class="choice-sym" aria-hidden="true">&euro;</span><span class="choice-cap">EUR</span>
             </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="British pound" data-event="cur-gbp">
+            <button type="button" class="choice-btn" aria-pressed="false" data-value="gbp" data-tip="British pound" data-event="cur-gbp">
               <span class="choice-sym" aria-hidden="true">&pound;</span><span class="choice-cap">GBP</span>
             </button>
-            <button type="button" class="choice-btn" aria-pressed="false" data-tip="Japanese yen" data-event="cur-jpy">
+            <button type="button" class="choice-btn" aria-pressed="false" data-value="jpy" data-tip="Japanese yen" data-event="cur-jpy">
               <span class="choice-sym" aria-hidden="true">&yen;</span><span class="choice-cap">JPY</span>
+            </button>
+            <button type="button" class="choice-btn" disabled data-value="btc" data-tip="Not supported here">
+              <span class="choice-sym" aria-hidden="true">&#8383;</span><span class="choice-cap">BTC</span>
             </button>
           </div>
         </div>
         <pre id="code-choice-grid"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-choice-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+
+        <p class="type-label" style="margin-top: var(--space-card);">The symbol can be an SVG icon instead of a glyph</p>
+        <div class="demo">
+          <div class="choice-grid" role="group" aria-label="Layout" style="max-width: 22rem;">
+            <button type="button" class="choice-btn" aria-pressed="true" data-value="list">
+              <span class="choice-sym"><svg width="22" height="22" data-icon="menu" aria-hidden="true"></svg></span><span class="choice-cap">List</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-value="grid">
+              <span class="choice-sym"><svg width="22" height="22" data-icon="grid" aria-hidden="true"></svg></span><span class="choice-cap">Grid</span>
+            </button>
+            <button type="button" class="choice-btn" aria-pressed="false" data-value="map">
+              <span class="choice-sym"><svg width="22" height="22" data-icon="globe" aria-hidden="true"></svg></span><span class="choice-cap">Map</span>
+            </button>
+          </div>
+        </div>
       </article>
 
       <!-- Content &amp; data -->

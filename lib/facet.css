@@ -7238,7 +7238,9 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
    options — currencies, units, categories — too many for a segmented
    control, too visual for a select. What it is: a grid of small square
    choice buttons (.choice-grid of .choice-btn — a .choice-sym symbol
-   above a .choice-cap caption), five per row on phones. aria-pressed
+   above a .choice-cap caption — the symbol can be a glyph or an SVG icon)
+   that wraps to fit its width, about five per row on phones. A disabled
+   button greys out and takes no pick. aria-pressed
    carries the state and facet.js keeps the pick exclusive; on change the
    grid fires a bubbling CustomEvent "facet:choice" {value, button}
    (value = data-value ?? the button text), and
@@ -7259,7 +7261,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
 
 .choice-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
   gap: var(--space-control);
 }
 .choice-btn {
@@ -7289,6 +7291,8 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
   color: var(--text);
 }
 .choice-btn[aria-pressed="true"] .choice-sym { color: var(--accent-3); }
+.choice-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.choice-btn:disabled:active { transform: none; }
 
 /* Velvet: wells for the field, a raised face for the pick, gold symbol. */
 [data-theme="velvet"] .choice-btn {
