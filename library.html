@@ -1418,19 +1418,35 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="file-date" data-cat="forms">
         <h3 data-status="dev">File upload &amp; date input</h3>
         <p>
-          The file picker and the date input, themed but kept native, so the browser's own dialogs do the work.
+          The file picker and the whole date-and-time family, themed but kept native — so drag-and-drop, the platform's own dialogs, the keyboard and the form value all work for free. Reach for these before any custom uploader or calendar. A file input takes <code>multiple</code>, <code>accept</code> and <code>capture</code>; the date family covers date, time, month, week and datetime-local.
         </p>
         <div class="demo">
-          <div class="grid">
+          <div class="grid" style="--grid-min: 15rem;">
             <label class="field">
               <span class="field-label">Statement PDF</span>
               <input type="file" accept=".pdf" data-tip="Native file input; only the button is dressed">
               <span class="field-hint">Drag a file onto it, or browse</span>
             </label>
             <label class="field">
+              <span class="field-label">Receipts</span>
+              <input type="file" accept="image/*" multiple data-tip="multiple accepts several files at once">
+              <span class="field-hint">Several images at once</span>
+            </label>
+            <label class="field">
               <span class="field-label">Start date</span>
               <input type="date" value="2026-07-05" data-tip="Native picker, accent highlight">
-              <span class="field-hint">The picker is the platform's own</span>
+            </label>
+            <label class="field">
+              <span class="field-label">Reminder time</span>
+              <input type="time" value="09:30" data-tip="Native time picker">
+            </label>
+            <label class="field">
+              <span class="field-label">Billing month</span>
+              <input type="month" value="2026-07" data-tip="A whole month">
+            </label>
+            <label class="field">
+              <span class="field-label">Deadline</span>
+              <input type="datetime-local" value="2026-07-20T17:00" data-tip="Date and time together">
             </label>
           </div>
         </div>
@@ -1474,7 +1490,7 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="slider" data-cat="forms">
         <h3 data-status="dev">Slider</h3>
         <p>
-          A range slider with its live value beside it — for small bounded choices you drag to.
+          A themed range input with its live value beside it — the track fills with accent up to the thumb, so you feel more-and-less at a glance. For bounded choices you drag to: years, percentages, counts. A long range can grow a tick scale with landmarks; when the exact digit matters, pair it with the number input.
         </p>
         <p class="chips" role="group" aria-label="Slider states">
           <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="input">Disabled</button>

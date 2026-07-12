@@ -772,19 +772,37 @@ WHEN TO USE: always these before any custom uploader or calendar — native mean
 
 What it is: the native file and date controls, themed and kept native
 — the file input's button is styled as a secondary action while
-drag-drop, keyboard and the form value stay the browser's; the date
-input keeps its native picker with the accent coloring its highlight
-and color-scheme flipping it in dark mode. When to use it: always
-these before any custom uploader or calendar, wrapped in the same
-label.field pattern as every other control.
+drag-drop, keyboard and the form value stay the browser's (add multiple
+for many files, accept to filter, capture to open the camera on a
+phone); and the whole date-and-time family — date, time, month, week
+and datetime-local — each keeping its native picker with the accent
+coloring the highlight and color-scheme flipping it in dark mode. When
+to use it: always these before any custom uploader or calendar, wrapped
+in the same label.field pattern as every other control.
 
     <label class="field">
       <span class="field-label">Statement PDF</span>
       <input type="file" accept=".pdf">
     </label>
     <label class="field">
+      <span class="field-label">Receipts</span>
+      <input type="file" accept="image/*" multiple>
+    </label>
+    <label class="field">
       <span class="field-label">Start date</span>
       <input type="date">
+    </label>
+    <label class="field">
+      <span class="field-label">Reminder time</span>
+      <input type="time">
+    </label>
+    <label class="field">
+      <span class="field-label">Billing month</span>
+      <input type="month">
+    </label>
+    <label class="field">
+      <span class="field-label">Deadline</span>
+      <input type="datetime-local">
     </label>
 
 ### Card
@@ -1751,19 +1769,31 @@ set data-status="error" on the field and swap the hint for a
 
 WHEN TO USE: a bounded pick where the feel of more-and-less matters more than the exact digit — years, percentages. Pair it with the number input when precision matters.
 
-What it is: a real, themed range input — hairline track,
-accent-3 thumb — paired with a live value readout. What it is for: picking a number
+What it is: a real, themed range input — an accent-3 thumb over a track
+that fills with accent up to the thumb and fades to a hairline past it —
+paired with a live value readout. What it is for: picking a number
 inside a known range where the feel of more-and-less matters more than
 exact digits: years, percentages, counts. When to use it: bounded inputs
 with sensible ends. When the exact number matters, pair it with or swap it
 for the number input. Put an <output> in the field label and facet.js
-keeps it showing the live value. Full keyboard support comes free with the
-native element.
+keeps it showing the live value and paints the fill; a long range can grow
+a tick scale — wrap the slider in a .slider-wrap with a .slider-scale
+(data-minor, data-label and data-now set the ticks). Full keyboard support
+comes free with the native element.
 
     <label class="field">
       <span class="field-label">Years <output>10</output></span>
       <input type="range" class="slider" min="1" max="40" value="10"
              data-tip="Drag, or use the arrow keys">
+    </label>
+
+    <!-- A long range with a tick scale; the highlighted tick is "now" -->
+    <label class="field">
+      <span class="field-label">From year <output>2000</output></span>
+      <span class="slider-wrap">
+        <input type="range" class="slider" min="1960" max="2056" value="2000">
+        <span class="slider-scale" data-minor="10" data-label="40" data-now="2026" aria-hidden="true"></span>
+      </span>
     </label>
 
 ### Detailed slider

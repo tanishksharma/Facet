@@ -2804,11 +2804,13 @@ input[type="search"] { border-radius: var(--radius-pill); }
 
    What it is: the native file and date controls, themed and kept native
    — the file input's button is styled as a secondary action while
-   drag-drop, keyboard and the form value stay the browser's; the date
-   input keeps its native picker with the accent coloring its highlight
-   and color-scheme flipping it in dark mode. When to use it: always
-   these before any custom uploader or calendar, wrapped in the same
-   label.field pattern as every other control.*/
+   drag-drop, keyboard and the form value stay the browser's (add multiple
+   for many files, accept to filter, capture to open the camera on a
+   phone); and the whole date-and-time family — date, time, month, week
+   and datetime-local — each keeping its native picker with the accent
+   coloring the highlight and color-scheme flipping it in dark mode. When
+   to use it: always these before any custom uploader or calendar, wrapped
+   in the same label.field pattern as every other control.*/
 
 /* File upload: the native input stays (drag-drop, keyboard, form
    value all free); only its button is styled like a secondary action
@@ -2928,14 +2930,17 @@ input[type="week"] {
    (docs mirror — identical to llms.txt · Slider)
    WHEN TO USE: a bounded pick where the feel of more-and-less matters more than the exact digit — years, percentages. Pair it with the number input when precision matters.
 
-   What it is: a real, themed range input — hairline track,
-   accent-3 thumb — paired with a live value readout. What it is for: picking a number
+   What it is: a real, themed range input — an accent-3 thumb over a track
+   that fills with accent up to the thumb and fades to a hairline past it —
+   paired with a live value readout. What it is for: picking a number
    inside a known range where the feel of more-and-less matters more than
    exact digits: years, percentages, counts. When to use it: bounded inputs
    with sensible ends. When the exact number matters, pair it with or swap it
    for the number input. Put an <output> in the field label and facet.js
-   keeps it showing the live value. Full keyboard support comes free with the
-   native element.
+   keeps it showing the live value and paints the fill; a long range can grow
+   a tick scale — wrap the slider in a .slider-wrap with a .slider-scale
+   (data-minor, data-label and data-now set the ticks). Full keyboard support
+   comes free with the native element.
 
    Usage:
      <label class="field">
@@ -2953,13 +2958,16 @@ input[type="week"] {
   background: transparent;
   border: none;
   cursor: pointer;
+  --fill: 0%;                             /* facet.js keeps this at the thumb */
 }
 
-/* Track: a quiet hairline. */
+/* Track: an accent fill up to the thumb, a quiet hairline past it. facet.js
+   sets --fill; with JS off the whole track is the hairline (still usable). */
 .slider::-webkit-slider-runnable-track {
   height: 4px;
-  background: var(--border);
   border-radius: var(--radius-pill);
+  background: linear-gradient(to right,
+    var(--accent-3) var(--fill), var(--border) var(--fill));
 }
 
 .slider::-moz-range-track {
