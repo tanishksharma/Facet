@@ -620,11 +620,22 @@ with the gap owned by the row. What it is for: button rows, chip sets,
 meta lines, any run of small pieces. When to use it: whenever things
 sit beside each other — the row owns the gap, so children stay
 margin-free, exactly like the stack owns vertical rhythm. Variants:
-.row-tight for close runs, .row-loose for more spacing.
+.row-tight for close runs, .row-loose for more spacing; .row-between
+spreads the ends apart, .row-end pushes everything to the trailing
+edge, .row-top aligns to the top instead of the centre. Give any one
+child .push to send it and everything after it to the far end — the
+toolbar spacer.
 
     <div class="row">
       <button class="btn btn-small">Save</button>
       <button class="btn btn-ghost btn-small">Delete</button>
+    </div>
+
+    <!-- A toolbar: title on the left, actions pushed to the right -->
+    <div class="row">
+      <strong>Invoices</strong>
+      <button class="btn btn-small push">Export</button>
+      <button class="btn btn-primary btn-small">New</button>
     </div>
 
 ### Grid
@@ -636,12 +647,22 @@ at least a card wide, collapsing to one on phones with no breakpoints
 written. What it is for: card grids, feature grids, galleries,
 dashboards. When to use it: any set of same-shaped pieces; the grid
 decides the count, the content decides the size. Variants: .grid-wide
-for bigger cards, .grid-tight and .grid-loose for gap.
+for bigger cards, .grid-tight and .grid-loose for gap; .grid-2 and
+.grid-3 fix the count at two or three columns (still collapsing to one
+on phones) for exact two- and three-up layouts. Set --grid-min on any
+grid to change the minimum card width the auto-fit uses.
 
     <div class="grid">
       <article> card </article>
       <article> card </article>
       <article> card </article>
+    </div>
+
+    <!-- Exactly three across on desktop, one on phones -->
+    <div class="grid-3">
+      <article> a </article>
+      <article> b </article>
+      <article> c </article>
     </div>
 
 ### Switch, checkbox, radio

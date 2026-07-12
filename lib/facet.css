@@ -6003,7 +6003,11 @@ button.list-item:active { background: var(--surface-active); }
    meta lines, any run of small pieces. When to use it: whenever things
    sit beside each other — the row owns the gap, so children stay
    margin-free, exactly like the stack owns vertical rhythm. Variants:
-   .row-tight for close runs, .row-loose for more spacing.*/
+   .row-tight for close runs, .row-loose for more spacing; .row-between
+   spreads the ends apart, .row-end pushes everything to the trailing
+   edge, .row-top aligns to the top instead of the centre. Give any one
+   child .push to send it and everything after it to the far end — the
+   toolbar spacer.*/
 .row,
 .row-tight,
 .row-loose {
@@ -6014,6 +6018,10 @@ button.list-item:active { background: var(--surface-active); }
 }
 .row-tight { gap: var(--space-control); }
 .row-loose { gap: var(--space-page); }
+.row-between { justify-content: space-between; }
+.row-end { justify-content: flex-end; }
+.row-top { align-items: flex-start; }
+:is(.row, .row-tight, .row-loose) > .push { margin-inline-start: auto; }
 
 /* ----- GRID: responsive columns with themed gaps -----
    (docs mirror — identical to llms.txt · Grid)
@@ -6024,18 +6032,29 @@ button.list-item:active { background: var(--surface-active); }
    written. What it is for: card grids, feature grids, galleries,
    dashboards. When to use it: any set of same-shaped pieces; the grid
    decides the count, the content decides the size. Variants: .grid-wide
-   for bigger cards, .grid-tight and .grid-loose for gap.*/
+   for bigger cards, .grid-tight and .grid-loose for gap; .grid-2 and
+   .grid-3 fix the count at two or three columns (still collapsing to one
+   on phones) for exact two- and three-up layouts. Set --grid-min on any
+   grid to change the minimum card width the auto-fit uses.*/
 .grid,
 .grid-wide,
 .grid-tight,
 .grid-loose {
   display: grid;
   gap: var(--space-stack);
-  grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min, 14rem), 100%), 1fr));
 }
-.grid-wide { grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr)); }
+.grid-wide { grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min, 20rem), 100%), 1fr)); }
 .grid-tight { gap: var(--space-control); }
 .grid-loose { gap: var(--space-page); }
+/* Fixed counts that still collapse to one column on phones. */
+.grid-2, .grid-3 { display: grid; gap: var(--space-stack); }
+.grid-2 { grid-template-columns: 1fr; }
+.grid-3 { grid-template-columns: 1fr; }
+@media (min-width: 640px) {
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
 
 /* ----- APP GRID: a launcher of app tiles -----
    (docs mirror — identical to llms.txt · App grid)

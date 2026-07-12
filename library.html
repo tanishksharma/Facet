@@ -1027,15 +1027,20 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="row" data-cat="layout">
         <h3 data-status="dev">Row</h3>
         <p>
-          Puts things side by side with an even gap, wrapping onto new lines when the room runs out.
+          Puts things side by side with an even gap, wrapping onto new lines when the room runs out — the row owns the gap, so children stay margin-free. Change the gap, spread the ends apart, or give one child <code>.push</code> to send it and everything after it to the far edge (the toolbar spacer).
         </p>
-        <p class="chips" role="group" aria-label="Row gaps">
-          <button class="chip" aria-pressed="false" data-chip-group="rowgap" data-chip-class="row-tight">Tight</button>
-          <button class="chip" aria-pressed="true" data-chip-group="rowgap" data-chip-class="row">Default</button>
-          <button class="chip" aria-pressed="false" data-chip-group="rowgap" data-chip-class="row-loose">Loose</button>
+        <p class="chips" role="group" aria-label="Row gap">
+          <button class="chip" aria-pressed="false" data-chip-group="rowgap" data-chip-class="row-tight" data-chip-target="#row-demo">Tight</button>
+          <button class="chip" aria-pressed="true" data-chip-group="rowgap" data-chip-class="row" data-chip-target="#row-demo">Default</button>
+          <button class="chip" aria-pressed="false" data-chip-group="rowgap" data-chip-class="row-loose" data-chip-target="#row-demo">Loose</button>
+        </p>
+        <p class="chips" role="group" aria-label="Row alignment">
+          <button class="chip" aria-pressed="true" data-chip-group="rowalign" data-chip-class="" data-chip-target="#row-demo" data-tip="Packed to the start">Start</button>
+          <button class="chip" aria-pressed="false" data-chip-group="rowalign" data-chip-class="row-between" data-chip-target="#row-demo" data-tip="Ends spread apart">Between</button>
+          <button class="chip" aria-pressed="false" data-chip-group="rowalign" data-chip-class="row-end" data-chip-target="#row-demo" data-tip="Pushed to the trailing edge">End</button>
         </p>
         <div class="demo">
-          <div class="row">
+          <div class="row" id="row-demo">
             <button class="btn btn-small">Save</button>
             <button class="btn btn-small">Duplicate</button>
             <button class="btn btn-ghost btn-small">Delete</button>
@@ -1044,24 +1049,37 @@ article p   { font-family: var(--font-reading); }
         </div>
         <pre id="code-row"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-row" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+
+        <p class="type-label" style="margin-top: var(--space-card);">A toolbar with a <code>.push</code> spacer — title left, actions right</p>
+        <div class="demo">
+          <div class="row" style="width:100%;">
+            <strong>Invoices</strong>
+            <button class="btn btn-ghost btn-small push">Export</button>
+            <button class="btn btn-primary btn-small">New invoice</button>
+          </div>
+        </div>
       </article>
 
       <!-- GRID -->
       <article class="element stack" id="grid" data-cat="layout">
         <h3 data-status="dev">Grid</h3>
         <p>
-          A grid of equal columns — as many as fit the screen, one on phones, with no breakpoints to write.
+          A grid of equal columns — as many as fit the screen, one on phones, with no breakpoints to write. Auto-fit sizes the count from the content; <code>.grid-2</code> and <code>.grid-3</code> fix an exact two- or three-up count that still collapses to one on phones; set <code>--grid-min</code> to change the minimum card width.
         </p>
-        <p class="chips" role="group" aria-label="Grid variants">
-          <button class="chip" aria-pressed="true" data-chip-group="gridvar" data-chip-class="grid">Default</button>
-          <button class="chip" aria-pressed="false" data-chip-group="gridvar" data-chip-class="grid-wide">Wide cards</button>
+        <p class="chips" role="group" aria-label="Grid variant">
+          <button class="chip" aria-pressed="true" data-chip-group="gridvar" data-chip-class="grid" data-chip-target="#grid-demo">Auto-fit</button>
+          <button class="chip" aria-pressed="false" data-chip-group="gridvar" data-chip-class="grid-wide" data-chip-target="#grid-demo">Wide cards</button>
+          <button class="chip" aria-pressed="false" data-chip-group="gridvar" data-chip-class="grid-2" data-chip-target="#grid-demo" data-tip="Exactly two across on desktop">Two-up</button>
+          <button class="chip" aria-pressed="false" data-chip-group="gridvar" data-chip-class="grid-3" data-chip-target="#grid-demo" data-tip="Exactly three across on desktop">Three-up</button>
         </p>
         <div class="demo">
-          <div class="grid">
+          <div class="grid" id="grid-demo">
             <p class="demo-box">One</p>
             <p class="demo-box">Two</p>
             <p class="demo-box">Three</p>
             <p class="demo-box">Four</p>
+            <p class="demo-box">Five</p>
+            <p class="demo-box">Six</p>
           </div>
         </div>
         <pre id="code-grid"><code></code></pre>
