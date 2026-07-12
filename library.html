@@ -79,6 +79,8 @@
         <ul>
           <li><a href="#card">Card</a></li>
           <li><a href="#feed-post">Feed post</a></li>
+          <li><a href="#entry">Entry</a></li>
+          <li><a href="#testimonial">Testimonial</a></li>
           <li><a href="#list">List</a></li>
           <li><a href="#table">Table</a></li>
           <li><a href="#chart">Chart</a></li>
@@ -1676,6 +1678,90 @@ article p   { font-family: var(--font-reading); }
         </div>
         <pre id="code-feed-post"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-feed-post" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- ENTRY -->
+      <article class="element stack" id="entry" data-cat="content">
+        <h3 data-status="dev">Entry</h3>
+        <p>
+          One dated item — a logo, title and date on the head row, then an optional source line, a summary and a bullet list. Stack several under a heading for a résumé, a changelog, a timeline or a list of awards. Every part is optional.
+        </p>
+        <div class="demo stack" style="max-width: 34rem;">
+          <!-- Full entry: emoji logo, org line, summary and bullets -->
+          <article class="entry">
+            <div class="entry-head">
+              <span class="entry-logo">🛰️</span>
+              <strong>Staff Engineer</strong>
+              <span class="entry-date">2023 — now</span>
+            </div>
+            <p class="entry-org">Orbital Systems · Remote</p>
+            <p>Led the ground-station rewrite and mentored the platform team through the migration.</p>
+            <ul>
+              <li>Cut telemetry latency by 40% across the fleet.</li>
+              <li>Shipped the new mission-control dashboard.</li>
+            </ul>
+          </article>
+
+          <!-- Image logo, no bullets -->
+          <article class="entry">
+            <div class="entry-head">
+              <span class="entry-logo"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%234f6bed'/%3E%3Ctext x='20' y='28' font-size='22' fill='%23fff' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" alt="Meridian"></span>
+              <strong>B.Sc. Computer Science</strong>
+              <span class="entry-date">2016 — 2020</span>
+            </div>
+            <p class="entry-org">Meridian University</p>
+            <p>Graduated with honours; thesis on real-time scheduling.</p>
+          </article>
+
+          <!-- Bare: just a head and a line -->
+          <article class="entry">
+            <div class="entry-head">
+              <span class="entry-logo">🏆</span>
+              <strong>Design Award, Best New Tool</strong>
+              <span class="entry-date">2024</span>
+            </div>
+            <p class="entry-org">Awwwards</p>
+          </article>
+        </div>
+        <pre id="code-entry"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-entry" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- TESTIMONIAL -->
+      <article class="element stack" id="testimonial" data-cat="content">
+        <h3 data-status="dev">Testimonial</h3>
+        <p>
+          One quote of praise with its author — an avatar, a name and role, and the quote set in the reading face. Place a few in a row or grid on a landing or about page. Use real quotes and real people, never invented praise.
+        </p>
+        <div class="demo grid" style="--grid-min: 16rem;">
+          <!-- Initials avatar -->
+          <figure class="testimonial">
+            <div class="testimonial-head">
+              <span class="testimonial-avatar">AL</span>
+              <span class="testimonial-who">
+                <span class="testimonial-name">Ada Lovelace</span>
+                <span class="testimonial-role">CTO, Analytical Engines</span>
+              </span>
+              <span class="testimonial-mark" aria-hidden="true">”</span>
+            </div>
+            <blockquote class="testimonial-quote">It shipped in a weekend and looked designed. Nothing else comes close.</blockquote>
+          </figure>
+
+          <!-- Photo avatar -->
+          <figure class="testimonial">
+            <div class="testimonial-head">
+              <span class="testimonial-avatar"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23e0b64a'/%3E%3Ctext x='20' y='27' font-size='20' text-anchor='middle'%3E%F0%9F%A7%91%3C/text%3E%3C/svg%3E" alt=""></span>
+              <span class="testimonial-who">
+                <span class="testimonial-name">Grace Hopper</span>
+                <span class="testimonial-role">Founder, Cobol Co.</span>
+              </span>
+              <span class="testimonial-mark" aria-hidden="true">”</span>
+            </div>
+            <blockquote class="testimonial-quote">The one library my whole team could read on the first pass.</blockquote>
+          </figure>
+        </div>
+        <pre id="code-testimonial"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-testimonial" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- LIST -->

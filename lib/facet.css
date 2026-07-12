@@ -5670,6 +5670,93 @@ details.dropdown {
 .feed-act-static { margin-left: auto; cursor: default; }
 .feed-act-static:hover { color: var(--text-muted); }
 
+/* (docs mirror — identical to llms.txt · Entry)
+   WHEN TO USE: a dated listing entry — a job or degree on a résumé, a release in a changelog, a milestone on a roadmap, an award. Stack several under a heading.
+
+   What it is: one dated entry — an .entry-head row (an .entry-logo holding an
+   emoji or a logo image, a strong title, and an .entry-date pushed to the far
+   end), an optional .entry-org line (company, place, tags), a summary
+   paragraph, and an optional bullet list. What it is for: work history,
+   education, changelogs, timelines and awards — any list of dated items with a
+   source and details. When to use it: stack them in a .stack; every part is
+   optional, so a bare entry is just a head and a line. */
+/* ----- ENTRY: a dated listing entry (work, education, changelog, award) ----- */
+.entry { display: flex; flex-direction: column; gap: var(--space-tight); }
+.entry-head { display: flex; align-items: center; gap: var(--space-inline); }
+.entry-logo {
+  flex: none;
+  width: 2.5rem; height: 2.5rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  border: var(--border-hairline) solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  overflow: hidden;
+}
+.entry-logo img { width: 100%; height: 100%; object-fit: cover; }
+.entry-head > strong, .entry-title { font-weight: var(--weight-strong); }
+.entry-date {
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+}
+.entry-org { color: var(--text-muted); font-size: var(--text-caption); }
+.entry ul { margin: 0; }
+
+/* (docs mirror — identical to llms.txt · Testimonial)
+   WHEN TO USE: one quote of praise with its author — a customer, a colleague, a review. A few in a row or grid; never invented.
+
+   What it is: a quote card — a .testimonial-head (an .testimonial-avatar with
+   an image or initials, a .testimonial-who with the .testimonial-name and
+   .testimonial-role, and a decorative .testimonial-mark quote glyph pushed to
+   the end) over the .testimonial-quote itself, set in the quote face. What it
+   is for: borrowed trust on landing and about pages. When to use it: with real
+   quotes and real people, a few in a card row or grid — never a carousel of
+   invented praise. */
+/* ----- TESTIMONIAL: a quote of praise with its author ----- */
+.testimonial {
+  display: flex; flex-direction: column; gap: var(--space-inline);
+  padding: var(--space-card);
+  border: var(--border-element) solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-raised);
+}
+.testimonial-head { display: flex; align-items: center; gap: var(--space-inline); }
+.testimonial-avatar {
+  flex: none;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: var(--radius-pill);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  background: var(--accent-2);
+  color: var(--on-accent-2);
+  font-weight: var(--weight-strong);
+  font-size: var(--text-footnote);
+}
+.testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.testimonial-who { display: flex; flex-direction: column; min-width: 0; }
+.testimonial-name { font-size: var(--text-footnote); font-weight: var(--weight-strong); line-height: 1.2; }
+.testimonial-role {
+  font-size: var(--text-caption); color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.testimonial-mark {
+  margin-left: auto; flex: none;
+  color: var(--accent-2);
+  font-family: var(--font-quote);
+  font-size: 2.5rem; line-height: 1;
+}
+.testimonial-quote {
+  margin: 0;
+  font-family: var(--font-quote);
+  font-size: var(--text-quote);
+  line-height: var(--leading-snug);
+  color: var(--text);
+}
+
 /* ----- LIST: rows of items -----
    (docs mirror — identical to llms.txt · List)
    WHEN TO USE: any repeated row of items — settings, menus, feeds, search results. It is ONE component: every look is a composition of its slots, never a sibling component.

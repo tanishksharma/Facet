@@ -181,6 +181,11 @@ two-line; bare with hairlines or .list-boxed; rows can be links or buttons);
 the text clamp (.text-clamp — holds a long block to --clamp-lines lines,
 default 3, with a soft bottom fade and no ellipsis, the full text kept in
 the DOM for assistive tech, reader view and print);
+the dated entry (.entry — a logo, title and date head over an optional org
+line, summary and bullet list, for résumés, changelogs, timelines and
+awards; every part optional) and the testimonial card (.testimonial — an
+avatar, name, role and quote glyph over a quote in the quote face, for
+borrowed trust on landing pages);
 the app-grid launcher (.app-grid of .app-tile links — rounded-square icon,
 name, one-line caption, optional .app-count metric in tabular digits);
 the icon badge (.icon-badge in an .icon-badge-holder — a plasticine
@@ -854,6 +859,63 @@ each carries a data-event hook.
         <span class="feed-act feed-act-static"><svg width="16" height="16" data-icon="eye"></svg>1.2k</span>
       </div>
     </article>
+
+### Entry
+
+WHEN TO USE: a dated listing entry — a job or degree on a résumé, a release in a changelog, a milestone on a roadmap, an award. Stack several under a heading.
+
+What it is: one dated entry — an .entry-head row (an .entry-logo holding an
+emoji or a logo image, a strong title, and an .entry-date pushed to the far
+end), an optional .entry-org line (company, place, tags), a summary
+paragraph, and an optional bullet list. What it is for: work history,
+education, changelogs, timelines and awards — any list of dated items with a
+source and details. When to use it: stack them in a .stack; every part is
+optional, so a bare entry is just a head and a line.
+
+    <article class="entry">
+      <div class="entry-head">
+        <span class="entry-logo">🛰️</span>
+        <strong>Staff Engineer</strong>
+        <span class="entry-date">2023 — now</span>
+      </div>
+      <p class="entry-org">Orbital Systems · Remote</p>
+      <p>Led the ground-station rewrite and mentored the platform team.</p>
+      <ul>
+        <li>Cut telemetry latency by 40%.</li>
+        <li>Shipped the new fleet dashboard.</li>
+      </ul>
+    </article>
+
+Use an image logo instead of an emoji with <span class="entry-logo"><img
+src="/acme.png" alt="Acme"></span>. Drop the .entry-date, the .entry-org,
+the paragraph or the list freely — any subset is valid.
+
+### Testimonial
+
+WHEN TO USE: one quote of praise with its author — a customer, a colleague, a review. A few in a row or grid; never invented.
+
+What it is: a quote card — a .testimonial-head (an .testimonial-avatar with
+an image or initials, a .testimonial-who with the .testimonial-name and
+.testimonial-role, and a decorative .testimonial-mark quote glyph pushed to
+the end) over the .testimonial-quote itself, set in the quote face. What it
+is for: borrowed trust on landing and about pages. When to use it: with real
+quotes and real people, a few in a card row or grid — never a carousel of
+invented praise.
+
+    <figure class="testimonial">
+      <div class="testimonial-head">
+        <span class="testimonial-avatar">AL</span>
+        <span class="testimonial-who">
+          <span class="testimonial-name">Ada Lovelace</span>
+          <span class="testimonial-role">CTO, Analytical Engines</span>
+        </span>
+        <span class="testimonial-mark" aria-hidden="true">”</span>
+      </div>
+      <blockquote class="testimonial-quote">It shipped in a weekend and looked designed. Nothing else comes close.</blockquote>
+    </figure>
+
+Swap the initials for a photo with <span class="testimonial-avatar"><img
+src="/ada.jpg" alt=""></span>. Place a few in a .card-row or a .grid.
 
 ### List
 
