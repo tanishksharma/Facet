@@ -680,17 +680,35 @@
           <h3>facet.fieldActions</h3>
           <p>
             A field carrying data-field-actions gains a Clear × and a ⋯
-            menu (Copy, Paste, Select all, Undo) tucked at its trailing
-            edge. facet.js wraps the control and wires everything — no
-            markup for the buttons, no per-field JS. Undo keeps the field's
-            own history; the Clear hides itself while the field is empty.
-            Each action gives feedback and a data-event hook.
+            menu (Copy, Paste, Select all, Undo, Redo — each with its icon)
+            tucked at its trailing edge. facet.js wraps the control and
+            wires everything — no markup for the buttons, no per-field JS.
+            Undo and Redo walk the field's own history and grey out when
+            their stack is empty; the Clear hides itself while the field is
+            empty. Each action gives feedback and a data-event hook.
           </p>
           <pre id="code-fn-field-actions"><code>&lt;label class="field" data-field-actions&gt;
   &lt;span class="field-label"&gt;API key&lt;/span&gt;
   &lt;input type="text" value="sk-facet-9f2ac41e8b" aria-label="API key"&gt;
 &lt;/label&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-field-actions" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-password-reveal" data-llms="Fields: input, textarea, select, search">
+          <h3>facet.passwordReveal</h3>
+          <p>
+            data-reveal on a .field with a password input injects a show/hide
+            eye at its trailing edge. facet.js flips the input between
+            password and text; aria-pressed carries the state (and lights the
+            eye) and the button's label updates for screen readers. It shares
+            the same field wrapper as the actions menu, so a field can have
+            both.
+          </p>
+          <pre id="code-fn-password-reveal"><code>&lt;label class="field" data-reveal&gt;
+  &lt;span class="field-label"&gt;Password&lt;/span&gt;
+  &lt;input type="password" autocomplete="current-password"&gt;
+&lt;/label&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-password-reveal" data-tip="Copies this code">Copy</button></p>
         </article>
       </section>
 

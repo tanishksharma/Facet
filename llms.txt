@@ -162,9 +162,10 @@ cancelable facet:subscribe event, the project owns the send);
 the calculator-grade number input (prefilled example, one-tap clear,
 locale-aware grouping, words helper in the active language); labelled
 fields with hints and three-color validation (data-status +
-.field-msg, aria-invalid and native :user-invalid honoured), plus opt-in
-in-field actions (data-field-actions adds a Clear × and a Copy / Paste /
-Select all / Undo menu); the
+.field-msg, aria-invalid and native :user-invalid honoured), the right
+mobile keyboard and autofill from type + inputmode + autocomplete, plus
+two opt-ins (data-reveal adds a password show/hide eye, data-field-actions
+adds a Clear × and a Copy / Paste / Select all / Undo / Redo menu); the
 component state grammar — every state rides a native pseudo-class, an
 ARIA attribute or data-status, giving selected cards and rows,
 disabled anything, readonly fields, indeterminate progress and
