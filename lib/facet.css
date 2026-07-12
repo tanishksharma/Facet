@@ -2733,10 +2733,15 @@ input, textarea, [contenteditable] {
    readers announce it; for validation set
    data-status="error|warning|success" on the field and swap the hint
    for a .field-msg line (.field-invalid + .field-error stay as aliases
-   — see Component states). A text field can also carry data-field-actions
-   to gain an in-field Clear and a Copy / Paste / Select all / Undo menu
-   (see Field actions). When to use it: any time a control needs a name —
-   which is always. */
+   — see Component states). The input's type sets its mobile keyboard,
+   autofill and native check (email, tel, url, number, password); inputmode
+   fine-tunes the keyboard without changing the type (numeric on a text field
+   for a one-time code) and autocomplete names the autofill (email, tel,
+   one-time-code, current-password). A password field takes data-reveal for a
+   show/hide eye; any text field takes data-field-actions for an in-field
+   Clear and a Copy / Paste / Select all / Undo / Redo menu (see Field
+   actions). When to use it: any time a control needs a name — which is
+   always. */
 .field {
   display: flex;
   flex-direction: column;
@@ -2881,7 +2886,7 @@ input[type="week"] {
    What it is: an opt-in pair of affordances tucked at a field's trailing
    edge — a Clear × that wipes the value in one tap, and a ⋯ menu of Copy
    (the value to the clipboard), Paste (the clipboard into the field at the
-   cursor), Select all, and Undo (step back through the field's own history).
+   cursor), Select all, and Undo / Redo (stepping through the field's history).
    What it is for: fields worth acting on by hand. When to use it: add
    data-field-actions to the .field and facet.js wraps the control and wires
    everything — no per-field JS, no markup for the buttons. Each action gives
@@ -2893,7 +2898,8 @@ input[type="week"] {
    .field-control and injects .field-actions at its trailing edge. Reuses the
    ghost icon button and the dropdown menu; the input just gets room for them. */
 .field-control { position: relative; display: block; }
-.field-control > :is(input, textarea) { padding-right: 4.75rem; }
+.field-control > :is(input, textarea) { padding-right: 2.75rem; }          /* room for one affordance */
+.field-control:has(.field-menu) > :is(input, textarea) { padding-right: 4.75rem; }  /* clear + menu */
 .field-actions {
   position: absolute;
   right: var(--space-tight);
@@ -2906,10 +2912,15 @@ input[type="week"] {
 .field-control:has(> textarea) .field-actions { top: var(--space-tight); }
 .field-actions .btn-icon { color: var(--text-muted); }
 .field-actions .btn-icon:hover { color: var(--text); }
-/* The ⋯ menu drops below-right so it never spills past the field's edge. */
+/* The ⋯ menu drops below-right so it never spills past the field's edge,
+   and each item leads with its icon. */
 .field-actions .dropdown-menu { left: auto; right: 0; min-width: 11rem; }
+.field-menu .dropdown-menu button { gap: var(--space-inline); }
+.field-menu .dropdown-menu svg { flex: none; opacity: 0.7; }
 /* Nothing to clear while the field is empty (a class beats .btn's display). */
 .field-clear[hidden] { display: none; }
+/* The password reveal (data-reveal): the eye lights when the value shows. */
+.field-reveal[aria-pressed="true"] { color: var(--accent-3); }
 
 /* --------------------------------------------------------------------------
    SLIDER

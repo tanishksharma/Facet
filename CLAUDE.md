@@ -738,8 +738,10 @@ SaaS dashboard (templates/saas.html) and social app (templates/social.html) alre
 ### Field actions component (in-field menu)
 
 > **SHIPPED** — `data-field-actions` on a `.field`; facet.js (`initFieldActions`)
-> wraps the control and injects a Clear × plus a ⋯ dropdown of Copy / Paste /
-> Select all / Undo. Two decisions landed differently from the original note:
+> wraps the control and injects a Clear × plus a ⋯ dropdown (icons per item) of
+> Copy / Paste / Select all / Undo / Redo (Undo/Redo grey out when their stack is
+> empty). A sibling `data-reveal` adds a show/hide eye to a password field
+> (`initPasswordReveal`), sharing the same `.field-control` wrapper. Two decisions landed differently from the original note:
 > the menu is a real `details.dropdown` (not `[popover]`), reusing the dropdown
 > component's own open/close, and the menu holds Select all alongside the
 > spec's Copy/Paste/Undo. Undo keeps a per-field history (snapshots at focus and

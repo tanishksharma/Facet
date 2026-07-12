@@ -1232,7 +1232,7 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="fields" data-cat="forms">
         <h3 data-status="dev">Fields: input, textarea, select, search</h3>
         <p>
-          One label.field pattern wraps every control — text, select, textarea, search — with a hint line and validation built in. Add data-field-actions and a field gains a Clear × and a ⋯ menu for Copy, Paste, Select all and Undo.
+          One label.field pattern wraps every control — text, select, textarea, search — with a hint line and validation built in. The input type sets the mobile keyboard, autofill and native check; inputmode fine-tunes the keyboard on its own. Add data-reveal to a password field for a show/hide eye, or data-field-actions to any field for a Clear × and a ⋯ menu (Copy, Paste, Select all, Undo, Redo).
         </p>
         <div class="demo stack">
           <p class="eyebrow" data-demo-chrome style="margin:0;">Controls — one pattern, any kind</p>
@@ -1261,11 +1261,45 @@ article p   { font-family: var(--font-reading); }
             <input type="search" placeholder="Type to filter">
           </label>
 
-          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">In-field actions — data-field-actions adds Clear × and a ⋯ menu (Copy · Paste · Select all · Undo)</p>
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">Types &amp; keyboards — the right type gives the right mobile keyboard, validation and autofill</p>
+          <div class="grid">
+            <label class="field">
+              <span class="field-label">Email</span>
+              <input type="email" inputmode="email" autocomplete="email" placeholder="you@example.com">
+              <span class="field-hint">type=email: @-key keyboard, autofill, native check.</span>
+            </label>
+            <label class="field">
+              <span class="field-label">Phone</span>
+              <input type="tel" inputmode="tel" autocomplete="tel" placeholder="+1 555 0199">
+              <span class="field-hint">type=tel: the phone keypad; format in your app.</span>
+            </label>
+            <label class="field">
+              <span class="field-label">Quantity</span>
+              <input type="number" inputmode="numeric" min="1" max="99" value="4">
+              <span class="field-hint">type=number for a real quantity.</span>
+            </label>
+            <label class="field">
+              <span class="field-label">One-time code</span>
+              <input type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="6" placeholder="000000">
+              <span class="field-hint">Digits keyboard without the spinner.</span>
+            </label>
+            <label class="field">
+              <span class="field-label">Website</span>
+              <input type="url" inputmode="url" autocomplete="url" placeholder="https://">
+              <span class="field-hint">type=url: the URL keyboard.</span>
+            </label>
+            <label class="field" data-reveal>
+              <span class="field-label">Password</span>
+              <input type="password" autocomplete="current-password" value="hunter2-abc">
+              <span class="field-hint">data-reveal adds the show/hide eye.</span>
+            </label>
+          </div>
+
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">In-field actions — data-field-actions adds Clear × and a ⋯ menu (Copy · Paste · Select all · Undo · Redo)</p>
           <label class="field" data-field-actions>
             <span class="field-label">API key</span>
             <input type="text" value="sk-facet-9f2ac41e8b" aria-label="API key">
-            <span class="field-hint">Copy it, paste a new one, select all or undo — and clear with the ×.</span>
+            <span class="field-hint">Copy it, paste a new one, select all, undo/redo — and clear with the ×.</span>
           </label>
 
           <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">Validation — data-status on the field + a .field-msg line</p>
@@ -1304,6 +1338,18 @@ article p   { font-family: var(--font-reading); }
   &lt;span class="field-label"&gt;Full name&lt;/span&gt;
   &lt;input type="text" placeholder="Ada Lovelace"&gt;
   &lt;span class="field-hint"&gt;As it appears on the invoice.&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- type + inputmode + autocomplete: the right keyboard, autofill and check --&gt;
+&lt;input type="email" inputmode="email" autocomplete="email"&gt;
+&lt;input type="tel"   inputmode="tel"   autocomplete="tel"&gt;
+&lt;input type="url"   inputmode="url"   autocomplete="url"&gt;
+&lt;input type="text"  inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code"&gt;
+
+&lt;!-- password with a show/hide eye: one attribute --&gt;
+&lt;label class="field" data-reveal&gt;
+  &lt;span class="field-label"&gt;Password&lt;/span&gt;
+  &lt;input type="password" autocomplete="current-password"&gt;
 &lt;/label&gt;
 
 &lt;!-- in-field actions: one attribute, facet.js injects × and the ⋯ menu --&gt;
