@@ -4821,11 +4821,15 @@ progress:not([value])::-moz-progress-bar { background: transparent; }
    toggleable pill button; aria-pressed carries its state and facet.js
    toggles a bare chip on click (chips wired to data attributes keep
    their own handlers); an svg glyph inside a chip sits beside the label
-   on its own. Avatar: a round face — an image or initials on
-   the quiet fill; .avatar-large for bigger. Progress: the native
-   <progress> themed, accent-1 fill on a quiet track. Badges state, they
-   never act; avatars carry the person's name in alt or aria-label;
-   determinate progress needs value and max with words nearby.*/
+   on its own; add a .chip-remove × to make it a removable filter token
+   (facet.js deletes the chip and fires a bubbling facet:chipremove
+   {value, chip}). Avatar: a round face — an image or initials on the
+   quiet fill; .avatar-small and .avatar-large resize it, and an
+   .avatar-group overlaps several into one ringed cluster. Progress: the
+   native <progress> themed, accent-1 fill on a quiet track, or a sliding
+   indeterminate bar when it has no value. Badges state, they never act;
+   avatars carry the person's name in alt or aria-label; determinate
+   progress needs value and max with words nearby.*/
 .badge {
   display: inline-flex;
   align-items: center;
@@ -4873,6 +4877,17 @@ progress:not([value])::-moz-progress-bar { background: transparent; }
   border-color: var(--accent-3);
   color: var(--on-accent-3);
 }
+/* Removable chip: a filter token carrying an × that deletes it. */
+.chip-remove {
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-inline: var(--space-tight) calc(-1 * var(--space-tight) / 2);
+  width: 1.15rem; height: 1.15rem;
+  border: none; border-radius: var(--radius-pill);
+  background: transparent; color: inherit; opacity: 0.55;
+  cursor: pointer; font-size: 1rem; line-height: 1;
+  transition: opacity var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
+}
+.chip-remove:hover { opacity: 1; background: var(--surface-active); }
 
 .avatar {
   display: inline-flex;
@@ -4889,7 +4904,14 @@ progress:not([value])::-moz-progress-bar { background: transparent; }
   flex: none;
 }
 .avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-small { width: 1.75rem; height: 1.75rem; font-size: var(--text-caption); }
 .avatar-large { width: 3.5rem; height: 3.5rem; font-size: var(--text-body); }
+/* Avatar group: overlapping faces, each ringed by the page background so
+   they read apart. Left to right in source order; end a group with a
+   count avatar ("+3") for the overflow. */
+.avatar-group { display: inline-flex; }
+.avatar-group > .avatar { border: 2px solid var(--background); margin-inline-start: -0.6rem; }
+.avatar-group > .avatar:first-child { margin-inline-start: 0; }
 
 progress {
   appearance: none;

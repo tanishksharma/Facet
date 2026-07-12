@@ -2020,30 +2020,52 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="small-talkers" data-cat="content">
         <h3 data-status="dev">Badge, chip, avatar, progress</h3>
         <p>
-          Four tiny signals: the badge for a status word, the chip for a filter, the avatar for a person, the progress bar for a share of done.
+          Four tiny signals. The badge is a status word that never acts; the chip is a filter you press, or a token you remove with its ×; the avatar is a person, alone or overlapped into a group; the progress bar shows a share of done, or slides on its own when the total is unknown.
         </p>
-        <div class="demo">
-          <div class="stack">
-            <p class="row-tight" style="max-width: none;">
-              <span class="badge">Draft</span>
-              <span class="badge badge-success">Paid</span>
-              <span class="badge badge-warning">Expiring</span>
-              <span class="badge badge-error">Failed</span>
-              <span class="badge badge-info">3 updates</span>
-            </p>
-            <p class="chips">
-              <button type="button" class="chip" aria-pressed="true" data-tip="A pressed filter chip" data-event="filter-food">Food</button>
-              <button type="button" class="chip" aria-pressed="false" data-tip="Click to press" data-event="filter-travel">Travel</button>
-              <button type="button" class="chip" aria-pressed="false" data-tip="Click to press" data-event="filter-rent">Rent</button>
-            </p>
-            <p class="row-tight" style="max-width: none;">
-              <span class="avatar" aria-label="Tanishk Sharma">TS</span>
-              <span class="avatar avatar-large" aria-label="Facet">F</span>
-            </p>
-            <label class="field">
-              <span class="field-label">Uploading — 70%</span>
-              <progress value="70" max="100"></progress>
-            </label>
+        <div class="demo stack">
+          <!-- Badge: the status words -->
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Badge — a status word in a tinted pill</p>
+          <p class="row-tight" data-demo-unwrap style="max-width: none;">
+            <span class="badge">Draft</span>
+            <span class="badge badge-success">Paid</span>
+            <span class="badge badge-warning">Expiring</span>
+            <span class="badge badge-error">Failed</span>
+            <span class="badge badge-info">3 updates</span>
+          </p>
+
+          <!-- Chip: pressed / plain / disabled / removable -->
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Chip — a toggle filter, or a removable token</p>
+          <p class="chips" data-demo-unwrap>
+            <button type="button" class="chip" aria-pressed="true" data-tip="A pressed filter chip" data-event="filter-food">Food</button>
+            <button type="button" class="chip" aria-pressed="false" data-tip="Click to press" data-event="filter-travel">Travel</button>
+            <button type="button" class="chip" disabled data-tip="Not available">Archived</button>
+            <span class="chip" data-value="rent">Rent
+              <button type="button" class="chip-remove" aria-label="Remove Rent">&times;</button>
+            </span>
+            <span class="chip" data-value="tax">Tax
+              <button type="button" class="chip-remove" aria-label="Remove Tax">&times;</button>
+            </span>
+          </p>
+
+          <!-- Avatar: sizes, image, group -->
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Avatar — a face, alone or overlapped</p>
+          <p class="row" data-demo-unwrap style="max-width: none; align-items: center;">
+            <span class="avatar avatar-small" aria-label="Tanishk Sharma">TS</span>
+            <span class="avatar" aria-label="Tanishk Sharma">TS</span>
+            <span class="avatar avatar-large" aria-label="Facet">F</span>
+            <span class="avatar-group">
+              <span class="avatar" aria-label="Ada Lovelace">AL</span>
+              <span class="avatar" style="background: var(--accent-3); color: var(--on-accent-3);" aria-label="Grace Hopper">GH</span>
+              <span class="avatar" style="background: var(--accent-1); color: var(--on-accent-1);" aria-label="Alan Turing">AT</span>
+              <span class="avatar" aria-label="3 more">+3</span>
+            </span>
+          </p>
+
+          <!-- Progress: determinate and indeterminate -->
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Progress — a known share, or an unknown wait</p>
+          <div class="stack-tight" data-demo-unwrap style="max-width: 22rem;">
+            <label class="field"><span class="field-label">Uploading — 70%</span><progress value="70" max="100"></progress></label>
+            <label class="field"><span class="field-label">Working…</span><progress aria-label="Working"></progress></label>
           </div>
         </div>
         <pre id="code-small-talkers"><code></code></pre>
