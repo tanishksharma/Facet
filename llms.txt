@@ -138,8 +138,9 @@ backdrop, data-bg-fluid-fixed for pools the surface scrolls over; the
 view-stack app shell for screen-to-screen apps (main.view-stack of
 .view screens, hash-routed, facet.views.go/back, safe-area padded);
 buttons in
-three variants and three sizes working on <button> and <a>, plus .btn-pill
-capsule shape (an icon-and-label pill with no extra markup); icon buttons;
+three styles and three sizes working on <button> and <a>, plus .btn-pill
+capsule shape (an icon-and-label pill with no extra markup) and .btn-icon
+(the same button reduced to one glyph — style, size and shape all combine);
 the app-kit floating controls — the tab bar (the Photos-style command
 bar: a bottom pill on phones, the top site bar on wide screens, its
 corner panels condensing into and rising out of their own buttons, one
@@ -836,34 +837,74 @@ it needs no tokens of its own and restyles with every theme.
       </li>
     </ul>
 
-### Modal, drawer, popover
+### Modal
 
-WHEN TO USE: a modal for a decision that blocks the page, a drawer for a side task that keeps context, a popover for a small anchored bite. All are the native elements, so focus trapping, Esc and the backdrop come free.
+WHEN TO USE: a decision that blocks the page until it is answered — a confirm, a sign-in, a short form. Built on <dialog>, so focus trapping, Esc and the inert page behind come free.
 
-What it is: overlays built on the platform's own machinery — modal and
-drawer are <dialog> (focus trap, Esc, inert page for free), popover is
-the popover attribute (top layer, light dismiss, no JS at all). What
-it is for: modal for a decision that blocks the page; drawer for a
-side panel of details or filters; popover for small floating bits. The
-drawer slides in from the right by default; add .drawer-left and it
-slides from the left — the document-world twin of the app-kit
-.sheet-left. When to use it: open a dialog from any button whose
-aria-controls names it — facet.js calls showModal; close with a form
-method="dialog" button inside, Esc, or a backdrop click. Popovers need
-only popovertarget on the button. The app-kit .sheet stays the settings
-panel for app pages; the drawer is the document-world sibling.
+What it is: a centered card built on the platform's own <dialog> — focus
+trap, Esc and an inert page for free. What it is for: the one thing the
+reader must deal with before the page continues. When to use it: open it
+from any button whose aria-controls names the dialog (facet.js calls
+showModal); close it with a form method="dialog" button inside, Esc, or a
+click on the backdrop. Give it a tidy shape with the optional .dialog-head
+(a title on the left, a close icon button on the right) and .dialog-actions
+(the buttons, pushed to the trailing edge). The app-kit .sheet is the
+settings panel for app pages; the modal is the document-world decision.
 
-    <button class="btn" aria-controls="confirm">Delete…</button>
-    <dialog class="modal" id="confirm">
-      <p>Delete this report?</p>
-      <form method="dialog" class="row">
-        <button class="btn btn-primary">Delete</button>
+    <button class="btn btn-primary" aria-controls="confirm">Delete…</button>
+    <dialog class="modal stack" id="confirm">
+      <div class="dialog-head">
+        <h3>Delete this report?</h3>
+        <form method="dialog"><button class="btn btn-icon btn-ghost" aria-label="Close"><svg width="20" height="20" data-icon="close"></svg></button></form>
+      </div>
+      <p>This cannot be undone.</p>
+      <form method="dialog" class="dialog-actions">
         <button class="btn">Keep it</button>
+        <button class="btn btn-primary">Delete</button>
       </form>
     </dialog>
 
+### Drawer
+
+WHEN TO USE: a side task that keeps the page's context in view — filters, details, a navigation list. One panel, any edge.
+
+What it is: a <dialog class="drawer"> that slides in from an edge; the
+direction is a variant — the default right, .drawer-left, .drawer-top or
+.drawer-bottom. The side drawers stand full height; top and bottom are
+full-width strips capped at 85% of the height; all of them scroll their
+own content when it overflows. What it is for: filters, details and
+navigation that sit beside the work instead of on top of it. When to use
+it: same open and close as the modal — a button's aria-controls names it
+(facet.js calls showModal), Esc, backdrop and form method="dialog" all
+close it; the optional .dialog-head and .dialog-actions give it the same
+tidy header and footer, and in a column drawer the actions sink to the
+bottom edge. The document-world twin of the app-kit .sheet.
+
+    <button class="btn" aria-controls="filters">Filters</button>
+    <dialog class="drawer stack" id="filters">
+      <h3>Filters</h3>
+      <label class="check-row"><input type="checkbox" checked> Cleared</label>
+      <form method="dialog" class="dialog-actions"><button class="btn btn-primary">Apply</button></form>
+    </dialog>
+
+### Popover
+
+WHEN TO USE: a small anchored bite — a hint, a definition, a short menu — that should close the moment attention moves on.
+
+What it is: a [popover] element toggled straight from a button's
+popovertarget — the platform's top layer, no JS to open. What it is for:
+small floating bits attached to a control: a hint, a note, a few actions.
+When to use it: point a button's popovertarget at the element's id and it
+toggles, no wiring. It light-dismisses on a click outside or Esc, and
+facet.js also closes it the moment the page scrolls, so a popover never
+floats detached from the thing it explains. For actions that change the
+page rather than explain it, reach for the dropdown menu instead.
+
     <button class="btn" popovertarget="note">Toggle popover</button>
-    <div popover id="note">Light-dismisses on any outside click.</div>
+    <div popover id="note" class="stack-tight">
+      <strong>Quick note</strong>
+      <p class="text-footnote">Light-dismisses on any outside click, Esc, or a scroll.</p>
+    </div>
 
 ### Accordion, toast, dropdown menu
 
@@ -1453,42 +1494,32 @@ visitor left. Each arrival fires a bubbling "facet:view" CustomEvent
 
 WHEN TO USE: any click that does something. At most one primary per screen; navigation dressed as a button is an <a class="btn">.
 
-What it is: the action element, in three variants and three sizes, working
-identically on <button> and on <a>. What it is for: .btn-primary carries
-the screen's one main action in accent-1. .btn-secondary is every other
-action, on the accent-2 fill. .btn-ghost is for quiet actions inside busy
-areas, invisible until hovered. When to use it: any click that does something. One primary
-per screen at most. Navigation styled as a button is an <a class="btn">.
-Put the button's key action name in a data-event attribute as the
+What it is: the action element, working identically on <button> and on
+<a>, in a small family of independent options you combine freely. Style:
+.btn-primary carries the screen's one main action in accent-1;
+.btn-secondary is every other action, on the accent-2 fill (the look a
+bare .btn already has); .btn-ghost is the quiet action inside busy areas,
+invisible until hovered. Size: .btn-small, the default, and .btn-large.
+Shape: .btn-pill rounds it into a capsule. An inline <svg> before the
+label needs no class — the button is already a flex row, so icon-and-label
+sit together (this is the icon-pill the nav menu is built from). The icon
+button is the same element reduced to one glyph: add .btn-icon for a
+square target and give it an aria-label (the icon alone says nothing) plus
+a data-tip; it takes every style, size and shape, so a primary pill icon
+button is just .btn.btn-primary.btn-pill.btn-icon. Icons are inline SVG
+with stroke="currentColor", so they wear the button's text color in every
+theme. What it is for: every action a click performs. When to use it: any
+click that does something, one primary per screen at most; navigation
+styled as a button is an <a class="btn">. States are built in — hover, a
+focus ring, a pressed weight and :disabled; aria-disabled disables an
+<a class="btn"> (a link can't be :disabled), and aria-busy shows a working
+spinner and blocks re-clicks. Put the action's name in data-event as the
 analytics hook.
 
-    <button class="btn btn-primary" data-event="calc-run"
-            data-tip="Runs the calculation">Calculate</button>
-
-Variants: .btn-primary, .btn-secondary (default for bare .btn), .btn-ghost
-Shapes: .btn-pill rounds the button into a capsule. Because the base .btn is
-already an inline-flex row, an inline <svg> icon plus a text label sit side by
-side with no extra class — that is the icon-pill the nav menu is built from.
-Sizes: .btn-small, default, .btn-large
-States built in: hover, focus ring, pressed, :disabled
-
-### Icon button
-
-WHEN TO USE: compact, secondary actions where an icon plus its tooltip is enough — close, clear, share. Always with an aria-label.
-
-What it is: a square button holding a single icon. What it is for: compact
-actions whose meaning the icon plus its tooltip carries — the clear cross
-in a number field, a close button, a share arrow. When to use it: when
-space is tight and the action is secondary. The icon alone says nothing, so
-every icon button carries an aria-label for screen readers and a data-tip
-tooltip for everyone else. Combines with any button variant and size.
-Icons are inline SVG with stroke="currentColor" so they take the button's
-text color in every theme.
-
+    <button class="btn btn-primary" data-event="save"
+            data-tip="Saves your changes">Save changes</button>
     <button class="btn btn-icon" aria-label="Close" data-tip="Close this panel">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-           stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-           aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg>
+      <svg width="20" height="20" data-icon="close" aria-hidden="true"></svg>
     </button>
 
 ### Number input

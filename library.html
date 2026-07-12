@@ -62,8 +62,7 @@
              data-page-lead="Buttons, fields and every control a hand touches.">
           <a class="nav-group-name side-index-name" href="#cat-forms">Forms &amp; controls</a>
         <ul>
-          <li><a href="#button">Button</a></li>
-          <li><a href="#icon-button">Icon button</a></li>
+          <li><a href="#button">Button &amp; icon button</a></li>
           <li><a href="#choice-controls">Switch &amp; checks</a></li>
           <li><a href="#stepper">Stepper &amp; segmented</a></li>
           <li><a href="#fields">Fields</a></li>
@@ -95,7 +94,9 @@
              data-page-lead="What floats above the page and what folds away.">
           <a class="nav-group-name side-index-name" href="#cat-overlays">Overlays &amp; disclosure</a>
         <ul>
-          <li><a href="#overlays">Modal, drawer, popover</a></li>
+          <li><a href="#modal">Modal</a></li>
+          <li><a href="#drawer">Drawer</a></li>
+          <li><a href="#popover">Popover</a></li>
           <li><a href="#disclosure">Accordion, toast, dropdown</a></li>
           <li><a href="#tooltip">Tooltip</a></li>
         </ul>
@@ -1119,75 +1120,67 @@ article p   { font-family: var(--font-reading); }
       <!-- Forms &amp; controls -->
       <h3 class="wall-group">Forms &amp; controls</h3>
 
-      <!-- BUTTON -->
+      <!-- BUTTON (text + icon are one component; icon is a variant) -->
       <article class="element stack" id="button" data-cat="forms">
         <h3 data-status="dev">Button</h3>
         <p>
-          The action element: three variants and three sizes for primary, secondary and quiet actions. Works identically as a button or a link, and carries every state built in.
+          The action element, on a &lt;button&gt; or an &lt;a&gt;. Style, size and shape are independent options you combine; the icon button is the same element reduced to one glyph. Pick a variant, set its options, and copy the exact button.
+        </p>
+        <p class="chips variant-row" role="group" aria-label="Variant">
+          <button class="chip" aria-pressed="true" data-chip-show="#btn-sec-text" data-tip="A labelled button">Text button</button>
+          <button class="chip" aria-pressed="false" data-chip-show="#btn-sec-icon" data-tip="A square button holding one icon">Icon button</button>
         </p>
         <div class="demo stack">
-          <p class="eyebrow" data-demo-chrome style="margin:0;">Variants — one primary per screen</p>
-          <div class="row">
-            <button class="btn btn-primary" data-event="save" data-tip="The screen's one main action, in accent-1">Save changes</button>
-            <button class="btn" data-tip="Every other action, on the accent-2 fill">Cancel</button>
-            <button class="btn btn-ghost" data-tip="Quiet actions inside busy areas — invisible until hovered">Dismiss</button>
+          <div class="stack" id="btn-sec-text" data-demo-unwrap style="align-items:flex-start;">
+            <button class="btn btn-primary" data-event="save">Save changes</button>
+            <div class="stack" data-demo-chrome style="width:100%;">
+              <p class="chips" role="group" aria-label="Style" style="margin:0;">
+                <button class="chip" aria-pressed="true"  data-chip-group="style-t" data-chip-class="btn-primary" data-chip-target="#btn-sec-text > .btn" data-tip="The one main action, accent-1">Primary</button>
+                <button class="chip" aria-pressed="false" data-chip-group="style-t" data-chip-class="" data-chip-target="#btn-sec-text > .btn" data-tip="Every other action — the default bare .btn">Secondary</button>
+                <button class="chip" aria-pressed="false" data-chip-group="style-t" data-chip-class="btn-ghost" data-chip-target="#btn-sec-text > .btn" data-tip="Quiet until hovered">Ghost</button>
+              </p>
+              <p class="chips" role="group" aria-label="Size" style="margin:0;">
+                <button class="chip" aria-pressed="false" data-chip-group="size-t" data-chip-class="btn-small" data-chip-target="#btn-sec-text > .btn">Small</button>
+                <button class="chip" aria-pressed="true"  data-chip-group="size-t" data-chip-class="" data-chip-target="#btn-sec-text > .btn">Default</button>
+                <button class="chip" aria-pressed="false" data-chip-group="size-t" data-chip-class="btn-large" data-chip-target="#btn-sec-text > .btn">Large</button>
+              </p>
+              <p class="chips" role="group" aria-label="Shape" style="margin:0;">
+                <button class="chip" aria-pressed="true"  data-chip-group="shape-t" data-chip-class="" data-chip-target="#btn-sec-text > .btn">Default</button>
+                <button class="chip" aria-pressed="false" data-chip-group="shape-t" data-chip-class="btn-pill" data-chip-target="#btn-sec-text > .btn" data-tip="A fully-rounded capsule">Pill</button>
+              </p>
+              <p class="chips" role="group" aria-label="State" style="margin:0;">
+                <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="#btn-sec-text > .btn" data-tip="Non-interactive">Disabled</button>
+                <button class="chip" aria-pressed="false" data-chip-attr="aria-busy" data-chip-attr-value="true" data-chip-target="#btn-sec-text > .btn" data-tip="A spinner shows and re-clicks are blocked">Loading</button>
+              </p>
+            </div>
           </div>
-          <p class="eyebrow" data-demo-chrome style="margin:0;">Sizes</p>
-          <div class="row" style="align-items:center;">
-            <button class="btn btn-primary btn-small">Small</button>
-            <button class="btn btn-primary">Default</button>
-            <button class="btn btn-primary btn-large">Large</button>
-          </div>
-          <p class="eyebrow" data-demo-chrome style="margin:0;">With an icon · as a pill · as a link</p>
-          <div class="row" style="align-items:center;">
-            <button class="btn"><svg width="16" height="16" data-icon="download" aria-hidden="true"></svg>Export</button>
-            <button class="btn btn-primary btn-pill"><svg width="16" height="16" data-icon="plus" aria-hidden="true"></svg>New report</button>
-            <a class="btn btn-pill" href="#button" data-tip="An &lt;a&gt; styled as a button — same look, real link">Open docs</a>
-          </div>
-          <p class="eyebrow" data-demo-chrome style="margin:0;">States — hover and focus are built in too</p>
-          <div class="row" style="align-items:center;">
-            <button class="btn" disabled>Disabled</button>
-            <button class="btn btn-primary" aria-busy="true" data-tip="Working: the spinner shows and re-clicks are blocked">Saving</button>
-            <a class="btn" href="#button" aria-disabled="true" data-tip="A disabled link — aria-disabled, since an &lt;a&gt; can't be :disabled">Disabled link</a>
+          <div class="stack" id="btn-sec-icon" data-demo-unwrap hidden style="align-items:flex-start;">
+            <button class="btn btn-icon btn-primary" aria-label="Add"><svg width="20" height="20" data-icon="plus" aria-hidden="true"></svg></button>
+            <div class="stack" data-demo-chrome style="width:100%;">
+              <p class="chips" role="group" aria-label="Style" style="margin:0;">
+                <button class="chip" aria-pressed="true"  data-chip-group="style-i" data-chip-class="btn-primary" data-chip-target="#btn-sec-icon > .btn" data-tip="The one main action, accent-1">Primary</button>
+                <button class="chip" aria-pressed="false" data-chip-group="style-i" data-chip-class="" data-chip-target="#btn-sec-icon > .btn" data-tip="The default bare .btn">Secondary</button>
+                <button class="chip" aria-pressed="false" data-chip-group="style-i" data-chip-class="btn-ghost" data-chip-target="#btn-sec-icon > .btn" data-tip="Quiet until hovered">Ghost</button>
+              </p>
+              <p class="chips" role="group" aria-label="Size" style="margin:0;">
+                <button class="chip" aria-pressed="false" data-chip-group="size-i" data-chip-class="btn-small" data-chip-target="#btn-sec-icon > .btn">Small</button>
+                <button class="chip" aria-pressed="true"  data-chip-group="size-i" data-chip-class="" data-chip-target="#btn-sec-icon > .btn">Default</button>
+                <button class="chip" aria-pressed="false" data-chip-group="size-i" data-chip-class="btn-large" data-chip-target="#btn-sec-icon > .btn">Large</button>
+              </p>
+              <p class="chips" role="group" aria-label="Shape" style="margin:0;">
+                <button class="chip" aria-pressed="true"  data-chip-group="shape-i" data-chip-class="" data-chip-target="#btn-sec-icon > .btn" data-tip="A rounded square">Square</button>
+                <button class="chip" aria-pressed="false" data-chip-group="shape-i" data-chip-class="btn-pill" data-chip-target="#btn-sec-icon > .btn" data-tip="A circle">Round</button>
+              </p>
+              <p class="chips" role="group" aria-label="State" style="margin:0;">
+                <button class="chip" aria-pressed="false" data-chip-attr="disabled" data-chip-target="#btn-sec-icon > .btn">Disabled</button>
+                <button class="chip" aria-pressed="false" data-chip-attr="aria-busy" data-chip-attr-value="true" data-chip-target="#btn-sec-icon > .btn" data-tip="A spinner replaces the icon">Loading</button>
+              </p>
+              <p class="text-caption" style="margin:0; color: var(--text-muted);">Every icon button needs an aria-label — the icon alone says nothing.</p>
+            </div>
           </div>
         </div>
         <pre id="code-button"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
-      </article>
-
-      <!-- ICON BUTTON -->
-      <article class="element stack" id="icon-button" data-cat="forms">
-        <h3 data-status="dev">Icon button</h3>
-        <p>
-          A square button holding one icon — for compact actions whose meaning the icon and its tooltip carry. It takes every button variant, size and state, and always needs an aria-label.
-        </p>
-        <div class="demo stack">
-          <p class="eyebrow" data-demo-chrome style="margin:0;">Variants</p>
-          <div class="row" style="align-items:center;">
-            <button class="btn btn-icon btn-primary" aria-label="Add" data-tip="Add"><svg width="20" height="20" data-icon="plus" aria-hidden="true"></svg></button>
-            <button class="btn btn-icon" aria-label="Edit" data-tip="Edit"><svg width="20" height="20" data-icon="edit" aria-hidden="true"></svg></button>
-            <button class="btn btn-icon btn-ghost" aria-label="More" data-tip="More"><svg width="20" height="20" data-icon="more" aria-hidden="true"></svg></button>
-          </div>
-          <p class="eyebrow" data-demo-chrome style="margin:0;">Sizes</p>
-          <div class="row" style="align-items:center;">
-            <button class="btn btn-icon btn-small" aria-label="Copy" data-tip="Copy"><svg width="16" height="16" data-icon="copy" aria-hidden="true"></svg></button>
-            <button class="btn btn-icon" aria-label="Share" data-tip="Share"><svg width="20" height="20" data-icon="share" aria-hidden="true"></svg></button>
-            <button class="btn btn-icon btn-large" aria-label="Download" data-tip="Download"><svg width="24" height="24" data-icon="download" aria-hidden="true"></svg></button>
-          </div>
-          <p class="eyebrow" data-demo-chrome style="margin:0;">Common actions · and a ghost pill close</p>
-          <div class="row" style="align-items:center;">
-            <button class="btn btn-icon" aria-label="Search" data-tip="Search"><svg width="20" height="20" data-icon="search" aria-hidden="true"></svg></button>
-            <button class="btn btn-icon" aria-label="Filter" data-tip="Filter"><svg width="20" height="20" data-icon="filter" aria-hidden="true"></svg></button>
-            <button class="btn btn-icon btn-ghost btn-pill" aria-label="Close" data-tip="Close"><svg width="20" height="20" data-icon="close" aria-hidden="true"></svg></button>
-          </div>
-          <p class="eyebrow" data-demo-chrome style="margin:0;">States</p>
-          <div class="row" style="align-items:center;">
-            <button class="btn btn-icon" aria-label="Delete" disabled data-tip="Disabled"><svg width="20" height="20" data-icon="trash" aria-hidden="true"></svg></button>
-            <button class="btn btn-icon btn-primary" aria-label="Uploading" aria-busy="true" data-tip="Working — the spinner replaces the icon"><svg width="20" height="20" data-icon="upload" aria-hidden="true"></svg></button>
-          </div>
-        </div>
-        <pre id="code-icon-button"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-icon-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+        <p><button class="btn btn-small" data-copy="#code-button" data-tip="Copies the configured button above">Copy</button></p>
       </article>
 
       <!-- CHOICE CONTROLS -->
@@ -1749,52 +1742,77 @@ article p   { font-family: var(--font-reading); }
       <h3 class="wall-group">Overlays &amp; disclosure</h3>
 
       <!-- MODAL + DRAWER + POPOVER -->
-      <article class="element stack" id="overlays" data-cat="overlays">
-        <h3 data-status="dev">Modal, drawer, popover</h3>
+      <!-- MODAL -->
+      <article class="element stack" id="modal" data-cat="overlays">
+        <h3 data-status="dev">Modal</h3>
         <p>
-          Modal, drawer and popover, built on the platform's own dialog machinery — focus, Escape and the backdrop come free. The drawer slides from the right by default, or from the left with .drawer-left; the popover needs no JS at all.
+          A centered card for a decision that blocks the page — a confirm, a sign-in, a short form. Focus, Escape and the backdrop are the platform's own. The optional .dialog-head and .dialog-actions give it a tidy title row and footer.
         </p>
         <div class="demo">
-          <div class="row">
-            <button type="button" class="btn btn-primary" aria-controls="demo-modal" data-tip="A decision that blocks the page" data-event="demo-modal-open">Open modal</button>
-            <button type="button" class="btn" aria-controls="demo-drawer" data-tip="A side panel from the right — details or filters" data-event="demo-drawer-open">Filters drawer</button>
-            <button type="button" class="btn" aria-controls="demo-drawer-left" data-tip="The same panel from the left — navigation" data-event="demo-drawer-left-open">Nav drawer</button>
-            <button type="button" class="btn" popovertarget="demo-popover" data-tip="A small anchored note — no JS involved">Toggle popover</button>
-          </div>
+          <button type="button" class="btn btn-primary" aria-controls="demo-modal" data-tip="Opens the modal" data-event="modal-open">Open modal</button>
           <dialog class="modal stack" id="demo-modal">
-            <div class="row" style="justify-content:space-between; align-items:flex-start;">
-              <h4 style="margin:0;">Delete this report?</h4>
+            <div class="dialog-head">
+              <h4>Delete this report?</h4>
               <form method="dialog"><button class="btn btn-icon btn-ghost" aria-label="Close" data-tip="Close"><svg width="20" height="20" data-icon="close" aria-hidden="true"></svg></button></form>
             </div>
             <p class="text-footnote" style="color:var(--text-muted);">This cannot be undone. The figures stay in your ledger.</p>
-            <form method="dialog" class="row">
-              <button class="btn btn-primary" data-event="demo-modal-confirm">Delete</button>
+            <form method="dialog" class="dialog-actions">
               <button class="btn" data-tip="Closes without doing anything">Keep it</button>
+              <button class="btn btn-primary" data-event="report-delete">Delete</button>
             </form>
           </dialog>
+        </div>
+        <pre id="code-modal"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-modal" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- DRAWER -->
+      <article class="element stack" id="drawer" data-cat="overlays">
+        <h3 data-status="dev">Drawer</h3>
+        <p>
+          One edge panel for a side task that keeps the page in view — filters, details or navigation. Choose the edge it slides from; its content scrolls when it overflows.
+        </p>
+        <p class="chips variant-row" role="group" aria-label="Slide from">
+          <button class="chip" aria-pressed="true"  data-chip-group="dir" data-chip-class="" data-chip-target="#demo-drawer" data-tip="The default — the right edge">Right</button>
+          <button class="chip" aria-pressed="false" data-chip-group="dir" data-chip-class="drawer-left" data-chip-target="#demo-drawer" data-tip="The left edge">Left</button>
+          <button class="chip" aria-pressed="false" data-chip-group="dir" data-chip-class="drawer-top" data-chip-target="#demo-drawer" data-tip="A full-width strip from the top">Top</button>
+          <button class="chip" aria-pressed="false" data-chip-group="dir" data-chip-class="drawer-bottom" data-chip-target="#demo-drawer" data-tip="A full-width strip from the bottom">Bottom</button>
+        </p>
+        <div class="demo">
+          <button type="button" class="btn btn-primary" aria-controls="demo-drawer" data-tip="Opens the drawer from the chosen edge" data-event="drawer-open">Open drawer</button>
           <dialog class="drawer stack" id="demo-drawer">
-            <h4 style="margin:0;">Filters</h4>
+            <div class="dialog-head">
+              <h4>Filters</h4>
+              <form method="dialog"><button class="btn btn-icon btn-ghost" aria-label="Close" data-tip="Close"><svg width="20" height="20" data-icon="close" aria-hidden="true"></svg></button></form>
+            </div>
             <label class="check-row"><input type="checkbox" checked> Cleared</label>
             <label class="check-row"><input type="checkbox" checked> Pending</label>
             <label class="check-row"><input type="checkbox"> Overdue</label>
-            <form method="dialog" style="margin-top:auto;"><button class="btn btn-primary">Apply</button></form>
+            <form method="dialog" class="dialog-actions">
+              <button class="btn">Cancel</button>
+              <button class="btn btn-primary">Apply</button>
+            </form>
           </dialog>
-          <dialog class="drawer drawer-left stack" id="demo-drawer-left">
-            <h4 style="margin:0;">Menu</h4>
-            <nav class="stack-tight" aria-label="Sections">
-              <a class="nav-link" href="#overlays" aria-current="page">Overview</a>
-              <a class="nav-link" href="#overlays">Transactions</a>
-              <a class="nav-link" href="#overlays">Settings</a>
-            </nav>
-            <form method="dialog" style="margin-top:auto;"><button class="btn">Close</button></form>
-          </dialog>
+        </div>
+        <pre id="code-drawer"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-drawer" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- POPOVER -->
+      <article class="element stack" id="popover" data-cat="overlays">
+        <h3 data-status="dev">Popover</h3>
+        <p>
+          A small anchored bite — a hint, a definition, a short note — toggled straight from a button with no JS. It closes on an outside click, Escape, or the moment the page scrolls.
+        </p>
+        <div class="demo" style="padding-block: var(--space-card);">
+          <button type="button" class="btn" popovertarget="demo-popover" data-tip="Toggles the popover — no JS involved">Details</button>
           <div popover id="demo-popover" class="stack-tight">
             <strong>Quick note</strong>
-            <p class="text-footnote" style="color:var(--text-muted);">Popovers light-dismiss: click anywhere else, or press Escape.</p>
+            <p class="text-footnote" style="color:var(--text-muted);">Light-dismisses on any outside click, Escape, or a page scroll.</p>
           </div>
         </div>
-        <pre id="code-overlays"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-overlays" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+        <pre id="code-popover"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-popover" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- ACCORDION + TOAST + DROPDOWN -->

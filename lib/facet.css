@@ -2528,23 +2528,27 @@ input, textarea, [contenteditable] {
    (docs mirror — identical to llms.txt · Button)
    WHEN TO USE: any click that does something. At most one primary per screen; navigation dressed as a button is an <a class="btn">.
 
-   What it is: the action element, in three variants and three sizes, working
-   identically on <button> and on <a>. What it is for: .btn-primary carries
-   the screen's one main action in accent-1. .btn-secondary is every other
-   action, on the accent-2 fill. .btn-ghost is for quiet actions inside busy
-   areas, invisible until hovered. When to use it: any click that does something. One primary
-   per screen at most. Navigation styled as a button is an <a class="btn">.
-   Put the button's key action name in a data-event attribute as the
+   What it is: the action element, working identically on <button> and on
+   <a>, in a small family of independent options you combine freely. Style:
+   .btn-primary carries the screen's one main action in accent-1;
+   .btn-secondary is every other action, on the accent-2 fill (the look a
+   bare .btn already has); .btn-ghost is the quiet action inside busy areas,
+   invisible until hovered. Size: .btn-small, the default, and .btn-large.
+   Shape: .btn-pill rounds it into a capsule. An inline <svg> before the
+   label needs no class — the button is already a flex row, so icon-and-label
+   sit together (this is the icon-pill the nav menu is built from). The icon
+   button is the same element reduced to one glyph: add .btn-icon for a
+   square target and give it an aria-label (the icon alone says nothing) plus
+   a data-tip; it takes every style, size and shape, so a primary pill icon
+   button is just .btn.btn-primary.btn-pill.btn-icon. Icons are inline SVG
+   with stroke="currentColor", so they wear the button's text color in every
+   theme. What it is for: every action a click performs. When to use it: any
+   click that does something, one primary per screen at most; navigation
+   styled as a button is an <a class="btn">. States are built in — hover, a
+   focus ring, a pressed weight and :disabled; aria-disabled disables an
+   <a class="btn"> (a link can't be :disabled), and aria-busy shows a working
+   spinner and blocks re-clicks. Put the action's name in data-event as the
    analytics hook.
-
-   Usage:  <button class="btn btn-primary" data-event="calc-run"
-                   data-tip="Runs the calculation">Calculate</button>
-   Variants: .btn-primary  .btn-secondary (default for bare .btn)  .btn-ghost
-   Sizes:    .btn-small  .btn (default)  .btn-large
-   States:   hover, focus ring, pressed, :disabled — all built in.
-             aria-disabled="true" disables an <a class="btn"> the same way;
-             aria-busy="true" shows a working spinner and blocks re-clicks
-             (see the STATE GRAMMAR section).
    -------------------------------------------------------------------------- */
 
 .btn {
@@ -2636,22 +2640,11 @@ input, textarea, [contenteditable] {
 .btn-pill { border-radius: var(--radius-pill); }
 
 /* --------------------------------------------------------------------------
-   ICON BUTTON
-
-   (docs mirror — identical to llms.txt · Icon button)
-   WHEN TO USE: compact, secondary actions where an icon plus its tooltip is enough — close, clear, share. Always with an aria-label.
-
-   What it is: a square button holding a single icon. What it is for: compact
-   actions whose meaning the icon plus its tooltip carries — the clear cross
-   in a number field, a close button, a share arrow. When to use it: when
-   space is tight and the action is secondary. The icon alone says nothing, so
-   every icon button carries an aria-label for screen readers and a data-tip
-   tooltip for everyone else. Combines with any button variant and size.
-   Icons are inline SVG with stroke="currentColor" so they take the button's
-   text color in every theme.
-
-   Usage:  <button class="btn btn-icon" aria-label="Close"
-                   data-tip="Close this panel"> <svg>...</svg> </button>
+   ICON BUTTON — the .btn reduced to one glyph
+   Not its own component: it is the Button variant documented in the BUTTON
+   section above (and llms.txt · Button). .btn-icon makes the button a
+   square touch target; it takes every style, size and shape, and always
+   carries an aria-label because the icon alone says nothing.
    -------------------------------------------------------------------------- */
 
 .btn-icon {
@@ -3305,22 +3298,22 @@ input[type="checkbox"].switch:checked { background: var(--accent-1); }
 input[type="checkbox"].switch:checked::before { translate: 1.125rem 0; }
 input[type="checkbox"].switch:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* ----- MODAL, DRAWER, POPOVER: the native top layer, styled -----
-   (docs mirror — identical to llms.txt · Modal, drawer, popover)
-   WHEN TO USE: a modal for a decision that blocks the page, a drawer for a side task that keeps context, a popover for a small anchored bite. All are the native elements, so focus trapping, Esc and the backdrop come free.
+/* ===== MODAL, DRAWER, POPOVER: three components on the native top layer =====
+   Three separate components sharing the platform's <dialog> and [popover]
+   machinery. Each carries its own docs-mirror comment at its rules below. */
 
-   What it is: overlays built on the platform's own machinery — modal and
-   drawer are <dialog> (focus trap, Esc, inert page for free), popover is
-   the popover attribute (top layer, light dismiss, no JS at all). What
-   it is for: modal for a decision that blocks the page; drawer for a
-   side panel of details or filters; popover for small floating bits. The
-   drawer slides in from the right by default; add .drawer-left and it
-   slides from the left — the document-world twin of the app-kit
-   .sheet-left. When to use it: open a dialog from any button whose
-   aria-controls names it — facet.js calls showModal; close with a form
-   method="dialog" button inside, Esc, or a backdrop click. Popovers need
-   only popovertarget on the button. The app-kit .sheet stays the settings
-   panel for app pages; the drawer is the document-world sibling.*/
+/* (docs mirror — identical to llms.txt · Modal)
+   WHEN TO USE: a decision that blocks the page until it is answered — a confirm, a sign-in, a short form. Built on <dialog>, so focus trapping, Esc and the inert page behind come free.
+
+   What it is: a centered card built on the platform's own <dialog> — focus
+   trap, Esc and an inert page for free. What it is for: the one thing the
+   reader must deal with before the page continues. When to use it: open it
+   from any button whose aria-controls names the dialog (facet.js calls
+   showModal); close it with a form method="dialog" button inside, Esc, or a
+   click on the backdrop. Give it a tidy shape with the optional .dialog-head
+   (a title on the left, a close icon button on the right) and .dialog-actions
+   (the buttons, pushed to the trailing edge). The app-kit .sheet is the
+   settings panel for app pages; the modal is the document-world decision. */
 /* A closed dialog must stay hidden even when a layout class on it (e.g.
    .stack, which sets display:flex) would otherwise beat the UA's
    dialog:not([open]) { display:none }. Without this, a <dialog class="modal
@@ -3329,55 +3322,135 @@ dialog:not([open]) { display: none; }
 
 dialog.modal,
 dialog.drawer {
-  border: none;
-  padding: var(--space-page);
+  border: var(--border-hairline) solid var(--border);
   background: var(--surface);
   color: var(--text);
   box-shadow: var(--shadow-overlay);
 }
+
+/* MODAL — a centered card for a decision that blocks the page. */
 dialog.modal {
-  width: min(92vw, 34rem);
+  width: min(92vw, 30rem);
+  padding: var(--space-card);
   border-radius: var(--radius-card);
   margin: auto;                   /* centre it — the * { margin: 0 } reset
                                      wipes the UA's centring margin, so a
                                      modal without this pins to the corner */
 }
+
+/* (docs mirror — identical to llms.txt · Drawer)
+   WHEN TO USE: a side task that keeps the page's context in view — filters, details, a navigation list. One panel, any edge.
+
+   What it is: a <dialog class="drawer"> that slides in from an edge; the
+   direction is a variant — the default right, .drawer-left, .drawer-top or
+   .drawer-bottom. The side drawers stand full height; top and bottom are
+   full-width strips capped at 85% of the height; all of them scroll their
+   own content when it overflows. What it is for: filters, details and
+   navigation that sit beside the work instead of on top of it. When to use
+   it: same open and close as the modal — a button's aria-controls names it
+   (facet.js calls showModal), Esc, backdrop and form method="dialog" all
+   close it; the optional .dialog-head and .dialog-actions give it the same
+   tidy header and footer, and in a column drawer the actions sink to the
+   bottom edge. The document-world twin of the app-kit .sheet. */
+/* DRAWER — an edge panel; the direction is a variant. Base is the right
+   edge. It scrolls its own content when it overflows, and its inner
+   padding absorbs the safe-area insets on the edge it hugs. */
 dialog.drawer {
   margin: 0 0 0 auto;             /* pinned to the right edge */
   width: min(92vw, 24rem);
   height: 100dvh;
   max-height: 100dvh;
+  overflow-y: auto;               /* long content scrolls inside the panel */
+  padding: var(--space-card);
+  padding-top: calc(var(--space-card) + var(--safe-top));
+  padding-bottom: calc(var(--space-card) + var(--safe-bottom));
   border-radius: var(--radius-card) 0 0 var(--radius-card);
-  /* full-height panel: its padding absorbs the island and the home bar */
-  padding-top: calc(var(--space-page) + var(--safe-top));
-  padding-bottom: calc(var(--space-page) + var(--safe-bottom));
 }
+/* The left twin — the document world's navigation drawer, mirroring the
+   app-kit .sheet-left. */
+dialog.drawer-left {
+  margin: 0 auto 0 0;
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+}
+/* Top and bottom: full-width strips, capped height, content scrolling
+   inside. Bottom is the phone sheet's document-world twin. */
+dialog.drawer-top,
+dialog.drawer-bottom {
+  width: 100%;
+  max-width: 100%;
+  /* fit-content, not auto: a top-layer <dialog> with height:auto stretches
+     to fill the viewport, so a short strip would balloon to the cap */
+  height: fit-content;
+  max-height: 85dvh;
+}
+dialog.drawer-top {
+  margin: 0 auto auto auto;
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+  padding-top: calc(var(--space-card) + var(--safe-top));
+}
+dialog.drawer-bottom {
+  margin: auto auto 0 auto;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  padding-bottom: calc(var(--space-card) + var(--safe-bottom));
+}
+
+/* An optional tidy structure any dialog can use: a header row (title on
+   the left, a close icon button on the right), and a footer of actions
+   pushed to the trailing edge. Both are plain flex helpers — a modal or
+   drawer reads well without them, cleaner with them. */
+.dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-stack);
+}
+.dialog-head > :is(h1, h2, h3, h4, h5) { margin: 0; }
+.dialog-actions {
+  display: flex;
+  gap: var(--space-control);
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+/* In a full-height side drawer, the actions footer sinks to the bottom
+   edge. Top and bottom drawers are content-height strips, so they must
+   NOT pin (an auto margin there would inflate them to the max height). */
+dialog.drawer:not(.drawer-top):not(.drawer-bottom) .dialog-actions { margin-top: auto; }
+
 dialog.modal::backdrop,
 dialog.drawer::backdrop {
   background: rgb(0 0 0 / 0.5);
   backdrop-filter: blur(3px);
 }
-/* Arrive with the motion setting: the panel rises (modal) or slides in
-   from the edge (drawer) while its backdrop fades up with it, so nothing
+/* Arrive with the motion setting: the modal rises, each drawer slides in
+   from its own edge, and the backdrop fades up with it, so nothing
    hard-cuts onto the screen. Leave instantly — a closing <dialog> hits
    display:none before an exit could play. */
-dialog.modal[open]  { animation: facet-modal-in  var(--duration-normal) var(--ease-spring); }
-dialog.drawer[open] { animation: facet-drawer-in var(--duration-slow)   var(--ease-spring); }
+dialog.modal[open]          { animation: facet-modal-in        var(--duration-normal) var(--ease-spring); }
+dialog.drawer[open]         { animation: facet-drawer-in       var(--duration-slow)   var(--ease-spring); }
+dialog.drawer-left[open]    { animation: facet-drawer-left-in  var(--duration-slow)   var(--ease-spring); }
+dialog.drawer-top[open]     { animation: facet-drawer-top-in   var(--duration-slow)   var(--ease-spring); }
+dialog.drawer-bottom[open]  { animation: facet-drawer-bottom-in var(--duration-slow)  var(--ease-spring); }
 dialog.modal[open]::backdrop,
 dialog.drawer[open]::backdrop { animation: facet-fade-in var(--duration-normal) var(--ease-out); }
-/* The left twin: same panel pinned to the LEFT edge — the document
-   world's navigation drawer, mirroring the app-kit .sheet-left. */
-dialog.drawer-left {
-  margin: 0 auto 0 0;
-  border-radius: 0 var(--radius-card) var(--radius-card) 0;
-}
-dialog.drawer-left[open] { animation: facet-drawer-left-in var(--duration-slow) var(--ease-spring); }
-@keyframes facet-modal-in       { from { opacity: 0; translate: 0 20px; scale: 0.97; } }
-@keyframes facet-drawer-in      { from { translate: 100% 0; } }
-@keyframes facet-drawer-left-in { from { translate: -100% 0; } }
+@keyframes facet-modal-in         { from { opacity: 0; translate: 0 20px; scale: 0.97; } }
+@keyframes facet-drawer-in        { from { translate: 100% 0; } }
+@keyframes facet-drawer-left-in   { from { translate: -100% 0; } }
+@keyframes facet-drawer-top-in    { from { translate: 0 -100%; } }
+@keyframes facet-drawer-bottom-in { from { translate: 0 100%; } }
 @keyframes facet-fade-in   { from { opacity: 0; } }
 @keyframes facet-pop-in    { from { opacity: 0; translate: 0 6px; scale: 0.97; } }
 
+/* (docs mirror — identical to llms.txt · Popover)
+   WHEN TO USE: a small anchored bite — a hint, a definition, a short menu — that should close the moment attention moves on.
+
+   What it is: a [popover] element toggled straight from a button's
+   popovertarget — the platform's top layer, no JS to open. What it is for:
+   small floating bits attached to a control: a hint, a note, a few actions.
+   When to use it: point a button's popovertarget at the element's id and it
+   toggles, no wiring. It light-dismisses on a click outside or Esc, and
+   facet.js also closes it the moment the page scrolls, so a popover never
+   floats detached from the thing it explains. For actions that change the
+   page rather than explain it, reach for the dropdown menu instead. */
 [popover] {
   margin: auto;                   /* centered fallback where no anchor */
   border: var(--border-element) solid var(--border);

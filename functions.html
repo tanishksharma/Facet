@@ -820,14 +820,15 @@
           <p><button class="btn btn-small" data-copy="#code-fn-dropdowns" data-tip="Copies this code">Copy</button></p>
         </article>
 
-        <article class="element stack" id="fn-dialogs" data-llms="Modal, drawer, popover">
+        <article class="element stack" id="fn-dialogs" data-llms="Modal">
           <h3>Dialog triggers</h3>
           <p>
-            One attribute opens a modal: a button whose aria-controls names
-            a &lt;dialog&gt; shows it modally on click, with a tap on the
-            backdrop closing it. Escape and &lt;form method="dialog"&gt;
-            buttons are the platform's own close paths — the library adds
-            the trigger and the outside-click, nothing more.
+            One attribute opens a modal or drawer: a button whose
+            aria-controls names a &lt;dialog&gt; shows it modally on click,
+            with a tap on the backdrop closing it. Escape and
+            &lt;form method="dialog"&gt; buttons are the platform's own close
+            paths — the library adds the trigger and the outside-click,
+            nothing more.
           </p>
           <pre id="code-fn-dialogs"><code>&lt;button class="btn btn-primary" aria-controls="confirm"&gt;Delete…&lt;/button&gt;
 
@@ -839,6 +840,21 @@
   &lt;/form&gt;
 &lt;/dialog&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-dialogs" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-popover" data-llms="Popover">
+          <h3>Popover dismiss</h3>
+          <p>
+            A native [popover] already light-dismisses on an outside click
+            and on Escape. facet.js adds the one thing it does not do on its
+            own: it closes the moment the page scrolls, so an anchored
+            popover never floats away from the control it explains. A scroll
+            inside the popover's own content is left alone. Self-wiring, no
+            markup beyond popovertarget.
+          </p>
+          <pre id="code-fn-popover"><code>&lt;button class="btn" popovertarget="note"&gt;Details&lt;/button&gt;
+&lt;div popover id="note"&gt;Closes on outside click, Esc, or a page scroll.&lt;/div&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-popover" data-tip="Copies this code">Copy</button></p>
         </article>
 
         <article class="element stack" id="fn-tooltips" data-llms="Description tooltip">
