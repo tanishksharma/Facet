@@ -5550,6 +5550,126 @@ details.dropdown {
   padding: var(--space-card);
 }
 
+/* (docs mirror — identical to llms.txt · Feed post)
+   WHEN TO USE: an authored social post in a feed — your own updates, shares and short articles, stacked newest first. One post per card; not a comment thread.
+
+   What it is: a card for one authored post, built on .card. Its slots, top
+   to bottom: a .feed-author row (a .feed-avatar, a .feed-author-meta with the
+   .feed-author-name and a kind label, and a .feed-date pushed to the end); a
+   .feed-post-body of text (.feed-comment); an optional media block — a plain
+   .feed-media image, or a .feed-embed / .feed-link-preview that shows a
+   thumbnail with a play glyph over a source and title; a row of #hashtag
+   .feed-tags; and a .feed-actions bar of .feed-act buttons (like, comment)
+   with a passive .feed-act-static count pushed to the end. The whole card can
+   be one link: a stretched .feed-post-link overlay opens the post while the
+   tags, actions and any embed link stay clickable above it (they carry
+   z-index over the overlay). What it is for: a personal or product feed of
+   authored posts. When to use it: stack them in a column; a post is any
+   subset of the slots. The action buttons are presentational — wire likes and
+   comments in your project (the library keeps that state out on purpose);
+   each carries a data-event hook. */
+/* ----- FEED POST: an authored social post card, built on .card ----- */
+.feed-post {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack);
+  position: relative;            /* anchors the stretched overlay link */
+  isolation: isolate;            /* scopes the z-index layering to the card */
+  transition:
+    box-shadow var(--duration-normal) var(--ease-out),
+    translate var(--duration-normal) var(--ease-spring);
+}
+/* The whole-card link: a stretched overlay so the card is one click zone.
+   Interactive children (tags, actions, an embed link) ride above it. */
+.feed-post-link { position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.feed-post:has(.feed-post-link):hover { translate: 0 -2px; box-shadow: var(--shadow-floating); }
+.feed-post:has(.feed-post-link):active { translate: 0 0; box-shadow: var(--shadow-raised); }
+.feed-post-link:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+.feed-act, .feed-tag, .feed-link-preview { position: relative; z-index: 2; }
+
+/* Author row: avatar, name + kind, and the date at the far end. */
+.feed-author { display: flex; align-items: center; gap: var(--space-control); }
+.feed-avatar {
+  flex: none;
+  width: 2.25rem; height: 2.25rem;
+  border-radius: var(--radius-pill);
+  border: var(--border-element) solid var(--border);
+  object-fit: cover;
+}
+.feed-author-meta { display: flex; flex-direction: column; line-height: 1.35; min-width: 0; }
+.feed-author-name { white-space: nowrap; font-weight: var(--weight-strong); }
+.feed-date { margin-left: auto; white-space: nowrap; }
+
+/* Body. */
+.feed-post-body { display: block; }
+.feed-comment { margin: 0; }
+
+/* Media: a bordered thumbnail; a link-preview drops the border and adds a
+   source + title strip; the play glyph sits over a video thumbnail. */
+.feed-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  border: var(--border-element) solid var(--border);
+}
+.feed-media img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.feed-media-play {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: #fff;
+  background: rgb(0 0 0 / 0.18);       /* scrim over the thumbnail (theme-neutral) */
+  transition: background var(--duration-fast) var(--ease-out);
+}
+.feed-media:hover .feed-media-play { background: rgb(0 0 0 / 0.3); }
+.feed-embed {
+  display: flex; flex-direction: column; gap: var(--space-control);
+  padding: var(--space-stack);
+  border: var(--border-element) solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--background);
+}
+.feed-link-preview { padding: 0; overflow: hidden; text-decoration: none; color: inherit; }
+.feed-link-preview .feed-media { border: 0; border-radius: 0; }
+.feed-link-meta {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: var(--space-control) var(--space-stack);
+  border-top: var(--border-hairline) solid var(--border);
+}
+.feed-link-source {
+  font-family: var(--font-mono); font-size: var(--text-caption);
+  text-transform: uppercase; letter-spacing: var(--tracking-caps);
+  color: var(--text-muted);
+}
+.feed-link-title { font-size: var(--text-footnote); color: var(--text); }
+
+/* Tags: quiet #hashtag links that can double as filters (aria-pressed). */
+.feed-tag { font-size: var(--text-caption); color: var(--accent-3); cursor: pointer; user-select: none; }
+.feed-tag:hover { text-decoration: underline; }
+.feed-tag[aria-pressed="true"] { text-decoration: underline; font-weight: var(--weight-strong); }
+
+/* Actions: a low bar of glyph+count buttons; a passive count sits at the end. */
+.feed-actions {
+  display: flex; gap: var(--space-stack);
+  padding-top: var(--space-inline);
+  border-top: var(--border-hairline) solid var(--border);
+}
+.feed-act {
+  display: inline-flex; align-items: center; gap: 0.45em;
+  min-height: 28px; padding: var(--space-tight) 0;
+  border: 0; background: none;
+  color: var(--text-muted);
+  font-size: var(--text-footnote);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.feed-act:hover { color: var(--text); }
+.feed-act:active { transform: scale(0.94); }
+.feed-act[aria-pressed="true"] { color: var(--accent-3); }
+.feed-act svg { flex: none; }
+.feed-act-static { margin-left: auto; cursor: default; }
+.feed-act-static:hover { color: var(--text-muted); }
+
 /* ----- LIST: rows of items -----
    (docs mirror — identical to llms.txt · List)
    WHEN TO USE: any repeated row of items — settings, menus, feeds, search results. It is ONE component: every look is a composition of its slots, never a sibling component.

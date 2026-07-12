@@ -810,6 +810,51 @@ raises cards out of the fabric; Elegant carves them in; Aero glosses them.
       <span class="card-inline-trailing">→</span>
     </article>
 
+### Feed post
+
+WHEN TO USE: an authored social post in a feed — your own updates, shares and short articles, stacked newest first. One post per card; not a comment thread.
+
+What it is: a card for one authored post, built on .card. Its slots, top to
+bottom: a .feed-author row (a .feed-avatar, a .feed-author-meta with the
+.feed-author-name and a kind label, and a .feed-date pushed to the end); a
+.feed-post-body of text (.feed-comment); an optional media block — a plain
+.feed-media image, or a .feed-embed / .feed-link-preview that shows a
+thumbnail with a play glyph over a source and title; a row of #hashtag
+.feed-tags; and a .feed-actions bar of .feed-act buttons (like, comment)
+with a passive .feed-act-static count pushed to the end. The whole card can
+be one link: a stretched .feed-post-link overlay opens the post while the
+tags, actions and any embed link stay clickable above it (they carry
+z-index over the overlay). What it is for: a personal or product feed of
+authored posts. When to use it: stack them in a column; a post is any
+subset of the slots. The action buttons are presentational — wire likes and
+comments in your project (the library keeps that state out on purpose);
+each carries a data-event hook.
+
+    <article class="card feed-post">
+      <a class="feed-post-link" href="/post/123" aria-label="Open the post"></a>
+      <div class="feed-author">
+        <img class="feed-avatar" src="/me.jpg" alt="" width="36" height="36">
+        <div class="feed-author-meta">
+          <strong class="feed-author-name">Ada Lovelace</strong>
+          <span class="text-caption">Posted</span>
+        </div>
+        <span class="feed-date text-caption">6 Jul · 8:53 pm</span>
+      </div>
+      <div class="feed-post-body"><p class="text-footnote feed-comment">The note itself…</p></div>
+      <a class="feed-embed feed-link-preview" href="https://youtu.be/x" target="_blank" rel="noopener">
+        <span class="feed-media"><img src="/thumb.jpg" alt=""><span class="feed-media-play" aria-hidden="true">▶</span></span>
+        <span class="feed-link-meta"><span class="feed-link-source">youtube.com</span><span class="feed-link-title">The title</span></span>
+      </a>
+      <div class="chips feed-tags">
+        <span class="feed-tag" role="button" tabindex="0" aria-pressed="false">#AI</span>
+      </div>
+      <div class="feed-actions" role="group" aria-label="Reactions">
+        <button type="button" class="feed-act" data-event="post-like" aria-pressed="false" aria-label="Like"><svg width="16" height="16" data-icon="heart"></svg><span>12</span></button>
+        <button type="button" class="feed-act" data-event="post-comment" aria-label="Comment"><svg width="16" height="16" data-icon="mail"></svg></button>
+        <span class="feed-act feed-act-static"><svg width="16" height="16" data-icon="eye"></svg>1.2k</span>
+      </div>
+    </article>
+
 ### List
 
 WHEN TO USE: any repeated row of items — settings, menus, feeds, search results. It is ONE component: every look is a composition of its slots, never a sibling component.

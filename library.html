@@ -78,6 +78,7 @@
           <a class="nav-group-name side-index-name" href="#cat-content">Content &amp; data</a>
         <ul>
           <li><a href="#card">Card</a></li>
+          <li><a href="#feed-post">Feed post</a></li>
           <li><a href="#list">List</a></li>
           <li><a href="#table">Table</a></li>
           <li><a href="#chart">Chart</a></li>
@@ -1616,6 +1617,65 @@ article p   { font-family: var(--font-reading); }
         </div>
         <pre id="code-card"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-card" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- FEED POST -->
+      <article class="element stack" id="feed-post" data-cat="content">
+        <h3 data-status="dev">Feed post</h3>
+        <p>
+          An authored social post, built on the card: an author row, the text, an optional image or link-preview embed, hashtags, and a low actions bar. The whole card can be one link while the tags and actions stay clickable. Stack them newest-first for a feed.
+        </p>
+        <div class="demo stack" style="max-width: 34rem;">
+          <!-- A share with a link-preview embed, the whole card a link -->
+          <article class="card feed-post">
+            <a class="feed-post-link" href="#feed-post" aria-label="Open: Has the fight failed?" data-event="post-open"></a>
+            <div class="feed-author">
+              <img class="feed-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23c9d3dd'/%3E%3Ctext x='20' y='27' font-size='20' text-anchor='middle'%3E%F0%9F%A7%91%3C/text%3E%3C/svg%3E" alt="" width="36" height="36">
+              <div class="feed-author-meta">
+                <strong class="feed-author-name">Tanishk Sharma</strong>
+                <span class="text-caption">Shared</span>
+              </div>
+              <span class="feed-date text-caption">6 Jul · 8:53 pm</span>
+            </div>
+            <div class="feed-post-body"><p class="text-footnote feed-comment">Al-Shabab has encircled Mogadishu and taken back most of what was won in 2022. A collapse here reshapes the whole Horn of Africa.</p></div>
+            <a class="feed-embed feed-link-preview" href="#feed-post" data-event="post-embed">
+              <span class="feed-media"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' fill='%232a2f36'/%3E%3Ctext x='160' y='104' font-size='40' text-anchor='middle' fill='%23fff'%3E%F0%9F%93%BA%3C/text%3E%3C/svg%3E" alt="" width="480" height="270"><span class="feed-media-play" aria-hidden="true">▶</span></span>
+              <span class="feed-link-meta"><span class="feed-link-source">youtube.com</span><span class="feed-link-title">Inside Story: Has the fight against al-Shabab failed?</span></span>
+            </a>
+            <div class="chips feed-tags">
+              <span class="feed-tag" role="button" tabindex="0" aria-pressed="false" data-tip="Filter by tag">#Somalia</span>
+              <span class="feed-tag" role="button" tabindex="0" aria-pressed="false" data-tip="Filter by tag">#Horn of Africa</span>
+            </div>
+            <div class="feed-actions" role="group" aria-label="Reactions">
+              <button type="button" class="feed-act" aria-pressed="false" aria-label="Like" data-event="post-like"><svg width="16" height="16" data-icon="heart" aria-hidden="true"></svg><span>13</span></button>
+              <button type="button" class="feed-act" aria-label="Comment" data-event="post-comment"><svg width="16" height="16" data-icon="message" aria-hidden="true"></svg><span>4</span></button>
+              <span class="feed-act feed-act-static" aria-label="Views"><svg width="16" height="16" data-icon="eye" aria-hidden="true"></svg>1.2k</span>
+            </div>
+          </article>
+
+          <!-- A plain text post, no media -->
+          <article class="card feed-post">
+            <div class="feed-author">
+              <img class="feed-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23d8cbe6'/%3E%3Ctext x='20' y='27' font-size='20' text-anchor='middle'%3E%F0%9F%A7%91%3C/text%3E%3C/svg%3E" alt="" width="36" height="36">
+              <div class="feed-author-meta">
+                <strong class="feed-author-name">Tanishk Sharma</strong>
+                <span class="text-caption">Posted</span>
+              </div>
+              <span class="feed-date text-caption">4 Jul · 11:20 am</span>
+            </div>
+            <div class="feed-post-body"><p class="text-footnote feed-comment">Shipping beats polishing. The version people use teaches you more than the version you perfect in private.</p></div>
+            <div class="chips feed-tags">
+              <span class="feed-tag" role="button" tabindex="0" aria-pressed="false" data-tip="Filter by tag">#Startups</span>
+            </div>
+            <div class="feed-actions" role="group" aria-label="Reactions">
+              <button type="button" class="feed-act" aria-pressed="true" aria-label="Like" data-event="post-like"><svg width="16" height="16" data-icon="heart" aria-hidden="true"></svg><span>28</span></button>
+              <button type="button" class="feed-act" aria-label="Comment" data-event="post-comment"><svg width="16" height="16" data-icon="message" aria-hidden="true"></svg><span>7</span></button>
+              <span class="feed-act feed-act-static" aria-label="Views"><svg width="16" height="16" data-icon="eye" aria-hidden="true"></svg>3.4k</span>
+            </div>
+          </article>
+        </div>
+        <pre id="code-feed-post"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-feed-post" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- LIST -->
