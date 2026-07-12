@@ -2291,21 +2291,81 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="block-footer">
         <h3 data-status="dev">Footer</h3>
         <p>
-          Link columns over a legal row — the bottom of every site page.
+          The page's closing band: a brand lockup with tagline and social buttons, a subscribe well, link columns, and a copyright line. Add data-plinth to make it the dark base of the site in both light and dark.
         </p>
         <div class="demo">
-          <footer class="stack">
-            <div class="grid">
-              <nav class="stack-tight" aria-label="Product"><p class="text-caption" style="margin:0;">PRODUCT</p><a class="nav-link" href="#block-footer">Pricing</a><a class="nav-link" href="#block-footer">Changelog</a></nav>
-              <nav class="stack-tight" aria-label="Company"><p class="text-caption" style="margin:0;">COMPANY</p><a class="nav-link" href="#block-footer">About</a><a class="nav-link" href="#block-footer">Contact</a></nav>
-              <nav class="stack-tight" aria-label="Legal"><p class="text-caption" style="margin:0;">LEGAL</p><a class="nav-link" href="#block-footer">Privacy</a><a class="nav-link" href="#block-footer">Terms</a></nav>
+          <footer class="footer" data-plinth>
+            <div class="footer-inner">
+              <div class="footer-top">
+                <div class="footer-brand">
+                  <span class="footer-wordmark">Facet</span>
+                  <p class="footer-tagline">The design library your AI can read — one link, one script, no build step.</p>
+                  <p class="footer-meta">Now: shipping the footer</p>
+                  <div class="footer-social">
+                    <a href="https://github.com/tanishksharma/Facet" aria-label="Facet on GitHub" data-tip="GitHub"><svg width="18" height="18" data-icon="external"></svg></a>
+                    <a href="#block-footer" aria-label="Share" data-tip="Share"><svg width="18" height="18" data-icon="share"></svg></a>
+                  </div>
+                </div>
+                <form class="subscribe" data-subscribe>
+                  <p class="subscribe-label">Mailing list</p>
+                  <p class="subscribe-blurb">Hear from us when something ships.</p>
+                  <div class="subscribe-row">
+                    <label class="visually-hidden" for="foot-sub">Email address</label>
+                    <input id="foot-sub" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+                    <button class="btn" type="submit" data-event="subscribe">Subscribe</button>
+                  </div>
+                  <p class="subscribe-msg" role="status" aria-live="polite"></p>
+                </form>
+              </div>
+              <div class="footer-cols">
+                <nav class="footer-col" aria-label="Product">
+                  <p class="footer-col-label">Product</p>
+                  <ul class="footer-links"><li><a href="#components">Components</a></li><li><a href="#tokens">Tokens</a></li></ul>
+                </nav>
+                <nav class="footer-col" aria-label="Learn">
+                  <p class="footer-col-label">Learn</p>
+                  <ul class="footer-links"><li><a href="/llms.txt">llms.txt</a></li><li><a href="/product.html">Build a product</a></li></ul>
+                </nav>
+                <nav class="footer-col" aria-label="Themes">
+                  <p class="footer-col-label">Themes</p>
+                  <ul class="footer-links"><li><a href="/build.html">Build a theme</a></li></ul>
+                </nav>
+                <nav class="footer-col" aria-label="Source">
+                  <p class="footer-col-label">Source</p>
+                  <ul class="footer-links"><li><a href="https://github.com/tanishksharma/Facet">GitHub</a></li></ul>
+                </nav>
+              </div>
+              <div class="footer-bottom">
+                <span>© 2026 Facet</span>
+                <span>Built with Facet</span>
+              </div>
             </div>
-            <hr>
-            <p class="text-caption">© 2026 Acme. Built on Facet.</p>
           </footer>
         </div>
         <pre id="code-block-footer"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-block-footer" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- SUBSCRIBE -->
+      <article class="element stack" id="subscribe">
+        <h3 data-status="dev">Subscribe</h3>
+        <p>
+          An inline email-capture well: a label and blurb over one input and one button, with a status line under it. Facet validates the address and fires an event with the email; the actual send stays your job.
+        </p>
+        <div class="demo">
+          <form class="subscribe" data-subscribe style="max-width: 26rem;">
+            <p class="subscribe-label">Mailing list</p>
+            <p class="subscribe-blurb">Hear from us when something ships.</p>
+            <div class="subscribe-row">
+              <label class="visually-hidden" for="sub-demo">Email address</label>
+              <input id="sub-demo" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+              <button class="btn" type="submit" data-event="subscribe">Subscribe</button>
+            </div>
+            <p class="subscribe-msg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+        <pre id="code-subscribe"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-subscribe" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- HERO -->
@@ -3113,7 +3173,7 @@ https://facet-kappa.vercel.app/templates/card.html</code></pre>
               <button type="button" class="tab-seg" aria-current="false">Pricing</button>
               <button type="button" class="tab-seg" aria-current="false">Docs</button>
               <button type="button" class="tab-seg" aria-current="false">Blog</button>
-              <a class="btn btn-primary btn-small tab-action" href="#tab-bar" data-event="signup" data-tip="The bar's one action">Start free</a>
+              <a class="tab-action" href="#tab-bar" data-event="signup" data-tip="The bar's one action — a tab-shaped CTA, no button classes needed">Start free</a>
             </div>
             <button type="button" class="tab-settings" aria-controls="tabbar-settings-sheet" aria-expanded="false" aria-label="Open settings" data-tip="Slides the settings in from the right">
               <svg width="20" height="20" data-icon="sliders" aria-hidden="true"></svg>

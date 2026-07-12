@@ -2194,7 +2194,7 @@ input, textarea, [contenteditable] {
   .bg-fluid-layer { display: none !important; }
 
   /* page furniture never prints; an explicit on-role overrides */
-  nav, .skip-link, .top-menu, .bg-fixed,
+  nav, .skip-link, .top-menu, .bg-fixed, .footer,
   .tab-bar, .float-btn, .float-btn-right,
   .sheet, .sheet-scrim, .nav-menu,
   .scroll-gauge, .scroll-gauge-page,
@@ -3676,6 +3676,229 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
   gap: var(--space-control);
 }
 .top-menu .nav-link svg { flex: none; }
+
+/* (docs mirror — identical to llms.txt · Footer)
+   WHEN TO USE: the last band of any real page — the standing navigation and identity that closes it, the counterpart to the top menu or tab bar. Every content or marketing page; not one-page apps, which end at their last snap section.
+
+   What it is: the page's closing band — a full-bleed footer that reads as
+   the site's plinth. Every piece is optional and the markup is the variant:
+   a .footer-top holding the brand column (.footer-brand with a wordmark, a
+   one-line .footer-tagline, an optional mono .footer-meta status line and a
+   row of round .footer-social buttons) beside an optional .subscribe well;
+   then up to four .footer-cols link columns (each a nav.footer-col with a
+   mono .footer-col-label over a .footer-links list, links may carry a leading
+   icon); then a .footer-bottom line for copyright and colophon. It carries
+   its own --footer-* token block so it can stand apart from page surface,
+   and by default it inherits the theme, toning to the surface with the page
+   accent bleeding faintly through its top edge. Add data-plinth and it
+   becomes the dark base of the whole site in BOTH light and dark modes —
+   the deliberately-inverted always-dark case — with the accent still bleeding
+   through the top. What it is for: the standing navigation and identity that
+   closes every page. When to use it: on any real page; one-page apps end at
+   their last section instead. It clears the floating bottom tab bar on phones
+   on its own, and never prints (page furniture). */
+/* ----- FOOTER: the page's closing band / site plinth -----
+   Full-bleed by intent; the inner column holds the reading width. The
+   --footer-* tokens let the band stand apart from page surface without
+   any component below it reading page tokens; data-plinth remaps them to
+   a fixed dark palette (the sanctioned always-dark exception, like the
+   inverted callout and the instruction overlay). Authored at the end of
+   the page in reading order; user-select stays on so the copyright and
+   links copy, but it is print furniture and drops on paper. */
+.footer {
+  --footer-bg:     var(--surface);
+  --footer-bg-2:   var(--background);
+  --footer-well:   var(--surface-active);
+  --footer-text:   var(--text);
+  --footer-muted:  var(--text-muted);
+  --footer-line:   var(--border);
+  --footer-accent: var(--accent-3);
+  position: relative;
+  z-index: 1;
+  margin-top: var(--space-section);
+  border-top: var(--border-hairline) solid var(--footer-line);
+  /* the accent bleeds faintly through the top edge, over a soft two-tone
+     ground from the band's own surface down to the page */
+  background:
+    radial-gradient(110% 70% at 50% 0%,
+      color-mix(in srgb, var(--footer-accent) 10%, transparent), transparent 58%),
+    linear-gradient(var(--footer-bg), var(--footer-bg-2));
+  color: var(--footer-text);
+  font-size: var(--text-footnote);
+  line-height: var(--leading-body);
+}
+/* The plinth: dark in both modes, the site's base. Raw hex is the
+   sanctioned always-dark escape hatch — paper never sees it (the footer
+   is print furniture) and it must not follow the theme or the mode. */
+.footer[data-plinth] {
+  --footer-bg:     #0b0e11;
+  --footer-bg-2:   #10141a;
+  --footer-well:   #151a21;
+  --footer-text:   #e8ebef;
+  --footer-muted:  rgb(232 235 239 / 0.58);
+  --footer-line:   rgb(232 235 239 / 0.10);
+}
+/* The inner reading column. Its bottom padding clears the floating bottom
+   tab pill on phones (the bar's own clearance token); a wide screen with
+   no bottom pill drops back to plain air. */
+.footer-inner {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: var(--space-section) var(--space-page)
+           calc(var(--space-stack) + var(--bar-clearance-bottom, 6rem));
+}
+@media (min-width: 40rem) {
+  .footer-inner { padding-bottom: var(--space-section); }
+}
+/* Top row: brand column, optional subscribe well beside it on wide screens. */
+.footer-top { display: grid; gap: var(--space-card); align-items: start; }
+@media (min-width: 56rem) {
+  .footer-top { grid-template-columns: 1.15fr 0.85fr; gap: var(--space-section); }
+}
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack);
+  align-items: flex-start;
+}
+.footer-wordmark {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
+  font-size: var(--text-h4);
+  color: var(--footer-text);
+}
+.footer-tagline { margin: 0; max-width: var(--measure-narrow, 26rem); color: var(--footer-muted); }
+.footer-meta {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--footer-muted);
+}
+/* Round social buttons: their own icon-link skin so they follow the
+   footer tokens (a plinth flips them light on dark for free). */
+.footer-social { display: flex; gap: var(--space-control); flex-wrap: wrap; }
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  border: var(--border-element) solid var(--footer-line);
+  border-radius: var(--radius-pill);
+  color: var(--footer-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+.footer-social a svg { flex: none; }
+.footer-social a:hover { color: var(--footer-text); border-color: var(--footer-text); }
+@media (pointer: coarse) { .footer-social a { width: 44px; min-width: 44px; height: 44px; } }
+/* Link columns: two up on phones, up to four up on desktop. */
+.footer-cols {
+  display: grid;
+  gap: var(--space-card) var(--space-card);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--space-section);
+}
+@media (min-width: 44rem) {
+  .footer-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.footer-col-label {
+  margin: 0 0 var(--space-stack);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--footer-muted);
+}
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+}
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-control);
+  color: var(--footer-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.footer-links a svg { flex: none; opacity: 0.7; }
+.footer-links a:hover {
+  color: var(--footer-text);
+  text-decoration: underline;
+  text-decoration-color: var(--footer-accent);
+  text-underline-offset: 3px;
+}
+/* The legal line: copyright on the left, colophon on the right. */
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-tight) var(--space-card);
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: var(--space-section);
+  padding-top: var(--space-stack);
+  border-top: var(--border-hairline) solid var(--footer-line);
+  font-size: var(--text-caption);
+  color: var(--footer-muted);
+}
+.footer-bottom a { color: var(--footer-muted); text-decoration: underline; text-underline-offset: 2px; }
+.footer-bottom a:hover { color: var(--footer-text); }
+.footer a:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+  border-radius: var(--radius-control);
+}
+
+/* (docs mirror — identical to llms.txt · Subscribe)
+   WHEN TO USE: any inline email capture — the footer's mailing-list well, an end-of-article sign-up, a hero or modal opt-in. The layout and the validation are the library's; the actual send stays the project's.
+
+   What it is: a compact email-capture well — a label and blurb over one
+   input and one button in a row, with a status line beneath. What it is
+   for: collecting an email inline without a whole form. When to use it:
+   wherever a single email opt-in belongs. Give the form data-subscribe and
+   facet.js validates the address on submit, sets data-ok on the .subscribe-msg
+   line, and dispatches a facet:subscribe CustomEvent carrying the email so
+   the project does the network call — the library never owns an endpoint.
+   With JS off the form still posts natively. It reads --footer-well inside a
+   footer so it tones to the plinth, and plain surface anywhere else. */
+/* ----- SUBSCRIBE: the inline email-capture well -----
+   Pure markup and tokens; the input inherits the base field styling. The
+   submit is the consumer's — facet.js only validates and announces. */
+.subscribe {
+  background: var(--footer-well, var(--surface));
+  border: var(--border-element) solid var(--footer-line, var(--border));
+  border-radius: var(--radius-card);
+  padding: var(--space-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-control);
+  color: var(--footer-text, var(--text));
+}
+.subscribe-label {
+  margin: 0;
+  font-weight: var(--weight-strong);
+  color: var(--footer-text, var(--text));
+}
+.subscribe-blurb { margin: 0; font-size: var(--text-footnote); color: var(--footer-muted, var(--text-muted)); }
+.subscribe-row { display: flex; gap: var(--space-control); flex-wrap: wrap; }
+.subscribe-row input { flex: 1 1 12rem; min-width: 0; }   /* inherits the base input skin */
+.subscribe-msg {
+  margin: 0;
+  min-height: 1.2em;
+  font-size: var(--text-footnote);
+  color: var(--footer-muted, var(--text-muted));
+}
+.subscribe-msg[data-ok="true"] { color: var(--success); }
+.subscribe-msg[data-ok="false"] { color: var(--error); }
 
 /* ----- HEADING BAR: the accent stroke under a heading -----
    (docs mirror — identical to llms.txt · Heading bar)
@@ -5436,7 +5659,7 @@ button.list-item:active { background: var(--surface-active); }
 /* (docs mirror — identical to llms.txt · Tab bar)
    WHEN TO USE: the main navigation of an app-shaped page — a floating pill of three to five sections with the menu on its left and settings on its right; phones get it at the bottom, wide screens can move it to the top.
 
-   What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost — and never re-centring once the reader scrolls the pill themselves. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one condenses the other away first, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. A tapped link segment glides the highlight onto itself before the page changes; coming back through the browser's back-forward cache puts the highlight back on the returning page's own tab. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost; the round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. Clearing the bar: the page never hand-measures it — put .page-under-bar on <main> (or body) with the .tab-bar-top site bar and it pads the top on wide screens and the bottom on phones, where the same bar folds back to the bottom pill; a page with the plain bottom .tab-bar pads itself with padding-bottom: var(--bar-clearance-bottom). The tokens behind it: --bar-height (48px, what the pill and corner buttons stand), --bar-clearance-top and --bar-clearance-bottom (height + the bar's edge inset + one card of air). What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow. */
+   What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost — and never re-centring once the reader scrolls the pill themselves. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one condenses the other away first, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. A tapped link segment glides the highlight onto itself before the page changes; coming back through the browser's back-forward cache puts the highlight back on the returning page's own tab. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost — a tab-shaped accent pill with a built-in skin (the indicator's height and pill radius, filled with accent-1), so it needs no .btn classes to belong to the bar; data-variant="ghost" gives a quiet one on the segment's own raised surface, and data-keep rides it along on phones for an essential CTA. The round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself by default; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. Clearing the bar: the page never hand-measures it — put .page-under-bar on <main> (or body) with the .tab-bar-top site bar and it pads the top on wide screens and the bottom on phones, where the same bar folds back to the bottom pill; a page with the plain bottom .tab-bar pads itself with padding-bottom: var(--bar-clearance-bottom). The tokens behind it: --bar-height (48px, what the pill and corner buttons stand), --bar-clearance-top and --bar-clearance-bottom (height + the bar's edge inset + one card of air). What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow. */
 /* ----- TAB BAR: the floating command bar (Photos-style pill) -----
    Embossed frosted glass: translucent over a backdrop blur, pressed INTO
    the page via inset shadows (dark from the top, faint from the bottom).
@@ -5568,7 +5791,51 @@ button.list-item:active { background: var(--surface-active); }
   /* the same survival halo for the brand and the corner glyphs */
   filter: drop-shadow(0 0 3px color-mix(in srgb, var(--surface) 90%, transparent));
 }
-.tab-action { display: none; }
+/* .tab-action — the one CTA, with a built-in tab-shaped skin so it needs
+   no .btn classes to belong to the bar. It stands inside the pill like a
+   segment (the .tab-indicator's height and pill radius), filled with the
+   accent as the single primary action in the chrome. Desktop-only by
+   default (hidden on the phone pill, where the slot folds away); the
+   top-placement rule below reveals it. Two opt-ins: [data-variant="ghost"]
+   swaps the accent fill for the segment's own raised-surface look, for a
+   CTA that should not shout; [data-keep] rides it along as the pill's last
+   option on phones too, for apps whose CTA is essential (install, checkout). */
+.tab-action {
+  display: none;
+  align-items: center;
+  gap: var(--space-control);
+  min-height: 40px;                   /* stands inside the pill like a segment */
+  padding-inline: var(--space-stack);
+  border-radius: var(--radius-pill);  /* the .tab-indicator's family */
+  background: var(--accent-1);        /* the one filled action in the chrome */
+  color: var(--on-accent-1);
+  font-size: var(--text-footnote);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-ui);
+  letter-spacing: var(--tracking-label);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  /* raised out of the inset bar, matching the indicator's lift */
+  box-shadow:
+    0 2px 5px color-mix(in srgb, var(--text) 25%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--background) 60%, transparent);
+  transition: background var(--duration-fast) var(--ease-out),
+              transform var(--duration-normal) var(--ease-spring);
+}
+.tab-action svg { flex: none; }
+.tab-action:hover { background: var(--accent-1-hover); }
+.tab-action:active { background: var(--accent-1-pressed); transform: translateY(1px) scale(0.98); }
+/* Ghost: the quiet CTA, wearing the raised-segment surface (the same fill
+   the .tab-indicator uses) instead of the accent. */
+.tab-action[data-variant="ghost"] {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  color: var(--text);
+}
+.tab-action[data-variant="ghost"]:hover { background: var(--surface); }
+.tab-action[data-variant="ghost"]:active { background: var(--surface-active); transform: translateY(1px) scale(0.98); }
+/* Keep on phones: the essential CTA rides the pill as its last option. */
+.tab-action[data-keep] { display: inline-flex; }
 /* Top placement: on wide screens the same bar pins to the top edge as
    the site bar — the round menu just off the pill's left, the round
    settings just off its right, and the pill itself capped at the

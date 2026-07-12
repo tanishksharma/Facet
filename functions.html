@@ -632,6 +632,29 @@
 &lt;/ul&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-filter" data-tip="Copies this code">Copy</button></p>
         </article>
+
+        <article class="element stack" id="fn-subscribe" data-llms="Subscribe">
+          <h3>facet.subscribe</h3>
+          <p>
+            A form carrying data-subscribe validates its email on submit,
+            announces the result on its .subscribe-msg line, and dispatches a
+            cancelable facet:subscribe event with the email — so the library
+            owns the layout, the validation and the status UX while your page
+            owns the send. Cancel the event to run your own status line;
+            leave it and the well shows a default confirmation and resets.
+          </p>
+          <pre id="code-fn-subscribe"><code>&lt;form class="subscribe" data-subscribe&gt;
+  &lt;input type="email" name="email" required placeholder="you@example.com"&gt;
+  &lt;button class="btn" type="submit"&gt;Subscribe&lt;/button&gt;
+  &lt;p class="subscribe-msg" role="status" aria-live="polite"&gt;&lt;/p&gt;
+&lt;/form&gt;
+&lt;script&gt;
+  document.addEventListener("facet:subscribe", e =&gt; {
+    fetch("/api/subscribe", { method: "POST", body: JSON.stringify(e.detail) });
+  });
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-subscribe" data-tip="Copies this code">Copy</button></p>
+        </article>
       </section>
 
       <!-- ==============================

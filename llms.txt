@@ -142,12 +142,21 @@ three variants and three sizes working on <button> and <a>, plus .btn-pill
 capsule shape (an icon-and-label pill with no extra markup); icon buttons;
 the app-kit floating controls — the tab bar (the Photos-style command
 bar: a bottom pill on phones, the top site bar on wide screens, its
-corner panels condensing into and rising out of their own buttons),
+corner panels condensing into and rising out of their own buttons, one
+optional tab-shaped .tab-action CTA with a built-in accent skin — ghost
+and phone-keep opt-ins),
 settings sheet, float button, scroll
 gauge, and the nav menu (a floating Menu-pill + Settings-button cluster, built
 from .btn.btn-pill, a no-JS <details> of real links upgraded to an overlay),
 with .page-under-bar and the --bar-clearance tokens so pages clear the
 fixed bar without hand-measuring it;
+the site footer (.footer — the page's closing band: brand lockup with
+tagline, mono status line and round social buttons, up to four link
+columns, a copyright/colophon line; its own --footer-* tokens, data-plinth
+for the always-dark site base, clears the bottom tab bar and never prints);
+the subscribe well (.subscribe — inline email capture: label, blurb, one
+input and button, a status line; data-subscribe validates and fires a
+cancelable facet:subscribe event, the project owns the send);
 the calculator-grade number input (prefilled example, one-tap clear,
 locale-aware grouping, words helper in the active language); labelled
 fields with hints and three-color validation (data-status +
@@ -928,6 +937,68 @@ content, plain underlined links stay the rule.
       <a class="nav-link" href="/" aria-current="page">Dashboard</a>
       <a class="nav-link" href="/reports">Reports</a>
     </nav>
+
+### Footer
+
+WHEN TO USE: the last band of any real page — the standing navigation and identity that closes it, the counterpart to the top menu or tab bar. Every content or marketing page; not one-page apps, which end at their last snap section.
+
+What it is: the page's closing band — a full-bleed footer that reads as the site's plinth. Every piece is optional and the markup is the variant: a .footer-top holding the brand column (.footer-brand with a .footer-wordmark, a one-line .footer-tagline, an optional mono .footer-meta status line and a row of round .footer-social buttons) beside an optional .subscribe well; then up to four .footer-cols link columns (each a nav.footer-col with a mono .footer-col-label over a .footer-links list, links may carry a leading icon); then a .footer-bottom line for copyright and colophon. It carries its own --footer-* token block so it can stand apart from page surface, and by default it inherits the theme, toning to the surface with the page accent bleeding faintly through its top edge. Add data-plinth and it becomes the dark base of the whole site in BOTH light and dark modes — the deliberately-inverted always-dark case — with the accent still bleeding through the top. What it is for: the standing navigation and identity that closes every page. When to use it: on any real page; one-page apps end at their last section instead. It clears the floating bottom tab bar on phones on its own, and never prints (page furniture).
+
+    <footer class="footer" data-plinth>
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <span class="footer-wordmark">Acme</span>
+            <p class="footer-tagline">One line on what this is.</p>
+            <p class="footer-meta">Now: shipping the thing</p>
+            <div class="footer-social">
+              <a href="https://x.com/acme" aria-label="Acme on X" data-tip="X"><svg width="18" height="18" data-icon="external"></svg></a>
+            </div>
+          </div>
+          <form class="subscribe" data-subscribe>
+            <p class="subscribe-label">Mailing list</p>
+            <p class="subscribe-blurb">Hear from us when something ships.</p>
+            <div class="subscribe-row">
+              <label class="visually-hidden" for="f-sub">Email address</label>
+              <input id="f-sub" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+              <button class="btn" type="submit" data-event="subscribe">Subscribe</button>
+            </div>
+            <p class="subscribe-msg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+        <div class="footer-cols">
+          <nav class="footer-col" aria-label="Product">
+            <p class="footer-col-label">Product</p>
+            <ul class="footer-links"><li><a href="/pricing">Pricing</a></li><li><a href="/changelog">Changelog</a></li></ul>
+          </nav>
+          <nav class="footer-col" aria-label="Company">
+            <p class="footer-col-label">Company</p>
+            <ul class="footer-links"><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li></ul>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Acme</span>
+          <span>Built with <a href="https://facet-kappa.vercel.app">Facet</a></span>
+        </div>
+      </div>
+    </footer>
+
+### Subscribe
+
+WHEN TO USE: any inline email capture — the footer's mailing-list well, an end-of-article sign-up, a hero or modal opt-in. The layout and the validation are the library's; the actual send stays the project's.
+
+What it is: a compact email-capture well — a .subscribe-label and .subscribe-blurb over one input and one button in a .subscribe-row, with a .subscribe-msg status line beneath. What it is for: collecting an email inline without a whole form. When to use it: wherever a single email opt-in belongs. Give the form data-subscribe and facet.js validates the address on submit, sets data-ok on the .subscribe-msg line (true green, false red), and dispatches a facet:subscribe CustomEvent (detail: { email, form }) so the project does the network call — the library never owns an endpoint. The event is cancelable: call event.preventDefault() in your listener to take over the status line yourself; leave it and the well shows a default confirmation and resets. With JS off the form posts natively, so give it a real action if you have no listener. It reads --footer-well inside a footer so it tones to the plinth, plain surface anywhere else.
+
+    <form class="subscribe" data-subscribe>
+      <p class="subscribe-label">Mailing list</p>
+      <p class="subscribe-blurb">Hear from us when something ships.</p>
+      <div class="subscribe-row">
+        <label class="visually-hidden" for="sub-email">Email address</label>
+        <input id="sub-email" type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+        <button class="btn" type="submit" data-event="subscribe">Subscribe</button>
+      </div>
+      <p class="subscribe-msg" role="status" aria-live="polite"></p>
+    </form>
 
 ### Table
 
@@ -1901,12 +1972,6 @@ WHEN TO USE: app and docs shells with more destinations than a top row holds —
 
 What it is: sectioned nav-link groups in an aside — exactly the pattern this page's own index uses. What it is for: app and docs shells with more destinations than a top row holds. When to use it: three sections or more; fewer fit the top menu.
 
-### Footer
-
-WHEN TO USE: every page's last block — link columns and the small print.
-
-What it is: link columns over a legal row. What it is for: the bottom of every site page. When to use it: always — a page that ends abruptly reads as broken.
-
 ### Hero
 
 WHEN TO USE: the opening statement of a landing page — display type, one line under it, one primary action.
@@ -2115,7 +2180,7 @@ What it is: synthesized UI sound and vibration with no audio files — facet.fee
 
 WHEN TO USE: the main navigation of an app-shaped page — a floating pill of three to five sections with the menu on its left and settings on its right; phones get it at the bottom, wide screens can move it to the top.
 
-What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost — and never re-centring once the reader scrolls the pill themselves. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one condenses the other away first, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. A tapped link segment glides the highlight onto itself before the page changes; coming back through the browser's back-forward cache puts the highlight back on the returning page's own tab. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost; the round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. Clearing the bar: the page never hand-measures it — put .page-under-bar on <main> (or body) with the .tab-bar-top site bar and it pads the top on wide screens and the bottom on phones, where the same bar folds back to the bottom pill; a page with the plain bottom .tab-bar pads itself with padding-bottom: var(--bar-clearance-bottom). The tokens behind it: --bar-height (48px, what the pill and corner buttons stand), --bar-clearance-top and --bar-clearance-bottom (height + the bar's edge inset + one card of air). What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow.
+What it is: the app's floating command bar, in the style of Apple's Photos pill. Three detached pieces sit in one row: a round .tab-menu button on the left that opens the navigation sheet from the LEFT edge, the long glass .tab-set pill of text segments with one raised highlight sliding behind the active one, and a round .tab-settings button on the right that opens the settings sheet from the RIGHT edge. Each piece is optional — write only the pill for a simple app, drop the menu or the settings button when there is nothing behind it; the markup IS the variant, nothing to configure. A segment is a <button> paging the snap pager (data-section) or a real <a> to another page (aria-current="page") — the site bar's tabs are links; on a narrow screen the pill scrolls sideways when the tabs outgrow it, starting with the current tab centred in view so nobody feels lost — and never re-centring once the reader scrolls the pill themselves. The highlight is one injected .tab-indicator moving on per-edge analytic springs: the leading edge leads with momentum, the trailing edge lags so the pill stretches, and both settle with a small fixed overshoot whatever the jump length. It wires itself to the page's snap pager ([data-section] segments page there, and the pager's moves slide the pill back behind a one-second nav lock so pass-through sections stay quiet); the corner buttons open whatever sheet they aria-controls, opening one condenses the other away first, and the whole bar rises above the sheet's scrim so the button that opened a panel stays visible as its close toggle. A tapped link segment glides the highlight onto itself before the page changes; coming back through the browser's back-forward cache puts the highlight back on the returning page's own tab. Add .tab-bar-top and wide screens pin the same bar to the TOP edge as the site bar: the pill caps at a centered reading-column width, the way content pages hold the middle of a wide screen. The convention inside it: the .tab-brand logo lockup on the left IS the home tab — the highlight sits around it when the home page is current, so Home never repeats in the tab row — the page tabs sit to the right side, and one optional .tab-action CTA can sit rightmost — a tab-shaped accent pill with a built-in skin (the indicator's height and pill radius, filled with accent-1), so it needs no .btn classes to belong to the bar; data-variant="ghost" gives a quiet one on the segment's own raised surface, and data-keep rides it along on phones for an essential CTA. The round menu and settings buttons hang just off the pill's edges, and their panels drop DOWN from those corners as phone-width glass dropdowns (see the sheet's .sheet-rise). Phones keep the bottom pill: the brand rides along as the pill's FIRST option — still the home tab, still highlightable — while the CTA slot hides itself by default; the same markup serves both shapes. The older anatomy (segments directly in the bar with a .tab-divider) still renders as the one-pill bar. Clearing the bar: the page never hand-measures it — put .page-under-bar on <main> (or body) with the .tab-bar-top site bar and it pads the top on wide screens and the bottom on phones, where the same bar folds back to the bottom pill; a page with the plain bottom .tab-bar pads itself with padding-bottom: var(--bar-clearance-bottom). The tokens behind it: --bar-height (48px, what the pill and corner buttons stand), --bar-clearance-top and --bar-clearance-bottom (height + the bar's edge inset + one card of air). What it is for: the primary navigation of one-page apps. When to use it: any app-shaped product; pages and documents take the top menu instead. On a real page it floats fixed; here it sits in the flow.
 
     <nav class="tab-bar tab-bar-top" aria-label="Sections">
       <button type="button" class="tab-menu" aria-controls="nav-sheet"
