@@ -655,6 +655,26 @@
 &lt;/script&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-subscribe" data-tip="Copies this code">Copy</button></p>
         </article>
+
+        <article class="element stack" id="fn-table-sort" data-llms="Table">
+          <h3>facet.tableSort</h3>
+          <p>
+            A table.table carrying data-sortable gets click- and
+            keyboard-sortable column headers: each header toggles
+            aria-sort and reorders the rows, numeric columns (th.num) as
+            numbers and the rest as text. A header with data-sort-skip
+            stays inert, for an actions column. With JS off the table
+            still renders in source order — sorting is the only thing lost.
+          </p>
+          <pre id="code-fn-table-sort"><code>&lt;table class="table" data-sortable&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th scope="col"&gt;Month&lt;/th&gt;&lt;th scope="col" class="num"&gt;Amount&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;April&lt;/td&gt;&lt;td class="num"&gt;12,480&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;July&lt;/td&gt;&lt;td class="num"&gt;48,000&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-table-sort" data-tip="Copies this code">Copy</button></p>
+        </article>
       </section>
 
       <!-- ==============================

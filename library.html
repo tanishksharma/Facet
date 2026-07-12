@@ -1123,19 +1123,33 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="button" data-cat="forms">
         <h3 data-status="dev">Button</h3>
         <p>
-          The action element: three variants and three sizes for primary, secondary and quiet actions. Works identically as a button or a link.
+          The action element: three variants and three sizes for primary, secondary and quiet actions. Works identically as a button or a link, and carries every state built in.
         </p>
-        <p class="chips" role="group" aria-label="Button variants, sizes and states">
-          <button class="chip" aria-pressed="true" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
-          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-secondary">Secondary</button>
-          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-ghost">Ghost</button>
-          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-small">Small</button>
-          <button class="chip" aria-pressed="true" data-chip-group="size" data-chip-class="">Default size</button>
-          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-large">Large</button>
-          <button class="chip" aria-pressed="false" data-chip-attr="disabled">Disabled</button>
-        </p>
-        <div class="demo">
-          <button class="btn btn-primary" data-event="calc-run" data-tip="Runs the calculation">Calculate</button>
+        <div class="demo stack">
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Variants — one primary per screen</p>
+          <div class="row">
+            <button class="btn btn-primary" data-event="save" data-tip="The screen's one main action, in accent-1">Save changes</button>
+            <button class="btn" data-tip="Every other action, on the accent-2 fill">Cancel</button>
+            <button class="btn btn-ghost" data-tip="Quiet actions inside busy areas — invisible until hovered">Dismiss</button>
+          </div>
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Sizes</p>
+          <div class="row" style="align-items:center;">
+            <button class="btn btn-primary btn-small">Small</button>
+            <button class="btn btn-primary">Default</button>
+            <button class="btn btn-primary btn-large">Large</button>
+          </div>
+          <p class="eyebrow" data-demo-chrome style="margin:0;">With an icon · as a pill · as a link</p>
+          <div class="row" style="align-items:center;">
+            <button class="btn"><svg width="16" height="16" data-icon="download" aria-hidden="true"></svg>Export</button>
+            <button class="btn btn-primary btn-pill"><svg width="16" height="16" data-icon="plus" aria-hidden="true"></svg>New report</button>
+            <a class="btn btn-pill" href="#button" data-tip="An &lt;a&gt; styled as a button — same look, real link">Open docs</a>
+          </div>
+          <p class="eyebrow" data-demo-chrome style="margin:0;">States — hover and focus are built in too</p>
+          <div class="row" style="align-items:center;">
+            <button class="btn" disabled>Disabled</button>
+            <button class="btn btn-primary" aria-busy="true" data-tip="Working: the spinner shows and re-clicks are blocked">Saving</button>
+            <a class="btn" href="#button" aria-disabled="true" data-tip="A disabled link — aria-disabled, since an &lt;a&gt; can't be :disabled">Disabled link</a>
+          </div>
         </div>
         <pre id="code-button"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
@@ -1145,21 +1159,32 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="icon-button" data-cat="forms">
         <h3 data-status="dev">Icon button</h3>
         <p>
-          A square button holding one icon — for compact actions whose meaning the icon and its tooltip carry.
+          A square button holding one icon — for compact actions whose meaning the icon and its tooltip carry. It takes every button variant, size and state, and always needs an aria-label.
         </p>
-        <p class="chips" role="group" aria-label="Icon button variants, sizes and states">
-          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-primary">Primary</button>
-          <button class="chip" aria-pressed="true" data-chip-group="variant" data-chip-class="">Secondary</button>
-          <button class="chip" aria-pressed="false" data-chip-group="variant" data-chip-class="btn-ghost">Ghost</button>
-          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-small">Small</button>
-          <button class="chip" aria-pressed="true" data-chip-group="size" data-chip-class="">Default size</button>
-          <button class="chip" aria-pressed="false" data-chip-group="size" data-chip-class="btn-large">Large</button>
-          <button class="chip" aria-pressed="false" data-chip-attr="disabled">Disabled</button>
-        </p>
-        <div class="demo">
-          <button class="btn btn-icon" aria-label="Close" data-tip="Close this panel">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15"/></svg>
-          </button>
+        <div class="demo stack">
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Variants</p>
+          <div class="row" style="align-items:center;">
+            <button class="btn btn-icon btn-primary" aria-label="Add" data-tip="Add"><svg width="20" height="20" data-icon="plus" aria-hidden="true"></svg></button>
+            <button class="btn btn-icon" aria-label="Edit" data-tip="Edit"><svg width="20" height="20" data-icon="edit" aria-hidden="true"></svg></button>
+            <button class="btn btn-icon btn-ghost" aria-label="More" data-tip="More"><svg width="20" height="20" data-icon="more" aria-hidden="true"></svg></button>
+          </div>
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Sizes</p>
+          <div class="row" style="align-items:center;">
+            <button class="btn btn-icon btn-small" aria-label="Copy" data-tip="Copy"><svg width="16" height="16" data-icon="copy" aria-hidden="true"></svg></button>
+            <button class="btn btn-icon" aria-label="Share" data-tip="Share"><svg width="20" height="20" data-icon="share" aria-hidden="true"></svg></button>
+            <button class="btn btn-icon btn-large" aria-label="Download" data-tip="Download"><svg width="24" height="24" data-icon="download" aria-hidden="true"></svg></button>
+          </div>
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Common actions · and a ghost pill close</p>
+          <div class="row" style="align-items:center;">
+            <button class="btn btn-icon" aria-label="Search" data-tip="Search"><svg width="20" height="20" data-icon="search" aria-hidden="true"></svg></button>
+            <button class="btn btn-icon" aria-label="Filter" data-tip="Filter"><svg width="20" height="20" data-icon="filter" aria-hidden="true"></svg></button>
+            <button class="btn btn-icon btn-ghost btn-pill" aria-label="Close" data-tip="Close"><svg width="20" height="20" data-icon="close" aria-hidden="true"></svg></button>
+          </div>
+          <p class="eyebrow" data-demo-chrome style="margin:0;">States</p>
+          <div class="row" style="align-items:center;">
+            <button class="btn btn-icon" aria-label="Delete" disabled data-tip="Disabled"><svg width="20" height="20" data-icon="trash" aria-hidden="true"></svg></button>
+            <button class="btn btn-icon btn-primary" aria-label="Uploading" aria-busy="true" data-tip="Working — the spinner replaces the icon"><svg width="20" height="20" data-icon="upload" aria-hidden="true"></svg></button>
+          </div>
         </div>
         <pre id="code-icon-button"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-icon-button" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
@@ -1508,21 +1533,41 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="table" data-cat="content">
         <h3 data-status="dev">Table</h3>
         <p>
-          The data table: quiet header, striped rows, and a hover that names the row you are reading. For records, not layout.
+          The data table: quiet header, striped rows, and a hover that names the row you are reading. Add data-sortable and the headers sort; mark a row aria-selected or data-status to carry a state. For records, not layout.
         </p>
-        <div class="demo">
+        <div class="demo stack">
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Sortable headers · a selected row · statusful rows — click a header to sort</p>
           <div class="table-scroll">
-            <table class="table">
+            <table class="table" data-sortable>
               <thead>
-                <tr><th scope="col">Month</th><th scope="col">Category</th><th scope="col" class="num">Amount</th></tr>
+                <tr><th scope="col">Month</th><th scope="col">Category</th><th scope="col">Status</th><th scope="col" class="num">Amount</th></tr>
               </thead>
               <tbody>
-                <tr><td>April</td><td>Groceries</td><td class="num">12,480</td></tr>
-                <tr><td>May</td><td>Groceries</td><td class="num">11,975</td></tr>
-                <tr><td>June</td><td>Travel</td><td class="num">31,200</td></tr>
-                <tr><td>July</td><td>Rent</td><td class="num">48,000</td></tr>
+                <tr aria-selected="true"><td>April</td><td>Groceries</td><td><span class="badge badge-success">Cleared</span></td><td class="num">12,480</td></tr>
+                <tr><td>May</td><td>Groceries</td><td><span class="badge badge-success">Cleared</span></td><td class="num">11,975</td></tr>
+                <tr data-status="warning"><td>June</td><td>Travel</td><td><span class="badge badge-warning">Pending</span></td><td class="num">31,200</td></tr>
+                <tr data-status="error"><td>July</td><td>Rent</td><td><span class="badge badge-error">Overdue</span></td><td class="num">48,000</td></tr>
               </tbody>
             </table>
+          </div>
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">Empty state · loading state</p>
+          <div class="grid" data-demo-chrome>
+            <div class="table-scroll">
+              <table class="table">
+                <thead><tr><th scope="col">Month</th><th scope="col" class="num">Amount</th></tr></thead>
+                <tbody><tr><td colspan="2"><div class="empty"><strong>No transactions yet</strong><span>They appear here the moment you add one.</span></div></td></tr></tbody>
+              </table>
+            </div>
+            <div class="table-scroll" aria-busy="true">
+              <table class="table">
+                <thead><tr><th scope="col">Month</th><th scope="col" class="num">Amount</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="skeleton" style="display:block;height:0.8em;width:5em;"></span></td><td class="num"><span class="skeleton" style="display:block;height:0.8em;width:4em;margin-left:auto;"></span></td></tr>
+                  <tr><td><span class="skeleton" style="display:block;height:0.8em;width:6em;"></span></td><td class="num"><span class="skeleton" style="display:block;height:0.8em;width:3.5em;margin-left:auto;"></span></td></tr>
+                  <tr><td><span class="skeleton" style="display:block;height:0.8em;width:4.5em;"></span></td><td class="num"><span class="skeleton" style="display:block;height:0.8em;width:4.5em;margin-left:auto;"></span></td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <pre id="code-table"><code></code></pre>
@@ -1707,31 +1752,45 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="overlays" data-cat="overlays">
         <h3 data-status="dev">Modal, drawer, popover</h3>
         <p>
-          Modal, drawer and popover, built on the platform's own dialog machinery — focus, Escape and the backdrop come free.
+          Modal, drawer and popover, built on the platform's own dialog machinery — focus, Escape and the backdrop come free. The drawer slides from the right by default, or from the left with .drawer-left; the popover needs no JS at all.
         </p>
         <div class="demo">
           <div class="row">
-            <button type="button" class="btn" aria-controls="demo-modal" data-tip="Opens the modal dialog" data-event="demo-modal-open">Open modal</button>
-            <button type="button" class="btn" aria-controls="demo-drawer" data-tip="Opens the side drawer" data-event="demo-drawer-open">Open drawer</button>
-            <button type="button" class="btn" popovertarget="demo-popover" data-tip="Toggles the popover — no JS involved">Toggle popover</button>
+            <button type="button" class="btn btn-primary" aria-controls="demo-modal" data-tip="A decision that blocks the page" data-event="demo-modal-open">Open modal</button>
+            <button type="button" class="btn" aria-controls="demo-drawer" data-tip="A side panel from the right — details or filters" data-event="demo-drawer-open">Filters drawer</button>
+            <button type="button" class="btn" aria-controls="demo-drawer-left" data-tip="The same panel from the left — navigation" data-event="demo-drawer-left-open">Nav drawer</button>
+            <button type="button" class="btn" popovertarget="demo-popover" data-tip="A small anchored note — no JS involved">Toggle popover</button>
           </div>
           <dialog class="modal stack" id="demo-modal">
-            <h4>Delete this report?</h4>
-            <p class="text-footnote">This cannot be undone. The figures stay in your ledger.</p>
+            <div class="row" style="justify-content:space-between; align-items:flex-start;">
+              <h4 style="margin:0;">Delete this report?</h4>
+              <form method="dialog"><button class="btn btn-icon btn-ghost" aria-label="Close" data-tip="Close"><svg width="20" height="20" data-icon="close" aria-hidden="true"></svg></button></form>
+            </div>
+            <p class="text-footnote" style="color:var(--text-muted);">This cannot be undone. The figures stay in your ledger.</p>
             <form method="dialog" class="row">
               <button class="btn btn-primary" data-event="demo-modal-confirm">Delete</button>
               <button class="btn" data-tip="Closes without doing anything">Keep it</button>
             </form>
           </dialog>
           <dialog class="drawer stack" id="demo-drawer">
-            <h4>Filters</h4>
-            <label class="check-row"><input type="checkbox" checked> Paid</label>
-            <label class="check-row"><input type="checkbox"> Pending</label>
-            <form method="dialog"><button class="btn">Done</button></form>
+            <h4 style="margin:0;">Filters</h4>
+            <label class="check-row"><input type="checkbox" checked> Cleared</label>
+            <label class="check-row"><input type="checkbox" checked> Pending</label>
+            <label class="check-row"><input type="checkbox"> Overdue</label>
+            <form method="dialog" style="margin-top:auto;"><button class="btn btn-primary">Apply</button></form>
+          </dialog>
+          <dialog class="drawer drawer-left stack" id="demo-drawer-left">
+            <h4 style="margin:0;">Menu</h4>
+            <nav class="stack-tight" aria-label="Sections">
+              <a class="nav-link" href="#overlays" aria-current="page">Overview</a>
+              <a class="nav-link" href="#overlays">Transactions</a>
+              <a class="nav-link" href="#overlays">Settings</a>
+            </nav>
+            <form method="dialog" style="margin-top:auto;"><button class="btn">Close</button></form>
           </dialog>
           <div popover id="demo-popover" class="stack-tight">
             <strong>Quick note</strong>
-            <p class="text-footnote">Popovers light-dismiss: click anywhere else.</p>
+            <p class="text-footnote" style="color:var(--text-muted);">Popovers light-dismiss: click anywhere else, or press Escape.</p>
           </div>
         </div>
         <pre id="code-overlays"><code></code></pre>

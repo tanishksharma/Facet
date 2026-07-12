@@ -844,11 +844,13 @@ What it is: overlays built on the platform's own machinery — modal and
 drawer are <dialog> (focus trap, Esc, inert page for free), popover is
 the popover attribute (top layer, light dismiss, no JS at all). What
 it is for: modal for a decision that blocks the page; drawer for a
-side panel of details or filters; popover for small floating bits.
-When to use it: open a dialog from any button whose aria-controls
-names it — facet.js calls showModal; close with a form method="dialog"
-button inside, Esc, or a backdrop click. Popovers need only
-popovertarget on the button. The app-kit .sheet stays the settings
+side panel of details or filters; popover for small floating bits. The
+drawer slides in from the right by default; add .drawer-left and it
+slides from the left — the document-world twin of the app-kit
+.sheet-left. When to use it: open a dialog from any button whose
+aria-controls names it — facet.js calls showModal; close with a form
+method="dialog" button inside, Esc, or a backdrop click. Popovers need
+only popovertarget on the button. The app-kit .sheet stays the settings
 panel for app pages; the drawer is the document-world sibling.
 
     <button class="btn" aria-controls="confirm">Delete…</button>
@@ -1006,16 +1008,27 @@ WHEN TO USE: real tabular data, where rows and columns mean something — compar
 
 What it is: the data table — muted header row, zebra striping, a
 hover that names the row you are reading, right-aligned tabular
-numbers via .num. What it is for: real records: transactions, users,
-line items. When to use it: data with columns; one-field lists go in
-list markup. Wrap wide tables in .table-scroll so they scroll
+numbers via .num. Add data-sortable and every column header becomes a
+click- and keyboard-sort control (facet.js reorders the rows, numeric
+columns as numbers, a th carrying data-sort-skip stays inert). Rows
+take the state grammar: aria-selected marks a picked row, and
+data-status="success|warning|error|info" tints a row and draws a
+reading-edge bar in the status color (pair it with a badge for the
+words). The empty state is one full-width cell holding an .empty block;
+the loading state is skeleton rows (.skeleton bars in the cells, or
+facet.busy on the region). What it is for: real records: transactions,
+users, line items. When to use it: data with columns; one-field lists
+go in list markup. Wrap wide tables in .table-scroll so they scroll
 horizontally on phones (the wrapper law allows it: it enables
 scrolling).
 
     <div class="table-scroll">
-      <table class="table">
+      <table class="table" data-sortable>
         <thead><tr><th scope="col">Month</th><th scope="col" class="num">Amount</th></tr></thead>
-        <tbody><tr><td>April</td><td class="num">12,480</td></tr></tbody>
+        <tbody>
+          <tr aria-selected="true"><td>April</td><td class="num">12,480</td></tr>
+          <tr data-status="error"><td>July</td><td class="num">48,000</td></tr>
+        </tbody>
       </table>
     </div>
 

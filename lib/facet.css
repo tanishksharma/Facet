@@ -3313,11 +3313,13 @@ input[type="checkbox"].switch:disabled { opacity: 0.5; cursor: not-allowed; }
    drawer are <dialog> (focus trap, Esc, inert page for free), popover is
    the popover attribute (top layer, light dismiss, no JS at all). What
    it is for: modal for a decision that blocks the page; drawer for a
-   side panel of details or filters; popover for small floating bits.
-   When to use it: open a dialog from any button whose aria-controls
-   names it — facet.js calls showModal; close with a form method="dialog"
-   button inside, Esc, or a backdrop click. Popovers need only
-   popovertarget on the button. The app-kit .sheet stays the settings
+   side panel of details or filters; popover for small floating bits. The
+   drawer slides in from the right by default; add .drawer-left and it
+   slides from the left — the document-world twin of the app-kit
+   .sheet-left. When to use it: open a dialog from any button whose
+   aria-controls names it — facet.js calls showModal; close with a form
+   method="dialog" button inside, Esc, or a backdrop click. Popovers need
+   only popovertarget on the button. The app-kit .sheet stays the settings
    panel for app pages; the drawer is the document-world sibling.*/
 /* A closed dialog must stay hidden even when a layout class on it (e.g.
    .stack, which sets display:flex) would otherwise beat the UA's
@@ -3363,8 +3365,16 @@ dialog.modal[open]  { animation: facet-modal-in  var(--duration-normal) var(--ea
 dialog.drawer[open] { animation: facet-drawer-in var(--duration-slow)   var(--ease-spring); }
 dialog.modal[open]::backdrop,
 dialog.drawer[open]::backdrop { animation: facet-fade-in var(--duration-normal) var(--ease-out); }
-@keyframes facet-modal-in  { from { opacity: 0; translate: 0 20px; scale: 0.97; } }
-@keyframes facet-drawer-in { from { translate: 100% 0; } }
+/* The left twin: same panel pinned to the LEFT edge — the document
+   world's navigation drawer, mirroring the app-kit .sheet-left. */
+dialog.drawer-left {
+  margin: 0 auto 0 0;
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+}
+dialog.drawer-left[open] { animation: facet-drawer-left-in var(--duration-slow) var(--ease-spring); }
+@keyframes facet-modal-in       { from { opacity: 0; translate: 0 20px; scale: 0.97; } }
+@keyframes facet-drawer-in      { from { translate: 100% 0; } }
+@keyframes facet-drawer-left-in { from { translate: -100% 0; } }
 @keyframes facet-fade-in   { from { opacity: 0; } }
 @keyframes facet-pop-in    { from { opacity: 0; translate: 0 6px; scale: 0.97; } }
 
@@ -4732,9 +4742,17 @@ progress::-moz-progress-bar { background: var(--accent-1); border-radius: var(--
 
    What it is: the data table — muted header row, zebra striping, a
    hover that names the row you are reading, right-aligned tabular
-   numbers via .num. What it is for: real records: transactions, users,
-   line items. When to use it: data with columns; one-field lists go in
-   list markup. Wrap wide tables in .table-scroll so they scroll
+   numbers via .num. Add data-sortable and every column header becomes a
+   click- and keyboard-sort control (facet.js reorders the rows, numeric
+   columns as numbers, a th carrying data-sort-skip stays inert). Rows
+   take the state grammar: aria-selected marks a picked row, and
+   data-status="success|warning|error|info" tints a row and draws a
+   reading-edge bar in the status color (pair it with a badge for the
+   words). The empty state is one full-width cell holding an .empty block;
+   the loading state is skeleton rows (.skeleton bars in the cells, or
+   facet.busy on the region). What it is for: real records: transactions,
+   users, line items. When to use it: data with columns; one-field lists
+   go in list markup. Wrap wide tables in .table-scroll so they scroll
    horizontally on phones (the wrapper law allows it: it enables
    scrolling).*/
 .table-scroll { overflow-x: auto; }
@@ -4761,6 +4779,37 @@ table.table {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+/* A statusful row: the status color as a reading-edge bar over a faint
+   tint, the same grammar as the statusful card — the words carry the
+   meaning (pair it with a badge), the edge only points at it. The tint
+   is on the row; the bar rides the first cell so it survives horizontal
+   scroll, and the cells keep normal ink. */
+.table tbody tr[data-status="success"] { background: var(--success-tint); }
+.table tbody tr[data-status="warning"] { background: var(--warning-tint); }
+.table tbody tr[data-status="error"]   { background: var(--error-tint); }
+.table tbody tr[data-status="info"]    { background: var(--info-tint); }
+.table tbody tr[data-status="success"] td:first-child { box-shadow: inset 3px 0 0 var(--success); }
+.table tbody tr[data-status="warning"] td:first-child { box-shadow: inset 3px 0 0 var(--warning); }
+.table tbody tr[data-status="error"]   td:first-child { box-shadow: inset 3px 0 0 var(--error); }
+.table tbody tr[data-status="info"]    td:first-child { box-shadow: inset 3px 0 0 var(--info); }
+
+/* Sortable headers: table[data-sortable] makes every column header a
+   sort control (facet.js wires the click and keyboard). The active
+   column shows its direction through aria-sort; the caret is CSS, so a
+   header with no JS simply shows no caret. Numeric columns (.num) sort
+   as numbers, everything else as text. */
+.table[data-sortable] th { cursor: pointer; user-select: none; }
+.table[data-sortable] th:hover,
+.table[data-sortable] th:focus-visible { color: var(--text); }
+.table[data-sortable] th:focus-visible { outline: var(--focus-ring); outline-offset: -2px; }
+.table[data-sortable] th[aria-sort]::after {
+  content: " ↕";
+  font-size: 0.85em;
+  opacity: 0.4;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+.table[data-sortable] th[aria-sort="ascending"]::after  { content: " ↑"; opacity: 1; }
+.table[data-sortable] th[aria-sort="descending"]::after { content: " ↓"; opacity: 1; }
 
 /* ----- NAV LINK: the three states of site navigation -----
    (docs mirror — identical to llms.txt · Nav link)
