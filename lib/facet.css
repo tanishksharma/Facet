@@ -2034,6 +2034,18 @@ figcaption {
   border-radius: var(--radius-control);
 }
 
+/* A programmatic focus target — a container the script focuses only to move
+   the reader into it (a dialog when it opens, a screen when it mounts),
+   never itself in the tab order — must not paint the keyboard ring. Its
+   tabindex="-1" says it is script-focusable but not tabbable, so the ring
+   would be noise: the reader did not tab here. This is why a freshly opened
+   modal no longer lands a ring (and a focus-triggered tooltip) on nothing in
+   particular. Keyboard rings on real controls are untouched. */
+[tabindex="-1"]:focus,
+[tabindex="-1"]:focus-visible,
+dialog:focus,
+dialog:focus-visible { outline: none; }
+
 /* ----- Text selection ----- */
 
 ::selection {
@@ -3400,11 +3412,24 @@ dialog.drawer-bottom {
    drawer reads well without them, cleaner with them. */
 .dialog-head {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: var(--space-stack);
 }
-.dialog-head > :is(h1, h2, h3, h4, h5) { margin: 0; }
+/* A dialog title is UI chrome, not content: it wears the interface voice
+   (the body face, heading weight), never the display serif a page heading
+   uses — a functional title reads wrong in a calligraphic face. The close
+   button is pulled tight to the edge so the title sets the header height. */
+.dialog-head > :is(h1, h2, h3, h4, h5) {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-heading);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-snug);
+}
+.dialog-head > .btn-icon { margin: calc(var(--space-tight) * -1) calc(var(--space-tight) * -1) calc(var(--space-tight) * -1) 0; color: var(--text-muted); }
+.dialog-head > .btn-icon:hover { color: var(--text); }
 .dialog-actions {
   display: flex;
   gap: var(--space-control);
