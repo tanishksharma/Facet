@@ -5370,7 +5370,10 @@ details.dropdown {
    (add data-multi) plus a .card-option-mark, so :has(:checked) lights the
    whole card with no JavaScript and it stays keyboard operable;
    .card-inline is a compact horizontal row (.card-inline-media,
-   .card-inline-body with -title/-meta, .card-inline-trailing). A card may
+   .card-inline-body with -title/-meta, .card-inline-trailing); .card-media
+   bleeds an image (an <img> or a .card-media-img) to the top edge over a
+   padded .card-body — the product, article or thumbnail card, and it takes
+   .card-clickable to become one link. A card may
    also be a stack: class="card stack" (or stack-tight / stack-loose) lays
    the card's children out with the stack's gap — the pairing is supported
    directly, no extra rule needed. Variants use
@@ -5525,6 +5528,27 @@ details.dropdown {
 .card-inline-title { font-weight: var(--weight-strong); }
 .card-inline-meta { color: var(--text-muted); font-size: var(--text-footnote); }
 .card-inline-trailing { flex: none; margin-left: auto; color: var(--text-muted); }
+
+/* Media: an image bleeding to the top edge over a padded body — the product,
+   article and thumbnail card. The card drops its own padding so the image
+   runs edge to edge and the corners clip; the .card-body carries the padding.
+   Combine with .card-clickable to make the whole card a link. The image may
+   be a real <img> or a .card-media-img element with a background. */
+.card-media { padding: 0; overflow: hidden; }
+.card-media > img,
+.card-media > .card-media-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--surface-hover);   /* a quiet tone while the image loads */
+}
+.card-media > .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+  padding: var(--space-card);
+}
 
 /* ----- LIST: rows of items -----
    (docs mirror — identical to llms.txt · List)

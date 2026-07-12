@@ -1513,9 +1513,10 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="card" data-cat="content">
         <h3 data-status="dev">Card</h3>
         <p>
-          The grouped surface: a padded, rounded panel that lifts content above the page. The building block of most layouts.
+          The grouped surface: a padded, rounded panel that lifts content above the page — the building block of most layouts. One primitive with modifiers for the common shapes: outlined, clickable, media, feature, inline and selectable; states ride the grammar (aria-selected, data-status).
         </p>
-        <div class="demo">
+        <div class="demo stack">
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Surfaces — default lifts on shadow, outlined uses a hairline, clickable is one link</p>
           <div class="grid">
             <article class="card stack-tight">
               <p class="text-caption">Default</p>
@@ -1533,7 +1534,27 @@ article p   { font-family: var(--font-reading); }
               <p class="text-footnote" style="color: var(--text-muted);">Lifts on hover, presses on click.</p>
             </a>
           </div>
-          <div class="grid" style="margin-top: var(--space-stack);">
+
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">Media — an image over a padded body; the whole card can be a link</p>
+          <div class="grid">
+            <a class="card card-media card-clickable" href="#card" data-event="card-open">
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23c9d3dd'/%3E%3Cstop offset='1' stop-color='%23e9edf1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='180' fill='url(%23g)'/%3E%3Ctext x='160' y='104' font-size='56' text-anchor='middle'%3E%F0%9F%8F%94%EF%B8%8F%3C/text%3E%3C/svg%3E" alt="Snowy peaks at dawn">
+              <div class="card-body">
+                <strong>Dawn over the ridge</strong>
+                <p class="text-footnote" style="color: var(--text-muted); margin:0;">A cover image bleeds to the edges; the body carries the padding.</p>
+              </div>
+            </a>
+            <article class="card card-media">
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 180'%3E%3Cdefs%3E%3ClinearGradient id='h' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23d8cbe6'/%3E%3Cstop offset='1' stop-color='%23eee6f4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='320' height='180' fill='url(%23h)'/%3E%3Ctext x='160' y='104' font-size='56' text-anchor='middle'%3E%F0%9F%8E%A8%3C/text%3E%3C/svg%3E" alt="Abstract gradient">
+              <div class="card-body">
+                <strong>Static media card</strong>
+                <p class="text-footnote" style="color: var(--text-muted); margin:0;">Drop a &lt;p&gt;, actions or a price into the body.</p>
+              </div>
+            </article>
+          </div>
+
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">Compositions — feature (icon badge) and inline (compact row)</p>
+          <div class="grid">
             <article class="card card-feature">
               <span class="card-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></span>
               <h3 class="card-feature-title">Fast by default</h3>
@@ -1545,17 +1566,52 @@ article p   { font-family: var(--font-reading); }
               <span class="card-inline-trailing" aria-hidden="true">&rarr;</span>
             </article>
           </div>
-          <div role="radiogroup" aria-label="Capital of France" class="stack-tight" style="margin-top: var(--space-stack);">
-            <label class="card card-option">
-              <input type="radio" name="q-capital" class="card-option-input" checked>
-              <span class="card-option-mark" aria-hidden="true"></span>
-              <span class="card-option-body"><span class="card-option-title">Paris</span><span class="card-option-note">Tap a card to choose — the whole card lights up.</span></span>
-            </label>
-            <label class="card card-option">
-              <input type="radio" name="q-capital" class="card-option-input">
-              <span class="card-option-mark" aria-hidden="true"></span>
-              <span class="card-option-body"><span class="card-option-title">Berlin</span></span>
-            </label>
+
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">Selectable — a radio picker (single) and a checkbox set (data-multi), lit with no JS</p>
+          <div class="grid">
+            <div role="radiogroup" aria-label="Capital of France" class="stack-tight">
+              <label class="card card-option">
+                <input type="radio" name="q-capital" class="card-option-input" checked>
+                <span class="card-option-mark" aria-hidden="true"></span>
+                <span class="card-option-body"><span class="card-option-title">Paris</span><span class="card-option-note">The whole card lights up.</span></span>
+              </label>
+              <label class="card card-option">
+                <input type="radio" name="q-capital" class="card-option-input">
+                <span class="card-option-mark" aria-hidden="true"></span>
+                <span class="card-option-body"><span class="card-option-title">Berlin</span></span>
+              </label>
+            </div>
+            <div class="stack-tight">
+              <label class="card card-option" data-multi>
+                <input type="checkbox" name="perks" class="card-option-input" checked>
+                <span class="card-option-mark" aria-hidden="true"></span>
+                <span class="card-option-body"><span class="card-option-title">Priority support</span><span class="card-option-note">data-multi allows several.</span></span>
+              </label>
+              <label class="card card-option" data-multi>
+                <input type="checkbox" name="perks" class="card-option-input">
+                <span class="card-option-mark" aria-hidden="true"></span>
+                <span class="card-option-body"><span class="card-option-title">Extra seats</span></span>
+              </label>
+            </div>
+          </div>
+
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">States — aria-selected marks a chosen card; data-status draws a status edge</p>
+          <div class="grid">
+            <article class="card stack-tight" aria-selected="true">
+              <p class="text-caption">Selected</p>
+              <strong>Current plan</strong>
+              <p class="text-footnote" style="color: var(--text-muted); margin:0;">aria-selected rings it in accent.</p>
+            </article>
+            <article class="card stack-tight" data-status="success">
+              <p class="text-caption">Status · success</p>
+              <strong>Payment cleared <span class="badge badge-success">Paid</span></strong>
+              <p class="text-footnote" style="color: var(--text-muted); margin:0;">The edge points; the badge says it.</p>
+            </article>
+            <article class="card stack-tight" data-status="error">
+              <p class="text-caption">Status · error</p>
+              <strong>Sync failed <span class="badge badge-error">Error</span></strong>
+              <p class="text-footnote" style="color: var(--text-muted); margin:0;">Pair the edge with words.</p>
+            </article>
           </div>
         </div>
         <pre id="code-card"><code></code></pre>

@@ -771,7 +771,10 @@ pickers — a real <label> wrapping a radio (single-pick) or a checkbox
 (add data-multi) plus a .card-option-mark, so :has(:checked) lights the
 whole card with no JavaScript and it stays keyboard operable;
 .card-inline is a compact horizontal row (.card-inline-media,
-.card-inline-body with -title/-meta, .card-inline-trailing). A card may
+.card-inline-body with -title/-meta, .card-inline-trailing); .card-media
+bleeds an image (an <img> or a .card-media-img) to the top edge over a
+padded .card-body — the product, article or thumbnail card, and it takes
+.card-clickable to become one link. A card may
 also be a stack: class="card stack" (or stack-tight / stack-loose) lays
 the card's children out with the stack's gap — the pairing is supported
 directly, no extra rule needed. Variants use
