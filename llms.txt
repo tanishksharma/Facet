@@ -649,18 +649,36 @@ for bigger cards, .grid-tight and .grid-loose for gap.
 WHEN TO USE: checkbox for independent yes/nos, radio for one-of-few with every option visible, switch for a setting that takes effect the moment it flips.
 
 What it is: the yes/no and pick-one controls — native checkbox and
-radio themed through accent-color, and a switch that is a
-checkbox upgraded with one class. What it is for: settings, consents,
-filters — checkbox for independent yes/nos, radio for one-of-few with
-all options visible, switch for a setting that takes effect
-immediately. When to use it: wrap control and text in a
-label.check-row so the whole line is the hit target. The switch keeps
-checkbox semantics — form value, keyboard, screen readers — the class
-only changes the appearance.
+radio themed through accent-color, and a switch that is a checkbox
+upgraded with one class. Every state is native: checked, disabled, and
+the checkbox's indeterminate mark (the mixed state of a select-all),
+which you set in JS with el.indeterminate = true. What it is for:
+settings, consents, filters — checkbox for independent yes/nos, radio
+for one-of-few with all options visible, switch for a setting that
+takes effect immediately. When to use it: wrap the control and its text
+in a label.check-row so the whole line is the hit target. Add a
+.check-text block (a title over a muted .check-desc helper line) for a
+labelled setting, and .check-row-split to push the control to the
+trailing edge — the settings-row shape. The switch keeps checkbox
+semantics — form value, keyboard, screen readers — the class only
+changes the appearance.
 
     <label class="check-row"><input type="checkbox" class="switch" checked> Sound on</label>
     <label class="check-row"><input type="checkbox"> Email me a copy</label>
+    <label class="check-row"><input type="checkbox" disabled> Backups (soon)</label>
     <label class="check-row"><input type="radio" name="plan" checked> Monthly</label>
+
+    <!-- A labelled setting: title, helper line, switch pushed to the end -->
+    <label class="check-row check-row-split">
+      <span class="check-text">Two-factor sign-in
+        <span class="check-desc">Ask for a code from your phone at login.</span>
+      </span>
+      <input type="checkbox" class="switch" checked>
+    </label>
+
+    <!-- Indeterminate (mixed) checkbox — set it in JS, CSS themes the mark -->
+    <label class="check-row"><input type="checkbox" id="all"> Select all</label>
+    <script>document.getElementById('all').indeterminate = true</script>
 
 ### Stepper & segmented control
 
@@ -675,8 +693,11 @@ same thing. When to use it: stepper for ranges of a few dozen at most
 (beyond that, the number input); segmented for choices that change
 what is shown — not settings that act (the switch) and not navigation
 (the tab bar). The stepper buttons call the input's own
-stepUp/stepDown so min/max/step rule; the radios keep arrows, form
-value and announcements native.
+stepUp/stepDown so min/max/step rule — a button greys out and stops
+at the end of its range on its own — and the radios keep arrows, form
+value and announcements native. Add .segmented-fill so the pill
+spans its row with the options sharing the width equally; disable one
+option with a disabled radio.
 
     <div class="stepper" role="group" aria-label="Guests">
       <button type="button" class="stepper-down" aria-label="Fewer">−</button>
@@ -687,6 +708,14 @@ value and announcements native.
     <fieldset class="segmented" aria-label="Range">
       <label><input type="radio" name="range" checked><span>1Y</span></label>
       <label><input type="radio" name="range"><span>5Y</span></label>
+      <label><input type="radio" name="range"><span>Max</span></label>
+    </fieldset>
+
+    <!-- Full-width, spanning its row -->
+    <fieldset class="segmented segmented-fill" aria-label="View">
+      <label><input type="radio" name="view" checked><span>List</span></label>
+      <label><input type="radio" name="view"><span>Grid</span></label>
+      <label><input type="radio" name="view" disabled><span>Map</span></label>
     </fieldset>
 
 ### Fields: input, textarea, select, search

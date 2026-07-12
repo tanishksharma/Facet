@@ -1192,43 +1192,87 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="choice-controls" data-cat="forms">
         <h3 data-status="dev">Switch, checkbox, radio</h3>
         <p>
-          Switches, checkboxes and radios — the native controls wearing the theme, with nothing custom to break.
+          The yes/no and pick-one controls: a checkbox for independent choices, a radio for one of a few, and a switch for a setting that takes effect the instant it flips. All three are the native input wearing the theme — real form value, real keyboard, nothing custom to break. Wrap each in a label so the whole line is tappable; add a description line and push the control to the edge for a settings row.
         </p>
-        <div class="demo">
-          <div class="stack-tight">
+        <div class="demo stack">
+          <!-- The three controls, every state -->
+          <div class="stack-tight" data-demo-unwrap>
             <label class="check-row"><input type="checkbox" class="switch" checked data-event="setting-sound" data-tip="A checkbox in switch clothes"> Sound on</label>
+            <label class="check-row"><input type="checkbox" class="switch" disabled> Backups (soon)</label>
             <label class="check-row"><input type="checkbox" checked data-tip="Native checkbox, themed by accent-color"> Email me a copy</label>
-            <label class="check-row"><input type="checkbox" disabled data-tip="Disabled state"> Backups (soon)</label>
-            <label class="check-row"><input type="radio" name="plan" checked data-tip="Native radio, themed by accent-color"> Monthly</label>
-            <label class="check-row"><input type="radio" name="plan" data-tip="Native radio, themed by accent-color"> Yearly</label>
+            <label class="check-row"><input type="checkbox" id="cc-mixed" data-tip="Indeterminate — the mixed state, set in JS"> Select all tags</label>
+            <label class="check-row"><input type="checkbox" disabled> Archived (locked)</label>
+            <label class="check-row"><input type="radio" name="cc-plan" checked data-tip="Native radio, themed by accent-color"> Monthly</label>
+            <label class="check-row"><input type="radio" name="cc-plan" data-tip="One of a few, all visible"> Yearly</label>
+            <label class="check-row"><input type="radio" name="cc-plan" disabled> Lifetime (soon)</label>
           </div>
         </div>
+        <script>var _ccm = document.getElementById('cc-mixed'); if (_ccm) _ccm.indeterminate = true;</script>
         <pre id="code-choice-controls"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-choice-controls" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+
+        <p class="type-label" style="margin-top: var(--space-card);">The settings-row shape · <code>.check-text</code> + <code>.check-row-split</code></p>
+        <div class="demo">
+          <div class="stack-tight" style="max-width: 30rem;">
+            <label class="check-row check-row-split">
+              <span class="check-text">Two-factor sign-in
+                <span class="check-desc">Ask for a code from your phone at login.</span>
+              </span>
+              <input type="checkbox" class="switch" checked data-event="setting-2fa">
+            </label>
+            <label class="check-row check-row-split">
+              <span class="check-text">Weekly digest
+                <span class="check-desc">A Monday summary of everything that changed.</span>
+              </span>
+              <input type="checkbox" class="switch">
+            </label>
+          </div>
+        </div>
       </article>
 
       <!-- STEPPER + SEGMENTED -->
       <article class="element stack" id="stepper" data-cat="forms">
         <h3 data-status="dev">Stepper &amp; segmented control</h3>
         <p>
-          A count with minus and plus buttons, and a segmented control for flipping between a few views of the same thing.
+          A count between minus and plus buttons, and a segmented control for flipping between a few views of the same thing. The stepper wraps a real number input, so its buttons obey the min, max and step you set — each greys out on its own at the end of the range. The segmented control is radios underneath, so the value, keyboard arrows and screen-reader behaviour are all native.
         </p>
-        <div class="demo">
-          <div class="row">
-            <div class="stepper" role="group" aria-label="Guests">
-              <button type="button" class="stepper-down" aria-label="Fewer guests" data-tip="Steps down within min and max" data-event="guests-down">&minus;</button>
-              <input type="number" value="2" min="1" max="12" aria-label="Guests">
-              <button type="button" class="stepper-up" aria-label="More guests" data-tip="Steps up within min and max" data-event="guests-up">+</button>
-            </div>
-            <fieldset class="segmented" aria-label="Range">
-              <label><input type="radio" name="range" checked data-tip="One year"><span>1Y</span></label>
-              <label><input type="radio" name="range" data-tip="Five years"><span>5Y</span></label>
-              <label><input type="radio" name="range" data-tip="Everything"><span>Max</span></label>
-            </fieldset>
+        <div class="demo stack">
+          <!-- Steppers: a mid-range count, and one parked at its minimum -->
+          <div class="row" data-demo-unwrap style="align-items:flex-end; gap: var(--space-card);">
+            <label class="field" style="max-width:12rem;">Guests
+              <div class="stepper" role="group" aria-label="Guests">
+                <button type="button" class="stepper-down" aria-label="Fewer guests" data-tip="Steps down within min and max" data-event="guests-down">&minus;</button>
+                <input type="number" value="2" min="1" max="12" aria-label="Guests">
+                <button type="button" class="stepper-up" aria-label="More guests" data-tip="Steps up within min and max" data-event="guests-up">+</button>
+              </div>
+            </label>
+            <label class="field" style="max-width:12rem;">Rooms (at minimum)
+              <div class="stepper" role="group" aria-label="Rooms">
+                <button type="button" class="stepper-down" aria-label="Fewer rooms">&minus;</button>
+                <input type="number" value="1" min="1" max="6" aria-label="Rooms">
+                <button type="button" class="stepper-up" aria-label="More rooms">+</button>
+              </div>
+            </label>
           </div>
         </div>
         <pre id="code-stepper"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-stepper" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+
+        <p class="type-label" style="margin-top: var(--space-card);">Segmented control · inline, and full-width with a disabled option</p>
+        <div class="demo stack">
+          <div class="stack" data-demo-unwrap style="align-items:flex-start; max-width: 26rem;">
+            <fieldset class="segmented" aria-label="Range">
+              <label><input type="radio" name="seg-range" checked data-tip="One year"><span>1Y</span></label>
+              <label><input type="radio" name="seg-range" data-tip="Five years"><span>5Y</span></label>
+              <label><input type="radio" name="seg-range" data-tip="Everything"><span>Max</span></label>
+            </fieldset>
+            <fieldset class="segmented segmented-fill" aria-label="View" style="width:100%;">
+              <label><input type="radio" name="seg-view" checked><span>List</span></label>
+              <label><input type="radio" name="seg-view"><span>Grid</span></label>
+              <label><input type="radio" name="seg-view" disabled data-tip="Not available here"><span>Map</span></label>
+            </fieldset>
+          </div>
+        </div>
       </article>
 
       <!-- FIELDS -->

@@ -3317,14 +3317,19 @@ input[type="week"] {
    WHEN TO USE: checkbox for independent yes/nos, radio for one-of-few with every option visible, switch for a setting that takes effect the moment it flips.
 
    What it is: the yes/no and pick-one controls — native checkbox and
-   radio themed through accent-color, and a switch that is a
-   checkbox upgraded with one class. What it is for: settings, consents,
-   filters — checkbox for independent yes/nos, radio for one-of-few with
-   all options visible, switch for a setting that takes effect
-   immediately. When to use it: wrap control and text in a
-   label.check-row so the whole line is the hit target. The switch keeps
-   checkbox semantics — form value, keyboard, screen readers — the class
-   only changes the appearance.*/
+   radio themed through accent-color, and a switch that is a checkbox
+   upgraded with one class. Every state is native: checked, disabled, and
+   the checkbox's indeterminate mark (the mixed state of a select-all),
+   which you set in JS with el.indeterminate = true. What it is for:
+   settings, consents, filters — checkbox for independent yes/nos, radio
+   for one-of-few with all options visible, switch for a setting that
+   takes effect immediately. When to use it: wrap the control and its text
+   in a label.check-row so the whole line is the hit target. Add a
+   .check-text block (a title over a muted .check-desc helper line) for a
+   labelled setting, and .check-row-split to push the control to the
+   trailing edge — the settings-row shape. The switch keeps checkbox
+   semantics — form value, keyboard, screen readers — the class only
+   changes the appearance.*/
 input[type="checkbox"],
 input[type="radio"] {
   accent-color: var(--accent-1);
@@ -3342,6 +3347,13 @@ input[type="radio"] {
   cursor: pointer;
 }
 .check-row:has(input:disabled) { cursor: not-allowed; color: var(--text-muted); }
+
+/* Optional: a stacked title over a muted helper line inside the row. */
+.check-text { display: flex; flex-direction: column; gap: 2px; font-weight: var(--weight-medium); }
+.check-desc { font-size: var(--text-caption); color: var(--text-muted); font-weight: var(--weight-body); line-height: var(--leading-snug); }
+.check-row:has(.check-text) { align-items: flex-start; }
+/* Settings shape: label text leads, the control sits at the trailing edge. */
+.check-row-split { justify-content: space-between; gap: var(--space-card); }
 
 /* The switch: a checkbox styled as a track and thumb. */
 input[type="checkbox"].switch {
@@ -5879,8 +5891,11 @@ button.list-item:active { background: var(--surface-active); }
    (beyond that, the number input); segmented for choices that change
    what is shown — not settings that act (the switch) and not navigation
    (the tab bar). The stepper buttons call the input's own
-   stepUp/stepDown so min/max/step rule; the radios keep arrows, form
-   value and announcements native.*/
+   stepUp/stepDown so min/max/step rule — a button greys out and stops
+   at the end of its range on its own — and the radios keep arrows, form
+   value and announcements native. Add .segmented-fill so the pill
+   spans its row with the options sharing the width equally; disable one
+   option with a disabled radio.*/
 .stepper {
   display: inline-flex;
   align-items: center;
@@ -5903,6 +5918,9 @@ button.list-item:active { background: var(--surface-active); }
 }
 .stepper button:hover { background: var(--accent-2-hover); }
 .stepper button:active { background: var(--accent-2-pressed); }
+.stepper button:disabled { opacity: 0.35; cursor: not-allowed; }
+.stepper button:disabled:hover { background: transparent; }
+.stepper:has(input:disabled) { opacity: 0.55; }
 .stepper input {
   width: 3.5rem;
   border: none;
@@ -5963,6 +5981,10 @@ button.list-item:active { background: var(--surface-active); }
   outline: var(--focus-ring);
   outline-offset: var(--focus-offset);
 }
+/* Full-width: the pill spans its row, options share the width equally. */
+.segmented-fill { display: flex; }
+.segmented-fill label { flex: 1; }
+.segmented-fill span { flex: 1; justify-content: center; }
 
 /* ----- ROW: horizontal flow with wrap and themed gaps -----
    (docs mirror — identical to llms.txt · Row)
