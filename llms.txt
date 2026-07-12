@@ -138,9 +138,10 @@ backdrop, data-bg-fluid-fixed for pools the surface scrolls over; the
 view-stack app shell for screen-to-screen apps (main.view-stack of
 .view screens, hash-routed, facet.views.go/back, safe-area padded);
 buttons in
-three styles and three sizes working on <button> and <a>, plus .btn-pill
-capsule shape (an icon-and-label pill with no extra markup) and .btn-icon
-(the same button reduced to one glyph — style, size and shape all combine);
+four styles (primary, secondary, ghost, danger) and three sizes working on
+<button> and <a>, plus .btn-pill capsule shape (an icon-and-label pill with
+no extra markup) and .btn-icon (the same button reduced to one glyph — style,
+size and shape all combine);
 the app-kit floating controls — the tab bar (the Photos-style command
 bar: a bottom pill on phones, the top site bar on wide screens, its
 corner panels condensing into and rising out of their own buttons, one
@@ -839,28 +840,48 @@ it needs no tokens of its own and restyles with every theme.
 
 ### Modal
 
-WHEN TO USE: a decision that blocks the page until it is answered — a confirm, a sign-in, a short form. Built on <dialog>, so focus trapping, Esc and the inert page behind come free.
+WHEN TO USE: something that must be dealt with before the page continues — a destructive confirm, an alert to acknowledge, a short form, or a panel of content. Built on <dialog>, so focus trapping, Esc and the inert page behind come free.
 
-What it is: a centered card built on the platform's own <dialog> — focus
-trap, Esc and an inert page for free. What it is for: the one thing the
-reader must deal with before the page continues. When to use it: open it
-from any button whose aria-controls names the dialog (facet.js calls
-showModal); close it with a form method="dialog" button inside, Esc, or a
-click on the backdrop. Give it a tidy shape with the optional .dialog-head
-(a title on the left, a close icon button on the right) and .dialog-actions
-(the buttons, pushed to the trailing edge). The app-kit .sheet is the
+What it is: a centered card on the platform's own <dialog>, composed from
+three slots — .dialog-head (an optional .dialog-icon status chip, the title,
+an optional close button), .dialog-body (the ONE region that scrolls), and
+.dialog-actions (the footer buttons). A short modal needs only head and
+actions and stays a simple padded card; add a .dialog-body and it becomes a
+head / scrolling-body / actions column with the head and actions held still
+and hairlines marking them off. Three sizes: .modal-sm (a terse confirm),
+the default (a form), .modal-lg (content). The title wears the interface
+voice, not the display serif. What it is for: one card, four jobs — a
+destructive confirm (the danger action is .btn-danger, there is no close
+button since Cancel is the way out, and Cancel carries autofocus so Enter is
+safe); an alert (a .dialog-icon with data-status colours the icon, one action
+to acknowledge); a form (put autofocus on the first field, keep the corner
+close); and scrolling content (a .dialog-body between a sticky head and
+footer). When to use it: open it from a button whose aria-controls names the
+dialog (facet.js calls showModal and moves focus into the dialog — the dialog
+itself unless you set autofocus, so nothing is falsely ring-highlighted);
+close it with a form method="dialog" button, Esc, or a backdrop click. On
+phones the actions go full width and stack. The app-kit .sheet is the
 settings panel for app pages; the modal is the document-world decision.
 
-    <button class="btn btn-primary" aria-controls="confirm">Delete…</button>
-    <dialog class="modal stack" id="confirm">
-      <div class="dialog-head">
-        <h3>Delete this report?</h3>
-        <form method="dialog"><button class="btn btn-icon btn-ghost" aria-label="Close"><svg width="20" height="20" data-icon="close"></svg></button></form>
-      </div>
+    <button class="btn" aria-controls="confirm">Delete report…</button>
+    <dialog class="modal modal-sm stack" id="confirm">
+      <div class="dialog-head"><h4>Delete this report?</h4></div>
       <p>This cannot be undone.</p>
       <form method="dialog" class="dialog-actions">
-        <button class="btn">Keep it</button>
-        <button class="btn btn-primary">Delete</button>
+        <button class="btn" autofocus>Cancel</button>
+        <button class="btn btn-danger">Delete report</button>
+      </form>
+    </dialog>
+
+    <dialog class="modal modal-lg" id="terms">
+      <div class="dialog-head">
+        <h4>Terms of service</h4>
+        <form method="dialog"><button class="btn btn-icon btn-ghost" aria-label="Close"><svg width="20" height="20" data-icon="close"></svg></button></form>
+      </div>
+      <div class="dialog-body stack"><p>Long content scrolls here…</p></div>
+      <form method="dialog" class="dialog-actions">
+        <button class="btn">Decline</button>
+        <button class="btn btn-primary">Accept</button>
       </form>
     </dialog>
 
@@ -1499,7 +1520,9 @@ What it is: the action element, working identically on <button> and on
 .btn-primary carries the screen's one main action in accent-1;
 .btn-secondary is every other action, on the accent-2 fill (the look a
 bare .btn already has); .btn-ghost is the quiet action inside busy areas,
-invisible until hovered. Size: .btn-small, the default, and .btn-large.
+invisible until hovered; .btn-danger is the destructive action, filled with
+the error color for an irreversible Delete (use it sparingly, always paired
+with a Cancel). Size: .btn-small, the default, and .btn-large.
 Shape: .btn-pill rounds it into a capsule. An inline <svg> before the
 label needs no class — the button is already a flex row, so icon-and-label
 sit together (this is the icon-pill the nav menu is built from). The icon

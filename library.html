@@ -1138,6 +1138,7 @@ article p   { font-family: var(--font-reading); }
                 <button class="chip" aria-pressed="true"  data-chip-group="style-t" data-chip-class="btn-primary" data-chip-target="#btn-sec-text > .btn" data-tip="The one main action, accent-1">Primary</button>
                 <button class="chip" aria-pressed="false" data-chip-group="style-t" data-chip-class="" data-chip-target="#btn-sec-text > .btn" data-tip="Every other action — the default bare .btn">Secondary</button>
                 <button class="chip" aria-pressed="false" data-chip-group="style-t" data-chip-class="btn-ghost" data-chip-target="#btn-sec-text > .btn" data-tip="Quiet until hovered">Ghost</button>
+                <button class="chip" aria-pressed="false" data-chip-group="style-t" data-chip-class="btn-danger" data-chip-target="#btn-sec-text > .btn" data-tip="Destructive — filled with the error color">Danger</button>
               </p>
               <p class="chips" role="group" aria-label="Size" style="margin:0;">
                 <button class="chip" aria-pressed="false" data-chip-group="size-t" data-chip-class="btn-small" data-chip-target="#btn-sec-text > .btn">Small</button>
@@ -1161,6 +1162,7 @@ article p   { font-family: var(--font-reading); }
                 <button class="chip" aria-pressed="true"  data-chip-group="style-i" data-chip-class="btn-primary" data-chip-target="#btn-sec-icon > .btn" data-tip="The one main action, accent-1">Primary</button>
                 <button class="chip" aria-pressed="false" data-chip-group="style-i" data-chip-class="" data-chip-target="#btn-sec-icon > .btn" data-tip="The default bare .btn">Secondary</button>
                 <button class="chip" aria-pressed="false" data-chip-group="style-i" data-chip-class="btn-ghost" data-chip-target="#btn-sec-icon > .btn" data-tip="Quiet until hovered">Ghost</button>
+                <button class="chip" aria-pressed="false" data-chip-group="style-i" data-chip-class="btn-danger" data-chip-target="#btn-sec-icon > .btn" data-tip="Destructive — filled with the error color">Danger</button>
               </p>
               <p class="chips" role="group" aria-label="Size" style="margin:0;">
                 <button class="chip" aria-pressed="false" data-chip-group="size-i" data-chip-class="btn-small" data-chip-target="#btn-sec-icon > .btn">Small</button>
@@ -1746,21 +1748,80 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="modal" data-cat="overlays">
         <h3 data-status="dev">Modal</h3>
         <p>
-          A centered card for a decision that blocks the page — a confirm, a sign-in, a short form. Focus, Escape and the backdrop are the platform's own. The optional .dialog-head and .dialog-actions give it a tidy title row and footer.
+          A centered card that blocks the page until it is dealt with. One card serves four jobs: a destructive confirm, an alert, a form, and scrolling content. Built on &lt;dialog&gt;, so focus, Escape and the backdrop are the platform's own. Compose it from .dialog-head (an optional status icon, the title, an optional close), .dialog-body (the part that scrolls), and .dialog-actions.
+        </p>
+        <p class="chips variant-row" role="group" aria-label="Modal kind">
+          <button class="chip" aria-pressed="true"  data-chip-show="#modal-sec-confirm" data-tip="A destructive decision — danger action, no close, Cancel focused">Confirm</button>
+          <button class="chip" aria-pressed="false" data-chip-show="#modal-sec-alert" data-tip="A result to acknowledge — status icon, one action">Alert</button>
+          <button class="chip" aria-pressed="false" data-chip-show="#modal-sec-form" data-tip="A short form — first field focused, close in the corner">Form</button>
+          <button class="chip" aria-pressed="false" data-chip-show="#modal-sec-content" data-tip="Long content — sticky header and footer, the body scrolls">Content</button>
         </p>
         <div class="demo">
-          <button type="button" class="btn btn-primary" aria-controls="demo-modal" data-tip="Opens the modal" data-event="modal-open">Open modal</button>
-          <dialog class="modal stack" id="demo-modal">
-            <div class="dialog-head">
-              <h4>Delete this report?</h4>
-              <form method="dialog"><button class="btn btn-icon btn-ghost" aria-label="Close"><svg width="20" height="20" data-icon="close" aria-hidden="true"></svg></button></form>
-            </div>
-            <p class="text-footnote" style="color:var(--text-muted);">This cannot be undone. The figures stay in your ledger.</p>
-            <form method="dialog" class="dialog-actions">
-              <button class="btn" data-tip="Closes without doing anything">Keep it</button>
-              <button class="btn btn-primary" data-event="report-delete">Delete</button>
-            </form>
-          </dialog>
+          <!-- Confirm: destructive, no close, danger action, Cancel focused -->
+          <div id="modal-sec-confirm" data-demo-unwrap>
+            <button type="button" class="btn" aria-controls="demo-modal-confirm" data-event="modal-open">Delete report…</button>
+            <dialog class="modal modal-sm stack" id="demo-modal-confirm">
+              <div class="dialog-head"><h4>Delete this report?</h4></div>
+              <p style="color:var(--text-muted);">This cannot be undone. The figures stay in your ledger, but the report and its charts are removed.</p>
+              <form method="dialog" class="dialog-actions">
+                <button class="btn" autofocus>Cancel</button>
+                <button class="btn btn-danger" data-event="report-delete">Delete report</button>
+              </form>
+            </dialog>
+          </div>
+
+          <!-- Alert: status icon, single acknowledgement -->
+          <div id="modal-sec-alert" data-demo-unwrap hidden>
+            <button type="button" class="btn" aria-controls="demo-modal-alert">Try a failed payment</button>
+            <dialog class="modal modal-sm stack" id="demo-modal-alert">
+              <div class="dialog-head">
+                <span class="dialog-icon" data-status="error" aria-hidden="true"><svg data-icon="warning"></svg></span>
+                <h4>Payment failed</h4>
+              </div>
+              <p style="color:var(--text-muted);">Your card was declined. No money left your account — try another card.</p>
+              <form method="dialog" class="dialog-actions"><button class="btn btn-primary">Got it</button></form>
+            </dialog>
+          </div>
+
+          <!-- Form: fields, first one focused, close in the corner -->
+          <div id="modal-sec-form" data-demo-unwrap hidden>
+            <button type="button" class="btn btn-primary" aria-controls="demo-modal-form">New project</button>
+            <dialog class="modal stack" id="demo-modal-form">
+              <div class="dialog-head">
+                <h4>New project</h4>
+                <form method="dialog"><button class="btn btn-icon btn-ghost" aria-label="Close"><svg width="20" height="20" data-icon="close" aria-hidden="true"></svg></button></form>
+              </div>
+              <label class="field"><span class="field-label">Name</span><input type="text" autofocus placeholder="Q3 launch"></label>
+              <label class="field"><span class="field-label">Visibility</span><select><option>Private</option><option>Team</option><option>Public</option></select></label>
+              <form method="dialog" class="dialog-actions">
+                <button class="btn">Cancel</button>
+                <button class="btn btn-primary" data-event="project-create">Create</button>
+              </form>
+            </dialog>
+          </div>
+
+          <!-- Content: sticky head + footer, scrolling body -->
+          <div id="modal-sec-content" data-demo-unwrap hidden>
+            <button type="button" class="btn" aria-controls="demo-modal-content">Read terms</button>
+            <dialog class="modal modal-lg" id="demo-modal-content">
+              <div class="dialog-head">
+                <h4>Terms of service</h4>
+                <form method="dialog"><button class="btn btn-icon btn-ghost" aria-label="Close"><svg width="20" height="20" data-icon="close" aria-hidden="true"></svg></button></form>
+              </div>
+              <div class="dialog-body stack">
+                <p>These terms govern your use of the service. By continuing you agree to them in full.</p>
+                <p>1. You keep ownership of everything you create. We store it so you can reach it from anywhere, and never claim a licence beyond running the product.</p>
+                <p>2. Don't use the service to break the law or to harm others. We can suspend an account that does.</p>
+                <p>3. The service is provided as is. We work hard to keep it up, but we can't promise it never goes down.</p>
+                <p>4. We may update these terms; we'll tell you before a material change takes effect.</p>
+                <p>5. Either side can end the agreement at any time. Your data stays exportable for thirty days after.</p>
+              </div>
+              <form method="dialog" class="dialog-actions">
+                <button class="btn">Decline</button>
+                <button class="btn btn-primary" data-event="terms-accept">Accept</button>
+              </form>
+            </dialog>
+          </div>
         </div>
         <pre id="code-modal"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-modal" data-tip="Copies the exact HTML of the demo above">Copy</button></p>

@@ -2042,9 +2042,7 @@ figcaption {
    modal no longer lands a ring (and a focus-triggered tooltip) on nothing in
    particular. Keyboard rings on real controls are untouched. */
 [tabindex="-1"]:focus,
-[tabindex="-1"]:focus-visible,
-dialog:focus,
-dialog:focus-visible { outline: none; }
+[tabindex="-1"]:focus-visible { outline: none; }
 
 /* ----- Text selection ----- */
 
@@ -2545,7 +2543,9 @@ input, textarea, [contenteditable] {
    .btn-primary carries the screen's one main action in accent-1;
    .btn-secondary is every other action, on the accent-2 fill (the look a
    bare .btn already has); .btn-ghost is the quiet action inside busy areas,
-   invisible until hovered. Size: .btn-small, the default, and .btn-large.
+   invisible until hovered; .btn-danger is the destructive action, filled with
+   the error color for an irreversible Delete (use it sparingly, always paired
+   with a Cancel). Size: .btn-small, the default, and .btn-large.
    Shape: .btn-pill rounds it into a capsule. An inline <svg> before the
    label needs no class — the button is already a flex row, so icon-and-label
    sit together (this is the icon-pill the nav menu is built from). The icon
@@ -2624,6 +2624,21 @@ input, textarea, [contenteditable] {
 .btn-ghost:active {
   background: var(--accent-2-hover);
 }
+
+/* Danger: the destructive primary — filled with the error color for an
+   irreversible action (Delete, Remove). Its text reads in --background,
+   which is near-white in light and near-black in dark, so it stays legible
+   on the theme's red in either mode with no extra token. Use it sparingly,
+   always paired with a Cancel; a non-destructive main action stays
+   .btn-primary. */
+.btn-danger {
+  background: var(--error);
+  border-color: var(--error);
+  color: var(--background);
+  box-shadow: var(--shadow-raised);
+}
+.btn-danger:hover { filter: brightness(1.08); }
+.btn-danger:active { filter: brightness(0.92); }
 
 /* Sizes. Small keeps the 44px touch target via min-height on mobile. */
 .btn-small {
@@ -3315,16 +3330,27 @@ input[type="checkbox"].switch:disabled { opacity: 0.5; cursor: not-allowed; }
    machinery. Each carries its own docs-mirror comment at its rules below. */
 
 /* (docs mirror — identical to llms.txt · Modal)
-   WHEN TO USE: a decision that blocks the page until it is answered — a confirm, a sign-in, a short form. Built on <dialog>, so focus trapping, Esc and the inert page behind come free.
+   WHEN TO USE: something that must be dealt with before the page continues — a destructive confirm, an alert to acknowledge, a short form, or a panel of content. Built on <dialog>, so focus trapping, Esc and the inert page behind come free.
 
-   What it is: a centered card built on the platform's own <dialog> — focus
-   trap, Esc and an inert page for free. What it is for: the one thing the
-   reader must deal with before the page continues. When to use it: open it
-   from any button whose aria-controls names the dialog (facet.js calls
-   showModal); close it with a form method="dialog" button inside, Esc, or a
-   click on the backdrop. Give it a tidy shape with the optional .dialog-head
-   (a title on the left, a close icon button on the right) and .dialog-actions
-   (the buttons, pushed to the trailing edge). The app-kit .sheet is the
+   What it is: a centered card on the platform's own <dialog>, composed from
+   three slots — .dialog-head (an optional .dialog-icon status chip, the title,
+   an optional close button), .dialog-body (the ONE region that scrolls), and
+   .dialog-actions (the footer buttons). A short modal needs only head and
+   actions and stays a simple padded card; add a .dialog-body and it becomes a
+   head / scrolling-body / actions column with the head and actions held still
+   and hairlines marking them off. Three sizes: .modal-sm (a terse confirm),
+   the default (a form), .modal-lg (content). The title wears the interface
+   voice, not the display serif. What it is for: one card, four jobs — a
+   destructive confirm (the danger action is .btn-danger, there is no close
+   button since Cancel is the way out, and Cancel carries autofocus so Enter is
+   safe); an alert (a .dialog-icon with data-status colours the icon, one action
+   to acknowledge); a form (put autofocus on the first field, keep the corner
+   close); and scrolling content (a .dialog-body between a sticky head and
+   footer). When to use it: open it from a button whose aria-controls names the
+   dialog (facet.js calls showModal and moves focus into the dialog — the dialog
+   itself unless you set autofocus, so nothing is falsely ring-highlighted);
+   close it with a form method="dialog" button, Esc, or a backdrop click. On
+   phones the actions go full width and stack. The app-kit .sheet is the
    settings panel for app pages; the modal is the document-world decision. */
 /* A closed dialog must stay hidden even when a layout class on it (e.g.
    .stack, which sets display:flex) would otherwise beat the UA's
@@ -3340,15 +3366,23 @@ dialog.drawer {
   box-shadow: var(--shadow-overlay);
 }
 
-/* MODAL — a centered card for a decision that blocks the page. */
+/* MODAL — a centered card for a decision that blocks the page. The simple
+   form is a padded card (confirm, alert, short form); add a .dialog-body and
+   it becomes a head / scrolling-body / actions column (see the slots below).
+   Three sizes: .modal-sm for a terse confirm, the default for a form, and
+   .modal-lg for content. */
 dialog.modal {
   width: min(92vw, 30rem);
+  max-height: min(85dvh, 44rem);
+  overflow-y: auto;               /* a simple modal scrolls if it overflows */
   padding: var(--space-card);
   border-radius: var(--radius-card);
   margin: auto;                   /* centre it — the * { margin: 0 } reset
                                      wipes the UA's centring margin, so a
                                      modal without this pins to the corner */
 }
+dialog.modal.modal-sm { width: min(92vw, 22rem); }
+dialog.modal.modal-lg { width: min(94vw, 40rem); }
 
 /* (docs mirror — identical to llms.txt · Drawer)
    WHEN TO USE: a side task that keeps the page's context in view — filters, details, a navigation list. One panel, any edge.
@@ -3406,40 +3440,106 @@ dialog.drawer-bottom {
   padding-bottom: calc(var(--space-card) + var(--safe-bottom));
 }
 
-/* An optional tidy structure any dialog can use: a header row (title on
-   the left, a close icon button on the right), and a footer of actions
-   pushed to the trailing edge. Both are plain flex helpers — a modal or
-   drawer reads well without them, cleaner with them. */
+/* The dialog slots — the tidy structure a modal or drawer composes from:
+   .dialog-head (an optional status icon, the title, an optional close),
+   .dialog-body (the ONE region that scrolls), and .dialog-actions (the
+   footer buttons). A short dialog needs only head + actions and stays a
+   simple padded card; add a .dialog-body and the dialog switches to a
+   head / scrolling-body / actions column with the head and actions held
+   still — see the :has() rule below. */
 .dialog-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-stack);
+  gap: var(--space-inline);
 }
 /* A dialog title is UI chrome, not content: it wears the interface voice
    (the body face, heading weight), never the display serif a page heading
-   uses — a functional title reads wrong in a calligraphic face. The close
-   button is pulled tight to the edge so the title sets the header height. */
+   uses — a functional title reads wrong in a calligraphic face. Its auto
+   end-margin pushes whatever trails it (the close button) to the far edge,
+   so a leading icon, the title and the close lay out in one line. */
 .dialog-head > :is(h1, h2, h3, h4, h5) {
   margin: 0;
+  margin-inline-end: auto;
   font-family: var(--font-body);
   font-size: var(--text-h4);
   font-weight: var(--weight-heading);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
 }
-.dialog-head > .btn-icon { margin: calc(var(--space-tight) * -1) calc(var(--space-tight) * -1) calc(var(--space-tight) * -1) 0; color: var(--text-muted); }
-.dialog-head > .btn-icon:hover { color: var(--text); }
+/* The close sits muted at the trailing edge, tucked tight so the title
+   sets the header height. It usually lives in a <form method="dialog"> so
+   it closes natively with no JS. */
+.dialog-head form { display: inline-flex; }
+.dialog-head .btn-icon {
+  color: var(--text-muted);
+  margin-block: calc(var(--space-tight) * -1);
+  margin-inline-end: calc(var(--space-tight) * -1);
+}
+.dialog-head .btn-icon:hover { color: var(--text); }
+/* The alert icon: a status-tinted chip before the title (success / warning
+   / error / info), reading the same tint pairs as the badge and the status
+   row. Neutral without a data-status. */
+.dialog-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-active);
+  color: var(--text);
+}
+.dialog-icon svg { width: 1.15rem; height: 1.15rem; }
+.dialog-icon[data-status="success"] { background: var(--success-tint); color: var(--success); }
+.dialog-icon[data-status="warning"] { background: var(--warning-tint); color: var(--warning); }
+.dialog-icon[data-status="error"]   { background: var(--error-tint);   color: var(--error); }
+.dialog-icon[data-status="info"]    { background: var(--info-tint);    color: var(--info); }
 .dialog-actions {
   display: flex;
   gap: var(--space-control);
   justify-content: flex-end;
   flex-wrap: wrap;
 }
-/* In a full-height side drawer, the actions footer sinks to the bottom
-   edge. Top and bottom drawers are content-height strips, so they must
-   NOT pin (an auto margin there would inflate them to the max height). */
-dialog.drawer:not(.drawer-top):not(.drawer-bottom) .dialog-actions { margin-top: auto; }
+
+/* The structured form: a dialog holding a .dialog-body becomes a head /
+   body / actions column. The card stops padding itself and clips to its
+   corners; the body is the only scroller (head and actions stay put), and
+   hairlines mark them off once content scrolls under. This is how a content
+   or long-form dialog behaves; a short confirm skips .dialog-body and stays
+   the simple padded card above. */
+dialog.modal:has(> .dialog-body),
+dialog.drawer:has(> .dialog-body) {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+dialog:has(> .dialog-body) > .dialog-head {
+  padding: var(--space-card) var(--space-card) var(--space-inline);
+  border-bottom: var(--border-hairline) solid var(--border);
+}
+dialog:has(> .dialog-body) > .dialog-body {
+  flex: 1 1 auto;
+  min-height: 0;                 /* let the flex child actually scroll */
+  overflow-y: auto;
+  padding: var(--space-card);
+}
+dialog:has(> .dialog-body) > .dialog-actions {
+  padding: var(--space-inline) var(--space-card) var(--space-card);
+  border-top: var(--border-hairline) solid var(--border);
+}
+/* In a full-height side drawer with no scrolling body, the actions footer
+   sinks to the bottom edge. Top/bottom drawers are content-height strips,
+   so they must NOT pin (an auto margin there would inflate them to the cap);
+   a structured drawer pins its actions with flexbox instead, not a margin. */
+dialog.drawer:not(.drawer-top):not(.drawer-bottom):not(:has(> .dialog-body)) .dialog-actions { margin-top: auto; }
+
+/* Phones: a modal's actions go full width and stack, thumb-friendly. */
+@media (max-width: 30rem) {
+  .dialog-actions { flex-direction: column-reverse; align-items: stretch; }
+  .dialog-actions .btn { width: 100%; }
+}
 
 dialog.modal::backdrop,
 dialog.drawer::backdrop {
