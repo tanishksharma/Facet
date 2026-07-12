@@ -675,6 +675,23 @@
 &lt;/table&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-table-sort" data-tip="Copies this code">Copy</button></p>
         </article>
+
+        <article class="element stack" id="fn-field-actions" data-llms="Field actions">
+          <h3>facet.fieldActions</h3>
+          <p>
+            A field carrying data-field-actions gains a Clear × and a ⋯
+            menu (Copy, Paste, Select all, Undo) tucked at its trailing
+            edge. facet.js wraps the control and wires everything — no
+            markup for the buttons, no per-field JS. Undo keeps the field's
+            own history; the Clear hides itself while the field is empty.
+            Each action gives feedback and a data-event hook.
+          </p>
+          <pre id="code-fn-field-actions"><code>&lt;label class="field" data-field-actions&gt;
+  &lt;span class="field-label"&gt;API key&lt;/span&gt;
+  &lt;input type="text" value="sk-facet-9f2ac41e8b" aria-label="API key"&gt;
+&lt;/label&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-field-actions" data-tip="Copies this code">Copy</button></p>
+        </article>
       </section>
 
       <!-- ==============================

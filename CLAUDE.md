@@ -737,7 +737,17 @@ SaaS dashboard (templates/saas.html) and social app (templates/social.html) alre
 
 ### Field actions component (in-field menu)
 
-- [ ] Field actions (requested, not yet built): inside every text field, an actions affordance on the right edge. Decision: a single three-dot menu button (icon, in-field, 44px target) that opens a small popover with Copy (the field value to clipboard), Paste (from clipboard into the field), and Undo (revert the last change — keep a per-field value history); PLUS a standalone Clear (×) icon in the field that wipes the value in one tap (distinct from the menu). All self-wiring via facet.js on a `data-field-actions` field wrapper: no per-field JS. Each action fires feedback (tap/tick) and a `data-event` analytics hook; the menu is a real `button` + `[popover]`/details, the × is a real `button` with an aria-label. Works in every theme, keyboard operable, description tooltips on each. Wall entry on library.html (Fields group) + Features/llms.txt line when built.
+> **SHIPPED** — `data-field-actions` on a `.field`; facet.js (`initFieldActions`)
+> wraps the control and injects a Clear × plus a ⋯ dropdown of Copy / Paste /
+> Select all / Undo. Two decisions landed differently from the original note:
+> the menu is a real `details.dropdown` (not `[popover]`), reusing the dropdown
+> component's own open/close, and the menu holds Select all alongside the
+> spec's Copy/Paste/Undo. Undo keeps a per-field history (snapshots at focus and
+> before each mutation); the Clear self-hides while the field is empty; each
+> action fires feedback + a `data-event`. Wall entry live on library.html
+> (Fields), `### Field actions` in llms.txt, `facet.fieldActions` on functions.html.
+
+- [x] Field actions: an in-field Clear × and a ⋯ menu (Copy, Paste, Select all, Undo), opt-in via `data-field-actions`, self-wiring, keyboard operable, themed.
 
 ### Icon set — grow as needed
 

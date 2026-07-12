@@ -1232,37 +1232,93 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="fields" data-cat="forms">
         <h3 data-status="dev">Fields: input, textarea, select, search</h3>
         <p>
-          Labelled inputs — text, dropdown, search and more — in one pattern with hints and error lines built in.
+          One label.field pattern wraps every control — text, select, textarea, search — with a hint line and validation built in. Add data-field-actions and a field gains a Clear × and a ⋯ menu for Copy, Paste, Select all and Undo.
         </p>
-        <div class="demo">
+        <div class="demo stack">
+          <p class="eyebrow" data-demo-chrome style="margin:0;">Controls — one pattern, any kind</p>
           <div class="grid">
             <label class="field">
-              <span class="field-label">Project name</span>
-              <input type="text" placeholder="Untitled" data-tip="A plain text field">
-              <span class="field-hint">Shown on the invoice header</span>
+              <span class="field-label">Full name</span>
+              <input type="text" placeholder="Ada Lovelace">
+              <span class="field-hint">As it appears on the invoice.</span>
             </label>
             <label class="field">
               <span class="field-label">Currency</span>
-              <select data-tip="A select with the token chevron">
+              <select>
                 <option>Rupee ₹</option>
                 <option>Dollar $</option>
                 <option>Euro €</option>
               </select>
-              <span class="field-hint">Used for every figure</span>
+              <span class="field-hint">Used for every figure.</span>
+            </label>
+          </div>
+          <label class="field">
+            <span class="field-label">Notes</span>
+            <textarea rows="3" placeholder="Anything we should know?"></textarea>
+          </label>
+          <label class="field">
+            <span class="field-label">Search projects</span>
+            <input type="search" placeholder="Type to filter">
+          </label>
+
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">In-field actions — data-field-actions adds Clear × and a ⋯ menu (Copy · Paste · Select all · Undo)</p>
+          <label class="field" data-field-actions>
+            <span class="field-label">API key</span>
+            <input type="text" value="sk-facet-9f2ac41e8b" aria-label="API key">
+            <span class="field-hint">Copy it, paste a new one, select all or undo — and clear with the ×.</span>
+          </label>
+
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">Validation — data-status on the field + a .field-msg line</p>
+          <div class="grid">
+            <label class="field" data-status="error">
+              <span class="field-label">Email</span>
+              <input type="email" value="nope@" aria-invalid="true" aria-label="Email">
+              <span class="field-msg">That address is missing its domain.</span>
+            </label>
+            <label class="field" data-status="warning">
+              <span class="field-label">Password</span>
+              <input type="password" value="sunshine" aria-label="Password">
+              <span class="field-msg">Weak — add a number or two.</span>
+            </label>
+            <label class="field" data-status="success">
+              <span class="field-label">Username</span>
+              <input type="text" value="ada" aria-label="Username">
+              <span class="field-msg">Available.</span>
+            </label>
+          </div>
+
+          <p class="eyebrow" data-demo-chrome style="margin: var(--space-stack) 0 0;">Readonly · disabled</p>
+          <div class="grid">
+            <label class="field">
+              <span class="field-label">Account ID</span>
+              <input type="text" value="FCT-2201-88" readonly aria-label="Account ID">
             </label>
             <label class="field">
-              <span class="field-label">Search projects</span>
-              <input type="search" placeholder="Type to filter" data-tip="Search reads as a capsule">
-            </label>
-            <label class="field field-invalid">
-              <span class="field-label">Notes</span>
-              <textarea rows="2" data-tip="A textarea in the same pattern">Too long…</textarea>
-              <span class="field-error">Keep notes under 200 characters.</span>
+              <span class="field-label">Plan</span>
+              <input type="text" value="Enterprise" disabled aria-label="Plan">
             </label>
           </div>
         </div>
-        <pre id="code-fields"><code></code></pre>
-        <p><button class="btn btn-small" data-copy="#code-fields" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+        <pre id="code-fields" data-code-static><code>&lt;!-- one pattern for every control: swap input for select / textarea / search --&gt;
+&lt;label class="field"&gt;
+  &lt;span class="field-label"&gt;Full name&lt;/span&gt;
+  &lt;input type="text" placeholder="Ada Lovelace"&gt;
+  &lt;span class="field-hint"&gt;As it appears on the invoice.&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- in-field actions: one attribute, facet.js injects × and the ⋯ menu --&gt;
+&lt;label class="field" data-field-actions&gt;
+  &lt;span class="field-label"&gt;API key&lt;/span&gt;
+  &lt;input type="text" value="sk-facet-9f2ac41e8b" aria-label="API key"&gt;
+&lt;/label&gt;
+
+&lt;!-- validation: data-status on the field, a .field-msg under it --&gt;
+&lt;label class="field" data-status="error"&gt;
+  &lt;span class="field-label"&gt;Email&lt;/span&gt;
+  &lt;input type="email" value="nope@" aria-invalid="true"&gt;
+  &lt;span class="field-msg"&gt;That address is missing its domain.&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-fields" data-tip="Copies the field patterns above">Copy</button></p>
       </article>
 
       <!-- FILE + DATE -->
