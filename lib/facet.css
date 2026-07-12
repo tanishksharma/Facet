@@ -3498,7 +3498,7 @@ dialog.drawer-bottom {
 .dialog-actions {
   display: flex;
   gap: var(--space-control);
-  justify-content: flex-end;
+  justify-content: flex-start;   /* left-aligned, to line up under left-aligned content */
   flex-wrap: wrap;
 }
 
@@ -3507,9 +3507,12 @@ dialog.drawer-bottom {
    corners; the body is the only scroller (head and actions stay put), and
    hairlines mark them off once content scrolls under. This is how a content
    or long-form dialog behaves; a short confirm skips .dialog-body and stays
-   the simple padded card above. */
-dialog.modal:has(> .dialog-body),
-dialog.drawer:has(> .dialog-body) {
+   the simple padded card above. The [open] guard matters: this rule sets
+   display:flex, which out-specifies the UA's dialog:not([open]){display:none}
+   — without [open] a closed structured dialog would render nested in the
+   page instead of staying hidden until shown. */
+dialog.modal[open]:has(> .dialog-body),
+dialog.drawer[open]:has(> .dialog-body) {
   padding: 0;
   overflow: hidden;
   display: flex;
