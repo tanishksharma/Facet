@@ -2086,7 +2086,7 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="chart" data-cat="content">
         <h3 data-status="dev">Chart</h3>
         <p>
-          A themed line chart drawn from a list of points — with labels, event markers and an optional dashed projection.
+          A themed line chart drawn from a list of points with <code>facet.chart()</code>: the line in accent-1, dots ringed in the page, a muted grid and axis, faint labelled event markers, and an optional dashed projection past a chosen point. Drag across the plot for a crosshair that reads the nearest value. Every colour is a token, so switching theme or mode restyles a live chart with no redraw. Keep the numbers in a table nearby for readers.
         </p>
         <div class="demo">
           <div class="chart-card">
@@ -2247,7 +2247,7 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="icons" data-cat="content">
         <h3 data-status="dev">Icons</h3>
         <p>
-          The icon set: thin line glyphs you place with one attribute and color with the text color. About sixty ship, and you can add your own.
+          The icon set: thin line glyphs you drop in with one attribute — <code>&lt;svg data-icon="search"&gt;</code> — sized by its <code>width</code>/<code>height</code> and coloured by the current text color, so an icon inside a button or a link matches automatically. About sixty ship; add your own by extending <code>facet.icons</code> with a name and its path data, then re-running <code>facet.icon()</code>. Click any gallery glyph below to copy its tag.
         </p>
         <div class="demo">
           <div class="grid" id="icon-gallery" style="--bg-cell: 0;"></div>
@@ -2263,7 +2263,7 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="map" data-cat="content">
         <h3 data-status="dev">Themed map</h3>
         <p>
-          A Google Map wearing the active theme, so the map matches the page in every theme, light and dark.
+          A Google Map wearing the active theme — drop a <code>&lt;div data-map data-lat data-lng data-zoom&gt;</code> and facet.js styles the tiles to match the page in every theme, light and dark, restyling live when the theme or mode changes. It needs a Google Maps API key (add the Maps script with your key); with no key or no network the block stays an empty panel rather than breaking the page.
         </p>
         <div class="demo">
           <div data-map data-lat="28.6129" data-lng="77.2295" data-zoom="12" data-tip="Wears whatever theme this page is in"></div>
