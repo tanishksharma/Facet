@@ -957,10 +957,11 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="base">
         <h3 data-status="dev">Base styles</h3>
         <p>
-          The look of raw HTML itself. Around thirty bare tags are already
+          The look of raw HTML itself. Around thirty-five bare tags are already
           designed before any class is added: headings, paragraphs, links,
-          lists, quotes, tables, images, rules, code and keyboard keys, and
-          the whole form family — labels, text inputs, selects, textareas,
+          lists, quotes, tables, images, rules, code blocks and keyboard keys,
+          the small text tags (mark, del, ins, abbr, sub, sup), a themed meter,
+          and the whole form family — labels, text inputs, selects, textareas,
           file and date pickers, checkboxes, radios and buttons. One visible
           focus ring, selection colors, thin scrollbars and the print base
           come with it, and controls refuse accidental text selection while
@@ -1004,6 +1005,18 @@ article p   { font-family: var(--font-reading); }
             <a href="#base">a link</a> are styled too — and press
             <kbd>Tab</kbd> here to see the focus ring every control shares.
           </p>
+          <p class="type-label" style="margin: 0;">The small text tags</p>
+          <p>
+            Highlight a phrase with <mark>a mark</mark>, show an edit as
+            <del>removed</del> <ins>added</ins>, expand an
+            <abbr title="Cascading Style Sheets">abbr</abbr> on hover, and set
+            H<sub>2</sub>O or E=mc<sup>2</sup> with sub and sup — all raw tags.
+          </p>
+          <p class="type-label" style="margin: 0;">A code block and a meter</p>
+          <pre><code>const facet = "one CSS, one JS";
+// no build step, never minified</code></pre>
+          <label for="demo-raw-meter">Disk used — 8.1 of 10 GB</label>
+          <meter id="demo-raw-meter" value="8.1" min="0" max="10" low="3" high="9" optimum="2">8.1 GB</meter>
           <hr>
           <p><small>Even the horizontal rule above and this small print are the base layer.</small></p>
         </div>

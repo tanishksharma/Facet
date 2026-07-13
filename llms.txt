@@ -540,8 +540,11 @@ re-applies it after you insert markup.
 
 WHEN TO USE: write raw semantic HTML and it already looks designed —
 this is the layer that makes a bare page presentable before any class.
-Headings, paragraphs, lists, blockquotes, tables, code, forms and
-buttons are all styled; one visible keyboard focus ring everywhere;
+Headings, paragraphs, lists, blockquotes, tables, code blocks, forms and
+buttons are all styled, plus the small text tags (mark for highlight,
+del/ins for edits, abbr for abbreviations, sub/sup), a keyboard key
+(kbd) and a themed meter that colours by whether the value is good, low
+or critical; one visible keyboard focus ring everywhere;
 selection colors; thin scrollbars; a skip-to-content link pattern; the
 hidden attribute always wins; tabular figures on numeric UI; images
 are block-level and never overflow. Controls refuse accidental text
