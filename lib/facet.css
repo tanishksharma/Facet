@@ -247,9 +247,11 @@
      The raw colors above stay fills-only (yellow on white fails hard).
      Derived per color (yellow needs far more darkening than red), so a
      theme that re-tunes the palette keeps the pairing; dark mode
-     re-derives toward white below. */
+     re-derives toward white below. Yellow is nudged toward its red
+     neighbour first: darkening pure yellow alone reads as muddy olive,
+     so the -text tone is warmed into a clean gold before it drops to AA. */
   --color-1-text: color-mix(in srgb, var(--color-1) 78%, black);
-  --color-2-text: color-mix(in srgb, var(--color-2) 54%, black);
+  --color-2-text: color-mix(in srgb, color-mix(in srgb, var(--color-2) 82%, var(--color-1)) 60%, black);
   --color-3-text: color-mix(in srgb, var(--color-3) 58%, black);
   --color-4-text: color-mix(in srgb, var(--color-4) 84%, black);
   --color-5-text: color-mix(in srgb, var(--color-5) 82%, black);
@@ -543,9 +545,11 @@
   /* The vivid -text companions flip: on a near-black page the hue is
      carried UP toward white instead (the raw brights mostly pass here;
      one uniform lift puts all five comfortably past AA). Set on
-     [data-mode="dark"] so every theme's dark twin inherits them. */
+     [data-mode="dark"] so every theme's dark twin inherits them. Yellow
+     keeps its warm gold nudge here too so it stays a rich, bright gold
+     rather than a pale washed lemon. */
   --color-1-text: color-mix(in srgb, var(--color-1) 88%, white);
-  --color-2-text: color-mix(in srgb, var(--color-2) 88%, white);
+  --color-2-text: color-mix(in srgb, color-mix(in srgb, var(--color-2) 95%, var(--color-1)) 90%, white);
   --color-3-text: color-mix(in srgb, var(--color-3) 88%, white);
   --color-4-text: color-mix(in srgb, var(--color-4) 88%, white);
   --color-5-text: color-mix(in srgb, var(--color-5) 88%, white);
