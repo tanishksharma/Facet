@@ -4482,9 +4482,10 @@ prefers-reduced-motion still everything.*/
    (docs mirror — identical to llms.txt · Icons)
    WHEN TO USE: every small symbol a product needs — write <svg data-icon="name"></svg> and facet.js fills it. Never paste icon paths by hand; extend the table instead.
 
-   What it is: 24x24 line glyphs at a 1.5px stroke with round
-   caps, carried as markup inside facet.js — no image files, no sprite
-   fetch. Write <svg data-icon="search"></svg> and facet.js fills it;
+   What it is: over a hundred smooth, round-capped 24x24 line glyphs from
+   Lucide (lucide.dev, ISC-licensed, a fork of Feather), carried as markup
+   inside facet.js — no image files, no sprite fetch, no build step. Write
+   <svg data-icon="search"></svg> and facet.js fills it;
    icons ride currentColor and scale with the surrounding text.
    In running text add .glyph — it makes the svg sit in the sentence
    like a character (inline-block, sized to the line, baseline-aligned)
@@ -4495,9 +4496,15 @@ prefers-reduced-motion still everything.*/
    facet.icon(). The set: search close check plus minus arrow-right
    arrow-left arrow-up arrow-down chevron-right chevron-left chevron-up
    chevron-down menu more settings home user users heart star bookmark
-   bell calendar clock download upload share external link copy edit
-   trash filter eye lock mail globe image file folder sun moon info
-   warning help play pause.*/
+   bell calendar clock download upload share print external link copy edit
+   trash filter eye lock mail message globe image file folder sun moon info
+   play pause chart grid sliders refresh undo redo clipboard volume vibrate
+   motion contrast plus-square download-cloud sparkle gem wrench phone
+   camera video mic map-pin map credit-card cart bag tag gift send paperclip
+   list log-out log-in key shield thumbs-up thumbs-down smile flag zap cloud
+   wifi book award target trending-up pie-chart bar-chart code terminal hash
+   at-sign percent wallet package briefcase coffee rocket warning select
+   help.*/
 svg[data-icon] {
   width: 1.25em;
   height: 1.25em;
