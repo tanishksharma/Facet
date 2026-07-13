@@ -114,8 +114,10 @@ function initSetupStrip() {
   }
 }
 
-/* Chips flip the live demo. Three kinds, by data attribute:
+/* Chips flip the live demo. Four kinds, by data attribute:
      data-chip-group + data-chip-class   radio-style class swap
+     data-chip-group + data-chip-attr    radio-style attribute value swap
+                                          (e.g. data-density on the target)
      data-chip-attr                      toggle an attribute on/off
      data-chip-show                      show one of several demo children
    data-chip-target narrows the element acted on (default: the demo's
@@ -134,6 +136,12 @@ function initChips() {
         for (const other of group) {
           if (other.dataset.chipClass) target.classList.remove(other.dataset.chipClass);
           other.setAttribute("aria-pressed", "false");
+        }
+        // Radio over an attribute value (this chip wins, others clear it).
+        if (chip.dataset.chipAttr !== undefined) {
+          const attr = chip.dataset.chipAttr;
+          if (chip.dataset.chipAttrValue) target.setAttribute(attr, chip.dataset.chipAttrValue);
+          else target.removeAttribute(attr);
         }
         if (chip.dataset.chipClass) target.classList.add(chip.dataset.chipClass);
         chip.setAttribute("aria-pressed", "true");

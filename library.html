@@ -749,7 +749,23 @@ article p   { font-family: var(--font-reading); }
           <code>--width-wide</code> 80rem for dashboards.
         </p>
 
+        <p class="chips" role="group" aria-label="Density">
+          <button class="chip" aria-pressed="false" data-chip-group="density" data-chip-attr="data-density" data-chip-attr-value="small" data-chip-target="#space-scale" data-tip="Tightens the whole scale">Small</button>
+          <button class="chip" aria-pressed="true" data-chip-group="density" data-chip-attr="data-density" data-chip-attr-value="" data-chip-target="#space-scale" data-tip="The default rhythm">Medium</button>
+          <button class="chip" aria-pressed="false" data-chip-group="density" data-chip-attr="data-density" data-chip-attr-value="large" data-chip-target="#space-scale" data-tip="Opens the whole scale">Large</button>
+        </p>
         <div class="demo stack">
+          <p class="text-caption">The whole scale, each bar sized to its token — flip the density above and watch it breathe</p>
+          <ul id="space-scale" class="stack-tight" style="list-style: none; margin: 0; padding: 0;">
+            <li class="row" style="align-items: center; gap: var(--space-inline);"><span class="space-bar" style="height: 0.85rem; width: var(--space-tight); background: var(--accent-3); border-radius: 2px;"></span><code class="text-caption">--space-tight</code></li>
+            <li class="row" style="align-items: center; gap: var(--space-inline);"><span class="space-bar" style="height: 0.85rem; width: var(--space-control); background: var(--accent-3); border-radius: 2px;"></span><code class="text-caption">--space-control</code></li>
+            <li class="row" style="align-items: center; gap: var(--space-inline);"><span class="space-bar" style="height: 0.85rem; width: var(--space-inline); background: var(--accent-3); border-radius: 2px;"></span><code class="text-caption">--space-inline</code></li>
+            <li class="row" style="align-items: center; gap: var(--space-inline);"><span class="space-bar" style="height: 0.85rem; width: var(--space-stack); background: var(--accent-3); border-radius: 2px;"></span><code class="text-caption">--space-stack</code></li>
+            <li class="row" style="align-items: center; gap: var(--space-inline);"><span class="space-bar" style="height: 0.85rem; width: var(--space-card); background: var(--accent-3); border-radius: 2px;"></span><code class="text-caption">--space-card</code></li>
+            <li class="row" style="align-items: center; gap: var(--space-inline);"><span class="space-bar" style="height: 0.85rem; width: var(--space-page); background: var(--accent-3); border-radius: 2px;"></span><code class="text-caption">--space-page</code></li>
+            <li class="row" style="align-items: center; gap: var(--space-inline);"><span class="space-bar" style="height: 0.85rem; width: var(--space-section); background: var(--accent-3); border-radius: 2px;"></span><code class="text-caption">--space-section</code></li>
+            <li class="row" style="align-items: center; gap: var(--space-inline);"><span class="space-bar" style="height: 0.85rem; width: var(--space-hero); background: var(--accent-3); border-radius: 2px;"></span><code class="text-caption">--space-hero</code></li>
+          </ul>
           <p class="text-caption">Gaps inside a control row · <code>--space-control</code></p>
           <div class="space-viz" style="display: inline-flex; gap: var(--space-control); padding: var(--space-control); flex-wrap: wrap;">
             <button class="btn btn-primary">Calculate</button>
