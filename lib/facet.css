@@ -403,6 +403,8 @@
   --space-page:    calc(2rem    * var(--density-scale));  /* 32px · container side padding, page margins */
   --space-section: calc(3rem    * var(--density-scale));  /* 48px · between whole page sections */
   --space-hero:    calc(4rem    * var(--density-scale));  /* 64px · the biggest breaks: hero bands */
+  --space-xl:      calc(6rem    * var(--density-scale));  /* 96px · extra-large section breaks */
+  --space-2xl:     calc(8rem    * var(--density-scale));  /* 128px · hero-to-content, big editorial gaps */
   --space-pin:     20px;   /* the inset a viewport-pinned panel keeps from the screen edges — exact pixels, never density-scaled, so pinned panels fit exactly and never move with the scroll */
 
   /* ----- Spacing: the safe areas -----

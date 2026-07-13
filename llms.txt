@@ -420,7 +420,9 @@ pairs, 4px), --space-control (inside buttons and inputs, 8px),
 --space-inline (gaps in a row, 12px), --space-stack (default block
 gap, 16px), --space-card (card padding, 24px), --space-page (page
 margins, 32px), --space-section (between page sections, 48px),
---space-hero (the biggest breaks, 64px). --space-pin (20px) is the one
+--space-hero (the biggest breaks, 64px), --space-xl (extra-large
+section breaks, 96px), --space-2xl (hero-to-content and big editorial
+gaps, 128px). --space-pin (20px) is the one
 fixed slot: the inset a viewport-pinned panel keeps from the screen
 edges (height: calc(100dvh - 2 * var(--space-pin))) — exact pixels,
 never density-scaled, so pinned panels fit exactly and never move with
