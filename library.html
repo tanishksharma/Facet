@@ -1961,7 +1961,7 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="list" data-cat="content">
         <h3 data-status="dev">List</h3>
         <p>
-          Rows with a leading icon or picture, a title, and a trailing value or action — the workhorse of feeds, settings and results.
+          Rows with a leading icon or picture, a title, an optional description line, and a trailing value or action — the workhorse of feeds, settings and results. One component: every look is a composition of the same slots, never a sibling. Rows separated by hairlines (<code>.list</code>) or boxed in a border (<code>.list-boxed</code>); a row can be a link or a button; states ride the grammar — a selected or current row lights an accent edge, a disabled row greys out.
         </p>
         <div class="demo">
           <ul class="list list-boxed">
@@ -2014,6 +2014,22 @@ article p   { font-family: var(--font-reading); }
                 <span class="list-desc">2.4 MB — a real button in the trail of a static row</span>
               </span>
               <span class="list-trail"><button type="button" class="btn btn-icon btn-small" aria-label="Remove report-2026.pdf" data-tip="Removes this row" data-event="list-remove"><svg data-icon="close" aria-hidden="true"></svg></button></span>
+            </li>
+          </ul>
+
+          <p class="type-label" data-demo-chrome style="margin: var(--space-stack) 0 0;">States and the bare variant — selected lights an accent edge, disabled greys out</p>
+          <ul class="list" aria-label="States">
+            <li class="list-item">
+              <span class="list-content"><span class="list-title">All mail</span></span>
+              <span class="list-trail">128</span>
+            </li>
+            <li class="list-item" aria-current="true">
+              <span class="list-content"><span class="list-title">Starred — the current row</span></span>
+              <span class="list-trail">12</span>
+            </li>
+            <li class="list-item" aria-disabled="true">
+              <span class="list-content"><span class="list-title">Archive — disabled</span></span>
+              <span class="list-trail">—</span>
             </li>
           </ul>
         </div>

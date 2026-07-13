@@ -5865,8 +5865,11 @@ details.dropdown {
    dismiss or per-row action — never inside an <a> or <button> row, where a
    nested control is invalid HTML. Rows are always direct children
    of .list, so a <ul> takes <li class="list-item"> and a clickable list is a
-   <nav> of <a class="list-item">. Reuses the neutral ramp and type tokens, so
-   it needs no tokens of its own and restyles with every theme.*/
+   <nav> of <a class="list-item">. States ride the grammar: aria-current
+   or aria-selected on a row lights an accent bar at its reading edge,
+   aria-disabled greys it and turns off the pointer. Reuses the neutral
+   ramp and type tokens, so it needs no tokens of its own and restyles
+   with every theme.*/
 .list {
   display: flex;
   flex-direction: column;
