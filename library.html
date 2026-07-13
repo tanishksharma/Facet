@@ -2484,13 +2484,14 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="wayfinding" data-cat="nav">
         <h3 data-status="dev">Tabs, breadcrumb, pagination</h3>
         <p>
-          Tabs for switching views, the breadcrumb for where you are, pagination for long lists — the wayfinding trio.
+          The wayfinding trio. Tabs switch views in place — real ARIA tabs, so click or arrow-key between them and the accent underline glides; the breadcrumb is the path to here, the current page unlinked; pagination walks a long set page by page, every page a real URL, the edges going disabled at the ends. A tab can be disabled too.
         </p>
         <div class="demo">
           <div class="stack">
             <div class="tabs" role="tablist" aria-label="Report views">
               <button type="button" role="tab" aria-selected="true" aria-controls="pane-overview" id="tab-overview" data-tip="Arrow keys work too">Overview</button>
               <button type="button" role="tab" aria-selected="false" aria-controls="pane-activity" id="tab-activity" data-tip="Arrow keys work too">Activity</button>
+              <button type="button" role="tab" aria-disabled="true" data-tip="Not available yet">Forecast</button>
             </div>
             <p role="tabpanel" id="pane-overview" aria-labelledby="tab-overview" class="text-footnote">The overview pane: totals and the verdict.</p>
             <p role="tabpanel" id="pane-activity" aria-labelledby="tab-activity" class="text-footnote" hidden>The activity pane: every change, newest first.</p>
