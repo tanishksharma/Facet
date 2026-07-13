@@ -1688,6 +1688,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   initSkinLab();                   // build.html: the theme × mode gallery
   const gaugeBox = document.querySelector("#scroll-gauge .demo-scroller");
   if (gaugeBox && window.facet) facet.scrollGauge(gaugeBox);
+  document.querySelector("#demo-toast-error")?.addEventListener("click", () => {
+    facet.toast("Couldn't reach the server", "error");
+  });
+  document.querySelector("#demo-toast-info")?.addEventListener("click", () => {
+    facet.toast("Three new updates", "info");
+  });
   document.querySelector("#demo-toast")?.addEventListener("click", () => {
     facet.toast("Report saved", "success");
   });

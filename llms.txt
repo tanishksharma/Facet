@@ -1146,12 +1146,15 @@ WHEN TO USE: the accordion folds long optional reading; the toast confirms an ou
 
 What it is: the accordion is native <details class="accordion">
 styled (hairline rows, rotating chevron; give siblings the same name
-attribute and the browser keeps exactly one open); the toast is
+attribute and the browser keeps exactly one open, and add open to
+start one expanded); the toast is
 facet.toast(message, kind) — a transient pill that says one thing and
 leaves after four seconds, announced politely (kinds success /
 warning / error / info color the dot); the dropdown is
 details.dropdown whose summary is styled as a button and whose
-.dropdown-menu holds real buttons and links, closed by outside
+.dropdown-menu holds real buttons and links — each can lead with an
+svg icon, an aria-disabled item greys out, and .dropdown-danger marks
+a destructive one — closed by outside
 clicks, Esc, or picking an item. When to use it: never a toast for a
 question (dialog) and never a dropdown for navigation (links).
 

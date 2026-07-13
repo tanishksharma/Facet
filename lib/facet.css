@@ -5290,12 +5290,15 @@ table.table {
 
    What it is: the accordion is native <details class="accordion">
    styled (hairline rows, rotating chevron; give siblings the same name
-   attribute and the browser keeps exactly one open); the toast is
+   attribute and the browser keeps exactly one open, and add open to
+   start one expanded); the toast is
    facet.toast(message, kind) — a transient pill that says one thing and
    leaves after four seconds, announced politely (kinds success /
    warning / error / info color the dot); the dropdown is
    details.dropdown whose summary is styled as a button and whose
-   .dropdown-menu holds real buttons and links, closed by outside
+   .dropdown-menu holds real buttons and links — each can lead with an
+   svg icon, an aria-disabled item greys out, and .dropdown-danger marks
+   a destructive one — closed by outside
    clicks, Esc, or picking an item. When to use it: never a toast for a
    question (dialog) and never a dropdown for navigation (links).*/
 details.accordion {
@@ -5433,10 +5436,13 @@ details.dropdown {
   min-height: 2.75rem;
   display: flex;
   align-items: center;
+  gap: var(--space-inline);
 }
+.dropdown-menu svg { flex: none; }
 .dropdown-menu button:hover,
 .dropdown-menu a:hover { background: var(--accent-2-hover); }
 .dropdown-menu .dropdown-danger { color: var(--error); }
+.dropdown-menu [aria-disabled="true"]:hover { background: none; }
 
 /* ----- CARD: default, outlined, clickable -----
    (docs mirror — identical to llms.txt · Card)

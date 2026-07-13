@@ -2415,31 +2415,43 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="disclosure" data-cat="overlays">
         <h3 data-status="dev">Accordion, toast, dropdown menu</h3>
         <p>
-          The accordion for folding content, the toast for a passing notice, and the dropdown menu for a few actions behind a button.
+          Three quiet overlays. The accordion folds long optional reading — give a set the same <code>name</code> and only one opens at a time; add <code>open</code> to start one expanded. The toast is a passing pill for an outcome that needs no reply — <code>facet.toast(message, kind)</code>, where kind tints it success, error, info or warning. The dropdown menu holds a few actions behind one button — items take icons, an <code>aria-disabled</code> item greys out, and <code>.dropdown-danger</code> marks a destructive one.
         </p>
-        <div class="demo">
-          <div class="stack">
-            <div>
-              <details class="accordion" name="faq">
-                <summary>How is the rate calculated?</summary>
-                <p class="text-footnote">From the average of the last twelve months, weighted toward recent ones.</p>
-              </details>
-              <details class="accordion" name="faq">
-                <summary>Can I export everything?</summary>
-                <p class="text-footnote">Yes — every table has an export in its dropdown menu.</p>
-              </details>
-            </div>
-            <div class="row">
-              <button type="button" class="btn" id="demo-toast" data-tip="Shows a success toast" data-event="demo-toast">Show a toast</button>
-              <details class="dropdown">
-                <summary class="btn" data-tip="Opens the action menu">More actions</summary>
-                <div class="dropdown-menu">
-                  <button type="button" data-event="report-export">Export CSV</button>
-                  <button type="button" data-event="report-duplicate">Duplicate</button>
-                  <button type="button" class="dropdown-danger" data-event="report-delete">Delete report</button>
-                </div>
-              </details>
-            </div>
+        <div class="demo stack">
+          <p class="type-label" data-demo-chrome style="margin:0;">Accordion — one open at a time; the third starts open</p>
+          <div data-demo-unwrap>
+            <details class="accordion" name="faq">
+              <summary>How is the rate calculated?</summary>
+              <p class="text-footnote">From the average of the last twelve months, weighted toward recent ones.</p>
+            </details>
+            <details class="accordion" name="faq">
+              <summary>Can I export everything?</summary>
+              <p class="text-footnote">Yes — every table has an export in its dropdown menu.</p>
+            </details>
+            <details class="accordion" name="faq" open>
+              <summary>Is it free?</summary>
+              <p class="text-footnote">Yes. One link, one script, no account. This one starts open.</p>
+            </details>
+          </div>
+
+          <p class="type-label" data-demo-chrome style="margin:0;">Toast — one per kind</p>
+          <div class="row" data-demo-unwrap>
+            <button type="button" class="btn btn-small" id="demo-toast" data-tip="A success toast" data-event="demo-toast">Success</button>
+            <button type="button" class="btn btn-small" id="demo-toast-error" data-tip="An error toast">Error</button>
+            <button type="button" class="btn btn-small" id="demo-toast-info" data-tip="An info toast">Info</button>
+          </div>
+
+          <p class="type-label" data-demo-chrome style="margin:0;">Dropdown menu — icons, a disabled item, a danger action</p>
+          <div data-demo-unwrap>
+            <details class="dropdown">
+              <summary class="btn" data-tip="Opens the action menu">More actions</summary>
+              <div class="dropdown-menu">
+                <button type="button" data-event="report-export"><svg width="16" height="16" data-icon="download" aria-hidden="true"></svg>Export CSV</button>
+                <button type="button" data-event="report-duplicate"><svg width="16" height="16" data-icon="copy" aria-hidden="true"></svg>Duplicate</button>
+                <button type="button" aria-disabled="true"><svg width="16" height="16" data-icon="share" aria-hidden="true"></svg>Share (soon)</button>
+                <button type="button" class="dropdown-danger" data-event="report-delete"><svg width="16" height="16" data-icon="trash" aria-hidden="true"></svg>Delete report</button>
+              </div>
+            </details>
           </div>
         </div>
         <pre id="code-disclosure"><code></code></pre>
