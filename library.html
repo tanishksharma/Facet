@@ -813,21 +813,39 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="shape">
         <h3 data-status="dev">Shape and elevation</h3>
         <p>
-          Small radii on controls, medium on cards, large on overlays, pill
-          for chips and thumbs. Shadows stay subtle and flat in every theme.
-          How things move is its own system — see
-          <a href="#motion">Motion</a> just below.
+          Three systems a theme retunes at once: radius by role (small on controls, medium on panels, large on cards, full on pills and thumbs), border weight by role (a hairline separator, an element outline, a highlight for emphasis), and a shadow ladder that lifts a surface from just-raised to floating to overlay — subtle and flat in every theme. How things move is its own system — see <a href="#motion">Motion</a> just below.
         </p>
-        <div class="demo">
+        <div class="demo stack">
+          <p class="type-label" data-demo-chrome style="margin:0;">Radius by role — each on the kind of thing it shapes</p>
           <ul class="shape-row">
             <li><div class="tile" style="border-radius: var(--radius-control)"></div>--radius-control</li>
             <li><div class="tile" style="border-radius: var(--radius-panel)"></div>--radius-panel</li>
             <li><div class="tile" style="border-radius: var(--radius-card)"></div>--radius-card</li>
             <li><div class="tile" style="border-radius: var(--radius-pill)"></div>--radius-pill</li>
-            <li><div class="tile" style="box-shadow: var(--shadow-raised)"></div>--shadow-raised</li>
-            <li><div class="tile" style="box-shadow: var(--shadow-floating)"></div>--shadow-floating</li>
-            <li><div class="tile" style="box-shadow: var(--shadow-overlay)"></div>--shadow-overlay</li>
           </ul>
+
+          <p class="type-label" data-demo-chrome style="margin:0;">Border weight by role</p>
+          <ul class="shape-row">
+            <li><div class="tile" style="border: var(--border-hairline) solid var(--border); box-shadow: none;"></div>--border-hairline</li>
+            <li><div class="tile" style="border: var(--border-element) solid var(--border-strong); box-shadow: none;"></div>--border-element</li>
+            <li><div class="tile" style="border: var(--border-highlight) solid var(--accent-3); box-shadow: none;"></div>--border-highlight</li>
+          </ul>
+
+          <p class="type-label" data-demo-chrome style="margin:0;">Elevation ladder — the same surface, lifted higher</p>
+          <div class="row" style="gap: var(--space-card); align-items: flex-start;">
+            <div class="stack-tight" style="padding: var(--space-card); background: var(--surface); border-radius: var(--radius-card); box-shadow: var(--shadow-raised); min-width: 8rem;">
+              <strong class="text-footnote">Raised</strong>
+              <span class="text-caption" style="color: var(--text-muted);">--shadow-raised · cards</span>
+            </div>
+            <div class="stack-tight" style="padding: var(--space-card); background: var(--surface); border-radius: var(--radius-card); box-shadow: var(--shadow-floating); min-width: 8rem;">
+              <strong class="text-footnote">Floating</strong>
+              <span class="text-caption" style="color: var(--text-muted);">--shadow-floating · menus</span>
+            </div>
+            <div class="stack-tight" style="padding: var(--space-card); background: var(--surface); border-radius: var(--radius-card); box-shadow: var(--shadow-overlay); min-width: 8rem;">
+              <strong class="text-footnote">Overlay</strong>
+              <span class="text-caption" style="color: var(--text-muted);">--shadow-overlay · dialogs</span>
+            </div>
+          </div>
         </div>
         <pre id="code-shape" data-code-static><code>/* Radii and shadows by role — a theme retunes them all at once. */
 .panel   { border-radius: var(--radius-card); box-shadow: var(--shadow-raised); }
