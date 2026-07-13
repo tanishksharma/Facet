@@ -1040,17 +1040,22 @@ article p   { font-family: var(--font-reading); }
       <article class="element stack" id="print">
         <h3 data-status="dev">Print &amp; export</h3>
         <p>
-          Printing built in. Mark what belongs on paper and what does not, and every page prints clean: white ground, folds opened, nothing cut in half. A save-as-PDF button is one attribute.
+          Printing is a first-class, declarative feature. One attribute names whether an element belongs on paper — <code>data-print="off"</code> (page furniture, never prints), <code>data-print="only"</code> (print-only: a letterhead, a footer), <code>data-print="on"</code> (force it on even inside an off region) — with readable class aliases (<code>.print-hide</code>, <code>.print-only</code>, <code>.print-show</code>). The themed print stylesheet then neutralises to ink-on-paper (white ground, no shadows or theme colour), opens every fold, avoids breaks through cards, rows and figures, and keeps the selection in reading order. A Save-as-PDF affordance is one attribute; add <code>.page-break</code> to start a section on a fresh sheet.
         </p>
-        <div class="demo">
-          <div class="stack">
-            <p class="row" style="max-width: none;">
-              <button class="btn" data-print-action="page" data-event="export-pdf" data-tip="Opens the print dialog — Save as PDF is the export">Print this page</button>
-              <span class="badge" data-print="only">Prints only — invisible on screen</span>
-              <span class="badge badge-info" data-print="off">Screen only — never prints</span>
-            </p>
-            <p class="text-footnote" style="color: var(--text-muted);">The two badges demonstrate the roles: open the print preview and they trade places.</p>
-          </div>
+        <div class="demo stack">
+          <p class="type-label" data-demo-chrome style="margin:0;">The three roles — open your print preview and watch them trade places</p>
+          <p class="row" data-demo-unwrap style="max-width: none;">
+            <span class="badge" data-print="only">Prints only — invisible on screen</span>
+            <span class="badge badge-info" data-print="off">Screen only — never prints</span>
+            <span class="badge badge-success" data-print="on">Always prints</span>
+          </p>
+
+          <p class="type-label" data-demo-chrome style="margin:0;">The Save-as-PDF affordance</p>
+          <p data-demo-unwrap style="margin:0;">
+            <button class="btn" data-print-action="page" data-event="export-pdf" data-tip="Opens the print dialog — Save as PDF is the export">
+              <svg width="16" height="16" data-icon="print" aria-hidden="true"></svg> Save as PDF
+            </button>
+          </p>
         </div>
         <pre id="code-print"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-print" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
