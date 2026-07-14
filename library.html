@@ -713,6 +713,117 @@ article p   { font-family: var(--font-reading); }
   --on-accent-1: #FFFFFF;
 }</code></pre>
         <p><button class="btn btn-small" data-copy="#code-custom-accent" data-tip="Copies the CSS override block above">Copy</button></p>
+
+        <p class="type-label" data-demo-chrome style="margin: var(--space-stack) 0 0;">Accent placement model — one interface, many brands</p>
+        <p>
+          The ranks are layers, not an importance ladder. <strong>Accent 3</strong>
+          is the base the product sits in — the pale page and section washes,
+          and the pills, chips and badges (a very pale fill with a normal-color
+          outline), plus the selected tab, focus and text highlights.
+          <strong>Accent 2</strong> is the middle that breaks information down —
+          eyebrows, callouts, captions. <strong>Accent 1</strong> is the
+          highlight on top — the main headings, links, the one primary action
+          and the committed marks on inputs. Onboarding a brand: its base color
+          → accent-3, its highlight → accent-1. Each panel below sets only those
+          two hues; everything else derives. The swatch strip makes the pale
+          ones visible: ground (the pale wash), pill (the tinted fill + colored
+          edge), then the two full hues.
+        </p>
+        <div class="accent-lab">
+
+          <div class="accent-lab-panel">
+            <span class="accent-lab-name">Default · neutral</span>
+            <div class="accent-lab-legend">
+              <span><i style="background: var(--accent-3-wash)"></i>Ground</span>
+              <span><i style="background: var(--accent-3-tint); border-color: var(--accent-3-edge)"></i>Pill</span>
+              <span><i style="background: var(--accent-3)"></i>Base 3</span>
+              <span><i style="background: var(--accent-1)"></i>Top 1</span>
+            </div>
+            <p class="eyebrow">Eyebrow · accent 2</p>
+            <h4 style="color: var(--accent-1-text); margin: 0;">Main heading</h4>
+            <p style="font-size: var(--text-footnote); max-width: none;">Body stays neutral. An <a href="#accent-lab">inline link</a> and a <mark>highlight</mark>.</p>
+            <div class="accent-lab-line">
+              <button class="btn btn-primary btn-small">Primary</button>
+              <button class="btn btn-small">Secondary</button>
+            </div>
+            <div class="accent-lab-line">
+              <span class="badge">Badge</span>
+              <button class="chip" aria-pressed="true">Chip on</button>
+              <button class="chip">Chip</button>
+            </div>
+            <label class="accent-lab-check"><input type="checkbox" checked> Checked</label>
+          </div>
+
+          <div class="accent-lab-panel" style="--accent-3: #4f46e5; --accent-3-text: #4338ca; --accent-1: #4f46e5; --accent-1-text: #4338ca;">
+            <span class="accent-lab-name">Single colour · indigo</span>
+            <div class="accent-lab-legend">
+              <span><i style="background: var(--accent-3-wash)"></i>Ground</span>
+              <span><i style="background: var(--accent-3-tint); border-color: var(--accent-3-edge)"></i>Pill</span>
+              <span><i style="background: var(--accent-3)"></i>Base 3</span>
+              <span><i style="background: var(--accent-1)"></i>Top 1</span>
+            </div>
+            <p class="eyebrow">Eyebrow · accent 2</p>
+            <h4 style="color: var(--accent-1-text); margin: 0;">Main heading</h4>
+            <p style="font-size: var(--text-footnote); max-width: none;">Body stays neutral. An <a href="#accent-lab">inline link</a> and a <mark>highlight</mark>.</p>
+            <div class="accent-lab-line">
+              <button class="btn btn-primary btn-small">Primary</button>
+              <button class="btn btn-small">Secondary</button>
+            </div>
+            <div class="accent-lab-line">
+              <span class="badge">Badge</span>
+              <button class="chip" aria-pressed="true">Chip on</button>
+              <button class="chip">Chip</button>
+            </div>
+            <label class="accent-lab-check"><input type="checkbox" checked> Checked</label>
+          </div>
+
+          <div class="accent-lab-panel" style="--accent-3: #7c3aed; --accent-3-text: #6d28d9; --accent-1: #f59e0b; --accent-1-text: #b45309;">
+            <span class="accent-lab-name">Purple base · amber top</span>
+            <div class="accent-lab-legend">
+              <span><i style="background: var(--accent-3-wash)"></i>Ground</span>
+              <span><i style="background: var(--accent-3-tint); border-color: var(--accent-3-edge)"></i>Pill</span>
+              <span><i style="background: var(--accent-3)"></i>Base 3</span>
+              <span><i style="background: var(--accent-1)"></i>Top 1</span>
+            </div>
+            <p class="eyebrow">Eyebrow · accent 2</p>
+            <h4 style="color: var(--accent-1-text); margin: 0;">Main heading</h4>
+            <p style="font-size: var(--text-footnote); max-width: none;">Body stays neutral. An <a href="#accent-lab">inline link</a> and a <mark>highlight</mark>.</p>
+            <div class="accent-lab-line">
+              <button class="btn btn-primary btn-small">Primary</button>
+              <button class="btn btn-small">Secondary</button>
+            </div>
+            <div class="accent-lab-line">
+              <span class="badge">Badge</span>
+              <button class="chip" aria-pressed="true">Chip on</button>
+              <button class="chip">Chip</button>
+            </div>
+            <label class="accent-lab-check"><input type="checkbox" checked> Checked</label>
+          </div>
+
+          <div class="accent-lab-panel" style="--accent-3: #0d9488; --accent-3-text: #0f766e; --accent-1: #db2777; --accent-1-text: #be185d;">
+            <span class="accent-lab-name">Teal base · pink top</span>
+            <div class="accent-lab-legend">
+              <span><i style="background: var(--accent-3-wash)"></i>Ground</span>
+              <span><i style="background: var(--accent-3-tint); border-color: var(--accent-3-edge)"></i>Pill</span>
+              <span><i style="background: var(--accent-3)"></i>Base 3</span>
+              <span><i style="background: var(--accent-1)"></i>Top 1</span>
+            </div>
+            <p class="eyebrow">Eyebrow · accent 2</p>
+            <h4 style="color: var(--accent-1-text); margin: 0;">Main heading</h4>
+            <p style="font-size: var(--text-footnote); max-width: none;">Body stays neutral. An <a href="#accent-lab">inline link</a> and a <mark>highlight</mark>.</p>
+            <div class="accent-lab-line">
+              <button class="btn btn-primary btn-small">Primary</button>
+              <button class="btn btn-small">Secondary</button>
+            </div>
+            <div class="accent-lab-line">
+              <span class="badge">Badge</span>
+              <button class="chip" aria-pressed="true">Chip on</button>
+              <button class="chip">Chip</button>
+            </div>
+            <label class="accent-lab-check"><input type="checkbox" checked> Checked</label>
+          </div>
+
+        </div>
       </article>
 
       <!-- ==============================

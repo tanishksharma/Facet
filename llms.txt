@@ -411,8 +411,10 @@ information down — eyebrows, callouts, captions; --accent-1 is the TOP
 layer, the highlight — the main headings (h1/h2), links, the one
 primary action and the committed marks on inputs (checkbox check, radio
 dot, switch), a brand's highlight colour. Reach
-for --accent-3-wash as a faint page/section ground, --accent-3-tint for
-a pill on a card, --accent-N-text when a rank must WRITE as text. A
+for --accent-3-wash as a faint page/section ground, --accent-3-tint +
+--accent-3-edge for a pill on a card (a very pale fill with a
+normal-colour outline — how badges, chips and callouts carry the base
+hue without shouting), --accent-N-text when a rank must WRITE as text. A
 single-colour product sets all three to one hue and lets placement
 (fill vs label vs tint) carry the difference; a two-colour brand maps
 its base to accent-3 and its highlight to accent-1. The middle layer's
@@ -1358,9 +1360,12 @@ update(next) redraws with new data.
 
 WHEN TO USE: badges state, they never act; chips toggle; an avatar names a person; progress shows completeness with words nearby.
 
-What it is: four tiny signals. Badge: a status word in a tinted pill —
-.badge plus .badge-success / -warning / -error / -info. Chip: a small
-toggleable pill button; aria-pressed carries its state and facet.js
+What it is: four tiny signals. Badge: a word in a pill — the plain
+.badge rides the base accent (accent-3: a very pale fill with a
+normal-colour outline), plus .badge-success / -warning / -error / -info
+for status. Chip: a small toggleable pill button; when pressed it takes
+the same pale-fill-plus-coloured-outline base treatment; aria-pressed
+carries its state and facet.js
 toggles a bare chip on click (chips wired to data attributes keep
 their own handlers); an svg glyph inside a chip sits beside the label
 on its own; add a .chip-remove × to make it a removable filter token

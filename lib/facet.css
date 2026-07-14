@@ -231,6 +231,14 @@
   --accent-3-tint: color-mix(in srgb, var(--accent-3) 14%, var(--surface));
   --accent-3-wash: color-mix(in srgb, var(--accent-3) 6%, var(--background));
 
+  /* The outline companion for each rank — the "normal colour" edge that
+     frames a very pale fill (a pill on a card, a callout). Same recipe as the
+     status -edge tokens (a ~40% mix), so a tinted chip reads as its accent
+     via a clear border while the fill stays soft. */
+  --accent-1-edge: color-mix(in srgb, var(--accent-1) 42%, var(--surface));
+  --accent-2-edge: color-mix(in srgb, var(--accent-2-text) 38%, var(--surface));
+  --accent-3-edge: color-mix(in srgb, var(--accent-3) 42%, var(--surface));
+
   /* Neutral control fills — a filled control that carries NO brand colour:
      secondary and ghost buttons, the file button, row/menu/stepper hovers,
      track backgrounds, placeholder avatars. Severed from the accent ranks so
@@ -4963,9 +4971,9 @@ progress:not([value])::-moz-progress-bar { background: transparent; }
   border-radius: var(--radius-pill);
   font-size: var(--text-caption);
   font-weight: var(--weight-strong);
-  background: var(--accent-3-tint);   /* BASE layer: a neutral badge is a pill */
+  background: var(--accent-3-tint);   /* BASE layer: a pale fill with a normal-colour outline */
   color: var(--accent-3-text);
-  border: var(--border-element) solid var(--border);
+  border: var(--border-element) solid var(--accent-3-edge);
 }
 .badge-success { background: var(--success-tint); color: var(--success); border-color: var(--success-edge); }
 .badge-warning { background: var(--warning-tint); color: var(--warning); border-color: var(--warning-edge); }
@@ -4999,9 +5007,9 @@ progress:not([value])::-moz-progress-bar { background: transparent; }
 .chip:hover { border-color: var(--text-muted); }
 .chip:active { transform: scale(0.92); }
 .chip[aria-pressed="true"] {
-  background: var(--accent-3);
-  border-color: var(--accent-3);
-  color: var(--on-accent-3);
+  background: var(--accent-3-tint);   /* BASE layer: pale fill + a normal-colour outline, not a solid block */
+  border-color: var(--accent-3-edge);
+  color: var(--accent-3-text);
 }
 /* Removable chip: a filter token carrying an × that deletes it. */
 .chip-remove {

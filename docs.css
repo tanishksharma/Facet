@@ -1162,3 +1162,56 @@ article.element pre code { color: var(--hl-text); }
 }
 #motion .demo .motion-part:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 #motion .demo .motion-note { color: var(--text-muted); max-width: 60ch; margin: 0; }
+
+/* ==============================
+   Accent placement model — the comparison lab in the Color entry.
+   One interface repeated across several brands: each panel sets only the
+   base hue (accent-3) and highlight hue (accent-1); everything else derives.
+   Shows where each rank lands, and — because washes are very pale — an
+   explicit swatch legend so the ground and pill fills are visible.
+   ============================== */
+.accent-lab {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-inline);
+  margin-top: var(--space-stack);
+}
+.accent-lab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-inline);
+  padding: var(--space-card);
+  border: var(--border-element) solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--accent-3-wash);   /* the pale base-layer ground, made visible */
+}
+.accent-lab-panel > * { max-width: none; margin: 0; }
+.accent-lab-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-eyebrow);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.accent-lab-legend { display: flex; gap: 4px; }
+.accent-lab-legend > span {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  text-align: center;
+}
+.accent-lab-legend i {
+  display: block;
+  height: 22px;
+  border-radius: 5px;
+  border: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+}
+.accent-lab-line { display: flex; gap: var(--space-tight); flex-wrap: wrap; align-items: center; }
+.accent-lab-check { display: flex; gap: var(--space-tight); align-items: center; font-size: var(--text-footnote); }
+.accent-lab-check input { min-height: 0; }
