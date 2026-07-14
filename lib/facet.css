@@ -92,7 +92,7 @@
    text renders instantly and survives the font failing to load. display=swap
    shows fallback text first, then swaps — never a blank flash of text.
    @import must stay at the very top, before any style rule. */
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Chewy&family=Cormorant:wght@500;600;700&family=Doto:wght@700&family=Great+Vibes&family=JetBrains+Mono:wght@400;500;800&family=Libre+Barcode+128+Text&family=Ma+Shan+Zheng&family=Nanum+Brush+Script&family=Newsreader:ital,wght@0,400;0,600;1,400;1,500&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Pixelify+Sans:wght@400;700&family=Playfair+Display:wght@500;600;700&family=Special+Elite&family=Tiro+Devanagari+Hindi&family=Yuji+Syuku&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Chewy&family=Cormorant:wght@500;600;700&family=Doto:wght@700&family=Great+Vibes&family=JetBrains+Mono:wght@400;500;800&family=Libre+Barcode+128+Text&family=Ma+Shan+Zheng&family=Nanum+Brush+Script&family=Newsreader:ital,wght@0,400;0,600;1,400;1,500&family=Nunito:wght@400;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Pixelify+Sans:wght@400;700&family=Varela+Round&family=Playfair+Display:wght@500;600;700&family=Special+Elite&family=Tiro+Devanagari+Hindi&family=Yuji+Syuku&display=swap');
 
 /* Gadey — the hero display face, self-hosted (not on Google Fonts).
    The URL is relative to THIS stylesheet, so consumers pulling
@@ -966,10 +966,14 @@
   --radius-panel: 16px;
   --radius-card: 22px;
 
-  /* ----- Type: humanist round sans, no serif; headings sit chunky and
-     optimistic, the Frutiger/Segoe voice of the era ----- */
-  --font-heading: "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --weight-heading: 700;
+  /* ----- Type: the theme re-voices ONLY THREE font tokens; every other type
+     role (mono, quote, hero, scripts…) inherits the base. Headings take Varela
+     Round — the fully-rounded, gel-plastic display face of the era — at its own
+     chunky natural weight (400, so no faux-bold); body takes Nunito, a warm
+     rounded-terminal humanist sans. The rest of the stack stays the base. ----- */
+  --font-heading: "Varela Round", "Nunito", system-ui, "Segoe UI", sans-serif;
+  --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --weight-heading: 400;
 
   /* ----- Elevation: floaty, aqua-tinted depth, never black ----- */
   --shadow-raised: 0 1px 2px rgb(12 48 73 / 0.10), 0 3px 8px rgb(18 115 184 / 0.10);
