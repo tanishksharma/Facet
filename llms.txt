@@ -100,10 +100,12 @@ container widths, radii by role (--radius-control/-panel/-card/-pill),
 border WIDTHS by role (--border-hairline for separators, --border-element
 for outlines, --border-focus for the focus ring, --border-highlight for
 emphasis), layered whisper-light shadows, motion durations and easings,
-focus ring. Ranked accents: the base family plus
-accent-1 (the one primary action), accent-2 (every secondary action's
-fill) and accent-3 (links, labels, quiet affordances), each with hover,
-pressed and on-colors in every theme — components pick ranks, never
+focus ring. Ranked accents as a placement model, base to top: the base
+family plus accent-3 (the BASE layer — washes, pills, the selected tab,
+focus and selected states), accent-2 (the MIDDLE layer — eyebrows,
+callouts, captions) and accent-1 (the TOP layer — main headings and the
+one primary action), each with hover, pressed, on-colors and derived
+-tint / -text / -wash in every theme — components pick ranks, never
 colors.
 
 Adapts to the reader: all sizes in rem, so device/browser text-size
@@ -398,10 +400,22 @@ roles and ranks. The neutral roles: --background (the page),
 --surface (cards and inputs, one step above), --surface-hover /
 --surface-active (interactive fills), --border-subtle / --border /
 --border-strong (three line weights), --text / --text-muted /
---text-subtle (three text weights). The accent ranks, each with
--hover, -pressed and an on-color: --accent-1 is the ONE primary action
-per screen, --accent-2 fills every secondary action, --accent-3 is the
-quiet interactive color (links, labels, focus). Status colors say what
+--text-subtle (three text weights). The accent ranks are a PLACEMENT
+model, base to top, each with -hover, -pressed, an on-color and a
+derived -tint / -text (and -wash on the base): --accent-3 is the BASE
+layer — page and section washes, pills and chips, the selected tab,
+focus and selected states (a brand's base colour); --accent-2 is the
+MIDDLE layer that breaks information down — eyebrows, callouts,
+captions; --accent-1 is the TOP layer, the highlight — the main
+headings and the one primary action (a brand's highlight colour). Reach
+for --accent-3-wash as a faint page/section ground, --accent-3-tint for
+a pill on a card, --accent-N-text when a rank must WRITE as text. A
+single-colour product sets all three to one hue and lets placement
+(fill vs label vs tint) carry the difference; a two-colour brand maps
+its base to accent-3 and its highlight to accent-1. The middle layer's
+text defaults to the neutral muted ink, so a two-colour brand never has
+to invent a third — a true three-colour brand overrides --accent-2 and
+--accent-2-text with its support hue. Status colors say what
 happened: --success, --warning, --error, --info — each with a derived
 -tint and -edge pair for washes and borders. The vivid palette
 (--color-1 red … --color-5 purple) is decoration only — card tints,
@@ -2815,6 +2829,26 @@ short generic ones are the silent-collision traps: .card, .stack, .row,
 .shine, .glyph (the inline-svg fix). Before inventing a class in your
 own project, search this file for the name; if it exists, pick another
 or prefix yours.
+
+Mapping a brand onto the accent ranks (do this first when a product has
+brand colours): the ranks are LAYERS, not an importance ladder — read
+them base to top.
+- One brand colour (single-colour product): set --accent-1, --accent-2
+  and --accent-3 to the same hue. Difference comes from placement — a
+  solid fill (top), a small label (middle), a faint tint (base) — not
+  from hue. Nothing looks flat because each rank lands somewhere else.
+- Two brand colours (a base and a highlight, the common case): the base
+  colour → --accent-3 (it becomes the page and section washes, the
+  pills, the selected tab, focus and selected states — the ground the
+  product sits in). The highlight → --accent-1 (it becomes the main
+  headings and the one primary button — the loud thing on top). Leave
+  --accent-2 alone: the middle layer defaults to the neutral muted ink
+  and quietly breaks information down (eyebrows, callouts, captions).
+- Three brand colours: also override --accent-2 (and --accent-2-text
+  for the readable version) with the support hue.
+Set them with facet.set({...}) or a [data-theme] block; do NOT paint
+components with raw hex. The rank tokens (and their derived -tint,
+-text, -wash) reach every component and every theme for free.
 
 Choosing a shell (one per page):
 - A document, a marketing page, an article: no shell. Normal flow,

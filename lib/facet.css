@@ -140,10 +140,16 @@
      --surface (cards and inputs, one step above), --surface-hover /
      --surface-active (interactive fills), --border-subtle / --border /
      --border-strong (three line weights), --text / --text-muted /
-     --text-subtle (three text weights). The accent ranks, each with
-     -hover, -pressed and an on-color: --accent-1 is the ONE primary action
-     per screen, --accent-2 fills every secondary action, --accent-3 is the
-     quiet interactive color (links, labels, focus). Status colors say what
+     --text-subtle (three text weights). The accent ranks are a PLACEMENT
+     model, base to top, each with -hover, -pressed, an on-color and a derived
+     -tint / -text (and -wash on the base): --accent-3 is the BASE layer —
+     page and section washes, pills, the selected tab, focus and selected
+     states (a brand's base colour); --accent-2 is the MIDDLE layer that
+     breaks information down — eyebrows, callouts, captions; --accent-1 is the
+     TOP layer, the highlight — the main headings and the one primary action
+     (a brand's highlight colour). A single-colour product sets all three to
+     one hue; a two-colour brand maps base to accent-3 and highlight to
+     accent-1. Status colors say what
      happened: --success, --warning, --error, --info — each with a derived
      -tint and -edge pair for washes and borders. The vivid palette
      (--color-1 red … --color-5 purple) is decoration only — card tints,
@@ -171,27 +177,53 @@
   --text-muted: #687076;      /* secondary text, hints, captions — AA on surface (slate-11) */
   --text-subtle: #889199;     /* tertiary: placeholders, disabled, the non-essential */
 
-  /* ----- Colors: the accent ranks ----- */
-  /* Components never pick colors; they pick ranks. Accent-1 is the one
-     primary action on a screen. Accent-2 is every secondary action's
-     fill. Accent-3 is the quiet interactive color: links, labels, focus,
-     small affordances. Each rank carries hover, pressed and an on-color
-     for text sitting on it. In Default, accent-1 and accent-3 are the
-     ink itself; accent-2 is the surface family. */
-  --accent-1: #11181C;        /* the ink is the accent — a Vercel-black primary */
+  /* ----- Colors: the accent ranks — a placement model, base → middle → top ----- */
+  /* The three ranks are LAYERS, not an importance ladder. Components never
+     pick colors; they pick a rank, and the rank says WHERE the color lands.
+     - Accent 3 is the BASE layer the product sits in: page and section
+       washes, pills and chips, the selected tab, focus, checked and selected
+       states, sliders. One hue at three strengths — faint -wash (the ground),
+       -tint (a pill on a card), full (focus and ink).
+     - Accent 2 is the MIDDLE layer that breaks information down: eyebrows,
+       callouts, captions. Support text and quiet fills, never the loud one.
+     - Accent 1 is the TOP layer, the highlight: the main headings and the
+       one primary action. Loudest, smallest, highest intent.
+     A brand coming in maps its base color to accent-3 and its highlight to
+     accent-1; a single-color product sets all three to one hue and lets
+     placement (fill vs label vs tint) carry the difference. Each rank still
+     carries hover, pressed and an on-color for text sitting on its fill.
+     In Default, accent-1 and accent-3 are the ink itself; accent-2's support
+     ink defaults to the neutral muted text. */
+  --accent-1: #11181C;        /* TOP: the highlight — headings + the one primary action (Vercel-black here) */
   --accent-1-hover: #0A0F12;
   --accent-1-pressed: #05080A;
   --on-accent-1: #FFFFFF;
 
-  --accent-2: #F1F3F5;        /* a real light-gray fill, distinct from the white surface (slate-3) */
+  --accent-2: #F1F3F5;        /* MIDDLE: the quiet support fill (a light gray, distinct from the white surface) */
   --accent-2-hover: #ECEEF0;
   --accent-2-pressed: #DFE3E6;
   --on-accent-2: #11181C;
 
-  --accent-3: #11181C;        /* the quiet interactive rank — the ink */
+  --accent-3: #11181C;        /* BASE: the layer the product sits in — washes, pills, tabs, focus (the ink here) */
   --accent-3-hover: #0A0F12;
   --accent-3-pressed: #05080A;
   --on-accent-3: #FFFFFF;
+
+  /* The derived set: each rank's -tint (a fill on a card), -text (the hue
+     carried to AA when the rank must WRITE) and, for the base layer, a -wash
+     (the faint page/section ground). Derived once here from the base hues via
+     color-mix, so every theme that only re-sets --accent-1/-2/-3 gets the
+     whole set free (the mixes re-resolve against the theme's own hues). The
+     middle layer's text defaults to the neutral muted ink — a two-colour
+     brand (base + highlight) never has to pick a third; a true three-colour
+     brand overrides --accent-2 and --accent-2-text with its support hue. */
+  --accent-1-text: var(--accent-1);
+  --accent-1-tint: color-mix(in srgb, var(--accent-1) 12%, var(--surface));
+  --accent-2-text: var(--text-muted);
+  --accent-2-tint: color-mix(in srgb, var(--accent-2-text) 12%, var(--surface));
+  --accent-3-text: var(--accent-3);
+  --accent-3-tint: color-mix(in srgb, var(--accent-3) 14%, var(--surface));
+  --accent-3-wash: color-mix(in srgb, var(--accent-3) 6%, var(--background));
 
   /* The OS accent, as its own opt-in color — dormant, used by nothing until
      you reach for it (var(--os-accent) on a link, a highlight, whatever).
@@ -1838,6 +1870,16 @@ h1 { font-size: var(--text-h1); line-height: var(--leading-heading); letter-spac
 h2 { font-size: var(--text-h2); line-height: var(--leading-heading); letter-spacing: var(--tracking-heading); }
 h3 { font-size: var(--text-h3); line-height: var(--leading-snug);    letter-spacing: var(--tracking-heading); }
 h4, h5, h6 { font-size: var(--text-h4); line-height: var(--leading-snug); letter-spacing: var(--tracking-snug); }
+
+/* The main headings carry the TOP layer (accent-1): the highlight a brand
+   maps its loud colour to. In Default accent-1 IS the ink, so nothing shifts;
+   a coloured theme voices its big titles in its highlight. Kept to h1/h2 (and
+   the matching display roles) so small subheadings stay neutral ink and the
+   colour reads as emphasis, not a coat. accent-1 clears AA-large in every
+   shipped theme; a component that needs a heading to stay neutral sets its
+   own colour. */
+h1, h2,
+.text-display, .text-h1, .text-h2 { color: var(--accent-1-text); }
 
 /* ----- Text ----- */
 
@@ -7509,7 +7551,7 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
   font-weight: var(--weight-eyebrow);
   text-transform: uppercase;   /* the eyebrow is ALWAYS caps, whatever case the author wrote */
   letter-spacing: var(--tracking-wide);
-  color: var(--accent-3);
+  color: var(--accent-2-text);   /* MIDDLE layer: the eyebrow supports the heading, it never competes with it */
   display: block;
 }
 .nudge-scrim {
