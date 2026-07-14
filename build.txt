@@ -1,7 +1,7 @@
 # Facet — Build a great product (the prompt pack)
 
 This file is the product-building method that ships with the Facet
-design library (https://facet-kappa.vercel.app). It exists so a normal
+design library (https://facet.tanishksharma.com). It exists so a normal
 person can point an AI agent at Facet and get a real, tasteful,
 working product — not a wireframe — with no build step, no npm, no
 install ritual.
@@ -22,7 +22,7 @@ at /product.html — you and your person are reading the same rules.
 
 ## The method (what every prompt below enforces)
 
-1. LEARN THE MATERIAL. Fetch https://facet-kappa.vercel.app/llms.txt
+1. LEARN THE MATERIAL. Fetch https://facet.tanishksharma.com/llms.txt
    and learn what exists: tokens, components, blocks, templates, app
    shells, themes, behaviours. Never invent a component Facet already
    ships; never reach for a framework — Facet is one CSS file and one
@@ -56,8 +56,8 @@ You are going to build me a complete product using the Facet design
 library, and I am not a developer — so you make the technical
 decisions and you never hand them to me.
 
-First, read https://facet-kappa.vercel.app/build.txt and follow its
-method exactly. Read https://facet-kappa.vercel.app/llms.txt to learn
+First, read https://facet.tanishksharma.com/build.txt and follow its
+method exactly. Read https://facet.tanishksharma.com/llms.txt to learn
 every component, theme and behaviour Facet ships.
 
 Then interview me in plain language, a few questions at a time — who
@@ -90,8 +90,8 @@ You are going to build me a complete product using the Facet design
 library. I understand technology — a PM/founder level, not a daily
 coder — so teach me as you build and keep me in the real decisions.
 
-First, read https://facet-kappa.vercel.app/build.txt and follow its
-method exactly. Read https://facet-kappa.vercel.app/llms.txt to learn
+First, read https://facet.tanishksharma.com/build.txt and follow its
+method exactly. Read https://facet.tanishksharma.com/llms.txt to learn
 every component, theme and behaviour Facet ships.
 
 Interview me before building: users, the one job, success, feel.

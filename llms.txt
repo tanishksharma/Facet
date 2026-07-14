@@ -232,10 +232,10 @@ and the same AI instructions this file carries.
 
 ## Consume it
 
-    <link rel="stylesheet" href="https://facet-kappa.vercel.app/lib/facet.css">
-    <script src="https://facet-kappa.vercel.app/lib/facet.js" defer></script>
+    <link rel="stylesheet" href="https://facet.tanishksharma.com/lib/facet.css">
+    <script src="https://facet.tanishksharma.com/lib/facet.js" defer></script>
 
-facet-kappa.vercel.app is the library's live home — point at it directly.
+facet.tanishksharma.com is the library's live home — point at it directly.
 Projects never copy the files in; they point at the hosted URL and update
 when the library does. (If the library moves to another domain, swap the
 host; everything is served from /lib on whatever domain hosts it.)
@@ -1285,7 +1285,7 @@ What it is: the page's closing band — a full-bleed footer that reads as the si
         </div>
         <div class="footer-bottom">
           <span>© 2026 Acme</span>
-          <span>Built with <a href="https://facet-kappa.vercel.app">Facet</a></span>
+          <span>Built with <a href="https://facet.tanishksharma.com">Facet</a></span>
         </div>
       </div>
     </footer>
@@ -2120,7 +2120,7 @@ service worker must be served from your own site root:
 
 1. sw.js — one line that switches Facet's engine on at your root:
 
-    importScripts("https://facet-kappa.vercel.app/lib/facet-sw.js");
+    importScripts("https://facet.tanishksharma.com/lib/facet-sw.js");
 
    A service worker can only control pages at or below its own url, so
    this file must sit at the ROOT (not a subfolder). It is a pointer, not
