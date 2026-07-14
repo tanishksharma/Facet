@@ -5,11 +5,11 @@
      map of the whole project lives in CLAUDE.md; the usage guide is llms.txt.
      Keep this list in sync with the header nav and the CLAUDE.md project map. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://facet-kappa.vercel.app/</loc></url>
-  <url><loc>https://facet-kappa.vercel.app/library.html</loc></url>
-  <url><loc>https://facet-kappa.vercel.app/functions.html</loc></url>
-  <url><loc>https://facet-kappa.vercel.app/product.html</loc></url>
-  <url><loc>https://facet-kappa.vercel.app/build.html</loc></url>
-  <url><loc>https://facet-kappa.vercel.app/llms.txt</loc></url>
-  <url><loc>https://facet-kappa.vercel.app/CLAUDE.md</loc></url>
+  <url><loc>https://facet.tanishksharma.com/</loc></url>
+  <url><loc>https://facet.tanishksharma.com/library.html</loc></url>
+  <url><loc>https://facet.tanishksharma.com/functions.html</loc></url>
+  <url><loc>https://facet.tanishksharma.com/product.html</loc></url>
+  <url><loc>https://facet.tanishksharma.com/build.html</loc></url>
+  <url><loc>https://facet.tanishksharma.com/llms.txt</loc></url>
+  <url><loc>https://facet.tanishksharma.com/CLAUDE.md</loc></url>
 </urlset>

@@ -58,8 +58,8 @@ vercel.json        Vercel headers: CORS + long cache for /fonts
 Projects consume the library by URL, never by copying files in:
 
 ```html
-<link rel="stylesheet" href="https://facet-kappa.vercel.app/lib/facet.css">
-<script src="https://facet-kappa.vercel.app/lib/facet.js" defer></script>
+<link rel="stylesheet" href="https://facet.tanishksharma.com/lib/facet.css">
+<script src="https://facet.tanishksharma.com/lib/facet.js" defer></script>
 ```
 
 
