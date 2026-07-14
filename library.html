@@ -2364,13 +2364,30 @@ article p   { font-family: var(--font-reading); }
         <p>
           The icon set: over a hundred smooth, round-capped line glyphs from <a href="https://lucide.dev" rel="noopener">Lucide</a> (ISC-licensed), embedded directly in facet.js — no CDN, no build. Drop one in with one attribute — <code>&lt;svg data-icon="search"&gt;</code> — sized by its <code>width</code>/<code>height</code> and coloured by the current text color, so an icon inside a button or a link matches automatically. Add your own by extending <code>facet.icons</code> with a name and its path data, then re-running <code>facet.icon()</code>. Click any gallery glyph below to copy its tag.
         </p>
+        <p>
+          <strong>3D glass icons.</strong> Mark any icon <code>.icon-3d</code> and, under the <strong>Aero</strong> theme, it re-renders as a glossy candy-glass sculpture — a warm gradient tile with a specular gloss, a white rim and the glyph in white. It is the Frutiger Aqua feature icon, kept warm (yellows, oranges, reds) so it pops against the theme's blue-green glass. Use it on big display icons, not small UI glyphs. Under any other theme it is just a larger line glyph. Switch the page to Aero to see the treatment.
+        </p>
         <div class="demo">
           <div class="grid" id="icon-gallery" style="--bg-cell: 0;"></div>
+        </div>
+        <div class="demo row" style="gap: var(--space-inline); align-items:center; flex-wrap:wrap;">
+          <svg data-icon="rocket" class="icon-3d" aria-hidden="true"></svg>
+          <svg data-icon="heart" class="icon-3d" aria-hidden="true"></svg>
+          <svg data-icon="star" class="icon-3d" aria-hidden="true"></svg>
+          <svg data-icon="mail" class="icon-3d" aria-hidden="true"></svg>
+          <svg data-icon="cloud" class="icon-3d" aria-hidden="true"></svg>
+          <svg data-icon="camera" class="icon-3d" aria-hidden="true"></svg>
+          <svg data-icon="gift" class="icon-3d" aria-hidden="true"></svg>
+          <svg data-icon="calendar" class="icon-3d" aria-hidden="true"></svg>
+          <svg data-icon="wallet" class="icon-3d" aria-hidden="true"></svg>
         </div>
         <pre id="code-icons"><code>&lt;button class="btn btn-icon" aria-label="Search" data-tip="Search everything"&gt;
   &lt;svg data-icon="search"&gt;&lt;/svg&gt;
 &lt;/button&gt;
-&lt;p&gt;&lt;svg class="glyph" data-icon="clock"&gt;&lt;/svg&gt; Updated an hour ago&lt;/p&gt;</code></pre>
+&lt;p&gt;&lt;svg class="glyph" data-icon="clock"&gt;&lt;/svg&gt; Updated an hour ago&lt;/p&gt;
+
+&lt;!-- 3D glass feature icon — glossy candy sculpture under the Aero theme --&gt;
+&lt;svg data-icon="rocket" class="icon-3d"&gt;&lt;/svg&gt;</code></pre>
         <p><button class="btn btn-small" data-copy="#code-icons" data-tip="Copies the usage example above">Copy</button></p>
       </article>
 
