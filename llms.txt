@@ -102,9 +102,10 @@ for outlines, --border-focus for the focus ring, --border-highlight for
 emphasis), layered whisper-light shadows, motion durations and easings,
 focus ring. Ranked accents as a placement model, base to top: the base
 family plus accent-3 (the BASE layer — washes, pills, the selected tab,
-focus and selected states), accent-2 (the MIDDLE layer — eyebrows,
-callouts, captions) and accent-1 (the TOP layer — main headings and the
-one primary action), each with hover, pressed, on-colors and derived
+focus rings and text highlights), accent-2 (the MIDDLE layer —
+eyebrows, callouts, captions) and accent-1 (the TOP layer — main
+headings, links, the one primary action and input check marks), each
+with hover, pressed, on-colors and derived
 -tint / -text / -wash in every theme — components pick ranks, never
 colors.
 
@@ -403,11 +404,13 @@ roles and ranks. The neutral roles: --background (the page),
 --text-subtle (three text weights). The accent ranks are a PLACEMENT
 model, base to top, each with -hover, -pressed, an on-color and a
 derived -tint / -text (and -wash on the base): --accent-3 is the BASE
-layer — page and section washes, pills and chips, the selected tab,
-focus and selected states (a brand's base colour); --accent-2 is the
-MIDDLE layer that breaks information down — eyebrows, callouts,
-captions; --accent-1 is the TOP layer, the highlight — the main
-headings and the one primary action (a brand's highlight colour). Reach
+layer — page and section washes, pills and chips, the selected tab, the
+"you are here" nav state, focus rings, text-selection highlights (a
+brand's base colour); --accent-2 is the MIDDLE layer that breaks
+information down — eyebrows, callouts, captions; --accent-1 is the TOP
+layer, the highlight — the main headings (h1/h2), links, the one
+primary action and the committed marks on inputs (checkbox check, radio
+dot, switch), a brand's highlight colour. Reach
 for --accent-3-wash as a faint page/section ground, --accent-3-tint for
 a pill on a card, --accent-N-text when a rank must WRITE as text. A
 single-colour product sets all three to one hue and lets placement

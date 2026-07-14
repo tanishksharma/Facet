@@ -143,10 +143,11 @@
      --text-subtle (three text weights). The accent ranks are a PLACEMENT
      model, base to top, each with -hover, -pressed, an on-color and a derived
      -tint / -text (and -wash on the base): --accent-3 is the BASE layer —
-     page and section washes, pills, the selected tab, focus and selected
-     states (a brand's base colour); --accent-2 is the MIDDLE layer that
-     breaks information down — eyebrows, callouts, captions; --accent-1 is the
-     TOP layer, the highlight — the main headings and the one primary action
+     page and section washes, pills, the selected tab, the nav "you are here"
+     state, focus rings and text highlights (a brand's base colour);
+     --accent-2 is the MIDDLE layer that breaks information down — eyebrows,
+     callouts, captions; --accent-1 is the TOP layer, the highlight — the main
+     headings, links, the one primary action and the checked marks on inputs
      (a brand's highlight colour). A single-colour product sets all three to
      one hue; a two-colour brand maps base to accent-3 and highlight to
      accent-1. Status colors say what
@@ -181,13 +182,18 @@
   /* The three ranks are LAYERS, not an importance ladder. Components never
      pick colors; they pick a rank, and the rank says WHERE the color lands.
      - Accent 3 is the BASE layer the product sits in: page and section
-       washes, pills and chips, the selected tab, focus, checked and selected
-       states, sliders. One hue at three strengths — faint -wash (the ground),
-       -tint (a pill on a card), full (focus and ink).
+       washes, pills and chips, the selected tab, the "you are here" nav
+       state, focus rings, text-selection highlights, sliders. One hue at
+       three strengths — faint -wash (the ground), -tint (a pill on a card),
+       full (focus and ink).
      - Accent 2 is the MIDDLE layer that breaks information down: eyebrows,
        callouts, captions. Support text and quiet fills, never the loud one.
-     - Accent 1 is the TOP layer, the highlight: the main headings and the
-       one primary action. Loudest, smallest, highest intent.
+     - Accent 1 is the TOP layer, the highlight: the main headings (h1/h2),
+       links, the one primary action, and the committed marks on inputs (the
+       checkbox check, the radio dot, the switch) — the moments highest in
+       hierarchy. Loudest, smallest, highest intent. Its -text value is the
+       AA-safe writing tone (a theme deepens it where the fill tone is too
+       light to read as small text).
      A brand coming in maps its base color to accent-3 and its highlight to
      accent-1; a single-color product sets all three to one hue and lets
      placement (fill vs label vs tint) carry the difference. Each rank still
@@ -224,6 +230,17 @@
   --accent-3-text: var(--accent-3);
   --accent-3-tint: color-mix(in srgb, var(--accent-3) 14%, var(--surface));
   --accent-3-wash: color-mix(in srgb, var(--accent-3) 6%, var(--background));
+
+  /* Neutral control fills — a filled control that carries NO brand colour:
+     secondary and ghost buttons, the file button, row/menu/stepper hovers,
+     track backgrounds, placeholder avatars. Severed from the accent ranks so
+     a coloured brand keeps its plain controls calm and spends colour only in
+     the three expressive layers. Aliased to the neutral surface ramp, so the
+     Default look is unchanged (the values match the old secondary fill) and
+     every theme gets sensible neutral controls for free. */
+  --fill: var(--surface-active);
+  --fill-hover: var(--border-subtle);
+  --fill-strong: var(--border);
 
   /* The OS accent, as its own opt-in color — dormant, used by nothing until
      you reach for it (var(--os-accent) on a link, a highlight, whatever).
@@ -650,6 +667,11 @@
   --accent-3-hover: #5F4A19;
   --accent-3-pressed: #544117;
   --on-accent-3: #FFFFFF;
+
+  /* The top layer writes (links, headings) in the deeper gold: the base
+     accent-1 is a lighter gold tuned as a fill, which fails AA at small text
+     sizes on the wells. */
+  --accent-1-text: #6B531C;
 
   /* Status inks deepened too: the wells (--surface) are darker than
      the fabric, and status words must stay AA inside them. */
@@ -1165,6 +1187,10 @@
   --accent-3-hover: #695217;
   --accent-3-pressed: #584512;
   --on-accent-3: #FFF8E7;
+
+  /* Links and headings write in the deep gold for AA; the base accent-1
+     (#8C6D1F) is a fill gold that falls just under AA at small text sizes. */
+  --accent-1-text: #7A5F1B;
 
   --success: #516B31;         /* olive, AA on cream */
   --warning: #885D14;
@@ -1894,7 +1920,7 @@ small { font-size: var(--text-footnote); }
 strong, b { font-weight: var(--weight-strong); }
 
 a {
-  color: var(--accent-3);       /* the quiet interactive rank, every theme */
+  color: var(--accent-1-text);  /* TOP layer: a link is a primary affordance, it wears the highlight */
   text-decoration: underline;
   text-underline-offset: 0.15em;
   text-decoration-color: var(--border);
@@ -1971,8 +1997,8 @@ kbd {
 
 /* ----- Highlight, edits, abbreviations, sub/superscript ----- */
 mark {
-  background: var(--accent-2);
-  color: var(--text);
+  background: var(--accent-3-tint);   /* BASE layer: a text highlight is part of the ground */
+  color: var(--accent-3-text);
   padding: 0.05em 0.25em;
   border-radius: 3px;
 }
@@ -1990,10 +2016,10 @@ meter {
   height: 0.5rem;
   border: none;
   border-radius: var(--radius-pill);
-  background: var(--accent-2-pressed);
+  background: var(--fill-strong);
   overflow: hidden;
 }
-meter::-webkit-meter-bar { background: var(--accent-2-pressed); border: none; border-radius: var(--radius-pill); }
+meter::-webkit-meter-bar { background: var(--fill-strong); border: none; border-radius: var(--radius-pill); }
 meter::-webkit-meter-optimum-value { background: var(--success); border-radius: var(--radius-pill); }
 meter::-webkit-meter-suboptimum-value { background: var(--warning); border-radius: var(--radius-pill); }
 meter::-webkit-meter-even-less-good-value { background: var(--error); border-radius: var(--radius-pill); }
@@ -2664,8 +2690,8 @@ input, textarea, [contenteditable] {
   padding: var(--space-control) var(--space-card);
   border: var(--border-element) solid var(--border);
   border-radius: var(--radius-control);
-  background: var(--accent-2);
-  color: var(--on-accent-2);
+  background: var(--fill);
+  color: var(--text);
   font-weight: var(--weight-medium);
   line-height: var(--leading-ui);
   letter-spacing: var(--tracking-label);
@@ -2690,16 +2716,17 @@ input, textarea, [contenteditable] {
 .btn-primary:hover { background: var(--accent-1-hover); border-color: var(--accent-1-hover); }
 .btn-primary:active { background: var(--accent-1-pressed); border-color: var(--accent-1-pressed); }
 
-/* Secondary: the accent-2 fill with a hairline. The default look. */
+/* Secondary: the neutral fill with a hairline. The default look — a plain
+   control, deliberately colourless so a coloured brand stays calm. */
 .btn-secondary:hover,
 .btn:not(.btn-primary):not(.btn-ghost):hover {
-  background: var(--accent-2-hover);
+  background: var(--fill-hover);
   border-color: var(--text-muted);
 }
 
 .btn-secondary:active,
 .btn:not(.btn-primary):not(.btn-ghost):active {
-  background: var(--accent-2-pressed);
+  background: var(--fill-strong);
 }
 
 /* Ghost: no fill, no border, until hovered. */
@@ -2709,12 +2736,12 @@ input, textarea, [contenteditable] {
 }
 
 .btn-ghost:hover {
-  background: var(--accent-2);
+  background: var(--fill);
   border-color: var(--border);
 }
 
 .btn-ghost:active {
-  background: var(--accent-2-hover);
+  background: var(--fill-hover);
 }
 
 /* Danger: the destructive primary — filled with the error color for an
@@ -2920,14 +2947,14 @@ input[type="file"]::file-selector-button {
   padding: var(--space-control) var(--space-stack);
   border: var(--border-element) solid var(--border);
   border-radius: var(--radius-panel);
-  background: var(--accent-2);
-  color: var(--on-accent-2);
+  background: var(--fill);
+  color: var(--text);
   font: inherit;
   font-weight: var(--weight-strong);
   cursor: pointer;
   transition: background var(--duration-fast) var(--ease-out);
 }
-input[type="file"]:hover::file-selector-button { background: var(--accent-2-hover); }
+input[type="file"]:hover::file-selector-button { background: var(--fill-hover); }
 
 /* Date and time: native pickers, themed — accent-color colors the
    picker highlight, color-scheme already flips it in dark mode. */
@@ -2970,7 +2997,7 @@ input[type="week"] {
 .number-words {
   min-height: 1.2em;                      /* reserves the line: no layout jump */
   font-size: var(--text-caption);
-  color: var(--accent-3);
+  color: var(--accent-2-text);            /* MIDDLE layer: a caption-style helper */
   font-weight: var(--weight-strong);
 }
 
@@ -4295,7 +4322,7 @@ details[open] .when-open { display: inline-flex; align-items: center; gap: inher
   width: 2.6rem;
   height: 0.3rem;
   margin-top: calc(var(--space-tight) + 4px);
-  background: var(--accent-3);
+  background: var(--accent-1);
   border-radius: var(--radius-pill);
 }
 .heading-bar-center { text-align: center; }
@@ -4595,16 +4622,16 @@ svg[data-icon] {
   font-weight: var(--weight-heading);
   color: var(--text);
   text-decoration: none;
-  border-bottom: var(--border-highlight) solid var(--accent-3);
+  border-bottom: var(--border-highlight) solid var(--accent-1-text);
   padding-bottom: 2px;
   transition: color var(--duration-fast) var(--ease-out);
 }
 .flagship-link::after {
   content: "\27F6";               /* the long arrow */
-  color: var(--accent-3);
+  color: var(--accent-1-text);
   transition: translate var(--duration-normal) var(--ease-spring);
 }
-.flagship-link:hover { color: var(--accent-3); }
+.flagship-link:hover { color: var(--accent-1-text); }
 .flagship-link:hover::after { translate: 0.35em 0; }
 
 /* ----- SKELETON, SPINNER, EMPTY STATE: the waiting states -----
@@ -4625,7 +4652,7 @@ svg[data-icon] {
   min-height: 1em;
   border-radius: var(--radius-control);
   background: linear-gradient(90deg,
-    var(--accent-2-pressed) 25%, var(--accent-2) 42%, var(--accent-2-pressed) 60%);
+    var(--fill-strong) 25%, var(--fill) 42%, var(--fill-strong) 60%);
   background-size: 200% 100%;
   animation: facet-shimmer 1.4s linear infinite;
   color: transparent;
@@ -4640,7 +4667,7 @@ svg[data-icon] {
   display: inline-block;
   width: 1.5rem;
   height: 1.5rem;
-  border: 3px solid var(--accent-2-pressed);
+  border: 3px solid var(--fill-strong);
   border-top-color: var(--accent-1);
   border-radius: var(--radius-pill);
   animation: facet-spin 0.8s linear infinite;
@@ -4759,7 +4786,7 @@ textarea[readonly] {
 /* A <progress> with no value attribute is indeterminate: an accent
    sweep slides the track until the real number arrives. */
 progress:not([value]) {
-  background: var(--accent-2-pressed);
+  background: var(--fill-strong);
   background-image: linear-gradient(90deg, transparent, var(--accent-1) 50%, transparent);
   background-size: 40% 100%;
   background-repeat: no-repeat;
@@ -4800,8 +4827,8 @@ progress:not([value])::-moz-progress-bar { background: transparent; }
   opacity: 1;
   background: transparent;
   box-shadow: none;
-  border: 2px solid color-mix(in srgb, var(--on-accent-2) 30%, transparent);
-  border-top-color: var(--on-accent-2);
+  border: 2px solid color-mix(in srgb, var(--text) 25%, transparent);
+  border-top-color: var(--text);
   border-radius: var(--radius-pill);
   animation: facet-spin 0.8s linear infinite;
 }
@@ -4936,8 +4963,8 @@ progress:not([value])::-moz-progress-bar { background: transparent; }
   border-radius: var(--radius-pill);
   font-size: var(--text-caption);
   font-weight: var(--weight-strong);
-  background: var(--accent-2);
-  color: var(--on-accent-2);
+  background: var(--accent-3-tint);   /* BASE layer: a neutral badge is a pill */
+  color: var(--accent-3-text);
   border: var(--border-element) solid var(--border);
 }
 .badge-success { background: var(--success-tint); color: var(--success); border-color: var(--success-edge); }
@@ -4995,8 +5022,8 @@ progress:not([value])::-moz-progress-bar { background: transparent; }
   width: 2.5rem;
   height: 2.5rem;
   border-radius: var(--radius-pill);
-  background: var(--accent-2-pressed);
-  color: var(--on-accent-2);
+  background: var(--fill-strong);
+  color: var(--text);
   font-size: var(--text-footnote);
   font-weight: var(--weight-strong);
   overflow: hidden;
@@ -5018,10 +5045,10 @@ progress {
   height: 0.5rem;
   border: none;
   border-radius: var(--radius-pill);
-  background: var(--accent-2-pressed);
+  background: var(--fill-strong);
   overflow: hidden;
 }
-progress::-webkit-progress-bar { background: var(--accent-2-pressed); border-radius: var(--radius-pill); }
+progress::-webkit-progress-bar { background: var(--fill-strong); border-radius: var(--radius-pill); }
 progress::-webkit-progress-value { background: var(--accent-1); border-radius: var(--radius-pill); transition: width var(--duration-normal) var(--ease-out); }
 progress::-moz-progress-bar { background: var(--accent-1); border-radius: var(--radius-pill); }
 
@@ -5165,7 +5192,7 @@ table.table {
   border-bottom: var(--border-hairline) solid var(--border);
 }
 .table tbody tr:nth-child(even) { background: var(--surface); }
-.table tbody tr:hover { background: var(--accent-2-hover); }
+.table tbody tr:hover { background: var(--fill-hover); }
 .table .num {
   text-align: right;
   font-variant-numeric: tabular-nums;
@@ -5225,12 +5252,12 @@ table.table {
 }
 .nav-link:hover {
   color: var(--text);
-  background: var(--accent-2-hover);
+  background: var(--fill-hover);
 }
 .nav-link[aria-current="page"] {
   color: var(--text);
   font-weight: var(--weight-strong);
-  background: var(--accent-2-pressed);
+  background: var(--accent-3-tint);   /* BASE layer: "you are here" rides the base colour */
 }
 
 /* ----- TABS: in-page views under an underline -----
@@ -5331,10 +5358,10 @@ table.table {
   text-decoration: none;
   transition: background var(--duration-fast) var(--ease-out);
 }
-.pagination a:hover { background: var(--accent-2-hover); }
+.pagination a:hover { background: var(--fill-hover); }
 .pagination [aria-current="page"] {
-  background: var(--accent-1);
-  color: var(--on-accent-1);
+  background: var(--accent-3-tint);   /* BASE layer: "you are here" matches the tab and nav-link current state */
+  color: var(--accent-3-text);
   font-weight: var(--weight-strong);
 }
 .pagination [aria-disabled="true"] { color: var(--text-muted); }
@@ -5495,7 +5522,7 @@ details.dropdown {
 }
 .dropdown-menu svg { flex: none; }
 .dropdown-menu button:hover,
-.dropdown-menu a:hover { background: var(--accent-2-hover); }
+.dropdown-menu a:hover { background: var(--fill-hover); }
 .dropdown-menu .dropdown-danger { color: var(--error); }
 .dropdown-menu [aria-disabled="true"]:hover { background: none; }
 
@@ -5878,8 +5905,8 @@ details.dropdown {
   border-radius: var(--radius-pill);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
-  background: var(--accent-2);
-  color: var(--on-accent-2);
+  background: var(--fill-strong);
+  color: var(--text);
   font-weight: var(--weight-strong);
   font-size: var(--text-footnote);
 }
@@ -5892,7 +5919,7 @@ details.dropdown {
 }
 .testimonial-mark {
   margin-left: auto; flex: none;
-  color: var(--accent-2);
+  color: var(--accent-2-text);   /* MIDDLE layer: the quote glyph is a support accent */
   font-family: var(--font-quote);
   font-size: 2.5rem; line-height: 1;
 }
@@ -6054,8 +6081,8 @@ button.list-item:active { background: var(--surface-active); }
   touch-action: manipulation;
   transition: background var(--duration-fast) var(--ease-out);
 }
-.stepper button:hover { background: var(--accent-2-hover); }
-.stepper button:active { background: var(--accent-2-pressed); }
+.stepper button:hover { background: var(--fill-hover); }
+.stepper button:active { background: var(--fill-strong); }
 .stepper button:disabled { opacity: 0.35; cursor: not-allowed; }
 .stepper button:disabled:hover { background: transparent; }
 .stepper:has(input:disabled) { opacity: 0.55; }
@@ -7435,11 +7462,11 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
 .choice-btn .choice-sym { font-size: var(--text-h4); font-weight: 700; }
 .choice-btn .choice-cap { font-size: var(--text-caption); letter-spacing: var(--tracking-caps); }
 .choice-btn[aria-pressed="true"] {
-  background: var(--accent-2-hover);
-  border-color: var(--text-muted);
+  background: var(--accent-3-tint);   /* BASE layer: the picked option fills with the base colour */
+  border-color: var(--accent-3);
   color: var(--text);
 }
-.choice-btn[aria-pressed="true"] .choice-sym { color: var(--accent-3); }
+.choice-btn[aria-pressed="true"] .choice-sym { color: var(--accent-1); }   /* TOP: the pick mark is the highlight */
 .choice-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .choice-btn:disabled:active { transform: none; }
 
