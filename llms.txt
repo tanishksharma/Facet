@@ -259,10 +259,16 @@ extracted from the shipped inflation app: matte velvet surfaces, one
 light source from above, elements raised out of the fabric or carved
 into it, gold as the only accent ink, serif display headings, tuned
 press physics that hold in every motion mode. Aero
-(data-theme="aero") is the Frutiger Aero era: pale sky ground, glass
-controls with the hard gloss line, translucent plastic fills, pill
-buttons and inputs, a blue glow on the one primary action; dark is
-ocean glass — deep water, lifted sky blue, sea-glass green. Elegant
+(data-theme="aero") is the full Frutiger Aero era: a sky→aqua→meadow
+aurora ground lit by soft blooms, glass controls with the hard gloss
+line, translucent plastic fills, bubbly rounded pills and inputs, a
+humanist round sans with a wet glossy sheen on the headings, and a blue
+glow on the one primary action — floaty, optimistic, blue-and-green. Its
+companion feature icons are the glass set: mark any icon .icon-3d and
+under this theme facet.js renders it as a warm candy-glass sculpture
+(bright yellows, oranges, reds with gloss and a white rim) so it pops
+against the blue-green glass. Dark is ocean glass — deep water, lifted
+sky blue, sea-glass green. Elegant
 (data-theme="elegant") is cream and gold: ivory surfaces, umber ink,
 gold hairline borders, serif display headings, carved elevation —
 panels pressed into the cream, never floated on shadows; its dark twin
@@ -1601,7 +1607,19 @@ instead of breaking the line, because the base media rule makes
 every svg a block.
 Decorative by default (aria-hidden); an aria-label on the svg makes
 it meaningful. Extend: facet.icons.rocket = '<path d="..."/>' then
-facet.icon(). The set: search close check plus minus arrow-right
+facet.icon().
+3D glass icon (.icon-3d): the Aero theme's companion feature-icon set.
+Mark any icon .icon-3d — <svg data-icon="rocket" class="icon-3d"></svg> —
+and under data-theme="aero" facet.js re-renders it from the same Lucide
+path as a glossy candy-glass sculpture: a warm gradient tile (bright
+yellows, oranges, reds, picked by a stable hash of the icon name), a
+specular top gloss, a white rim and the glyph in white with a soft inner
+shadow — the Frutiger Aqua feature icon, kept warm so it pops against the
+theme's blue-green glass. Use it only on big display icons (cards, hero
+rows), never on small UI glyphs (chevrons, close, menu) which stay simple
+ink. Under every other theme .icon-3d is just a larger (2.5em) line glyph,
+so the markup is portable; icons re-render automatically when the theme
+flips. The set: search close check plus minus arrow-right
 arrow-left arrow-up arrow-down chevron-right chevron-left chevron-up
 chevron-down menu more settings home user users heart star bookmark
 bell calendar clock download upload share print external link copy edit

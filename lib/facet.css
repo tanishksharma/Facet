@@ -913,21 +913,34 @@
 
 /*
    Theme · Aero (light). <html data-theme="aero">.
-   Frutiger Aero era: sky aqua, glass gloss, translucent plastic, pill
-   buttons. Everything sits on a pale sky; controls are glass — a hard
-   gloss line across the top half, a translucent white border, a soft
+   Frutiger Aero, pushed to the full era: a sky→aqua→meadow aurora ground
+   lit by soft blooms, glass gloss, translucent plastic, bubbly rounded
+   pills, and a flowy humanist sans with a wet glossy sheen on the
+   headings — floaty, optimistic, blue-and-green. Controls are glass: a
+   hard gloss line across the top half, a translucent white border, a soft
    blue glow under the one primary action. Accent-1 is glossy sky blue,
-   accent-2 the translucent plastic fill, accent-3 the aero grass green
-   that keeps AA as link text. The --a-* material tokens carry the
-   glass itself; recipes below apply it to the components.
+   accent-2 the translucent plastic fill, accent-3 the aero grass-teal
+   that keeps AA as link text; the whole neutral ramp is sky-tinted so
+   nothing falls back to a neutral gray. The --a-* material tokens carry
+   the glass itself; recipes below apply it to the components. The theme's
+   companion feature icons are the .icon-3d glass set — warm candy-gloss
+   sculptures rendered by facet.js, deliberately warm (yellows, oranges,
+   reds) so they pop against the blue-green glass.
 */
 [data-theme="aero"] {
-  --background: #EAF6FD;      /* pale sky */
-  --surface: #F7FCFF;         /* white glass panel */
-  --text: #0C3049;            /* deep sea ink */
-  --text-muted: #4E7189;      /* haze over water */
-  --border: #BCDCEF;          /* sky hairline */
+  /* ----- Neutral ramp: sky and white glass, every rung on-theme ----- */
+  --background: #E4F4FD;          /* pale sky */
+  --surface: #F6FCFF;             /* white glass panel, lifts off the sky */
+  --surface-hover: #ECF7FE;       /* interactive fill, rest→hover */
+  --surface-active: #DFF1FB;      /* interactive fill, pressed */
+  --border-subtle: #D3E9F6;       /* the faintest sky line */
+  --border: #B8DBEF;              /* element outlines */
+  --border-strong: #8FC2E2;       /* emphasis: hovered inputs, selected outlines */
+  --text: #0C3049;                /* deep sea ink */
+  --text-muted: #4E7189;          /* haze over water */
+  --text-subtle: #7C9DB2;         /* placeholders, disabled, the non-essential */
 
+  /* ----- Accent ranks: blue action, plastic fill, grass link ----- */
   --accent-1: #0B6FB8;        /* glossy sky blue, deep enough for white labels */
   --accent-1-hover: #0A64A6;
   --accent-1-pressed: #095996;
@@ -938,7 +951,7 @@
   --accent-2-pressed: #BBDDF2;
   --on-accent-2: #0C3049;
 
-  --accent-3: #0A7D5F;        /* aero grass green: AA as text on sky */
+  --accent-3: #0A7D5F;        /* aero grass-teal: AA as link text on sky */
   --accent-3-hover: #086C52;
   --accent-3-pressed: #075C46;
   --on-accent-3: #FFFFFF;
@@ -948,27 +961,42 @@
   --error: #C03A2E;
   --info: #1273B8;
 
-  /* Blue-tinted depth: aero shadows are blue-toned, never black. */
-  --shadow-raised: 0 1px 2px rgb(12 48 73 / 0.10);
-  --shadow-floating: 0 4px 14px rgb(12 48 73 / 0.14);
-  --shadow-overlay: 0 12px 36px rgb(12 48 73 / 0.22);
+  /* ----- Shape: bubblier than the base — everything rounds and floats ----- */
+  --radius-control: 12px;
+  --radius-panel: 16px;
+  --radius-card: 22px;
+
+  /* ----- Type: humanist round sans, no serif; headings sit chunky and
+     optimistic, the Frutiger/Segoe voice of the era ----- */
+  --font-heading: "Nunito Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --weight-heading: 700;
+
+  /* ----- Elevation: floaty, aqua-tinted depth, never black ----- */
+  --shadow-raised: 0 1px 2px rgb(12 48 73 / 0.10), 0 3px 8px rgb(18 115 184 / 0.10);
+  --shadow-floating: 0 2px 6px rgb(12 48 73 / 0.12), 0 8px 22px rgb(18 115 184 / 0.18);
+  --shadow-overlay: 0 16px 48px rgb(12 60 100 / 0.28);
 
   /* ----- The glass material ----- */
   /* The gloss is the era's signature: a bright top half ending in a
      hard line at 50%, a faint rise at the bottom edge. Layered as a
      background-image over any rank's fill. */
   --a-gloss: linear-gradient(180deg,
-    rgb(255 255 255 / 0.80), rgb(255 255 255 / 0.28) 48%,
-    rgb(255 255 255 / 0.00) 52%, rgb(255 255 255 / 0.16));
-  --a-glass-border: rgb(255 255 255 / 0.65);
+    rgb(255 255 255 / 0.90), rgb(255 255 255 / 0.34) 46%,
+    rgb(255 255 255 / 0.00) 52%, rgb(255 255 255 / 0.22));
+  --a-glass-border: rgb(255 255 255 / 0.70);
   --a-glass-bg: rgb(255 255 255 / 0.55);
-  --a-glow: 0 2px 12px rgb(11 111 184 / 0.35);
+  --a-glow: 0 3px 16px rgb(11 111 184 / 0.42);
 
-  /* A sky gradient behind everything, so the frosted glass has real colour to
-     refract (flat glass reads as gray). Fixed so it stays put while scrolling. */
+  /* A sky→aqua→meadow aurora behind everything, so the frosted glass has real
+     colour to refract (flat glass reads as gray): blue sky up top melting
+     through aqua into grass green at the foot, lit by soft luminous blooms —
+     the whole Frutiger Aero landscape in a gradient. Fixed so it stays put
+     while scrolling. */
   background-image:
-    radial-gradient(140% 100% at 50% -10%, rgb(255 255 255 / 0.55), transparent 55%),
-    linear-gradient(168deg, #D6EEFB 0%, #EAF6FD 45%, #E1F5EE 100%);
+    radial-gradient(120% 80% at 12% -12%, rgb(120 210 255 / 0.55), transparent 52%),
+    radial-gradient(120% 90% at 88% 2%, rgb(150 235 205 / 0.45), transparent 55%),
+    radial-gradient(110% 75% at 50% 118%, rgb(120 220 150 / 0.42), transparent 60%),
+    linear-gradient(170deg, #CFEBFC 0%, #E4F5FD 40%, #DEF6EA 78%, #D2F0DC 100%);
   background-attachment: fixed;
 }
 
@@ -979,11 +1007,16 @@
    sea glass.
 */
 [data-theme="aero"][data-mode="dark"] {
-  --background: #062A40;      /* deep water */
-  --surface: #0B3A57;         /* submerged glass panel */
+  --background: #062A40;          /* deep water */
+  --surface: #0C3C5A;             /* submerged glass panel, lifts off the deep */
+  --surface-hover: #114A6D;       /* interactive fill, rest→hover */
+  --surface-active: #16577F;      /* interactive fill, pressed */
+  --border-subtle: #123F5D;       /* the faintest line in the depths */
+  --border: #1D537A;              /* element outlines */
+  --border-strong: #2E6E9C;       /* emphasis */
   --text: #E9F6FF;
   --text-muted: #8FB4CA;
-  --border: #1D537A;
+  --text-subtle: #6E93A9;
 
   --accent-1: #35B3F5;
   --accent-1-hover: #4FBEF8;
@@ -1005,21 +1038,25 @@
   --error: #F08A75;
   --info: #6FC2F2;
 
-  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4);
-  --shadow-floating: 0 4px 14px rgb(0 0 0 / 0.45);
-  --shadow-overlay: 0 12px 36px rgb(0 0 0 / 0.55);
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.4), 0 3px 10px rgb(0 0 0 / 0.3);
+  --shadow-floating: 0 2px 6px rgb(0 0 0 / 0.4), 0 10px 26px rgb(0 0 0 / 0.5);
+  --shadow-overlay: 0 16px 48px rgb(0 0 0 / 0.55);
 
   --a-gloss: linear-gradient(180deg,
-    rgb(255 255 255 / 0.30), rgb(255 255 255 / 0.10) 48%,
-    rgb(255 255 255 / 0.00) 52%, rgb(255 255 255 / 0.06));
-  --a-glass-border: rgb(255 255 255 / 0.28);
+    rgb(255 255 255 / 0.34), rgb(255 255 255 / 0.12) 46%,
+    rgb(255 255 255 / 0.00) 52%, rgb(255 255 255 / 0.07));
+  --a-glass-border: rgb(255 255 255 / 0.30);
   --a-glass-bg: rgb(150 200 235 / 0.10);
-  --a-glow: 0 2px 14px rgb(53 179 245 / 0.45);
+  --a-glow: 0 3px 18px rgb(53 179 245 / 0.48);
 
-  /* Deep-ocean gradient behind the submerged glass. */
+  /* Deep-ocean aurora behind the submerged glass: dark water lit from the
+     surface, a teal current sweeping in from the side and a green glow at the
+     seabed — the night side of the Frutiger landscape. */
   background-image:
-    radial-gradient(140% 100% at 50% -10%, rgb(120 200 255 / 0.14), transparent 55%),
-    linear-gradient(168deg, #04283D 0%, #0A3D5C 55%, #06304A 100%);
+    radial-gradient(120% 80% at 12% -12%, rgb(40 150 220 / 0.30), transparent 52%),
+    radial-gradient(120% 90% at 88% 2%, rgb(30 190 160 / 0.22), transparent 55%),
+    radial-gradient(110% 75% at 50% 118%, rgb(20 175 115 / 0.20), transparent 60%),
+    linear-gradient(170deg, #04283D 0%, #073A4F 45%, #063E3C 80%, #05352E 100%);
   background-attachment: fixed;
 }
 
@@ -1100,6 +1137,41 @@
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   border: none;
+}
+
+/* Aero headings: the flowy humanist sans set with a wet, glossy sheen — a
+   bright top highlight plus a soft coloured drop, so the letters read like
+   poured glass. Kept restrained enough to hold AA on the pale sky. */
+[data-theme="aero"] h1,
+[data-theme="aero"] h2,
+[data-theme="aero"] .text-display,
+[data-theme="aero"] .text-h1,
+[data-theme="aero"] .text-h2 {
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.7), 0 2px 12px rgb(12 60 100 / 0.12);
+}
+[data-theme="aero"][data-mode="dark"] h1,
+[data-theme="aero"][data-mode="dark"] h2,
+[data-theme="aero"][data-mode="dark"] .text-display,
+[data-theme="aero"][data-mode="dark"] .text-h1,
+[data-theme="aero"][data-mode="dark"] .text-h2 {
+  text-shadow: 0 0 14px rgb(80 200 255 / 0.30);
+}
+
+/* Aero buttons brighten a touch on hover — the plastic springs toward the
+   light — and the primary action's blue glow blooms wider. */
+[data-theme="aero"] .btn:hover { filter: brightness(1.04); }
+[data-theme="aero"] .btn-primary:hover {
+  box-shadow: var(--a-glow), 0 6px 18px rgb(11 111 184 / 0.30),
+              inset 0 1px 0 rgb(255 255 255 / 0.5);
+}
+
+/* The glass icon set (.icon-3d, rendered by facet.js): under Aero the candy
+   tiles cast a soft floating shadow so each glyph reads as a 3D sculpture. */
+[data-theme="aero"] .icon-3d {
+  filter: drop-shadow(0 3px 5px rgb(12 48 73 / 0.28));
+}
+[data-theme="aero"][data-mode="dark"] .icon-3d {
+  filter: drop-shadow(0 3px 7px rgb(0 0 0 / 0.5));
 }
 
 /*
@@ -4533,6 +4605,24 @@ svg[data-icon] {
   width: 1.05em;
   height: 1.05em;
   vertical-align: -0.15em;
+}
+
+/* ----- 3D GLASS ICON: the Aero feature-icon opt-in -----
+   (docs mirror — identical to llms.txt · Icons)
+   What it is: mark any <svg data-icon> with .icon-3d and, under the Aero
+   theme, facet.js renders it as a glossy candy-glass sculpture — a warm
+   gradient tile (bright yellows, oranges and reds), a specular top gloss,
+   a white rim and the glyph in white with a soft drop shadow — the
+   Frutiger Aero / Aqua feature icon. What it is for: the big, standalone
+   feature icons on cards and hero rows, kept warm so they pop against the
+   theme's blue-green glass. When to use it: only on display icons, never on
+   small UI glyphs (chevrons, close, menu) which stay simple ink. Under any
+   other theme .icon-3d is just a larger line glyph, so the markup is
+   portable. Default 2.5em; override with font-size or width/height. */
+.icon-3d {
+  width: 2.5em;
+  height: 2.5em;
+  vertical-align: -0.3em;
 }
 
 /* ----- FLAGSHIP LINK: the signature way to another page -----

@@ -418,7 +418,7 @@ The shipped set, by design intent:
 
 - **Default** (no attribute) — a cool near-white page with white surfaces that lift above it, a refined Radix-slate neutral ramp (surface / surface-hover / surface-active, three border weights, three text weights) and whisper-light, navy-tinted layered shadows; hierarchy comes from elevation and hairline borders, not heavy shadow. The neutral base, where the accent ranks are the ink itself (a Vercel-black primary). Dark is Linear's near-black surface ladder (never pure black), softened paper ink, and a top-edge inset highlight in place of shadow. (The OS accent is a separate dormant token, `--os-accent`, kept out of the ranks on purpose.)
 - **Velvet** (`data-theme="velvet"`) — neumorphic matte material, gold ink, serif display, one light source from above.
-- **Aero** (`data-theme="aero"`) — Frutiger Aero glass gloss, sky aqua, pill buttons; dark is ocean glass.
+- **Aero** (`data-theme="aero"`) — the full Frutiger Aero era: a sky→aqua→meadow aurora ground, glass gloss, translucent plastic, bubbly rounded pills, a humanist round sans with a wet glossy sheen on headings, blue-and-green throughout; companion glass feature icons via `.icon-3d` (warm candy-gloss sculptures rendered by facet.js); dark is ocean glass.
 - **Elegant** (`data-theme="elegant"`) — cream and gold, serif display, carved (inset) elevation; dark twin is obsidian and gold.
 
 **Adding a theme:** add its `[data-theme="…"]` block in facet.css mapping every semantic token (light + dark), keep AA contrast in both, then add it to the switcher and the Build page. Everything downstream reads the semantic tokens, so nothing else changes.
