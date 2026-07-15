@@ -710,6 +710,136 @@ machinery behind that line. Once shipped, extend that line to name the grammar: 
 rides a native pseudo-class, an ARIA attribute, or `data-status` — never an invented
 class.
 
+### Favicon engine, SEO head pack & the project starter kit (cross-cutting)
+
+> **SPEC ONLY, not built (15 Jul 2026).** Filed as an All To Dos board
+> row (Project = Facet). This section is the reference that row points
+> at. Nothing here ships until the row is worked. Three pillars plus one
+> tool page; build in the order under Rollout, each pass landing its
+> keep-in-sync lines.
+
+**Why.** Facet already ships two thirds of a good SEO and identity story:
+an SVG favicon, OG tags, canonical, JSON-LD slots, robots.txt, sitemap.xml,
+a manifest and llms.txt. But it is scattered, hand written per page, has no
+engine and no generator, and there is no single contract for "the files
+every project ships at its root." A builder pointing an AI at Facet should
+get a correct favicon, a complete head, and every root file, with no
+designer, no favicon-generator website, and no guesswork. That is the gap
+this closes.
+
+**The honest constraint.** No build step, two tags, never minified. There is
+no place to pre-render a pile of PNGs. So everything here is one of three
+things: a copy-paste file, an SVG, or a runtime facet.js behaviour that draws
+to canvas. State the constraint out loud as a strength: the correct 2026
+favicon set is small, and Facet says so instead of shipping the old
+twenty-file ritual.
+
+**Pillar 1: the favicon engine (`facet.favicon`).**
+- The correct minimal file set, and no more: `favicon.svg` (the source of
+  truth, with an inline `<style>` plus `prefers-color-scheme` so it adapts to
+  a dark tab bar), `favicon.ico` (a 32px legacy fallback browsers request on
+  their own), one 180px `apple-touch-icon` PNG, and the 192/512/maskable PNGs
+  the manifest already lists. Facet ships all of these today except
+  `favicon.ico` and the dark-aware SVG. Add both.
+- The engine draws a favicon at runtime, from a monogram, the Facet mark, or
+  an emoji plus a theme colour, to a `<canvas>`, and sets it as a data-URI
+  icon link: `facet.favicon.set(spec)`. This is the real value. A builder
+  with no art gets a real, on-brand favicon instantly, and an agent sets it
+  from one call.
+- App feel on the browser tab, the same story as the tab bar:
+  `facet.favicon.badge(n)` overlays an unread count, `.dot()` a presence dot,
+  `.busy()` an animated spinner while work runs, `.reset()` restores the base
+  icon. All honour reduced motion, tear down cleanly, and restore on
+  `pageshow` with `persisted` (bfcache law).
+- Off by default: a favicon is brand, not chrome. Theme-syncing the favicon
+  is opt-in, never automatic, so a coloured theme never silently repaints a
+  project's logo.
+
+**Pillar 2: the SEO head pack system.**
+- One canonical, tiered head pack, documented in a single place instead of
+  scattered across the PWA and iOS sections. Four tiers: Minimum (charset,
+  viewport, title, description, canonical, favicon, theme-color, the llms.txt
+  alternate link), Share (og:title/description/type/url/image, twitter:card,
+  an og-image), App (the apple metas, manifest, apple-touch-icon), Data
+  (JSON-LD).
+- `facet.head({...})` (name to settle against `facet.seo`): a runtime helper
+  that injects and keeps title, canonical, OG and JSON-LD in sync for
+  view-stack pages that change screen without a reload, which cannot update
+  those tags today. The static HTML still ships the base pack so the JS-off
+  law holds: the helper only enhances and keeps things in sync, it is never
+  the only home for the head.
+- A JSON-LD slot library: copy-paste, filled-in blocks for the types people
+  actually need, Organization, Article, Product, BreadcrumbList, FAQPage,
+  WebSite + SearchAction, because hand-writing JSON-LD is where SEO usually
+  breaks. Templates already carry Article and Organization slots; this
+  generalises the set.
+
+**Pillar 3: the project starter kit (the headline deliverable).**
+- One canonical list, "the files every Facet project ships at its root,"
+  each with its job and a filled-in starter: `index.html` and pages,
+  `favicon.svg` + `favicon.ico` + apple-touch, `manifest.json`, `sw.js`,
+  `robots.txt`, `sitemap.xml`, `llms.txt`, `AGENTS.md`, `/icons/`, an
+  og-image. Ship them as a `/starters/` folder of copy-paste templates plus a
+  ship checklist.
+- The distinction Facet should own, because everyone conflates these files:
+  `llms.txt` describes the LIVE SITE to AI readers and crawlers (the shipped
+  product's own guide, not Facet's); `AGENTS.md` (the cross-tool standard) or
+  `CLAUDE.md` instructs CODING AGENTS editing the repo; `sitemap.xml` and
+  `robots.txt` are for SEARCH CRAWLERS. Three audiences, three files, not
+  interchangeable. Say it crisply; it is a genuinely useful, opinionated point
+  no rival library makes.
+- A Facet-built product's own `llms.txt` is a different artifact from Facet's
+  `llms.txt`: it describes THAT product, not the library. The starter provides
+  the template and states the rule.
+
+**The tool.** A studio page in the same shape as the Themes page (build.html):
+a favicon designer (type a letter or pick the mark, choose colour and shape,
+get the SVG plus PNGs rendered client-side via canvas, no build), a head-pack
+generator (name, description and domain in; the full head block plus every
+root file out as a downloadable set), a structured-data builder, and a live
+ship checklist that passes or fails each requirement against the current page.
+The one real commitment is whether this becomes a new top-level nav item
+("Ship"), which touches the project map, sitemap.xml and every page header per
+the keep-in-sync contract; the alternative is a section on an existing page.
+Decide at build time.
+
+**Rollout, each pass landing its wall / functions / llms lines per the
+keep-in-sync contract:**
+1. Files + docs: add `favicon.ico` and the dark-aware `favicon.svg`, correct
+   every template head, write the one canonical head-pack section and the
+   root-files contract into llms.txt, add the file-audience distinction. No
+   new JS: highest clarity, lowest risk, ship this first.
+2. Favicon engine: `facet.favicon` (canvas generate, badge/dot/busy/reset,
+   restore on pageshow), its wall entry, its functions.html entry, its
+   llms.txt section.
+3. SEO runtime: `facet.head()` sync helper and the JSON-LD slot library, wall
+   + functions + llms lines.
+4. The tool: the Ship studio (favicon designer, head-pack and root-files
+   generator, structured-data builder, live checklist), plus the nav decision
+   if it lands as its own page.
+
+**Compliance-checklist additions (once built):**
+- Declares its head role: every page ships the Minimum head pack; app pages
+  add App; content pages add the right JSON-LD slot.
+- Ships the correct favicon set and references it (svg + ico + apple-touch),
+  never a lone PNG.
+
+**Feature inventory (add when built):** one llms.txt line, and only if it
+reads as a headline, one index.html Features card: "Favicon engine and SEO
+kit: a correct minimal favicon set (dark-aware SVG, ico, apple-touch),
+`facet.favicon` to draw an icon from a monogram, mark or emoji and to
+badge/spin the browser tab, one tiered head pack, a `facet.head()` runtime
+sync helper, a JSON-LD slot library, and a starter kit of every root file a
+project ships (llms.txt, AGENTS.md, sitemap.xml, robots.txt, manifest) with
+the crawler vs coding-agent vs AI-reader distinction spelled out."
+
+**Open decisions to settle at build time:** whether the Ship studio is a new
+nav page or a section; whether the favicon engine ships inside core facet.js
+or as a small optional file; the exact `/starters/` folder name and layout;
+whether `facet.head()` and `facet.favicon` share one namespace; and whether to
+ship `AGENTS.md`, `CLAUDE.md`, or both as the repo-agent file (lean AGENTS.md
+as the standard, with a one-line CLAUDE.md pointer).
+
 ### Theme marketplace + community submissions 
 
 Let visitors build a theme (the Build-a-theme page already does this) and submit it for review and, if approved, shipping as an official theme. Below the builder, a marketplace lists the built-in themes and, under a separate heading, approved community themes. This is the project's first social surface.
