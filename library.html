@@ -161,6 +161,7 @@
           <li><a href="#shine">Shine</a></li>
           <li><a href="#feedback">Sound &amp; haptics</a></li>
           <li><a href="#backgrounds">Backgrounds</a></li>
+          <li><a href="#aero-utilities">Aero-era utilities</a></li>
         </ul>
         </div>
         <div class="nav-group side-index-group" data-group="appkit"
@@ -3688,12 +3689,13 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
       <article class="element stack" id="backgrounds">
         <h3 data-status="live">Backgrounds</h3>
         <p>
-          Very faint materials for big quiet surfaces. Two variants: Grid shows its five looks stacked below — the technical grid, the dot grid, the circle grid of outlined rings, graph paper and the custom grid of your own symbols — and each area carries its own controls, so every look tunes independently; Fluid drifts soft color like light through glass. The technical, dot and circle grids can also scatter your own characters across the pattern, at a size you pick, in a fresh arrangement on every visit.
+          Very faint materials for big quiet surfaces. Three variants: Grid shows its five looks stacked below — the technical grid, the dot grid, the circle grid of outlined rings, graph paper and the custom grid of your own symbols — and each area carries its own controls, so every look tunes independently; Fluid drifts soft color like light through glass; Aero is the living Frutiger Aero scene, with soap bubbles rising, fish swimming and light shafts drifting. The technical, dot and circle grids can also scatter your own characters across the pattern, at a size you pick, in a fresh arrangement on every visit.
         </p>
 
         <p class="chips variant-row" role="group" aria-label="Variant">
           <button class="chip" aria-pressed="true" data-bg-variant="grid" data-tip="The repeating-symbol variant, all four looks">Grid</button>
           <button class="chip" aria-pressed="false" data-bg-variant="fluid" data-tip="The breathing color-pool variant">Fluid</button>
+          <button class="chip" aria-pressed="false" data-bg-variant="aero" data-tip="The living Frutiger Aero scene: bubbles, fish and light shafts">Aero</button>
         </p>
 
         <div class="demo stack">
@@ -3878,6 +3880,10 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
             <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The fluid field</h4>
             <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Color pools breathe and bubbles drift, in this theme's own colors.</p>
           </section>
+          <section id="bg-variant-aero" data-bg-aero hidden style="min-height: 20rem; overflow: hidden; border-radius: var(--radius-card);">
+            <h4 style="position: relative; z-index: 1; margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The living scene</h4>
+            <p style="position: relative; z-index: 1; margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Soap bubbles rise, fish swim and light shafts drift. Built for full-bleed surfaces — a fixed backdrop or a hero; here it runs inside the card. Switch to the Aero theme to see it on its own sky-to-meadow ground.</p>
+          </section>
         </div>
 
         <pre id="code-backgrounds"><code></code></pre>
@@ -3934,6 +3940,19 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
             mounts a late-added surface.
           </p>
           <p>
+            Variant AERO: <code>data-bg-aero</code> — facet.js fills the
+            surface with an aria-hidden layer of god-ray light shafts,
+            drifting bokeh, continuously rising soap bubbles and a few
+            swimming fish of mixed sizes. Decorative and non-interactive;
+            built for a full-bleed backdrop (often
+            <code>position:fixed; inset:0; z-index:-1</code>) or a hero.
+            All motion is CSS and collapses to a calm static state under
+            <code>data-motion="off"</code> and reduced motion; a plain
+            empty surface with JS off.
+            <code>facet.aeroAmbient(el)</code> mounts a late-added
+            surface.
+          </p>
+          <p>
             Fixed to the screen: <code>.bg-fixed</code> on any grid look
             makes it the page's one still backdrop —
             <code>&lt;div class="bg-dots bg-fixed"&gt;&lt;/div&gt;</code>
@@ -3951,6 +3970,60 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
             Use ONE background per surface, never
             nested; all patterns fade under
             <code>prefers-contrast: more</code> and never print.
+          </p>
+        </div>
+      </article>
+
+      <!-- AERO-ERA UTILITIES -->
+      <article class="element stack" id="aero-utilities">
+        <h3 data-status="dev">Aero-era utilities</h3>
+        <p>
+          Small opt-in glass affordances the Frutiger Aero era leans on, usable in any theme: a go-arrow that slides forward on a call to action, a soft mirrored reflection beneath an element, and an idle light sweep across a panel. The Aero theme also swaps the pointer for its own glossy arrow cursor.
+        </p>
+        <div class="demo stack">
+          <p class="row" style="gap: var(--space-inline); align-items: center; flex-wrap: wrap;">
+            <button class="btn btn-primary go" data-tip="A call to action with the trailing go-arrow">Get started</button>
+            <a href="#aero-utilities" class="go" data-tip="An onward link carrying the go-arrow">Read more</a>
+          </p>
+          <div class="row" style="gap: var(--space-card); align-items: flex-start; flex-wrap: wrap;">
+            <div class="card shine" style="width: 15rem; min-height: 6rem;">
+              <h4>Shine</h4>
+              <p>An idle specular streak travels across the glass.</p>
+            </div>
+            <div class="card reflect" style="width: 15rem; min-height: 6rem;">
+              <h4>Reflect</h4>
+              <p>A soft wet-floor mirror sits below.</p>
+            </div>
+          </div>
+        </div>
+        <pre id="code-aero-utilities"><code>&lt;button class="btn btn-primary go"&gt;Get started&lt;/button&gt;
+&lt;a class="go" href="/pricing"&gt;Read more&lt;/a&gt;
+
+&lt;div class="card shine"&gt;…&lt;/div&gt;
+&lt;div class="card reflect"&gt;…&lt;/div&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-aero-utilities" data-tip="Copies the usage examples above">Copy</button></p>
+        <div class="ai-notes stack">
+          <p>
+            <code>.reflect</code> — a soft mirrored wet-floor reflection
+            below an element; it fades out and takes no layout space. Put
+            it on a card, a button row, an icon.
+          </p>
+          <p>
+            <code>.go</code> — the trailing directional arrow that is the
+            "go" verb on a call to action or onward link; it slides
+            forward on hover and focus. Decorative (the label already says
+            where it leads). Add it to any button or link.
+          </p>
+          <p>
+            <code>.shine</code> — an idle specular streak that sweeps
+            across a glass surface; add it to any panel, it needs no extra
+            markup and clips to the panel's own radius. Honors reduced
+            motion and <code>data-motion</code>.
+          </p>
+          <p>
+            Aero cursor: under <code>data-theme="aero"</code> the pointer
+            becomes a small glossy arrow; opt any subtree back to the
+            system cursor with <code>data-cursor="system"</code>.
           </p>
         </div>
       </article>

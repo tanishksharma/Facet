@@ -282,16 +282,19 @@ function orderEntryParts() {
 function initBackgroundDemo() {
   const article = document.querySelector("#backgrounds");
   const fluid = document.querySelector("#bg-variant-fluid");
+  const aero = document.querySelector("#bg-variant-aero");
   const surfaces = [...document.querySelectorAll("[data-bg-surface]")];
   if (!article || !fluid || !surfaces.length) return;
   const refresh = () => renderSnippet(article);
 
   for (const chip of document.querySelectorAll("[data-bg-variant]")) {
     chip.addEventListener("click", () => {
-      const isGrid = chip.dataset.bgVariant === "grid";
-      for (const s of surfaces) s.hidden = !isGrid;
-      fluid.hidden = isGrid;
-      if (!isGrid && window.facet) facet.fluidBackground(fluid);
+      const v = chip.dataset.bgVariant;   // "grid" | "fluid" | "aero"
+      for (const s of surfaces) s.hidden = v !== "grid";
+      fluid.hidden = v !== "fluid";
+      if (aero) aero.hidden = v !== "aero";
+      if (v === "fluid" && window.facet) facet.fluidBackground(fluid);
+      if (v === "aero" && window.facet && aero) facet.aeroAmbient(aero);
       for (const c of document.querySelectorAll("[data-bg-variant]")) {
         c.setAttribute("aria-pressed", String(c === chip));
       }
