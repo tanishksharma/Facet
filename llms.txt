@@ -2229,6 +2229,37 @@ FIXED TO THE SCREEN — two opt-ins pin a background to the viewport:
     <section data-bg-fluid>…</section>
     <div class="bg-dots bg-fixed"></div>            <!-- whole-page still backdrop -->
     <section data-bg-fluid data-bg-fluid-fixed>…</section>  <!-- pools fixed, surface scrolls over them -->
+
+VARIANT AERO — data-bg-aero: the living Frutiger Aero scene. Put
+data-bg-aero on a full-bleed surface (usually a fixed backdrop or a hero
+section) and facet.js fills it with an aria-hidden, non-interactive
+.aero-amb layer holding soft god-ray light shafts, drifting bokeh, rising
+soap bubbles and a few swimming fish of mixed sizes. Decorative only,
+never in the tab order, works with JS off (it simply stays empty). All
+motion is CSS and collapses to a calm static state under
+prefers-reduced-motion or data-motion="off". Pairs with the Aero theme's
+sky-to-meadow ground but is theme-agnostic. facet.aeroAmbient(el) mounts
+one you inserted after load.
+
+    <div data-bg-aero style="position:fixed;inset:0;z-index:-1"></div>
+
+## Aero-era utilities
+
+WHEN TO USE: three small opt-in glass affordances the Frutiger Aero era
+leans on, usable in any theme.
+.reflect — a soft mirrored "wet-floor" reflection below an element; it
+  fades out and takes no layout space. Put it on a card, a button row, an
+  icon.
+.go — the trailing directional arrow that is the "go" verb on a CTA or
+  onward link; it slides forward on hover and focus. Decorative (the label
+  already says where it leads). Add it to any button or link:
+  <button class="btn btn-primary go">Get started</button>
+.shine — an idle specular streak that sweeps across a glass surface (the
+  era's "alive glass"); add it to any panel, it needs no extra markup and
+  clips to the panel's own radius. Honors reduced motion and data-motion.
+Aero cursor: under data-theme="aero" the pointer becomes a small glossy
+arrow; opt any subtree back to the system cursor with data-cursor="system".
+
 ## Blocks
 
 Assemblies of the components, documented as copyable patterns in the
