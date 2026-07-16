@@ -1120,7 +1120,159 @@ runtime, against the "one CSS + one JS, no heavy deps" charter. Default: skip.
 
 -------------------------------------------------------------------------------
 
-## Parked — not scheduled
+## Platform capabilities — features the web ships that Facet does not use (research digest)
+===============================================================================
+
+
+A standing reference like the competitor and React Bits digests: a menu to
+assess one item at a time, never a queue. Compiled 16 Jul 2026 by a systematic
+per-platform audit (cross-browser core, device/OS APIs, iOS/WebKit, Chromium,
+macOS/desktop/Firefox); every item below was verified ABSENT from the shipped
+files by grep on that date. Raise one, decide, build or drop — anything built
+lands through the normal compliance checklist and keep-in-sync contract.
+
+> **Standing reminder (recurring practice).** Whenever a capability pass
+> happens — or once a quarter — walk webstatus.dev's newly-Baseline list, the
+> WebKit blog and the Chrome release notes against this digest and llms.txt:
+> add what's new, delete what shipped. Companion rule for consumers, once
+> adopted: prefer the platform — never write JS for what HTML or CSS now does
+> natively.
+
+Guardrails: everything here obeys the charter — no build step, no heavy
+dependency, JS-off safe, reduced-motion honoured, teardown shipped.
+Single-engine features ship only as progressive enhancement behind @supports
+or a feature check, never as a requirement.
+
+
+### A. Cross-browser core CSS (Baseline or near)
+
+- [ ] Container queries (`@container` + cqw/cqi units): components adapt to their container, not the viewport — the single biggest one for a component library.
+- [ ] Anchor positioning (`anchor-name`/`position-anchor`/`position-area`, Chrome 125+, Safari 26): tooltips, dropdowns and popovers positioned by CSS with overflow fallbacks — replaces real facet.js positioning code.
+- [ ] Scroll-driven animations (`animation-timeline: scroll()/view()`): scroll reveals, progress gauges and parallax washes with zero JS, off the main thread — the React Bits reveal tier in pure CSS, JS observer as fallback.
+- [ ] `@property` typed custom properties: animatable angles/lengths — the traveling-border and gradient effects in the React Bits digest require it.
+- [ ] `oklch()` color + `light-dark()`: perceptually even ramps; one declaration carrying a light/dark token pair (color-scheme is already set) — could shrink every theme block.
+- [ ] `subgrid`: card internals align across a grid row (the all-buttons-on-one-line fix).
+- [ ] `field-sizing: content`: textareas grow natively as the user types.
+- [ ] `contrast-color()` (Safari 26 first): browser-picked AA text color — could derive `--on-accent-N` automatically, and make Skin Lab colors safe.
+- [ ] `scroll-state()` container queries (Chrome 133+): style a sticky bar when it actually sticks.
+- [ ] `::scroll-button` / `::scroll-marker` (Chrome 135+): native CSS carousels — the rail-dots backlog line may become pure CSS.
+- [ ] `text-box-trim` (Chrome 133+, Safari 18.2+, no Firefox): cuts half-leading to cap height — pixel-true vertical centering in buttons, chips, badges; true-flush display headings. A design-library-grade win.
+- [ ] `scrollbar-gutter: stable`: reserves scrollbar space so Windows/Linux classic scrollbars never shift a centered layout (invisible on a Mac with overlay scrollbars — which is why it's missing).
+- [ ] `prefers-reduced-transparency`: flatten Aero's glass, blurs and scrims under the OS setting — the sibling of the shipped prefers-contrast block.
+- [ ] `print-color-adjust: exact`: swatches, chart fills, badge tints, the business card and the deck need it to survive printing; the print system's ink-on-paper default strips them today.
+- [ ] `caret-color` (+ Chromium's `caret-shape: block` for the typewriter voice): theme the text-insertion caret; one line per theme.
+- [ ] `hyphens: auto` (+ correct `lang`): dictionary hyphenation for narrow measures and the A4/print templates.
+- [ ] `::target-text` + text fragments (`#:~:text=`): style the arrival highlight of shared deep links with the accent-3 selection tokens — a direct extension of the every-state-reachable-by-URL law.
+- [ ] `initial-letter`: real drop caps for article.html and the `--font-reading` editorial story.
+- [ ] `@scope`: scoped style boundaries — the accent-lab and scene previews hand-roll this with specificity games today.
+- [ ] `reading-flow` (Chrome 137): focus order follows visual order in reordered flex/grid — serves the reading-order law directly.
+- [ ] `sibling-index()` / `sibling-count()` (Chrome 138): staggered reveals and menu entrances without per-child `--i` variables or JS delays.
+- [ ] `if()` (Chrome 137) and `@function` (Chrome 139): inline conditionals and author-defined functions — the `-tint`/`-edge`/`-wash` color-mix recipes, repeated per rank and status, become one function.
+- [ ] Typed `attr()` (Chrome 133): read attributes as typed values in any property — a chart bar's height straight from its attribute, no inline style.
+- [ ] `overlay` in transition lists (Chrome 117): popover/dialog exits stay in the top layer while animating out — one keyword missing from the existing allow-discrete transitions.
+- [ ] Element-level view transitions (`view-transition-name` on elements, `view-transition-class`, `match-element`): Facet only transitions the root — card-expands-into-page morphs are the whole second half of the API.
+- [ ] `animation-composition: accumulate` (Chrome 112): compose two animations on one property — a principled fix for the parallax-exclusion law's two-writers problem.
+- [ ] `margin-trim: block` (WebKit-only): containers swallow first/last child flow margins natively — the exact problem the `:where()` stack reset fights.
+- [ ] `clip-path: shape()` (Safari 18.4+): responsive free-form clipping with curves — decorative section edges beyond `inset()`.
+- [ ] Gradient/shiny text (`background-clip: text`) and `-webkit-text-stroke`: the `.text-gradient`/`.text-shiny`/outline display-type utilities already on the React Bits list.
+- [ ] `@media (dynamic-range: high)`: push shine/glow brighter on HDR panels (all modern iPhones), quieter elsewhere.
+- [ ] `content-visibility: auto` + `contain-intrinsic-size` as a PERF tool: skip rendering off-screen sections — library.html's wall is the perfect consumer; today the property appears only inside the ::details-content rule.
+- [ ] Dark-mode favicon (a `prefers-color-scheme` media query INSIDE favicon.svg; Chrome + Firefox honour it): the fixed dark mark inverts for dark browser chrome.
+
+### B. Cross-browser typography & i18n
+
+- [ ] `font-variant-caps: all-small-caps` + per-face `font-feature-settings`: real small caps and stylistic sets — the eyebrow/caps voice uses only text-transform + tracking today; this is the upgrade the role-token system was built to carry.
+- [ ] `font-palette` / COLRv1 color fonts: recolor a color font from theme tokens via `@font-palette-values` — a theme flourish no competitor ships.
+- [ ] `text-spacing-trim` (Chrome 123) + `text-autospace` (Chrome 140): correct CJK punctuation kerning and CJK/Latin spacing — the typographic finish for the shipped `--font-japanese/-chinese/-korean` roles.
+- [ ] `text-emphasis`: the CJK italics-equivalent (emphasis dots) so `<em>` renders correctly under the script pairings.
+- [ ] `<ruby>`/`<rt>` base styling: the one forgotten tag the classless base doesn't style — completes the CJK story.
+- [ ] `<bdi>` in user-content snippets: an Arabic username in a comment card scrambles adjacent punctuation without it ("no RTL layout" still means user CONTENT can be RTL). One build-advice line.
+- [ ] `Intl.RelativeTimeFormat`: "2 h ago" in the page language — facet.js already ships formatNumber on Intl.NumberFormat and explicitly punts on this today; the social template hardcodes English.
+- [ ] `Intl.Segmenter`: grapheme-safe text splitting — the planned split-text/scramble effects break emoji and CJK with `split("")`.
+- [ ] `text-decoration-skip-ink` + `-webkit-font-smoothing`/`-moz-osx-font-smoothing`: minor; know the defaults differ per engine, consider per-theme (dark modes, serif display) — never blanket.
+- [ ] `hanging-punctuation: first last` (Safari-only, harmless no-op elsewhere): quotes hang into the margin on `--font-quote`/`--font-reading` blocks.
+
+### C. Cross-browser HTML & forms
+
+- [ ] Invoker commands (`commandfor`/`command`, Chrome 135+): buttons open dialogs, popovers and (with custom commands) sheets declaratively, zero JS — the most Facet-shaped feature on this list.
+- [ ] Exclusive accordions (`<details name="…">`): native one-open-at-a-time folds, no JS.
+- [ ] `hidden="until-found"`: collapsed content that Ctrl+F, search engines and AI agents can still find and auto-open — serves the AI-native law.
+- [ ] Customizable `<select>` (`appearance: base-select`, `::picker(select)`, `<selectedcontent>`): a fully themable native select — kills the custom-dropdown hack class.
+- [ ] `<datalist>`: native autocomplete on any input.
+- [ ] `<search>` element, `popover="hint"` (tooltips in the popover system), `dialog closedby`: small semantic wins.
+- [ ] Constraint Validation reporting (`setCustomValidity()`, `reportValidity()`, `:user-valid`): the state-system spec's "optional form-validate behaviour" — map native validity onto the shipped data-status/.field-msg machinery (only checkValidity is called today).
+- [ ] `showPicker()`: a styled affordance opens the native date/color picker Facet already themes-but-keeps-native.
+- [ ] Field attributes guidance: `spellcheck="false"` / `autocorrect="off"` / `writingsuggestions="false"` (Safari 18.2, Apple Intelligence) for OTP, handles, code and search fields; `dirname` for user-generated text; `contenteditable="plaintext-only"` as the inline-edit default; `capture="environment"` on the file field for camera-direct flows; `autocomplete="username webauthn"` so plain login fields offer passkeys (ceremony stays in projects).
+- [ ] Responsive images, the whole cluster (`<picture>`, `srcset`/`sizes`, AVIF/WebP chain, `image-set()` for CSS, `fetchpriority`, `decoding="async"`): completely absent — templates ship bare 1x `<img>`. Ship the canonical recipe in templates + one llms.txt Images build-advice entry (pairs with the loading="lazy" law). JPEG XL behind `<picture>` as a Safari bonus line.
+- [ ] Media base layer (`<video>`/`<audio>` themed like every other native element, `playsinline muted` iOS law, Media Session API for lock-screen controls, PiP toggle, AirPlay slot): Facet has NO media styling or guidance at all — a real Layer-2 gap for a library targeting whole products.
+- [ ] `@media (orientation: landscape)`: not one orientation query in the repo — landscape-phone adjustments for the tab bar and deck.
+
+### D. Cross-browser JS & device APIs
+
+- [ ] Page Visibility + Page Lifecycle (`visibilitychange`, `freeze`/`resume`, `contentvisibilityautostatechange`): NOTHING pauses today — the motion engine's idle sweep, shine loop, sounds and effect timers should suspend when the tab hides or freezes (battery + correctness). The highest-value invisible fix in this digest.
+- [ ] visualViewport (+ Chromium's VirtualKeyboard API with `env(keyboard-inset-*)`): keyboard-aware sheets and tab bar — keep the focused field and sheet actions above the iOS/Android keyboard. A real shipped-app pain the iOS rules don't cover yet.
+- [ ] Screen Wake Lock (`navigator.wakeLock`, Baseline 2024): hold while deck.html presents (it already has fullscreen on "f"), release on hide — stops the Mac sleeping mid-pitch.
+- [ ] `:fullscreen` styling + a `data-fullscreen` affordance: deck.html calls requestFullscreen bare with no styling or exit affordance; charts/embeds/device-previews could share one behaviour.
+- [ ] BroadcastChannel: sync a live theme/mode/skin change across open tabs (sessionStorage is per-tab, two tabs drift today); also the natural channel for the service worker's "new version" toast.
+- [ ] `online`/`offline` events → an offline badge/toast: Facet is PWA-first with an offline cache but no offline UI (navigator.onLine is read once).
+- [ ] Custom Highlight API (`CSS.highlights` + `::highlight()`): search-match highlighting in the library/token-rail filters with zero DOM mutation — protects the one-glance markup.
+- [ ] Drag and drop (+ file drop zone): a drop-state dressing for the file field (the wall text already brags drag-and-drop works, nothing styles it) and the future kanban template.
+- [ ] Composition events (`compositionstart/end`): field-actions undo and typewriter effects must not mutate mid-IME-composition — CJK input breaks otherwise; matters given the script font pairings.
+- [ ] Coalesced/predicted pointer events: smoother drag surfaces (scroll-gauge lane, dot-field, any signature piece).
+- [ ] `scrollend` event + scroll-snap events (`scrollsnapchange`, Chrome 129): replace hand-rolled scroll-idle timers; the pager computes its page from scroll math today.
+- [ ] File System Access (`showSaveFilePicker`, Chromium; `<a download>` fallback): real save-as for code-block downloads and theme-config export.
+- [ ] Speculation Rules (Chromium): prerender the next page on hover — multi-page Facet sites feel instant.
+- [ ] EyeDropper (Chromium): pick a color from anywhere on screen — build.html's Skin Lab.
+- [ ] `navigator.share` in the library proper (docs.js uses it; facet.js ships nothing): a share-button component with clipboard fallback.
+- [ ] Persistent storage (`navigator.storage.persist()`): facet-sw requests it on install so an installed PWA's offline cache survives Safari's 7-day ITP eviction.
+- [ ] OffscreenCanvas: icon-3d and the dot-field render off the main thread; low priority while effects stay light.
+- [ ] Base-layer `scroll-margin-top` + a quiet `:target` treatment: consumers with a sticky bar get anchored headings hidden under it — the offset exists only in docs.css, not /lib.
+- [ ] `scheduler.yield()`/`postTask` (Chromium): facet.js boot wires ~20 behaviours; yielding keeps first interaction instant.
+- [ ] Save-Data / Network Information (Chromium): a data-saver degrade like data-motion — skip idle animations and heavy faces under saveData.
+- [ ] `moveBefore()` (Chrome 133): reparent DOM without resetting animation/focus state — kanban drags and wall re-filtering without state loss.
+
+### E. iOS & iPadOS (WebKit) — beyond the shipped iOS laws
+
+- [ ] Dynamic Type (`font: -apple-system-body` capture → `--text-scale`): the iPhone Text Size setting drives the type scale. (Already a hub backlog line, 16 Jul 2026.)
+- [ ] Native switch with real haptics (`<input type="checkbox" switch>`, Safari 17.4+): the TRUE iOS switch with a system haptic tick — the only web haptic iPhones allow (navigator.vibrate is dead on iOS, so the haptics feature is silent on every iPhone today). Progressive enhancement on .switch.
+- [ ] AudioSession API (`navigator.audioSession.type = "ambient"`, WebKit): Facet's UI sounds currently INTERRUPT the user's music on iOS; ambient mixes politely. A direct fix to the sound layer.
+- [ ] Service-worker navigation preload (`registration.navigationPreload`): facet-sw is network-first, so every navigation pays SW startup latency; preload removes it. A straight upgrade to facet-sw.js.
+- [ ] Same-document view transitions (`document.startViewTransition()`, Safari 18+): Facet uses cross-document @view-transition but never the JS API — theme/mode switches and tab-panel swaps as one smooth morph.
+- [ ] Display-P3 color (`color(display-p3 …)`): richer inks on every modern Apple screen; vivid palette and accent ranks, sRGB fallback automatic.
+- [ ] Home-screen title (`apple-mobile-web-app-title` meta): the icon label, independent of `<title>` — app templates ship -capable and -status-bar-style but not this.
+- [ ] `apple-touch-startup-image` splash screens: removes the white flash on installed-PWA launch; needs per-device sizes.
+- [ ] `format-detection` meta (`telephone=no`): iOS auto-links phone-shaped numbers — the invoice/document templates show exactly those.
+- [ ] `-webkit-touch-callout: none` on drag surfaces and interface controls: kills the long-press callout; pairs with the user-select law.
+- [ ] Device motion channel (`devicemotion` + its permission): facet.motion reads only deviceorientation — shake gestures and acceleration-weighted parallax are unexploited.
+- [ ] GestureEvent pinch data (`e.scale`/`e.rotation`, iOS-only; only preventDefault'd today): ready-made pinch-to-zoom for a lightbox without touch math.
+- [ ] Apple Pencil (PointerEvent pressure/tilt/hover, Touch.force): a signature/annotation piece pairing with --font-hand; pencil hover previews on iPad.
+- [ ] Rich clipboard writes (`ClipboardItem` with text/html + text/plain): copy-as-Markdown puts both flavors on the iOS clipboard.
+- [ ] Smart App Banner (`apple-itunes-app` meta): opt-in head-pack line for products with a companion native app.
+- [ ] `<model>` element (USDZ, Safari 26): declarative 3D/AR product viewer, zero dependencies — borderline against the no-heavy-media stance; assess.
+- Out-of-charter, noted: Apple Pay JS (the `-apple-pay-button` CSS could be one documented line), passkey ceremonies, WebGPU, speech recognition.
+
+### F. Chromium (Chrome, Edge, Android)
+
+- [ ] CloseWatcher (`new CloseWatcher()`, Chrome 120): Esc AND the Android back gesture close sheets, menus and dropdowns without polluting history — the single biggest Android-app-feel gap; today the back gesture leaves the site instead of closing the sheet.
+- [ ] Manifest upgrade pack (`id`, `shortcuts`, `screenshots` + `categories` (store-style install sheet), `display_override`, `launch_handler: focus-existing`, `share_target`, monochrome icon purpose): both manifests ship only the bare minimum — one commented template-manifest pass covers all of it.
+- [ ] Window Controls Overlay (`display_override: ["window-controls-overlay"]` + `env(titlebar-area-*)` + `app-region: drag`): the app.html site-bar extends into the desktop title bar — true native-app look for installed PWAs.
+- [ ] Dark-variant theme-color meta (`media="(prefers-color-scheme: dark)"`, also Safari 15+): the shipped single static #FFFFFF meta gives JS-off dark-mode visitors a white address bar against a dark page — violates the works-without-JS law. Ship the pair; keep the JS sync on top.
+- [ ] Badging API (`navigator.setAppBadge`, also Safari 17 Mac web apps): a tiny facet.badge(n) helper or a guidance line; the count itself is app data.
+- [ ] `getInstalledRelatedApps()`: facet.install skips the nudge when the native app is already installed.
+- [ ] Interest invokers (`interestfor`, ~Chrome 140): declarative hovercards with correct touch/keyboard/AT behavior — the platform slowly absorbing Facet's hand-rolled tooltip JS. Watch and adopt.
+- [ ] Web Install API (`navigator.install()`, origin trial): future facet.install upgrade; watch, don't ship.
+- [ ] Edge extras (side panel manifest member; Windows 11 widgets): free distribution surfaces; document at most.
+- Out-of-charter, noted: background sync/fetch/periodic (app logic — correctly absent from facet-sw), protocol/file handlers beyond a commented slot, Navigation API (routing is project logic), Document PiP, Window Management/second-screen presenting (deck opt-in at most, single-engine), built-in AI task APIs, Houdini Paint (needs a worklet file — strains one-CSS-one-JS).
+
+### G. macOS & desktop Safari/Firefox
+
+- [ ] PNG favicon fallback: Safari has NEVER rendered SVG favicons — every Facet page ships only SVG, so Safari tabs show a blank glyph today. One PNG line in the head pack. The highest-priority one-line fix in this digest.
+- [ ] Safari 17+ "Add to Dock" web apps: the manifest already qualifies; the PWA docs speak only iOS + Android — add the Mac line and check the standalone-detect messaging covers the Dock case.
+- [ ] Pinned-tab mask-icon (`rel="mask-icon"`): optional monochrome gem for pinned tabs; note-level.
+- [ ] `any-pointer: coarse` / `any-hover`: the shipped `pointer: coarse` checks miss a Windows touchscreen laptop (fine mouse primary, coarse touch present) — it never gets the 44px targets. Switch the touch-target bumps to any-pointer.
+- [ ] `aria-keyshortcuts` on elements the shortcut engine binds (⌘K exists; no element declares it): serves the AI-operable-DOM law directly. `accesskey`: document as when-NOT-to-use.
+- [ ] Custom context menu (contextmenu event + the existing dropdown pieces): right-click menus on app surfaces (table rows, kanban cards); never on plain content. Assess as app-feel.
+- Out-of-charter, noted: window.open feature windows (guidance line at most).
 ===============================================================================
 
 
