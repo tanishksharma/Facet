@@ -2880,6 +2880,29 @@ guidance entries — read them like instructions. If advice is not
 written down here, do not assume it; if a pattern below repeats enough
 to earn markup and behaviour, it gets promoted to a real component.
 
+Native first — never rebuild what the platform ships (read this before
+writing ANY JavaScript): if HTML or CSS has a native mechanism for a
+behaviour, use it; hand-rolling it in JS is always the wrong answer —
+heavier, buggier, worse on touch, and it breaks with JS off. The
+concrete cases, because these are the ones AIs get wrong:
+- A carousel is NOT a JavaScript project. It is CSS scroll snapping on
+  an overflow row — Facet already ships it twice: .card-row (momentum
+  side-scroll with proximity snap) and the promo rail (.promo-scroll,
+  mandatory snap). Use one of those; never write slide logic, timers or
+  translate math. (The pager-law exception is FULL-PAGE vertical snap
+  only, where iOS breaks and .snap exists.)
+- Disclosure is <details>/<summary> (the accordion, the top-menu fold),
+  never a click handler on a div.
+- Modals are <dialog>, transient panels are the popover attribute —
+  both shipped as components; never a hand-built overlay with focus
+  math.
+- Start from a template when one matches the product's shape (see
+  Templates): an app shell, a dashboard, a feed, an article — copy it
+  and edit words before assembling from scratch.
+The rule generalises: before building any behaviour, check this file
+for the component, then check whether HTML/CSS already does it. Write
+JS only for what the platform genuinely lacks.
+
 Reserved class names: every class facet.css ships is reserved — the
 short generic ones are the silent-collision traps: .card, .stack, .row,
 .grid, .list, .chip, .badge, .avatar, .field, .fold, .snap, .empty,
