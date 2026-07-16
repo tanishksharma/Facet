@@ -215,7 +215,10 @@ by design.
 
 Accessible by default: AA contrast in every theme light and dark;
 everything keyboard operable; ARIA where semantics fall short; icon-only
-controls always labelled; live regions on changing content.
+controls always labelled; live regions on changing content; one
+consistent keyboard map across every component — Escape always closes
+the open layer, arrows walk grouped controls, Enter/Space activates
+(full map under Keyboard navigation below).
 
 AI-native: operable by agents through the DOM alone; shallow semantic
 structure; real buttons and links with accessible names; state in the
@@ -1205,7 +1208,8 @@ question (dialog) and never a dropdown for navigation (links).
 WHEN TO USE: tabs switch views in place; the breadcrumb says where you are in a hierarchy; pagination walks a long set page by page.
 
 What it is: the wayfinding trio. Tabs are real ARIA tabs (role=
-tablist/tab/tabpanel; click or arrow keys; accent underline; facet.js
+tablist/tab/tabpanel; click or arrow keys, Home/End to the ends; accent
+underline; facet.js
 wires panels and roving tabindex) for two-to-five in-page views.
 Breadcrumb is the path to here — nav.breadcrumb > ol of links with
 quiet separators, current page unlinked with aria-current="page".
@@ -1994,6 +1998,49 @@ with one. Add data-tip-below on elements near the top of the viewport so
 the hover bubble drops under them instead of clipping off the screen.
 
     <button class="btn" data-tip="Runs the calculation">Calculate</button>
+
+## Keyboard navigation
+
+WHEN TO USE: nothing to add — every component ships its keys already.
+Read this to know what a keyboard (or an agent sending key events) can
+do on any Facet page, and follow the two rules at the end when you add
+your own shortcuts.
+
+What it is: one keyboard map, the same on every page, carried by the
+components themselves — there is no separate shortcut registry to
+configure. The library's grammar has three verbs:
+
+Escape closes the open layer. Whatever is open on top of the page,
+Escape closes it: sheets (settings, navigation), the dropdown menu and
+the floating nav menu (both return focus to the button that opened
+them), the phone header's menu fold, a pinned touch tooltip, and the
+native layers — <dialog> and [popover] — through the platform's own
+Escape handling. One key, one meaning, everywhere.
+
+Arrows walk grouped controls. Tabs (role="tab" in a .tabs list) move
+with ArrowLeft/ArrowRight on a roving tabindex, and Home/End jump to
+the first and last tab. Radios, sliders, steppers and select keep
+their native arrow behaviour — the library never re-implements what
+the platform already does.
+
+Enter and Space activate. Real buttons and links activate natively;
+the library extends the same pair to the things it makes clickable —
+a sortable table header sorts on Enter or Space exactly as it does on
+click.
+
+Presenting (deck template): ArrowRight, ArrowDown, PageDown or Space
+go to the next slide; ArrowLeft, ArrowUp or PageUp go back; F enters
+fullscreen. Page keys mean a clicker's next/back buttons drive the
+deck too.
+
+Two rules when adding your own shortcuts: never make a shortcut the
+only path — every keyboard action has a click path and every click
+path is keyboard reachable (buttons and links are real elements, so
+Tab + Enter always works); and never bind a bare printable key
+globally — a single-letter or "/" shortcut must check that focus is
+not in an input, textarea or select first, or it hijacks typing.
+Everything is Tab-reachable with one visible focus ring, and every
+page ships a skip-to-content link as the first Tab stop.
 
 ## JavaScript API
 

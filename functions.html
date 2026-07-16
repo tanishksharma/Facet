@@ -57,6 +57,7 @@
           <li><a href="#fn-tab-indicator">facet.tabIndicator</a></li>
           <li><a href="#fn-scroll-gauge">facet.scrollGauge</a></li>
           <li><a href="#fn-controls">Settings controls</a></li>
+          <li><a href="#fn-keyboard">Keyboard map</a></li>
         </ul>
         </div>
         <div class="nav-group side-index-group" data-group="forms"
@@ -493,6 +494,35 @@
 &lt;/button&gt;
 &lt;button type="button" class="menu-item" data-section="stats"&gt;Open stats&lt;/button&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-controls" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-keyboard" data-llms="Keyboard navigation">
+          <h3>Keyboard map</h3>
+          <p>
+            One keyboard map, the same on every page, carried by the
+            components themselves — there is no shortcut registry to
+            configure. The grammar has three verbs. Escape closes the open
+            layer, whatever it is: a sheet, a dropdown or nav menu (focus
+            returns to the button that opened it), the header's menu fold, a
+            pinned tooltip, a dialog or popover. Arrows walk grouped
+            controls: tabs move with Left and Right and jump with Home and
+            End, while radios, sliders and steppers keep their native arrow
+            behaviour. Enter and Space activate — buttons and links
+            natively, and the things the library makes clickable, like
+            sortable table headers. The deck template presents with the
+            arrow, page and space keys, and F for fullscreen. On this docs
+            site itself, "/" or Ctrl/Cmd+K focuses the search and arrows
+            walk the sidebar — that part is docs chrome, not shipped
+            library behaviour.
+          </p>
+          <pre id="code-fn-keyboard"><code>Esc            closes the open layer: sheet, dropdown, nav menu,
+               menu fold, pinned tooltip, dialog, popover
+&#8592; &#8594;            walk tabs · Home / End jump to the ends
+Enter / Space  activate: buttons, links, sortable table headers
+&#8592; &#8593; &#8595; &#8594;        native controls keep their own arrows: radios,
+               sliders, steppers, select
+Deck template  &#8594; &#8595; PgDn Space next slide · &#8592; &#8593; PgUp back · F fullscreen</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-keyboard" data-tip="Copies this map">Copy</button></p>
         </article>
       </section>
 
