@@ -155,6 +155,12 @@ gauge, and the nav menu (a floating Menu-pill + Settings-button cluster, built
 from .btn.btn-pill, a no-JS <details> of real links upgraded to an overlay),
 with .page-under-bar and the --bar-clearance tokens so pages clear the
 fixed bar without hand-measuring it;
+the live appearance panel (the settings sheet as an on-any-page
+customiser: data-settings-tab sections, data-skin/data-token colour rows,
+data-font-cycle, data-density-cycle/-width-cycle/-text-size-cycle/-shape-cycle
+steppers, data-skin-reset and a data-shortcuts keyboard-map slot — every
+change restyles the live page through facet.set, skin keys persisting for
+the session; facet.appearance re-wires a late one);
 the site footer (.footer — the page's closing band: brand lockup with
 tagline, mono status line and round social buttons, up to four link
 columns, a copyright/colophon line; its own --footer-* tokens, data-plinth
@@ -2667,6 +2673,51 @@ What it is: the app's floating command bar, in the style of Apple's Photos pill.
 WHEN TO USE: the app's edge panels, each behind one button — settings on the right (the default), navigation on the left (.sheet-left).
 
 What it is: the app's edge panel — a slab floating clear of the screen over a dark scrim, sliding in as one rigid block on a spring that overshoots slightly and eases back. The right edge is the settings side (the default); .sheet-left is the same panel sliding from the LEFT edge — the navigation side — and opening either closes the other first — never two panels moving at once. Add .sheet-rise and on phones the panel rises out of the tab bar instead: the bar's own frosted glass, condensing into and rising out of its own corner button as a narrow card — the menu slimmer on the left, settings wider on the right — standing only as tall as its options need — capped at half the screen so nothing sits out of thumb reach, taller content scrolling inside — mostly opaque so the options read, options left-aligned under eyebrow group names, a slim position thumb riding the panel's OUTER edge (left on the left panel, so that corner reads as the page's corner), and a foot of small labeled pill actions that never scrolls away. On wide screens the same panel becomes a corner DROPDOWN instead: it hangs from the top bar with its outer edge lined up with the bar's own corner button — a slim panel for the menu on the left, a wider one for settings on the right — options left-aligned, in the same glass, and the page does not dim (a click anywhere still closes it). Inside, menu groups of thin rows (.menu-item under a .menu-label) and a foot row of square icon toggles (.menu-icon-btn) whose ON state stands raised while OFF sinks into a darker well. What it is for: navigation, actions and app-level controls behind one trigger — any button that aria-controls the sheet opens it; scrim tap and Esc close; the page behind locks still while a panel is open; the trigger's aria-expanded is managed, a floating trigger stays visible above the open sheet as its close toggle, and a sheet left open never survives the browser's back-forward cache — it closes itself on return. When to use it: every app-shaped product's settings. Press a row: it sinks INTO the panel with a true bevel, never a dark smear. State changes ease — toggles must never jump.
+
+### Appearance panel
+
+WHEN TO USE: any page or app whose reader should be able to restyle it live — the settings sheet as a full customiser, not just the five cyclers. Drop the rows into a .sheet and the library wires them; a plain content page can ship only the Options cyclers.
+
+What it is: the settings sheet upgraded from five cyclers (theme, appearance, motion, sounds, haptics — those are the Sound & haptics + data-control rows) into an on-any-page customiser, self-wired by facet.js (facet.appearance / initAppearance) on any .sheet that holds the rows. Every control routes through facet.set, so each change restyles the LIVE page: the skin keys (accents, ink, fonts) persist for the session, while token, density, width, text-size and shape overrides apply for the visit. It is all markup — no per-page JS. A mini tab bar (nav.tab-bar.sheet-tabs of .tab-seg buttons carrying data-settings-tab) splits the panel into sections, each a div[data-settings-panel] that shows when its tab is picked (the sheet eases between the panels' heights); the convention is Options, Style, Advanced, Shortcuts. The self-wiring controls, each a .menu-item row:
+- input[type="color"] data-skin="accent1|accent2|accent3|ink" — re-inks an accent rank or the text ink; hover/pressed/on-colors derive and the choice persists for the session. Wrap the row in .menu-color for the round swatch look.
+- input[type="color"] data-token="--surface" — overrides any semantic token by name (surfaces, borders, the text ramp), this visit. .menu-color again.
+- button data-font-cycle="fontHeading|fontBody" — cycles a curated face list, writing its .menu-value; data-faces="A,B,C" overrides the default list.
+- button data-density-cycle / data-width-cycle / data-text-size-cycle / data-shape-cycle — step the three-way layout controls (spacing density, page width tier, global text size, corner roundness), each showing its state in .menu-value.
+- button data-skin-reset — returns colours, fonts, spacing, width, text size and shape to the theme's own look.
+- div data-shortcuts — filled with the page's keyboard map as labelled key caps (.shortcut-list of .shortcut-row; Esc closes the open layer, arrows walk tabs, Home/End jump, Enter/Space activate, Tab moves on — the map from Keyboard navigation).
+Colour swatches read their starting value from the live tokens and re-sync whenever the theme or mode changes. What it is for: giving any Facet page the same live restyling the Build-a-theme page has, thumb-reachable in the settings sheet — the point of the library is that any page can be changed in any way. When to use it: any app or site whose reader should shape the look; Options-only for a plain content page. facet.appearance() re-wires a panel added to the DOM late.
+
+    <aside class="sheet sheet-rise" id="settings" data-open="false" aria-hidden="true" aria-label="Settings">
+      <div class="sheet-scroll">
+        <nav class="tab-bar sheet-tabs" aria-label="Settings sections">
+          <div class="tab-set">
+            <button type="button" class="tab-seg" data-settings-tab="options" aria-current="true">Options</button>
+            <button type="button" class="tab-seg" data-settings-tab="style" aria-current="false">Style</button>
+            <button type="button" class="tab-seg tab-seg-desktop" data-settings-tab="advanced" aria-current="false">Advanced</button>
+            <button type="button" class="tab-seg" data-settings-tab="shortcuts" aria-current="false">Shortcuts</button>
+          </div>
+        </nav>
+        <div class="sheet-group" data-settings-panel="options">
+          <button type="button" class="menu-item" data-control="theme">Theme <span class="menu-value">Default</span></button>
+          <button type="button" class="menu-item" data-control="appearance">Appearance <span class="menu-value">Auto</span></button>
+        </div>
+        <div class="sheet-group" data-settings-panel="style" hidden>
+          <label class="menu-item menu-color">Accent 1 <input type="color" data-skin="accent1" aria-label="Accent 1 color"></label>
+          <button type="button" class="menu-item" data-font-cycle="fontHeading">Headings <span class="menu-value"></span></button>
+          <button type="button" class="menu-item" data-skin-reset>Reset the look</button>
+        </div>
+        <div class="sheet-group" data-settings-panel="advanced" hidden>
+          <label class="menu-item menu-color">Surface <input type="color" data-token="--surface" aria-label="Surface color"></label>
+          <button type="button" class="menu-item" data-density-cycle>Density <span class="menu-value">Medium</span></button>
+          <button type="button" class="menu-item" data-text-size-cycle>Text size <span class="menu-value">Medium</span></button>
+          <button type="button" class="menu-item" data-shape-cycle>Roundness <span class="menu-value">Default</span></button>
+          <button type="button" class="menu-item" data-width-cycle>Page width <span class="menu-value">Default</span></button>
+        </div>
+        <div class="sheet-group" data-settings-panel="shortcuts" hidden>
+          <div data-shortcuts></div>
+        </div>
+      </div>
+    </aside>
 
 ### Float button
 

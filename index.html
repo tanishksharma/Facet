@@ -708,7 +708,8 @@
           <div class="tab-set">
             <button type="button" class="tab-seg" data-settings-tab="options" aria-current="true" data-tip="Theme, appearance, motion, sound and haptics">Options</button>
             <button type="button" class="tab-seg" data-settings-tab="style" aria-current="false" data-tip="Colors and fonts, changed live">Style</button>
-            <button type="button" class="tab-seg tab-seg-desktop" data-settings-tab="advanced" aria-current="false" data-tip="The deeper tokens and the full builder">Advanced</button>
+            <button type="button" class="tab-seg tab-seg-desktop" data-settings-tab="advanced" aria-current="false" data-tip="The deeper tokens, layout and shape">Advanced</button>
+            <button type="button" class="tab-seg" data-settings-tab="shortcuts" aria-current="false" data-tip="The keyboard map for this page">Shortcuts</button>
           </div>
         </nav>
 
@@ -763,21 +764,38 @@
           <label class="menu-item menu-color" data-tip="The page behind everything">
             Background <input type="color" data-token="--background" aria-label="Background color">
           </label>
-          <label class="menu-item menu-color" data-tip="Cards and panels">
+          <label class="menu-item menu-color" data-tip="Cards and panels, one step above the page">
             Surface <input type="color" data-token="--surface" aria-label="Surface color">
           </label>
+          <label class="menu-item menu-color" data-tip="The interactive fill under a hovered surface">
+            Surface hover <input type="color" data-token="--surface-hover" aria-label="Surface hover color">
+          </label>
+          <span class="menu-label">Lines &amp; text</span>
           <label class="menu-item menu-color" data-tip="Hairlines and edges">
             Border <input type="color" data-token="--border" aria-label="Border color">
+          </label>
+          <label class="menu-item menu-color" data-tip="The heavier line weight for emphasis">
+            Border strong <input type="color" data-token="--border-strong" aria-label="Border strong color">
           </label>
           <label class="menu-item menu-color" data-tip="Captions and secondary text">
             Muted ink <input type="color" data-token="--text-muted" aria-label="Muted ink color">
           </label>
-          <span class="menu-label">Layout</span>
+          <label class="menu-item menu-color" data-tip="The quietest text: hints and disabled labels">
+            Subtle ink <input type="color" data-token="--text-subtle" aria-label="Subtle ink color">
+          </label>
+          <span class="menu-label">Layout &amp; shape</span>
           <button type="button" class="menu-item" data-density-cycle data-tip="Tightens or opens every spacing step" data-event="cycle-density"><svg width="18" height="18" data-icon="grid" aria-hidden="true"></svg> Density <span class="menu-value">Medium</span></button>
+          <button type="button" class="menu-item" data-text-size-cycle data-tip="Scales all text up or down together" data-event="cycle-text-size"><svg width="18" height="18" data-icon="edit" aria-hidden="true"></svg> Text size <span class="menu-value">Medium</span></button>
+          <button type="button" class="menu-item" data-shape-cycle data-tip="How round every corner is, from sharp to pill" data-event="cycle-shape"><svg width="18" height="18" data-icon="sparkle" aria-hidden="true"></svg> Roundness <span class="menu-value">Default</span></button>
           <button type="button" class="menu-item" data-width-cycle data-tip="How wide the page runs, from a reading column to edge to edge" data-event="cycle-width"><svg width="18" height="18" data-icon="arrow-right" aria-hidden="true"></svg> Page width <span class="menu-value">Default</span></button>
           <a class="menu-item" href="/build.html" data-event="open-builder" data-tip="Every token, with live preview and copyable config">
             <svg width="18" height="18" data-icon="sliders" aria-hidden="true"></svg> Open the full theme builder
           </a>
+        </div>
+
+        <div class="sheet-group" data-settings-panel="shortcuts" hidden>
+          <span class="menu-label">Keyboard</span>
+          <div data-shortcuts></div>
         </div>
       </div>
     </aside>

@@ -48,42 +48,10 @@
   margin-block: var(--space-control) 0;
 }
 
-/* The settings sheet's theme-builder rows: a small round swatch on the
-   row's right edge; the native color input is the control. */
-.menu-color input[type="color"] {
-  width: 1.9rem;
-  height: 1.9rem;
-  min-height: 0;
-  margin-left: auto;
-  padding: 0;
-  border: var(--border-hairline) solid var(--border);
-  border-radius: var(--radius-pill);
-  background: none;
-  cursor: pointer;
-}
-.menu-color input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-.menu-color input[type="color"]::-webkit-color-swatch { border: none; border-radius: var(--radius-pill); }
-/* The settings panel's own mini tab bar: in flow at the panel's top,
-   centred, its groove hugging the tabs it holds — never a panel-wide
-   trench for two pills — and scrolling sideways if they outgrow it. */
-.sheet-tabs {
-  position: static;
-  transform: none;
-  z-index: auto;
-  max-width: none;
-  padding: 0;
-  justify-content: center;
-}
-.sheet-tabs .tab-set {
-  width: fit-content;
-  max-width: 100%;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.sheet-tabs .tab-set::-webkit-scrollbar { display: none; }
-/* Advanced is a desktop concern — phones never see the tab */
-.tab-seg-desktop { display: none; }
-@media (min-width: 40rem) { .tab-seg-desktop { display: inline-flex; } }
+/* The settings-sheet builder styles (.menu-color swatch rows, .sheet-tabs
+   mini tab bar, .tab-seg-desktop, the shortcut list) now ship in the
+   LIBRARY (facet.css, Appearance panel), since the panel is a library
+   feature any page can use — they are no longer duplicated here. */
 
 /* The site bar (the tab bar pinned top on wide screens): the page and
    the pinned index clear it. On phones the same bar floats at the

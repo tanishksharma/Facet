@@ -7292,6 +7292,71 @@ body.sheet-open { overflow: hidden; touch-action: none; }
   margin-left: var(--space-inline);
   margin-right: auto;
 }
+
+/* ---- Appearance panel: colour rows, section tabs, shortcut list ----
+   The settings sheet, upgraded into a live customiser (facet.js
+   initAppearance). A .menu-color row carries a native colour input as a
+   small round swatch on its trailing edge; .sheet-tabs is the panel's own
+   in-flow mini tab bar; the shortcut list renders the keyboard map as
+   labelled key caps. All theme-driven — no fixed colour. */
+.menu-color input[type="color"] {
+  width: 1.9rem;
+  height: 1.9rem;
+  min-height: 0;
+  margin-left: auto;
+  padding: 0;
+  border: var(--border-hairline) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: none;
+  cursor: pointer;
+}
+.menu-color input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.menu-color input[type="color"]::-webkit-color-swatch { border: none; border-radius: var(--radius-pill); }
+
+/* The settings panel's own mini tab bar: in flow at the panel's top,
+   centred, its groove hugging the tabs it holds — never a panel-wide
+   trench for two pills — and scrolling sideways if they outgrow it. */
+.sheet-tabs {
+  position: static;
+  transform: none;
+  z-index: auto;
+  max-width: none;
+  padding: 0;
+  justify-content: center;
+}
+.sheet-tabs .tab-set {
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sheet-tabs .tab-set::-webkit-scrollbar { display: none; }
+/* A tab (or any element) marked desktop-only: hidden until there is room. */
+.tab-seg-desktop { display: none; }
+@media (min-width: 40rem) { .tab-seg-desktop { display: inline-flex; } }
+
+/* The keyboard map, injected into any [data-shortcuts] slot: one row per
+   shortcut — the key caps on the left, what they do on the right. */
+.shortcut-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+  padding: var(--space-tight) var(--space-inline);
+}
+.shortcut-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-control);
+}
+.shortcut-keys {
+  flex: none;
+  display: flex;
+  gap: var(--space-tight);
+  min-width: 5.5rem;
+}
+.shortcut-keys kbd { font-size: var(--text-caption); }
+.shortcut-label { color: var(--text-muted); font-size: var(--text-caption); }
+
 /* A horizontal row of icon controls: equal widths, proper button faces,
    each with a tiny state caption. */
 .menu-icon-row {

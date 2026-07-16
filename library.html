@@ -170,6 +170,7 @@
         <ul>
           <li><a href="#tab-bar">Tab bar</a></li>
           <li><a href="#sheet">Sheet &amp; menu</a></li>
+          <li><a href="#appearance-panel">Appearance panel</a></li>
           <li><a href="#float-button">Float button</a></li>
           <li><a href="#nav-menu">Nav menu</a></li>
           <li><a href="#translation">Content translation</a></li>
@@ -4185,6 +4186,63 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
         </div>
         <pre id="code-sheet"><code></code></pre>
         <p><button class="btn btn-small" data-copy="#code-sheet" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
+      <!-- APPEARANCE PANEL -->
+      <article class="element stack" id="appearance-panel" data-cat="appkit" data-llms="Appearance panel">
+        <h3 data-status="dev">Appearance panel</h3>
+        <p>
+          The settings sheet as a live customiser: tabbed sections for the theme
+          and appearance, the brand colors and fonts, the deeper surface tokens,
+          the layout and shape controls, and the page's keyboard shortcuts. Every
+          control restyles this page as you touch it. Open it and change the look.
+        </p>
+        <div class="demo">
+          <button type="button" class="btn" aria-controls="demo-appearance" aria-expanded="false"
+                  data-tip="Opens a real appearance panel over this page" data-event="open-appearance-demo">Open the appearance panel</button>
+          <div class="sheet-scrim" data-open="false"></div>
+          <aside class="sheet" id="demo-appearance" data-open="false" aria-hidden="true" aria-label="Appearance">
+            <div class="sheet-scroll">
+              <nav class="tab-bar sheet-tabs" aria-label="Settings sections">
+                <div class="tab-set">
+                  <button type="button" class="tab-seg" data-settings-tab="options" aria-current="true" data-tip="Theme and appearance">Options</button>
+                  <button type="button" class="tab-seg" data-settings-tab="style" aria-current="false" data-tip="Colors and fonts">Style</button>
+                  <button type="button" class="tab-seg" data-settings-tab="advanced" aria-current="false" data-tip="Deeper tokens, layout and shape">Advanced</button>
+                  <button type="button" class="tab-seg" data-settings-tab="shortcuts" aria-current="false" data-tip="The keyboard map">Shortcuts</button>
+                </div>
+              </nav>
+              <div class="sheet-group" data-settings-panel="options">
+                <span class="menu-label">Options</span>
+                <button type="button" class="menu-item" data-control="theme" aria-label="Theme: tap to cycle" data-tip="Cycles the palette">Theme <span class="menu-value">Default</span></button>
+                <button type="button" class="menu-item" data-control="appearance" aria-label="Appearance: light, dark or auto" data-tip="Light, dark, or follow the system">Appearance <span class="menu-value">Auto</span></button>
+              </div>
+              <div class="sheet-group" data-settings-panel="style" hidden>
+                <span class="menu-label">Colors</span>
+                <label class="menu-item menu-color" data-tip="The primary action color">Accent 1 <input type="color" data-skin="accent1" aria-label="Accent 1 color"></label>
+                <label class="menu-item menu-color" data-tip="The text ink">Ink <input type="color" data-skin="ink" aria-label="Ink color"></label>
+                <span class="menu-label">Fonts</span>
+                <button type="button" class="menu-item" data-font-cycle="fontHeading" data-tip="Cycles the heading face">Headings <span class="menu-value"></span></button>
+                <button type="button" class="menu-item" data-skin-reset data-tip="Back to the theme's own look"><svg width="18" height="18" data-icon="undo" aria-hidden="true"></svg> Reset the look</button>
+              </div>
+              <div class="sheet-group" data-settings-panel="advanced" hidden>
+                <span class="menu-label">Surfaces</span>
+                <label class="menu-item menu-color" data-tip="Cards and panels">Surface <input type="color" data-token="--surface" aria-label="Surface color"></label>
+                <label class="menu-item menu-color" data-tip="Captions and secondary text">Muted ink <input type="color" data-token="--text-muted" aria-label="Muted ink color"></label>
+                <span class="menu-label">Layout &amp; shape</span>
+                <button type="button" class="menu-item" data-density-cycle data-tip="Tightens or opens every spacing step"><svg width="18" height="18" data-icon="grid" aria-hidden="true"></svg> Density <span class="menu-value">Medium</span></button>
+                <button type="button" class="menu-item" data-text-size-cycle data-tip="Scales all text together"><svg width="18" height="18" data-icon="edit" aria-hidden="true"></svg> Text size <span class="menu-value">Medium</span></button>
+                <button type="button" class="menu-item" data-shape-cycle data-tip="How round every corner is"><svg width="18" height="18" data-icon="sparkle" aria-hidden="true"></svg> Roundness <span class="menu-value">Default</span></button>
+                <button type="button" class="menu-item" data-width-cycle data-tip="How wide the page runs"><svg width="18" height="18" data-icon="arrow-right" aria-hidden="true"></svg> Page width <span class="menu-value">Default</span></button>
+              </div>
+              <div class="sheet-group" data-settings-panel="shortcuts" hidden>
+                <span class="menu-label">Keyboard</span>
+                <div data-shortcuts></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <pre id="code-appearance-panel"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-appearance-panel" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
       <!-- FLOAT BUTTON -->

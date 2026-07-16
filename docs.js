@@ -1503,134 +1503,12 @@ function initSkinLab() {
 
 
 
-/* The site settings sheet doubles as a live theme builder. Simple mode:
-   the theme cycler, four color rows (the accent ranks and the ink —
-   facet.set skin keys, so hover/pressed/on- derive and the choice
-   persists), and two font cycles. Advanced mode: the deeper surface
-   tokens, density, and the door to the full builder page. Inputs read
-   their starting values from the live computed tokens. */
-function initSettingsSkin() {
-  const sheet = document.querySelector("#site-settings");
-  if (!sheet || !window.facet) return;
-
-  // Options | Style | Advanced — the panel's own mini tab bar; the
-  // indicator and aria-current come from the library's tab wiring.
-  // Panels differ in height, so the sheet EASES between its two heights
-  // instead of jumping: measure before and after the swap, then animate
-  // between the real values (height: auto cannot transition in CSS).
-  const panels = [...sheet.querySelectorAll("[data-settings-panel]")];
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  for (const tab of sheet.querySelectorAll("[data-settings-tab]"))
-    tab.addEventListener("click", () => {
-      const before = sheet.offsetHeight;
-      for (const p of panels) p.hidden = p.dataset.settingsPanel !== tab.dataset.settingsTab;
-      const after = sheet.offsetHeight;
-      if (sheet.animate && !reduce && Math.abs(after - before) > 1)
-        sheet.animate(
-          [{ height: `${before}px` }, { height: `${after}px` }],
-          { duration: 260, easing: "cubic-bezier(0.22, 1, 0.36, 1)" });
-    });
-
-  // resolve any token to a hex value through a probe element
-  const probe = document.createElement("span");
-  probe.style.display = "none";
-  document.body.appendChild(probe);
-  const toHex = (rgb) => {
-    const m = String(rgb).match(/\d+/g);
-    return m ? "#" + m.slice(0, 3).map((n) => (+n).toString(16).padStart(2, "0")).join("") : "#000000";
-  };
-  const resolve = (token) => {
-    probe.style.color = `var(${token})`;
-    return toHex(getComputedStyle(probe).color);
-  };
-
-  const SKIN_TOKEN = { accent1: "--accent-1", accent2: "--accent-2", accent3: "--accent-3", ink: "--text" };
-  const colorInputs = [...sheet.querySelectorAll('input[type="color"]')];
-  const syncColors = () => {
-    for (const input of colorInputs)
-      input.value = resolve(input.dataset.token || SKIN_TOKEN[input.dataset.skin]);
-  };
-  syncColors();
-  for (const input of colorInputs) {
-    input.addEventListener("input", () => {
-      if (input.dataset.skin) facet.set({ [input.dataset.skin]: input.value });
-      else facet.set({ [input.dataset.token]: input.value });
-    });
-  }
-  // a theme change re-inks everything — the swatches follow
-  sheet.querySelector('[data-control="theme"]')
-    ?.addEventListener("click", () => setTimeout(syncColors, 50));
-
-  // font cycles: a short list per role, applied through the skin keys
-  const FACES = {
-    fontHeading: ["Cormorant", "Playfair Display", "Newsreader", "Nunito Sans", "JetBrains Mono"],
-    fontBody: ["Nunito Sans", "Newsreader", "Cormorant", "JetBrains Mono"],
-  };
-  for (const btn of sheet.querySelectorAll("[data-font-cycle]")) {
-    const role = btn.dataset.fontCycle;
-    const value = btn.querySelector(".menu-value");
-    const current = () => {
-      const face = getComputedStyle(document.documentElement)
-        .getPropertyValue(role === "fontHeading" ? "--font-heading" : "--font-body");
-      return face.split(",")[0].replace(/["']/g, "").trim();
-    };
-    value.textContent = current();
-    btn.addEventListener("click", () => {
-      const list = FACES[role];
-      const next = list[(list.indexOf(current()) + 1) % list.length];
-      facet.set({ [role]: next });
-      value.textContent = next;
-      if (facet.feedback) facet.feedback.tick();
-    });
-  }
-
-  // density: the three-step spacing scale, this visit
-  const density = sheet.querySelector("[data-density-cycle]");
-  if (density) {
-    const value = density.querySelector(".menu-value");
-    const STEPS = ["small", "medium", "large"];
-    density.addEventListener("click", () => {
-      const cur = document.documentElement.dataset.density || "medium";
-      const next = STEPS[(STEPS.indexOf(cur) + 1) % STEPS.length];
-      facet.set({ density: next === "medium" ? null : next });
-      value.textContent = next[0].toUpperCase() + next.slice(1);
-      if (facet.feedback) facet.feedback.tick();
-    });
-  }
-
-  // page width: the content column, from reading width to edge to edge
-  const width = sheet.querySelector("[data-width-cycle]");
-  if (width) {
-    const value = width.querySelector(".menu-value");
-    const TIERS = [[null, "Default"], ["wide", "Wide"], ["xwide", "Extra wide"], ["full", "Full"], ["narrow", "Narrow"]];
-    width.addEventListener("click", () => {
-      const cur = document.documentElement.dataset.width || null;
-      const at = TIERS.findIndex(([v]) => v === cur);
-      const [next, word] = TIERS[(at + 1) % TIERS.length];
-      facet.set({ width: next });
-      value.textContent = word;
-      if (facet.feedback) facet.feedback.tick();
-    });
-  }
-
-  // reset: back to the theme's own look
-  sheet.querySelector("[data-skin-reset]")?.addEventListener("click", () => {
-    facet.set({ accent1: null, accent2: null, accent3: null,
-                ink: null, fontHeading: null, fontBody: null });
-    for (const input of colorInputs)
-      if (input.dataset.token) document.documentElement.style.removeProperty(input.dataset.token);
-    facet.set({ density: null });
-    syncColors();
-    for (const btn of sheet.querySelectorAll("[data-font-cycle]")) {
-      const role = btn.dataset.fontCycle;
-      const face = getComputedStyle(document.documentElement)
-        .getPropertyValue(role === "fontHeading" ? "--font-heading" : "--font-body");
-      btn.querySelector(".menu-value").textContent = face.split(",")[0].replace(/["']/g, "").trim();
-    }
-    if (density) density.querySelector(".menu-value").textContent = "Medium";
-    if (facet.feedback) facet.feedback.snap();
-  });
-}
+/* The site settings sheet is a live customiser — but the whole builder
+   (colour rows, font cycles, density/width/text-size/shape steppers, the
+   reset and the keyboard-shortcut slot) now ships in the LIBRARY as
+   facet.appearance / initAppearance, self-wiring on any .sheet that holds
+   the rows. The docs site just uses it like any other page, so there is
+   no settings-sheet JS here anymore. */
 
 /* The navigation sheet's foot actions: Share hands the page to the
    system share sheet (copies the link where sharing isn't available),
@@ -1682,7 +1560,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFontNames();                 // the Fonts cards name the resolved face
   initHeroTypewriter();            // the home hero's cycling app idea
   initMotionDemo();                // the Motion tokens entry: race, toast, modes
-  initSettingsSkin();              // the settings sheet's live theme-builder rows
   initSiteActions();               // share / PDF / copy-link in the nav sheet
   initBackgroundDemo();            // the Backgrounds entry: variants + knobs
   initDevicePreview();             // Layer 5 templates in scaled device frames

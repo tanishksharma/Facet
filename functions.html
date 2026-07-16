@@ -57,6 +57,7 @@
           <li><a href="#fn-tab-indicator">facet.tabIndicator</a></li>
           <li><a href="#fn-scroll-gauge">facet.scrollGauge</a></li>
           <li><a href="#fn-controls">Settings controls</a></li>
+          <li><a href="#fn-appearance">facet.appearance</a></li>
           <li><a href="#fn-keyboard">Keyboard map</a></li>
         </ul>
         </div>
@@ -494,6 +495,49 @@
 &lt;/button&gt;
 &lt;button type="button" class="menu-item" data-section="stats"&gt;Open stats&lt;/button&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-controls" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-appearance" data-llms="Appearance panel">
+          <h3>facet.appearance</h3>
+          <p>
+            Turns the settings sheet into a live customiser any page can
+            ship. Put the builder rows in a .sheet and facet.js wires them:
+            data-settings-tab splits the panel into sections; color inputs
+            carrying data-skin re-ink an accent rank or the text and persist
+            for the session, while data-token overrides any semantic token
+            for the visit; data-font-cycle steps a face list; the
+            data-density-cycle, data-width-cycle, data-text-size-cycle and
+            data-shape-cycle buttons step the layout controls; data-skin-reset
+            puts everything back; and a data-shortcuts slot is filled with
+            the keyboard map. Every change routes through facet.set, so the
+            live page restyles with no reload. facet.appearance() re-wires a
+            panel added to the page late.
+          </p>
+          <pre id="code-fn-appearance"><code>&lt;aside class="sheet sheet-rise" id="settings" aria-label="Settings"&gt;
+  &lt;div class="sheet-scroll"&gt;
+    &lt;nav class="tab-bar sheet-tabs" aria-label="Settings sections"&gt;
+      &lt;div class="tab-set"&gt;
+        &lt;button class="tab-seg" data-settings-tab="style" aria-current="true"&gt;Style&lt;/button&gt;
+        &lt;button class="tab-seg" data-settings-tab="advanced" aria-current="false"&gt;Advanced&lt;/button&gt;
+        &lt;button class="tab-seg" data-settings-tab="shortcuts" aria-current="false"&gt;Shortcuts&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/nav&gt;
+    &lt;div class="sheet-group" data-settings-panel="style"&gt;
+      &lt;label class="menu-item menu-color"&gt;Accent &lt;input type="color" data-skin="accent1" aria-label="Accent 1"&gt;&lt;/label&gt;
+      &lt;button class="menu-item" data-font-cycle="fontHeading"&gt;Headings &lt;span class="menu-value"&gt;&lt;/span&gt;&lt;/button&gt;
+      &lt;button class="menu-item" data-skin-reset&gt;Reset the look&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="sheet-group" data-settings-panel="advanced" hidden&gt;
+      &lt;label class="menu-item menu-color"&gt;Surface &lt;input type="color" data-token="--surface" aria-label="Surface"&gt;&lt;/label&gt;
+      &lt;button class="menu-item" data-density-cycle&gt;Density &lt;span class="menu-value"&gt;Medium&lt;/span&gt;&lt;/button&gt;
+      &lt;button class="menu-item" data-shape-cycle&gt;Roundness &lt;span class="menu-value"&gt;Default&lt;/span&gt;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="sheet-group" data-settings-panel="shortcuts" hidden&gt;
+      &lt;div data-shortcuts&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/aside&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-appearance" data-tip="Copies this code">Copy</button></p>
         </article>
 
         <article class="element stack" id="fn-keyboard" data-llms="Keyboard navigation">
