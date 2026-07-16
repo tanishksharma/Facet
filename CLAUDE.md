@@ -791,6 +791,32 @@ twenty-file ritual.
 - A Facet-built product's own `llms.txt` is a different artifact from Facet's
   `llms.txt`: it describes THAT product, not the library. The starter provides
   the template and states the rule.
+- **The rest of the root contract (audited 16 Jul 2026).** The kit takes a
+  position on every other root and .well-known file, so a builder never
+  wonders. Three verdicts:
+  - Ship by default: a styled `404.html` (Vercel serves it natively for
+    static sites — useful links, on-theme); an `offline.html` fallback the
+    service worker shows when network-first misses cache; security headers in
+    `vercel.json` (X-Content-Type-Options, Referrer-Policy,
+    Permissions-Policy, frame-ancestors CSP — a static site earns them for
+    free); `.well-known/security.txt` (RFC 9116, a contact line for security
+    reports); and an explicit AI-crawler stance in robots.txt (name GPTBot,
+    ClaudeBot, PerplexityBot etc. and ALLOW them — being AI-readable is the
+    whole point; say it instead of leaving the default silence).
+  - Ship when it applies: an RSS/Atom `feed.xml` for content sites (feeds
+    are also AI-readable); `hreflang` alternate links in the head when the
+    page ships the translation layer's languages; the manifest extras for
+    installable apps — `shortcuts`, `screenshots`, `share_target`, `id` —
+    which unlock the richer Android/Chrome install UI; a
+    `.well-known/change-password` redirect when a site has auth (password
+    managers use it); and speculation rules
+    (`<script type="speculationrules">`) for instant navigations — no build
+    step, pure app feel; assess as its own small item.
+  - Refuse, and say why in the docs (the refusals ARE part of the product):
+    `browserconfig.xml` (dead IE/Edge legacy), Safari `mask-icon` pinned-tab
+    (obsolete), `humans.txt` (noise), `ads.txt`/`app-ads.txt` (only if
+    running ads), `apple-app-site-association` / `assetlinks.json`
+    (native-app territory), and the old twenty-file favicon ritual.
 
 **The tool.** A studio page in the same shape as the Themes page (build.html):
 a favicon designer (type a letter or pick the mark, choose colour and shape,
