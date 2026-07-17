@@ -7,7 +7,7 @@
 - AI writes the code now. Developer efficiency through abstraction no longer earns its weight.
 - AI training data is full of React, so an AI builds React by default. The default is wrong: the abstractions are dead weight the AI fights through, and the human cannot read what shipped.
 - When a machine does the typing, the right material is what is best for the web and best for a machine to reason about: clean, semantic, native HTML, CSS and JS.
-- No build. Works everywhere. Ages well. Readable by the person who checks it.
+- No build. Works everywhere. Ages well. Readable by the person who checks it. [done]
 
 ## The one line
 
@@ -17,12 +17,12 @@ React made the web complex so developers could build. AI does the building now, 
 
 - Vibe coders and serious intermediate builders: a PM, a founder, anyone with taste and an idea.
 - Not developers who want ceremony.
-- The promise: point your AI at Facet and ship a real, tasteful product.
+- The promise: point your AI at Facet and ship a real, tasteful product. [done]
 
 ## What it refuses
 
-- No npx. No CLI. No registry. No "copy these files". No install ritual.
-- One link tag, one script tag, and a guide the AI already knows how to read.
+- No npx. No CLI. No registry. No "copy these files". No install ritual. [done]
+- One link tag, one script tag, and a guide the AI already knows how to read. [done]
 
 ## Honest about React
 
