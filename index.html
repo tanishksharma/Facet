@@ -23,121 +23,56 @@
   <main id="main" class="container stack-loose">
 
     <!-- ==============================
-         Hero 1 · How you use it
-         Centered on the library's own fluid background: the gem, the
-         one-sentence prompt, and real components drifting around it.
+         The landing
+         One clean card: the sentence, a copy button, one line of help.
+         The library's fluid background breathes behind it.
          ============================== -->
     <section id="start" class="hero" data-bg-fluid
              style="justify-items: center; text-align: center; border-radius: var(--radius-card); padding-inline: var(--space-card);">
       <svg width="72" height="72" data-icon="gem" class="icon-3d idle-float" data-parallax="6" aria-hidden="true"></svg>
-      <p class="eyebrow">A design library your AI can read</p>
-      <h1 class="text-display">Ask your AI, get a product.</h1>
+      <h1 class="text-display">Built for your AI.</h1>
+      <p style="max-width: var(--measure); margin-inline: auto;">Facet is a design library in plain HTML, CSS and JS. One link, one script — and your AI already knows every piece.</p>
       <pre id="the-prompt" style="white-space: pre-wrap;"><code>Use the Facet library at facet.tanishksharma.com and build me a ___.</code></pre>
       <p class="row" style="justify-content: center;">
-        <button class="btn btn-primary btn-large go" data-copy="#the-prompt" data-event="copy-prompt"
-                data-tip="Copies the sentence to your clipboard">Copy the sentence</button>
-        <a class="flagship-link" href="/product.html" style="font-size: var(--text-body);">See the method</a>
+        <button class="btn btn-primary" data-copy="#the-prompt" data-event="copy-prompt"
+                data-tip="Copies the sentence to your clipboard">
+          <svg width="16" height="16" data-icon="copy" aria-hidden="true"></svg> Copy
+        </button>
       </p>
-      <p class="text-footnote">Paste it into your AI of choice and have fun.</p>
-      <!-- Real components, floating: every piece below is live library code. -->
-      <p class="row" style="justify-content: center;" aria-label="Live pieces, drifting">
-        <span class="badge badge-success idle-sway" data-parallax="12">Shipped</span>
-        <span class="avatar-group idle-float" data-parallax="8">
-          <span class="avatar" aria-label="Ada">AL</span>
-          <span class="avatar" aria-label="Noor">NK</span>
-          <span class="avatar">+3</span>
-        </span>
-        <button class="chip idle-float" aria-pressed="true" data-parallax="14" data-tip="A live filter chip">Dark mode</button>
-        <label class="check-row idle-sway" data-parallax="10" data-tip="A live switch"><input type="checkbox" class="switch" checked> Sounds</label>
-        <span class="badge idle-float" data-parallax="16">v0.9</span>
-      </p>
+      <p class="text-footnote">Copy this and paste it into your AI.</p>
     </section>
 
     <!-- ==============================
-         The three steps + what a shipped product includes
-         Centered cards; shine on the bento tiles.
+         What happens next
+         Three plain lines, no cards.
          ============================== -->
-    <section id="how" class="stack-loose" style="text-align: center;">
-      <h2 class="heading-bar heading-bar-center">Three steps, no tech</h2>
-      <div class="grid-3">
-        <article class="card card-feature" data-shine>
-          <span class="card-feature-icon"><svg data-icon="clipboard" aria-hidden="true"></svg></span>
-          <h3 class="card-feature-title">1 · Paste the prompt</h3>
-          <p class="card-feature-text">Your AI reads the whole library in one fetch.</p>
-        </article>
-        <article class="card card-feature" data-shine>
-          <span class="card-feature-icon"><svg data-icon="message" aria-hidden="true"></svg></span>
-          <h3 class="card-feature-title">2 · Plan together</h3>
-          <p class="card-feature-text">It guides you through what you are building and how.</p>
-        </article>
-        <article class="card card-feature" data-shine>
-          <span class="card-feature-icon"><svg data-icon="rocket" aria-hidden="true"></svg></span>
-          <h3 class="card-feature-title">3 · It builds</h3>
-          <p class="card-feature-text">A ready-to-ship product from the library's components — the full method is on the <a href="/product.html">Product page</a>.</p>
-        </article>
-      </div>
-      <p class="text-footnote">For vibe coders, PMs, hobby builders — anyone who wants to ship a product and does not care about the tech.</p>
-      <p class="eyebrow">Every product you ship includes</p>
-      <div class="grid-tight" style="--grid-min: 9.5rem;">
-        <div class="card stack-tight" data-shine><svg data-icon="contrast" aria-hidden="true"></svg><strong>Themes &amp; dark mode</strong></div>
-        <div class="card stack-tight" data-shine><svg data-icon="globe" aria-hidden="true"></svg><strong>Translation</strong></div>
-        <div class="card stack-tight" data-shine><svg data-icon="print" aria-hidden="true"></svg><strong>Print</strong></div>
-        <div class="card stack-tight" data-shine><svg data-icon="download-cloud" aria-hidden="true"></svg><strong>Offline install</strong></div>
-        <div class="card stack-tight" data-shine><svg data-icon="eye" aria-hidden="true"></svg><strong>Accessibility</strong></div>
-        <div class="card stack-tight" data-shine><svg data-icon="volume" aria-hidden="true"></svg><strong>Sound &amp; motion</strong></div>
-        <div class="card stack-tight" data-shine><svg data-icon="chart" aria-hidden="true"></svg><strong>Analytics hooks</strong></div>
-        <div class="card stack-tight" data-shine><svg data-icon="tag" aria-hidden="true"></svg><strong>Versioning</strong></div>
-      </div>
+    <section id="how" style="text-align: center; padding-block: var(--space-section); max-width: var(--measure); margin-inline: auto;">
+      <h2 class="heading-bar heading-bar-center">What happens next</h2>
+      <p><strong>1.</strong> Your AI reads the whole library in one fetch.</p>
+      <p><strong>2.</strong> It asks what you are building, and plans it with you.</p>
+      <p><strong>3.</strong> It builds the product from the library's parts, ready to ship.</p>
+      <p class="text-footnote">The full method — the interview, the plan, the quality bar — is on the <a href="/product.html">Product page</a>. You do not need to care about the tech.</p>
     </section>
 
     <hr aria-hidden="true">
 
     <!-- ==============================
-         Hero 2 · The argument
-         The claim as display type, six evidence cards, one quiet line.
+         Why this exists
+         The case, in plain words. Reading text, so it sits in normal
+         flow at reading measure — not cards.
          ============================== -->
-    <section id="argument" class="stack-loose" style="text-align: center; padding-block: var(--space-section);">
-      <p class="eyebrow">The argument</p>
-      <h2 class="text-display" style="margin: 0;">Now that AI writes the code,<br>the web can get clean again.</h2>
-      <div class="grid" style="text-align: left;">
-        <article class="card card-feature">
-          <span class="card-feature-icon"><svg data-icon="code" aria-hidden="true"></svg></span>
-          <h3 class="card-feature-title">Commented HTML anyone can read</h3>
-          <p class="card-feature-text">The library and every page built with it stay legible, top to bottom. Open the source of this page — that is the product.</p>
-        </article>
-        <article class="card card-feature">
-          <span class="card-feature-icon"><svg data-icon="package" aria-hidden="true"></svg></span>
-          <h3 class="card-feature-title">No bloated framework</h3>
-          <p class="card-feature-text">No runtime shipping unreadable minified slop between you and the page. One CSS file, one JS file, never minified.</p>
-        </article>
-        <article class="card card-feature">
-          <span class="card-feature-icon"><svg data-icon="zap" aria-hidden="true"></svg></span>
-          <h3 class="card-feature-title">The browser does the work</h3>
-          <p class="card-feature-text">Dialogs, snapping, dark mode, install, print — the platform's own features switched on, not rebuilt in script.</p>
-        </article>
-        <article class="card card-feature">
-          <span class="card-feature-icon"><svg data-icon="phone" aria-hidden="true"></svg></span>
-          <h3 class="card-feature-title">Every screen and browser respected</h3>
-          <p class="card-feature-text">Phone first, 44px targets, safe areas, your text-size setting honoured, and the hard-won iOS fixes baked in.</p>
-        </article>
-        <article class="card card-feature">
-          <span class="card-feature-icon"><svg data-icon="globe" aria-hidden="true"></svg></span>
-          <h3 class="card-feature-title">Translation built in</h3>
-          <p class="card-feature-text">One attribute switches the page's language — your content and the library's own labels together, crawlable with JS off.</p>
-        </article>
-        <article class="card card-feature">
-          <span class="card-feature-icon"><svg data-icon="tag" aria-hidden="true"></svg></span>
-          <h3 class="card-feature-title">Versioning that never breaks you</h3>
-          <p class="card-feature-text">Projects point at the hosted files and get every fix; frozen version folders will pin a shipped project forever.</p>
-        </article>
-      </div>
+    <section id="why" style="padding-block: var(--space-section); max-width: var(--measure); margin-inline: auto;">
+      <h2>The web can be light again.</h2>
+      <p>Frameworks like React exist to make developers faster. That was a fair trade when people typed every line: you accepted build steps, npm, bundlers and minified output because they helped teams ship.</p>
+      <p>Now AI does the typing, and the trade stops making sense. The machinery built for developer speed is just weight the machine has to fight through, and the page you ship becomes something nobody can read.</p>
+      <p>So Facet goes back to the material the web is made of: semantic HTML, plain CSS, a little JS. Pages load fast, work in every browser, install to a phone, print like documents, and you can open the source and understand every line. The browser already knows how to do most of what frameworks rebuild — dialogs, snapping, dark mode, offline. Facet just switches it on.</p>
       <p class="text-footnote">No npm, no build, no framework, never minified.</p>
     </section>
 
     <hr aria-hidden="true">
 
     <!-- ==============================
-         The numbers · stat row
+         The numbers
          Counts taken from the shipped files, not estimates.
          ============================== -->
     <section id="numbers" class="stack-loose" style="text-align: center; padding-block: var(--space-section);">
@@ -153,25 +88,22 @@
     </section>
 
     <!-- ==============================
-         Live component wall
-         Real working components. Nothing is a screenshot.
+         Try it right here
+         Two clusters instead of a wall of identical tiles: a working
+         form on one side; a chart, a sorting table and pressable
+         controls on the other. All live library code.
          ============================== -->
     <section id="live" class="stack-loose" style="padding-block: var(--space-section);">
-      <h2 class="heading-bar heading-bar-center" style="text-align: center;">Real components, running here</h2>
-      <p style="text-align: center;">Everything below is live library code — type, drag, sort, press. The same pieces, with their copy-paste HTML, live on the <a href="/library.html">Library page</a>.</p>
-      <div class="grid">
-
-        <article class="card stack-tight">
-          <p class="eyebrow">A field, validating</p>
+      <h2 class="heading-bar heading-bar-center" style="text-align: center;">Try it right here</h2>
+      <p style="text-align: center;">This page is the library. These are live — type, drag, sort, press.</p>
+      <div class="grid-2">
+        <form class="card stack" onsubmit="return false">
+          <strong>A working form</strong>
           <label class="field">
             <span class="field-label">Your email</span>
             <input type="email" required placeholder="you@example.com" autocomplete="email">
             <span class="field-hint">Type something wrong and tab away — the browser itself objects.</span>
           </label>
-        </article>
-
-        <article class="card stack-tight">
-          <p class="eyebrow">A number that speaks your locale</p>
           <label class="field">
             <span class="field-label">Monthly investment</span>
             <span class="number-input">
@@ -183,32 +115,6 @@
             <span class="number-words" aria-live="polite"></span>
             <span class="field-hint">Groups as you type, spelled out in words.</span>
           </label>
-        </article>
-
-        <article class="card stack-tight">
-          <p class="eyebrow">A chart, drawing</p>
-          <div class="chart-card"><div class="chart" id="growth-chart"></div></div>
-          <p class="text-caption">Components shipped: 12 in Jan to 91 in Jul. Drag across the plot to read values.</p>
-        </article>
-
-        <article class="card stack-tight">
-          <p class="eyebrow">A table, sorting</p>
-          <div class="table-scroll">
-            <table class="table" data-sortable>
-              <thead><tr><th scope="col">Template</th><th scope="col" class="num">Lines</th></tr></thead>
-              <tbody>
-                <tr><td>Landing</td><td class="num">312</td></tr>
-                <tr><td>Dashboard</td><td class="num">540</td></tr>
-                <tr><td>Deck</td><td class="num">421</td></tr>
-                <tr><td>Invoice</td><td class="num">268</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="text-caption">Click a header — keyboard works too.</p>
-        </article>
-
-        <article class="card stack-tight">
-          <p class="eyebrow">A slider, live</p>
           <label class="field">
             <span class="field-label">Years <output>10</output></span>
             <input type="range" class="slider" min="1" max="40" value="10"
@@ -220,46 +126,36 @@
             </span>
             <input type="checkbox" class="switch" checked>
           </label>
-        </article>
-
-        <article class="card feed-post">
-          <div class="feed-author">
-            <span class="avatar" aria-hidden="true">TS</span>
-            <div class="feed-author-meta">
-              <strong class="feed-author-name">Tanishk</strong>
-              <span class="text-caption">Posted</span>
-            </div>
-            <span class="feed-date text-caption">Today</span>
+        </form>
+        <div class="stack">
+          <div class="chart-card"><div class="chart" id="growth-chart"></div></div>
+          <p class="text-caption">Components shipped, Jan to Jul. Drag across the plot to read values.</p>
+          <div class="table-scroll">
+            <table class="table" data-sortable>
+              <thead><tr><th scope="col">Template</th><th scope="col" class="num">Lines</th></tr></thead>
+              <tbody>
+                <tr><td>Landing</td><td class="num">312</td></tr>
+                <tr><td>Dashboard</td><td class="num">540</td></tr>
+                <tr><td>Deck</td><td class="num">421</td></tr>
+                <tr><td>Invoice</td><td class="num">268</td></tr>
+              </tbody>
+            </table>
           </div>
-          <div class="feed-post-body"><p class="text-footnote feed-comment">A social post is a component too — author row, body, tags, reactions, all one card.</p></div>
-          <div class="chips feed-tags">
-            <span class="feed-tag" role="button" tabindex="0" aria-pressed="false">#facet</span>
-          </div>
-          <div class="feed-actions" role="group" aria-label="Reactions">
-            <button type="button" class="feed-act" data-event="post-like" aria-pressed="false" aria-label="Like"><svg width="16" height="16" data-icon="heart" aria-hidden="true"></svg><span>12</span></button>
-            <span class="feed-act feed-act-static"><svg width="16" height="16" data-icon="eye" aria-hidden="true"></svg>1.2k</span>
-          </div>
-        </article>
-
-        <article class="card stack-tight">
-          <p class="eyebrow">Buttons that press and tick</p>
+          <p class="text-caption">Click a header to sort — keyboard works too.</p>
           <p class="row">
             <button class="btn btn-primary" data-event="demo-press" data-tip="Presses with weight, clicks, and vibrates where it can">Press me</button>
-            <button class="btn" data-event="demo-press-2" data-tip="The secondary action">And me</button>
+            <span class="stepper" role="group" aria-label="Guests">
+              <button type="button" class="stepper-down" aria-label="Fewer" data-tip="Ticks as it steps">−</button>
+              <input type="number" value="2" min="1" max="12" aria-label="Guests">
+              <button type="button" class="stepper-up" aria-label="More" data-tip="Ticks as it steps">+</button>
+            </span>
           </p>
-          <div class="stepper" role="group" aria-label="Guests">
-            <button type="button" class="stepper-down" aria-label="Fewer" data-tip="Ticks as it steps">−</button>
-            <input type="number" value="2" min="1" max="12" aria-label="Guests">
-            <button type="button" class="stepper-up" aria-label="More" data-tip="Ticks as it steps">+</button>
-          </div>
-          <p class="text-caption">Sound and haptics are on by default — the settings sheet is the mute.</p>
-        </article>
-
+        </div>
       </div>
     </section>
 
     <!-- ==============================
-         Theming, live · split
+         Theming, live
          Four themes and dark mode beside a small product scene.
          Clicking restyles this whole page, not just the scene.
          ============================== -->
@@ -305,7 +201,7 @@
     </section>
 
     <!-- ==============================
-         Translation, live · split, mirrored
+         Translation, live
          The same scene, flipped into another language by one attribute.
          ============================== -->
     <section id="translation" class="stack" style="padding-block: var(--space-section);">
@@ -313,7 +209,7 @@
         <article class="card stack-tight" data-shine>
           <strong data-i18n><span data-lang="en">Every label follows</span><span data-lang="hi" hidden>हर लेबल साथ बदलता है</span></strong>
           <p class="text-footnote" data-i18n>
-            <span data-lang="en">Author each language inline; the active one shows, the rest hide. With JavaScript off, one language still renders — crawlable by design.</span>
+            <span data-lang="en">Write each language inline; the one the reader picked shows, the rest hide. With JavaScript off, one language still renders — crawlable by design.</span>
             <span data-lang="hi" hidden>हर भाषा एक ही HTML में लिखिए; चुनी हुई दिखती है, बाकी छिप जाती हैं। JavaScript बंद होने पर भी एक भाषा दिखती है।</span>
           </p>
           <label class="field">
@@ -339,8 +235,9 @@
     </section>
 
     <!-- ==============================
-         Sound and motion, live · split, alternating
-         Press things, hear ticks, watch springs; calm and off right beside.
+         Sound and motion, live
+         Press things, hear ticks, watch springs; the switches sit
+         right beside them.
          ============================== -->
     <section id="feel" class="stack" style="padding-block: var(--space-section);">
       <div class="grid-2">
@@ -362,12 +259,11 @@
             </button>
           </p>
           <p class="row">
-            <button class="btn btn-primary btn-large go" data-event="feel-press" data-tip="Press and hold — weight, click, vibration">Press and hold</button>
+            <button class="btn btn-primary btn-large" data-event="feel-press" data-tip="Press and hold — weight, click, vibration">Press and hold</button>
           </p>
         </div>
         <article class="card stack-tight idle-float" data-shine data-parallax="10">
-          <p class="eyebrow">This card is alive</p>
-          <strong>It drifts and catches light</strong>
+          <strong>This card is alive</strong>
           <p class="text-footnote">Parallax and shine ride one engine — your cursor, your phone's tilt, or an idle drift when nothing moves. Set Motion to Cursor or Tilt and lean in.</p>
         </article>
       </div>
@@ -376,7 +272,7 @@
     <hr aria-hidden="true">
 
     <!-- ==============================
-         What you can ship · horizontal card row
+         What you can ship
          Each card is the real template in a live frame, not an image.
          ============================== -->
     <section id="ship" class="stack-loose" style="padding-block: var(--space-section);">
@@ -427,8 +323,8 @@
     </section>
 
     <!-- ==============================
-         Everything it carries · chip strip
-         The rest of the inventory, each chip a link into the Library.
+         Everything it carries
+         The rest of the inventory as chips, each a link into the Library.
          ============================== -->
     <section id="carries" class="stack-loose" style="text-align: center; padding-block: var(--space-section);">
       <h2 class="heading-bar heading-bar-center">Everything it carries</h2>
@@ -448,24 +344,22 @@
     </section>
 
     <!-- ==============================
-         AI-native · the file your AI reads
+         For your AI
          llms.txt raw, and the two tags that are the whole install.
          ============================== -->
-    <section id="ai" class="stack-loose" style="padding-block: var(--space-section);">
-      <h2 class="heading-bar heading-bar-center" style="text-align: center;">AI-native</h2>
-      <p style="text-align: center;">One fetch teaches your AI everything. <a href="/llms.txt">llms.txt</a> is the whole library as plain text — this is how it opens:</p>
-      <pre><code># Facet
+    <section id="ai" class="stack-loose" style="text-align: center; padding-block: var(--space-section);">
+      <h2 class="heading-bar heading-bar-center">One file teaches your AI everything</h2>
+      <p style="max-width: var(--measure); margin-inline: auto;"><a href="/llms.txt">llms.txt</a> is the whole library as plain text. Your AI fetches it once and knows every component, theme and rule. This is how it opens:</p>
+      <pre style="width: fit-content; max-width: 100%; margin-inline: auto; text-align: left;"><code># Facet
 
 Facet is a plain HTML, CSS and JS design library. It is one CSS file and
 one JS file (plus a small optional service-worker engine, facet-sw.js,
 that powers offline/PWA) hosted at a public URL. Any page consumes it
 with one link tag and one script tag. No React, no build step, no npm
-install, never minified.
-This file is the full usage guide as plain text, for AI crawlers and
-builders — the exhaustive inventory of what Facet does and how to use it.</code></pre>
-      <p style="text-align: center;"><a class="flagship-link go" href="/llms.txt">Read the whole file</a></p>
-      <p style="text-align: center;">And the entire install, for people:</p>
-      <pre id="snippet-consume"><code>&lt;link rel="stylesheet" href="https://facet.tanishksharma.com/lib/facet.css"&gt;
+install, never minified.</code></pre>
+      <p><a class="flagship-link" href="/llms.txt" style="font-size: var(--text-body);">Read the whole file</a></p>
+      <p>And the entire install, for people:</p>
+      <pre id="snippet-consume" style="width: fit-content; max-width: 100%; margin-inline: auto; text-align: left;"><code>&lt;link rel="stylesheet" href="https://facet.tanishksharma.com/lib/facet.css"&gt;
 &lt;script src="https://facet.tanishksharma.com/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
       <p class="row" style="justify-content: center;">
         <button class="btn btn-small" data-copy="#snippet-consume" data-event="copy-consume"
@@ -474,8 +368,8 @@ builders — the exhaustive inventory of what Facet does and how to use it.</cod
     </section>
 
     <!-- ==============================
-         The close · open source
-         The invite to add a component, and the sentence one last time.
+         The close
+         Open source, and the sentence one last time.
          ============================== -->
     <section id="open-source" class="stack-loose bg-grid" data-bg-scatter="✦ ❋"
              style="text-align: center; padding: var(--space-section) var(--space-card); border-radius: var(--radius-card);">
@@ -485,12 +379,14 @@ builders — the exhaustive inventory of what Facet does and how to use it.</cod
         <a class="btn" href="https://github.com/tanishksharma/Facet" data-event="open-github">
           <svg width="16" height="16" data-icon="code" aria-hidden="true"></svg> GitHub
         </a>
-        <a class="btn btn-ghost go" href="/CLAUDE.md" data-event="open-charter">Read the charter</a>
+        <a class="btn btn-ghost" href="/CLAUDE.md" data-event="open-charter">Read the charter</a>
       </p>
       <div class="cta-band">
         <p class="text-h3"><strong>Use the Facet library at facet.tanishksharma.com and build me a ___.</strong></p>
         <button class="btn" data-copy="#the-prompt" data-event="copy-prompt-close"
-                data-tip="Copies the sentence to paste into your AI">Copy the sentence</button>
+                data-tip="Copies the sentence to paste into your AI">
+          <svg width="16" height="16" data-icon="copy" aria-hidden="true"></svg> Copy
+        </button>
       </div>
     </section>
 
