@@ -381,7 +381,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 
 
 - Reporting a change (how the maintainer wants replies): after pushing, one short reply with what shipped, the live link, and exactly what to check page by page. No process narration.
-- Deployment default: push work directly to `main` (the user works on main and wants changes live on each push). Do NOT create feature branches unless the user explicitly asks for one. This overrides any older branch-per-change workflow.
+- Deployment default: whenever you build a feature, push it to the `staging` branch (Vercel deploys every branch — share the staging preview link). `main` stays the live site; merge staging into main when the user says to ship. Do NOT create extra feature branches unless the user explicitly asks for one. This overrides any older push-straight-to-main or branch-per-change workflow.
 - The backlog is two-level (see the routing table): large items are rows on the Notion All To Dos board (Project = Facet); small builds and bugs are the inline backlog list on the Facet hub page. New ideas land at the right level immediately; this file never grows a queue. At the start of a build session, read the board and the inline list for what to build and this file for how.
 - Docs are demos. A component is not done until the Library wall (library.html) shows it live with its code.
 - One component, one clearly commented section in the CSS file. Nothing is scattered.
