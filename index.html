@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Facet — a plain HTML, CSS & JS design library</title>
-  <meta name="description" content="This is how the web was meant to be. Point your AI at Facet — a plain HTML, CSS and JS design library with themes, app feel and a build method — and build real products. Two tags, no build step, readable by people and by AI.">
+  <meta name="description" content="Point your AI at Facet — a plain HTML, CSS and JS design library with themes, app feel and a build method — and it builds you a real product. Two tags, no build step, readable by people and by AI.">
   <meta property="og:title" content="Facet — a plain HTML, CSS & JS design library">
-  <meta property="og:description" content="This is how the web was meant to be. Point your AI at Facet — a plain HTML, CSS and JS design library with themes, app feel and a build method — and build real products. Two tags, no build step, readable by people and by AI.">
+  <meta property="og:description" content="Point your AI at Facet — a plain HTML, CSS and JS design library with themes, app feel and a build method — and it builds you a real product. Two tags, no build step, readable by people and by AI.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://facet.tanishksharma.com/">
   <meta property="og:image" content="https://facet.tanishksharma.com/icons/icon-512.png">
@@ -16,789 +16,652 @@
   <link rel="alternate" type="text/plain" href="/llms.txt" title="Facet — how to use it, for AI">
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
-  <link rel="stylesheet" href="/docs.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <!-- No page header: the "facet" wordmark sits top-left in the flow and
-       scrolls with the page; the floating site menu (bottom-right) carries
-       the navigation. -->
-  <!-- Landing: one calm, centered block. The two tags are the hero — copy
-       them, pick a look, scroll on into the two-panel library below. Mode
-       stays automatic (each visitor's system preference); themes are the
-       only pick offered here. -->
-  <section class="landing container stack" aria-label="Get started">
-    <h1 class="landing-title">This is how the web was meant to&nbsp;be.</h1>
-    <p class="landing-lede">
-      Facet is a design library in plain HTML, CSS and JS. One link, one
-      script, no build step, never minified — this page <em>is</em> the library.
-    </p>
 
-    <!-- How to use it, whole: one sentence to your AI. The app idea types
-         itself out in the typewriter face and cycles (initHeroTypewriter). -->
-    <div class="hero-ask stack" aria-label="How to use Facet">
-      <p class="eyebrow hero-ask-label">Tell your AI:</p>
-      <blockquote class="hero-quote">
-        “Use the Facet library and help me build
-        <span class="hero-idea" id="hero-idea">an inflation calculator</span>.”
-      </blockquote>
-      <p class="hero-explain">
-        That sentence is the whole workflow. Facet exists to give your AI
-        taste: it teaches it, in its own language, how to build good web
-        apps, good installable apps and good products — every component,
-        every theme, every rule of craft, readable in one fetch.
-      </p>
-    </div>
-
-    <pre id="snippet-consume" class="landing-snippet"><code>&lt;link rel="stylesheet" href="https://[domain]/lib/facet.css"&gt;
-&lt;script src="https://[domain]/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
-    <!-- The site itself always knows its own domain: fill it in, so the
-         copied snippet points at wherever this page is actually hosted. -->
-    <script>
-      document.getElementById("snippet-consume").textContent =
-        document.getElementById("snippet-consume").textContent
-          .replaceAll("https://[domain]", location.origin);
-    </script>
-
-    <p class="landing-actions">
-      <button class="btn btn-primary" data-copy="#snippet-consume"
-              data-tip="Copies the two tags to your clipboard" data-event="copy-consume">Copy the two tags</button>
-    </p>
-
-    <!-- Pick a theme: the tags above rewrite themselves to carry it (data
-         attributes boot any page into it), and this page follows live
-         through the same facet.set() API projects use. Mode is left on
-         auto by design. -->
-    <p class="chips landing-chips" id="setup-strip" role="group" aria-label="Theme">
-      <button class="chip" aria-pressed="true" data-setup="theme" data-setup-value="" data-tip="White and black, the quiet base">Default</button>
-      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="velvet" data-tip="Neumorphic matte fabric, gold ink">Velvet</button>
-      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="aero" data-tip="Sky aqua, glass gloss, pill buttons">Aero</button>
-      <button class="chip" aria-pressed="false" data-setup="theme" data-setup-value="elegant" data-tip="Cream and gold, serif display, carved panels">Elegant</button>
-    </p>
-    <p id="size-badge" class="landing-size" hidden></p>
-  </section>
-
-  <!-- The divider between the landing and the two-panel library. -->
-  <hr class="section-rule container-wide" aria-hidden="true">
+  <!-- ==============================
+       Site header · the library's own top menu block
+       Brand plus the four pages; on phones the links fold behind Menu.
+       ============================== -->
+  <div class="top-menu-sticky">
+    <header class="top-menu">
+      <a class="brand-lockup" href="/" aria-current="page" data-event="nav-home" data-tip="Facet — you are home">
+        <svg width="22" height="22" data-icon="gem" aria-hidden="true"></svg>
+        <span class="wordmark-slot">facet</span>
+      </a>
+      <nav class="top-menu-links" aria-label="Site">
+        <a class="nav-link" href="/library.html" data-event="nav-library">Library</a>
+        <a class="nav-link" href="/functions.html" data-event="nav-functions">Functions</a>
+        <a class="nav-link" href="/product.html" data-event="nav-product">Product</a>
+        <a class="nav-link" href="/build.html" data-event="nav-build">Themes</a>
+      </nav>
+      <details class="top-menu-fold">
+        <summary class="fold-trigger" aria-label="Menu">
+          <svg width="20" height="20" data-icon="menu" class="when-closed" aria-hidden="true"></svg>
+          <svg width="20" height="20" data-icon="close" class="when-open" aria-hidden="true"></svg>
+        </summary>
+        <nav class="top-menu-links" aria-label="Site">
+          <a class="nav-link" href="/library.html" data-event="nav-library">Library</a>
+          <a class="nav-link" href="/functions.html" data-event="nav-functions">Functions</a>
+          <a class="nav-link" href="/product.html" data-event="nav-product">Product</a>
+          <a class="nav-link" href="/build.html" data-event="nav-build">Themes</a>
+        </nav>
+      </details>
+    </header>
+  </div>
 
   <main id="main" class="container stack-loose">
-      <!-- ==============================
-           Philosophy
-           Why Facet exists.
-           ============================== -->
-      <section id="philosophy" class="stack home-section">
-        <p class="home-kicker">Why it hits different</p>
-        <h2>The browser is the framework</h2>
-        <p>
-          Facet is extremely powerful because it truly uses your device's
-          potential — the way the internet was designed to be. No runtime
-          sits between you and the platform: pages install to the home
-          screen and work offline, respond to your text size and dark mode,
-          speak the reader's language and number system, move with the
-          device's own tilt and light, click and vibrate like hardware, and
-          print like real documents. Modern frontend rebuilds all of this in
-          minified framework machinery; Facet just switches the browser's
-          own features on.
-        </p>
-        <p>
-          And it goes one step further than any component kit: <strong>it
-          helps you think the product through</strong>. Point your AI at the
-          <a href="/product.html">build method</a> and it interviews you
-          about the users and the job to be done, agrees a feature set with
-          you, and builds it end to end — teaching as it goes. The page you
-          ship stays plain, readable HTML you can open and understand.
-        </p>
-      </section>
 
-      <!-- ==============================
-           How to use
-           Two audience tracks. People read this site; an AI reads the
-           source (llms.txt first, then the commented facet.css/facet.js).
-           The human decides, the AI builds.
-           ============================== -->
-      <section id="how-to" class="stack home-section">
-        <h2>How to use Facet</h2>
-        <p>
-          Two ways in, depending on who is reading. People read this site to
-          learn what Facet offers; an AI reads the source to know exactly how
-          every piece works. You bring them together — you decide, your AI
-          builds.
-        </p>
-        <div class="how-tracks">
+    <!-- ==============================
+         Hero 1 · How you use it
+         The one-sentence prompt, the three steps, who it is for, and
+         the bento of what a shipped product includes.
+         ============================== -->
+    <section id="start" class="stack">
+      <h1>Ask your AI, get a product.</h1>
+      <pre id="the-prompt"><code>Use the Facet library at facet.tanishksharma.com and build me a ___.</code></pre>
+      <p class="row">
+        <button class="btn btn-primary" data-copy="#the-prompt" data-event="copy-prompt"
+                data-tip="Copies the sentence to your clipboard">Copy the sentence</button>
+      </p>
+      <p>Paste this into your AI of choice and have fun.</p>
+      <ol>
+        <li><strong>Paste the prompt.</strong> Your AI reads the whole library in one fetch.</li>
+        <li><strong>Plan together.</strong> The AI guides you through what you are building and how.</li>
+        <li><strong>It builds.</strong> A ready-to-ship product assembled from the library's components — the full method is on the <a href="/product.html">Product page</a>.</li>
+      </ol>
+      <p class="text-footnote">For vibe coders, PMs, hobby builders — anyone who wants to ship a product and does not care about the tech.</p>
 
-          <article class="card how-track stack">
-            <p class="how-track-who">If you are a person</p>
-            <ol class="how-list">
-              <li>
-                <strong>Skim this page.</strong> The
-                <a href="#features">Features</a> show what Facet can do; the
-                principles below show what you can count on. You never need to
-                read the CSS or JavaScript.
-              </li>
-              <li>
-                <strong>Grab the two tags.</strong> One link and one script,
-                copied from the top of this page. That is the entire install —
-                no framework, no build step.
-              </li>
-              <li>
-                <strong>Explore the <a href="/library.html">Library</a>.</strong>
-                Every component, block, template and whole app shell, live and
-                with copy-paste code. Find the shells and pieces you want to use.
-              </li>
-              <li>
-                <strong>Let your AI build it.</strong> Tell your assistant which
-                template and components to use and ask it for a few options to
-                choose from. It reads the code so you do not have to.
-              </li>
-              <li>
-                <strong>Want to contribute?</strong> To extend the library
-                itself — maintain it or add new components — follow the build
-                instructions in
-                <a href="/CLAUDE.md"><code>CLAUDE.md</code></a>, the charter for
-                how Facet is built and kept consistent.
-              </li>
-            </ol>
-          </article>
-
-          <article class="card how-track stack">
-            <p class="how-track-who">If you are an AI</p>
-            <p>
-              Everything you need is in the source. Start with the manual, then
-              drop into the files for exact detail:
-            </p>
-            <ul class="how-files">
-              <li>
-                <a href="/llms.txt"><code>llms.txt</code></a> — <strong>read this
-                first.</strong> The complete usage guide: every feature and every
-                component, with copy-paste snippets, in one plain-text fetch.
-              </li>
-              <li>
-                <a href="/lib/facet.css"><code>facet.css</code></a> — the whole
-                design system, commented in place: every token and component
-                documented where it lives.
-              </li>
-              <li>
-                <a href="/lib/facet.js"><code>facet.js</code></a> — the
-                behaviours, one small named function each, commented the same way.
-              </li>
-            </ul>
-            <p>Pointing an assistant at Facet? Hand it this:</p>
-            <pre id="ai-prompt"><code>Use the Facet design library at https://facet.tanishksharma.com. Read /llms.txt for how to use every feature and component; the fully-commented source is /lib/facet.css and /lib/facet.js. Build pages with semantic HTML plus Facet's classes and data-attributes — no framework, no build step.</code></pre>
-            <p><button class="btn btn-small" data-copy="#ai-prompt" data-tip="Copies the prompt to paste into your AI">Copy the prompt</button></p>
-          </article>
-
-        </div>
-      </section>
-
-      <hr class="section-rule container-wide" aria-hidden="true">
-
-      <!-- ==============================
-           Features
-           The curated feature list: deduplicated, plain language, ordered
-           by impact — headliners first, then the system, then the small
-           conveniences. The exhaustive inventory is llms.txt; the old
-           feature wall is parked in a fold at the bottom of the page.
-           ============================== -->
-      <section id="features" class="stack home-section">
-        <p class="home-kicker">Features</p>
-        <h2>What you get</h2>
-        <p>
-          The most impactful things first. Every card names its area; the
-          complete technical inventory lives in <a href="/llms.txt">llms.txt</a>
-          and every piece runs live in the
-          <a href="/library.html">Component library</a>.
-        </p>
-
-        <div class="feat-hero-grid">
-          <article class="card feat-hero stack-tight">
-            <span class="feat-tag">For people</span>
-            <h3>Responds to your device</h3>
-            <p>Raise your phone's text size and the whole interface grows.
-            Dark mode follows your system. Reduced motion is honoured
-            everywhere, high-contrast modes strengthen the ink, and layouts
-            clear the notch and home bar.</p>
-          </article>
-          <article class="card feat-hero stack-tight">
-            <span class="feat-tag">For people</span>
-            <h3>Speaks the reader's language</h3>
-            <p>Author content in more than one language and one button flips
-            the page. Numbers group the local way — lakh and crore where
-            that is the norm — and big amounts are spelled out in words.</p>
-          </article>
-          <article class="card feat-hero stack-tight">
-            <span class="feat-tag">Theming</span>
-            <h3>One attribute restyles everything</h3>
-            <p>data-theme swaps the whole look, layout included. Dark mode
-            composes with any theme, a single section can wear its own, and
-            your brand color is one small block of overrides.</p>
-          </article>
-          <article class="card feat-hero stack-tight">
-            <span class="feat-tag">App feel</span>
-            <h3>Any page becomes an installable app</h3>
-            <p>Three small files make a page install to the home screen and
-            work offline. Real screens with a working Back button, a bottom
-            tab bar, a settings sheet and a floating menu — all self-wiring.</p>
-          </article>
-          <article class="card feat-hero stack-tight">
-            <span class="feat-tag">For AI</span>
-            <h3>It helps you think the product through</h3>
-            <p>The <a href="/product.html">build method</a> has your AI
-            interview you about users and the job to be done, agree a
-            feature set, and build end to end — teaching as it goes.</p>
-          </article>
-          <article class="card feat-hero stack-tight">
-            <span class="feat-tag">For AI</span>
-            <h3>An AI learns all of it in one fetch</h3>
-            <p><a href="/llms.txt">llms.txt</a> teaches an assistant every
-            component and rule in one plain-text read. The pages it builds
-            stay operable by agents: real buttons, real links, state in the
-            URL.</p>
-          </article>
-        </div>
-
-        <div class="topic-grid feat-grid">
-          <article class="card feat-card"><span class="feat-tag">Zero setup</span><span class="feat-card-name">Two files, nothing to install</span><span class="feat-card-phrase">One link and one script from a URL. No npm, no build step, never minified, always up to date.</span></article>
-          <article class="card feat-card"><span class="feat-tag">Zero setup</span><span class="feat-card-name">Plain HTML already looks designed</span><span class="feat-card-phrase">Around thirty bare tags are styled before any class: headings, tables, forms, code, focus rings, selection.</span></article>
-          <article class="card feat-card"><span class="feat-tag">Zero setup</span><span class="feat-card-name">Works with JavaScript off</span><span class="feat-card-phrase">Content, layout, links and forms all work without JS. Scripts only add polish on top.</span></article>
-          <article class="card feat-card"><span class="feat-tag">Components</span><span class="feat-card-name">A whole component library</span><span class="feat-card-phrase">Buttons, fields, cards, lists, tables, charts, overlays, navigation, status — live with copy-paste code.</span></article>
-          <article class="card feat-card"><span class="feat-tag">Components</span><span class="feat-card-name">Blocks and whole templates</span><span class="feat-card-phrase">Twenty ready page sections, plus eight full starters: landing, dashboard, social app, deck, documents.</span></article>
-          <article class="card feat-card"><span class="feat-tag">Components</span><span class="feat-card-name">Every state built in</span><span class="feat-card-phrase">Selected, disabled, busy, error, success — one attribute, and loading skins that trace the content's own shape.</span></article>
-          <article class="card feat-card"><span class="feat-tag">App feel</span><span class="feat-card-name">Motion, light, sound and touch</span><span class="feat-card-phrase">Parallax and shine follow the cursor or the phone's tilt; taps click and vibrate like hardware.</span></article>
-          <article class="card feat-card"><span class="feat-tag">App feel</span><span class="feat-card-name">Living backgrounds</span><span class="feat-card-phrase">Faint pattern grids of any glyph you pick, or a fluid field of drifting color.</span></article>
-          <article class="card feat-card"><span class="feat-tag">App feel</span><span class="feat-card-name">Smooth page transitions</span><span class="feat-card-phrase">One attribute and navigation animates — the old page eases away, the new one springs in.</span></article>
-          <article class="card feat-card"><span class="feat-tag">Theming</span><span class="feat-card-name">Eighteen type faces, one per job</span><span class="feat-card-phrase">Headings to barcodes: signature, typewriter, receipt, pixel, hand — plus native faces for four scripts.</span></article>
-          <article class="card feat-card"><span class="feat-tag">Theming</span><span class="feat-card-name">Build your own theme, visually</span><span class="feat-card-phrase">A live builder tunes every token and hands you a paste-ready config; Skin Lab compares all themes at once.</span></article>
-          <article class="card feat-card"><span class="feat-tag">For people</span><span class="feat-card-name">Prints like a document</span><span class="feat-card-phrase">Ink on paper, folds opened, controls stepped aside; one attribute says what belongs on the page.</span></article>
-        </div>
-
-        <ul class="feat-lines">
-          <li><strong>Live library.</strong> Every component runs on its page, and the snippet you copy is the demo itself.</li>
-          <li><strong>AA contrast in every theme,</strong> light and dark, verified — not hoped.</li>
-          <li><strong>Fully keyboard operable</strong> with one clear focus ring everywhere.</li>
-          <li><strong>A serious number input:</strong> digits group as you type and the amount is spelled out in words.</li>
-          <li><strong>Line icons and tooltips on one attribute</strong> — no icon files, no wiring; tips open on tap on phones and stay until you scroll.</li>
-          <li><strong>Themed Google Maps</strong> that wear the active palette.</li>
-          <li><strong>Rough visitor location,</strong> opt-in, with no service to set up.</li>
-          <li><strong>Shareable links keep the look:</strong> theme and mode ride the URL.</li>
-          <li><strong>Headlines scale smoothly</strong> from phone to desktop with no breakpoints.</li>
-          <li><strong>Real scannable barcodes</strong> from plain text, for tickets and invoices.</li>
-        </ul>
-      </section>
-
-      <!-- ==============================
-           What you can count on
-           The principles behind the library.
-           ============================== -->
-      <section id="rules" class="stack home-section">
-        <h2>What you can count on</h2>
-        <p>The promises behind every component — the principles the library holds itself to, so you always know what you are getting.</p>
-        <div class="feat-group">
-          <h3 class="feat-group-name">What you can count on</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-1" data-tip="Read more"><span class="feat-card-name">The code you ship stays readable</span><span class="feat-card-phrase">No minified soup — the library, and the pages you build with it, stay human-readable.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-2" data-tip="Read more"><span class="feat-card-name">One-glance HTML</span><span class="feat-card-phrase">Semantic tags and self-explanatory class names, so a page reads top to bottom.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-3" data-tip="Read more"><span class="feat-card-name">No wrapper soup</span><span class="feat-card-phrase">A container exists only to do a real job, like scrolling — never decoration.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-4" data-tip="Read more"><span class="feat-card-name">Real controls, always</span><span class="feat-card-phrase">Buttons are buttons, links are links, and every field has a real label.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-5" data-tip="Read more"><span class="feat-card-name">Accessible, SEO-ready and AI-readable</span><span class="feat-card-phrase">Built in from the start, not bolted on later.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-6" data-tip="Read more"><span class="feat-card-name">Battle-tested on iOS</span><span class="feat-card-phrase">The hard-won rules for snap pages, gestures, PWA shells and caching are already baked in.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="bp-7" data-tip="Read more"><span class="feat-card-name">Bring your own analytics</span><span class="feat-card-phrase">Every key action has a stable, named hook — wire any analytics tool in a few lines.</span></button>
-          </div>
-        </div>
-        <dialog class="modal stack topic-modal" id="bp-1"><h3>The code you ship stays readable</h3>
-          <p>Facet exists because modern front-end is often an unreadable pile of machinery. Here the library and the pages you write with it stay clean and legible — that is the whole point.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-2"><h3>One-glance HTML</h3>
-          <p>Structure makes sense on first read: header, nav, main, section, article. You can look at a page and understand it without decoding it.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-3"><h3>No wrapper soup</h3>
-          <p>Facet never nests boxes for the sake of it. An extra container is only there to enable something real, like a scroll area or a sticky region.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-4"><h3>Real controls, always</h3>
-          <p>Every interactive thing is the right HTML element with an accessible name — so it works with the keyboard, with screen readers, and with AI agents, for free.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-5"><h3>Accessible, SEO-ready and AI-readable</h3>
-          <p>Contrast, keyboard support, structured markup and a machine-readable guide are baseline in Facet, so the sites you build inherit them without extra work.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-6"><h3>Battle-tested on iOS</h3>
-          <p>Real app work on iPhone taught some painful lessons — how full-screen pages must scroll, how to tame gestures, what a standalone web app actually needs, and why caching has to be handled just so. Those fixes are built into the library so your app behaves reliably rather than breaking.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="bp-7"><h3>Bring your own analytics</h3>
-          <p>No tracking vendor is baked in. Instead, important actions carry a documented data-event name, so you can connect whichever analytics tool you use with a short snippet.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-      </section>
-    
-      <hr class="section-rule container-wide" aria-hidden="true">
-
-      <!-- ==============================
-           The old feature wall (archived)
-           The previous exhaustive card wall, kept intact inside a fold
-           until its content is fully absorbed above. Nothing links here.
-           ============================== -->
-      <section id="features-old" class="stack home-section">
-        <details class="home-archive">
-          <summary>The old feature wall — every card, kept for reference</summary>
-          <div class="stack">
-<section id="features-archive" class="stack home-section">
-        <h2>Features</h2>
-        <p>Everything Facet gives you, grouped by what it is for. Tap any card for the detail. The complete technical inventory also lives in <a href="/llms.txt">llms.txt</a> for AI tools.</p>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Two files, zero setup</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-1" data-tip="Read more"><span class="feat-card-name">Two files, nothing to install</span><span class="feat-card-phrase">One link tag and one script tag from a URL. No framework, no npm, no build step.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-2" data-tip="Read more"><span class="feat-card-name">Never minified</span><span class="feat-card-phrase">The files you load are the readable, commented source. Compression handles the size.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-3" data-tip="Read more"><span class="feat-card-name">Always up to date</span><span class="feat-card-phrase">Point your project at the URL and it gets every fix and new component the moment they ship.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-4" data-tip="Read more"><span class="feat-card-name">Installable as an app</span><span class="feat-card-phrase">One extra line turns any project into an offline-capable, installable web app.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-50" data-tip="Read more"><span class="feat-card-name">An app shell with real screens</span><span class="feat-card-phrase">Hash-routed views with working Back, each clear of the Dynamic Island and home bar.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-51" data-tip="Read more"><span class="feat-card-name">Prints like a document</span><span class="feat-card-phrase">Every theme flattens to ink on paper, controls step aside, and one attribute says what shows.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Restyle everything in one attribute</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-5" data-tip="Read more"><span class="feat-card-name">One attribute themes the whole page</span><span class="feat-card-phrase">data-theme="velvet" restyles every color, layout included. No attribute is the default.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-6" data-tip="Read more"><span class="feat-card-name">Dark mode that composes</span><span class="feat-card-phrase">data-mode="dark" is separate from the theme and stacks with any of them.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-7" data-tip="Read more"><span class="feat-card-name">Theme just one section</span><span class="feat-card-phrase">The theme and mode attributes work on any element, not only the whole page.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-8" data-tip="Read more"><span class="feat-card-name">Follows the visitor's system</span><span class="feat-card-phrase">With no mode forced, the page matches the reader's light or dark preference automatically.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-9" data-tip="Read more"><span class="feat-card-name">Shareable links keep the look</span><span class="feat-card-phrase">Theme and mode are saved in the URL, so a shared link opens exactly as you saw it.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-10" data-tip="Read more"><span class="feat-card-name">One-line theme and mode switches</span><span class="feat-card-phrase">Add data-theme-switch or data-mode-toggle to any button — no JavaScript.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-11" data-tip="Read more"><span class="feat-card-name">Build your own theme, visually</span><span class="feat-card-phrase">A live builder tunes each color and hands you a paste-ready config; Skin Lab compares every theme at once.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-12" data-tip="Read more"><span class="feat-card-name">Bring your own brand color</span><span class="feat-card-phrase">Override one accent in a small block and every button, link and highlight follows.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-13" data-tip="Read more"><span class="feat-card-name">Themed Google Map</span><span class="feat-card-phrase">One attribute makes an embedded map wear the active theme's colors.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">It adapts to the reader</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-14" data-tip="Read more"><span class="feat-card-name">Respects the phone's text-size setting</span><span class="feat-card-phrase">Everything is measured in relative units, so the whole UI grows when a reader raises their text size.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-15" data-tip="Read more"><span class="feat-card-name">Headlines that scale smoothly</span><span class="feat-card-phrase">Hero and heading sizes flex between phone and desktop with no breakpoints to manage.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-16" data-tip="Read more"><span class="feat-card-name">Mobile-first by default</span><span class="feat-card-phrase">44px touch targets, no hover-only controls, and safe-area handling out of the box.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-17" data-tip="Read more"><span class="feat-card-name">Tunable motion</span><span class="feat-card-phrase">On by default with a spring feel; switch it to calm or off, and reduced-motion always wins.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-18" data-tip="Read more"><span class="feat-card-name">Handles high-contrast modes</span><span class="feat-card-phrase">Text and borders strengthen automatically for high-contrast and forced-colors readers.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-19" data-tip="Read more"><span class="feat-card-name">Smooth page-to-page transitions</span><span class="feat-card-phrase">One attribute animates navigation — the old page eases out, the new one springs in.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-20" data-tip="Read more"><span class="feat-card-name">Speaks the visitor's language and numbers</span><span class="feat-card-phrase">Built-in labels translate with one attribute, and numbers group the local way.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-21" data-tip="Read more"><span class="feat-card-name">Prints cleanly</span><span class="feat-card-phrase">Sensible margins, navigation and controls hidden, ink-friendly colors when someone prints a page.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Write plain HTML, get a designed page</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-22" data-tip="Read more"><span class="feat-card-name">Semantic HTML already looks designed</span><span class="feat-card-phrase">Headings, text, links, lists, quotes, code, tables and forms look right with no classes.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-23" data-tip="Read more"><span class="feat-card-name">Polished basics everywhere</span><span class="feat-card-phrase">One clear focus ring, tidy text selection, thin scrollbars, and a skip-to-content link.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">A whole library of components</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-24" data-tip="Read more"><span class="feat-card-name">Layout building blocks</span><span class="feat-card-phrase">Containers, stacks, rows, an auto-fitting grid, and full-screen snap pages — no breakpoints to manage.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-25" data-tip="Read more"><span class="feat-card-name">The app kit</span><span class="feat-card-phrase">A bottom tab bar, a slide-in settings sheet, a floating menu button and a scroll gauge — all self-wiring.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-26" data-tip="Read more"><span class="feat-card-name">Buttons</span><span class="feat-card-phrase">Three styles and three sizes, working the same on a button or a link, with matching icon buttons.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-27" data-tip="Read more"><span class="feat-card-name">Form fields done properly</span><span class="feat-card-phrase">Text, textarea, select and search — all with labels, hints and error states, all themed.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-28" data-tip="Read more"><span class="feat-card-name">Sliders</span><span class="feat-card-phrase">Themed sliders with live readouts, plus a detailed slider for wide ranges.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-29" data-tip="Read more"><span class="feat-card-name">A serious number input</span><span class="feat-card-phrase">Prefilled example, one-tap clear, local digit grouping while typing, and a spell-it-out helper.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-30" data-tip="Read more"><span class="feat-card-name">Choice controls</span><span class="feat-card-phrase">Checkboxes, radios, a switch, steppers and segmented controls — native, themed, keyboard-friendly.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-31" data-tip="Read more"><span class="feat-card-name">Cards</span><span class="feat-card-phrase">Plain, outlined, or fully clickable — where the whole surface is a link that lifts and presses.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-32" data-tip="Read more"><span class="feat-card-name">Modals, drawers and popovers</span><span class="feat-card-phrase">On the browser's own top layer, opened by one attribute, with Esc and click-outside handled.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-33" data-tip="Read more"><span class="feat-card-name">Menus, toasts and accordions</span><span class="feat-card-phrase">Dropdown menus, brief notices, and expand/collapse sections — native where possible, no JS to wire.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-34" data-tip="Read more"><span class="feat-card-name">Navigation</span><span class="feat-card-phrase">Real tabs, breadcrumbs and pagination — proper ARIA, keyboard-navigable.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-35" data-tip="Read more"><span class="feat-card-name">Data and status</span><span class="feat-card-phrase">Tables, charts, badges, chips, avatars and progress bars.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-36" data-tip="Read more"><span class="feat-card-name">Graceful waiting states</span><span class="feat-card-phrase">Skeletons shaped like your content, a spinner, and honest empty states.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-52" data-tip="Read more"><span class="feat-card-name">A loading skin for live content</span><span class="feat-card-phrase">Mark a card or list busy and everything inside becomes pulsing placeholders tracing its own shape.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-53" data-tip="Read more"><span class="feat-card-name">Every state built in</span><span class="feat-card-phrase">Selected, disabled, loading, error, warning, success — set one attribute and the look follows in every theme.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-37" data-tip="Read more"><span class="feat-card-name">Line icons on one attribute</span><span class="feat-card-phrase">A named svg fills itself in, takes the surrounding text color, and needs no files.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-38" data-tip="Read more"><span class="feat-card-name">A description tooltip on one attribute</span><span class="feat-card-phrase">data-tip on anything shows a helpful bubble on hover and on keyboard focus.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-39" data-tip="Read more"><span class="feat-card-name">Parallax, shine and idle motion</span><span class="feat-card-phrase">Elements drift — and catch light — with the pointer, the scroll, or the device tilt; an idle drift keeps it alive.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-40" data-tip="Read more"><span class="feat-card-name">Sound and haptics</span><span class="feat-card-phrase">Synthesized taps and clicks, on by default, with a switch to turn them off.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-41" data-tip="Read more"><span class="feat-card-name">Textured backgrounds</span><span class="feat-card-phrase">Grids of dots, plus marks or your own emoji — or a fluid field of breathing color pools.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-42" data-tip="Read more"><span class="feat-card-name">Built-in rough location</span><span class="feat-card-phrase">The visitor's approximate city from their IP when you opt in — no service to wire up.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-43" data-tip="Read more"><span class="feat-card-name">Ready-made blocks and whole pages</span><span class="feat-card-phrase">Twenty copy-and-fill sections, plus full templates: landing, dashboard, social app and more.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Accessible and AI-ready by default</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-44" data-tip="Read more"><span class="feat-card-name">AA contrast in every theme</span><span class="feat-card-phrase">Light and dark, the palettes are built to pass — not checked after the fact.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-45" data-tip="Read more"><span class="feat-card-name">Fully keyboard operable</span><span class="feat-card-phrase">Everything reachable and usable by keyboard, with a clear focus ring and proper labels.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-46" data-tip="Read more"><span class="feat-card-name">Operable by AI agents</span><span class="feat-card-phrase">Real buttons and links, shallow structure, and page state in the URL — so an agent can read and drive it.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-47" data-tip="Read more"><span class="feat-card-name">The whole library as one text file</span><span class="feat-card-phrase">llms.txt teaches an AI everything about Facet in a single fetch.</span></button>
-          </div>
-        </div>
-        <div class="feat-group">
-          <h3 class="feat-group-name">Try it and learn it right here</h3>
-          <div class="topic-grid feat-grid">
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-48" data-tip="Read more"><span class="feat-card-name">Every component is live</span><span class="feat-card-phrase">The Library page shows each one working, with chips that flip its variants and states.</span></button>
-          <button type="button" class="card card-clickable feat-card" aria-controls="fx-49" data-tip="Read more"><span class="feat-card-name">Copy the exact HTML</span><span class="feat-card-phrase">The snippet is taken from the live demo, so what you copy is precisely what you see.</span></button>
-          </div>
-        </div>
-        <dialog class="modal stack topic-modal" id="fx-1"><h3>Two files, nothing to install</h3>
-          <p>Facet is one CSS file and one JS file. You add a link tag and a script tag pointing at the hosted URL and everything works — no framework to learn, no package to install, no build to run.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-2"><h3>Never minified</h3>
-          <p>The shipped files are the real, commented source — open them and read exactly what is happening. Gzip keeps them small, so readability costs you nothing.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-3"><h3>Always up to date</h3>
-          <p>Because you link to the hosted files instead of copying them in, your site picks up improvements automatically. At 1.0, frozen copies let you pin an old version for good if you prefer.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-4"><h3>Installable as an app</h3>
-          <p>Three small files at your project root make any page installable: a one-line sw.js (turns on offline caching), a manifest.json (name, colors, icons), and an icon set. Facet ships a working reference set you copy, and the full step-by-step recipe is in llms.txt. Then any page caches itself for offline use and can be added to a phone's home screen with its own icon and a full-screen shell.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-51"><h3>Prints like a document</h3>
-          <p>Hit print on any Facet page and it reads like it was designed for paper: themes flatten to ink on white, navigation and floating controls step aside, folds open, and cards never tear across sheets. One attribute overrides any element — never print, always print, or print only — and a ready-made button gives visitors Save as PDF.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-50"><h3>An app shell with real screens</h3>
-          <p>For apps that navigate screen to screen — home, question, result — the view stack shows one screen at a time from plain hash links, so the URL always names the screen and the browser's Back just works. Every screen automatically stays clear of the Dynamic Island and the home bar, and one class lets a full-bleed screen deliberately run under them.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-5"><h3>One attribute themes the whole page</h3>
-          <p>Put one attribute on the page and the entire design changes — text, surfaces, borders, buttons, even layout backgrounds. Remove it and you are back to the clean default theme.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-6"><h3>Dark mode that composes</h3>
-          <p>Dark mode is its own switch, independent of which theme you chose, so every theme automatically has a light and a dark version.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-7"><h3>Theme just one section</h3>
-          <p>Want one panel in another theme, or a dark hero on a light page? Put the attribute on that element and only that part restyles.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-8"><h3>Follows the visitor's system</h3>
-          <p>If you do not pick a mode, Facet respects whatever the visitor's device is set to, and follows it live if they change it.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-9"><h3>Shareable links keep the look</h3>
-          <p>The current theme and mode ride along in the web address. Send someone the link and it opens looking identical to your screen.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-10"><h3>One-line theme and mode switches</h3>
-          <p>Building a theme picker or a dark-mode toggle is a single attribute on a button. Facet wires the click, the state and the URL for you.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-11"><h3>Build your own theme, visually</h3>
-          <p>The theme builder lets you adjust each color and watch the whole page update, then copy a small config into your project. Skin Lab lines up every theme in light and dark so you can compare at a glance.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-12"><h3>Bring your own brand color</h3>
-          <p>Set your brand's accent colors once and every component that uses that accent picks them up — page-wide, or scoped to one section.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-13"><h3>Themed Google Map</h3>
-          <p>Drop in a map with one attribute and your own key, and its ground, water, roads and labels are recolored to match your theme, light or dark.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-14"><h3>Respects the phone's text-size setting</h3>
-          <p>People who set a larger text size on their phone or browser get a larger interface everywhere — not just bigger body text, but proportional spacing and controls too.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-15"><h3>Headlines that scale smoothly</h3>
-          <p>Large display type resizes fluidly with the screen, so headlines look right on a phone and on a wide monitor without a single media query.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-16"><h3>Mobile-first by default</h3>
-          <p>Everything is sized for thumbs, nothing important hides behind a hover, and the layout respects notches and home indicators — so it feels right on a phone from the start.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-17"><h3>Tunable motion</h3>
-          <p>Presses have weight and things settle with a gentle spring. Prefer it quieter? One attribute calms or removes all motion, and a reader's reduced-motion setting overrides everything.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-18"><h3>Handles high-contrast modes</h3>
-          <p>When a reader turns on a high-contrast or forced-colors mode, Facet responds at the color level — grays firm up, borders appear, the focus ring thickens — so nothing disappears.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-19"><h3>Smooth page-to-page transitions</h3>
-          <p>Add one attribute and moving between pages feels like an app: the current page slides away and the next springs in, while the URL changes normally.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-20"><h3>Speaks the visitor's language and numbers</h3>
-          <p>Every built-in label comes from one translation table you switch with a single attribute and extend in a line — and the same switch translates your own content: write each language inline, and the active one shows while the rest hide (so with JavaScript off one language still shows and search engines read it). The choice rides the URL, so a shared link opens in the same language. Number grouping follows the locale — lakh and crore where that is the norm, million and billion elsewhere.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-21"><h3>Prints cleanly</h3>
-          <p>Hit print and you get a tidy document — navigation and controls drop away, colors go easy on ink, and margins are sane.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-22"><h3>Semantic HTML already looks designed</h3>
-          <p>Before you add a single class, raw HTML is already styled — a clean, readable page out of the box. Classes are for components, not for making basic text presentable.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-23"><h3>Polished basics everywhere</h3>
-          <p>The small things that make a site feel finished are handled: a single visible focus outline for keyboard users, nice selection colors, slim scrollbars, and a skip link for screen readers.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-24"><h3>Layout building blocks</h3>
-          <p>The pieces you arrange everything else with: width-capped containers, evenly-spaced stacks and rows, a grid that fits as many columns as comfortably fit, and full-screen swipe pages for app-like flows.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-25"><h3>The app kit</h3>
-          <p>Everything that makes a web page feel like a native app: a tab bar with a moving selection indicator, a settings panel that slides in on a spring, a floating action button, a scroll indicator, and a floating nav menu — a Menu button that opens your page links beside a Settings button that opens the toggles. Drop them in and they wire themselves up. The nav menu is real links in a &lt;details&gt;, so it still works with JavaScript off.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-26"><h3>Buttons</h3>
-          <p>Primary, secondary and quiet buttons in small, medium and large — identical whether they are a real button or a link. Square icon-only buttons match.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-27"><h3>Form fields done properly</h3>
-          <p>Every input comes wired with a label, room for a hint, and a clear error state, styled to match your theme — including a select with a themed arrow and no image files.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-28"><h3>Sliders</h3>
-          <p>A clean slider that shows its value as you drag, and a heavier version for big ranges that pairs a coarse drag with plus/minus steppers and a number box for precise values.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-29"><h3>A serious number input</h3>
-          <p>Built for calculators and money: it starts with an example, clears on first touch, groups digits the way the reader's country does as they type, and can spell the amount out in words.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-30"><h3>Choice controls</h3>
-          <p>The full set of pick-one and toggle controls, built on native inputs so they stay accessible and submit in forms, just dressed to match your theme.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-31"><h3>Cards</h3>
-          <p>A flexible surface for grouping content. Make it clickable and the entire card becomes a link that lifts and presses.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-32"><h3>Modals, drawers and popovers</h3>
-          <p>Dialogs, side drawers and small popovers that sit above everything correctly, open from any button with one attribute, and close on Escape or a backdrop click — no extra code.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-33"><h3>Menus, toasts and accordions</h3>
-          <p>The disclosure set: dropdown menus of real buttons, short toast notices that announce themselves, and accordions where opening one closes the rest.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-34"><h3>Navigation</h3>
-          <p>Tabs you can arrow between, breadcrumbs that mark the current page, and pagination built from real links with big enough tap targets.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-35"><h3>Data and status</h3>
-          <p>The pieces for showing information: clean tables, simple charts, tinted status badges, filter chips, initial avatars and progress indicators.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-36"><h3>Graceful waiting states</h3>
-          <p>While things load, show a shimmer shaped like the real content or a spinner; when there is nothing yet, a clear empty state instead of a blank space.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-37"><h3>Line icons on one attribute</h3>
-          <p>A set of clean line icons built into the library. Name one on an empty svg and it fills in, riding the current text color; add your own in a line.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-38"><h3>A description tooltip on one attribute</h3>
-          <p>Explain any control with one attribute. The tip appears on hover and on keyboard focus, so it helps everyone, and it is pure CSS.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-39"><h3>Parallax, shine and idle motion</h3>
-          <p>Chosen elements float gently or drift behind the cursor, the scroll's momentum, or the phone's tilt — and the shine effect sweeps a specular light across icons and cards from the same movement, the way iOS icons catch light. Where no input exists, an idle drift stirs everything every few seconds. It is opt-in and respects reduced-motion.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-40"><h3>Sound and haptics</h3>
-          <p>Controls can play a soft synthesized click and a haptic tap — no audio files — giving the interface a physical feel. Users can toggle it in the settings sheet.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-41"><h3>Textured backgrounds</h3>
-          <p>Give a section a faint material — a technical grid, dots, notebook rules or graph paper — with a single class that recolors itself per theme. And one of them is yours to fill: give any surface your own character, emoji or icon and it becomes the repeating pattern, redrawn live as the theme changes.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-42"><h3>Built-in rough location</h3>
-          <p>The visitor's approximate city, region and country from an IP lookup, without wiring up a service — configurable and off by default. Precise GPS stays your app's call on a real tap, not something the library forces on load.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-43"><h3>Ready-made blocks and whole pages</h3>
-          <p>Beyond single components: assembled sections like heroes, pricing and carts you copy whole, and complete page templates you rename and fill in — each previewable at phone, tablet and desktop widths.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-44"><h3>AA contrast in every theme</h3>
-          <p>Every theme is designed so text meets AA contrast in both light and dark. Accessibility is a starting constraint here, not an afterthought.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-45"><h3>Fully keyboard operable</h3>
-          <p>You can drive the whole interface from the keyboard, controls announce themselves correctly, and icon-only buttons always carry a label.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-46"><h3>Operable by AI agents</h3>
-          <p>Because everything is real semantic HTML with accessible names and state stored in the URL, an AI agent can understand a page by reading it and act by clicking real controls — no guessing at custom widgets.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-47"><h3>The whole library as one text file</h3>
-          <p>A plain-text guide at the site root describes every token, component and snippet, so an AI assistant can learn the entire library from one file and help you build with it.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-48"><h3>Every component is live</h3>
-          <p>This is not a list of screenshots — every component is running on the Library page, and you can flip its variants and states to see exactly how each looks.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-49"><h3>Copy the exact HTML</h3>
-          <p>Each copy button gives you the real HTML behind the demo you are looking at, generated from the live page so it always matches. You can also copy it as Markdown to paste into an AI prompt.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-52"><h3>A loading skin for live content</h3>
-          <p>When a card, list or dashboard is refreshing from a server, mark it busy with one attribute. The text turns into soft pulsing bars that hug its own lines, images flatten to gray, buttons go quiet — and when the data lands, everything comes straight back. No separate skeleton markup to build.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        <dialog class="modal stack topic-modal" id="fx-53"><h3>Every state built in</h3>
-          <p>Selected cards and rows, disabled buttons and tabs, saving buttons with a spinner, fields that show error, warning or success with a message line — every state is one attribute, styled in every theme, and the accessible semantics come with it because the style rides the attribute itself.</p>
-          <form method="dialog" class="topic-modal-foot"><button class="btn" data-tip="Close this popup">Close</button></form>
-        </dialog>
-        </dialog>
-      </section>
-          </div>
-        </details>
-      </section>
-
-    </main>
-
-    <!-- SITE MENU · the floating utility menu, kept in sync across
-         index / library / build. facet.js wires it. -->
-    <nav class="tab-bar tab-bar-top" aria-label="Site">
-      <button type="button" class="tab-menu" aria-controls="site-nav" aria-expanded="false" aria-label="Open menu" data-tip="Navigation and files" data-event="open-site-nav">
-        <svg width="20" height="20" data-icon="menu" aria-hidden="true"></svg>
-      </button>
-      <div class="tab-set">
-        <a class="tab-brand" href="/" aria-current="page" data-event="nav-home" data-tip="Back to the home page"><svg width="18" height="18" data-icon="gem" aria-hidden="true"></svg>facet</a>
-        <a class="tab-seg" href="/library.html" aria-current="false" data-event="nav-library">Components</a>
-        <a class="tab-seg" href="/functions.html" aria-current="false" data-event="nav-functions">Functions</a>
-        <a class="tab-seg" href="/product.html" aria-current="false" data-event="nav-product">Product</a>
-        <a class="tab-seg" href="/build.html" aria-current="false" data-event="nav-build">Themes</a>
+      <p class="eyebrow">Every product you ship includes</p>
+      <div class="grid-tight" style="--grid-min: 9.5rem;">
+        <div class="card stack-tight"><svg data-icon="contrast" aria-hidden="true"></svg><strong>Themes &amp; dark mode</strong></div>
+        <div class="card stack-tight"><svg data-icon="globe" aria-hidden="true"></svg><strong>Translation</strong></div>
+        <div class="card stack-tight"><svg data-icon="print" aria-hidden="true"></svg><strong>Print</strong></div>
+        <div class="card stack-tight"><svg data-icon="download-cloud" aria-hidden="true"></svg><strong>Offline install</strong></div>
+        <div class="card stack-tight"><svg data-icon="eye" aria-hidden="true"></svg><strong>Accessibility</strong></div>
+        <div class="card stack-tight"><svg data-icon="volume" aria-hidden="true"></svg><strong>Sound &amp; motion</strong></div>
+        <div class="card stack-tight"><svg data-icon="chart" aria-hidden="true"></svg><strong>Analytics hooks</strong></div>
+        <div class="card stack-tight"><svg data-icon="tag" aria-hidden="true"></svg><strong>Versioning</strong></div>
       </div>
-      <button type="button" class="tab-settings" aria-controls="site-settings" aria-expanded="false" aria-label="Open appearance settings" data-tip="Appearance: theme, colors, fonts, motion, sound" data-event="open-site-settings">
-        <svg width="20" height="20" data-icon="eye" aria-hidden="true"></svg>
-      </button>
-    </nav>
-    <div class="sheet-scrim" data-open="false"></div>
-    <aside class="sheet sheet-left sheet-rise" id="site-nav" data-open="false" aria-hidden="true" aria-label="Navigation">
-      <div class="sheet-scroll">
-        <span class="menu-label">Navigate</span>
-        <a class="menu-item" href="/" data-event="nav-home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 11 8-7 8 7M6 9.5V20h12V9.5"/></svg> Home</a>
-        <a class="menu-item" href="/library.html" data-event="nav-library"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg> Component library</a>
-        <a class="menu-item" href="/functions.html" data-event="nav-functions"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> Function library</a>
-        <a class="menu-item" href="/product.html" data-event="nav-product"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 5-8 5-8-5Z"/><path d="M4 13l8 5 8-5"/></svg> Build a product</a>
-        <a class="menu-item" href="/build.html" data-event="nav-build"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2"/><circle cx="8" cy="16" r="2"/></svg> Build a theme</a>
-        <a class="menu-item" href="https://github.com/tanishksharma/Facet" data-event="nav-github"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H5v14h14v-4M13 4h7v7M20 4l-9 9"/></svg> GitHub</a>
+    </section>
 
-        <span class="menu-label">Files</span>
-        <a class="menu-item" href="/llms.txt" data-event="ref-llms"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6ZM14 3v4h4"/></svg> llms.txt</a>
-        <a class="menu-item" href="/CLAUDE.md" data-event="ref-claude"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6ZM14 3v4h4"/></svg> CLAUDE.md</a>
-        <a class="menu-item" href="/lib/facet.css" data-event="ref-css"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> facet.css</a>
-        <a class="menu-item" href="/lib/facet.js" data-event="ref-js"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg> facet.js</a>
+    <!-- ==============================
+         Hero 2 · The argument
+         The claim as display type, six evidence cards, one quiet line.
+         ============================== -->
+    <section id="argument" class="stack">
+      <p class="eyebrow">The argument</p>
+      <h2 class="text-display">Now that AI writes the code, the web can get clean again.</h2>
+      <div class="grid">
+        <article class="card card-feature">
+          <span class="card-feature-icon"><svg data-icon="code" aria-hidden="true"></svg></span>
+          <h3 class="card-feature-title">Commented HTML anyone can read</h3>
+          <p class="card-feature-text">The library and every page built with it stay legible, top to bottom. Open the source of this page — that is the product.</p>
+        </article>
+        <article class="card card-feature">
+          <span class="card-feature-icon"><svg data-icon="package" aria-hidden="true"></svg></span>
+          <h3 class="card-feature-title">No bloated framework</h3>
+          <p class="card-feature-text">No runtime shipping unreadable minified slop between you and the page. One CSS file, one JS file, never minified.</p>
+        </article>
+        <article class="card card-feature">
+          <span class="card-feature-icon"><svg data-icon="zap" aria-hidden="true"></svg></span>
+          <h3 class="card-feature-title">The browser does the work</h3>
+          <p class="card-feature-text">Dialogs, snapping, dark mode, install, print — the platform's own features switched on, not rebuilt in script.</p>
+        </article>
+        <article class="card card-feature">
+          <span class="card-feature-icon"><svg data-icon="phone" aria-hidden="true"></svg></span>
+          <h3 class="card-feature-title">Every screen and browser respected</h3>
+          <p class="card-feature-text">Phone first, 44px targets, safe areas, your text-size setting honoured, and the hard-won iOS fixes baked in.</p>
+        </article>
+        <article class="card card-feature">
+          <span class="card-feature-icon"><svg data-icon="globe" aria-hidden="true"></svg></span>
+          <h3 class="card-feature-title">Translation built in</h3>
+          <p class="card-feature-text">One attribute switches the page's language — your content and the library's own labels together, crawlable with JS off.</p>
+        </article>
+        <article class="card card-feature">
+          <span class="card-feature-icon"><svg data-icon="tag" aria-hidden="true"></svg></span>
+          <h3 class="card-feature-title">Versioning that never breaks you</h3>
+          <p class="card-feature-text">Projects point at the hosted files and get every fix; frozen version folders will pin a shipped project forever.</p>
+        </article>
       </div>
-      <div class="sheet-foot">
-        <div class="sheet-group menu-icon-row">
-          <button type="button" class="menu-icon-btn" data-site-share data-tip="Shares this page - copies the link where sharing isn't available" data-event="share-page">
-            <svg width="16" height="16" data-icon="share" aria-hidden="true"></svg>Share
-          </button>
-          <button type="button" class="menu-icon-btn" data-print-action="page" data-tip="Prints the page or saves it as a PDF" data-event="export-pdf">
-            <svg width="16" height="16" data-icon="print" aria-hidden="true"></svg>Save PDF
-          </button>
+      <p class="text-footnote">No npm, no build, no framework, never minified.</p>
+    </section>
+
+    <!-- ==============================
+         The numbers · stat row
+         Counts taken from the shipped files, not estimates.
+         ============================== -->
+    <section id="numbers" class="stack">
+      <h2 class="heading-bar">The library, counted</h2>
+      <div class="grid-tight" style="--grid-min: 8.5rem;">
+        <div class="stat"><strong>40</strong><span>COMPONENTS</span></div>
+        <div class="stat"><strong>26</strong><span>BLOCKS</span></div>
+        <div class="stat"><strong>8</strong><span>TEMPLATES</span></div>
+        <div class="stat"><strong>44</strong><span>BEHAVIOURS</span></div>
+        <div class="stat"><strong>108</strong><span>ICONS</span></div>
+      </div>
+      <p class="text-caption">Counted from the shipped files — every one runs live in the <a href="/library.html">Library</a>.</p>
+    </section>
+
+    <!-- ==============================
+         Live component wall
+         Real working components. Nothing is a screenshot.
+         ============================== -->
+    <section id="live" class="stack">
+      <h2 class="heading-bar">Real components, running here</h2>
+      <p>Everything below is live library code — type, drag, sort, press. The same pieces, with their copy-paste HTML, live on the <a href="/library.html">Library page</a>.</p>
+      <div class="grid">
+
+        <article class="card stack-tight">
+          <p class="eyebrow">A field, validating</p>
+          <label class="field">
+            <span class="field-label">Your email</span>
+            <input type="email" required placeholder="you@example.com" autocomplete="email">
+            <span class="field-hint">Type something wrong and tab away — the browser itself objects.</span>
+          </label>
+        </article>
+
+        <article class="card stack-tight">
+          <p class="eyebrow">A number that speaks your locale</p>
+          <label class="field">
+            <span class="field-label">Monthly investment</span>
+            <span class="number-input">
+              <input type="text" inputmode="numeric" value="25000" data-number
+                     data-tip="Digits group for your locale as you type. First tap clears the example.">
+              <button type="button" class="btn btn-ghost btn-icon btn-small number-clear"
+                      aria-label="Clear" data-tip="Clear this field">&times;</button>
+            </span>
+            <span class="number-words" aria-live="polite"></span>
+            <span class="field-hint">Groups as you type, spelled out in words.</span>
+          </label>
+        </article>
+
+        <article class="card stack-tight">
+          <p class="eyebrow">A chart, drawing</p>
+          <div class="chart-card"><div class="chart" id="growth-chart"></div></div>
+          <p class="text-caption">Components shipped: 12 in Jan to 91 in Jul. Drag across the plot to read values.</p>
+        </article>
+
+        <article class="card stack-tight">
+          <p class="eyebrow">A table, sorting</p>
+          <div class="table-scroll">
+            <table class="table" data-sortable>
+              <thead><tr><th scope="col">Template</th><th scope="col" class="num">Lines</th></tr></thead>
+              <tbody>
+                <tr><td>Landing</td><td class="num">312</td></tr>
+                <tr><td>Dashboard</td><td class="num">540</td></tr>
+                <tr><td>Deck</td><td class="num">421</td></tr>
+                <tr><td>Invoice</td><td class="num">268</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-caption">Click a header — keyboard works too.</p>
+        </article>
+
+        <article class="card stack-tight">
+          <p class="eyebrow">A slider, live</p>
+          <label class="field">
+            <span class="field-label">Years <output>10</output></span>
+            <input type="range" class="slider" min="1" max="40" value="10"
+                   data-tip="Drag, or use the arrow keys">
+          </label>
+          <label class="check-row check-row-split">
+            <span class="check-text">Reinvest returns
+              <span class="check-desc">A switch that flips the moment you tap it.</span>
+            </span>
+            <input type="checkbox" class="switch" checked>
+          </label>
+        </article>
+
+        <article class="card feed-post">
+          <div class="feed-author">
+            <span class="avatar" aria-hidden="true">TS</span>
+            <div class="feed-author-meta">
+              <strong class="feed-author-name">Tanishk</strong>
+              <span class="text-caption">Posted</span>
+            </div>
+            <span class="feed-date text-caption">Today</span>
+          </div>
+          <div class="feed-post-body"><p class="text-footnote feed-comment">A social post is a component too — author row, body, tags, reactions, all one card.</p></div>
+          <div class="chips feed-tags">
+            <span class="feed-tag" role="button" tabindex="0" aria-pressed="false">#facet</span>
+          </div>
+          <div class="feed-actions" role="group" aria-label="Reactions">
+            <button type="button" class="feed-act" data-event="post-like" aria-pressed="false" aria-label="Like"><svg width="16" height="16" data-icon="heart" aria-hidden="true"></svg><span>12</span></button>
+            <span class="feed-act feed-act-static"><svg width="16" height="16" data-icon="eye" aria-hidden="true"></svg>1.2k</span>
+          </div>
+        </article>
+
+        <article class="card stack-tight">
+          <p class="eyebrow">Buttons that press and tick</p>
+          <p class="row">
+            <button class="btn btn-primary" data-event="demo-press" data-tip="Presses with weight, clicks, and vibrates where it can">Press me</button>
+            <button class="btn" data-event="demo-press-2" data-tip="The secondary action">And me</button>
+          </p>
+          <div class="stepper" role="group" aria-label="Guests">
+            <button type="button" class="stepper-down" aria-label="Fewer" data-tip="Ticks as it steps">−</button>
+            <input type="number" value="2" min="1" max="12" aria-label="Guests">
+            <button type="button" class="stepper-up" aria-label="More" data-tip="Ticks as it steps">+</button>
+          </div>
+          <p class="text-caption">Sound and haptics are on by default — the settings sheet is the mute.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==============================
+         Theming, live · split
+         Four themes and dark mode beside a small product scene.
+         Clicking restyles this whole page, not just the scene.
+         ============================== -->
+    <section id="theming" class="stack">
+      <div class="grid-2">
+        <div class="stack">
+          <h2 class="heading-bar">Theming, live</h2>
+          <p>One attribute restyles everything — click and watch this whole page change, layout included. Dark mode is its own switch and composes with any theme.</p>
+          <p class="chips" role="group" aria-label="Theme">
+            <button class="chip" data-theme-switch="" data-event="theme-default" data-tip="White and black, the quiet base">Default</button>
+            <button class="chip" data-theme-switch="velvet" data-event="theme-velvet" data-tip="Neumorphic matte fabric, gold ink">Velvet</button>
+            <button class="chip" data-theme-switch="aero" data-event="theme-aero" data-tip="Sky aqua, glass gloss, pill buttons">Aero</button>
+            <button class="chip" data-theme-switch="elegant" data-event="theme-elegant" data-tip="Cream and gold, serif display, carved panels">Elegant</button>
+          </p>
+          <p class="row">
+            <button class="btn" data-mode-toggle data-event="toggle-mode" data-tip="Flips light and dark — it composes with every theme">
+              <svg width="16" height="16" data-icon="moon" aria-hidden="true"></svg> Light / dark
+            </button>
+          </p>
+          <p class="text-caption">The look rides the URL, so a shared link opens exactly as you see it.</p>
+        </div>
+        <article class="card stack-tight">
+          <div class="row">
+            <span class="avatar-group">
+              <span class="avatar" aria-label="Ada">AL</span>
+              <span class="avatar" aria-label="Noor">NK</span>
+              <span class="avatar">+3</span>
+            </span>
+            <span class="badge badge-success push" data-i18n><span data-lang="en">On track</span><span data-lang="hi" hidden>सही राह पर</span></span>
+          </div>
+          <strong data-i18n><span data-lang="en">Weekend trip fund</span><span data-lang="hi" hidden>वीकेंड ट्रिप फ़ंड</span></strong>
+          <p class="text-footnote" data-i18n>
+            <span data-lang="en">₹ 32,000 of ₹ 40,000 saved with four weeks to go.</span>
+            <span data-lang="hi" hidden>₹ 40,000 में से ₹ 32,000 जमा — चार हफ़्ते बाकी।</span>
+          </p>
+          <progress value="80" max="100" aria-label="Savings progress"></progress>
+          <p class="row">
+            <button class="btn btn-primary btn-small" data-event="scene-add" data-tip="The scene's one primary action" data-i18n><span data-lang="en">Add money</span><span data-lang="hi" hidden>पैसे जोड़ें</span></button>
+            <button class="btn btn-ghost btn-small" data-event="scene-history" data-tip="The quiet action" data-i18n><span data-lang="en">History</span><span data-lang="hi" hidden>इतिहास</span></button>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==============================
+         Translation, live · split, mirrored
+         The same scene, flipped into another language by one attribute.
+         ============================== -->
+    <section id="translation" class="stack">
+      <div class="grid-2">
+        <article class="card stack-tight">
+          <strong data-i18n><span data-lang="en">Every label follows</span><span data-lang="hi" hidden>हर लेबल साथ बदलता है</span></strong>
+          <p class="text-footnote" data-i18n>
+            <span data-lang="en">Author each language inline; the active one shows, the rest hide. With JavaScript off, one language still renders — crawlable by design.</span>
+            <span data-lang="hi" hidden>हर भाषा एक ही HTML में लिखिए; चुनी हुई दिखती है, बाकी छिप जाती हैं। JavaScript बंद होने पर भी एक भाषा दिखती है।</span>
+          </p>
+          <label class="field">
+            <span class="field-label" data-i18n><span data-lang="en">Amount</span><span data-lang="hi" hidden>राशि</span></span>
+            <span class="number-input">
+              <input type="text" inputmode="numeric" value="2500000" data-number aria-label="Amount"
+                     data-tip="The words under the field speak the active language too">
+              <button type="button" class="btn btn-ghost btn-icon btn-small number-clear" aria-label="Clear" data-tip="Clear this field">&times;</button>
+            </span>
+            <span class="number-words" aria-live="polite"></span>
+          </label>
+        </article>
+        <div class="stack">
+          <h2 class="heading-bar">Translation, live</h2>
+          <p>Every component is already wired for translation — the same switch flips your content and the library's own strings, and the choice rides the URL.</p>
+          <p class="chips" role="group" aria-label="Language">
+            <button class="chip" data-language-switch="en" data-event="language-en" data-tip="English">English</button>
+            <button class="chip" data-language-switch="hi" data-event="language-hi" data-tip="Hindi">हिन्दी</button>
+          </p>
+          <p class="text-caption">Number grouping follows too — lakh and crore where that is the norm.</p>
         </div>
       </div>
-        </aside>
-    <div class="sheet-scrim" data-open="false"></div>
-    <aside class="sheet sheet-rise" id="site-settings" data-open="false" aria-hidden="true" aria-label="Settings">
-      <div class="sheet-scroll">
-        <nav class="tab-bar sheet-tabs" aria-label="Settings sections">
-          <div class="tab-set">
-            <button type="button" class="tab-seg" data-settings-tab="options" aria-current="true" data-tip="Theme, appearance, motion, sound and haptics">Options</button>
-            <button type="button" class="tab-seg" data-settings-tab="style" aria-current="false" data-tip="Colors and fonts, changed live">Style</button>
-            <button type="button" class="tab-seg tab-seg-desktop" data-settings-tab="advanced" aria-current="false" data-tip="The deeper tokens, layout and shape">Advanced</button>
-            <button type="button" class="tab-seg" data-settings-tab="shortcuts" aria-current="false" data-tip="The keyboard map for this page">Shortcuts</button>
+    </section>
+
+    <!-- ==============================
+         Sound and motion, live · split, alternating
+         Press things, hear ticks, watch springs; calm and off right beside.
+         ============================== -->
+    <section id="feel" class="stack">
+      <div class="grid-2">
+        <div class="stack">
+          <h2 class="heading-bar">Sound and motion, live</h2>
+          <p>Synthesized clicks and haptic taps, springs with real weight, and a light that follows your cursor or your phone's tilt. All of it honours reduced motion, and the switches are right here.</p>
+          <p class="row">
+            <button class="btn btn-pill nav-set" data-control="motion" data-event="cycle-motion"
+                    data-tip="The motion engine: Off, Idle, then following your cursor or tilt">
+              <svg width="16" height="16" data-icon="motion" aria-hidden="true"></svg> Motion <span class="menu-value">Idle</span>
+            </button>
+            <button class="btn btn-pill nav-set" data-control="sounds" data-event="toggle-sounds"
+                    data-tip="The synthesized interface sounds">
+              <svg width="16" height="16" data-icon="volume" aria-hidden="true"></svg> Sounds <span class="menu-value">On</span>
+            </button>
+            <button class="btn btn-pill nav-set" data-control="haptics" data-event="toggle-haptics"
+                    data-tip="Vibration feedback, where the device has it">
+              <svg width="16" height="16" data-icon="vibrate" aria-hidden="true"></svg> Haptics <span class="menu-value">On</span>
+            </button>
+          </p>
+          <p class="row">
+            <button class="btn btn-primary btn-large" data-event="feel-press" data-tip="Press and hold — weight, click, vibration">Press and hold</button>
+          </p>
+        </div>
+        <article class="card stack-tight" data-shine data-parallax="10">
+          <p class="eyebrow">This card is alive</p>
+          <strong>It drifts and catches light</strong>
+          <p class="text-footnote">Parallax and shine ride one engine — your cursor, your phone's tilt, or an idle drift when nothing moves. Set Motion to Cursor or Tilt and lean in.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==============================
+         What you can ship · horizontal card row
+         Each card is the real template in a live frame, not an image.
+         ============================== -->
+    <section id="ship" class="stack">
+      <h2 class="heading-bar">What you can ship</h2>
+      <p>Whole starters, live below — scroll the shelf, open one, view its source. Each is a single readable HTML file.</p>
+      <div class="card-row">
+        <article class="stack-tight">
+          <iframe src="/templates/landing.html" width="230" height="340" loading="lazy" title="Landing page template, live"></iframe>
+          <strong>Landing page</strong>
+          <a href="/templates/landing.html" data-event="open-landing">Open the template</a>
+        </article>
+        <article class="stack-tight">
+          <iframe src="/templates/saas.html" width="230" height="340" loading="lazy" title="Dashboard template, live"></iframe>
+          <strong>Dashboard</strong>
+          <a href="/templates/saas.html" data-event="open-saas">Open the template</a>
+        </article>
+        <article class="stack-tight">
+          <iframe src="/templates/deck.html" width="230" height="340" loading="lazy" title="Pitch deck template, live"></iframe>
+          <strong>Pitch deck</strong>
+          <a href="/templates/deck.html" data-event="open-deck">Open the template</a>
+        </article>
+        <article class="stack-tight">
+          <iframe src="/templates/document.html" width="230" height="340" loading="lazy" title="Invoice and documents template, live"></iframe>
+          <strong>Invoice &amp; documents</strong>
+          <a href="/templates/document.html" data-event="open-document">Open the template</a>
+        </article>
+        <article class="stack-tight">
+          <iframe src="/templates/app.html" width="230" height="340" loading="lazy" title="Installable app template, live"></iframe>
+          <strong>Installable app</strong>
+          <a href="/templates/app.html" data-event="open-app">Open the template</a>
+        </article>
+        <article class="stack-tight">
+          <iframe src="/templates/social.html" width="230" height="340" loading="lazy" title="Social app template, live"></iframe>
+          <strong>Social app</strong>
+          <a href="/templates/social.html" data-event="open-social">Open the template</a>
+        </article>
+        <article class="stack-tight">
+          <iframe src="/templates/article.html" width="230" height="340" loading="lazy" title="Editorial article template, live"></iframe>
+          <strong>Article &amp; docs</strong>
+          <a href="/templates/article.html" data-event="open-article">Open the template</a>
+        </article>
+        <article class="stack-tight">
+          <iframe src="/templates/card.html" width="230" height="340" loading="lazy" title="Business card template, live"></iframe>
+          <strong>Business card</strong>
+          <a href="/templates/card.html" data-event="open-card">Open the template</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==============================
+         Everything it carries · chip strip
+         The rest of the inventory, each chip a link into the Library.
+         ============================== -->
+    <section id="carries" class="stack">
+      <h2 class="heading-bar">Everything it carries</h2>
+      <p class="chips">
+        <a class="chip" href="/library.html#print">Print &amp; export</a>
+        <a class="chip" href="/library.html#feedback">Sound &amp; haptics</a>
+        <a class="chip" href="/library.html#installable">Offline &amp; install</a>
+        <a class="chip" href="/library.html#base">Accessibility</a>
+        <a class="chip" href="/functions.html#fn-keyboard">Keyboard</a>
+        <a class="chip" href="/library.html#states">Every state</a>
+        <a class="chip" href="/library.html#backgrounds">Backgrounds</a>
+        <a class="chip" href="/library.html#icons">Icons</a>
+        <a class="chip" href="/library.html#translation">Translation</a>
+        <a class="chip" href="/functions.html#fn-copy">Copy hygiene</a>
+        <a class="chip" href="/library.html#base">Works without JavaScript</a>
+      </p>
+    </section>
+
+    <!-- ==============================
+         AI-native · the file your AI reads
+         llms.txt raw, and the two tags that are the whole install.
+         ============================== -->
+    <section id="ai" class="stack">
+      <h2 class="heading-bar">AI-native</h2>
+      <p>One fetch teaches your AI everything. <a href="/llms.txt">llms.txt</a> is the whole library as plain text — this is how it opens:</p>
+      <pre><code># Facet
+
+Facet is a plain HTML, CSS and JS design library. It is one CSS file and
+one JS file (plus a small optional service-worker engine, facet-sw.js,
+that powers offline/PWA) hosted at a public URL. Any page consumes it
+with one link tag and one script tag. No React, no build step, no npm
+install, never minified.
+This file is the full usage guide as plain text, for AI crawlers and
+builders — the exhaustive inventory of what Facet does and how to use it.</code></pre>
+      <p><a class="flagship-link" href="/llms.txt">Read the whole file</a></p>
+      <p>And the entire install, for people:</p>
+      <pre id="snippet-consume"><code>&lt;link rel="stylesheet" href="https://facet.tanishksharma.com/lib/facet.css"&gt;
+&lt;script src="https://facet.tanishksharma.com/lib/facet.js" defer&gt;&lt;/script&gt;</code></pre>
+      <p class="row">
+        <button class="btn btn-small" data-copy="#snippet-consume" data-event="copy-consume"
+                data-tip="Copies the two tags to your clipboard">Copy the two tags</button>
+      </p>
+    </section>
+
+    <!-- ==============================
+         The close · open source
+         The invite to add a component, and the sentence one last time.
+         ============================== -->
+    <section id="open-source" class="stack">
+      <h2 class="heading-bar">Completely open source</h2>
+      <p>The library is public, and the instructions for adding a component ship with it — the same <a href="/CLAUDE.md">build charter</a> the maintainer follows. Point your AI at it and add a component; you do not need to be technical.</p>
+      <p class="row">
+        <a class="btn" href="https://github.com/tanishksharma/Facet" data-event="open-github">
+          <svg width="16" height="16" data-icon="code" aria-hidden="true"></svg> GitHub
+        </a>
+        <a class="btn btn-ghost" href="/CLAUDE.md" data-event="open-charter">Read the charter</a>
+      </p>
+      <div class="cta-band">
+        <p class="text-h3"><strong>Use the Facet library at facet.tanishksharma.com and build me a ___.</strong></p>
+        <button class="btn" data-copy="#the-prompt" data-event="copy-prompt-close"
+                data-tip="Copies the sentence to paste into your AI">Copy the sentence</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==============================
+       Footer · the library's footer block
+       Navigation columns, the files, GitHub — the site's dark plinth.
+       ============================== -->
+  <footer class="footer" data-plinth>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-wordmark">facet</span>
+          <p class="footer-tagline">A plain HTML, CSS and JS design library. One link, one script, no build step.</p>
+          <p class="footer-meta">Now: growing the library</p>
+          <div class="footer-social">
+            <a href="https://github.com/tanishksharma/Facet" aria-label="Facet on GitHub" data-tip="The source, openly" data-event="footer-github"><svg width="18" height="18" data-icon="code" aria-hidden="true"></svg></a>
           </div>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <nav class="footer-col" aria-label="Pages">
+          <p class="footer-col-label">Pages</p>
+          <ul class="footer-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/library.html">Library</a></li>
+            <li><a href="/functions.html">Functions</a></li>
+            <li><a href="/product.html">Product</a></li>
+            <li><a href="/build.html">Themes</a></li>
+          </ul>
         </nav>
-
-        <div class="sheet-group" data-settings-panel="options">
-          <span class="menu-label">Options</span>
-          <button type="button" class="menu-item" data-control="theme" aria-label="Theme: tap to cycle" data-tip="Cycles the palette: Default, Velvet, Aero, Elegant" data-event="cycle-theme">
-            <svg width="18" height="18" data-icon="contrast" aria-hidden="true"></svg>
-            Theme <span class="menu-value">Default</span>
-          </button>
-          <button type="button" class="menu-item" data-control="appearance" aria-label="Appearance: light, dark or auto" data-tip="Light, dark, or follow the system" data-event="cycle-appearance">
-            <svg width="18" height="18" data-icon="sun" aria-hidden="true"></svg>
-            Appearance <span class="menu-value">Auto</span>
-          </button>
-          <button type="button" class="menu-item" data-control="motion" aria-label="Motion, parallax and shine: off, idle or responsive" data-tip="The motion engine behind parallax and shine: Off, Idle, then following your cursor or tilt" data-event="cycle-motion">
-            <svg width="18" height="18" data-icon="motion" aria-hidden="true"></svg>
-            Motion <span class="menu-value">Idle</span>
-          </button>
-          <button type="button" class="menu-item" data-control="sounds" aria-label="Sounds: on or off" data-tip="The synthesized interface sounds" data-event="toggle-sounds">
-            <svg width="18" height="18" data-icon="volume" aria-hidden="true"></svg>
-            Sounds <span class="menu-value">On</span>
-          </button>
-          <button type="button" class="menu-item" data-control="haptics" aria-label="Haptics: on or off" data-tip="The vibration feedback, where the device has it" data-event="toggle-haptics">
-            <svg width="18" height="18" data-icon="vibrate" aria-hidden="true"></svg>
-            Haptics <span class="menu-value">On</span>
-          </button>
-        </div>
-
-        <div class="sheet-group" data-settings-panel="style" hidden>
-          <span class="menu-label">Colors</span>
-          <label class="menu-item menu-color" data-tip="The primary action color — hover and pressed follow along">
-            Accent 1 <input type="color" data-skin="accent1" aria-label="Accent 1 color">
-          </label>
-          <label class="menu-item menu-color" data-tip="The secondary action color">
-            Accent 2 <input type="color" data-skin="accent2" aria-label="Accent 2 color">
-          </label>
-          <label class="menu-item menu-color" data-tip="The highlight color — focus rings, links, small accents">
-            Accent 3 <input type="color" data-skin="accent3" aria-label="Accent 3 color">
-          </label>
-          <label class="menu-item menu-color" data-tip="The text ink — muted text follows along">
-            Ink <input type="color" data-skin="ink" aria-label="Ink color">
-          </label>
-          <span class="menu-label">Fonts</span>
-          <button type="button" class="menu-item" data-font-cycle="fontHeading" data-tip="Cycles the heading face" data-event="cycle-font-heading"><svg width="18" height="18" data-icon="edit" aria-hidden="true"></svg> Headings <span class="menu-value"></span></button>
-          <button type="button" class="menu-item" data-font-cycle="fontBody" data-tip="Cycles the body face" data-event="cycle-font-body"><svg width="18" height="18" data-icon="edit" aria-hidden="true"></svg> Body <span class="menu-value"></span></button>
-          <button type="button" class="menu-item" data-skin-reset data-tip="Back to the theme's own colors and fonts" data-event="skin-reset">
-            <svg width="18" height="18" data-icon="undo" aria-hidden="true"></svg> Reset the look
-          </button>
-        </div>
-
-        <div class="sheet-group" data-settings-panel="advanced" hidden>
-          <span class="menu-label">Surfaces</span>
-          <label class="menu-item menu-color" data-tip="The page behind everything">
-            Background <input type="color" data-token="--background" aria-label="Background color">
-          </label>
-          <label class="menu-item menu-color" data-tip="Cards and panels, one step above the page">
-            Surface <input type="color" data-token="--surface" aria-label="Surface color">
-          </label>
-          <label class="menu-item menu-color" data-tip="The interactive fill under a hovered surface">
-            Surface hover <input type="color" data-token="--surface-hover" aria-label="Surface hover color">
-          </label>
-          <span class="menu-label">Lines &amp; text</span>
-          <label class="menu-item menu-color" data-tip="Hairlines and edges">
-            Border <input type="color" data-token="--border" aria-label="Border color">
-          </label>
-          <label class="menu-item menu-color" data-tip="The heavier line weight for emphasis">
-            Border strong <input type="color" data-token="--border-strong" aria-label="Border strong color">
-          </label>
-          <label class="menu-item menu-color" data-tip="Captions and secondary text">
-            Muted ink <input type="color" data-token="--text-muted" aria-label="Muted ink color">
-          </label>
-          <label class="menu-item menu-color" data-tip="The quietest text: hints and disabled labels">
-            Subtle ink <input type="color" data-token="--text-subtle" aria-label="Subtle ink color">
-          </label>
-          <span class="menu-label">Layout &amp; shape</span>
-          <button type="button" class="menu-item" data-density-cycle data-tip="Tightens or opens every spacing step" data-event="cycle-density"><svg width="18" height="18" data-icon="grid" aria-hidden="true"></svg> Density <span class="menu-value">Medium</span></button>
-          <button type="button" class="menu-item" data-text-size-cycle data-tip="Scales all text up or down together" data-event="cycle-text-size"><svg width="18" height="18" data-icon="edit" aria-hidden="true"></svg> Text size <span class="menu-value">Medium</span></button>
-          <button type="button" class="menu-item" data-shape-cycle data-tip="How round every corner is, from sharp to pill" data-event="cycle-shape"><svg width="18" height="18" data-icon="sparkle" aria-hidden="true"></svg> Roundness <span class="menu-value">Default</span></button>
-          <button type="button" class="menu-item" data-width-cycle data-tip="How wide the page runs, from a reading column to edge to edge" data-event="cycle-width"><svg width="18" height="18" data-icon="arrow-right" aria-hidden="true"></svg> Page width <span class="menu-value">Default</span></button>
-          <a class="menu-item" href="/build.html" data-event="open-builder" data-tip="Every token, with live preview and copyable config">
-            <svg width="18" height="18" data-icon="sliders" aria-hidden="true"></svg> Open the full theme builder
-          </a>
-        </div>
-
-        <div class="sheet-group" data-settings-panel="shortcuts" hidden>
-          <span class="menu-label">Keyboard</span>
-          <div data-shortcuts></div>
-        </div>
+        <nav class="footer-col" aria-label="Files">
+          <p class="footer-col-label">Files</p>
+          <ul class="footer-links">
+            <li><a href="/llms.txt">llms.txt</a></li>
+            <li><a href="/CLAUDE.md">CLAUDE.md</a></li>
+            <li><a href="/lib/facet.css">facet.css</a></li>
+            <li><a href="/lib/facet.js">facet.js</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="Templates">
+          <p class="footer-col-label">Templates</p>
+          <ul class="footer-links">
+            <li><a href="/templates/landing.html">Landing</a></li>
+            <li><a href="/templates/saas.html">Dashboard</a></li>
+            <li><a href="/templates/deck.html">Deck</a></li>
+            <li><a href="/templates/app.html">App</a></li>
+          </ul>
+        </nav>
       </div>
-    </aside>
-  <script src="/docs.js" defer></script>
+      <div class="footer-bottom">
+        <span>© 2026 Tanishk Sharma</span>
+        <span>This page is built with Facet — it is the library.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- The chart demo: waits for facet.js (deferred) via DOMContentLoaded. -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const el = document.getElementById("growth-chart");
+      if (el && window.facet && facet.chart) {
+        facet.chart(el, {
+          points: [
+            {x: 1, y: 12}, {x: 2, y: 24}, {x: 3, y: 39},
+            {x: 4, y: 52}, {x: 5, y: 66}, {x: 6, y: 80}, {x: 7, y: 91},
+          ],
+          events: [{x: 5, label: "State grammar"}],
+        });
+      }
+    });
+  </script>
+
+  <!-- SETTINGS · fixed interface controls, authored at the end of body
+       so selection and copy sweep the content first (the reading-order
+       law). The float button opens the library's appearance panel. -->
+  <div class="sheet-scrim" data-open="false"></div>
+  <aside class="sheet sheet-rise" id="site-settings" data-open="false" aria-hidden="true" aria-label="Settings">
+    <div class="sheet-scroll">
+      <nav class="tab-bar sheet-tabs" aria-label="Settings sections">
+        <div class="tab-set">
+          <button type="button" class="tab-seg" data-settings-tab="options" aria-current="true" data-tip="Theme, appearance, motion, sound and haptics">Options</button>
+          <button type="button" class="tab-seg" data-settings-tab="style" aria-current="false" data-tip="Colors and fonts, changed live">Style</button>
+          <button type="button" class="tab-seg tab-seg-desktop" data-settings-tab="advanced" aria-current="false" data-tip="The deeper tokens, layout and shape">Advanced</button>
+          <button type="button" class="tab-seg" data-settings-tab="shortcuts" aria-current="false" data-tip="The keyboard map for this page">Shortcuts</button>
+        </div>
+      </nav>
+
+      <div class="sheet-group" data-settings-panel="options">
+        <span class="menu-label">Options</span>
+        <button type="button" class="menu-item" data-control="theme" aria-label="Theme: tap to cycle" data-tip="Cycles the palette: Default, Velvet, Aero, Elegant" data-event="cycle-theme">
+          <svg width="18" height="18" data-icon="contrast" aria-hidden="true"></svg>
+          Theme <span class="menu-value">Default</span>
+        </button>
+        <button type="button" class="menu-item" data-control="appearance" aria-label="Appearance: light, dark or auto" data-tip="Light, dark, or follow the system" data-event="cycle-appearance">
+          <svg width="18" height="18" data-icon="sun" aria-hidden="true"></svg>
+          Appearance <span class="menu-value">Auto</span>
+        </button>
+        <button type="button" class="menu-item" data-control="motion" aria-label="Motion, parallax and shine: off, idle or responsive" data-tip="The motion engine behind parallax and shine: Off, Idle, then following your cursor or tilt" data-event="cycle-motion">
+          <svg width="18" height="18" data-icon="motion" aria-hidden="true"></svg>
+          Motion <span class="menu-value">Idle</span>
+        </button>
+        <button type="button" class="menu-item" data-control="sounds" aria-label="Sounds: on or off" data-tip="The synthesized interface sounds" data-event="toggle-sounds">
+          <svg width="18" height="18" data-icon="volume" aria-hidden="true"></svg>
+          Sounds <span class="menu-value">On</span>
+        </button>
+        <button type="button" class="menu-item" data-control="haptics" aria-label="Haptics: on or off" data-tip="The vibration feedback, where the device has it" data-event="toggle-haptics">
+          <svg width="18" height="18" data-icon="vibrate" aria-hidden="true"></svg>
+          Haptics <span class="menu-value">On</span>
+        </button>
+        <button type="button" class="menu-item" data-language-cycle data-languages="en,hi" aria-label="Language: tap to cycle" data-tip="Flips the page's language — content and labels together" data-event="cycle-language">
+          <svg width="18" height="18" data-icon="globe" aria-hidden="true"></svg>
+          Language <span class="menu-value">EN</span>
+        </button>
+      </div>
+
+      <div class="sheet-group" data-settings-panel="style" hidden>
+        <span class="menu-label">Colors</span>
+        <label class="menu-item menu-color" data-tip="The primary action color — hover and pressed follow along">
+          Accent 1 <input type="color" data-skin="accent1" aria-label="Accent 1 color">
+        </label>
+        <label class="menu-item menu-color" data-tip="The secondary action color">
+          Accent 2 <input type="color" data-skin="accent2" aria-label="Accent 2 color">
+        </label>
+        <label class="menu-item menu-color" data-tip="The highlight color — focus rings, links, small accents">
+          Accent 3 <input type="color" data-skin="accent3" aria-label="Accent 3 color">
+        </label>
+        <label class="menu-item menu-color" data-tip="The text ink — muted text follows along">
+          Ink <input type="color" data-skin="ink" aria-label="Ink color">
+        </label>
+        <span class="menu-label">Fonts</span>
+        <button type="button" class="menu-item" data-font-cycle="fontHeading" data-tip="Cycles the heading face" data-event="cycle-font-heading"><svg width="18" height="18" data-icon="edit" aria-hidden="true"></svg> Headings <span class="menu-value"></span></button>
+        <button type="button" class="menu-item" data-font-cycle="fontBody" data-tip="Cycles the body face" data-event="cycle-font-body"><svg width="18" height="18" data-icon="edit" aria-hidden="true"></svg> Body <span class="menu-value"></span></button>
+        <button type="button" class="menu-item" data-skin-reset data-tip="Back to the theme's own colors and fonts" data-event="skin-reset">
+          <svg width="18" height="18" data-icon="undo" aria-hidden="true"></svg> Reset the look
+        </button>
+      </div>
+
+      <div class="sheet-group" data-settings-panel="advanced" hidden>
+        <span class="menu-label">Surfaces</span>
+        <label class="menu-item menu-color" data-tip="The page behind everything">
+          Background <input type="color" data-token="--background" aria-label="Background color">
+        </label>
+        <label class="menu-item menu-color" data-tip="Cards and panels, one step above the page">
+          Surface <input type="color" data-token="--surface" aria-label="Surface color">
+        </label>
+        <label class="menu-item menu-color" data-tip="The interactive fill under a hovered surface">
+          Surface hover <input type="color" data-token="--surface-hover" aria-label="Surface hover color">
+        </label>
+        <span class="menu-label">Lines &amp; text</span>
+        <label class="menu-item menu-color" data-tip="Hairlines and edges">
+          Border <input type="color" data-token="--border" aria-label="Border color">
+        </label>
+        <label class="menu-item menu-color" data-tip="The heavier line weight for emphasis">
+          Border strong <input type="color" data-token="--border-strong" aria-label="Border strong color">
+        </label>
+        <label class="menu-item menu-color" data-tip="Captions and secondary text">
+          Muted ink <input type="color" data-token="--text-muted" aria-label="Muted ink color">
+        </label>
+        <label class="menu-item menu-color" data-tip="The quietest text: hints and disabled labels">
+          Subtle ink <input type="color" data-token="--text-subtle" aria-label="Subtle ink color">
+        </label>
+        <span class="menu-label">Layout &amp; shape</span>
+        <button type="button" class="menu-item" data-density-cycle data-tip="Tightens or opens every spacing step" data-event="cycle-density"><svg width="18" height="18" data-icon="grid" aria-hidden="true"></svg> Density <span class="menu-value">Medium</span></button>
+        <button type="button" class="menu-item" data-text-size-cycle data-tip="Scales all text up or down together" data-event="cycle-text-size"><svg width="18" height="18" data-icon="edit" aria-hidden="true"></svg> Text size <span class="menu-value">Medium</span></button>
+        <button type="button" class="menu-item" data-shape-cycle data-tip="How round every corner is, from sharp to pill" data-event="cycle-shape"><svg width="18" height="18" data-icon="sparkle" aria-hidden="true"></svg> Roundness <span class="menu-value">Default</span></button>
+        <button type="button" class="menu-item" data-width-cycle data-tip="How wide the page runs, from a reading column to edge to edge" data-event="cycle-width"><svg width="18" height="18" data-icon="arrow-right" aria-hidden="true"></svg> Page width <span class="menu-value">Default</span></button>
+        <a class="menu-item" href="/build.html" data-event="open-builder" data-tip="Every token, with live preview and copyable config">
+          <svg width="18" height="18" data-icon="sliders" aria-hidden="true"></svg> Open the full theme builder
+        </a>
+      </div>
+
+      <div class="sheet-group" data-settings-panel="shortcuts" hidden>
+        <span class="menu-label">Keyboard</span>
+        <div data-shortcuts></div>
+      </div>
+    </div>
+  </aside>
+  <button type="button" class="float-btn float-btn-right" aria-controls="site-settings" aria-expanded="false"
+          aria-label="Open appearance settings" data-tip="Appearance: theme, colors, fonts, motion, sound" data-event="open-site-settings">
+    <svg width="20" height="20" data-icon="eye" aria-hidden="true"></svg>
+  </button>
 </body>
 </html>
