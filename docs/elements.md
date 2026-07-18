@@ -74,7 +74,7 @@ Every component, one line each. States, themes and sizes are system facts on the
 ## Navigation
 
 - Tabs. Buttons that switch views in place. [done]
-- Steps indicator. Numbered stages of a multi-step flow. [gap]
+- Steps indicator. Numbered stages of a multi-step flow. [done]
 - Breadcrumb. The path to the current page. [done]
 - Back link. A small back step above the title. [gap]
 - Back to top. Appears after scrolling, returns to the top. [gap]

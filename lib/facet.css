@@ -5597,6 +5597,104 @@ table.table {
   font-weight: var(--weight-strong);
 }
 
+/* ----- STEPS INDICATOR: numbered stages of a multi-step flow -----
+   (docs mirror — identical to llms.txt · Steps indicator)
+   WHEN TO USE: a wizard, checkout or multi-step form — show the numbered stages, which one you are on, and which are behind you.
+
+   What it is: an ordered list of numbered stages with a connector line —
+   each step a marker (its number, or a check once done) and a label, the
+   current one marked and the finished ones filled behind it. What it is
+   for: multi-step flows: a checkout, a sign-up wizard, a multi-step form.
+   When to use it: whenever a task spans more than two screens and the
+   person needs to see where they are. The number comes from a CSS
+   counter, so it renders and renumbers with no JS. State rides the
+   grammar, no invented class: mark the current step aria-current="step"
+   and every finished step data-status="done" (its marker swaps the
+   number for a check and colours the path up to it). Steps are an
+   indicator, not controls; if a step should jump back, wrap its label in
+   an <a>.
+
+   Usage:
+     <ol class="steps" aria-label="Progress">
+       <li class="step" data-status="done"><span class="step-marker"></span><span class="step-label">Account</span></li>
+       <li class="step" aria-current="step"><span class="step-marker"></span><span class="step-label">Details</span></li>
+       <li class="step"><span class="step-marker"></span><span class="step-label">Review</span></li>
+     </ol>
+*/
+.steps {
+  --step-size: 2rem;
+  list-style: none;
+  display: flex;
+  counter-reset: step;
+  margin: 0;
+  padding: 0;
+}
+.step {
+  counter-increment: step;
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-tight);
+  text-align: center;
+  color: var(--text-muted);            /* upcoming steps read quiet */
+}
+/* the connector: a line from the previous marker's centre to this one's,
+   sitting behind the markers (equal-width steps, so -50%→50% spans exactly
+   one gap between two centres) */
+.step:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--step-size) / 2);
+  left: -50%;
+  right: 50%;
+  height: var(--border-element);
+  background: var(--border);
+  z-index: 0;
+}
+.step-marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--step-size);
+  height: var(--step-size);
+  border-radius: var(--radius-pill);
+  background: var(--fill);             /* neutral track for an upcoming step */
+  color: var(--text-muted);
+  border: var(--border-element) solid var(--border);
+  font-weight: var(--weight-strong);
+  font-variant-numeric: tabular-nums;
+}
+.step-marker::before { content: counter(step); }
+.step-label { font-size: var(--text-caption); font-weight: var(--weight-medium); }
+/* finished: filled with the base wayfinding hue, a check for the number,
+   and the segment leading into it coloured as travelled path */
+.step[data-status="done"] {
+  color: var(--text);
+}
+.step[data-status="done"] .step-marker {
+  background: var(--accent-3);
+  color: var(--on-accent-3);
+  border-color: var(--accent-3);
+}
+.step[data-status="done"] .step-marker::before { content: "✓"; }
+.step[data-status="done"]::before,
+.step[aria-current="step"]::before { background: var(--accent-3); }
+/* current: the you-are-here step — filled and ringed, label full strength */
+.step[aria-current="step"] {
+  color: var(--text);
+}
+.step[aria-current="step"] .step-marker {
+  background: var(--accent-3);
+  color: var(--on-accent-3);
+  border-color: var(--accent-3);
+  box-shadow: 0 0 0 3px var(--accent-3-tint);
+}
+.step[aria-current="step"] .step-label { font-weight: var(--weight-strong); }
+
 /* ----- PAGINATION: numbered pages as real links -----
    What it is: page links in 44px squares — previous, numbers, next —
    with the current page filled in accent-1 and marked aria-current.

@@ -1240,6 +1240,18 @@ pagination are links, never buttons.
       <a href="?page=1" aria-current="page">1</a> <a href="?page=2">2</a>
     </nav>
 
+### Steps indicator
+
+WHEN TO USE: a wizard, checkout or multi-step form — show the numbered stages, which one you are on, and which are behind you.
+
+What it is: an ordered list of numbered stages with a connector line (ol.steps of li.step, each a .step-marker and a .step-label) — each marker its number, or a check once done; the current step is marked and ringed, the finished ones filled behind it. What it is for: multi-step flows: a checkout, a sign-up wizard, a multi-step form. When to use it: whenever a task spans more than two screens and the person needs to see where they are. The number comes from a CSS counter, so it renders and renumbers with no JS. State rides the grammar, no invented class: mark the current step aria-current="step" and every finished step data-status="done" (its marker swaps the number for a check and colours the path up to it). Steps are an indicator, not controls; if a step should jump back, wrap its label in an <a>. Reuse it as the header of a multi-step form.
+
+    <ol class="steps" aria-label="Progress">
+      <li class="step" data-status="done"><span class="step-marker"></span><span class="step-label">Account</span></li>
+      <li class="step" aria-current="step"><span class="step-marker"></span><span class="step-label">Details</span></li>
+      <li class="step"><span class="step-marker"></span><span class="step-label">Review</span></li>
+    </ol>
+
 ### Nav link
 
 WHEN TO USE: the one style for links inside navs, sidebars and rails; aria-current="page" marks where you are.

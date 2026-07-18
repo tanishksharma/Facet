@@ -45,14 +45,17 @@
     </section>
 
     <!-- ==============================
-         What happens next
-         Three plain lines, no cards.
+         What happens next · the steps indicator component
+         The three stages of the build method as a numbered steps
+         indicator, the current stage marked.
          ============================== -->
     <section id="how" style="text-align: center; padding-block: var(--space-section); max-width: var(--measure); margin-inline: auto;">
       <h2 class="heading-bar heading-bar-center">What happens next</h2>
-      <p><strong>1.</strong> Your AI reads the whole library in one fetch.</p>
-      <p><strong>2.</strong> It asks what you are building, and plans it with you.</p>
-      <p><strong>3.</strong> It builds the product from the library's parts, ready to ship.</p>
+      <ol class="steps" aria-label="What happens next" style="max-width: 34rem; margin-inline: auto;">
+        <li class="step" aria-current="step"><span class="step-marker"></span><span class="step-label">Reads the whole library in one fetch</span></li>
+        <li class="step"><span class="step-marker"></span><span class="step-label">Asks what you are building, and plans it with you</span></li>
+        <li class="step"><span class="step-marker"></span><span class="step-label">Builds the product, ready to ship</span></li>
+      </ol>
       <p class="text-footnote">The full method — the interview, the plan, the quality bar — is on the <a href="/product.html">Product page</a>. You do not need to care about the tech.</p>
     </section>
 

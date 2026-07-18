@@ -2651,6 +2651,24 @@ article p   { font-family: var(--font-reading); }
         <p><button class="btn btn-small" data-copy="#code-wayfinding" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- STEPS INDICATOR -->
+      <article class="element stack" id="steps" data-cat="nav">
+        <h3 data-status="dev">Steps indicator</h3>
+        <p>
+          The numbered stages of a multi-step flow: which steps are behind you, which one you are on, and which are still ahead. Finished steps fill in and show a check; the current one is marked and ringed. Numbers come from the markup order, so they renumber themselves with no JavaScript.
+        </p>
+        <div class="demo">
+          <ol class="steps" aria-label="Checkout progress">
+            <li class="step" data-status="done"><span class="step-marker"></span><span class="step-label">Cart</span></li>
+            <li class="step" data-status="done"><span class="step-marker"></span><span class="step-label">Address</span></li>
+            <li class="step" aria-current="step"><span class="step-marker"></span><span class="step-label">Payment</span></li>
+            <li class="step"><span class="step-marker"></span><span class="step-label">Confirm</span></li>
+          </ol>
+        </div>
+        <pre id="code-steps"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-steps" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
       <!-- NAV LINK -->
       <article class="element stack" id="nav-link" data-cat="nav">
         <h3 data-status="dev">Nav link</h3>
