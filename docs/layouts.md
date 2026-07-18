@@ -48,7 +48,7 @@ One shell per page, never nested.
 - Masonry. Uneven tiles in balanced columns. [gap]
 - Chip strip. Two rows of chips scrolling sideways together. [done]
 - Section fold. A heading row that folds a section. [partial: the details-based accordion covers folding under a heading row; no dedicated section-fold block]
-- Rail dots. One dot per card under a scrolling rail. [gap]
+- Rail dots. One dot per card under a scrolling rail. [done]
 - Timeline. Phases on an axis. [partial: the Entry component styles dated lists (résumés, changelogs); no phases-on-an-axis block]
 
 ## App-shape pieces

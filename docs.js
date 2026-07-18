@@ -47,7 +47,7 @@ function renderSnippet(article) {
         .join("\n\n")
     : cleanDemoClone(el).outerHTML;
   const html = [...demo.children]
-    .filter(el => !el.hidden)
+    .filter(el => !el.hidden && !el.hasAttribute("data-demo-chrome"))
     .map(serialize)
     .filter(Boolean)
     .join("\n\n");

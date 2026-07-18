@@ -478,6 +478,30 @@
           <p><button class="btn btn-small" data-copy="#code-fn-scroll-gauge" data-tip="Copies this code">Copy</button></p>
         </article>
 
+        <article class="element stack" id="fn-rail-dots" data-llms="Rail dots">
+          <h3>facet.railDots</h3>
+          <p>
+            Grows a row of dots beneath any horizontal scroller carrying
+            data-rail-dots — one dot per direct child. The dot for the card
+            most in view fills in (aria-current="true"), watched with an
+            IntersectionObserver rooted on the rail, and clicking a dot
+            scrolls its card to centre (honouring reduced motion). It runs
+            for every [data-rail-dots] scroller at load, is guarded against
+            double-wiring, and the rail scrolls and drags on its own, so
+            the dots are a wayfinding aid, not the scroll mechanism.
+            facet.railDots() re-wires a late-added rail.
+          </p>
+          <pre id="code-fn-rail-dots"><code>&lt;div class="card-row" data-rail-dots aria-label="Templates"&gt;
+  &lt;article&gt;…&lt;/article&gt;
+  &lt;article&gt;…&lt;/article&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  facet.railDots();   // re-wire after inserting a rail
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-rail-dots" data-tip="Copies this code">Copy</button></p>
+        </article>
+
         <article class="element stack" id="fn-controls" data-llms="App-kit self-wiring (apps are markup + data only)">
           <h3>Settings controls</h3>
           <p>

@@ -2331,7 +2331,8 @@ Assemblies of the components, documented as copyable patterns in the
 Library's Blocks layer — a block is the arrangement, not a new
 thing to learn. The set: grid of cards; horizontal card row
 (.card-row: momentum side-scroll, per-card proximity snap — safe, the
-pager law is about full pages); promo rail (.promo-scroll of
+pager law is about full pages; add data-rail-dots for a dot-per-card
+wayfinding row beneath it — full Rail dots entry below); promo rail (.promo-scroll of
 .promo-card links: full-bleed, tinted from the vivid palette,
 mandatory snap — full entry below); filterable card list (an input with
 data-filter="#target" live-hides non-matching children — the markup
@@ -2778,6 +2779,17 @@ What it is: a floating navigation cluster pinned bottom-left — a "Menu" pill t
 WHEN TO USE: long scrollers inside app screens — a slim thumb that shows how much is left and drags to scrub.
 
 What it is: a pill thumb inset in an embossed groove beside a scroller — thumb height is the visible share of the content, position is progress, and overscroll momentum slides it out of the groove where the clip swallows it. What it is for: a themed, unobtrusive scrollbar look-alike for panels and whole pages; facet.scrollGauge(scroller) injects it, a metric option reports composite scrolls (the pager's sections laid end to end), and onScrub makes the lane a drag handle; risen sheet panels (.sheet-rise) inject their own automatically, riding the panel's outer edge. When to use it: sheets and app pages where the native scrollbar is hidden. Auto-hides when nothing overflows. Scroll the box:
+
+### Rail dots
+
+WHEN TO USE: a horizontal card row where the reader should see how many cards there are and which one is in view — a shelf, a carousel, a gallery.
+
+What it is: a row of dots below a horizontal scroller, one per card; the dot for the card most in view fills in, and clicking a dot scrolls its card to centre. facet.js builds and wires it from one attribute — data-rail-dots on the scroller — so there is nothing to author but the dots row appears under the rail. What it is for: wayfinding under any .card-row shelf or carousel. When to use it: when the rail has more cards than show at once and their count matters. It is an enhancement, not the scroll mechanism: the rail scrolls and drags on its own, and each dot is a real 28px-target button with an accessible name, so it works by keyboard; with JS off the rail still scrolls and no dots appear. The current dot reads aria-current="true"; facet.railDots() re-wires a late-added rail.
+
+    <div class="card-row" data-rail-dots aria-label="Templates">
+      <article>…</article>
+      <article>…</article>
+    </div>
 
 ### Installable (PWA)
 
