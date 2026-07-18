@@ -5238,6 +5238,41 @@ progress:not([value])::-moz-progress-bar { background: transparent; }
 .badge-info    { background: var(--info-tint);    color: var(--info);    border-color: var(--info-edge); }
 
 .chips { display: flex; flex-wrap: wrap; gap: var(--space-tight); max-width: none; }
+
+/* ----- CHIP STRIP: two rows of chips scrolling sideways together -----
+   (docs mirror — identical to llms.txt · Chip strip)
+   WHEN TO USE: too many chips to wrap tidily — tags, filters, category jumps — kept to two rows that scroll sideways as one instead of wrapping down the page.
+
+   What it is: the chips laid on a two-row grid that flows into columns and
+   scrolls sideways with momentum — both rows move together because they
+   share one scroll container. What it is for: a long band of tags, filters
+   or category links that would eat vertical space if it wrapped. When to
+   use it: more chips than fit two tidy rows; for a handful, plain wrapping
+   .chips is enough. Chips are the same .chip as everywhere — a button to
+   toggle, an <a> to link. The chips fill top-to-bottom then rightward, so
+   authoring order reads down each column.
+
+   Usage:
+     <div class="chip-strip">
+       <a class="chip" href="/library.html#print">Print &amp; export</a>
+       <a class="chip" href="/library.html#feedback">Sound &amp; haptics</a>
+       …
+     </div>
+*/
+.chip-strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, auto);
+  grid-auto-columns: max-content;
+  gap: var(--space-tight);
+  overflow-x: auto;
+  padding-bottom: var(--space-control);   /* room for the scrollbar */
+  scroll-snap-type: x proximity;
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+.chip-strip > * { scroll-snap-align: start; }
+
 .chip {
   display: inline-flex;                /* an svg glyph sits beside the label
                                           (the base svg rule is display:block,

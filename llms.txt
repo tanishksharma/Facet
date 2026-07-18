@@ -2335,7 +2335,9 @@ pager law is about full pages); promo rail (.promo-scroll of
 .promo-card links: full-bleed, tinted from the vivid palette,
 mandatory snap — full entry below); filterable card list (an input with
 data-filter="#target" live-hides non-matching children — the markup
-is the data); list cards; product grid; product detail; cart line
+is the data); chip strip (.chip-strip: two rows of chips scrolling
+sideways together, for a long band of tags or category links — full
+entry below); list cards; product grid; product detail; cart line
 items with a stepper and the result total; the side index panel (.side-index: the sticky
 grouped-links aside the docs themselves use); full top menu (.top-menu:
 wordmark, .top-menu-links, actions; on phones the header stays one
@@ -2376,6 +2378,18 @@ What it is: cards in the auto-fitting grid — as many columns as fit, one on ph
 WHEN TO USE: more cards than fit, kept on one line — recent items, suggestions — side-scrolling with momentum and a gentle per-card snap.
 
 What it is: cards that scroll sideways with momentum and a gentle per-card snap — proximity snap is safe here; the pager law is about full-page sections. What it is for: browsable shelves: recents, suggestions, categories. When to use it: when the list is long but the screen is not.
+
+### Chip strip
+
+WHEN TO USE: too many chips to wrap tidily — tags, filters, category jumps — kept to two rows that scroll sideways as one instead of wrapping down the page.
+
+What it is: the chips on a two-row grid that flows into columns and scrolls sideways with momentum (.chip-strip) — both rows move together because they share one scroll container. What it is for: a long band of tags, filters or category links that would eat vertical space if it wrapped. When to use it: more chips than fit two tidy rows; for a handful, plain wrapping .chips is enough. Chips are the same .chip as everywhere — a button to toggle, an <a> to link. They fill top-to-bottom then rightward, so authoring order reads down each column.
+
+    <div class="chip-strip">
+      <a class="chip" href="/library.html#print">Print &amp; export</a>
+      <a class="chip" href="/library.html#feedback">Sound &amp; haptics</a>
+      …
+    </div>
 
 ### Filterable card list
 
