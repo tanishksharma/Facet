@@ -3225,6 +3225,25 @@ article p   { font-family: var(--font-reading); }
         <p><button class="btn btn-small" data-copy="#code-block-feature-grid" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- BENTO GRID -->
+      <article class="element stack" id="block-bento">
+        <h3 data-status="dev">Bento grid</h3>
+        <p>
+          Feature tiles of mixed size on the one grid — a big statement tile among smaller ones. Any tile can take two columns, two rows or both; on phones they stack to one column and the sizes switch off.
+        </p>
+        <div class="demo">
+          <div class="bento" style="--bento-cols: 3;">
+            <article class="card stack-tight tile-big"><strong>One big idea</strong><p class="text-footnote">The tile that carries the message. Two columns and two rows, set with <code>.tile-big</code> or <code>data-span="big"</code>.</p></article>
+            <article class="card stack-tight"><svg data-icon="clock"></svg><strong>Fast</strong><p class="text-footnote">A plain one-up tile.</p></article>
+            <article class="card stack-tight"><svg data-icon="lock"></svg><strong>Private</strong><p class="text-footnote">Another one-up tile.</p></article>
+            <article class="card stack-tight tile-wide"><strong>Wide claim</strong><p class="text-footnote">Two columns, one row — <code>.tile-wide</code>.</p></article>
+            <article class="card stack-tight" data-span="tall"><strong>Tall note</strong><p class="text-footnote">Two rows, one column — <code>data-span="tall"</code>.</p></article>
+          </div>
+        </div>
+        <pre id="code-block-bento"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-block-bento" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
       <!-- PRICING -->
       <article class="element stack" id="block-pricing">
         <h3 data-status="dev">Pricing table</h3>

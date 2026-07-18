@@ -90,16 +90,17 @@
     </section>
 
     <!-- ==============================
-         Try it right here
-         Two clusters instead of a wall of identical tiles: a working
-         form on one side; a chart, a sorting table and pressable
-         controls on the other. All live library code.
+         Try it right here · the bento grid block
+         A wall of live library components as mixed-size tiles: the
+         working form as a tall tile, the chart wide across the top, the
+         sorting table and the pressable controls filling the bed. All
+         live library code, laid out on the bento grid.
          ============================== -->
     <section id="live" class="stack-loose" style="padding-block: var(--space-section);">
       <h2 class="heading-bar heading-bar-center" style="text-align: center;">Try it right here</h2>
       <p style="text-align: center;">This page is the library. These are live — type, drag, sort, press.</p>
-      <div class="grid-2">
-        <form class="card stack" onsubmit="return false">
+      <div class="bento" style="--bento-cols: 3;">
+        <form class="card stack tile-tall" onsubmit="return false">
           <strong>A working form</strong>
           <label class="field">
             <span class="field-label">Your email</span>
@@ -129,9 +130,13 @@
             <input type="checkbox" class="switch" checked>
           </label>
         </form>
-        <div class="stack">
-          <div class="chart-card"><div class="chart" id="growth-chart"></div></div>
+        <article class="card stack tile-wide">
+          <strong>A live chart</strong>
+          <div class="chart" id="growth-chart"></div>
           <p class="text-caption">Components shipped, Jan to Jul. Drag across the plot to read values.</p>
+        </article>
+        <article class="card stack">
+          <strong>A sorting table</strong>
           <div class="table-scroll">
             <table class="table" data-sortable>
               <thead><tr><th scope="col">Template</th><th scope="col" class="num">Lines</th></tr></thead>
@@ -144,6 +149,9 @@
             </table>
           </div>
           <p class="text-caption">Click a header to sort — keyboard works too.</p>
+        </article>
+        <article class="card stack">
+          <strong>Real feedback</strong>
           <p class="row">
             <button class="btn btn-primary" data-event="demo-press" data-tip="Presses with weight, clicks, and vibrates where it can">Press me</button>
             <span class="stepper" role="group" aria-label="Guests">
@@ -152,7 +160,8 @@
               <button type="button" class="stepper-up" aria-label="More" data-tip="Ticks as it steps">+</button>
             </span>
           </p>
-        </div>
+          <p class="text-caption">Press has weight, clicks and vibrates; the stepper ticks.</p>
+        </article>
       </div>
     </section>
 

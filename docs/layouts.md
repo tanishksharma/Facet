@@ -26,7 +26,7 @@ One shell per page, never nested.
 - Collapsible nav rail. The sidebar collapsed to icons and back. [gap]
 - Footer. Identity, link columns, a sign-up well, a legal row. [done]
 - Hero. Display heading, one line, one action. [done]
-- Bento grid. Mixed-size feature tiles. [gap]
+- Bento grid. Mixed-size feature tiles. [done]
 - Feature grid. Icon, claim, one sentence, repeated. [done]
 - Pricing table. Plan cards, the recommended one highlighted. [done]
 - Comparison table. Plans against features, check by check. [gap]

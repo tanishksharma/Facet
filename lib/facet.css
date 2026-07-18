@@ -4012,6 +4012,49 @@ dialog.drawer[open]::backdrop { animation: facet-fade-in var(--duration-normal) 
   scroll-snap-align: start;
 }
 
+/* ----- BENTO: mixed-size feature tiles on the existing grid -----
+   (docs mirror — identical to llms.txt · Bento grid)
+   WHEN TO USE: a showcase where a few tiles deserve more room than the rest — one hero feature among supporting ones, a product wall, a live component wall.
+
+   What it is: the auto-fitting grid with size modifiers — one stack on
+   phones, a fixed column bed on wider screens where any tile can claim
+   two columns (.tile-wide), two rows (.tile-tall) or both (.tile-big).
+   What it is for: an unequal showcase — a big statement tile among
+   smaller ones, a product bento, a wall of live components. When to use
+   it: when equal cards read flat and you want emphasis without leaving
+   the grid. Spans are set two ways, whichever the author prefers: the
+   modifier classes .tile-wide / .tile-tall / .tile-big, or the equivalent
+   attribute data-span="wide|tall|big". No new breakpoint system — it
+   collapses to one column below the same 640px line the fixed grids use,
+   where every tile is full width and the spans switch off. Set
+   --bento-cols to change the column bed (default 4); grid-auto-flow: dense
+   backfills the gaps a big tile leaves. A tile is any element; a .card is
+   the usual one.
+
+   Usage:
+     <div class="bento" style="--bento-cols: 3;">
+       <article class="card tile-big">…</article>
+       <article class="card">…</article>
+       <article class="card tile-wide">…</article>
+       <article class="card" data-span="tall">…</article>
+     </div>
+*/
+.bento {
+  display: grid;
+  gap: var(--space-stack);
+  grid-template-columns: 1fr;      /* one stack on phones */
+  grid-auto-flow: dense;
+}
+@media (min-width: 640px) {
+  .bento {
+    grid-template-columns: repeat(var(--bento-cols, 4), 1fr);
+    grid-auto-rows: minmax(8rem, 1fr);   /* an even bed with a floor, so a tall tile reads as tall */
+  }
+  .bento > .tile-wide, .bento > [data-span="wide"] { grid-column: span 2; }
+  .bento > .tile-tall, .bento > [data-span="tall"] { grid-row: span 2; }
+  .bento > .tile-big,  .bento > [data-span="big"]  { grid-column: span 2; grid-row: span 2; }
+}
+
 /* Details label swap: inside any <details>, .when-closed shows only
    while shut and .when-open only while open — so a summary can say
    "Menu" shut and "Close" open with no JS. Generic; the top menu's
