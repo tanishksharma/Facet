@@ -68,4 +68,4 @@ Every line of /docs was verified against the shipped files (lib/facet.css, lib/f
 
 ## Bug found during verification (not a spec line)
 
-Printing a themed page in dark mode leaks dark ink onto paper: the print block's `:root` token reset (facet.css ~line 2483) loses specificity to `[data-theme="velvet"][data-mode="dark"]` blocks. Default theme prints clean; themed dark does not. One-selector fix in the print block.
+Printing a themed page in dark mode leaks dark ink onto paper: the print block's `:root` token reset (facet.css ~line 2483) loses specificity to `[data-theme="velvet"][data-mode="dark"]` blocks. Default theme prints clean; themed dark does not. One-selector fix in the print block. [fixed] — the print token reset now declares its values `!important` (an important custom property beats any non-important theme block whatever its specificity), and the reset was extended to the theme-private surface tokens (velvet's `--v-face`/`--v-well-bg`, aero's `--a-glass-bg`/`--a-gloss`) plus a `[data-theme] { background-image: none }` rule, so velvet/aero dark cards and the aero aurora ground print ink on white too.

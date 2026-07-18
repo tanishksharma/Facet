@@ -2478,27 +2478,49 @@ input, textarea, [contenteditable] {
   /* …and shows on paper, at its element's natural display */
   [data-print="only"], .print-only { display: revert !important; }
 
-  /* ink on paper: no theme, no dark mode, no elevation */
+  /* ink on paper: no theme, no dark mode, no elevation. The values are
+     !important so the reset beats every themed selector: a plain :root
+     (0,1,0) loses to a theme's [data-theme="velvet"][data-mode="dark"]
+     (0,2,0), which would leak dark ink onto paper — an !important custom
+     property wins over any non-important theme block whatever its
+     specificity, which is exactly the "must beat everything" guarantee
+     the rest of this print block already relies on. */
   :root, [data-mode="dark"] {
-    --background: #FFFFFF;
-    --surface: #FFFFFF;
-    --surface-hover: #FFFFFF;
-    --surface-active: #F2F2F2;
-    --text: #111111;
-    --text-muted: #444444;
-    --text-subtle: #666666;
-    --border: #BBBBBB;
-    --border-subtle: #CCCCCC;
-    --border-strong: #999999;
-    --shadow-flat: none;
-    --shadow-raised: none;
-    --shadow-floating: none;
-    --shadow-overlay: none;
+    --background: #FFFFFF !important;
+    --surface: #FFFFFF !important;
+    --surface-hover: #FFFFFF !important;
+    --surface-active: #F2F2F2 !important;
+    --text: #111111 !important;
+    --text-muted: #444444 !important;
+    --text-subtle: #666666 !important;
+    --border: #BBBBBB !important;
+    --border-subtle: #CCCCCC !important;
+    --border-strong: #999999 !important;
+    --shadow-flat: none !important;
+    --shadow-raised: none !important;
+    --shadow-floating: none !important;
+    --shadow-overlay: none !important;
   }
+  /* Themes also paint some surfaces from their OWN private tokens — velvet's
+     fabric faces and wells, aero's frosted glass — which the semantic reset
+     above does not reach, so a card would still print its dark fabric. Flatten
+     those to paper too, and drop every theme's ambient background-image (the
+     aero/elegant aurora painted on the <html> root), so a themed page in dark
+     mode still prints ink on white. */
+  :root, [data-mode="dark"] {
+    --v-bg: #FFFFFF !important;
+    --v-face: #FFFFFF !important;
+    --v-face-accent: #FFFFFF !important;
+    --v-well-bg: #FFFFFF !important;
+    --a-glass-bg: #FFFFFF !important;
+    --a-gloss: none !important;
+  }
+  [data-theme] { background-image: none !important; }
   * {
     box-shadow: none !important;
     text-shadow: none !important;
     backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
   .bg-grid, .bg-dots, .bg-circles, .bg-ruled, .bg-graph, [data-bg-glyph] { background-image: none !important; }
   .bg-fluid-layer { display: none !important; }
