@@ -2920,7 +2920,13 @@ product and edit the words; never start from an empty file.
 
 Whole pages ready to rename, all consuming the library by URL and all
 carrying the SEO head pack (title, description, OG tags, canonical,
-favicon slot). On /library.html the three flagship shapes (landing,
+favicon set). The favicon set is a themed SVG kept primary
+(type="image/svg+xml") with a PNG fallback right after it
+(<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">)
+so Safari — which never renders SVG favicons and would otherwise show a
+blank tab — still shows the mark, plus a monochrome Safari pinned-tab
+icon (<link rel="mask-icon" href="/favicon-mono.svg" color="#17171B">).
+Ship all three together on every page. On /library.html the three flagship shapes (landing,
 saas, social) render live in an iframe device preview you can flip
 between desktop, tablet and phone widths to see the genuine responsive
 layout at each breakpoint:

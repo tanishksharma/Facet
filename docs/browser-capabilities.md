@@ -102,7 +102,7 @@ What the browser itself gives Facet, grouped by topic: the support contract, the
 
 ## macOS and desktop
 
-- A PNG favicon fallback, since Safari never renders SVG favicons; a monochrome pinned-tab icon. [gap]
+- A PNG favicon fallback, since Safari never renders SVG favicons; a monochrome pinned-tab icon. [done]
 - The Safari "Add to Dock" install path, documented beside iOS and Android; touch targets that survive a mouse-plus-touchscreen machine. [partial: 44px touch targets ship; the Add to Dock install path is not documented]
 - Keyboard shortcuts declared on the elements that carry them, for assistive tech and agents; right-click menus on app surfaces, reusing the dropdown. [gap]
 

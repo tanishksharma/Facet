@@ -94,7 +94,7 @@ The complete capability inventory. One line per capability. Details of any singl
 ## Head and SEO
 
 - Every template ships a complete head: title, description, social share preview, favicon set. [done]
-- The favicon follows the theme, with a PNG fallback so every browser shows it. [gap]
+- The favicon follows the theme, with a PNG fallback so every browser shows it. [partial: the PNG fallback and monochrome pinned-tab icon ship on every page, so Safari tabs are no longer blank; the theme-following (dark browser-chrome invert) half is the separate browser-capabilities line still open]
 - Structured data where the page type has one: the article template carries its JSON-LD slot. [done]
 
 ## Analytics

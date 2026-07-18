@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- The Facet mark as a single monochrome shape for Safari's pinned-tab
+       icon (rel="mask-icon"): no background, the browser applies the link's
+       color attribute to the path. -->
+  <path d="M50 14 86 41 72 86 28 86 14 41Z" fill="#000000"/>
+</svg>
