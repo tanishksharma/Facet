@@ -1,44 +1,66 @@
-# Facet — Build a great product (the prompt pack)
+# Facet — the prompt pack
 
-This file is the product-building method that ships with the Facet
-design library (https://facet.tanishksharma.com). It exists so a normal
-person can point an AI agent at Facet and get a real, tasteful,
-working product — not a wireframe — with no build step, no npm, no
-install ritual.
+Every build prompt the Facet design library ships, one per situation.
+Facet lives at https://facet.tanishksharma.com — one CSS file and one
+JS file at a URL, no framework, no build step.
 
-How to use it, as a person: copy ONE of the two prompts below into
-your AI assistant (Claude, ChatGPT, Cursor, anything that can write
-files), answer its questions, and review what it builds. Pick Prompt 1
-if you don't write code; pick Prompt 2 if you understand tech and want
-to stay in control of the decisions.
+As a person: find your situation below, copy that one prompt into your
+AI assistant (Claude, ChatGPT, Cursor, anything that writes files),
+and describe what you want. The same list, with copy buttons, is at
+/product.html.
 
-How to use it, as an agent: if you were sent here by a prompt or a
-link, read this whole file, then fetch /llms.txt for the complete
-component and capability inventory. The prompts below are your
-operating contract; the question bank and the quality bar at the end
-are yours to execute. The human-readable version of this method lives
-at /product.html — you and your person are reading the same rules.
+As an agent: if a prompt or a link sent you here, read "Choosing the
+prompt" just below, pick the prompt that matches the project's moment
+yourself, and execute it. Always fetch /llms.txt for the complete
+component and capability inventory — it is the source of truth for
+what exists.
 
 
-## The method (what every prompt below enforces)
+## Choosing the prompt
+
+One prompt per situation. A person copies the one that matches; an
+agent sent here chooses from the state of the project and what the
+person just asked, without being told which.
+
+- Nothing exists yet, the person does not write code → 1
+- Nothing exists yet, the person understands tech → 2
+  (Cannot tell which? Ask one question: technical decisions explained,
+  or handled for you?)
+- The product needs accounts, shared data or persistence → 3, alongside
+  whichever build prompt is running
+- A Facet project already exists, unfinished → 4
+- One new capability on a working product → 5
+- Something worked and now does not → 6
+- The look changes, the behaviour does not → 7
+- It works but feels big or messy → 8
+- A new language → 9
+- It should live on a home screen and work offline → 10
+- It needs to exist on paper → 11
+- It is done and needs to go live → 12
+- The piece belongs in the Facet library itself → 13
+
+Moments compose: a bug found mid-build means prompt 6, then back to
+the build. After every big step, prompt 8's audit is worth a pass —
+bloat is cut continuously, not in one cleanup at the end.
+
+
+## The contract (every prompt assumes this)
 
 1. LEARN THE MATERIAL. Fetch https://facet.tanishksharma.com/llms.txt
    and learn what exists: tokens, components, blocks, templates, app
    shells, themes, behaviours. Never invent a component Facet already
-   ships; never reach for a framework — Facet is one CSS file and one
-   JS file at a URL.
-2. INTERVIEW FIRST. Do not build from the first message. Ask
-   questions in small rounds until you can state: who this is for,
-   the one job it does, what success looks like, and what it should
-   feel like. The question bank below is the checklist.
+   ships; never reach for a framework.
+2. INTERVIEW FIRST. Do not build from the first message. Ask questions
+   in small rounds until you can state: who this is for, the one job
+   it does, what success looks like, what it should feel like. The
+   question bank at the end is the checklist.
 3. AGREE THE PLAN. Propose a v1: the screens, the features in, the
    features explicitly OUT, the theme and the shell. One short list.
    Wait for a yes before writing code.
 4. BUILD WITH THE LIBRARY. Semantic HTML plus Facet classes and data
-   attributes. Pick the right shell (a plain page, a snap flow, or a
-   view-stack app — llms.txt's Build advice says how to choose), one
-   theme, one accent-1 action per screen. Every state reachable by
-   URL. App logic stays in the project's own small script.
+   attributes. The right shell, one theme, one accent-1 action per
+   screen. Every state reachable by URL. App logic stays in the
+   project's own small script.
 5. VERIFY LIKE A USER. Open the product. Walk every screen, click
    every action, resize to a phone, switch light and dark. Fix what
    you find before showing it.
@@ -46,10 +68,7 @@ at /product.html — you and your person are reading the same rules.
    and the one next thing worth doing.
 
 
-## Prompt 1 — the non-technical builder
-
-Copy everything between the lines into your AI, then describe your
-idea in one sentence.
+## 1 — Start from nothing, non-technical
 
 ----------------------------------------------------------------------
 You are going to build me a complete product using the Facet design
@@ -80,10 +99,7 @@ one improvement you would make next. Then stop and wait.
 ----------------------------------------------------------------------
 
 
-## Prompt 2 — the technical builder
-
-Copy everything between the lines into your AI, then describe your
-idea. This prompt keeps you in the decisions and teaches as it goes.
+## 2 — Start from nothing, technical
 
 ----------------------------------------------------------------------
 You are going to build me a complete product using the Facet design
@@ -118,7 +134,276 @@ it works, what you left out, and what you would do next. Then stop.
 ----------------------------------------------------------------------
 
 
-## The backend addendum (when the product needs one)
+## 3 — A backend is needed
+
+----------------------------------------------------------------------
+My Facet product needs a real backend — accounts, shared data,
+something that must persist beyond one browser. Follow the backend
+addendum in https://facet.tanishksharma.com/build.txt before wiring
+anything.
+
+Start by telling me, in plain words: what exactly needs a server
+here, what stays possible without one, and the smallest real setup
+that works — usually one managed database with row-level security
+and a couple of serverless functions, never a server I babysit.
+Name the running cost in real money, default to a free tier, and
+wait for my yes before creating anything billable.
+
+Keep the front end complete and static-first: the product still
+renders and reads without the backend wherever that is honest —
+cached content, read-only views, a clear offline state. Secrets
+never reach the client: keys live in the host's environment
+variables, and the browser talks to your functions, never to the
+database.
+
+When it works, prove it: create, read and change real data through
+the product's own screens, then show me where the data lives and
+what it costs per month. Then stop.
+----------------------------------------------------------------------
+
+
+## 4 — Continue a half-built product
+
+----------------------------------------------------------------------
+You are continuing a product that already uses the Facet design
+library. Do not touch anything until you have read what exists.
+
+First, read https://facet.tanishksharma.com/build.txt and follow its
+method. Read https://facet.tanishksharma.com/llms.txt to learn the
+library. Then read every file in this project and tell me back, in a
+short list: what the product is, which screens exist, which theme
+and shell it uses, and what looks unfinished or broken.
+
+Then ask me what done means for this round — a few questions, not an
+interrogation — and propose the shortest list of steps that gets
+there. Wait for my yes.
+
+Work inside the patterns the project already has: its theme, its
+shell, its naming, its files. Do not restructure, rename or restyle
+anything that already works unless I ask for it. When you finish,
+verify like a user — every screen you touched, phone size, light and
+dark — and tell me what changed and what you deliberately left
+alone. Then stop.
+----------------------------------------------------------------------
+
+
+## 5 — Add a feature
+
+----------------------------------------------------------------------
+Add one feature to my existing Facet product. I will describe the
+feature in my next message. Everything else stays still.
+
+First, read https://facet.tanishksharma.com/build.txt and
+https://facet.tanishksharma.com/llms.txt, then read the project so
+you know its screens, theme, shell and patterns.
+
+Before building, tell me in a few lines how the feature will work
+and where it will live — which screen, which Facet components — and
+wait for my yes. Use components the library already ships; never
+invent one it has, never add a framework or a build step.
+
+Build the feature complete: its empty, loading and error states,
+keyboard operation, phone size, light and dark, its state in the
+URL so it can be linked to. Touch only what the feature needs — no
+drive-by refactors, no restyling, nothing else moves. Then verify
+it like a user, show me, and stop.
+----------------------------------------------------------------------
+
+
+## 6 — Fix a bug
+
+----------------------------------------------------------------------
+Fix one bug in my Facet product. Reproduce first, fix second, prove
+it third. I will describe the bug in my next message.
+
+Before changing anything, reproduce it: open the product, follow the
+steps, and tell me you can see it — or tell me exactly what you
+tried if you cannot. Never fix what you have not seen.
+
+Then find the cause, not the symptom, and make the smallest change
+that removes it. Check https://facet.tanishksharma.com/llms.txt
+before working around the library: the behaviour you need may
+already ship, and a bug inside a Facet component itself should be
+reported upstream, not patched over in my project.
+
+Prove the fix: walk the same steps and show the bug is gone, then
+check the screens around it — phone size, light and dark — to show
+nothing else broke. Tell me the cause in one sentence. Then stop.
+----------------------------------------------------------------------
+
+
+## 7 — Restyle or rebrand
+
+----------------------------------------------------------------------
+Restyle my Facet product. The markup does not change — in Facet a
+look is tokens and attributes, never new HTML.
+
+First, read the theming sections of
+https://facet.tanishksharma.com/llms.txt so you restyle the way the
+library intends: the data-theme attribute, dark mode as its own
+attribute, fonts by role, and the brand recipe — base colour to
+accent-3, highlight to accent-1, support hue to accent-2.
+
+Ask me for what exists: brand colours, fonts, a logo, the feel I
+want. Then show me the mapping — which theme is the base, what each
+accent rank becomes, which font roles change — and wait for my yes.
+
+Apply it as tokens and attributes only. If you find yourself editing
+a component's HTML or writing new CSS for something the library
+already styles, stop and tell me what you needed — that is the wrong
+path. Verify every screen in the new look, light and dark, contrast
+still readable, and show me before and after. Then stop.
+----------------------------------------------------------------------
+
+
+## 8 — Review and cut
+
+----------------------------------------------------------------------
+Audit my Facet product and cut the extra. Read it cold, as if
+someone else built it, and judge it.
+
+First, read https://facet.tanishksharma.com/build.txt — the quality
+bar at the end is the checklist — and
+https://facet.tanishksharma.com/llms.txt so you know everything the
+library ships.
+
+Go through every file and give me three lists: what breaks the
+quality bar (missing states, keyboard gaps, wrapper soup, state not
+in the URL); what re-invents the library (hand-rolled CSS or JS that
+a Facet component, token or behaviour already covers — name the
+replacement); and what is extra (code, wrappers, screens or options
+nothing uses).
+
+Wait for my yes on the lists, then cut: swap re-inventions for the
+library's own pieces, delete what nothing uses, fix the breaks.
+Prefer deleting to adding. Verify every screen after, and report
+what got smaller. Then stop.
+----------------------------------------------------------------------
+
+
+## 9 — Add a language
+
+----------------------------------------------------------------------
+Add a language to my Facet product using the library's own
+translation system — never a rewrite, never a second copy of the
+pages.
+
+First, read the translation section of
+https://facet.tanishksharma.com/llms.txt and follow it exactly: the
+translation table, the attributes on translatable text, and the
+language switch control.
+
+Ask me which languages, and whether the translations come from me or
+from you drafting them for my review — and for each language, formal
+or casual register, once. Mark every piece of interface text
+translatable, fill the table, and wire the switch where the library
+says it goes.
+
+Verify by walking every screen in each language: nothing overflows,
+nothing is left untranslated, dates and numbers follow the locale
+where the library handles them, and the choice survives moving
+between pages. Show me each language live. Then stop.
+----------------------------------------------------------------------
+
+
+## 10 — Make it installable
+
+----------------------------------------------------------------------
+Make my Facet product installable: a real icon on a phone's home
+screen, working offline, using Facet's PWA layer — not a rebuild.
+
+First, read the PWA and offline sections of
+https://facet.tanishksharma.com/llms.txt and follow them: the
+manifest, the icon set, the one-line service worker that loads the
+library's caching engine, and the iOS metas the library requires —
+viewport-fit, the apple-mobile-web-app pair, safe-area insets.
+
+Follow the library's caching law exactly: pages load network-first
+and the cache answers only offline — never cache-first HTML. Ask me
+for the app's name, and build the icon set from the product's own
+mark.
+
+Verify: install it in a phone-sized viewport, open it standalone,
+check the status bar and the safe areas, then go offline and show
+the product still opens. Tell me what works offline and what
+honestly cannot. Then stop.
+----------------------------------------------------------------------
+
+
+## 11 — Produce the paper pieces
+
+----------------------------------------------------------------------
+Produce a paper piece for my product — an invoice, a pitch deck, a
+letterhead, a business card, a one-pager — using Facet's print
+system and templates, never a PDF tool.
+
+First, read https://facet.tanishksharma.com/llms.txt — the print
+system and the templates — and start from the closest shipped
+template (deck, document, card) rather than a blank page.
+
+Ask me which piece, what goes on it, and whose brand it carries.
+Build it as a Facet page that prints exactly: interface controls off
+the paper, content on it, clean ink-on-paper with no shadows, page
+breaks in the right places, and exact sizes where the template
+defines them — the deck's 1920×1080, the card's 3.5×2in, A4
+documents.
+
+Verify by printing to PDF at the exact size and checking every
+page: nothing clipped, nothing orphaned, no dark ink leaking from a
+themed mode. Give me the page and the PDF. Then stop.
+----------------------------------------------------------------------
+
+
+## 12 — Hand over and ship
+
+----------------------------------------------------------------------
+Ship my Facet product and hand it over honestly.
+
+Before deploying, run the full quality bar at the end of
+https://facet.tanishksharma.com/build.txt — every screen by URL,
+keyboard everything, phone and desktop, light and dark, JavaScript
+off, one clean print — and fix what fails.
+
+Deploy it as the static site it is: any static host works. Ask me
+which host I use, or pick the simplest free one and say why in one
+line. Wire the deploy and give me the live link.
+
+Then verify LIVE, not just locally: open the deployed link and walk
+every screen as a user, on a phone size, clicking everything.
+
+Hand over in plain words: the live link, what shipped, what was
+left out and why, what it costs to keep running (usually nothing),
+and the one next thing worth doing. Then stop.
+----------------------------------------------------------------------
+
+
+## 13 — Contribute a component to the library
+
+----------------------------------------------------------------------
+You are going to add a component to the Facet library itself — not
+to a product built with it. This is maintainer work and it follows
+the library's own charter.
+
+First, read the repo at https://github.com/tanishksharma/Facet.
+CLAUDE.md at its root is the build charter: the markup rules, the
+naming rules, the compliance checklist and the keep-in-sync
+contract. Read llms.txt to be sure the component does not already
+exist — the library never ships the same thing twice.
+
+Tell the maintainer what the component is and why it earns a place —
+the library grows by extraction: patterns that repeat across real
+products, not one-offs — and wait for a yes.
+
+Then build it the charter's way: semantic tokens only, every state
+covered, keyboard operable, print role declared, fully commented,
+and one commit that updates the CSS, the JS if it has behaviour, the
+library page's wall entry and llms.txt together. A new entry ships
+marked in development; only the maintainer promotes it. Open the
+change as a pull request. Then stop.
+----------------------------------------------------------------------
+
+
+## The backend addendum (rules behind prompt 3)
 
 Facet's charter keeps app logic, data and state in the project, never
 in the library — so a backend is the PROJECT's choice. When one is

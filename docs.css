@@ -80,6 +80,15 @@ body { padding-bottom: var(--bar-clearance-bottom); }
   padding-block: var(--space-pin);
   padding-inline: var(--space-pin);
 }
+/* On paper the index is furniture and the two-column grid is a screen
+   idea: the page prints as one full-width column of content. Without
+   this, hiding the index leaves the content sitting in the sidebar's
+   narrow track. */
+@media print {
+  .docs-layout { display: block; padding: 0; }
+  .docs-index { display: none !important; }
+}
+
 /* The index panel, search box and grouped lists are the library's own
    .side-index block now (promoted from this chrome — the docs dogfood
    it). Only the docs-specific hooks remain here. */
@@ -384,6 +393,36 @@ article.element > p { max-width: none; line-height: var(--leading-snug); }
 article.element {
   border-top: var(--border-hairline) solid var(--border);
   padding-top: var(--space-card);
+}
+
+/* PRODUCT PAGE — one prompt per situation, listed. Deliberately NOT
+   .element: a prompt has no demo, no options and no AI-instructions
+   block, and its text is English, not code — so it carries the same
+   hairline divider and nothing else. The title, the one line saying
+   which moment it is for, the prompt, a copy button. */
+.prompt-entry {
+  border-top: var(--border-hairline) solid var(--border);
+  padding-top: var(--space-card);
+}
+.prompt-entry > h2 { font-size: var(--text-h3); }
+/* Jumping from the index lands the title clear of the pinned site bar.
+   Selector matches the generic section[id]/article[id] rule above so it
+   wins by order, not by a specificity fight. */
+@media (min-width: 40rem) {
+  article.prompt-entry[id] { scroll-margin-top: var(--bar-clearance-top); }
+}
+.prompt-when { color: var(--text-muted); font-size: var(--text-footnote); max-width: var(--measure); }
+/* The prompt itself reads as writing, not a code sample: it wraps
+   instead of scrolling sideways, and the block stops at the width the
+   prompt is already hard-wrapped to, so there is no dead space. */
+.prompt-entry > pre { white-space: pre-wrap; max-width: 74ch; }
+/* The index on this page carries no search box, so the panel supplies
+   its own top breathing room (elsewhere the sticky search wrapper does),
+   and on phones — where the index's links are hidden — it goes entirely
+   rather than leaving an empty panel above the page. */
+.docs-index:not(:has(.side-search)) { padding-top: var(--space-stack); }
+@media (max-width: 56rem) {
+  .docs-index:not(:has(.side-search)) { display: none; }
 }
 
 /* One wall entry. The demo is a distinct panel — a surface fill a shade

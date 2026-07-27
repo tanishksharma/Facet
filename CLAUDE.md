@@ -109,14 +109,20 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     Truth for: -
 
 `product.html`
-    What:      Build a great product: the AI product-building method for humans
-    Read by:   people
-    Truth for: the human-facing pitch of the build method
+    What:      the Prompt library — every build prompt, one per situation,
+               listed plainly with a copy button each. No pitch, no
+               explanation of the method: the home page sells, this page
+               lists. It is a human-readable mirror of build.txt.
+    Read by:   people (browsing), AI (either file)
+    Truth for: -
 
 `build.txt`
-    What:      the prompt pack — the same method as one plain-text fetch
-    Read by:   consumers' AI
-    Truth for: the product-building prompts and their contract
+    What:      the prompt pack — every prompt as one plain-text fetch, plus
+               the rules an agent uses to CHOOSE its prompt from the
+               project's moment, the shared contract, the backend addendum,
+               the question bank and the quality bar
+    Read by:   consumers' AI (PRIMARY)
+    Truth for: the product-building prompts, their situations and the contract
 
 `/templates/*.html`
     What:      whole-page starters (landing, saas, social, app, article, deck, document, card)
@@ -474,10 +480,25 @@ The shipped set, by design intent:
 > non-technical, Prompt 2 technical, the backend addendum, the
 > interview question bank, the quality bar). The AI-mirror decision
 > landed as: llms.txt stays the capability guide and gains a small
-> pointer section; the prompts live in their own fetch. Still open
-> from the spec: worked example runs on the page, and deeper prompt
-> tracks as real products exercise the method. The spec below stays as
-> the reference.
+> pointer section; the prompts live in their own fetch.
+>
+> **SECOND EDITION (27 Jul 2026) — the prompt shelf.** product.html is
+> now a plain LIST of prompts, not a pitch: no hero, no "how it works",
+> no "why this works" — the home page sells, this page lists. Thirteen
+> situations, each one card (number · situation title · one muted line
+> naming the moment · the prompt · Copy). build.txt carries the same
+> thirteen plus a "Choosing the prompt" section that maps a project's
+> moment to a prompt number, so an agent sent to the file picks its own
+> prompt instead of being told which. The situations: 1 start from
+> nothing non-technical · 2 start from nothing technical · 3 backend
+> needed · 4 continue a half-built product · 5 add a feature · 6 fix a
+> bug · 7 restyle or rebrand · 8 review and cut · 9 add a language ·
+> 10 make it installable · 11 produce the paper pieces · 12 hand over
+> and ship · 13 contribute a component to the library. Adding a
+> situation means adding it in BOTH files plus the Choosing list.
+> Still open: the phase-keyed router that detects the moment
+> automatically (the board row), and worked example runs. The spec
+> below stays as the reference.
 
 The strategic bet made concrete (see The thesis above). Today Facet is a design
 library an AI *can* read. The next edition makes Facet a thing you *point your AI

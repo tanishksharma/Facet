@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Build a great product — Facet</title>
-  <meta name="description" content="Point your AI at Facet and build a real product: two copy-paste prompts that make the AI interview you, agree a plan, build with the library, and verify like a user. The whole method, in the open.">
-  <meta property="og:title" content="Build a great product — Facet">
-  <meta property="og:description" content="Point your AI at Facet and build a real product: two copy-paste prompts that make the AI interview you, agree a plan, build with the library, and verify like a user.">
+  <title>The prompts — Facet</title>
+  <meta name="description" content="Every Facet build prompt, one per situation: start from nothing, add a feature, fix a bug, restyle, ship. Copy the one that matches; an AI reads the same set at /build.txt.">
+  <meta property="og:title" content="The prompts — Facet">
+  <meta property="og:description" content="Every Facet build prompt, one per situation. Copy the one that matches; an AI reads the same set at /build.txt.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://facet.tanishksharma.com/product.html">
   <meta property="og:image" content="https://facet.tanishksharma.com/icons/icon-512.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23FFFFFF'/><path d='M50 14 86 41 72 86 28 86 14 41Z' fill='%2317171B'/></svg>">
   <link rel="canonical" href="https://facet.tanishksharma.com/product.html">
-  <link rel="alternate" type="text/plain" href="/build.txt" title="The same method, as one file for AI">
+  <link rel="alternate" type="text/plain" href="/build.txt" title="The same prompts, as one file for AI">
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
   <link rel="stylesheet" href="/docs.css">
@@ -21,85 +21,51 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <main id="main" class="container stack-loose">
-    <!-- ==============================
-         Hero
-         The pitch: your AI does the building; the method is public.
-         ============================== -->
-    <section class="stack home-section" id="pitch">
-      <p class="home-kicker">Build a great product</p>
-      <h1>Point your AI at Facet. Ship something real.</h1>
-      <p>
-        Facet is a design library an AI can actually read — and this page
-        is the method that turns that into a product. You copy one prompt
-        into your assistant. It reads the library, interviews you about
-        who the product is for and what job it does, agrees a plan with
-        you, builds with real components, and checks its own work like a
-        user before showing you. Nothing here is hidden: the exact
-        prompts are below, and your AI reads the same rules at
-        <a href="/build.txt">/build.txt</a>.
-      </p>
-    </section>
+  <div class="docs-layout container-wide">
 
-    <!-- ==============================
-         How it works
-         The four moves every prompt enforces.
-         ============================== -->
-    <section class="stack home-section" id="how">
-      <h2>How it works</h2>
-      <ol class="steps">
-        <li class="step">
-          <span class="step-num">1</span>
-          <div class="step-body">
-            <h3>Copy one prompt</h3>
-            <p>Pick your tier below and paste it into Claude, ChatGPT, Cursor — anything that writes files. Then describe your idea in a sentence.</p>
-          </div>
-        </li>
-        <li class="step">
-          <span class="step-num">2</span>
-          <div class="step-body">
-            <h3>It interviews you</h3>
-            <p>Before any code: who is it for, the one job it does, what done looks like, how it should feel. A few questions at a time, in your words.</p>
-          </div>
-        </li>
-        <li class="step">
-          <span class="step-num">3</span>
-          <div class="step-body">
-            <h3>You agree the plan</h3>
-            <p>A short v1 list — the screens, what is in, what is deliberately out, which theme and shell — and it waits for your yes.</p>
-          </div>
-        </li>
-        <li class="step">
-          <span class="step-num">4</span>
-          <div class="step-body">
-            <h3>It builds and verifies</h3>
-            <p>Plain HTML on Facet's components — no installs, no build step — then it walks every screen like a user, on a phone size, in light and dark, before handing over.</p>
-          </div>
-        </li>
-      </ol>
-    </section>
+    <aside class="docs-index side-index" aria-label="Page index" data-print="off">
+      <nav aria-label="The prompts">
+        <div class="nav-group side-index-group">
+          <a class="nav-group-name side-index-name" href="#prompts">The prompts</a>
+          <ul>
+          <li><a href="#prompt-start-simple">1 · Start, non-technical</a></li>
+          <li><a href="#prompt-start-technical">2 · Start, technical</a></li>
+          <li><a href="#prompt-backend">3 · Backend needed</a></li>
+          <li><a href="#prompt-continue">4 · Continue a build</a></li>
+          <li><a href="#prompt-feature">5 · Add a feature</a></li>
+          <li><a href="#prompt-bug">6 · Fix a bug</a></li>
+          <li><a href="#prompt-restyle">7 · Restyle or rebrand</a></li>
+          <li><a href="#prompt-review">8 · Review and cut</a></li>
+          <li><a href="#prompt-language">9 · Add a language</a></li>
+          <li><a href="#prompt-install">10 · Make it installable</a></li>
+          <li><a href="#prompt-paper">11 · Paper pieces</a></li>
+          <li><a href="#prompt-ship">12 · Hand over and ship</a></li>
+          <li><a href="#prompt-contribute">13 · Contribute a component</a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
 
-    <!-- ==============================
-         The prompts
-         The whole method, in the open, with copy buttons.
-         ============================== -->
-    <section class="stack home-section" id="prompts">
-      <h2>The prompts</h2>
-      <p>
-        Two tiers, same method. The difference is who makes the technical
-        calls: Prompt 1 keeps every decision with the AI and speaks plain
-        language only; Prompt 2 keeps you in the decisions and teaches as
-        it builds — including when a real backend is worth it.
-      </p>
-
-      <article class="card stack" id="prompt-simple">
-        <h3>Prompt 1 · I don't write code</h3>
-        <p class="text-footnote" style="color: var(--text-muted);">
-          The AI makes every technical choice, never asks you about
-          frameworks or hosting, keeps everything front-end and static,
-          and parks anything that would need a server.
+    <main id="main" class="stack-loose">
+      <!-- ==============================
+           The prompts
+           One prompt per situation, listed. Nothing else: the home page
+           sells the method, this page holds it.
+           ============================== -->
+      <section id="prompts" class="stack">
+        <h1>The prompts</h1>
+        <p>
+          One prompt per situation. Copy the one that matches yours into
+          your AI and describe what you want. An agent reads the same set,
+          plus the rules for choosing between them, at
+          <a href="/build.txt">/build.txt</a>.
         </p>
-        <pre id="code-prompt-simple"><code>You are going to build me a complete product using the Facet design
+      </section>
+
+      <article class="prompt-entry stack" id="prompt-start-simple">
+        <h2>1 · Start from nothing, non-technical</h2>
+        <p class="prompt-when">Nothing exists yet and you don't write code. The AI makes every technical decision.</p>
+        <pre id="code-prompt-start-simple"><code>You are going to build me a complete product using the Facet design
 library, and I am not a developer — so you make the technical
 decisions and you never hand them to me.
 
@@ -124,17 +90,13 @@ When you finish, check your own work like a user would — every
 screen, every button, on a phone size and in dark mode — then show
 me the result and tell me: what shipped, what you left out, and the
 one improvement you would make next. Then stop and wait.</code></pre>
-        <p><button class="btn btn-primary" data-copy="#code-prompt-simple" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-simple">Copy this prompt</button></p>
+        <p><button class="btn btn-small" data-copy="#code-prompt-start-simple" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-start-simple">Copy</button></p>
       </article>
 
-      <article class="card stack" id="prompt-technical">
-        <h3>Prompt 2 · I understand tech</h3>
-        <p class="text-footnote" style="color: var(--text-muted);">
-          The AI teaches as it builds, keeps you in the real decisions,
-          and may propose a backend when the product honestly needs one —
-          smallest option, costs named, only after your yes.
-        </p>
-        <pre id="code-prompt-technical"><code>You are going to build me a complete product using the Facet design
+      <article class="prompt-entry stack" id="prompt-start-technical">
+        <h2>2 · Start from nothing, technical</h2>
+        <p class="prompt-when">Nothing exists yet and you understand tech. The AI teaches as it builds and keeps you in the decisions.</p>
+        <pre id="code-prompt-start-technical"><code>You are going to build me a complete product using the Facet design
 library. I understand technology — a PM/founder level, not a daily
 coder — so teach me as you build and keep me in the real decisions.
 
@@ -163,33 +125,280 @@ Follow the backend rules in build.txt's addendum.
 When you finish, verify like a user — every screen, every action,
 phone size, light and dark — then walk me through what shipped, how
 it works, what you left out, and what you would do next. Then stop.</code></pre>
-        <p><button class="btn btn-primary" data-copy="#code-prompt-technical" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-technical">Copy this prompt</button></p>
+        <p><button class="btn btn-small" data-copy="#code-prompt-start-technical" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-start-technical">Copy</button></p>
       </article>
-    </section>
 
-    <!-- ==============================
-         Why it works
-         The transparency pitch: the same rules bind both sides.
-         ============================== -->
-    <section class="stack home-section" id="why">
-      <h2>Why this works</h2>
-      <p>
-        Most AI-built products fail one of two ways: the AI builds the
-        wrong thing because nobody asked what the right thing was, or it
-        builds on a framework stack neither of you can read afterwards.
-        This method removes both. The interview comes before the code,
-        and the material is Facet: semantic HTML an AI gets right in one
-        pass and a person can open and follow, with taste — the themes,
-        the spacing, the motion — already built in.
-      </p>
-      <p>
-        And it is all in the open: <a href="/build.txt">build.txt</a> is
-        the same contract your AI reads — the method, the interview
-        question bank, the backend rules, and the quality bar it must
-        pass before calling anything done.
-      </p>
-    </section>
-  </main>
+      <article class="prompt-entry stack" id="prompt-backend">
+        <h2>3 · A backend is needed</h2>
+        <p class="prompt-when">The product needs accounts, shared data or persistence. Runs alongside whichever build prompt is going.</p>
+        <pre id="code-prompt-backend"><code>My Facet product needs a real backend — accounts, shared data,
+something that must persist beyond one browser. Follow the backend
+addendum in https://facet.tanishksharma.com/build.txt before wiring
+anything.
+
+Start by telling me, in plain words: what exactly needs a server
+here, what stays possible without one, and the smallest real setup
+that works — usually one managed database with row-level security
+and a couple of serverless functions, never a server I babysit.
+Name the running cost in real money, default to a free tier, and
+wait for my yes before creating anything billable.
+
+Keep the front end complete and static-first: the product still
+renders and reads without the backend wherever that is honest —
+cached content, read-only views, a clear offline state. Secrets
+never reach the client: keys live in the host's environment
+variables, and the browser talks to your functions, never to the
+database.
+
+When it works, prove it: create, read and change real data through
+the product's own screens, then show me where the data lives and
+what it costs per month. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-backend" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-backend">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-continue">
+        <h2>4 · Continue a half-built product</h2>
+        <p class="prompt-when">A Facet project already exists, unfinished. The AI reads what exists before touching anything.</p>
+        <pre id="code-prompt-continue"><code>You are continuing a product that already uses the Facet design
+library. Do not touch anything until you have read what exists.
+
+First, read https://facet.tanishksharma.com/build.txt and follow its
+method. Read https://facet.tanishksharma.com/llms.txt to learn the
+library. Then read every file in this project and tell me back, in a
+short list: what the product is, which screens exist, which theme
+and shell it uses, and what looks unfinished or broken.
+
+Then ask me what done means for this round — a few questions, not an
+interrogation — and propose the shortest list of steps that gets
+there. Wait for my yes.
+
+Work inside the patterns the project already has: its theme, its
+shell, its naming, its files. Do not restructure, rename or restyle
+anything that already works unless I ask for it. When you finish,
+verify like a user — every screen you touched, phone size, light and
+dark — and tell me what changed and what you deliberately left
+alone. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-continue" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-continue">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-feature">
+        <h2>5 · Add a feature</h2>
+        <p class="prompt-when">One new capability on a working product. Nothing else moves.</p>
+        <pre id="code-prompt-feature"><code>Add one feature to my existing Facet product. I will describe the
+feature in my next message. Everything else stays still.
+
+First, read https://facet.tanishksharma.com/build.txt and
+https://facet.tanishksharma.com/llms.txt, then read the project so
+you know its screens, theme, shell and patterns.
+
+Before building, tell me in a few lines how the feature will work
+and where it will live — which screen, which Facet components — and
+wait for my yes. Use components the library already ships; never
+invent one it has, never add a framework or a build step.
+
+Build the feature complete: its empty, loading and error states,
+keyboard operation, phone size, light and dark, its state in the
+URL so it can be linked to. Touch only what the feature needs — no
+drive-by refactors, no restyling, nothing else moves. Then verify
+it like a user, show me, and stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-feature" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-feature">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-bug">
+        <h2>6 · Fix a bug</h2>
+        <p class="prompt-when">Something worked and now does not. Reproduce first, fix second, prove it third.</p>
+        <pre id="code-prompt-bug"><code>Fix one bug in my Facet product. Reproduce first, fix second, prove
+it third. I will describe the bug in my next message.
+
+Before changing anything, reproduce it: open the product, follow the
+steps, and tell me you can see it — or tell me exactly what you
+tried if you cannot. Never fix what you have not seen.
+
+Then find the cause, not the symptom, and make the smallest change
+that removes it. Check https://facet.tanishksharma.com/llms.txt
+before working around the library: the behaviour you need may
+already ship, and a bug inside a Facet component itself should be
+reported upstream, not patched over in my project.
+
+Prove the fix: walk the same steps and show the bug is gone, then
+check the screens around it — phone size, light and dark — to show
+nothing else broke. Tell me the cause in one sentence. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-bug" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-bug">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-restyle">
+        <h2>7 · Restyle or rebrand</h2>
+        <p class="prompt-when">The look changes, the behaviour does not. The markup never changes.</p>
+        <pre id="code-prompt-restyle"><code>Restyle my Facet product. The markup does not change — in Facet a
+look is tokens and attributes, never new HTML.
+
+First, read the theming sections of
+https://facet.tanishksharma.com/llms.txt so you restyle the way the
+library intends: the data-theme attribute, dark mode as its own
+attribute, fonts by role, and the brand recipe — base colour to
+accent-3, highlight to accent-1, support hue to accent-2.
+
+Ask me for what exists: brand colours, fonts, a logo, the feel I
+want. Then show me the mapping — which theme is the base, what each
+accent rank becomes, which font roles change — and wait for my yes.
+
+Apply it as tokens and attributes only. If you find yourself editing
+a component's HTML or writing new CSS for something the library
+already styles, stop and tell me what you needed — that is the wrong
+path. Verify every screen in the new look, light and dark, contrast
+still readable, and show me before and after. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-restyle" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-restyle">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-review">
+        <h2>8 · Review and cut</h2>
+        <p class="prompt-when">It works but feels big or messy. A cold audit flags the replaceable and cuts the extra.</p>
+        <pre id="code-prompt-review"><code>Audit my Facet product and cut the extra. Read it cold, as if
+someone else built it, and judge it.
+
+First, read https://facet.tanishksharma.com/build.txt — the quality
+bar at the end is the checklist — and
+https://facet.tanishksharma.com/llms.txt so you know everything the
+library ships.
+
+Go through every file and give me three lists: what breaks the
+quality bar (missing states, keyboard gaps, wrapper soup, state not
+in the URL); what re-invents the library (hand-rolled CSS or JS that
+a Facet component, token or behaviour already covers — name the
+replacement); and what is extra (code, wrappers, screens or options
+nothing uses).
+
+Wait for my yes on the lists, then cut: swap re-inventions for the
+library's own pieces, delete what nothing uses, fix the breaks.
+Prefer deleting to adding. Verify every screen after, and report
+what got smaller. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-review" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-review">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-language">
+        <h2>9 · Add a language</h2>
+        <p class="prompt-when">A new language, through the library's own translation system.</p>
+        <pre id="code-prompt-language"><code>Add a language to my Facet product using the library's own
+translation system — never a rewrite, never a second copy of the
+pages.
+
+First, read the translation section of
+https://facet.tanishksharma.com/llms.txt and follow it exactly: the
+translation table, the attributes on translatable text, and the
+language switch control.
+
+Ask me which languages, and whether the translations come from me or
+from you drafting them for my review — and for each language, formal
+or casual register, once. Mark every piece of interface text
+translatable, fill the table, and wire the switch where the library
+says it goes.
+
+Verify by walking every screen in each language: nothing overflows,
+nothing is left untranslated, dates and numbers follow the locale
+where the library handles them, and the choice survives moving
+between pages. Show me each language live. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-language" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-language">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-install">
+        <h2>10 · Make it installable</h2>
+        <p class="prompt-when">It should live on a home screen and work offline, using the library's PWA layer.</p>
+        <pre id="code-prompt-install"><code>Make my Facet product installable: a real icon on a phone's home
+screen, working offline, using Facet's PWA layer — not a rebuild.
+
+First, read the PWA and offline sections of
+https://facet.tanishksharma.com/llms.txt and follow them: the
+manifest, the icon set, the one-line service worker that loads the
+library's caching engine, and the iOS metas the library requires —
+viewport-fit, the apple-mobile-web-app pair, safe-area insets.
+
+Follow the library's caching law exactly: pages load network-first
+and the cache answers only offline — never cache-first HTML. Ask me
+for the app's name, and build the icon set from the product's own
+mark.
+
+Verify: install it in a phone-sized viewport, open it standalone,
+check the status bar and the safe areas, then go offline and show
+the product still opens. Tell me what works offline and what
+honestly cannot. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-install" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-install">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-paper">
+        <h2>11 · Produce the paper pieces</h2>
+        <p class="prompt-when">It needs to exist on paper: invoice, deck, letterhead, card, one-pager.</p>
+        <pre id="code-prompt-paper"><code>Produce a paper piece for my product — an invoice, a pitch deck, a
+letterhead, a business card, a one-pager — using Facet's print
+system and templates, never a PDF tool.
+
+First, read https://facet.tanishksharma.com/llms.txt — the print
+system and the templates — and start from the closest shipped
+template (deck, document, card) rather than a blank page.
+
+Ask me which piece, what goes on it, and whose brand it carries.
+Build it as a Facet page that prints exactly: interface controls off
+the paper, content on it, clean ink-on-paper with no shadows, page
+breaks in the right places, and exact sizes where the template
+defines them — the deck's 1920×1080, the card's 3.5×2in, A4
+documents.
+
+Verify by printing to PDF at the exact size and checking every
+page: nothing clipped, nothing orphaned, no dark ink leaking from a
+themed mode. Give me the page and the PDF. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-paper" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-paper">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-ship">
+        <h2>12 · Hand over and ship</h2>
+        <p class="prompt-when">It is done and needs to go live: deploy, verify live, hand over honestly.</p>
+        <pre id="code-prompt-ship"><code>Ship my Facet product and hand it over honestly.
+
+Before deploying, run the full quality bar at the end of
+https://facet.tanishksharma.com/build.txt — every screen by URL,
+keyboard everything, phone and desktop, light and dark, JavaScript
+off, one clean print — and fix what fails.
+
+Deploy it as the static site it is: any static host works. Ask me
+which host I use, or pick the simplest free one and say why in one
+line. Wire the deploy and give me the live link.
+
+Then verify LIVE, not just locally: open the deployed link and walk
+every screen as a user, on a phone size, clicking everything.
+
+Hand over in plain words: the live link, what shipped, what was
+left out and why, what it costs to keep running (usually nothing),
+and the one next thing worth doing. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-ship" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-ship">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-contribute">
+        <h2>13 · Contribute a component to the library</h2>
+        <p class="prompt-when">The piece belongs in Facet itself. Rides the library's own charter.</p>
+        <pre id="code-prompt-contribute"><code>You are going to add a component to the Facet library itself — not
+to a product built with it. This is maintainer work and it follows
+the library's own charter.
+
+First, read the repo at https://github.com/tanishksharma/Facet.
+CLAUDE.md at its root is the build charter: the markup rules, the
+naming rules, the compliance checklist and the keep-in-sync
+contract. Read llms.txt to be sure the component does not already
+exist — the library never ships the same thing twice.
+
+Tell the maintainer what the component is and why it earns a place —
+the library grows by extraction: patterns that repeat across real
+products, not one-offs — and wait for a yes.
+
+Then build it the charter's way: semantic tokens only, every state
+covered, keyboard operable, print role declared, fully commented,
+and one commit that updates the CSS, the JS if it has behaviour, the
+library page's wall entry and llms.txt together. A new entry ships
+marked in development; only the maintainer promotes it. Open the
+change as a pull request. Then stop.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-contribute" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-contribute">Copy</button></p>
+      </article>
+    </main>
+
+  </div>
 
   <!-- SITE MENU · the floating utility menu, kept in sync across
        index / library / product / build. facet.js wires it. -->

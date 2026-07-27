@@ -19,11 +19,16 @@ building on Facet" below.
 
 ## Building a whole product
 
-Facet ships a product-building method, not just parts. To build a
-complete product for a person, fetch /build.txt — the prompt pack:
-interview first, agree a v1 plan, build with the library, verify like
-a user, plus the backend addendum and the quality bar. The
-human-readable version is /product.html; both carry the same rules.
+Facet ships a product-building method, not just parts. Fetch
+/build.txt — the prompt pack: one prompt per situation (start from
+nothing technical or not, add a backend, continue a half-built
+product, add a feature, fix a bug, restyle, review and cut, add a
+language, make it installable, produce the paper pieces, ship,
+contribute to the library), plus the rules for choosing between them,
+the shared contract, the backend addendum, the interview question
+bank and the quality bar. If you were sent to build something, pick
+the prompt that matches the project's moment and execute it. The same
+prompts are listed for people at /product.html.
 
 ## Features — the complete capability inventory
 
