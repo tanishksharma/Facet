@@ -55,7 +55,7 @@ sw.js              PWA: one-line service worker at the root (loads facet-sw.js)
 manifest.json      PWA: the site's install manifest (also the copy reference)
 icons/             PWA: app icon PNGs (180 apple, 192, 512, 512-maskable)
 fonts/             self-hosted faces: Gadey.woff2 (the hero face, not on Google Fonts)
-vercel.json        Vercel headers: CORS + long cache for /fonts
+vercel.json        Vercel headers: no-cache everywhere + CORS for /lib and /fonts
 ```
 
 Projects consume the library by URL, never by copying files in:
@@ -175,9 +175,11 @@ Two audiences, two canonical docs: **to USE Facet, read `llms.txt`**; **to BUILD
     Truth for: -
 
 `vercel.json`
-    What:      Vercel config — CORS and cache headers for /fonts, so cross-origin consumers can load the self-hosted face
+    What:      Vercel config — no-cache (max-age=0, must-revalidate) on every file
+               so consumers always get the newest deploy, plus CORS on /lib and
+               /fonts so cross-origin consumers can load the library and the face
     Read by:   Vercel
-    Truth for: -
+    Truth for: the serving/caching policy
 
 `LICENSE`
     What:      the license
@@ -440,6 +442,7 @@ The shipped set, by design intent:
 
 
 - Consume by URL only. No npm package until there is a concrete reason.
+- Consumers ride the bleeding edge, uncached (decided 30 Jul 2026): every project loads the library LIVE from https://facet.tanishksharma.com/lib/ on every page view — no vendored copies anywhere (the old tanishksharmacom `apps/lib/facet.*` and `gem.js` copies were deleted), and the whole site is served `Cache-Control: public, max-age=0, must-revalidate` (vercel.json) so browsers revalidate on every load and an upstream change shows up in real time. Unchanged files answer with a cheap 304, so freshness costs almost nothing. Projects that want stability will pin a frozen `/lib/v1/` when it exists; until then everything tracks live `/lib/`.
 - Tag releases in Git: v0.1, v0.2, and so on.
 - Freeze on dependency: copy the current files to `/lib/v1/` and leave them untouched. Work continues in `/lib/`.
 - Old projects point at their frozen folder forever. New projects point at `/lib/` and get the latest.
@@ -1172,7 +1175,7 @@ The full shipped history is in git and in the live files (facet.css / facet.js /
 - Variant sections on the wall (decided 9 Jul 2026): when one component ships variants that differ in machinery, not just a class flip (the background's grid vs fluid), it stays ONE wall entry — a leading "Variant:" chip row switches between variant sections, each with its own demo surface and its own control cluster, and the copy snippet always serializes the visible variant. First user: Backgrounds (Variant: Grid | Fluid). This is how any future multi-variant component presents.
 - Variant vs component (decided 8 Jul 2026): a variant flips one class on the SAME markup and behaviour (.btn-primary, .list-boxed, .nav-menu-right); when markup, position or behaviour differ, it is a different component, and the sharing happens through primitives and tokens plus a Build advice entry for choosing between them. Concretely: the four navigations (top-menu block, nav-menu cluster, tab bar, sheet) stay separate components; a list row is ONE component whose looks are slot compositions (icon/avatar, title, description, value/badge/action in the trail), never sibling components.
 - The site is multi-page. The site chrome is the library's own tab bar in its top site-bar shape (dogfooding): gem + facet brand in the pill, tabs Home · Components · Functions · Product · Themes, a round menu button opening the navigation sheet from the left (pages, GitHub and the Files group — llms.txt, CLAUDE.md, facet.css, facet.js) and a round settings button opening the settings sheet from the right (theme, appearance, motion, sounds, haptics). llms.txt and CLAUDE.md are never top-level nav items. (Decided 10 Jul 2026; replaces the floating bottom-corner menu. The old Components and Layouts pages merged into Library.)
-- The brand mark is a live gem (decided 30 Jul 2026): the site logo is gem.js's spinning fire diamond — `data-gem="round" data-stone="diamond" data-spin` with every effect on — in the tab-bar brand pill of every docs page and, larger, on the home hero. It replaces the old `data-icon="gem"` line glyph in the site chrome (the glyph stays in the icon set for consumers). gem.js itself lives at `/lib/gem.js` as an optional standalone engine — never merged into facet.js, never required by any component; its upstream home is THIS repo (tanishksharmacom now vendors it the way it vendors facet.*).
+- The brand mark is a live gem (decided 30 Jul 2026): the site logo is gem.js's spinning fire diamond — `data-gem="round" data-stone="diamond" data-spin` with every effect on — in the tab-bar brand pill of every docs page and, larger, on the home hero. It replaces the old `data-icon="gem"` line glyph in the site chrome (the glyph stays in the icon set for consumers). gem.js itself lives at `/lib/gem.js` as an optional standalone engine — never merged into facet.js, never required by any component; its upstream home is THIS repo, and consumers (tanishksharmacom included) load it LIVE by URL like facet.* — nobody vendors a copy.
 - Pinned means exact fit (decided 9 Jul 2026): a component fixed or stuck to the viewport edges sizes itself with viewport units minus the pin inset — height: calc(100dvh - 2 * var(--space-pin)), width with vw the same way — and keeps --space-pin (20px, exact pixels, never density-scaled) as its margin from the edges, so pinned panels fit the screen exactly and never move with the scroll. First user: the side index.
 - Settings are session-scoped (decided 10 Jul 2026): every preference facet.js stores — theme, appearance (defaults to Auto), skin colors and fonts, motion, sounds, haptics — lives in sessionStorage, never localStorage: it holds across page navigations in the tab and resets when the tab closes, so a choice never follows a visitor forever. localStorage is reserved for durable device FACTS that are not preferences (the installed-app stamp). New settings follow this without asking.
 - Color eases by default (decided 10 Jul 2026): a base rule transitions the paint-only properties (color, background-color, border-color, box-shadow, fill, stroke, opacity) at --duration-fast on every element, so hover tints, status flips and whole theme/mode switches cross-fade. Transform, size and position are deliberately EXCLUDED — the spring engines and layout own those, and a blanket transition would fight them (see the parallax exclusion above). An element's own transition declaration overrides the default wholesale; reduced motion collapses it.
