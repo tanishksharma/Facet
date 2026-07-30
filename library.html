@@ -16,6 +16,7 @@
   <link rel="alternate" type="text/plain" href="/llms.txt" title="Facet — how to use it, for AI">
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
+  <script src="/lib/gem.js" defer></script>
   <link rel="stylesheet" href="/docs.css">
 </head>
 <body>
@@ -2406,6 +2407,24 @@ article p   { font-family: var(--font-reading); }
         <p><button class="btn btn-small" data-copy="#code-map" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
       </article>
 
+      <!-- GEM -->
+      <article class="element stack" id="gem" data-cat="content" data-llms="Gems (gem.js)">
+        <h3 data-status="dev">Gem</h3>
+        <p>
+          An animated, faceted gemstone drawn as inline SVG and lit by a single moving light — the cursor on desktop, device tilt on mobile. Twelve cuts, eleven stones, and the optical effects jewellers name: brilliance, highlight, sheen, scintillation and fire, plus a passive idle loop and a perpetual spin for brand marks (the spinning diamond in this site's tab bar is one). It ships as its own optional file, <code>/lib/gem.js</code> — one extra script tag, fully standalone, honouring reduced motion.
+        </p>
+        <div class="demo">
+          <p class="row" style="max-width: none; gap: var(--space-section); justify-content: center; align-items: center;">
+            <span data-gem="round" data-stone="diamond" data-effects="highlight sheen scintillation fire idle" style="width: 96px; height: 96px;" data-tip="A diamond — extra scintillation and fire, some behind the stone"></span>
+            <span data-gem="pear" data-stone="sapphire" data-effects="highlight sheen scintillation idle" style="width: 96px; height: 96px;" data-tip="Move the cursor and the light follows"></span>
+            <span data-gem="emerald" data-stone="emerald" data-effects="highlight sheen scintillation idle" style="width: 96px; height: 96px;" data-tip="The emerald cut, in emerald"></span>
+            <span data-gem="marquise" data-stone="amethyst" data-effects="highlight sheen scintillation fire idle" style="width: 96px; height: 96px;" data-tip="Fire: brief spectral flashes on random facets"></span>
+          </p>
+        </div>
+        <pre id="code-gem"><code></code></pre>
+        <p><button class="btn btn-small" data-copy="#code-gem" data-tip="Copies the exact HTML of the demo above">Copy</button></p>
+      </article>
+
       <!-- APP GRID -->
       
 
@@ -4427,7 +4446,7 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
         <svg width="20" height="20" data-icon="menu" aria-hidden="true"></svg>
       </button>
       <div class="tab-set">
-        <a class="tab-brand" href="/" aria-current="false" data-event="nav-home" data-tip="Back to the home page"><svg width="18" height="18" data-icon="gem" aria-hidden="true"></svg>facet</a>
+        <a class="tab-brand" href="/" aria-current="false" data-event="nav-home" data-tip="Back to the home page"><span class="brand-gem" data-gem="round" data-stone="diamond" data-spin data-effects="highlight sheen scintillation fire idle" aria-hidden="true" style="width: 1.25rem; height: 1.25rem; display: inline-block; flex: none;"></span>facet</a>
         <a class="tab-seg" href="/library.html" aria-current="page" data-event="nav-library">Components</a>
         <a class="tab-seg" href="/functions.html" aria-current="false" data-event="nav-functions">Functions</a>
         <a class="tab-seg" href="/product.html" aria-current="false" data-event="nav-product">Product</a>

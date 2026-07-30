@@ -128,7 +128,12 @@ transitions — data-transition="page" animates cross-page navigation
 (old page eases away, new one springs in, URL changes normally), with
 a[data-no-transition] per-link opt-out and facet.go(url) for
 programmatic moves, instant fallback where unsupported; a full
-print & export system (see its section).
+print & export system (see its section); animated SVG gemstones from
+the optional gem engine (/lib/gem.js, its own script tag) — data-gem
+turns any sized element into a faceted, cursor/tilt-lit stone with
+twelve cuts, eleven stones, jeweller effects (brilliance, highlight,
+sheen, scintillation, fire), a passive idle loop and a perpetual
+data-spin brand-mark mode (see the Gems section).
 
 Base layer: raw semantic HTML looks designed with no classes; one visible
 keyboard focus ring everywhere; selection colors, thin scrollbars,
@@ -253,6 +258,11 @@ facet.tanishksharma.com is the library's live home — point at it directly.
 Projects never copy the files in; they point at the hosted URL and update
 when the library does. (If the library moves to another domain, swap the
 host; everything is served from /lib on whatever domain hosts it.)
+
+Optional extras, each its own additional script tag, only when used:
+/lib/gem.js (animated gemstones — see the Gems section) and the
+service-worker engine /lib/facet-sw.js (loaded from a one-line sw.js
+stub, not a script tag — see the PWA section).
 
 ## Theming
 
@@ -1673,6 +1683,79 @@ help.
       <svg data-icon="search"></svg>
     </button>
     <p><svg class="glyph" data-icon="clock"></svg> Updated an hour ago</p>
+
+### Gems (gem.js)
+
+WHEN TO USE: a brand mark, a hero jewel, a decorative stone with real presence — one or a handful per page, never as list-item chrome. It is the library's signature ornament; the docs site's own logo is one.
+
+What it is: an animated, faceted gemstone rendered as inline SVG and lit
+by a single moving light source — the cursor on desktop, device tilt on
+mobile — reproducing the optical properties jewellers name: brilliance
+(facets brighten and darken as the light moves), highlight (two orbiting
+specular spots), sheen (a soft sweeping band), scintillation (sparkle
+stars during movement) and fire (brief spectral flashes on random
+facets; diamond-strength, opt-in elsewhere). The stone is two layers — a
+deep pavilion under a translucent crown that shift apart on tilt, so it
+reads as a 3-D body. It lives in its OWN optional file, loaded next to
+facet.js (it is fully standalone and needs neither facet file):
+
+    <script src="https://facet.tanishksharma.com/lib/gem.js" defer></script>
+
+Declarative: any element with data-gem becomes a gem on load, filling
+its box — size is pure CSS, the same code drives a 20px chip or a 480px
+hero stone. Always give the element a width and height.
+
+    <div data-gem="round" data-stone="diamond"
+         style="width:160px;height:160px"></div>
+    <div data-gem="pear" data-stone="sapphire"
+         data-effects="highlight sheen scintillation fire idle"
+         style="width:200px;height:200px"></div>
+
+Options (attributes or Gem.create keys):
+- data-gem / shape: the cut — round, oval, octagon, emerald, baguette,
+  marquise, pear, trillion, hexagon, cushion, heart, droplet (default
+  round; the live list is Gem.shapes).
+- data-stone / stone: the colour ramp — diamond, sapphire, ruby,
+  emerald, morganite, topaz, amethyst, citrine, aquamarine, tanzanite,
+  ptourmaline (default diamond; the live list is Gem.stones). Or pass
+  ramp: six colours lightest→darkest to invent a stone.
+- data-effects / effects: which effect layers run — highlight, sheen,
+  scintillation, fire, idle. As an attribute list the ON ones (the rest
+  turn off); programmatically pass booleans. Defaults: highlight, sheen
+  and scintillation on; fire and idle off. idle is the passive
+  look-at-me: left alone, the gem traces one full circle every few
+  seconds, desynced from its neighbours, yielding instantly to real
+  input.
+- data-spin / spin: the brand-mark mode — the gem ignores the shared
+  light entirely and loops its circle forever at full radius. Pair with
+  fire for constant sparkle. The canonical Facet brand mark:
+
+    <span class="brand-gem" data-gem="round" data-stone="diamond" data-spin
+          data-effects="highlight sheen scintillation fire idle"
+          aria-hidden="true" style="width:1.25rem;height:1.25rem"></span>
+
+Programmatic API: Gem.create(target, options) builds or updates a gem
+(target is an element or selector; returns the instance). Instances
+carry .set(opts) to re-render with a new shape/stone/ramp/effects,
+.setEffects({fire:true}) to merge toggles, .toggle('fire'), and
+.destroy(). Gem.scan(root?) hydrates [data-gem] elements added after
+load. Gem.enableTilt() requests iOS motion permission — call it from a
+real user gesture only. Gem.setParallax(bool) turns the shared light's
+input on or off for every gem; Gem.motionLive() says whether the light
+is drivable right now; Gem.light() returns the live light vector
+{x, y, move} so the host can react to it too. Gem.config exposes the
+global tuning knobs.
+
+Behaviour notes: one shared requestAnimationFrame loop paints every
+on-screen gem (off-screen ones are skipped via IntersectionObserver);
+prefers-reduced-motion renders a single static frame; the SVG carries
+aria-hidden — a gem is decoration, give the surrounding element the
+accessible name. The shared light reads/writes
+localStorage['parallax-enabled'] so a host page's own parallax toggle
+drives the gems too; gem.js writes only the SVG's internals, never the
+host element's transform, so it composes with data-parallax and the
+motion engine. Not integrated with facet.motion's modes yet — a spin
+gem turns regardless, and that is the intended brand-mark behaviour.
 
 ### Parallax & idle motion
 

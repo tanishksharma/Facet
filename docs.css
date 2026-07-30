@@ -1222,3 +1222,16 @@ article.element pre code { color: var(--hl-text); }
 .accent-lab-line { display: flex; gap: var(--space-tight); flex-wrap: wrap; align-items: center; }
 .accent-lab-check { display: flex; gap: var(--space-tight); align-items: center; font-size: var(--text-footnote); }
 .accent-lab-check input { min-height: 0; }
+
+/* ==============================
+   Brand gem
+   The site logo: a live gem.js diamond (round cut, perpetual spin + fire)
+   in every page's tab-bar brand pill, and larger on the home hero. gem.js
+   fills whatever box it is given, so the docs site sizes the box here.
+   ============================== */
+.tab-brand .brand-gem {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+}

@@ -20,6 +20,10 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 function cleanDemoClone(el) {
   const clone = el.cloneNode(true);
   for (const chrome of clone.querySelectorAll("[data-demo-chrome]")) chrome.remove();
+  // a [data-gem] element's SVG is drawn by gem.js from the data attributes —
+  // the injected markup is not snippet material, the attributes are
+  for (const gem of clone.querySelectorAll("[data-gem]")) gem.innerHTML = "";
+  if (clone.matches?.("[data-gem]")) clone.innerHTML = "";
   for (const node of [clone, ...clone.querySelectorAll("[style], [data-bg-surface]")]) {
     node.removeAttribute("data-bg-surface");
     if (node.style) {

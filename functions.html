@@ -16,6 +16,7 @@
   <link rel="alternate" type="text/plain" href="/llms.txt" title="Facet — how to use it, for AI">
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
+  <script src="/lib/gem.js" defer></script>
   <link rel="stylesheet" href="/docs.css">
 </head>
 <body>
@@ -1124,6 +1125,35 @@ Deck template  &#8594; &#8595; PgDn Space next slide · &#8592; &#8593; PgUp bac
 &lt;/button&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-print" data-tip="Copies this code">Copy</button></p>
         </article>
+
+        <article class="element stack" id="fn-gem" data-llms="Gems (gem.js)">
+          <h3>Gem</h3>
+          <p>
+            The gem engine, in its own optional file /lib/gem.js: any
+            element carrying data-gem becomes an animated SVG gemstone,
+            hydrated automatically on load. Gem.create builds or updates
+            one from code; Gem.scan hydrates markup added later;
+            Gem.enableTilt asks for iOS motion permission from a user
+            gesture; Gem.setParallax turns the shared cursor/tilt light
+            on or off; Gem.light exposes the live light vector for the
+            host page. Instances carry .set, .setEffects, .toggle and
+            .destroy. One shared animation loop paints every on-screen
+            gem; off-screen gems are skipped, and reduced motion renders
+            one static frame.
+          </p>
+          <pre id="code-fn-gem"><code>&lt;script src=".../lib/gem.js" defer&gt;&lt;/script&gt;
+
+&lt;div data-gem="pear" data-stone="sapphire"
+     data-effects="highlight sheen scintillation idle"
+     style="width:160px;height:160px"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  const g = Gem.create('#hero', { shape: 'round', stone: 'diamond',
+                                  spin: true, effects: { fire: true } });
+  g.set({ stone: 'ruby' });          // swap the stone live
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-gem" data-tip="Copies this code">Copy</button></p>
+        </article>
       </section>
     </main>
   </div>
@@ -1139,7 +1169,7 @@ Deck template  &#8594; &#8595; PgDn Space next slide · &#8592; &#8593; PgUp bac
         <svg width="20" height="20" data-icon="menu" aria-hidden="true"></svg>
       </button>
       <div class="tab-set">
-        <a class="tab-brand" href="/" aria-current="false" data-event="nav-home" data-tip="Back to the home page"><svg width="18" height="18" data-icon="gem" aria-hidden="true"></svg>facet</a>
+        <a class="tab-brand" href="/" aria-current="false" data-event="nav-home" data-tip="Back to the home page"><span class="brand-gem" data-gem="round" data-stone="diamond" data-spin data-effects="highlight sheen scintillation fire idle" aria-hidden="true" style="width: 1.25rem; height: 1.25rem; display: inline-block; flex: none;"></span>facet</a>
         <a class="tab-seg" href="/library.html" aria-current="false" data-event="nav-library">Components</a>
         <a class="tab-seg" href="/functions.html" aria-current="page" data-event="nav-functions">Functions</a>
         <a class="tab-seg" href="/product.html" aria-current="false" data-event="nav-product">Product</a>
