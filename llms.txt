@@ -131,7 +131,7 @@ programmatic moves, instant fallback where unsupported; a full
 print & export system (see its section); animated SVG gemstones from
 the optional gem engine (/lib/gem.js, its own script tag) — data-gem
 turns any sized element into a faceted, cursor/tilt-lit stone with
-twelve cuts, eleven stones, jeweller effects (brilliance, highlight,
+34 cuts, 17 stones, jeweller effects (brilliance, highlight,
 sheen, scintillation, fire), a passive idle loop and a perpetual
 data-spin brand-mark mode (see the Gems section).
 
@@ -1712,13 +1712,19 @@ hero stone. Always give the element a width and height.
          style="width:200px;height:200px"></div>
 
 Options (attributes or Gem.create keys):
-- data-gem / shape: the cut — round, oval, octagon, emerald, baguette,
-  marquise, pear, trillion, hexagon, cushion, heart, droplet (default
-  round; the live list is Gem.shapes).
-- data-stone / stone: the colour ramp — diamond, sapphire, ruby,
-  emerald, morganite, topaz, amethyst, citrine, aquamarine, tanzanite,
-  ptourmaline (default diamond; the live list is Gem.stones). Or pass
-  ramp: six colours lightest→darkest to invent a stone.
+- data-gem / shape: the cut — 34 of them: round, oval, octagon,
+  baguette, marquise, trillion, cushion, emerald, pear, hexagon, heart,
+  droplet, princess, asscher, radiant, kite, shield, halfmoon, lozenge,
+  star, triangle, pentagon, trapezoid, bullet, portrait, rose,
+  briolette, oldmine, oldeuropean, hexportrait, epaulette, emeraldwide,
+  square, taperbaguette (default round; the live list is Gem.shapes).
+- data-stone / stone: the colour ramp — 17 of them: diamond, sapphire,
+  ruby, emerald, morganite, topaz, amethyst, citrine, aquamarine,
+  tanzanite, ptourmaline, peridot, garnet, spinel, onyx, skyblue,
+  padparadscha (default diamond; the live list is Gem.stones, and
+  Gem.stoneRamp(name) returns a stone's six colours to seed a custom
+  ramp UI). Or pass ramp: six colours lightest→darkest to invent a
+  stone.
 - data-effects / effects: which effect layers run — highlight, sheen,
   scintillation, fire, idle. As an attribute list the ON ones (the rest
   turn off); programmatically pass booleans. Defaults: highlight, sheen
@@ -1726,6 +1732,12 @@ Options (attributes or Gem.create keys):
   look-at-me: left alone, the gem traces one full circle every few
   seconds, desynced from its neighbours, yielding instantly to real
   input.
+- Geometry (Gem.create / .set keys, each with a sensible per-cut
+  default): table — the flat-top size, 0.15–0.65 (default 0.4, smaller
+  = more crown); rings — facet density, 1–6 bands girdle→table
+  (default 2); elongation — vertical stretch, 0.6–1.7 (default 1,
+  turns a round into an oval); smooth — corner-rounding passes, 0–3
+  (default 0; some cuts set their own).
 - data-spin / spin: the brand-mark mode — the gem ignores the shared
   light entirely and loops its circle forever at full radius. Pair with
   fire for constant sparkle. The canonical Facet brand mark:
@@ -1739,20 +1751,23 @@ Programmatic API: Gem.create(target, options) builds or updates a gem
 carry .set(opts) to re-render with a new shape/stone/ramp/effects,
 .setEffects({fire:true}) to merge toggles, .toggle('fire'), and
 .destroy(). Gem.scan(root?) hydrates [data-gem] elements added after
-load. Gem.enableTilt() requests iOS motion permission — call it from a
-real user gesture only. Gem.setParallax(bool) turns the shared light's
-input on or off for every gem; Gem.motionLive() says whether the light
-is drivable right now; Gem.light() returns the live light vector
-{x, y, move} so the host can react to it too. Gem.config exposes the
-global tuning knobs.
+load. The shared light has a device-level mode, stored in
+localStorage['gem-motion-mode']: Gem.setMode('auto'|'cursor'|'tilt'|
+'off') sets it ('auto' is the default — cursor on fine pointers, tilt
+on touch), Gem.mode() reports the effective mode, Gem.can() reports
+{cursor, tilt} for building a toggle UI, and Gem.setParallax(bool)
+survives as a back-compat alias (true → auto, false → off).
+Gem.enableTilt() requests iOS motion permission and switches to Tilt —
+call it from a real user gesture only. Gem.motionLive() says whether
+the light is drivable right now; Gem.light() returns the live light
+vector {x, y, move} so the host can react to it too. Gem.config
+exposes the global tuning knobs.
 
 Behaviour notes: one shared requestAnimationFrame loop paints every
 on-screen gem (off-screen ones are skipped via IntersectionObserver);
 prefers-reduced-motion renders a single static frame; the SVG carries
 aria-hidden — a gem is decoration, give the surrounding element the
-accessible name. The shared light reads/writes
-localStorage['parallax-enabled'] so a host page's own parallax toggle
-drives the gems too; gem.js writes only the SVG's internals, never the
+accessible name. gem.js writes only the SVG's internals, never the
 host element's transform, so it composes with data-parallax and the
 motion engine. Not integrated with facet.motion's modes yet — a spin
 gem turns regardless, and that is the intended brand-mark behaviour.

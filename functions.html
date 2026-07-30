@@ -1133,13 +1133,14 @@ Deck template  &#8594; &#8595; PgDn Space next slide · &#8592; &#8593; PgUp bac
             element carrying data-gem becomes an animated SVG gemstone,
             hydrated automatically on load. Gem.create builds or updates
             one from code; Gem.scan hydrates markup added later;
+            Gem.setMode picks the light's input — auto, cursor, tilt or
+            off — with Gem.mode and Gem.can for building a toggle UI;
             Gem.enableTilt asks for iOS motion permission from a user
-            gesture; Gem.setParallax turns the shared cursor/tilt light
-            on or off; Gem.light exposes the live light vector for the
-            host page. Instances carry .set, .setEffects, .toggle and
-            .destroy. One shared animation loop paints every on-screen
-            gem; off-screen gems are skipped, and reduced motion renders
-            one static frame.
+            gesture and switches to Tilt; Gem.light exposes the live
+            light vector and Gem.stoneRamp a stone's colours. Instances
+            carry .set, .setEffects, .toggle and .destroy. One shared
+            animation loop paints every on-screen gem; off-screen gems
+            are skipped, and reduced motion renders one static frame.
           </p>
           <pre id="code-fn-gem"><code>&lt;script src=".../lib/gem.js" defer&gt;&lt;/script&gt;
 
