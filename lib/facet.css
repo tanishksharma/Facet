@@ -2143,7 +2143,8 @@ figure, table, pre { margin: 0 0 var(--flow-paragraph); }
 :where(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table, figure):first-child { margin-top: 0; }
 :where(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, pre, table, figure):last-child { margin-bottom: 0; }
 .stack > *, .stack-tight > *, .stack-loose > *,
-.row > *, .row-tight > *, .row-loose > * { margin-block: 0; }
+.row > *, .row-tight > *, .row-loose > *,
+.result > * { margin-block: 0; }    /* .result is gap-based too: gap governs it, not prose rhythm */
 
 hr {
   border: none;
@@ -2824,6 +2825,11 @@ input, textarea, [contenteditable] {
   padding-bottom: calc(var(--space-page) + var(--nav-menu-clearance, 3.75rem) + var(--safe-bottom));
 }
 .view-stack.is-stacked .view::-webkit-scrollbar { display: none; }
+/* A scroller's content keeps its natural height. Without this, a flex child
+   whose overflow is not visible (.list-boxed clips its row hovers, so its
+   automatic flex minimum is zero) shrinks to fit the viewport and clips its
+   own rows instead of letting the view scroll. */
+.view-stack.is-stacked .view > * { flex: none; }
 .view-stack.is-stacked .view > :first-child { margin-top: auto; }
 .view-stack.is-stacked .view > :last-child { margin-bottom: auto; }
 .view-stack.is-stacked .view.is-active {
