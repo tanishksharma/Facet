@@ -4215,7 +4215,9 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
           The settings sheet as a live customiser: tabbed sections for the theme
           and appearance, the brand colors and fonts, the deeper surface tokens,
           the layout and shape controls, and the page's keyboard shortcuts. Every
-          control restyles this page as you touch it. Open it and change the look.
+          control restyles this page as you touch it, and each tab ends with its
+          own quiet reset row, so putting one back never disturbs another. Open
+          it and change the look.
         </p>
         <div class="demo">
           <button type="button" class="btn" aria-controls="demo-appearance" aria-expanded="false"
@@ -4235,6 +4237,7 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
                 <span class="menu-label">Options</span>
                 <button type="button" class="menu-item" data-control="theme" aria-label="Theme: tap to cycle" data-tip="Cycles the palette">Theme <span class="menu-value">Default</span></button>
                 <button type="button" class="menu-item" data-control="appearance" aria-label="Appearance: light, dark or auto" data-tip="Light, dark, or follow the system">Appearance <span class="menu-value">Auto</span></button>
+                <button type="button" class="menu-item" data-settings-reset data-tip="Back to the default theme, appearance, motion and sound"><svg width="18" height="18" data-icon="undo" aria-hidden="true"></svg> Reset options</button>
               </div>
               <div class="sheet-group" data-settings-panel="style" hidden>
                 <span class="menu-label">Colors</span>
@@ -4517,6 +4520,9 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
           <button type="button" class="menu-item" data-control="haptics" aria-label="Haptics: on or off" data-tip="The vibration feedback, where the device has it" data-event="toggle-haptics">
             <svg width="18" height="18" data-icon="vibrate" aria-hidden="true"></svg>
             Haptics <span class="menu-value">On</span>
+          </button>
+          <button type="button" class="menu-item" data-settings-reset data-tip="Back to the default theme, appearance, motion and sound" data-event="options-reset">
+            <svg width="18" height="18" data-icon="undo" aria-hidden="true"></svg> Reset options
           </button>
         </div>
 
