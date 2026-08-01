@@ -1162,6 +1162,30 @@ Deck template  &#8594; &#8595; PgDn Space next slide · &#8592; &#8593; PgUp bac
 &lt;/script&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-gem" data-tip="Copies this code">Copy</button></p>
         </article>
+
+        <article class="element stack" id="fn-shaders" data-llms="Shader backgrounds (facet-shaders.js)">
+          <h3>Shader background</h3>
+          <p>
+            The optional WebGL background engine, /lib/facet-shaders.js —
+            powered by Paper Shaders (shaders.paper.design, Apache-2.0),
+            whose published package it imports live at runtime rather than
+            hosting a copy. Any element carrying data-bg-shader gets
+            Paper's mesh gradient mounted at its own size, colored by
+            data-shader-colors or the surface's --bg-fluid-color hooks.
+            facetShaders.mount(el) mounts a late-added surface; offline or
+            without WebGL the element keeps its CSS background.
+          </p>
+          <pre id="code-fn-shaders"><code>&lt;script src=".../lib/facet-shaders.js" defer&gt;&lt;/script&gt;
+
+&lt;div class="bg-fixed" data-bg-shader
+     data-shader-colors="#e0eaff, #241d9a, #f75092, #9f50d3"
+     data-shader-speed="0.6" aria-hidden="true"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  facetShaders.mount(el);   // a surface added after load
+&lt;/script&gt;</code></pre>
+          <p><button class="btn btn-small" data-copy="#code-fn-shaders" data-tip="Copies this code">Copy</button></p>
+        </article>
       </section>
     </main>
   </div>

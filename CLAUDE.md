@@ -25,6 +25,10 @@ The repo root is the library's website, deployed by Vercel as a static site on e
   facet.css        the whole design system
   facet.js         small vanilla JS behaviours
   facet-sw.js      the shared PWA caching engine (network-first pages)
+  facet-shaders.js optional WebGL shader backgrounds — powered by Paper
+                   Shaders (shaders.paper.design, Apache-2.0), whose
+                   published package it imports live at runtime; nothing
+                   of theirs is hosted or forked here
   gem.js           the animated SVG gemstone engine (optional extra script;
                    fully standalone — cuts, stones, jeweller lighting effects;
                    the site's brand mark is one, spinning, with fire)

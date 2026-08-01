@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="/lib/facet.css">
   <script src="/lib/facet.js" defer></script>
   <script src="/lib/gem.js" defer></script>
+  <script src="/lib/facet-shaders.js" defer></script>
   <link rel="stylesheet" href="/docs.css">
 </head>
 <body>
@@ -4001,6 +4002,27 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
             <code>prefers-contrast: more</code> and never print.
           </p>
         </div>
+
+      <article class="element stack" id="shader-background">
+        <h3 data-status="dev">Shader background</h3>
+        <p>
+          A truly opalescent, GPU-drawn animated background — flowing color
+          spots folding into each other, a material CSS gradients cannot
+          reach. Powered by <a href="https://shaders.paper.design" target="_blank" rel="noopener">Paper
+          Shaders</a> (Apache-2.0): the optional engine loads the authors'
+          own published package live at runtime, nothing hosted or forked
+          here. One extra script tag; the surface keeps its CSS background
+          offline or without WebGL.
+        </p>
+        <section data-bg-shader data-shader-colors="#e0eaff, #241d9a, #f75092, #9f50d3" data-shader-speed="0.6" style="min-height: 16rem; border-radius: var(--radius-card);" aria-label="Live shader background demo"></section>
+        <pre id="code-shader-background"><code>&lt;script src="https://facet.tanishksharma.com/lib/facet-shaders.js" defer&gt;&lt;/script&gt;
+
+&lt;div class="bg-fixed" data-bg-shader
+     data-shader-colors="#e0eaff, #241d9a, #f75092, #9f50d3"
+     data-shader-speed="0.6" data-shader-distortion="0.8"
+     data-shader-swirl="0.1" aria-hidden="true"&gt;&lt;/div&gt;</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-shader-background" data-tip="Copies this code">Copy</button></p>
+      </article>
       </article>
 
       <!-- AERO-ERA UTILITIES -->

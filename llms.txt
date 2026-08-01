@@ -133,7 +133,12 @@ the optional gem engine (/lib/gem.js, its own script tag) — data-gem
 turns any sized element into a faceted, cursor/tilt-lit stone with
 34 cuts, 17 stones, jeweller effects (brilliance, highlight,
 sheen, scintillation, fire), a passive idle loop and a perpetual
-data-spin brand-mark mode (see the Gems section).
+data-spin brand-mark mode (see the Gems section); true WebGL shader
+backgrounds from the optional shader engine (/lib/facet-shaders.js) —
+data-bg-shader mounts Paper Shaders' mesh gradient
+(shaders.paper.design, Apache-2.0, imported live from the authors'
+published package, never hosted here) into any surface (see the
+Shader backgrounds section).
 
 Base layer: raw semantic HTML looks designed with no classes; one visible
 keyboard focus ring everywhere; selection colors, thin scrollbars,
@@ -261,9 +266,11 @@ when the library does. (If the library moves to another domain, swap the
 host; everything is served from /lib on whatever domain hosts it.)
 
 Optional extras, each its own additional script tag, only when used:
-/lib/gem.js (animated gemstones — see the Gems section) and the
-service-worker engine /lib/facet-sw.js (loaded from a one-line sw.js
-stub, not a script tag — see the PWA section).
+/lib/gem.js (animated gemstones — see the Gems section),
+/lib/facet-shaders.js (WebGL shader backgrounds powered by Paper
+Shaders — see the Shader backgrounds section) and the service-worker
+engine /lib/facet-sw.js (loaded from a one-line sw.js stub, not a
+script tag — see the PWA section).
 
 ## Theming
 
@@ -1684,6 +1691,39 @@ help.
       <svg data-icon="search"></svg>
     </button>
     <p><svg class="glyph" data-icon="clock"></svg> Updated an hour ago</p>
+
+### Shader backgrounds (facet-shaders.js)
+
+WHEN TO USE: when a background must be genuinely opalescent or
+iridescent — GPU-drawn color fields folding into each other, a class
+of material CSS gradients cannot reach. POWERED BY PAPER SHADERS
+(https://shaders.paper.design), the zero-dependency shader library by
+Paper, Apache-2.0 licensed (https://github.com/paper-design/shaders).
+Facet does not host or fork their code: /lib/facet-shaders.js
+dynamic-imports the published package from esm.sh at runtime (pinned),
+so the shader source always comes from the original authors — all
+credit for the shader work is theirs. One optional script tag beside
+facet.js (an optional engine like gem.js; no component requires it):
+
+    <script src="https://facet.tanishksharma.com/lib/facet-shaders.js" defer></script>
+
+    <div class="bg-fixed" data-bg-shader
+         data-shader-colors="#e0eaff, #241d9a, #f75092, #9f50d3"
+         data-shader-speed="0.6" data-shader-distortion="0.8"
+         data-shader-swirl="0.1" aria-hidden="true"></div>
+
+data-bg-shader mounts Paper's MESH GRADIENT at the element's own size
+(give it one — .bg-fixed for a whole-page ground). data-shader-colors
+takes up to 10 comma-separated CSS colors; without it the surface's
+--bg-fluid-color-1..4 custom properties are read, so one palette
+drives both this and the CSS fluid background. data-shader-speed
+(0 stops it, default 0.6), data-shader-distortion 0–1 (default 0.8),
+data-shader-swirl 0–1 (default 0.1). Degrades honestly: offline or
+without WebGL the element keeps whatever CSS background it already
+has — pair data-bg-shader with data-bg-fluid for a same-palette
+fallback. prefers-reduced-motion mounts the gradient static.
+facetShaders.mount(el) mounts a late-added surface; every mount
+stores its handle on el.__facetShader (with .dispose()).
 
 ### Gems (gem.js)
 
