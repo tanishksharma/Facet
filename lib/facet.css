@@ -1641,7 +1641,9 @@
    accent and vivid tokens so every theme recolors it for free;
    facet.js mounts three GPU-composited layers whose desynced clocks
    keep it from ever repeating. Still under data-motion="off" and
-   reduced motion; plain background with JS off.
+   reduced motion; plain background with JS off. Tunable per surface:
+   --bg-fluid-color-1..4 repaint the pools, --bg-fluid-strength
+   multiplies their opacity, --bg-fluid-speed the drift rate.
    FIXED TO THE SCREEN — .bg-fixed on any grid look makes it the
    page's one still backdrop (body's first child, content floats over
    it, its own --bg-strength default raised to 22%);
@@ -1768,11 +1770,22 @@
    as radial gradients in theme colors (so themes recolor them free),
    heavily blurred, drifting on its own clock — desynced durations
    mean the field never visibly repeats. The first layer also paints
-   the page ground, so the stack works over any ancestor. */
+   the page ground, so the stack works over any ancestor.
+   Tunable per surface, like the grid looks' --bg-tint/--bg-strength:
+   --bg-fluid-color-1..4 repaint the pools (defaults: the accent base
+   and the vivid ranks), --bg-fluid-strength multiplies every pool's
+   opacity (1 = the shipped look), and --bg-fluid-speed multiplies the
+   drift rate (1 = the shipped clocks, 2 = twice as fast). */
 [data-bg-fluid] {
   position: relative;
   overflow: hidden;
   isolation: isolate;                /* the layers stay inside this surface */
+  --bg-fluid-color-1: var(--accent-3);
+  --bg-fluid-color-2: var(--color-4);
+  --bg-fluid-color-3: var(--color-5);
+  --bg-fluid-color-4: var(--color-3);
+  --bg-fluid-strength: 1;
+  --bg-fluid-speed: 1;
 }
 .bg-fluid-layer {
   position: absolute;
@@ -1788,18 +1801,18 @@
 }
 .bg-fluid-layer:nth-of-type(2) {
   background-image:
-    radial-gradient(42% 38% at 24% 32%, color-mix(in srgb, var(--accent-3) 20%, transparent), transparent 70%),
-    radial-gradient(34% 30% at 78% 18%, color-mix(in srgb, var(--color-4) 14%, transparent), transparent 70%),
-    radial-gradient(40% 36% at 66% 82%, color-mix(in srgb, var(--color-5) 12%, transparent), transparent 70%);
-  animation: facet-fluid-drift 38s ease-in-out infinite alternate;
+    radial-gradient(42% 38% at 24% 32%, color-mix(in srgb, var(--bg-fluid-color-1) calc(20% * var(--bg-fluid-strength)), transparent), transparent 70%),
+    radial-gradient(34% 30% at 78% 18%, color-mix(in srgb, var(--bg-fluid-color-2) calc(14% * var(--bg-fluid-strength)), transparent), transparent 70%),
+    radial-gradient(40% 36% at 66% 82%, color-mix(in srgb, var(--bg-fluid-color-3) calc(12% * var(--bg-fluid-strength)), transparent), transparent 70%);
+  animation: facet-fluid-drift calc(38s / var(--bg-fluid-speed)) ease-in-out infinite alternate;
 }
 .bg-fluid-layer:nth-of-type(3) {
   background-image:
-    radial-gradient(7% 7% at 30% 78%, color-mix(in srgb, var(--accent-3) 26%, transparent), transparent 70%),
-    radial-gradient(5% 5% at 58% 40%, color-mix(in srgb, var(--color-4) 22%, transparent), transparent 70%),
-    radial-gradient(4% 4% at 82% 64%, color-mix(in srgb, var(--color-3) 20%, transparent), transparent 70%),
-    radial-gradient(6% 6% at 12% 22%, color-mix(in srgb, var(--color-5) 18%, transparent), transparent 70%);
-  animation: facet-fluid-rise 51s ease-in-out infinite alternate;
+    radial-gradient(7% 7% at 30% 78%, color-mix(in srgb, var(--bg-fluid-color-1) calc(26% * var(--bg-fluid-strength)), transparent), transparent 70%),
+    radial-gradient(5% 5% at 58% 40%, color-mix(in srgb, var(--bg-fluid-color-2) calc(22% * var(--bg-fluid-strength)), transparent), transparent 70%),
+    radial-gradient(4% 4% at 82% 64%, color-mix(in srgb, var(--bg-fluid-color-4) calc(20% * var(--bg-fluid-strength)), transparent), transparent 70%),
+    radial-gradient(6% 6% at 12% 22%, color-mix(in srgb, var(--bg-fluid-color-3) calc(18% * var(--bg-fluid-strength)), transparent), transparent 70%);
+  animation: facet-fluid-rise calc(51s / var(--bg-fluid-speed)) ease-in-out infinite alternate;
 }
 @keyframes facet-fluid-drift {
   to { transform: translate3d(5%, -4%, 0) scale(1.18) rotate(6deg); }

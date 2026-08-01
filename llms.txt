@@ -2361,7 +2361,16 @@ with no redraw. facet.js mounts three GPU-composited layers whose
 desynced clocks keep the field from visibly repeating;
 facet.fluidBackground(el) mounts a late-added surface. Still under
 data-motion="off" and prefers-reduced-motion; plain background with
-JS off.
+JS off. Tunable per surface, like the grid looks' --bg-tint and
+--bg-strength: --bg-fluid-color-1..4 repaint the four pool colors
+(defaults: the accent base and the vivid ranks, so themes keep
+recoloring it free), --bg-fluid-strength multiplies every pool's
+opacity (1 = the shipped look, 1.5 = half again as colored), and
+--bg-fluid-speed multiplies the drift rate (1 = the shipped clocks,
+2 = twice as fast). Set them on the surface itself:
+
+    <section data-bg-fluid
+      style="--bg-fluid-color-1: hotpink; --bg-fluid-strength: 1.4; --bg-fluid-speed: 1.5;">…</section>
 
 FIXED TO THE SCREEN — two opt-ins pin a background to the viewport:
 - .bg-fixed on any grid look makes it the page's one still backdrop —

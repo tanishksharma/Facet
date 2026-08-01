@@ -3958,7 +3958,11 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
             keep it from repeating; still under
             <code>data-motion="off"</code> and reduced motion; plain
             surface with JS off. <code>facet.fluidBackground(el)</code>
-            mounts a late-added surface.
+            mounts a late-added surface. Tunable per surface:
+            <code>--bg-fluid-color-1..4</code> repaint the pools,
+            <code>--bg-fluid-strength</code> multiplies their opacity,
+            <code>--bg-fluid-speed</code> the drift rate (each defaults
+            to the shipped look at 1).
           </p>
           <p>
             Variant AERO: <code>data-bg-aero</code> — facet.js fills the
