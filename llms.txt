@@ -2365,12 +2365,19 @@ JS off. Tunable per surface, like the grid looks' --bg-tint and
 --bg-strength: --bg-fluid-color-1..4 repaint the four pool colors
 (defaults: the accent base and the vivid ranks, so themes keep
 recoloring it free), --bg-fluid-strength multiplies every pool's
-opacity (1 = the shipped look, 1.5 = half again as colored), and
+opacity (1 = the shipped look, 1.5 = half again as colored),
 --bg-fluid-speed multiplies the drift rate (1 = the shipped clocks,
-2 = twice as fast). Set them on the surface itself:
+2 = twice as fast), --bg-fluid-scale multiplies the pool sizes
+(0.6 = smaller, tighter splotches with more ground showing through),
+--bg-fluid-travel multiplies how far the pools wander — the two
+layers roam opposite circuits, so at 2+ they visibly cross and their
+colors mix — and --bg-fluid-blur is the out-of-focus radius (default
+42px; smaller pools usually want a smaller blur to stay defined).
+Set them on the surface itself:
 
     <section data-bg-fluid
-      style="--bg-fluid-color-1: hotpink; --bg-fluid-strength: 1.4; --bg-fluid-speed: 1.5;">…</section>
+      style="--bg-fluid-color-1: hotpink; --bg-fluid-strength: 1.4; --bg-fluid-speed: 1.5;
+             --bg-fluid-scale: 0.6; --bg-fluid-travel: 2.5; --bg-fluid-blur: 30px;">…</section>
 
 FIXED TO THE SCREEN — two opt-ins pin a background to the viewport:
 - .bg-fixed on any grid look makes it the page's one still backdrop —
