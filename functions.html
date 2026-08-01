@@ -87,7 +87,7 @@
           <li><a href="#fn-tabs">Tabs</a></li>
           <li><a href="#fn-dropdowns">Dropdowns</a></li>
           <li><a href="#fn-dialogs">Dialog triggers</a></li>
-          <li><a href="#fn-tooltips">Touch tooltips</a></li>
+          <li><a href="#fn-tooltips">Tooltips</a></li>
         </ul>
         </div>
         <div class="nav-group side-index-group" data-group="feel"
@@ -975,19 +975,24 @@ Deck template  &#8594; &#8595; PgDn Space next slide · &#8592; &#8593; PgUp bac
         </article>
 
         <article class="element stack" id="fn-tooltips" data-llms="Description tooltip">
-          <h3>Touch tooltips</h3>
+          <h3>Tooltips</h3>
           <p>
-            The tap half of the description tooltip. Hover and keyboard
-            focus are pure CSS; on touch screens facet.js opens the bubble
-            on tap instead — placed above, below or beside the element,
-            wherever there is room — and keeps it until the page scrolls,
-            a tap lands anywhere else, or the same element is tapped again. A control that opens something else (a sheet, a menu, a dialog) acts without pinning a bubble over what it opened.
-            Delegated, so late-added markup needs no wiring.
+            The floating half of the description tooltip. One bubble serves
+            every pointer: hover and keyboard focus show it on desktop, a
+            tap pins it on touch screens — placed above, below or beside
+            the element, wherever there is room, never clipped by the
+            viewport or a scrolling ancestor. A pinned bubble stays until
+            the page scrolls, a tap lands anywhere else, or the same
+            element is tapped again. A control that opens something else
+            (a sheet, a menu, a dialog) acts without pinning a bubble over
+            what it opened. Delegated, so late-added markup needs no
+            wiring. With JavaScript off a CSS-only bubble opens above the
+            element instead (data-tip-below drops it under).
           </p>
           <pre id="code-fn-tooltips"><code>&lt;button class="btn" data-tip="Runs the calculation"&gt;Calculate&lt;/button&gt;
 
-&lt;!-- Desktop: hover or focus shows it. Touch: tap shows it,
-     scroll or a tap elsewhere hides it. Nothing to call. --&gt;</code></pre>
+&lt;!-- Hover, focus or tap shows it, placed where there is room.
+     Scroll or a tap elsewhere hides it. Nothing to call. --&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-tooltips" data-tip="Copies this code">Copy</button></p>
         </article>
       </section>

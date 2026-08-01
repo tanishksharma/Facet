@@ -3504,24 +3504,30 @@ input[type="week"] {
    WHEN TO USE: on every interactive element — one data-tip attribute explains it in place. This is the library's everything-explained-in-place promise; write one for every control you ship.
 
    What it is: a one-attribute explanation bubble: put data-tip on any element
-   and the text appears above it on hover and on keyboard focus. On touch
-   screens a tap opens it instead — placed above, below or beside the
-   element, wherever there is room, always inside the viewport, with a
-   tail pointing at it — and it stays until the page scrolls, a tap
-   lands anywhere else, or the same element is tapped again. A control that opens something else (a sheet, a menu, a dialog) acts without pinning a bubble over what it opened. A tablet's
-   trackpad cursor shows it on hover too. The tap still performs the element's own
-   action; the bubble explains, it never blocks. What it is for: explaining
-   every interactive element in place — one of the library's core
-   principles. The description doubles as documentation anyone can read by
-   pointing at the thing. When to use it: every interactive element ships
-   with one. Add data-tip-below on elements near the top of the viewport so
-   the hover bubble drops under them instead of clipping off the screen.
+   and the text appears beside it on hover, on keyboard focus and, on touch
+   screens, on tap. The bubble measures the viewport and places itself
+   above the element when there is room, below when there is not, and
+   beside it as the last resort — always fully on screen, with a tail
+   pointing at it, floating free of any overflow clipping. On touch the
+   tap pins it until the page scrolls, a tap lands anywhere else, or the
+   same element is tapped again; a control that opens something else (a
+   sheet, a menu, a dialog) acts without pinning a bubble over what it
+   opened. A tablet's trackpad cursor shows it on hover too. The tap
+   still performs the element's own action; the bubble explains, it
+   never blocks. What it is for: explaining every interactive element in
+   place — one of the library's core principles. The description doubles
+   as documentation anyone can read by pointing at the thing. When to
+   use it: every interactive element ships with one. With JavaScript off
+   a simpler CSS-only bubble opens above the element on hover and focus;
+   add data-tip-below on elements near the top of the viewport so that
+   fallback drops under them instead of clipping off the screen.
 
    Usage:  <button class="btn" data-tip="Runs the calculation">Calculate</button>
 
-   Limits: the hover bubble can be clipped by overflow:hidden ancestors;
-   the touch bubble (initTouchTooltips in facet.js) floats free of any
-   clipping and places itself by available space.
+   Limits: the CSS fallback bubble (JS off) can be clipped by
+   overflow:hidden ancestors and always opens above (or below with
+   data-tip-below); the floating bubble (initTooltips in facet.js)
+   floats free of any clipping and places itself by available space.
    -------------------------------------------------------------------------- */
 
 [data-tip] {
@@ -3579,6 +3585,15 @@ input[type="week"] {
   [data-tip]:focus-visible::before { display: none; }
 }
 
+/* While facet.js runs, the floating bubble serves EVERY pointer — it
+   measures the viewport and places itself where there is room — so the
+   CSS bubble stands down everywhere (initTooltips stamps the html tag).
+   Without JS the stamp never lands and this bubble is the fallback. */
+html[data-tip-float] [data-tip]:hover::after,
+html[data-tip-float] [data-tip]:focus-visible::after,
+html[data-tip-float] [data-tip]:hover::before,
+html[data-tip-float] [data-tip]:focus-visible::before { display: none; }
+
 /* The floating touch bubble (one per page, created by facet.js):
    the same skin as the hover bubble, positioned by script. */
 .tip-bubble {
@@ -3616,8 +3631,9 @@ input[type="week"] {
 .tip-bubble[data-place="left"]::after  { left: 100%; top: 50%; translate: 0 -50%; border-left-color: var(--text); }
 .tip-bubble[data-place="right"]::after { right: 100%; top: 50%; translate: 0 -50%; border-right-color: var(--text); }
 
-/* Elements near the top of the viewport add data-tip-below, so the tip
-   drops under them instead of clipping off the screen. */
+/* No-JS fallback hint: elements near the top of the viewport add
+   data-tip-below, so the CSS tip drops under them instead of clipping
+   off the screen. (With JS the floating bubble places itself.) */
 [data-tip][data-tip-below]::after {
   bottom: auto;
   top: calc(100% + var(--space-control));

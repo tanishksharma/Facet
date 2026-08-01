@@ -2134,18 +2134,23 @@ a muted verdict line alone.
 WHEN TO USE: on every interactive element — one data-tip attribute explains it in place. This is the library's everything-explained-in-place promise; write one for every control you ship.
 
 What it is: a one-attribute explanation bubble: put data-tip on any element
-and the text appears above it on hover and on keyboard focus. On touch
-screens a tap opens it instead — placed above, below or beside the
-element, wherever there is room, always inside the viewport, with a
-tail pointing at it — and it stays until the page scrolls, a tap
-lands anywhere else, or the same element is tapped again. A control that opens something else (a sheet, a menu, a dialog) acts without pinning a bubble over what it opened. A tablet's
-trackpad cursor shows it on hover too. The tap still performs the element's own
-action; the bubble explains, it never blocks. What it is for: explaining
-every interactive element in place — one of the library's core
-principles. The description doubles as documentation anyone can read by
-pointing at the thing. When to use it: every interactive element ships
-with one. Add data-tip-below on elements near the top of the viewport so
-the hover bubble drops under them instead of clipping off the screen.
+and the text appears beside it on hover, on keyboard focus and, on touch
+screens, on tap. The bubble measures the viewport and places itself
+above the element when there is room, below when there is not, and
+beside it as the last resort — always fully on screen, with a tail
+pointing at it, floating free of any overflow clipping. On touch the
+tap pins it until the page scrolls, a tap lands anywhere else, or the
+same element is tapped again; a control that opens something else (a
+sheet, a menu, a dialog) acts without pinning a bubble over what it
+opened. A tablet's trackpad cursor shows it on hover too. The tap
+still performs the element's own action; the bubble explains, it
+never blocks. What it is for: explaining every interactive element in
+place — one of the library's core principles. The description doubles
+as documentation anyone can read by pointing at the thing. When to
+use it: every interactive element ships with one. With JavaScript off
+a simpler CSS-only bubble opens above the element on hover and focus;
+add data-tip-below on elements near the top of the viewport so that
+fallback drops under them instead of clipping off the screen.
 
     <button class="btn" data-tip="Runs the calculation">Calculate</button>
 
@@ -2163,7 +2168,7 @@ configure. The library's grammar has three verbs:
 Escape closes the open layer. Whatever is open on top of the page,
 Escape closes it: sheets (settings, navigation), the dropdown menu and
 the floating nav menu (both return focus to the button that opened
-them), the phone header's menu fold, a pinned touch tooltip, and the
+them), the phone header's menu fold, an open tooltip bubble, and the
 native layers — <dialog> and [popover] — through the platform's own
 Escape handling. One key, one meaning, everywhere.
 
