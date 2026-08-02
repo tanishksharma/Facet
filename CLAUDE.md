@@ -741,6 +741,119 @@ machinery behind that line. Once shipped, extend that line to name the grammar: 
 rides a native pseudo-class, an ARIA attribute, or `data-status` — never an invented
 class.
 
+### Cursor system — a distinct cursor for every kind of interaction (cross-cutting)
+
+The idea, in one line: **the cursor should say what will happen if you click, before
+you click.** Facet already promises "everything explained in place" through the
+description tooltip; the tooltip is the *slow* channel (you must hover and wait), the
+cursor is the *instant* one. Today the library spends that channel on almost nothing —
+41 `cursor:` declarations, nearly all of them a hand-written `pointer`, plus `help` on
+`abbr[title]`, `not-allowed` on disabled controls, and one custom glossy arrow in the
+Aero theme. A dropdown, a link, a close button and a submit button all say the same
+word. This spec makes the cursor a real, systematic affordance layer.
+
+**The grammar (the whole idea).** A cursor names the OUTCOME, not the widget. Group by
+what happens next, and the set stays small enough to learn in one pass:
+
+| Role | Means | Where it comes from |
+|---|---|---|
+| `act` | does something here | `<button>`, submit, a real action |
+| `navigate` | takes you somewhere else | `<a href>`, tab links, a card that is a link |
+| `reveal` | opens something in place | `[aria-expanded="false"]`, `[aria-haspopup]`, closed `<summary>`, "show more" |
+| `collapse` | closes what is open | `[aria-expanded="true"]`, `details[open] > summary` |
+| `dismiss` | removes or closes it | the field Clear ×, chip remove, sheet close |
+| `adjust` | changes a value by dragging | `input[type="range"]`, resize and drag handles |
+| `blocked` | cannot be used | `:disabled`, `[aria-disabled="true"]` |
+| `wait` | busy, do not click again | `[aria-busy="true"]` |
+| `explain` | reveals a description | `[data-tip]` on a non-interactive element, `abbr[title]` |
+| `text` | select text | prose — NEVER overridden |
+
+**The architectural move: derive, never assign.** Every row above already exists in the
+markup because the Component state system made state ride native pseudo-classes and
+ARIA attributes. So the cursor layer reads the SAME attributes and needs no new markup
+for the common cases — the dropdown that flips `aria-expanded` gets a cursor that flips
+with it, for free, on the attribute the accessibility layer already maintains. Looks and
+semantics cannot drift apart, which is exactly why states were built this way.
+Selectors go in `:where()` so specificity stays 0 and any author rule wins.
+
+**Technology: native `cursor: url()`, and nothing else.** Two options exist and only one
+survives the charter:
+- **Native `cursor: url("data:image/svg+xml,…") x y, keyword`** — zero JS, zero lag,
+  works with JS off, renders in the compositor, works over every element including
+  native controls. Limits: no `currentColor` inside a data URI (the same problem the
+  glyph background already solves), ~32×32 practical on Windows, and it MUST end in a
+  native keyword fallback.
+- **A fake DOM element following the pointer** — full design freedom and animation, but
+  it lags on low-end devices, dies over iframes and native controls, vanishes during
+  drags, needs JS to exist at all, and fights the reading-order/print laws. **Rejected.
+  Do not revisit without a new argument.**
+
+**Discipline: use the platform's word wherever one exists.** Only draw a custom glyph
+where the OS has no cursor for the meaning. That keeps the payload tiny and the result
+familiar:
+- Native, untouched: `pointer` (act), `text`, `not-allowed` (blocked), `progress`
+  (wait — the OS animates it, never ship a static spinner), `help` (explain),
+  `ew-resize`/`ns-resize` (adjust), `grab`/`grabbing`, `zoom-in`/`zoom-out`.
+- Custom SVG, five glyphs only: `navigate`, `reveal`, `collapse`, `dismiss`, and the
+  side-opening `reveal-side` for sheets and drawers.
+
+**Art direction.** Each custom cursor is the familiar OS arrow with a small badge at its
+lower right — a NE arrow for navigate, a chevron down for reveal, a chevron up for
+collapse, a × for dismiss. Rules:
+- **Two inks, never per-theme.** A cursor is chrome, not brand: it must read on any
+  background. Ship a dark glyph and a light one, switched by `data-mode` /
+  `prefers-color-scheme`, and give every glyph a contrasting halo outline the way OS
+  cursors do. Eight themes × N cursors is a maintenance trap — do not go there.
+- Ship 32×32 with a 64×64 twin via `image-set()` for retina. Document the hotspot per
+  cursor; the arrow tip is always the hotspot, never the badge.
+- The glyphs are tokens (`--cursor-navigate`, `--cursor-reveal`, …) so a theme or a
+  project can swap the art without touching a single component.
+
+**The API.**
+- Automatic, from the semantics above. Nothing to write.
+- `data-cursor="act|navigate|reveal|collapse|dismiss|adjust|explain|none"` on any element
+  overrides the derived role.
+- `data-cursors="off"` on `<html>` turns the whole system off and returns every native
+  cursor, plus a settings-sheet row beside motion / sounds / haptics (session-scoped,
+  per the settings decision).
+
+**Reconcile the Aero collision before writing a line.** `[data-theme="aero"]` already
+ships a custom cursor and already claims `data-cursor="system"` as its opt-out. Under
+this spec `data-cursor` becomes the per-element ROLE attribute, so: keep
+`data-cursor="system"` working forever as an alias of the global off switch, move Aero's
+glossy arrow into the token layer as a theme override of `--cursor-default`, and say so
+in the migration note. Nothing an author wrote yesterday may break.
+
+**Platform and accessibility rules (non-negotiable).**
+- The entire block lives inside `@media (hover: hover) and (pointer: fine)`. Touch has
+  no cursor; coarse pointers must not pay for any of this.
+- Never override `text` over real prose. The I-beam is the most deeply learned cursor
+  on the platform and replacing it is a regression, not a feature.
+- A custom cursor overrides the visitor's OS cursor-size and high-contrast accessibility
+  settings. That is why the kill switch is mandatory, not optional, and why the glyphs
+  stay arrow-shaped rather than becoming decorative shapes.
+- The cursor is never the ONLY signal. Anything with a cursor role still carries its
+  focus ring, its hover state and its description tooltip — a keyboard user and a
+  touch user must lose nothing.
+
+**Rollout: three commits, each landing its wall entry + llms.txt lines.**
+1. Tokens + grammar: the role tokens, the five SVG glyphs in both inks, the
+   `@media (hover: hover)` shell, the `data-cursors` kill switch, the Aero migration.
+2. Derivation: the `:where()` selectors mapping ARIA and native pseudo-classes to roles,
+   and the audit that replaces the ~41 ad-hoc `cursor:` declarations with the system.
+3. Surfacing: the `data-cursor` override, the settings-sheet row, the library wall entry
+   (Layer 5 · App feel, beside motion / sound / haptics) with a hover-me strip showing
+   every role, and the home Features card — this is a headline, user-facing capability.
+
+**Compliance-checklist addition (once shipped):** a new component declares its cursor
+role, or inherits one correctly from its semantics; it never hand-writes `cursor:`.
+
+**Open decisions to settle at build time:** whether `navigate` should distinguish
+same-site from external links (leaning no — too fine to read at 32px); whether the
+system defaults ON or OFF for consumers (leaning ON, since taste-by-default is the
+product's promise); and whether the reveal/collapse pair also applies to the tooltip
+trigger or whether `help` covers it.
+
 ### Theme marketplace + community submissions 
 
 Let visitors build a theme (the Build-a-theme page already does this) and submit it for review and, if approved, shipping as an official theme. Below the builder, a marketplace lists the built-in themes and, under a separate heading, approved community themes. This is the project's first social surface.
