@@ -1637,14 +1637,18 @@
    within the load, so a theme or mode change re-inks the same
    arrangement instead of reshuffling. facet.js draws the scatter
    tile in the same pattern ink and redraws it with the glyph engine.
-   VARIANT FLUID — data-bg-fluid: a soft, slowly-breathing field of
-   out-of-focus color pools and drifting bubbles, drawn from the
-   accent and vivid tokens so every theme recolors it for free;
-   facet.js mounts three GPU-composited layers whose desynced clocks
-   keep it from ever repeating. Still under data-motion="off" and
-   reduced motion; plain background with JS off. Tunable per surface:
-   --bg-fluid-color-1..4 repaint the pools, --bg-fluid-strength
-   multiplies their opacity, --bg-fluid-speed the drift rate.
+   VARIANT FLUID — data-bg-fluid: metaballs. Soft circles blurred
+   until they melt together, then alpha-thresholded back to one hard
+   edge, so a cluster reads as a single liquid shape rather than a
+   pile of discs. One layer per vivid colour, drawn from the theme
+   tokens so every theme recolors it for free; facet.js mounts the
+   rig and each cluster travels slowly while its blobs jostle on
+   their own clocks. Still under data-motion="off" and reduced
+   motion; plain background with JS off. Tunable per surface:
+   --bg-fluid-color-1..5 repaint the layers, --bg-fluid-size and
+   --bg-fluid-merge set the blobs and how far apart they fuse,
+   --bg-fluid-haze softens the finished composite,
+   --bg-fluid-strength and --bg-fluid-mix how the layers combine.
    FIXED TO THE SCREEN — .bg-fixed on any grid look makes it the
    page's one still backdrop (body's first child, content floats over
    it, its own --bg-strength default raised to 22%);
@@ -1766,81 +1770,179 @@
   background-size: var(--bg-glyph-tile, 3.5rem 3.5rem);
 }
 
-/* Variant fluid: out-of-focus color pools breathing behind the page.
-   facet.js mounts three .bg-fluid-layer spans; each carries its pools
-   as radial gradients in theme colors (so themes recolor them free),
-   heavily blurred, drifting on its own clock — desynced durations
-   mean the field never visibly repeats. The first layer also paints
-   the page ground, so the stack works over any ancestor.
-   Tunable per surface, like the grid looks' --bg-tint/--bg-strength:
-   --bg-fluid-color-1..4 repaint the pools (defaults: the accent base
-   and the vivid ranks), --bg-fluid-strength multiplies every pool's
-   opacity (1 = the shipped look), --bg-fluid-speed multiplies the
-   drift rate (1 = the shipped clocks, 2 = twice as fast),
-   --bg-fluid-scale multiplies the pool sizes (0.6 = smaller, tighter
-   splotches with more ground showing through), --bg-fluid-travel
-   multiplies how far the pools wander (2 = twice the roam, so the two
-   layers cross and their colors visibly mix), and --bg-fluid-blur is
-   the out-of-focus radius (smaller pools usually want a smaller blur
-   to stay defined). */
+/* Variant fluid: metaballs. Soft circles are blurred until they melt into
+   each other, then alpha-thresholded back into one hard edge — so a group
+   of circles reads as a single liquid shape rather than a pile of discs.
+
+   facet.js mounts one .bg-fluid-layer per vivid colour inside a shared
+   .bg-fluid-haze, and gives each layer its own SVG filter. The matrix in
+   that filter boosts ALPHA only — its RGB rows are identity — so colour
+   survives the threshold untouched: it can live in the blob itself, and
+   two hues blend smoothly across the join where they fuse. (The CSS
+   blur()+contrast() shorthand cannot do this; contrast works on RGB and
+   drags every hue to a primary.)
+
+   Blobs are grouped into CLUSTERS, and the nesting is load-bearing: one
+   element cannot run two animations against transform, so a cluster
+   carries the slow shared travel while each blob inside runs its own
+   faster, independently phased jostle. The fused shape holds together
+   without ever holding still. Cluster centres are dealt round-robin
+   across the layers, which keeps each colour's shapes away from its
+   neighbours' instead of piling them up.
+
+   Tunable per surface. --bg-fluid-color-1..5 repaint the layers (the
+   vivid five by default); --bg-fluid-size is blob diameter in hundredths
+   of the surface's short side and --bg-fluid-merge the merge distance as
+   a fraction of that, so the two always track each other;
+   --bg-fluid-contrast is how hard the rim snaps and --bg-fluid-threshold
+   where it is cut (under 1 blobs shrink and hold apart, over 1 they swell
+   and fuse early); --bg-fluid-haze is one Gaussian over the finished
+   composite (in surface units, like the rest, so a hero card is not
+   swamped by a blur sized for a whole page); --bg-fluid-strength each layer's opacity and --bg-fluid-mix
+   how they combine (normal blends like paint, screen adds light and wants
+   a dark ground, soft-light stains); --bg-fluid-clusters and
+   --bg-fluid-cluster-size how many shapes and how many blobs in each;
+   --bg-fluid-spread the ring they sit on; --bg-fluid-speed and
+   --bg-fluid-travel the motion; --bg-fluid-grain fine noise for when a
+   wide haze bands in 8-bit.
+
+   Geometry rides --bg-fluid-unit, which facet.js measures from the
+   surface itself — a hundredth of its short side, refreshed on resize —
+   so the same numbers work on a full-page wash and on a hero card.
+   Still under data-motion="off" and reduced motion; plain background
+   with JS off. */
+
 [data-bg-fluid] {
   position: relative;
   overflow: hidden;
   isolation: isolate;                /* the layers stay inside this surface */
-  --bg-fluid-color-1: var(--accent-3);
-  --bg-fluid-color-2: var(--color-4);
-  --bg-fluid-color-3: var(--color-5);
-  --bg-fluid-color-4: var(--color-3);
-  --bg-fluid-strength: 1;
+  --bg-fluid-color-1: var(--color-1);
+  --bg-fluid-color-2: var(--color-2);
+  --bg-fluid-color-3: var(--color-3);
+  --bg-fluid-color-4: var(--color-4);
+  --bg-fluid-color-5: var(--color-5);
+  --bg-fluid-size: 20;               /* blob diameter, hundredths of the short side */
+  --bg-fluid-merge: 0.15;            /* merge distance, x blob size */
+  --bg-fluid-contrast: 240;
+  --bg-fluid-threshold: 1;
+  --bg-fluid-haze: 3.3;              /* whole-composite blur, in surface units */
+  --bg-fluid-strength: 0.2;
+  --bg-fluid-mix: normal;
+  --bg-fluid-clusters: 5;
+  --bg-fluid-cluster-size: 3;
+  --bg-fluid-spread: 0.41;
   --bg-fluid-speed: 1;
-  --bg-fluid-scale: 1;
   --bg-fluid-travel: 1;
-  --bg-fluid-blur: 42px;
+  --bg-fluid-grain: 0;
+  --bg-fluid-unit: 1px;              /* facet.js measures this from the surface */
 }
-.bg-fluid-layer {
+
+/* The haze pass. Every layer has fused and blended by the time this runs,
+   so ONE Gaussian softens the whole composite. It carries the ground and
+   overscans itself: a blur samples past its element's edges, and without
+   both of those it would pull transparency in at the perimeter and
+   vignette the surface. */
+.bg-fluid-haze {
   position: absolute;
-  inset: -25%;
+  inset: calc((-3 * var(--bg-fluid-haze) - 2) * var(--bg-fluid-unit));
   z-index: -1;
   pointer-events: none;
-  filter: blur(var(--bg-fluid-blur));
+  background: var(--background);
+  isolation: isolate;
+  filter: blur(calc(var(--bg-fluid-haze) * var(--bg-fluid-unit)));
 }
-.bg-fluid-layer:nth-of-type(1) {
+
+.bg-fluid-layer {
+  position: absolute;
   inset: 0;
-  filter: none;
-  background: var(--background);     /* the ground the pools float over */
+  opacity: var(--bg-fluid-strength);
+  mix-blend-mode: var(--bg-fluid-mix);
 }
-.bg-fluid-layer:nth-of-type(2) {
-  background-image:
-    radial-gradient(calc(42% * var(--bg-fluid-scale)) calc(38% * var(--bg-fluid-scale)) at 24% 32%, color-mix(in srgb, var(--bg-fluid-color-1) calc(20% * var(--bg-fluid-strength)), transparent), transparent 70%),
-    radial-gradient(calc(34% * var(--bg-fluid-scale)) calc(30% * var(--bg-fluid-scale)) at 78% 18%, color-mix(in srgb, var(--bg-fluid-color-2) calc(14% * var(--bg-fluid-strength)), transparent), transparent 70%),
-    radial-gradient(calc(40% * var(--bg-fluid-scale)) calc(36% * var(--bg-fluid-scale)) at 66% 82%, color-mix(in srgb, var(--bg-fluid-color-3) calc(12% * var(--bg-fluid-strength)), transparent), transparent 70%);
-  animation: facet-fluid-drift calc(38s / var(--bg-fluid-speed)) ease-in-out infinite;
+
+/* Overscanned so cluster centres are dealt beyond the visible edge too,
+   and shapes drift in and out of frame instead of every one sitting fully
+   inside it. */
+.bg-fluid-shapes {
+  position: absolute;
+  inset: calc(-9 * var(--bg-fluid-unit));
+  filter: var(--bg-fluid-filter);
 }
-.bg-fluid-layer:nth-of-type(3) {
-  background-image:
-    radial-gradient(calc(7% * var(--bg-fluid-scale)) calc(7% * var(--bg-fluid-scale)) at 30% 78%, color-mix(in srgb, var(--bg-fluid-color-1) calc(26% * var(--bg-fluid-strength)), transparent), transparent 70%),
-    radial-gradient(calc(5% * var(--bg-fluid-scale)) calc(5% * var(--bg-fluid-scale)) at 58% 40%, color-mix(in srgb, var(--bg-fluid-color-2) calc(22% * var(--bg-fluid-strength)), transparent), transparent 70%),
-    radial-gradient(calc(4% * var(--bg-fluid-scale)) calc(4% * var(--bg-fluid-scale)) at 82% 64%, color-mix(in srgb, var(--bg-fluid-color-4) calc(20% * var(--bg-fluid-strength)), transparent), transparent 70%),
-    radial-gradient(calc(6% * var(--bg-fluid-scale)) calc(6% * var(--bg-fluid-scale)) at 12% 22%, color-mix(in srgb, var(--bg-fluid-color-3) calc(18% * var(--bg-fluid-strength)), transparent), transparent 70%);
-  animation: facet-fluid-rise calc(51s / var(--bg-fluid-speed)) ease-in-out infinite;
+
+.bg-fluid-cluster {
+  position: absolute;
+  left: var(--bg-fluid-x);
+  top: var(--bg-fluid-y);
+  width: 0;
+  height: 0;
+  will-change: transform;
+  animation: facet-fluid-drift calc(1s * var(--bg-fluid-dur) / var(--bg-fluid-speed)) ease-in-out infinite;
+  animation-delay: calc(-1s * var(--bg-fluid-lag));
+  animation-direction: var(--bg-fluid-dir);
 }
-/* The wander: each layer roams through four corners of its box and
-   returns home, so a full loop never jumps. The two layers run opposite
-   circuits (clockwise vs counter-clockwise) on desynced clocks, which is
-   what carries pools ACROSS each other and lets their colors mix.
-   --bg-fluid-travel scales every offset; at 1 the roam stays within the
-   old gentle bounds. */
+
+.bg-fluid-blob {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--bg-fluid-d);
+  height: var(--bg-fluid-d);
+  margin: calc(var(--bg-fluid-d) / -2) 0 0 calc(var(--bg-fluid-d) / -2);
+  border-radius: 50%;
+  background: var(--bg-fluid-ink);
+  will-change: transform;
+  animation: facet-fluid-jostle calc(1s * var(--bg-fluid-jdur) / var(--bg-fluid-speed)) ease-in-out infinite;
+  animation-delay: calc(-1s * var(--bg-fluid-jlag));
+  animation-direction: var(--bg-fluid-jdir);
+}
+
+/* Fine noise. A wide haze makes a very gradual gradient, and 8-bit colour
+   cannot hold one smoothly — it steps into faint stripes. Noise hides the
+   steps. Off by default; raise --bg-fluid-grain only if banding shows. */
+.bg-fluid-grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--bg-fluid-grain);
+  mix-blend-mode: overlay;
+  background-image: var(--bg-fluid-noise);
+}
+
+/* The cluster's slow travel: it roams from where it was placed and comes
+   home, so a full loop never jumps. --bg-fluid-travel scales every offset. */
 @keyframes facet-fluid-drift {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-  25% { transform: translate3d(calc(6% * var(--bg-fluid-travel)), calc(-5% * var(--bg-fluid-travel)), 0) scale(1.14) rotate(4deg); }
-  50% { transform: translate3d(calc(-3% * var(--bg-fluid-travel)), calc(-8% * var(--bg-fluid-travel)), 0) scale(1.2) rotate(-3deg); }
-  75% { transform: translate3d(calc(-7% * var(--bg-fluid-travel)), calc(4% * var(--bg-fluid-travel)), 0) scale(1.1) rotate(-5deg); }
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(calc(var(--bg-fluid-dx1) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), calc(var(--bg-fluid-dy1) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), 0); }
+  50% { transform: translate3d(calc(var(--bg-fluid-dx2) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), calc(var(--bg-fluid-dy2) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), 0); }
+  75% { transform: translate3d(calc(var(--bg-fluid-dx3) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), calc(var(--bg-fluid-dy3) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), 0); }
 }
-@keyframes facet-fluid-rise {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
-  25% { transform: translate3d(calc(-6% * var(--bg-fluid-travel)), calc(4% * var(--bg-fluid-travel)), 0) scale(1.1) rotate(-4deg); }
-  50% { transform: translate3d(calc(4% * var(--bg-fluid-travel)), calc(-7% * var(--bg-fluid-travel)), 0) scale(1.16) rotate(3deg); }
-  75% { transform: translate3d(calc(7% * var(--bg-fluid-travel)), calc(5% * var(--bg-fluid-travel)), 0) scale(1.08) rotate(5deg); }
+
+/* The blob's own wander around its seat on the cluster ring, kept well
+   inside the merge distance so it loosens the shape rather than tearing
+   off it. Runs on a much shorter clock than the cluster, which is what
+   keeps the silhouette alive. */
+@keyframes facet-fluid-jostle {
+  0%, 100% {
+    transform: translate3d(calc(var(--bg-fluid-ox) * var(--bg-fluid-unit)), calc(var(--bg-fluid-oy) * var(--bg-fluid-unit)), 0) scale(1, 1);
+  }
+  33% {
+    transform: translate3d(
+      calc((var(--bg-fluid-ox) + var(--bg-fluid-jx1)) * var(--bg-fluid-unit)),
+      calc((var(--bg-fluid-oy) + var(--bg-fluid-jy1)) * var(--bg-fluid-unit)), 0)
+      scale(var(--bg-fluid-sx1), var(--bg-fluid-sy1));
+  }
+  66% {
+    transform: translate3d(
+      calc((var(--bg-fluid-ox) + var(--bg-fluid-jx2)) * var(--bg-fluid-unit)),
+      calc((var(--bg-fluid-oy) + var(--bg-fluid-jy2)) * var(--bg-fluid-unit)), 0)
+      scale(var(--bg-fluid-sx2), var(--bg-fluid-sy2));
+  }
+}
+
+[data-motion="off"] .bg-fluid-cluster,
+[data-motion="off"] .bg-fluid-blob { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .bg-fluid-cluster, .bg-fluid-blob { animation-play-state: paused; }
 }
 
 /* FIXED, WHOLE-PAGE: .bg-fixed turns any grid look into the page's one
@@ -1868,13 +1970,13 @@
 [data-bg-fluid][data-bg-fluid-fixed] {
   clip-path: inset(0 round var(--bg-fluid-radius, var(--radius-card)));
 }
-[data-bg-fluid-fixed] > .bg-fluid-layer { position: fixed; }
+[data-bg-fluid-fixed] > .bg-fluid-haze { position: fixed; }
 
 
 /* Contrast request: the pattern is removed. */
 @media (prefers-contrast: more) {
   .bg-grid, .bg-dots, .bg-circles, .bg-ruled, .bg-graph, [data-bg-glyph] { background-image: none; }
-  .bg-fluid-layer { display: none; }
+  .bg-fluid-haze, .bg-fluid-grain { display: none; }
 }
 
 
@@ -2537,7 +2639,7 @@ input, textarea, [contenteditable] {
     backdrop-filter: none !important;
   }
   .bg-grid, .bg-dots, .bg-circles, .bg-ruled, .bg-graph, [data-bg-glyph] { background-image: none !important; }
-  .bg-fluid-layer { display: none !important; }
+  .bg-fluid-haze, .bg-fluid-grain { display: none !important; }
 
   /* page furniture never prints; an explicit on-role overrides */
   nav, .skip-link, .top-menu, .bg-fixed, .footer,
