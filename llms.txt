@@ -2417,7 +2417,9 @@ each colour's shapes away from its neighbours'. All colour comes from
 theme tokens, so every theme and mode recolors it with no redraw;
 facet.fluidBackground(el) mounts a late-added surface and
 facet.fluidRefresh(el) remeasures one after its size or tokens
-change. Still under data-motion="off" and prefers-reduced-motion;
+change, and facet.fluidRemount(el) rebuilds one after a change to
+--bg-fluid-clusters or --bg-fluid-cluster-size (those two are baked
+into the DOM at mount, so a custom property alone cannot move them). Still under data-motion="off" and prefers-reduced-motion;
 plain background with JS off.
 
 Geometry is sized in SURFACE UNITS — a hundredth of the surface's
