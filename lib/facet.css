@@ -1837,6 +1837,19 @@
   --bg-fluid-unit: 1px;              /* facet.js measures this from the surface */
 }
 
+/* The WebGL field, where the device offers it: one canvas, the metaball
+   maths on the GPU, the main thread only feeding blob positions. Stretched
+   over the surface; rendered at reduced resolution and sampled up. */
+.bg-fluid-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+[data-bg-fluid-fixed] > .bg-fluid-canvas { position: fixed; }
+
 /* The internal canvas: the whole field is drawn at a reduced resolution
    and scaled back up to cover the surface — a goo pass costs by the pixel,
    and under the haze the upscale is invisible. facet.js sizes it and picks

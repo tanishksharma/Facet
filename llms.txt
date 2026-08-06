@@ -2420,12 +2420,13 @@ facet.fluidRefresh(el) remeasures one after its size or tokens
 change, and facet.fluidRemount(el) rebuilds one after a change to
 --bg-fluid-clusters or --bg-fluid-cluster-size (those two are baked
 into the DOM at mount, so a custom property alone cannot move them). Still under data-motion="off" and prefers-reduced-motion;
-plain background with JS off. For speed the field is drawn on a
-reduced internal canvas matched to the haze and scaled up (invisible
-under the blur), and its motion runs on one shared low-cadence ticker
-(roughly 7-16 updates a second, adapting to the device) — full-rate
-sampling would re-raster five software-filtered layers every frame,
-which floors Safari.
+plain background with JS off. Where the device offers WebGL
+(virtually everywhere) the field renders as a true metaball shader on
+the GPU — same tokens, same motion model, full-rate animation, near
+zero main-thread cost. Without WebGL it falls back to the DOM + SVG
+filter rig on a low-cadence ticker, and if even that strains the
+device the field freezes into its composed frame rather than slowing
+the page.
 
 Geometry is sized in SURFACE UNITS, measured by facet.js and
 refreshed on resize, so the same numbers describe a whole-page wash

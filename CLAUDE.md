@@ -1108,6 +1108,13 @@ runtime, against the "one CSS + one JS, no heavy deps" charter. Default: skip.
   with a few large blurred conic/radial gradients drifting behind the hero
   (`.bg-aurora`, Easy) — won't match, but stays dependency-free. True WebGL only
   ever as an OPTIONAL opt-in add-on file, never in core facet.js.
+  (Amended 6 Aug 2026: SELF-CONTAINED, dependency-free GLSL is permitted
+  inside facet.js when a core capability cannot meet its performance bar
+  any other way, and a no-WebGL fallback must remain. First user: the
+  fluid background's metaball shader — the filter engine, forced into
+  software by WebKit's compositing rules, ran at single-digit fps on an
+  iPad. The prohibition still binds for anything pulling a shader
+  LIBRARY or other dependency.)
 - **Physics / 3D** — Ballpit (three.js + physics), Lanyard (rope physics), Model
   Viewer, Meta Balls, fluid cursors. Out of scope.
 
