@@ -2422,9 +2422,12 @@ change, and facet.fluidRemount(el) rebuilds one after a change to
 into the DOM at mount, so a custom property alone cannot move them). Still under data-motion="off" and prefers-reduced-motion;
 plain background with JS off.
 
-Geometry is sized in SURFACE UNITS — a hundredth of the surface's
-short side, measured by facet.js and refreshed on resize — so the
-same numbers describe a whole-page wash and a hero card. Tunable per
+Geometry is sized in SURFACE UNITS, measured by facet.js and
+refreshed on resize, so the same numbers describe a whole-page wash
+and a hero card. A data-bg-fluid-fixed field measures a hundredth of
+the viewport's LONG side (vmax); a bounded surface measures a
+hundredth of its own SHORT side — a wide shallow hero sized off its
+width would be filled by one blob. Tunable per
 surface: --bg-fluid-color-1..5 repaint the five layers (defaults: the
 vivid five, so themes keep recoloring it free), --bg-fluid-size is
 blob diameter in those units (default 20) and --bg-fluid-merge the
