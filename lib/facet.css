@@ -1822,15 +1822,15 @@
   --bg-fluid-color-4: var(--color-4);
   --bg-fluid-color-5: var(--color-5);
   --bg-fluid-size: 20;               /* blob diameter, hundredths of the short side */
-  --bg-fluid-merge: 0.15;            /* merge distance, x blob size */
+  --bg-fluid-merge: 0.22;            /* merge distance, x blob size */
   --bg-fluid-contrast: 240;
-  --bg-fluid-threshold: 1;
+  --bg-fluid-threshold: 3;
   --bg-fluid-haze: 3.3;              /* whole-composite blur, in surface units */
   --bg-fluid-strength: 0.2;
   --bg-fluid-mix: normal;
   --bg-fluid-clusters: 5;
   --bg-fluid-cluster-size: 3;
-  --bg-fluid-spread: 0.41;
+  --bg-fluid-spread: 0.62;
   --bg-fluid-speed: 1;
   --bg-fluid-travel: 1;
   --bg-fluid-grain: 0;
