@@ -1870,13 +1870,19 @@
      the sheet, not the page, in WebKit, and the filter silently drops */
 }
 
+/* THE GOO LAW — nothing inside a reference-filtered subtree may composite.
+   WebKit silently DROPS an SVG url() filter the moment a descendant is
+   promoted to a compositor layer (an animated transform, a will-change),
+   and the field falls apart into plain circles. So clusters and blobs
+   animate through LAYOUT — margins and offsets — never transform. That is
+   normally the slow path, but here it is free: the filter re-rasterises
+   the subtree every frame in every engine regardless. */
 .bg-fluid-cluster {
   position: absolute;
   left: var(--bg-fluid-x);
   top: var(--bg-fluid-y);
   width: 0;
   height: 0;
-  will-change: transform;
   animation: facet-fluid-drift calc(1s * var(--bg-fluid-dur) / var(--bg-fluid-speed)) ease-in-out infinite;
   animation-delay: calc(-1s * var(--bg-fluid-lag));
   animation-direction: var(--bg-fluid-dir);
@@ -1884,14 +1890,13 @@
 
 .bg-fluid-blob {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: calc(var(--bg-fluid-ox) * var(--bg-fluid-unit));
+  top: calc(var(--bg-fluid-oy) * var(--bg-fluid-unit));
   width: var(--bg-fluid-d);
   height: var(--bg-fluid-d);
   margin: calc(var(--bg-fluid-d) / -2) 0 0 calc(var(--bg-fluid-d) / -2);
   border-radius: 50%;
   background: var(--bg-fluid-ink);
-  will-change: transform;
   animation: facet-fluid-jostle calc(1s * var(--bg-fluid-jdur) / var(--bg-fluid-speed)) ease-in-out infinite;
   animation-delay: calc(-1s * var(--bg-fluid-jlag));
   animation-direction: var(--bg-fluid-jdir);
@@ -1911,33 +1916,33 @@
 }
 
 /* The cluster's slow travel: it roams from where it was placed and comes
-   home, so a full loop never jumps. --bg-fluid-travel scales every offset. */
+   home, so a full loop never jumps. --bg-fluid-travel scales every offset.
+   Margins, not transform — see the goo law above. */
 @keyframes facet-fluid-drift {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  25% { transform: translate3d(calc(var(--bg-fluid-dx1) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), calc(var(--bg-fluid-dy1) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), 0); }
-  50% { transform: translate3d(calc(var(--bg-fluid-dx2) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), calc(var(--bg-fluid-dy2) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), 0); }
-  75% { transform: translate3d(calc(var(--bg-fluid-dx3) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), calc(var(--bg-fluid-dy3) * var(--bg-fluid-travel) * var(--bg-fluid-unit)), 0); }
+  0%, 100% { margin-left: 0px; margin-top: 0px; }
+  25% { margin-left: calc(var(--bg-fluid-dx1) * var(--bg-fluid-travel) * var(--bg-fluid-unit)); margin-top: calc(var(--bg-fluid-dy1) * var(--bg-fluid-travel) * var(--bg-fluid-unit)); }
+  50% { margin-left: calc(var(--bg-fluid-dx2) * var(--bg-fluid-travel) * var(--bg-fluid-unit)); margin-top: calc(var(--bg-fluid-dy2) * var(--bg-fluid-travel) * var(--bg-fluid-unit)); }
+  75% { margin-left: calc(var(--bg-fluid-dx3) * var(--bg-fluid-travel) * var(--bg-fluid-unit)); margin-top: calc(var(--bg-fluid-dy3) * var(--bg-fluid-travel) * var(--bg-fluid-unit)); }
 }
 
 /* The blob's own wander around its seat on the cluster ring, kept well
    inside the merge distance so it loosens the shape rather than tearing
    off it. Runs on a much shorter clock than the cluster, which is what
-   keeps the silhouette alive. */
+   keeps the silhouette alive. Offsets, not transform — the goo law; the
+   old scale breathing went with the transform, and the two-clock wander
+   already keeps the silhouette moving. */
 @keyframes facet-fluid-jostle {
   0%, 100% {
-    transform: translate3d(calc(var(--bg-fluid-ox) * var(--bg-fluid-unit)), calc(var(--bg-fluid-oy) * var(--bg-fluid-unit)), 0) scale(1, 1);
+    left: calc(var(--bg-fluid-ox) * var(--bg-fluid-unit));
+    top: calc(var(--bg-fluid-oy) * var(--bg-fluid-unit));
   }
   33% {
-    transform: translate3d(
-      calc((var(--bg-fluid-ox) + var(--bg-fluid-jx1)) * var(--bg-fluid-unit)),
-      calc((var(--bg-fluid-oy) + var(--bg-fluid-jy1)) * var(--bg-fluid-unit)), 0)
-      scale(var(--bg-fluid-sx1), var(--bg-fluid-sy1));
+    left: calc((var(--bg-fluid-ox) + var(--bg-fluid-jx1)) * var(--bg-fluid-unit));
+    top: calc((var(--bg-fluid-oy) + var(--bg-fluid-jy1)) * var(--bg-fluid-unit));
   }
   66% {
-    transform: translate3d(
-      calc((var(--bg-fluid-ox) + var(--bg-fluid-jx2)) * var(--bg-fluid-unit)),
-      calc((var(--bg-fluid-oy) + var(--bg-fluid-jy2)) * var(--bg-fluid-unit)), 0)
-      scale(var(--bg-fluid-sx2), var(--bg-fluid-sy2));
+    left: calc((var(--bg-fluid-ox) + var(--bg-fluid-jx2)) * var(--bg-fluid-unit));
+    top: calc((var(--bg-fluid-oy) + var(--bg-fluid-jy2)) * var(--bg-fluid-unit));
   }
 }
 
