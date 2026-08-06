@@ -1865,7 +1865,9 @@
 .bg-fluid-shapes {
   position: absolute;
   inset: calc(-9 * var(--bg-fluid-unit));
-  filter: var(--bg-fluid-filter);
+  /* the goo filter itself is set INLINE by facet.js — a fragment url piped
+     through a custom property into this cross-origin sheet resolves against
+     the sheet, not the page, in WebKit, and the filter silently drops */
 }
 
 .bg-fluid-cluster {
