@@ -21,6 +21,11 @@
   <link rel="stylesheet" href="/docs.css">
 </head>
 <body>
+  <!-- The site's own ground: the metaball fluid background, at whisper
+       intensity — the library dogfooding its default background. -->
+  <div class="bg-fixed" data-bg-fluid data-bg-fluid-fixed aria-hidden="true"
+       style="--bg-fluid-radius: 0; --bg-fluid-clusters: 3; --bg-fluid-size: 30; --bg-fluid-merge: 0.24; --bg-fluid-threshold: 3.4; --bg-fluid-spread: 0.66; --bg-fluid-haze: 8; --bg-fluid-strength: 0.08;"></div>
+
   <a class="skip-link" href="#main">Skip to content</a>
   <!-- No page header: the floating site menu (bottom-right) carries the
        navigation. -->
@@ -3896,9 +3901,46 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
               </p>
             </div>
           </section>
-          <section id="bg-variant-fluid" data-bg-fluid hidden style="min-height: 16rem;">
-            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The fluid field</h4>
-            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Color pools breathe and bubbles drift, in this theme's own colors.</p>
+          <section id="bg-variant-fluid" data-bg-fluid hidden style="min-height: 22rem; --bg-fluid-clusters: 3; --bg-fluid-size: 30; --bg-fluid-merge: 0.24; --bg-fluid-threshold: 3.4; --bg-fluid-spread: 0.66; --bg-fluid-haze: 8; --bg-fluid-strength: 0.14;">
+            <h4 style="position: relative; z-index: 1; margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The metaball field</h4>
+            <p style="position: relative; z-index: 1; margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Blobs melt into one another and drift apart like a lava lamp, in this theme's own colors.</p>
+            <div class="stack" data-demo-chrome style="position: relative; z-index: 1; padding: 0 var(--space-card) var(--space-card);">
+              <p class="chips" role="group" aria-label="Scale" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-fluid-size="20" data-tip="Blob diameter 20 surface units">Small</button>
+                <button class="chip" aria-pressed="false" data-fluid-size="25" data-tip="Blob diameter 25 surface units">Compact</button>
+                <button class="chip" aria-pressed="true" data-fluid-size="30" data-tip="Blob diameter 30 surface units — the shipped middle">Balanced</button>
+                <button class="chip" aria-pressed="false" data-fluid-size="38" data-tip="Blob diameter 38 surface units">Large</button>
+                <button class="chip" aria-pressed="false" data-fluid-size="48" data-tip="Blob diameter 48 surface units">Huge</button>
+              </p>
+              <p class="chips" role="group" aria-label="Density" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-fluid-clusters="1" data-tip="One shape per colour">Bare</button>
+                <button class="chip" aria-pressed="false" data-fluid-clusters="2" data-tip="Two shapes per colour">Sparse</button>
+                <button class="chip" aria-pressed="true" data-fluid-clusters="3" data-tip="Three shapes per colour — the shipped middle">Balanced</button>
+                <button class="chip" aria-pressed="false" data-fluid-clusters="4" data-tip="Four shapes per colour">Full</button>
+                <button class="chip" aria-pressed="false" data-fluid-clusters="5" data-tip="Five shapes per colour">Crowded</button>
+              </p>
+              <p class="chips" role="group" aria-label="Fluidity" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-fluid-mood="0.10,1,0.48" data-tip="Blobs only join on deep overlap">Separate</button>
+                <button class="chip" aria-pressed="false" data-fluid-mood="0.16,2,0.57" data-tip="Loose joins">Loose</button>
+                <button class="chip" aria-pressed="true" data-fluid-mood="0.24,3.4,0.66" data-tip="The shipped middle">Balanced</button>
+                <button class="chip" aria-pressed="false" data-fluid-mood="0.32,5.5,0.72" data-tip="Fields reach for each other early">Melting</button>
+                <button class="chip" aria-pressed="false" data-fluid-mood="0.44,9,0.80" data-tip="Everything flows into everything">Molten</button>
+              </p>
+              <p class="chips" role="group" aria-label="Blur" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-fluid-haze="0" data-tip="Razor-edged liquid">Crisp</button>
+                <button class="chip" aria-pressed="false" data-fluid-haze="3" data-tip="Slightly soft rims">Light</button>
+                <button class="chip" aria-pressed="true" data-fluid-haze="8" data-tip="The shipped middle">Soft</button>
+                <button class="chip" aria-pressed="false" data-fluid-haze="16" data-tip="Heavily softened">Hazy</button>
+                <button class="chip" aria-pressed="false" data-fluid-haze="30" data-tip="Colour dissolved to a suggestion">Dreamy</button>
+              </p>
+              <p class="chips" role="group" aria-label="Intensity" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-fluid-strength="0.08" data-tip="Barely there — this site&#x27;s own ground runs at Whisper">Whisper</button>
+                <button class="chip" aria-pressed="false" data-fluid-strength="0.11" data-tip="Between Whisper and Quiet">Hushed</button>
+                <button class="chip" aria-pressed="true" data-fluid-strength="0.14" data-tip="The shipped middle">Quiet</button>
+                <button class="chip" aria-pressed="false" data-fluid-strength="0.2" data-tip="Clearly present">Balanced</button>
+                <button class="chip" aria-pressed="false" data-fluid-strength="0.3" data-tip="As bright as it gets">Bold</button>
+              </p>
+            </div>
           </section>
           <section id="bg-variant-aero" data-bg-aero hidden style="min-height: 20rem; overflow: hidden; border-radius: var(--radius-card);">
             <h4 style="position: relative; z-index: 1; margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The living scene</h4>
