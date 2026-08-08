@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/docs.css">
 </head>
 <body>
-  <!-- The site's own ground: the metaball fluid background, at whisper
+  <!-- The site's own ground: the fluid background, at whisper
        intensity — the library dogfooding its default background. -->
   <div class="bg-fixed" data-bg-fluid data-bg-fluid-fixed aria-hidden="true"
        style="--bg-fluid-radius: 0; --bg-fluid-clusters: 3; --bg-fluid-size: 30; --bg-fluid-merge: 0.24; --bg-fluid-threshold: 3.4; --bg-fluid-spread: 0.66; --bg-fluid-haze: 8; --bg-fluid-strength: 0.08;"></div>
@@ -1054,7 +1054,7 @@ Deck template  &#8594; &#8595; PgDn Space next slide · &#8592; &#8593; PgUp bac
           <p><button class="btn btn-small" data-copy="#code-fn-shine" data-tip="Copies this code">Copy</button></p>
         </article>
 
-        <article class="element stack" id="fn-backgrounds" data-llms="Backgrounds">
+        <article class="element stack" id="fn-backgrounds" data-llms="Backgrounds|Backgrounds — grid|Backgrounds — fluid|Backgrounds — aero">
           <h3>Background engines</h3>
           <p>
             The background variants' JS halves. Glyph grids: an element
@@ -1067,9 +1067,10 @@ Deck template  &#8594; &#8595; PgDn Space next slide · &#8592; &#8593; PgUp bac
             data-bg-scatter-scale the character size), in a fresh
             arrangement every page load — facet.scatterBackground(el)
             forces one redraw by hand. Fluid: data-bg-fluid mounts the
-            drifting bokeh layers at load — facet.fluidBackground(el)
-            mounts a surface added later. All engines are otherwise
-            hands-off.
+            liquid field at load — facet.fluidBackground(el) mounts a
+            surface added later, facet.fluidRefresh(el) remeasures one,
+            facet.fluidRemount(el) rebuilds one after a cluster-count
+            change. All engines are otherwise hands-off.
           </p>
           <pre id="code-fn-backgrounds"><code>&lt;section data-bg-glyph="sparkle" data-bg-glyph-size="28"&gt;…&lt;/section&gt;
 &lt;section class="bg-dots" data-bg-scatter="✦ ❋" data-bg-scatter-rate="10"&gt;…&lt;/section&gt;

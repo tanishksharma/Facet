@@ -150,9 +150,10 @@ widths, stack in three gaps, full-viewport snap sections); one-attribute
 page width — data-width="narrow|wide|xwide|full" on <html> remaps every
 container from reading column to edge to edge, with a matching control
 in the settings panel; background
-materials in two variants (the grid looks and the breathing fluid
-field), pinnable to the viewport — .bg-fixed for a whole-page still
-backdrop, data-bg-fluid-fixed for pools the surface scrolls over; the
+materials in four variants (the grid looks, the liquid fluid field,
+the optional-engine shader gradient and the living aero scene),
+pinnable to the viewport — .bg-fixed for a whole-page still
+backdrop, data-bg-fluid-fixed for a field the surface scrolls over; the
 view-stack app shell for screen-to-screen apps (main.view-stack of
 .view screens, hash-routed, facet.views.go/back, safe-area padded);
 buttons in
@@ -2362,16 +2363,38 @@ band, a section divider zone, an empty state, or the whole page of a
 document-like product. Use variant GRID when the product should feel
 precise, technical or editorial (notes, tools, calculators; the custom
 glyph makes it a brand mark); use variant FLUID when it should feel
-alive and expressive (landings, launch pages, playful apps). One
+alive and expressive (landings, launch pages, playful apps); use
+variant SHADER when you want a continuous opalescent gradient rather
+than distinct liquid shapes (it needs the optional facet-shaders.js
+engine); use variant AERO for the living Frutiger Aero scene. One
 background per surface, never nested and never behind dense data;
 lower --bg-strength before reaching for none.
 
-Very faint page and section backgrounds, in two variants that are
-built differently and tuned separately. Put one class or attribute on
-a section or body; content sits straight on top. Everything fades to
-nothing under prefers-contrast: more and never prints.
+Very faint page and section backgrounds, in four variants that are
+built differently and tuned separately — each documented in its own
+section below (the shader variant's full guide is the "Shader
+backgrounds (facet-shaders.js)" section, since it lives in the
+optional engine). Put one class or attribute on a section or body;
+content sits straight on top. Everything fades to nothing under
+prefers-contrast: more and never prints.
 
-VARIANT GRID — a repeating symbol on a grid:
+FIXED TO THE SCREEN — two opt-ins pin a background to the viewport:
+- .bg-fixed on any grid look makes it the page's one still backdrop —
+  <div class="bg-dots bg-fixed"></div> as the body's first child,
+  content floats over it with no wrapper, the pattern holds still
+  while the page scrolls. It raises its own --bg-strength default to
+  22% (whole-page fixed use is where the 12% whisper disappears on
+  dim phone panels); tune as usual. Never prints. (The shader variant
+  reuses .bg-fixed the same way for a whole-page ground.)
+- data-bg-fluid-fixed beside data-bg-fluid pins the FIELD to the
+  screen while the surface scrolls over it like a window — a hero
+  card gliding over a still wash. The surface clips its window with a
+  clip-path rounded to the card radius; set --bg-fluid-radius to
+  match a different rounding.
+
+### Backgrounds — grid
+
+A repeating symbol on a grid:
 - The looks: .bg-grid (technical plus marks), .bg-dots (dot grid),
   .bg-circles (circle grid: outlined rings on the dots' half-cell
   rhythm, noticeably bigger than a dot; --bg-ring sets the ring
@@ -2400,33 +2423,40 @@ VARIANT GRID — a repeating symbol on a grid:
   facet.scatterBackground(el) draws a surface inserted
   after load.
 
-VARIANT FLUID — data-bg-fluid: metaballs. Soft circles are blurred
-until they melt into each other, then alpha-thresholded back into one
-hard edge, so a group of circles reads as a single liquid shape
-rather than a pile of discs — a lava lamp, not a bokeh field.
-facet.js mounts one layer per vivid colour inside a shared haze and
-gives each layer its own SVG filter whose colour matrix boosts ALPHA
-only; its RGB rows are identity, so colour survives the threshold
-untouched, lives in the blob itself, and two hues blend smoothly
-across the join where they fuse. Blobs are grouped into CLUSTERS: the
-cluster carries a slow shared travel while each blob inside runs its
-own faster, independently phased jostle, so a fused shape holds
-together without ever holding still and never settles into a circle.
-Cluster centres are dealt round-robin across the layers, which keeps
-each colour's shapes away from its neighbours'. All colour comes from
-theme tokens, so every theme and mode recolors it with no redraw;
+    <section class="bg-dots" style="--bg-tint: var(--accent-3); --bg-cell: 4rem;">
+      <h2>A quiet dotted surface</h2>
+    </section>
+    <section class="bg-circles" style="--bg-ring: 20px;">…</section>
+    <section class="bg-dots" data-bg-scatter="✦ ❋" data-bg-scatter-rate="10" data-bg-scatter-scale="1.5">…</section>
+    <section data-bg-glyph="♥ ✳ ✦" data-bg-glyph-scale="0.3">…</section>
+    <div class="bg-dots bg-fixed"></div>            <!-- whole-page still backdrop -->
+
+### Backgrounds — fluid
+
+data-bg-fluid: the fluid field. Soft blobs of colour drift, reach for
+each other, melt into single liquid shapes and pull apart again — a
+lava lamp, not a bokeh field. Two overlapping blobs join through a
+smooth waist rather than stacking as discs, and colour lives in the
+blob itself, so two hues blend across the join where they fuse. Blobs
+are grouped into CLUSTERS: the cluster carries a slow shared travel
+while each blob inside runs its own faster, independently phased
+jostle, so a fused shape holds together without ever holding still
+and never settles into a circle. Cluster centres are dealt
+round-robin across the five colour layers, which keeps each colour's
+shapes away from its neighbours'. All colour comes from theme tokens,
+so every theme and mode recolors it with no redraw;
 facet.fluidBackground(el) mounts a late-added surface and
 facet.fluidRefresh(el) remeasures one after its size or tokens
 change, and facet.fluidRemount(el) rebuilds one after a change to
 --bg-fluid-clusters or --bg-fluid-cluster-size (those two are baked
-into the DOM at mount, so a custom property alone cannot move them). Still under data-motion="off" and prefers-reduced-motion;
+into the field at mount, so a custom property alone cannot move
+them). Still under data-motion="off" and prefers-reduced-motion;
 plain background with JS off. Where the device offers WebGL
-(virtually everywhere) the field renders as a true metaball shader on
-the GPU — same tokens, same motion model, full-rate animation, near
-zero main-thread cost. Without WebGL it falls back to the DOM + SVG
-filter rig on a low-cadence ticker, and if even that strains the
-device the field freezes into its composed frame rather than slowing
-the page.
+(virtually everywhere) the field is computed per pixel on the GPU —
+full-rate animation, near zero main-thread cost. Without WebGL it
+falls back to a DOM + SVG filter rig on a low-cadence ticker, and if
+even that strains the device the field freezes into its composed
+frame rather than slowing the page.
 
 Geometry is sized in SURFACE UNITS, measured by facet.js and
 refreshed on resize, so the same numbers describe a whole-page wash
@@ -2436,17 +2466,18 @@ hundredth of its own SHORT side — a wide shallow hero sized off its
 width would be filled by one blob. Tunable per
 surface: --bg-fluid-color-1..5 repaint the five layers (defaults: the
 vivid five, so themes keep recoloring it free), --bg-fluid-size is
-blob diameter in those units (default 20) and --bg-fluid-merge the
-merge distance as a fraction of that size (0.15) so the two always
-track each other — change one without the other and the effect falls
-apart. --bg-fluid-contrast is how hard the rim snaps back to an edge
-(240; low leaves a soft cloud, high a crisp liquid rim) and
---bg-fluid-threshold where it is cut (1; under 1 blobs shrink and
-hold apart, over 1 they swell and fuse early).
---bg-fluid-haze (3.3) is ONE Gaussian over the finished composite —
-it softens everything at once without stopping anything merging,
-which is what backing off the per-layer edge would do; past about 6
-the shapes dissolve into regions that only suggest a colour.
+blob diameter in those units (default 20). --bg-fluid-merge (0.22)
+and --bg-fluid-threshold (3) together set the FLUIDITY — how hungrily
+neighbouring blobs bridge into one shape: low values join only on
+deep overlap, high values reach for each other from most of a radius
+away. Fluidity never changes how big a blob reads — the field is
+normalised so size holds across the whole dial.
+--bg-fluid-haze (3.3) is the blur dial, useful from 0 to about 30:
+0 is razor-edged liquid, small values soften the rims, and past about
+10 the shapes keep dissolving into wider and wider glows that only
+suggest a colour — the empty ground never picks up colour, however
+high it goes. (--bg-fluid-contrast (240) applies only to the
+no-WebGL fallback rig: how hard its rim snaps back to an edge.)
 --bg-fluid-strength (0.2) is each layer's opacity, the main dial for
 how loud the whole thing is, and --bg-fluid-mix (normal) how the
 layers combine: normal is alpha compositing like translucent paint
@@ -2457,7 +2488,7 @@ deliberately not offered — it muddies every overlap.
 shapes each colour gets and the most blobs in one; each cluster picks
 its own count between 2 and that, so the field is not a grid of
 identical shapes, and never below 2 because a cluster of one is a
-circle. --bg-fluid-spread (0.41) is the ring the blobs sit on as a
+circle. --bg-fluid-spread (0.62) is the ring the blobs sit on as a
 fraction of blob size — too low stacks them concentric and the shape
 goes round again, too high pulls them past the merge distance and the
 cluster breaks into separate balls. --bg-fluid-speed (1) multiplies
@@ -2471,31 +2502,28 @@ raise this only if you see them. Set them on the surface itself:
       style="--bg-fluid-color-1: hotpink; --bg-fluid-strength: 0.35;
              --bg-fluid-haze: 5; --bg-fluid-clusters: 3;
              --bg-fluid-mix: soft-light; --bg-fluid-speed: 1.4;">…</section>
+    <section data-bg-fluid data-bg-fluid-fixed>…</section>  <!-- field fixed, surface scrolls over it -->
 
-FIXED TO THE SCREEN — two opt-ins pin a background to the viewport:
-- .bg-fixed on any grid look makes it the page's one still backdrop —
-  <div class="bg-dots bg-fixed"></div> as the body's first child,
-  content floats over it with no wrapper, the pattern holds still
-  while the page scrolls. It raises its own --bg-strength default to
-  22% (whole-page fixed use is where the 12% whisper disappears on
-  dim phone panels); tune as usual. Never prints.
-- data-bg-fluid-fixed beside data-bg-fluid pins the POOLS to the
-  screen while the surface scrolls over them like a window — a hero
-  card gliding over a still wash. The surface clips its window with a
-  clip-path rounded to the card radius; set --bg-fluid-radius to
-  match a different rounding.
+### Backgrounds — shader
 
-    <section class="bg-dots" style="--bg-tint: var(--accent-3); --bg-cell: 4rem;">
-      <h2>A quiet dotted surface</h2>
-    </section>
-    <section class="bg-circles" style="--bg-ring: 20px;">…</section>
-    <section class="bg-dots" data-bg-scatter="✦ ❋" data-bg-scatter-rate="10" data-bg-scatter-scale="1.5">…</section>
-    <section data-bg-glyph="♥ ✳ ✦" data-bg-glyph-scale="0.3">…</section>
-    <section data-bg-fluid>…</section>
-    <div class="bg-dots bg-fixed"></div>            <!-- whole-page still backdrop -->
-    <section data-bg-fluid data-bg-fluid-fixed>…</section>  <!-- pools fixed, surface scrolls over them -->
+data-bg-shader: the shader gradient — a continuous opalescent sheet
+of flowing colour, GPU-drawn, where the fluid variant makes distinct
+liquid shapes. It lives in the OPTIONAL facet-shaders.js engine (one
+extra script tag; degrades to the element's own CSS background when
+offline or without WebGL) and by default reads the same
+--bg-fluid-color-1..5 palette hooks as the fluid variant, so one set
+of custom properties drives both. Full guide, attributes and the
+facetShaders.mount(el) API: see the "Shader backgrounds
+(facet-shaders.js)" section.
 
-VARIANT AERO — data-bg-aero: the living Frutiger Aero scene. Put
+    <script src="https://facet.tanishksharma.com/lib/facet-shaders.js" defer></script>
+    <div class="bg-fixed" data-bg-shader
+         data-shader-colors="#e0eaff, #241d9a, #f75092, #9f50d3"
+         data-shader-speed="0.6" aria-hidden="true"></div>
+
+### Backgrounds — aero
+
+data-bg-aero: the living Frutiger Aero scene. Put
 data-bg-aero on a full-bleed surface (usually a fixed backdrop or a hero
 section) and facet.js fills it with an aria-hidden, non-interactive
 .aero-amb layer holding soft god-ray light shafts, drifting bokeh, rising

@@ -20,6 +20,15 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 function cleanDemoClone(el) {
   const clone = el.cloneNode(true);
   for (const chrome of clone.querySelectorAll("[data-demo-chrome]")) chrome.remove();
+  // the fluid and shader engines inject their machinery (canvases, filter
+  // svgs, grain) into the surface at mount — regenerated from the
+  // attributes, never snippet material
+  if (clone.matches?.("[data-bg-fluid], [data-bg-shader]")) {
+    for (const n of [...clone.children]) {
+      if (/^(svg|canvas)$/i.test(n.tagName) || /bg-fluid-(scale|grain|haze|canvas)/.test(n.className)) n.remove();
+    }
+    clone.removeAttribute("data-paper-shader");
+  }
   // a [data-gem] element's SVG is drawn by gem.js from the data attributes —
   // the injected markup is not snippet material, the attributes are
   for (const gem of clone.querySelectorAll("[data-gem]")) gem.innerHTML = "";
@@ -236,10 +245,13 @@ async function initAiNotes() {
     const body = text.slice(m.index + m[0].length, i + 1 < heads.length ? heads[i + 1].index : text.length).trim();
     sections[m[1].trim().toLowerCase()] = body;
   });
+  llmsSections = sections;   // kept for per-variant note swaps
   for (const article of articles) {
     const h3 = article.querySelector(":scope > h3");
     if (!h3) continue;
-    const body = sections[(article.dataset.llms || h3.textContent).trim().toLowerCase()];
+    // data-llms may name several sections, |-separated, rendered in order
+    const body = (article.dataset.llms || h3.textContent).split("|")
+      .map(n => sections[n.trim().toLowerCase()]).filter(Boolean).join("\n\n");
     if (!body) continue;
     let notes = article.querySelector(":scope > .ai-notes");
     if (!notes) {
@@ -253,6 +265,31 @@ async function initAiNotes() {
     pre.textContent = body;
     notes.appendChild(pre);
   }
+}
+
+/* The Backgrounds entry's AI instructions follow the visible variant:
+   the section overview from llms.txt plus the active variant's own
+   subsection (the shader variant reads the optional engine's section),
+   re-rendered on every variant switch so a person always reads exactly
+   what an agent would read for the variant on screen. */
+let llmsSections = null;
+const BG_VARIANT_LLMS = {
+  grid: "backgrounds — grid",
+  fluid: "backgrounds — fluid",
+  shader: "shader backgrounds (facet-shaders.js)",
+  aero: "backgrounds — aero",
+};
+function setBackgroundNotes(variant) {
+  if (!llmsSections) return;   // llms.txt not loaded (yet) — fallback stays
+  const notes = document.querySelector("#backgrounds > .ai-notes");
+  const body = llmsSections[BG_VARIANT_LLMS[variant]];
+  if (!notes || !body) return;
+  const overview = llmsSections["backgrounds"];
+  notes.innerHTML = "";
+  const pre = document.createElement("pre");
+  pre.className = "ai-notes-body";
+  pre.textContent = overview ? overview + "\n\n" + body : body;
+  notes.appendChild(pre);
 }
 
 /* The entry structure, enforced everywhere: description, variant row,
@@ -275,7 +312,8 @@ function orderEntryParts() {
 
 /* The Backgrounds entry: variant Grid shows all five looks stacked —
    technical, dots, circles, graph paper and the custom grid — variant
-   Fluid its breathing field. Every surface carries its OWN control
+   Fluid the liquid field, variant Shader the opalescent GPU gradient,
+   variant Aero the living scene. Every surface carries its OWN control
    cluster (marked data-demo-chrome, stripped from the snippet): ink,
    opacity and spacing on all five; the ring-size chips on the circle
    grid; the scatter field (with frequency and size chips) on the
@@ -286,6 +324,7 @@ function orderEntryParts() {
 function initBackgroundDemo() {
   const article = document.querySelector("#backgrounds");
   const fluid = document.querySelector("#bg-variant-fluid");
+  const shader = document.querySelector("#bg-variant-shader");
   const aero = document.querySelector("#bg-variant-aero");
   const surfaces = [...document.querySelectorAll("[data-bg-surface]")];
   if (!article || !fluid || !surfaces.length) return;
@@ -293,15 +332,18 @@ function initBackgroundDemo() {
 
   for (const chip of document.querySelectorAll("[data-bg-variant]")) {
     chip.addEventListener("click", () => {
-      const v = chip.dataset.bgVariant;   // "grid" | "fluid" | "aero"
+      const v = chip.dataset.bgVariant;   // "grid" | "fluid" | "shader" | "aero"
       for (const s of surfaces) s.hidden = v !== "grid";
       fluid.hidden = v !== "fluid";
+      if (shader) shader.hidden = v !== "shader";
       if (aero) aero.hidden = v !== "aero";
       if (v === "fluid" && window.facet) facet.fluidBackground(fluid);
+      if (v === "shader" && window.facetShaders && shader) facetShaders.mount(shader);
       if (v === "aero" && window.facet && aero) facet.aeroAmbient(aero);
       for (const c of document.querySelectorAll("[data-bg-variant]")) {
         c.setAttribute("aria-pressed", String(c === chip));
       }
+      setBackgroundNotes(v);
       refresh();
     });
   }
@@ -1622,6 +1664,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Fold, control and spy — after all content and demo wiring, so the
   // injected snippets, demo tools and reference blocks fold in too.
   await initAiNotes();  // AI instructions come from llms.txt, one source
+  setBackgroundNotes(document.querySelector("[data-bg-variant][aria-pressed='true']")?.dataset.bgVariant || "grid");
   labelWallParts();     // after the notes exist, so every entry gets its AI-instructions label
   initWallSearch();
   initSearchKeys();
@@ -1652,6 +1695,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
           apply(chip.getAttribute(attr));
           if (window.facet && facet.fluidRemount) facet.fluidRemount(demo);
+          renderSnippet(document.querySelector("#backgrounds"));
         });
       })(chips[i]);
     }
@@ -1666,4 +1710,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     demo.style.setProperty("--bg-fluid-threshold", m[1]);
     demo.style.setProperty("--bg-fluid-spread", m[2]);
   });
+})();
+
+
+/* Backgrounds wall · shader knobs. Docs chrome only: each chip writes the
+   matching data-shader-* attribute onto the demo surface (so the copied
+   snippet follows) and steers the live Paper Shaders handle in place —
+   no remount needed, the handle exposes setSpeed and setUniforms. */
+(function () {
+  var demo = document.getElementById("bg-variant-shader");
+  if (!demo) return;
+  function wire(attr, dataName, apply) {
+    var chips = document.querySelectorAll("[" + attr + "]");
+    for (var i = 0; i < chips.length; i++) {
+      (function (chip) {
+        chip.addEventListener("click", function (e) {
+          // radio rows — without this the docs-wide chip handler toggles
+          // the pressed state straight back off
+          e.stopImmediatePropagation();
+          var kin = chip.parentElement.querySelectorAll(".chip");
+          for (var k = 0; k < kin.length; k++) {
+            kin[k].setAttribute("aria-pressed", kin[k] === chip ? "true" : "false");
+          }
+          var v = chip.getAttribute(attr);
+          demo.setAttribute(dataName, v);
+          if (demo.__facetShader) apply(demo.__facetShader, parseFloat(v));
+          renderSnippet(document.querySelector("#backgrounds"));
+        });
+      })(chips[i]);
+    }
+  }
+  wire("data-shader-speed-chip", "data-shader-speed", function (h, v) { h.setSpeed(v); });
+  wire("data-shader-distortion-chip", "data-shader-distortion", function (h, v) { h.setUniforms({ u_distortion: v }); });
+  wire("data-shader-swirl-chip", "data-shader-swirl", function (h, v) { h.setUniforms({ u_swirl: v }); });
 })();

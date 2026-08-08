@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="/docs.css">
 </head>
 <body>
-  <!-- The site's own ground: the metaball fluid background, at whisper
+  <!-- The site's own ground: the fluid background, at whisper
        intensity — the library dogfooding its default background. -->
   <div class="bg-fixed" data-bg-fluid data-bg-fluid-fixed aria-hidden="true"
        style="--bg-fluid-radius: 0; --bg-fluid-clusters: 3; --bg-fluid-size: 30; --bg-fluid-merge: 0.24; --bg-fluid-threshold: 3.4; --bg-fluid-spread: 0.66; --bg-fluid-haze: 8; --bg-fluid-strength: 0.08;"></div>
@@ -3714,12 +3714,13 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
       <article class="element stack" id="backgrounds">
         <h3 data-status="live">Backgrounds</h3>
         <p>
-          Very faint materials for big quiet surfaces. Three variants: Grid shows its five looks stacked below — the technical grid, the dot grid, the circle grid of outlined rings, graph paper and the custom grid of your own symbols — and each area carries its own controls, so every look tunes independently; Fluid drifts soft color like light through glass; Aero is the living Frutiger Aero scene, with soap bubbles rising, fish swimming and light shafts drifting. The technical, dot and circle grids can also scatter your own characters across the pattern, at a size you pick, in a fresh arrangement on every visit.
+          Very faint materials for big quiet surfaces. Four variants: Grid shows its five looks stacked below — the technical grid, the dot grid, the circle grid of outlined rings, graph paper and the custom grid of your own symbols — and each area carries its own controls, so every look tunes independently; Fluid is the liquid field, blobs melting into one another and drifting apart like a lava lamp; Shader is a continuous opalescent gradient drawn on the GPU by the optional facet-shaders.js engine; Aero is the living Frutiger Aero scene, with soap bubbles rising, fish swimming and light shafts drifting. The technical, dot and circle grids can also scatter your own characters across the pattern, at a size you pick, in a fresh arrangement on every visit.
         </p>
 
         <p class="chips variant-row" role="group" aria-label="Variant">
           <button class="chip" aria-pressed="true" data-bg-variant="grid" data-tip="The repeating-symbol variant, all four looks">Grid</button>
-          <button class="chip" aria-pressed="false" data-bg-variant="fluid" data-tip="The breathing color-pool variant">Fluid</button>
+          <button class="chip" aria-pressed="false" data-bg-variant="fluid" data-tip="The liquid field — blobs melt together and drift apart">Fluid</button>
+          <button class="chip" aria-pressed="false" data-bg-variant="shader" data-tip="The opalescent GPU gradient — needs the optional facet-shaders.js engine">Shader</button>
           <button class="chip" aria-pressed="false" data-bg-variant="aero" data-tip="The living Frutiger Aero scene: bubbles, fish and light shafts">Aero</button>
         </p>
 
@@ -3902,7 +3903,7 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
             </div>
           </section>
           <section id="bg-variant-fluid" data-bg-fluid hidden style="min-height: 22rem; --bg-fluid-clusters: 3; --bg-fluid-size: 30; --bg-fluid-merge: 0.24; --bg-fluid-threshold: 3.4; --bg-fluid-spread: 0.66; --bg-fluid-haze: 8; --bg-fluid-strength: 0.14;">
-            <h4 style="position: relative; z-index: 1; margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The metaball field</h4>
+            <h4 style="position: relative; z-index: 1; margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The fluid field</h4>
             <p style="position: relative; z-index: 1; margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">Blobs melt into one another and drift apart like a lava lamp, in this theme's own colors.</p>
             <div class="stack" data-demo-chrome style="position: relative; z-index: 1; padding: 0 var(--space-card) var(--space-card);">
               <p class="chips" role="group" aria-label="Scale" style="margin: 0;">
@@ -3939,6 +3940,28 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
                 <button class="chip" aria-pressed="true" data-fluid-strength="0.14" data-tip="The shipped middle">Quiet</button>
                 <button class="chip" aria-pressed="false" data-fluid-strength="0.2" data-tip="Clearly present">Balanced</button>
                 <button class="chip" aria-pressed="false" data-fluid-strength="0.3" data-tip="As bright as it gets">Bold</button>
+              </p>
+            </div>
+          </section>
+          <section id="bg-variant-shader" data-bg-shader data-shader-colors="#e0eaff, #241d9a, #f75092, #9f50d3" data-shader-speed="0.6" data-shader-distortion="0.8" data-shader-swirl="0.1" hidden style="min-height: 22rem; overflow: hidden; border-radius: var(--radius-card);">
+            <h4 style="margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The opal sheet</h4>
+            <p style="margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">A continuous sheet of colour folds into itself — a truly opalescent material CSS gradients cannot reach, drawn on the GPU by <a href="https://shaders.paper.design" target="_blank" rel="noopener">Paper Shaders</a> (Apache-2.0), whose published package the optional engine loads live at runtime. One extra script tag; offline or without WebGL the surface keeps its own CSS background.</p>
+            <div class="stack" data-demo-chrome style="padding: 0 var(--space-card) var(--space-card);">
+              <p class="chips" role="group" aria-label="Speed" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-shader-speed-chip="0" data-tip="Frozen — one still frame">Still</button>
+                <button class="chip" aria-pressed="false" data-shader-speed-chip="0.3" data-tip="A slow drift">Calm</button>
+                <button class="chip" aria-pressed="true" data-shader-speed-chip="0.6" data-tip="The default">Default</button>
+                <button class="chip" aria-pressed="false" data-shader-speed-chip="1.2" data-tip="Twice the default">Lively</button>
+              </p>
+              <p class="chips" role="group" aria-label="Distortion" style="margin: 0;">
+                <button class="chip" aria-pressed="false" data-shader-distortion-chip="0.3" data-tip="Gentle, almost straight bands">Gentle</button>
+                <button class="chip" aria-pressed="true" data-shader-distortion-chip="0.8" data-tip="The default organic folding">Default</button>
+                <button class="chip" aria-pressed="false" data-shader-distortion-chip="1" data-tip="As folded as it goes">Wild</button>
+              </p>
+              <p class="chips" role="group" aria-label="Swirl" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-shader-swirl-chip="0.1" data-tip="The default — a hint of vortex">Default</button>
+                <button class="chip" aria-pressed="false" data-shader-swirl-chip="0.5" data-tip="A clear whirl">Whirl</button>
+                <button class="chip" aria-pressed="false" data-shader-swirl-chip="0.9" data-tip="Full vortex">Vortex</button>
               </p>
             </div>
           </section>
@@ -3992,19 +4015,18 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
             surface.
           </p>
           <p>
-            Variant FLUID: <code>data-bg-fluid</code> — metaballs. Soft
-            circles are blurred until they melt into each other, then
-            alpha-thresholded back into one hard edge, so a group of
-            circles reads as a single liquid shape rather than a pile of
-            discs. facet.js mounts one layer per vivid colour, each with
-            its own SVG filter whose matrix boosts ALPHA only — colour
-            survives the threshold, lives in the blob, and two hues blend
-            across the join where they fuse. Blobs are grouped into
+            Variant FLUID: <code>data-bg-fluid</code> — the fluid field.
+            Soft blobs of colour drift, reach for each other, melt into
+            single liquid shapes and pull apart again — a lava lamp, not
+            a bokeh field. Colour lives in the blob itself, so two hues
+            blend across the join where they fuse. Blobs are grouped into
             clusters: the cluster carries a slow shared travel while each
             blob runs its own faster jostle, so a shape holds together
             without ever holding still, and cluster centres are dealt
             round-robin across the layers so each colour stays clear of
-            its neighbours. Still under <code>data-motion="off"</code>
+            its neighbours. Rendered per pixel on the GPU where WebGL
+            exists, with a DOM + SVG filter fallback. Still under
+            <code>data-motion="off"</code>
             and reduced motion; plain surface with JS off.
             <code>facet.fluidBackground(el)</code> mounts a late-added
             surface, <code>facet.fluidRefresh(el)</code> remeasures one.
@@ -4012,12 +4034,12 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
             short side — so the same numbers fit a whole page or a hero
             card. Tunable per surface:
             <code>--bg-fluid-color-1..5</code> repaint the layers,
-            <code>--bg-fluid-size</code> blob diameter and
-            <code>--bg-fluid-merge</code> the merge distance as a
-            fraction of it, <code>--bg-fluid-contrast</code> how hard the
-            rim snaps and <code>--bg-fluid-threshold</code> where it is
-            cut, <code>--bg-fluid-haze</code> one Gaussian over the
-            finished composite, <code>--bg-fluid-strength</code> each
+            <code>--bg-fluid-size</code> blob diameter,
+            <code>--bg-fluid-merge</code> and
+            <code>--bg-fluid-threshold</code> the fluidity (how hungrily
+            neighbouring blobs bridge, without changing their size),
+            <code>--bg-fluid-haze</code> the blur dial from razor-edged
+            to fully dissolved, <code>--bg-fluid-strength</code> each
             layer's opacity, <code>--bg-fluid-mix</code> how they combine
             (normal, screen, soft-light),
             <code>--bg-fluid-clusters</code> and
@@ -4027,6 +4049,22 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
             <code>--bg-fluid-travel</code> the motion, and
             <code>--bg-fluid-grain</code> noise for when a wide haze
             bands.
+          </p>
+          <p>
+            Variant SHADER: <code>data-bg-shader</code> — a continuous
+            opalescent gradient, GPU-drawn by the optional
+            facet-shaders.js engine (one extra script tag beside
+            facet.js; powered by Paper Shaders, loaded live from the
+            authors' published package). Colors come from
+            <code>data-shader-colors</code> or, unset, the same
+            <code>--bg-fluid-color-1..5</code> hooks as the fluid
+            variant; <code>data-shader-speed</code>,
+            <code>data-shader-distortion</code> and
+            <code>data-shader-swirl</code> tune the motion.
+            <code>facetShaders.mount(el)</code> mounts a late-added
+            surface. Offline or without WebGL the element keeps its own
+            CSS background — pair it with <code>data-bg-fluid</code> for
+            a same-palette fallback.
           </p>
           <p>
             Variant AERO: <code>data-bg-aero</code> — facet.js fills the
@@ -4062,26 +4100,6 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
           </p>
         </div>
 
-      <article class="element stack" id="shader-background">
-        <h3 data-status="dev">Shader background</h3>
-        <p>
-          A truly opalescent, GPU-drawn animated background — flowing color
-          spots folding into each other, a material CSS gradients cannot
-          reach. Powered by <a href="https://shaders.paper.design" target="_blank" rel="noopener">Paper
-          Shaders</a> (Apache-2.0): the optional engine loads the authors'
-          own published package live at runtime, nothing hosted or forked
-          here. One extra script tag; the surface keeps its CSS background
-          offline or without WebGL.
-        </p>
-        <section data-bg-shader data-shader-colors="#e0eaff, #241d9a, #f75092, #9f50d3" data-shader-speed="0.6" style="min-height: 16rem; border-radius: var(--radius-card);" aria-label="Live shader background demo"></section>
-        <pre id="code-shader-background"><code>&lt;script src="https://facet.tanishksharma.com/lib/facet-shaders.js" defer&gt;&lt;/script&gt;
-
-&lt;div class="bg-fixed" data-bg-shader
-     data-shader-colors="#e0eaff, #241d9a, #f75092, #9f50d3"
-     data-shader-speed="0.6" data-shader-distortion="0.8"
-     data-shader-swirl="0.1" aria-hidden="true"&gt;&lt;/div&gt;</code></pre>
-        <p><button class="btn btn-small" data-copy="#code-shader-background" data-tip="Copies this code">Copy</button></p>
-      </article>
       </article>
 
       <!-- AERO-ERA UTILITIES -->

@@ -1637,9 +1637,9 @@
    within the load, so a theme or mode change re-inks the same
    arrangement instead of reshuffling. facet.js draws the scatter
    tile in the same pattern ink and redraws it with the glyph engine.
-   VARIANT FLUID — data-bg-fluid: metaballs. Soft circles blurred
-   until they melt together, then alpha-thresholded back to one hard
-   edge, so a cluster reads as a single liquid shape rather than a
+   VARIANT FLUID — data-bg-fluid: the fluid field. Soft blobs of
+   colour drift, melt into single liquid shapes and pull apart
+   again — a cluster reads as one liquid shape rather than a
    pile of discs. One layer per vivid colour, drawn from the theme
    tokens so every theme recolors it for free; facet.js mounts the
    rig and each cluster travels slowly while its blobs jostle on
@@ -1770,9 +1770,10 @@
   background-size: var(--bg-glyph-tile, 3.5rem 3.5rem);
 }
 
-/* Variant fluid: metaballs. Soft circles are blurred until they melt into
-   each other, then alpha-thresholded back into one hard edge — so a group
-   of circles reads as a single liquid shape rather than a pile of discs.
+/* Variant fluid: the fluid field. In the no-WebGL fallback rig, soft
+   circles are blurred until they melt into each other, then
+   alpha-thresholded back into one hard edge — so a group of circles
+   reads as a single liquid shape rather than a pile of discs.
 
    facet.js mounts one .bg-fluid-layer per vivid colour inside a shared
    .bg-fluid-haze, and gives each layer its own SVG filter. The matrix in
@@ -1837,7 +1838,7 @@
   --bg-fluid-unit: 1px;              /* facet.js measures this from the surface */
 }
 
-/* The WebGL field, where the device offers it: one canvas, the metaball
+/* The WebGL field, where the device offers it: one canvas, the field
    maths on the GPU, the main thread only feeding blob positions. Stretched
    over the surface; rendered at reduced resolution and sampled up. */
 .bg-fluid-canvas {
