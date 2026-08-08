@@ -361,6 +361,7 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 - App shell law: standalone PWAs need `viewport-fit=cover` PLUS the apple-mobile-web-app metas (capable + black-translucent status bar), safe-area env() insets in section padding, and manifest colors that match the shipped theme.
 - Caching law: HTML and unversioned /lib/ files are never cache-first — network first, cache only offline. Cache-first pages hide every deploy until a second refresh; that bug shipped once and is now law. Corollary (shipped and burned us too): register the worker with updateViaCache: "none" AND bump sw.js's bytes when the engine changes — the update check byte-compares only the top-level sw.js, so with the default setting an unchanged one-line stub pins the imported engine on installed devices forever.
 - Parallax exclusion: elements carrying their own transform physics (velvet lift/press, the pager's elastic overscroll) never register with facetMotion's MOVE channel — two writers on one inline transform collide. The LIGHT channel (shine, data-shine) is exempt: it writes only the --shine-x/--shine-y custom properties, never transform, so it composes with anything.
+- Goo law: nothing inside an SVG-reference-filtered subtree may composite. WebKit silently DROPS a `filter: url(#…)` the moment a descendant is promoted to a compositor layer — an animated transform, a `will-change` — and the metaball field degrades to plain circles with no error anywhere. Inside a goo subtree, animate `left`/`top`/`margin`, never transform, and declare no `will-change`; the cost is nil because the filter re-rasterises the subtree every frame in every engine anyway. Chromium renders composited descendants under reference filters fine, which is exactly why this shipped broken: every headless check passed while Safari showed circles. Corollary: goo motion is driven by facet.js's shared low-cadence ticker and the field renders on a downscaled internal canvas — CSS-animating the subtree samples at 60fps and every sample re-rasters five software filters, which took Safari to one frame a second. Related, same subsystem: never pipe a fragment `url(#id)` through a custom property into a rule in the cross-origin library stylesheet — WebKit resolves it against the stylesheet, not the page; set such filters as inline styles.
 - Font-list law: never put `inherit` inside a font-family list; it silently invalidates the whole declaration. Stacks end in a generic family.
 - Back-forward-cache law: any UI state a click mutates just before navigation — an aria-current highlight glided onto a link, an open sheet — comes BACK when the reader swipes back, because iOS restores the mutated DOM from the bfcache. Every such state restores itself on `pageshow` with `persisted` (the sheet closes itself; the tab highlight returns to the page's own tab). This bit twice before becoming law.
 
@@ -1220,6 +1221,13 @@ runtime, against the "one CSS + one JS, no heavy deps" charter. Default: skip.
   with a few large blurred conic/radial gradients drifting behind the hero
   (`.bg-aurora`, Easy) — won't match, but stays dependency-free. True WebGL only
   ever as an OPTIONAL opt-in add-on file, never in core facet.js.
+  (Amended 6 Aug 2026: SELF-CONTAINED, dependency-free GLSL is permitted
+  inside facet.js when a core capability cannot meet its performance bar
+  any other way, and a no-WebGL fallback must remain. First user: the
+  fluid background's metaball shader — the filter engine, forced into
+  software by WebKit's compositing rules, ran at single-digit fps on an
+  iPad. The prohibition still binds for anything pulling a shader
+  LIBRARY or other dependency.)
 - **Physics / 3D** — Ballpit (three.js + physics), Lanyard (rope physics), Model
   Viewer, Meta Balls, fluid cursors. Out of scope.
 

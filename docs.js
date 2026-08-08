@@ -1628,3 +1628,42 @@ document.addEventListener("DOMContentLoaded", async () => {
   initScrollSpy();
   initLibraryPages();  // intro → layer card pages → entry pages (see the router)
 });
+
+
+/* Backgrounds wall · fluid presets. Docs chrome only: each chip row writes
+   the matching --bg-fluid-* tokens onto the demo surface and rebuilds it.
+   The rows mirror the recipe the maintainer froze for tanishksharma.com —
+   the middle chip of every row IS that site's setting (its ground runs the
+   same recipe at Whisper). */
+(function () {
+  var demo = document.getElementById("bg-variant-fluid");
+  if (!demo) return;
+  function wire(attr, apply) {
+    var chips = document.querySelectorAll("[" + attr + "]");
+    for (var i = 0; i < chips.length; i++) {
+      (function (chip) {
+        chip.addEventListener("click", function (e) {
+          // these rows are radio groups; without this the docs-wide chip
+          // handler toggles the pressed state straight back off
+          e.stopImmediatePropagation();
+          var kin = chip.parentElement.querySelectorAll(".chip");
+          for (var k = 0; k < kin.length; k++) {
+            kin[k].setAttribute("aria-pressed", kin[k] === chip ? "true" : "false");
+          }
+          apply(chip.getAttribute(attr));
+          if (window.facet && facet.fluidRemount) facet.fluidRemount(demo);
+        });
+      })(chips[i]);
+    }
+  }
+  wire("data-fluid-size", function (v) { demo.style.setProperty("--bg-fluid-size", v); });
+  wire("data-fluid-clusters", function (v) { demo.style.setProperty("--bg-fluid-clusters", v); });
+  wire("data-fluid-haze", function (v) { demo.style.setProperty("--bg-fluid-haze", v); });
+  wire("data-fluid-strength", function (v) { demo.style.setProperty("--bg-fluid-strength", v); });
+  wire("data-fluid-mood", function (v) {
+    var m = v.split(",");
+    demo.style.setProperty("--bg-fluid-merge", m[0]);
+    demo.style.setProperty("--bg-fluid-threshold", m[1]);
+    demo.style.setProperty("--bg-fluid-spread", m[2]);
+  });
+})();

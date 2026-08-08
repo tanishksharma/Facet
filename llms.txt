@@ -1715,7 +1715,7 @@ facet.js (an optional engine like gem.js; no component requires it):
 data-bg-shader mounts Paper's MESH GRADIENT at the element's own size
 (give it one — .bg-fixed for a whole-page ground). data-shader-colors
 takes up to 10 comma-separated CSS colors; without it the surface's
---bg-fluid-color-1..4 custom properties are read, so one palette
+--bg-fluid-color-1..5 custom properties are read, so one palette
 drives both this and the CSS fluid background. data-shader-speed
 (0 stops it, default 0.6), data-shader-distortion 0–1 (default 0.8),
 data-shader-swirl 0–1 (default 0.1). Degrades honestly: offline or
@@ -2400,30 +2400,77 @@ VARIANT GRID — a repeating symbol on a grid:
   facet.scatterBackground(el) draws a surface inserted
   after load.
 
-VARIANT FLUID — data-bg-fluid: a soft, slowly-breathing field of
-out-of-focus color pools and small drifting bubbles, drawn from the
-theme's accent and vivid tokens, so every theme and mode recolors it
-with no redraw. facet.js mounts three GPU-composited layers whose
-desynced clocks keep the field from visibly repeating;
-facet.fluidBackground(el) mounts a late-added surface. Still under
-data-motion="off" and prefers-reduced-motion; plain background with
-JS off. Tunable per surface, like the grid looks' --bg-tint and
---bg-strength: --bg-fluid-color-1..4 repaint the four pool colors
-(defaults: the accent base and the vivid ranks, so themes keep
-recoloring it free), --bg-fluid-strength multiplies every pool's
-opacity (1 = the shipped look, 1.5 = half again as colored),
---bg-fluid-speed multiplies the drift rate (1 = the shipped clocks,
-2 = twice as fast), --bg-fluid-scale multiplies the pool sizes
-(0.6 = smaller, tighter splotches with more ground showing through),
---bg-fluid-travel multiplies how far the pools wander — the two
-layers roam opposite circuits, so at 2+ they visibly cross and their
-colors mix — and --bg-fluid-blur is the out-of-focus radius (default
-42px; smaller pools usually want a smaller blur to stay defined).
-Set them on the surface itself:
+VARIANT FLUID — data-bg-fluid: metaballs. Soft circles are blurred
+until they melt into each other, then alpha-thresholded back into one
+hard edge, so a group of circles reads as a single liquid shape
+rather than a pile of discs — a lava lamp, not a bokeh field.
+facet.js mounts one layer per vivid colour inside a shared haze and
+gives each layer its own SVG filter whose colour matrix boosts ALPHA
+only; its RGB rows are identity, so colour survives the threshold
+untouched, lives in the blob itself, and two hues blend smoothly
+across the join where they fuse. Blobs are grouped into CLUSTERS: the
+cluster carries a slow shared travel while each blob inside runs its
+own faster, independently phased jostle, so a fused shape holds
+together without ever holding still and never settles into a circle.
+Cluster centres are dealt round-robin across the layers, which keeps
+each colour's shapes away from its neighbours'. All colour comes from
+theme tokens, so every theme and mode recolors it with no redraw;
+facet.fluidBackground(el) mounts a late-added surface and
+facet.fluidRefresh(el) remeasures one after its size or tokens
+change, and facet.fluidRemount(el) rebuilds one after a change to
+--bg-fluid-clusters or --bg-fluid-cluster-size (those two are baked
+into the DOM at mount, so a custom property alone cannot move them). Still under data-motion="off" and prefers-reduced-motion;
+plain background with JS off. Where the device offers WebGL
+(virtually everywhere) the field renders as a true metaball shader on
+the GPU — same tokens, same motion model, full-rate animation, near
+zero main-thread cost. Without WebGL it falls back to the DOM + SVG
+filter rig on a low-cadence ticker, and if even that strains the
+device the field freezes into its composed frame rather than slowing
+the page.
+
+Geometry is sized in SURFACE UNITS, measured by facet.js and
+refreshed on resize, so the same numbers describe a whole-page wash
+and a hero card. A data-bg-fluid-fixed field measures a hundredth of
+the viewport's LONG side (vmax); a bounded surface measures a
+hundredth of its own SHORT side — a wide shallow hero sized off its
+width would be filled by one blob. Tunable per
+surface: --bg-fluid-color-1..5 repaint the five layers (defaults: the
+vivid five, so themes keep recoloring it free), --bg-fluid-size is
+blob diameter in those units (default 20) and --bg-fluid-merge the
+merge distance as a fraction of that size (0.15) so the two always
+track each other — change one without the other and the effect falls
+apart. --bg-fluid-contrast is how hard the rim snaps back to an edge
+(240; low leaves a soft cloud, high a crisp liquid rim) and
+--bg-fluid-threshold where it is cut (1; under 1 blobs shrink and
+hold apart, over 1 they swell and fuse early).
+--bg-fluid-haze (3.3) is ONE Gaussian over the finished composite —
+it softens everything at once without stopping anything merging,
+which is what backing off the per-layer edge would do; past about 6
+the shapes dissolve into regions that only suggest a colour.
+--bg-fluid-strength (0.2) is each layer's opacity, the main dial for
+how loud the whole thing is, and --bg-fluid-mix (normal) how the
+layers combine: normal is alpha compositing like translucent paint
+and never blows out, screen adds light and needs a dark ground,
+soft-light stains the ground instead of covering it. Multiply is
+deliberately not offered — it muddies every overlap.
+--bg-fluid-clusters (5) and --bg-fluid-cluster-size (3) are how many
+shapes each colour gets and the most blobs in one; each cluster picks
+its own count between 2 and that, so the field is not a grid of
+identical shapes, and never below 2 because a cluster of one is a
+circle. --bg-fluid-spread (0.41) is the ring the blobs sit on as a
+fraction of blob size — too low stacks them concentric and the shape
+goes round again, too high pulls them past the merge distance and the
+cluster breaks into separate balls. --bg-fluid-speed (1) multiplies
+every clock at once and --bg-fluid-travel (1) how far a cluster roams
+from where it was placed. --bg-fluid-grain (0) lays fine noise over
+everything: a wide haze makes a very gradual gradient and 8-bit
+colour cannot hold one smoothly, so it steps into faint stripes —
+raise this only if you see them. Set them on the surface itself:
 
     <section data-bg-fluid
-      style="--bg-fluid-color-1: hotpink; --bg-fluid-strength: 1.4; --bg-fluid-speed: 1.5;
-             --bg-fluid-scale: 0.6; --bg-fluid-travel: 2.5; --bg-fluid-blur: 30px;">…</section>
+      style="--bg-fluid-color-1: hotpink; --bg-fluid-strength: 0.35;
+             --bg-fluid-haze: 5; --bg-fluid-clusters: 3;
+             --bg-fluid-mix: soft-light; --bg-fluid-speed: 1.4;">…</section>
 
 FIXED TO THE SCREEN — two opt-ins pin a background to the viewport:
 - .bg-fixed on any grid look makes it the page's one still backdrop —
