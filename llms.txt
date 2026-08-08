@@ -2496,7 +2496,10 @@ every clock at once and --bg-fluid-travel (1) how far a cluster roams
 from where it was placed. --bg-fluid-grain (0) lays fine noise over
 everything: a wide haze makes a very gradual gradient and 8-bit
 colour cannot hold one smoothly, so it steps into faint stripes —
-raise this only if you see them. Set them on the surface itself:
+raise this only if you see them. (To hand these dials to the READER,
+the Appearance panel's data-bg-fluid-dial rows step size, cluster
+count, fluidity, blur and strength through five named presets each —
+see the Appearance panel section.) Set them on the surface itself:
 
     <section data-bg-fluid
       style="--bg-fluid-color-1: hotpink; --bg-fluid-strength: 0.35;
@@ -2923,7 +2926,8 @@ What it is: the settings sheet upgraded from five cyclers (theme, appearance, mo
 - input[type="color"] data-token="--surface" — overrides any semantic token by name (surfaces, borders, the text ramp), this visit. .menu-color again.
 - button data-font-cycle="fontHeading|fontBody" — cycles a curated face list, writing its .menu-value; data-faces="A,B,C" overrides the default list.
 - button data-density-cycle / data-width-cycle / data-text-size-cycle / data-shape-cycle — step the three-way layout controls (spacing density, page width tier, global text size, corner roundness), each showing its state in .menu-value.
-- button data-skin-reset — returns colours, fonts, spacing, width, text size and shape to the theme's own look.
+- button data-bg-fluid-dial="scale|density|fluidity|blur|intensity" — steps ONE dial of the page's first data-bg-fluid surface through five named presets (the fluid background's own tuning ladder: blob size, shapes per colour, how hungrily blobs merge without changing size, edge blur from razor to dissolved, colour strength from Whisper to Bold). The row's starting .menu-value is read from the surface's own values (a surface between steps reads "Custom"), the choice is session-scoped like everything else, and the rows are inert on a page with no fluid surface.
+- button data-skin-reset — returns colours, fonts, spacing, width, text size and shape to the theme's own look, and any fluid-dial rows' surface back to its own baked recipe.
 - button data-settings-reset — puts the Options rows back to the page's defaults: theme Default, appearance Auto, motion its own default, sounds and haptics on, and the language back to the first one the page lists. It never asks for the iOS tilt permission, because a reset only ever quiets motion. The pattern: each tab carries its own quiet reset row at the foot of its own panel — Style resets the look, Options resets the options — never one global reset.
 - div data-shortcuts — filled with the page's keyboard map as labelled key caps (.shortcut-list of .shortcut-row; Esc closes the open layer, arrows walk tabs, Home/End jump, Enter/Space activate, Tab moves on — the map from Keyboard navigation).
 Colour swatches read their starting value from the live tokens and re-sync whenever the theme or mode changes. What it is for: giving any Facet page the same live restyling the Build-a-theme page has, thumb-reachable in the settings sheet — the point of the library is that any page can be changed in any way. When to use it: any app or site whose reader should shape the look; Options-only for a plain content page. facet.appearance() re-wires a panel added to the DOM late.
@@ -2946,6 +2950,8 @@ Colour swatches read their starting value from the live tokens and re-sync whene
         <div class="sheet-group" data-settings-panel="style" hidden>
           <label class="menu-item menu-color">Accent 1 <input type="color" data-skin="accent1" aria-label="Accent 1 color"></label>
           <button type="button" class="menu-item" data-font-cycle="fontHeading">Headings <span class="menu-value"></span></button>
+          <button type="button" class="menu-item" data-bg-fluid-dial="blur">Blur <span class="menu-value">Soft</span></button>
+          <button type="button" class="menu-item" data-bg-fluid-dial="intensity">Intensity <span class="menu-value">Whisper</span></button>
           <button type="button" class="menu-item" data-skin-reset>Reset the look</button>
         </div>
         <div class="sheet-group" data-settings-panel="advanced" hidden>
