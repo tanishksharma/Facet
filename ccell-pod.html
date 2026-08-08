@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inside a CCELL Pod — 3D Vaporization Explainer</title>
+<meta name="description" content="Interactive 3D cutaway of a CCELL-style ceramic THC cartridge: oil wicking, coil heating, vaporization and aerosol flow. Based on Wagner, Chen & Vrdoljak (2020), PLOS ONE.">
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="lib/facet.css">
+<style>
+  /* Page-local chrome for the 3D stage. The library provides tokens + buttons. */
+  html, body { height: 100%; }
+  body { margin: 0; overflow: hidden; background: var(--background, #0F1011); }
+  #stage { position: fixed; inset: 0; }
+  #stage canvas { display: block; }
+
+  .hud { position: fixed; z-index: 10; }
+  .hud-card {
+    background: color-mix(in srgb, var(--surface, #141516) 86%, transparent);
+    border: 1px solid var(--border, #33383b);
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  #intro { top: 16px; left: 16px; max-width: 330px; padding: 14px 16px; }
+  #intro h1 { margin: 0 0 4px; font-size: 1.05rem; letter-spacing: -0.01em; }
+  #intro p { margin: 0; font-size: 0.78rem; color: var(--text-muted, #9ba1a6); line-height: 1.45; }
+  #intro a { color: inherit; }
+
+  #steps { left: 16px; top: 130px; bottom: 88px; width: 330px; overflow-y: auto;
+           display: flex; flex-direction: column; gap: 8px; padding-right: 2px; }
+  .step { text-align: left; cursor: pointer; padding: 10px 12px 10px 14px; border-left: 3px solid transparent;
+          transition: border-color .2s, background .2s; font: inherit; color: inherit; width: 100%; }
+  .step:hover { background: color-mix(in srgb, var(--surface-hover, #18191A) 92%, transparent); }
+  .step[aria-current="true"] { border-left-color: var(--vapor, #9ecbff); }
+  .step b { display: block; font-size: 0.82rem; margin-bottom: 2px; }
+  .step small { display: none; font-size: 0.74rem; color: var(--text-muted, #9ba1a6); line-height: 1.45; }
+  .step[aria-current="true"] small { display: block; }
+  .step .n { display: inline-block; width: 1.2em; color: var(--text-subtle, #7c8388); }
+
+  #controls { right: 16px; bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;
+              max-width: 420px; padding: 10px; }
+  #controls .btn { font-size: 0.78rem; padding: 7px 12px; }
+  .btn.on { outline: 2px solid var(--vapor, #9ecbff); outline-offset: 1px; }
+
+  #source { left: 16px; bottom: 16px; padding: 8px 12px; font-size: 0.7rem; color: var(--text-subtle, #7c8388); max-width: 330px; }
+  #source a { color: var(--text-muted, #9ba1a6); }
+
+  #tempbar { right: 16px; top: 16px; padding: 10px 14px; width: 190px; }
+  #tempbar .lbl { font-size: 0.7rem; color: var(--text-muted, #9ba1a6); display: flex; justify-content: space-between; }
+  #tempbar .track { height: 6px; border-radius: 3px; margin-top: 6px; background:
+      linear-gradient(90deg, #3a6ea5, #d9a441 45%, #e2543e 75%, #ffffff); position: relative; }
+  #tempbar .dot { position: absolute; top: -3px; width: 12px; height: 12px; border-radius: 50%;
+      background: #fff; border: 2px solid #0F1011; transform: translateX(-6px); transition: left .3s; }
+
+  .tag { position: absolute; transform: translate(-50%, -50%); pointer-events: none;
+         font-size: 0.68rem; letter-spacing: 0.02em; color: #e8ecef;
+         background: rgba(10,12,14,0.72); border: 1px solid rgba(255,255,255,0.18);
+         padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+
+  @media (max-width: 900px) {
+    #intro { max-width: 240px; }
+    #steps { display: none; }
+    #tempbar { display: none; }
+    #source { display: none; }
+  }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+
+<div id="stage"></div>
+
+<div id="intro" class="hud hud-card">
+  <h1>Inside a CCELL pod</h1>
+  <p>A 3D cutaway of the ceramic-wick THC cartridge studied by Wagner, Chen &amp; Vrdoljak (2020). Click the steps, drag to orbit, scroll to zoom.</p>
+</div>
+
+<div id="steps" class="hud"></div>
+
+<div id="tempbar" class="hud hud-card">
+  <div class="lbl"><span>Coil temperature</span><span id="tempval">25 °C</span></div>
+  <div class="track"><div class="dot" id="tempdot" style="left:0%"></div></div>
+  <div class="lbl" style="margin-top:6px"><span>100–400&nbsp;°C wet</span><span>~1000&nbsp;°C dry</span></div>
+</div>
+
+<div id="controls" class="hud hud-card">
+  <button class="btn btn-primary" id="btnPuff">Take a puff</button>
+  <button class="btn on" id="btnCut">Cutaway</button>
+  <button class="btn" id="btnExplode">Exploded</button>
+  <button class="btn on" id="btnLabels">Labels</button>
+  <button class="btn on" id="btnSpin">Auto-rotate</button>
+</div>
+
+<div id="source" class="hud hud-card">
+  Geometry and temperatures follow
+  <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0240613" target="_blank" rel="noopener">
+  Wagner J, Chen W, Vrdoljak G (2020), PLOS ONE 15(10)</a>: ceramic heater ~6×4 mm, ~10 µm pores, Ni–Cr–Fe filament.
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+/* ============================================================
+   Scene scaffold
+   Units: 1 = 1 mm. Cartridge ≈ 11 mm diameter, 58 mm tall.
+   ============================================================ */
+const stage = document.getElementById('stage');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0f1011);
+scene.fog = new THREE.Fog(0x0f1011, 120, 260);
+
+const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 0.1, 500);
+camera.position.set(56, 56, 80);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.localClippingEnabled = true;
+stage.appendChild(renderer.domElement);
+
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(innerWidth, innerHeight);
+labelRenderer.domElement.style.position = 'fixed';
+labelRenderer.domElement.style.inset = '0';
+labelRenderer.domElement.style.pointerEvents = 'none';
+stage.appendChild(labelRenderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 27, 0);
+controls.enableDamping = true;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.7;
+controls.minDistance = 18;
+controls.maxDistance = 160;
+
+scene.add(new THREE.HemisphereLight(0xbfd4e6, 0x1a1c1f, 0.9));
+const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(40, 70, 30); scene.add(key);
+const rim = new THREE.DirectionalLight(0x88aaff, 0.5); rim.position.set(-50, 20, -40); scene.add(rim);
+const coilLight = new THREE.PointLight(0xff6a1a, 0, 40); coilLight.position.set(0, 11, 0); scene.add(coilLight);
+
+/* Ground disc for spatial grounding */
+const ground = new THREE.Mesh(
+  new THREE.CircleGeometry(70, 64),
+  new THREE.MeshStandardMaterial({ color: 0x131517, roughness: 1, metalness: 0 }));
+ground.rotation.x = -Math.PI / 2; ground.position.y = -6; scene.add(ground);
+
+/* ============================================================
+   Cutaway: one clipping plane removes the z>0 half of the shell
+   so the internals read. Particles and oil are never clipped.
+   ============================================================ */
+const cutPlane = new THREE.Plane(new THREE.Vector3(0, 0, -1), 0.001);
+let cutOn = true;
+const clippedMats = [];
+function mat(opts, clip = true) {
+  const m = new THREE.MeshPhysicalMaterial(Object.assign({ side: THREE.DoubleSide }, opts));
+  if (clip) { m.clippingPlanes = [cutPlane]; clippedMats.push(m); }
+  return m;
+}
+function setCut(on) {
+  cutOn = on;
+  cutPlane.constant = on ? 0.001 : 1000;
+}
+
+/* ============================================================
+   Materials
+   ============================================================ */
+const M = {
+  steel:   mat({ color: 0xb9bec4, metalness: 0.9,  roughness: 0.32 }),
+  steelIn: mat({ color: 0x8f959b, metalness: 0.85, roughness: 0.45 }),
+  nickel:  mat({ color: 0xd8c48a, metalness: 1.0,  roughness: 0.3 }),
+  gasket:  mat({ color: 0xb8b2a6, metalness: 0,    roughness: 0.9 }),
+  glass:   mat({ color: 0xdfe9ee, metalness: 0, roughness: 0.05, transmission: 0.92,
+                 thickness: 0.6, transparent: true, opacity: 0.35 }),
+  oil:     mat({ color: 0xd79a1e, metalness: 0, roughness: 0.15, transparent: true, opacity: 0.82,
+                 emissive: 0x3a2503, emissiveIntensity: 0.35 }),
+  ceramic: mat({ color: 0xf2efe8, metalness: 0, roughness: 0.95 }),
+  ceramicWet: mat({ color: 0xcbb27a, metalness: 0, roughness: 0.9, transparent: true, opacity: 0.0 }, true),
+  coil:    mat({ color: 0x4a4a4d, metalness: 0.8, roughness: 0.4, emissive: 0xff3d00, emissiveIntensity: 0 }, false),
+  mouth:   mat({ color: 0xf4f1ea, metalness: 0.05, roughness: 0.6 }),
+};
+
+/* ============================================================
+   Build the cartridge. Groups get an "explode" vector so the
+   exploded view can pull them apart vertically.
+   ============================================================ */
+const cart = new THREE.Group(); scene.add(cart);
+const parts = [];
+function part(explodeY) {
+  const g = new THREE.Group();
+  g.userData.home = 0; g.userData.explode = explodeY;
+  cart.add(g); parts.push(g); return g;
+}
+const tube = (rt, rb, h, m, rad = 48) => new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, rad), m);
+const ring = (r, t, m) => new THREE.Mesh(new THREE.TorusGeometry(r, t, 12, 48), m);
+
+/* --- 1 · 510 base + battery contact ------------------------- */
+const gBase = part(-14);
+{
+  const b = tube(5.5, 5.5, 6, M.steel); b.position.y = 3; gBase.add(b);
+  for (let i = 0; i < 3; i++) { const th = ring(5.5, 0.22, M.steelIn); th.rotation.x = Math.PI/2; th.position.y = 1 + i * 1.6; gBase.add(th); }
+  const contact = tube(2, 2, 2.4, M.nickel); contact.position.y = -0.4; gBase.add(contact);
+  const gk = ring(2.7, 0.5, M.gasket); gk.rotation.x = Math.PI/2; gk.position.y = 0.4; gBase.add(gk);
+  /* two air intake holes through the base wall */
+  for (const s of [1, -1]) {
+    const hole = tube(0.8, 0.8, 3, mat({ color: 0x0c0d0e, metalness: 0.3, roughness: 0.9 }));
+    hole.rotation.z = Math.PI / 2; hole.position.set(s * 4.4, 3.6, 0); gBase.add(hole);
+  }
+  /* lower air channel from intakes up to the ceramic bore */
+  const chan = tube(1.5, 1.5, 4, M.steelIn); chan.position.y = 5.5;
+  chan.material = mat({ color: 0x8f959b, metalness: 0.85, roughness: 0.45, transparent: true, opacity: 0.9 });
+  gBase.add(chan);
+}
+
+/* --- 2 · Atomizer housing + ceramic + coil ------------------ */
+const gAtom = part(-7);
+let feedHoles = [];
+{
+  const shell = tube(4.3, 4.3, 10, M.steel); shell.position.y = 11; gAtom.add(shell);
+  /* oil feed holes through the housing wall (admit oil from the tank) */
+  for (const s of [1, -1]) {
+    const h = tube(0.9, 0.9, 1.6, mat({ color: 0x1a1509, roughness: 0.8 }));
+    h.rotation.z = Math.PI / 2; h.position.set(s * 4.0, 11, 0); gAtom.add(h); feedHoles.push(h);
+  }
+  /* porous ceramic cylinder: outer sleeve with central bore */
+  const cer = new THREE.Mesh(
+    new THREE.CylinderGeometry(3.8, 3.8, 8, 48, 1, true), M.ceramic);
+  cer.position.y = 11; gAtom.add(cer);
+  const cerTop = ring(2.7, 1.15, M.ceramic); cerTop.rotation.x = Math.PI/2; cerTop.position.y = 15; gAtom.add(cerTop);
+  const cerBot = ring(2.7, 1.15, M.ceramic); cerBot.rotation.x = Math.PI/2; cerBot.position.y = 7; gAtom.add(cerBot);
+  const bore = tube(1.6, 1.6, 8, M.ceramic); bore.material = mat({ color: 0xe7e2d6, roughness: 0.95 }); bore.position.y = 11; gAtom.add(bore);
+  /* wet tint sleeve that fades in as oil saturates the pores */
+  const wet = new THREE.Mesh(new THREE.CylinderGeometry(3.9, 3.9, 8.1, 48, 1, true), M.ceramicWet);
+  wet.position.y = 11; gAtom.add(wet);
+  /* the embedded Ni–Cr–Fe helical filament */
+  const pts = [];
+  for (let i = 0; i <= 240; i++) {
+    const a = i / 240 * Math.PI * 10, y = 7.8 + (i / 240) * 6.4;
+    pts.push(new THREE.Vector3(Math.cos(a) * 2.6, y, Math.sin(a) * 2.6));
+  }
+  const coil = new THREE.Mesh(
+    new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 400, 0.28, 10), M.coil);
+  gAtom.add(coil);
+}
+
+/* --- 3 · Chimney (central air tube) ------------------------- */
+const gChim = part(7);
+{
+  const c = tube(1.6, 1.6, 33, M.steelIn); c.position.y = 31.5; gChim.add(c);
+  const cIn = tube(1.25, 1.25, 33.2, mat({ color: 0x5a6066, metalness: 0.6, roughness: 0.6 })); cIn.position.y = 31.5; gChim.add(cIn);
+}
+
+/* --- 4 · Tank (glass) + THC oil ----------------------------- */
+const gTank = part(14);
+let oilMesh, oilTopY = 42, oilBotY = 16.5;
+{
+  const glass = new THREE.Mesh(new THREE.CylinderGeometry(5.3, 5.3, 42, 48, 1, true), M.glass);
+  glass.position.y = 27; gTank.add(glass);
+  /* the oil is an annulus: it surrounds the chimney, it never fills the air path */
+  const shape = new THREE.Shape();
+  shape.absarc(0, 0, 4.9, 0, Math.PI * 2, false);
+  const hole = new THREE.Path();
+  hole.absarc(0, 0, 2.0, 0, Math.PI * 2, true);
+  shape.holes.push(hole);
+  oilMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(shape, { depth: 1, bevelEnabled: false, curveSegments: 48 }), M.oil);
+  oilMesh.rotation.x = -Math.PI / 2;
+  gTank.add(oilMesh);
+  oilMesh.userData.shape = shape;
+  setOilLevel(oilTopY);
+}
+function setOilLevel(top) {
+  oilTopY = Math.max(top, oilBotY + 2);
+  const h = oilTopY - oilBotY;
+  oilMesh.geometry.dispose();
+  oilMesh.geometry = new THREE.ExtrudeGeometry(oilMesh.userData.shape, { depth: h, bevelEnabled: false, curveSegments: 48 });
+  oilMesh.position.y = oilBotY;
+}
+
+/* --- 5 · Mouthpiece ----------------------------------------- */
+const gMouth = part(24);
+{
+  const mp = tube(3.1, 5.5, 10, M.mouth); mp.position.y = 53; gMouth.add(mp);
+  const lip = tube(3.1, 3.1, 1.6, M.mouth); lip.position.y = 58.6; gMouth.add(lip);
+  const out = tube(1.3, 1.3, 12, mat({ color: 0x26292b, roughness: 0.8 })); out.position.y = 53.5; gMouth.add(out);
+}
+
+/* ============================================================
+   Labels
+   ============================================================ */
+const labelDefs = [
+  ['Mouthpiece', 0, 56, 3.4],
+  ['Glass tank · THC distillate', 0, 38, 5.6],
+  ['Central air chimney', 0, 27, 1.9],
+  ['Oil feed hole', 4.2, 11, 0.6],
+  ['Porous ceramic + embedded coil', -4.0, 11, 0.6],
+  ['Air intake', -4.6, 3.6, 0.6],
+  ['510 battery contact', 0, -1.2, 2.2],
+];
+const labels = [];
+for (const [text, x, y, r] of labelDefs) {
+  const el = document.createElement('div'); el.className = 'tag'; el.textContent = text;
+  const o = new CSS2DObject(el); o.position.set(x + (x ? Math.sign(x) * r : r + 4.5), y, 0);
+  cart.add(o); labels.push(o);
+}
+
+/* ============================================================
+   Particles: oil wicking · airflow · vapor/aerosol
+   ============================================================ */
+function discTexture(inner, outer) {
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const g = c.getContext('2d');
+  const gr = g.createRadialGradient(32, 32, 2, 32, 32, 30);
+  gr.addColorStop(0, inner); gr.addColorStop(1, outer);
+  g.fillStyle = gr; g.beginPath(); g.arc(32, 32, 30, 0, 7); g.fill();
+  return new THREE.CanvasTexture(c);
+}
+const texSoft = discTexture('rgba(255,255,255,0.95)', 'rgba(255,255,255,0)');
+const texGold = discTexture('rgba(255,196,64,1)', 'rgba(255,160,20,0)');
+const texAir  = discTexture('rgba(140,190,255,0.9)', 'rgba(140,190,255,0)');
+
+function pool(n, map, size, blending = THREE.NormalBlending) {
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
+  const m = new THREE.PointsMaterial({ map, size, transparent: true, depthWrite: false,
+    blending, sizeAttenuation: true, opacity: 0.9 });
+  const p = new THREE.Points(geo, m);
+  p.frustumCulled = false; cart.add(p);
+  return { points: p, data: Array.from({ length: n }, () => ({ t: -1 })), geo };
+}
+const airP   = pool(260, texAir, 1.1, THREE.AdditiveBlending);
+const oilP   = pool(90, texGold, 0.9, THREE.AdditiveBlending);
+const vapP   = pool(340, texSoft, 3.0);
+
+/* Air path: intake hole → base channel → ceramic bore → chimney → out */
+function airPath(side) {
+  return new THREE.CatmullRomCurve3([
+    new THREE.Vector3(side * 6.4, 3.6, 0),
+    new THREE.Vector3(side * 2.2, 3.8, 0),
+    new THREE.Vector3(0, 6, 0),
+    new THREE.Vector3(0, 15, 0),
+    new THREE.Vector3(0, 34, 0),
+    new THREE.Vector3(0, 50, 0),
+    new THREE.Vector3(0, 62, 0),
+  ]);
+}
+const airPaths = [airPath(1), airPath(-1)];
+
+/* ============================================================
+   Puff state machine
+   ============================================================ */
+const S = { idle: 0, fire: 1, cool: 2 };
+let state = S.idle, stateT = 0, heat = 0, wet = 1, autoPuff = true;
+const FIRE_LEN = 4.2, COOL_LEN = 3.4, IDLE_LEN = 2.4;
+
+function startPuff() { if (state !== S.fire) { state = S.fire; stateT = 0; } }
+
+function spawnAir(dt) {
+  const rate = 60 * dt;
+  for (let k = 0; k < rate; k++) if (Math.random() < rate - k + 1) {
+    const d = airP.data.find(d => d.t < 0); if (!d) break;
+    d.t = 0; d.speed = 0.34 + Math.random() * 0.1;
+    d.path = airPaths[Math.random() < 0.5 ? 0 : 1];
+    d.jx = (Math.random() - 0.5) * 1.6; d.jz = (Math.random() - 0.5) * 1.6;
+  }
+}
+function spawnVapor(dt) {
+  const rate = 90 * dt * heat;
+  for (let k = 0; k < rate; k++) if (Math.random() < rate - k + 1) {
+    const d = vapP.data.find(d => d.t < 0); if (!d) break;
+    const a = Math.random() * Math.PI * 2;
+    d.t = 0; d.a = a; d.r = 1.55; d.y = 8 + Math.random() * 6;
+    d.speed = 9 + Math.random() * 5; d.s = 0.5 + Math.random() * 0.5;
+  }
+}
+function spawnOil(dt, boost) {
+  const rate = (boost ? 26 : 5) * dt;
+  for (let k = 0; k < rate; k++) if (Math.random() < rate - k + 1) {
+    const d = oilP.data.find(d => d.t < 0); if (!d) break;
+    const side = Math.random() < 0.5 ? 1 : -1;
+    d.t = 0; d.side = side; d.ya = 11 + (Math.random() - 0.5) * 1.2;
+    d.za = (Math.random() - 0.5) * 1.2;
+  }
+}
+
+function updateParticles(dt) {
+  /* air */
+  let pos = airP.geo.attributes.position.array;
+  airP.data.forEach((d, i) => {
+    if (d.t < 0) { pos[i*3+1] = -999; return; }
+    d.t += d.speed * dt;
+    if (d.t >= 1) { d.t = -1; pos[i*3+1] = -999; return; }
+    const p = d.path.getPoint(d.t);
+    const tight = p.y > 6 && p.y < 52 ? 0.45 : 1;
+    pos[i*3] = p.x + d.jx * tight; pos[i*3+1] = p.y; pos[i*3+2] = p.z + d.jz * tight;
+  });
+  airP.geo.attributes.position.needsUpdate = true;
+
+  /* vapor: born on the hot ceramic bore wall, drifts to axis, rides the draw upward, exits, fades */
+  pos = vapP.geo.attributes.position.array;
+  let alive = 0;
+  vapP.data.forEach((d, i) => {
+    if (d.t < 0) { pos[i*3+1] = -999; return; }
+    d.t += dt; alive++;
+    d.r = Math.max(0.15, d.r - dt * 2.2);
+    d.y += d.speed * dt * (d.y > 15 ? 1.6 : 0.7);
+    if (d.y > 64) { d.t = -1; pos[i*3+1] = -999; return; }
+    const wob = Math.sin(d.t * 6 + d.a) * 0.15;
+    pos[i*3] = Math.cos(d.a) * d.r + wob; pos[i*3+1] = d.y; pos[i*3+2] = Math.sin(d.a) * d.r + wob;
+  });
+  vapP.geo.attributes.position.needsUpdate = true;
+  vapP.points.material.opacity = 0.7;
+
+  /* oil: from tank through the feed holes into the ceramic */
+  pos = oilP.geo.attributes.position.array;
+  oilP.data.forEach((d, i) => {
+    if (d.t < 0) { pos[i*3+1] = -999; return; }
+    d.t += dt * 0.55;
+    if (d.t >= 1) { d.t = -1; pos[i*3+1] = -999; return; }
+    const x = d.side * (4.9 - d.t * 2.6);
+    pos[i*3] = x; pos[i*3+1] = d.ya; pos[i*3+2] = d.za * (1 - d.t);
+  });
+  oilP.geo.attributes.position.needsUpdate = true;
+}
+
+/* ============================================================
+   Explainer steps
+   ============================================================ */
+const steps = [
+  { t: 'The pod', d: 'A 510-thread cartridge: glass tank of THC distillate around a central air chimney, a ceramic heater at the bottom, a mouthpiece on top. Everything below is drawn from the CDPH teardown.',
+    cam: [56, 56, 80, 0, 27, 0] },
+  { t: 'Oil soaks the ceramic', d: 'Thick distillate seeps from the tank through two feed holes into a porous ceramic cylinder (~10 µm pores). Capillary action saturates the ceramic like a sponge, wetting the embedded coil.',
+    cam: [16, 14, 20, 0, 11, 0] },
+  { t: 'The coil heats', d: 'The battery drives current through a Ni–Cr–Fe filament embedded in the ceramic. A wetted coil runs ~100–400 °C. Dry, it can pass 1000 °C, which is how the charring in EVALI carts happened.',
+    cam: [12, 12, 16, 0, 11, 0] },
+  { t: 'THC vaporizes', d: 'Oil held in the pores boils off the hot ceramic surface. THC vaporizes around 157 °C. The ceramic acts as both wick and heat spreader, so vapor forms across the whole bore surface.',
+    cam: [10, 16, 14, 0, 12, 0] },
+  { t: 'Inhale: air sweeps through', d: 'A puff pulls air in through the base intakes, up through the ceramic bore. The airflow entrains the fresh vapor, which immediately cools and condenses into aerosol droplets.',
+    cam: [22, 8, 26, 0, 14, 0] },
+  { t: 'Aerosol up the chimney', d: 'The aerosol rides the central chimney through the middle of the oil tank and out the mouthpiece. The tank level drops slightly, and the ceramic re-wicks for the next puff.',
+    cam: [26, 44, 30, 0, 40, 0] },
+];
+const stepsEl = document.getElementById('steps');
+let activeStep = 0;
+steps.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'step hud-card';
+  b.innerHTML = `<b><span class="n">${i + 1}</span>${s.t}</b><small>${s.d}</small>`;
+  b.addEventListener('click', () => setStep(i));
+  stepsEl.appendChild(b);
+});
+const camTween = { on: false, t: 0, from: null, to: null, fromT: null, toT: null };
+function setStep(i) {
+  activeStep = i;
+  [...stepsEl.children].forEach((el, k) => el.setAttribute('aria-current', k === i));
+  const [x, y, z, tx, ty, tz] = steps[i].cam;
+  camTween.on = true; camTween.t = 0;
+  camTween.from = camera.position.clone(); camTween.to = new THREE.Vector3(x, y, z);
+  camTween.fromT = controls.target.clone(); camTween.toT = new THREE.Vector3(tx, ty, tz);
+  if (i >= 2) startPuff();
+}
+setTimeout(() => setStep(0), 50);
+
+/* ============================================================
+   Controls
+   ============================================================ */
+const btn = id => document.getElementById(id);
+btn('btnPuff').addEventListener('click', startPuff);
+btn('btnCut').addEventListener('click', e => { setCut(!cutOn); e.currentTarget.classList.toggle('on', cutOn); });
+let exploded = false, explodeK = 0;
+btn('btnExplode').addEventListener('click', e => { exploded = !exploded; e.currentTarget.classList.toggle('on', exploded); });
+let labelsOn = true;
+btn('btnLabels').addEventListener('click', e => {
+  labelsOn = !labelsOn; e.currentTarget.classList.toggle('on', labelsOn);
+  labels.forEach(l => l.visible = labelsOn);
+});
+btn('btnSpin').addEventListener('click', e => { controls.autoRotate = !controls.autoRotate; e.currentTarget.classList.toggle('on', controls.autoRotate); });
+
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  controls.autoRotate = false; autoPuff = false;
+  btn('btnSpin').classList.remove('on');
+}
+
+/* ============================================================
+   Main loop
+   ============================================================ */
+const tempVal = document.getElementById('tempval');
+const tempDot = document.getElementById('tempdot');
+const clock = new THREE.Clock();
+
+function tick() {
+  requestAnimationFrame(tick);
+  const dt = Math.min(clock.getDelta(), 0.05);
+  stateT += dt;
+
+  /* state machine */
+  if (state === S.fire) {
+    heat = Math.min(1, heat + dt / 0.9);
+    wet = Math.max(0.15, wet - dt * 0.16);
+    spawnAir(dt); spawnVapor(dt);
+    setOilLevel(oilTopY - dt * 0.22);
+    if (stateT > FIRE_LEN) { state = S.cool; stateT = 0; }
+  } else if (state === S.cool) {
+    heat = Math.max(0, heat - dt / 1.4);
+    wet = Math.min(1, wet + dt * 0.3);
+    spawnOil(dt, true);
+    if (stateT > COOL_LEN) { state = S.idle; stateT = 0; }
+  } else {
+    heat = Math.max(0, heat - dt / 1.4);
+    wet = Math.min(1, wet + dt * 0.12);
+    spawnOil(dt, false);
+    if (autoPuff && stateT > IDLE_LEN) startPuff();
+  }
+
+  /* drive visuals from heat + wet */
+  M.coil.emissiveIntensity = heat * 2.4;
+  coilLight.intensity = heat * 26;
+  M.ceramicWet.opacity = 0.5 * wet;
+  const t = 25 + heat * 305; /* wetted-coil operating band */
+  tempVal.textContent = `${Math.round(t)} °C`;
+  tempDot.style.left = `${Math.min(96, (t / 1000) * 100 * 2.4)}%`;
+
+  /* exploded view */
+  explodeK += ((exploded ? 1 : 0) - explodeK) * Math.min(1, dt * 4);
+  parts.forEach(g => g.position.y = g.userData.explode * explodeK);
+
+  /* camera tween */
+  if (camTween.on) {
+    camTween.t = Math.min(1, camTween.t + dt / 1.4);
+    const k = camTween.t * camTween.t * (3 - 2 * camTween.t);
+    camera.position.lerpVectors(camTween.from, camTween.to, k);
+    controls.target.lerpVectors(camTween.fromT, camTween.toT, k);
+    if (camTween.t >= 1) camTween.on = false;
+  }
+
+  updateParticles(dt);
+  controls.update();
+  renderer.render(scene, camera);
+  labelRenderer.render(scene, camera);
+}
+tick();
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  labelRenderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>
