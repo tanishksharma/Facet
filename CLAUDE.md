@@ -42,6 +42,8 @@ The repo root is the library's website, deployed by Vercel as a static site on e
                    print-to-PDF at exact size
   document.html    A4 pages: letterhead, invoice, one-pager
   card.html        3.5x2in business card, front/back + print sheet
+  city.html        neon city console: a generative wireframe city on one
+                   canvas, five swappable catalogues, a bottom control strip
   manifest.json    the PWA manifest template
 index.html         home: philosophy, curated features, how-to (people vs AI), principles
 library.html       the Component library — one growing ladder:

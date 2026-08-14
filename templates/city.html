@@ -1,0 +1,2255 @@
+<!doctype html>
+<html lang="en" data-mode="dark">
+<!--
+  Facet template - Neon city console
+  A full-screen generative city, drawn on one 2D canvas, with every part of
+  the look on a dropdown in a strip along the bottom: palette, sky, voice,
+  sky objects, skyline and four sliders. Swap the catalogues, keep the shell.
+  Consume the library by URL - point the two tags at your Facet domain.
+
+  The five catalogues below are plain data plus a draw function each, so a
+  project extends the look by adding an entry, never by editing the engine:
+    BUILDINGS  12 wireframe archetypes, each under 21 line segments
+    VOICES     8 objects for the thing in the middle, all driven by a level
+    PALETTES   14 two-ink schemes    SKIES 7 backdrops    FLOATS 10 sky objects
+
+  The strip keeps its own dark palette rather than Facet's neutrals on
+  purpose: it always sits over a black canvas, so a light theme would make
+  it unreadable. Its accent follows --accent, which the engine re-points at
+  the current palette.
+-->
+<head>
+  <meta charset="utf-8">
+  <title>Neon city console - Facet template</title>
+  <meta name="description" content="A generative wireframe city on one canvas, with every part of the look on a dropdown.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://facet.tanishksharma.com/lib/facet.css">
+  <script src="https://facet.tanishksharma.com/lib/facet.js" defer></script>
+<style>
+  /* One committed world: a night city on black. Every colour is painted,
+     so the page holds whatever ground the viewer's theme paints behind it. */
+  :root {
+    --accent: #FF2E88;
+    --ground: #020306;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--ground);
+    overflow: hidden;
+  }
+
+  body {
+    color: #C3CEDB;
+    font: 400 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* The city fills the window. The strip floats over its bottom edge. */
+  #city {
+    position: fixed;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* The one piece of copy on the page, top left, out of the way. */
+  .plate {
+    position: fixed;
+    top: max(1rem, env(safe-area-inset-top));
+    left: 1rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    pointer-events: none;
+  }
+
+  .plate .eyebrow {
+    font: 700 0.625rem/1 ui-monospace, "SF Mono", Menlo, monospace;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .plate .name {
+    font: 600 0.9375rem/1.3 ui-sans-serif, system-ui, sans-serif;
+    color: #ECF3FA;
+  }
+
+  .plate .hint {
+    font: 400 0.75rem/1.4 ui-monospace, "SF Mono", Menlo, monospace;
+    color: #6A798A;
+    max-width: 34ch;
+  }
+</style>
+</head>
+
+<body>
+
+
+<canvas id="city"></canvas>
+
+<div class="plate">
+  <span class="eyebrow">Fold one / live console</span>
+  <span class="name">One city, every dial</span>
+  <span class="hint">Every part of the look is a dropdown along the bottom. Start from a preset, then take it apart.</span>
+</div>
+
+<script>
+// lib-buildings.js — 12 wireframe building archetypes for the neon-city flyover.
+// Every archetype draws its silhouette first and only hints at interior structure,
+// so the skyline reads as architecture instead of noise. Max 30 segments each.
+
+(function () {
+  "use strict";
+
+  // Adds the top face outline of an axis-aligned box. `far` false skips the back
+  // edge, which is the cheap version used when detail is low.
+  const topFace = (g, x0, x1, z0, z1, y, far) => {
+    g.seg(g.P(x0, y, z0), g.P(x1, y, z0)); // front edge
+    g.seg(g.P(x0, y, z0), g.P(x0, y, z1)); // left edge
+    g.seg(g.P(x1, y, z0), g.P(x1, y, z1)); // right edge
+    if (far) g.seg(g.P(x0, y, z1), g.P(x1, y, z1)); // back edge
+  };
+
+  // Adds the two front corner posts of a box, plus the two back posts when `far`.
+  const posts = (g, x0, x1, z0, z1, ya, yb, far) => {
+    g.seg(g.P(x0, ya, z0), g.P(x0, yb, z0));
+    g.seg(g.P(x1, ya, z0), g.P(x1, yb, z0));
+    if (far) {
+      g.seg(g.P(x0, ya, z1), g.P(x0, yb, z1));
+      g.seg(g.P(x1, ya, z1), g.P(x1, yb, z1));
+    }
+  };
+
+  // Adds a horizontal ring of `n` chords around an ellipse, between two angles.
+  // Angles pi..2pi sweep the near half, which is the only half worth drawing.
+  const ring = (g, cx, cz, rx, rz, y, n, a0, a1) => {
+    let prev = null;
+    for (let i = 0; i <= n; i++) {
+      const a = a0 + (a1 - a0) * (i / n);
+      const p = g.P(cx + Math.cos(a) * rx, y, cz + Math.sin(a) * rz);
+      if (i > 0) g.seg(prev, p);
+      prev = p;
+    }
+  };
+
+  window.BUILDINGS = [
+
+    // A plain rectangular block: the filler mass that makes the giants read as giants.
+    {
+      id: "slab", name: "Slab", note: "A plain rectangular block, the city's background noise.",
+      make(rng) { return { w: 14 + rng() * 16, d: 16 + rng() * 20, h: 30 + rng() * 55 }; },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d, h = b.h;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        posts(g, x0, x1, z0, z1, 0, h, g.detail > 0.4);
+        topFace(g, x0, x1, z0, z1, h, true);
+        g.ctx.stroke();
+        // Floor plates, a suggestion of storeys and never a full grid.
+        const plates = Math.round(2 + g.detail * 3);
+        g.fade(z0, 0.28);
+        g.ctx.beginPath();
+        for (let i = 1; i < plates; i++) {
+          const y = (h / plates) * i;
+          g.seg(g.P(x0, y, z0), g.P(x1, y, z0));
+        }
+        g.ctx.stroke();
+      }
+    },
+
+    // A tower whose walls lean in all the way up, like the John Hancock Center.
+    {
+      id: "taper", name: "Tapered Tower", note: "Walls that lean inward the whole way up, a Hancock-style trunk.",
+      make(rng) {
+        return { w: 20 + rng() * 12, d: 20 + rng() * 12, h: 70 + rng() * 45, shrink: 0.42 + rng() * 0.18 };
+      },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d, h = b.h;
+        // The top footprint keeps the same centre but shrinks by `shrink`.
+        const cx = (x0 + x1) / 2, cz = (z0 + z1) / 2, k = b.shrink;
+        const tx0 = cx + (x0 - cx) * k, tx1 = cx + (x1 - cx) * k;
+        const tz0 = cz + (z0 - cz) * k, tz1 = cz + (z1 - cz) * k;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        g.seg(g.P(x0, 0, z0), g.P(tx0, h, tz0)); // four leaning corners
+        g.seg(g.P(x1, 0, z0), g.P(tx1, h, tz0));
+        g.seg(g.P(x0, 0, z1), g.P(tx0, h, tz1));
+        g.seg(g.P(x1, 0, z1), g.P(tx1, h, tz1));
+        topFace(g, tx0, tx1, tz0, tz1, h, true);
+        g.seg(g.P(x0, 0, z0), g.P(x1, 0, z0)); // ground line, front and sides
+        g.seg(g.P(x0, 0, z0), g.P(x0, 0, z1));
+        g.seg(g.P(x1, 0, z0), g.P(x1, 0, z1));
+        g.ctx.stroke();
+        // Two or three belts, drawn only across the front face.
+        const belts = Math.round(1 + g.detail * 2);
+        g.fade(z0, 0.26);
+        g.ctx.beginPath();
+        for (let i = 1; i <= belts; i++) {
+          const t = i / (belts + 1), y = h * t;
+          const a = x0 + (tx0 - x0) * t, c = x1 + (tx1 - x1) * t, zf = z0 + (tz0 - z0) * t;
+          g.seg(g.P(a, y, zf), g.P(c, y, zf));
+        }
+        g.ctx.stroke();
+      }
+    },
+
+    // Three stacked boxes stepping back: the 1916 zoning-law wedding cake.
+    {
+      id: "setback", name: "Setback Tower", note: "A wedding-cake tower stepping back in three tiers.",
+      make(rng) {
+        return { w: 26 + rng() * 14, d: 26 + rng() * 12, h: 60 + rng() * 40, step: 0.6 + rng() * 0.12 };
+      },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d;
+        const cx = (x0 + x1) / 2, cz = (z0 + z1) / 2;
+        // Tier heights fall off so the base is the fattest slice of the mass.
+        const hs = [b.h * 0.45, b.h * 0.75, b.h];
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        // Base tier gets the full box; it carries the silhouette on its own.
+        posts(g, x0, x1, z0, z1, 0, hs[0], false);
+        topFace(g, x0, x1, z0, z1, hs[0], g.detail > 0.4);
+        for (let t = 1; t < 3; t++) {
+          const k = Math.pow(b.step, t);
+          const ax0 = cx + (x0 - cx) * k, ax1 = cx + (x1 - cx) * k;
+          const az0 = cz + (z0 - cz) * k, az1 = cz + (z1 - cz) * k;
+          g.seg(g.P(ax0, hs[t - 1], az0), g.P(ax0, hs[t], az0)); // tier front posts
+          g.seg(g.P(ax1, hs[t - 1], az0), g.P(ax1, hs[t], az0));
+          if (g.detail > 0.3) topFace(g, ax0, ax1, az0, az1, hs[t], g.detail > 0.7);
+          else g.seg(g.P(ax0, hs[t], az0), g.P(ax1, hs[t], az0));
+        }
+        g.ctx.stroke();
+        // One cornice line per tier, front only.
+        if (g.detail > 0.5) {
+          g.fade(z0, 0.26);
+          g.ctx.beginPath();
+          g.seg(g.P(x0, hs[0] * 0.55, z0), g.P(x1, hs[0] * 0.55, z0));
+          const k = b.step;
+          g.seg(g.P(cx + (x0 - cx) * k, (hs[0] + hs[1]) / 2, cz + (z0 - cz) * k),
+                g.P(cx + (x1 - cx) * k, (hs[0] + hs[1]) / 2, cz + (z0 - cz) * k));
+          g.ctx.stroke();
+        }
+      }
+    },
+
+    // Two thin towers joined high up by a bridge, the Petronas move.
+    {
+      id: "twin", name: "Twin Towers", note: "Two slim shafts joined high up by a skybridge.",
+      make(rng) { return { w: 28 + rng() * 14, d: 14 + rng() * 8, h: 75 + rng() * 35, gap: 0.2 + rng() * 0.1 }; },
+      draw(g, b, x0, z0) {
+        const z1 = z0 + b.d, h = b.h;
+        const gapW = b.w * b.gap, tw = (b.w - gapW) / 2; // each shaft's own width
+        const a0 = x0, a1 = x0 + tw, c0 = a1 + gapW, c1 = c0 + tw;
+        const far = g.detail > 0.5;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        posts(g, a0, a1, z0, z1, 0, h, false);
+        topFace(g, a0, a1, z0, z1, h, far);
+        posts(g, c0, c1, z0, z1, 0, h, false);
+        topFace(g, c0, c1, z0, z1, h, far);
+        // The skybridge, two-thirds up, drawn as a shallow box across the gap.
+        const by = h * 0.66, bh = h * 0.05;
+        g.seg(g.P(a1, by, z0), g.P(c0, by, z0));
+        g.seg(g.P(a1, by + bh, z0), g.P(c0, by + bh, z0));
+        g.seg(g.P(a1, by, z0), g.P(a1, by + bh, z0));
+        g.seg(g.P(c0, by, z0), g.P(c0, by + bh, z0));
+        g.ctx.stroke();
+        // One mid plate per shaft.
+        if (g.detail > 0.4) {
+          g.fade(z0, 0.26);
+          g.ctx.beginPath();
+          g.seg(g.P(a0, h * 0.33, z0), g.P(a1, h * 0.33, z0));
+          g.seg(g.P(c0, h * 0.33, z0), g.P(c1, h * 0.33, z0));
+          g.ctx.stroke();
+        }
+      }
+    },
+
+    // A round shaft, the Marina City / Aon-cylinder type.
+    {
+      id: "cylinder", name: "Cylinder", note: "A round shaft, drawn as a coarse ring and two silhouette edges.",
+      make(rng) { const r = 8 + rng() * 5; return { w: r * 2, d: r * 2, h: 45 + rng() * 45 }; },
+      draw(g, b, x0, z0) {
+        const rx = b.w / 2, rz = b.d / 2, cx = x0 + rx, cz = z0 + rz, h = b.h;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        ring(g, cx, cz, rx, rz, h, 8, 0, Math.PI * 2); // full top ring
+        ring(g, cx, cz, rx, rz, 0, 3, Math.PI, Math.PI * 2); // near half of the base
+        g.seg(g.P(cx - rx, 0, cz), g.P(cx - rx, h, cz)); // the two edges that read as the silhouette
+        g.seg(g.P(cx + rx, 0, cz), g.P(cx + rx, h, cz));
+        g.ctx.stroke();
+        // Two banding rings, near half only.
+        if (g.detail > 0.35) {
+          g.fade(z0, 0.26);
+          g.ctx.beginPath();
+          ring(g, cx, cz, rx, rz, h * 0.36, 4, Math.PI, Math.PI * 2);
+          ring(g, cx, cz, rx, rz, h * 0.7, 4, Math.PI, Math.PI * 2);
+          g.ctx.stroke();
+        }
+      }
+    },
+
+    // A three-sided tower, the Flatiron wedge pushed vertical.
+    {
+      id: "prism", name: "Triangular Prism", note: "A three-sided wedge, flat face to the street.",
+      make(rng) { return { w: 20 + rng() * 12, d: 20 + rng() * 12, h: 40 + rng() * 40 }; },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d, h = b.h, mx = (x0 + x1) / 2;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        g.seg(g.P(x0, 0, z0), g.P(x0, h, z0)); // three corner posts
+        g.seg(g.P(x1, 0, z0), g.P(x1, h, z0));
+        g.seg(g.P(mx, 0, z1), g.P(mx, h, z1));
+        g.seg(g.P(x0, h, z0), g.P(x1, h, z0)); // top triangle
+        g.seg(g.P(x1, h, z0), g.P(mx, h, z1));
+        g.seg(g.P(mx, h, z1), g.P(x0, h, z0));
+        g.seg(g.P(x0, 0, z0), g.P(x1, 0, z0)); // base triangle, near two edges
+        g.seg(g.P(x1, 0, z0), g.P(mx, 0, z1));
+        g.seg(g.P(mx, 0, z1), g.P(x0, 0, z0));
+        g.ctx.stroke();
+        // Two or three full-triangle belts.
+        const belts = Math.round(1 + g.detail * 2);
+        g.fade(z0, 0.26);
+        g.ctx.beginPath();
+        for (let i = 1; i <= belts; i++) {
+          const y = (h / (belts + 1)) * i;
+          g.seg(g.P(x0, y, z0), g.P(x1, y, z0));
+          g.seg(g.P(x1, y, z0), g.P(mx, y, z1));
+          g.seg(g.P(mx, y, z1), g.P(x0, y, z0));
+        }
+        g.ctx.stroke();
+      }
+    },
+
+    // The huge blank one: mass and one seam, nothing else. Sets the city's scale.
+    {
+      id: "monolith", name: "Monolith", note: "A vast blank mass with a single seam, all scale and no detail.",
+      make(rng) { return { w: 30 + rng() * 16, d: 30 + rng() * 14, h: 100 + rng() * 50 }; },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d, h = b.h;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        posts(g, x0, x1, z0, z1, 0, h, g.detail > 0.5);
+        topFace(g, x0, x1, z0, z1, h, true);
+        g.ctx.stroke();
+        // One vertical seam and one high band. That is the entire interior.
+        if (g.detail > 0.25) {
+          const sx = x0 + b.w * 0.38;
+          g.fade(z0, 0.22);
+          g.ctx.beginPath();
+          g.seg(g.P(sx, 0, z0), g.P(sx, h, z0));
+          g.seg(g.P(x0, h * 0.86, z0), g.P(x1, h * 0.86, z0));
+          g.ctx.stroke();
+        }
+      }
+    },
+
+    // The tallest thing on the block: tapered shaft, crown, antenna mast.
+    {
+      id: "needle", name: "Needle", note: "A tapered spire topped by a crown and an antenna mast.",
+      make(rng) { const r = 12 + rng() * 6; return { w: r, d: r, h: 120 + rng() * 40 }; },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d;
+        const cx = (x0 + x1) / 2, cz = (z0 + z1) / 2;
+        const hs = b.h * 0.7, hc = b.h * 0.86; // shaft top, then crown apex
+        const k = 0.45; // the shaft top is 45% of the base footprint
+        const tx0 = cx + (x0 - cx) * k, tx1 = cx + (x1 - cx) * k;
+        const tz0 = cz + (z0 - cz) * k, tz1 = cz + (z1 - cz) * k;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        g.seg(g.P(x0, 0, z0), g.P(tx0, hs, tz0)); // leaning shaft corners
+        g.seg(g.P(x1, 0, z0), g.P(tx1, hs, tz0));
+        g.seg(g.P(x0, 0, z1), g.P(tx0, hs, tz1));
+        g.seg(g.P(x1, 0, z1), g.P(tx1, hs, tz1));
+        topFace(g, tx0, tx1, tz0, tz1, hs, g.detail > 0.4);
+        g.seg(g.P(tx0, hs, tz0), g.P(cx, hc, cz)); // crown pyramid, front pair always
+        g.seg(g.P(tx1, hs, tz0), g.P(cx, hc, cz));
+        if (g.detail > 0.4) { // its back pair only when there is budget for it
+          g.seg(g.P(tx0, hs, tz1), g.P(cx, hc, cz));
+          g.seg(g.P(tx1, hs, tz1), g.P(cx, hc, cz));
+        }
+        g.seg(g.P(cx, hc, cz), g.P(cx, b.h, cz)); // the mast
+        if (g.detail > 0.3) g.seg(g.P(x0, 0, z0), g.P(x1, 0, z0)); // ground line
+        g.ctx.stroke();
+        // Three belts up the shaft plus one collar on the mast.
+        const belts = Math.round(1 + g.detail * 2);
+        g.fade(z0, 0.24);
+        g.ctx.beginPath();
+        for (let i = 1; i <= belts; i++) {
+          const t = i / (belts + 1), y = hs * t;
+          const a = x0 + (tx0 - x0) * t, c = x1 + (tx1 - x1) * t, zf = z0 + (tz0 - z0) * t;
+          g.seg(g.P(a, y, zf), g.P(c, y, zf));
+        }
+        const my = (hc + b.h) / 2, mr = b.w * 0.08;
+        g.seg(g.P(cx - mr, my, cz), g.P(cx + mr, my, cz));
+        g.ctx.stroke();
+      }
+    },
+
+    // Two slabs crossing at right angles: the plus-shaped plan of a 60s tower.
+    {
+      id: "cross", name: "Cross-Plan Tower", note: "Two slabs crossing at right angles into a plus-shaped plan.",
+      make(rng) { const s = 24 + rng() * 10; return { w: s, d: s, h: 55 + rng() * 40 }; },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d, h = b.h;
+        // Each wing is 38% as thick as the plan is wide, centred on the other axis.
+        const iz0 = z0 + b.d * 0.31, iz1 = z1 - b.d * 0.31;
+        const ix0 = x0 + b.w * 0.31, ix1 = x1 - b.w * 0.31;
+        const far = g.detail > 0.5;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        posts(g, x0, x1, iz0, iz1, 0, h, false); // the east-west wing
+        topFace(g, x0, x1, iz0, iz1, h, far);
+        posts(g, ix0, ix1, z0, z1, 0, h, false); // the north-south wing, its face nearer
+        topFace(g, ix0, ix1, z0, z1, h, far);
+        g.ctx.stroke();
+        // Plates read across the nearer wing only, so the cross stays legible.
+        const plates = Math.round(1 + g.detail * 3);
+        g.fade(z0, 0.26);
+        g.ctx.beginPath();
+        for (let i = 1; i <= plates; i++) {
+          const y = (h / (plates + 1)) * i;
+          g.seg(g.P(ix0, y, z0), g.P(ix1, y, z0));
+        }
+        g.ctx.stroke();
+      }
+    },
+
+    // Four broad steps climbing to a small summit, a Mesopotamian mass.
+    {
+      id: "ziggurat", name: "Ziggurat", note: "Four broad steps climbing to a small summit.",
+      make(rng) { return { w: 30 + rng() * 14, d: 28 + rng() * 12, h: 35 + rng() * 25 }; },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d;
+        const cx = (x0 + x1) / 2, cz = (z0 + z1) / 2;
+        const steps = 4;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        for (let i = 0; i < steps; i++) {
+          // Each step keeps the centre and pulls in 18% of the plan per level.
+          const k = 1 - i * 0.18;
+          const ax0 = cx + (x0 - cx) * k, ax1 = cx + (x1 - cx) * k;
+          const az0 = cz + (z0 - cz) * k, az1 = cz + (z1 - cz) * k;
+          const ya = (b.h / steps) * i, yb = (b.h / steps) * (i + 1);
+          g.seg(g.P(ax0, ya, az0), g.P(ax0, yb, az0)); // the two riser edges
+          g.seg(g.P(ax1, ya, az0), g.P(ax1, yb, az0));
+          g.seg(g.P(ax0, yb, az0), g.P(ax1, yb, az0)); // the step's front lip
+          if (g.detail > 0.4) { // the side lips, which give it depth
+            g.seg(g.P(ax0, yb, az0), g.P(ax0, yb, az1));
+            g.seg(g.P(ax1, yb, az0), g.P(ax1, yb, az1));
+          }
+          if (i === steps - 1) g.seg(g.P(ax0, yb, az1), g.P(ax1, yb, az1)); // close the summit
+        }
+        g.ctx.stroke();
+      }
+    },
+
+    // The short wide one at street level: a podium with a parapet.
+    {
+      id: "podium", name: "Podium Block", note: "A low wide street-level block with a parapet.",
+      make(rng) { return { w: 24 + rng() * 20, d: 22 + rng() * 14, h: 15 + rng() * 10 }; },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d, h = b.h;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        posts(g, x0, x1, z0, z1, 0, h, g.detail > 0.5);
+        topFace(g, x0, x1, z0, z1, h, true);
+        g.ctx.stroke();
+        // A parapet band just under the roof, then a few tall mullions.
+        g.fade(z0, 0.26);
+        g.ctx.beginPath();
+        g.seg(g.P(x0, h * 0.86, z0), g.P(x1, h * 0.86, z0));
+        g.seg(g.P(x0, h * 0.86, z0), g.P(x0, h * 0.86, z1));
+        const mull = Math.round(1 + g.detail * 3);
+        for (let i = 1; i <= mull; i++) {
+          const x = x0 + (b.w / (mull + 1)) * i;
+          g.seg(g.P(x, 0, z0), g.P(x, h * 0.86, z0));
+        }
+        g.ctx.stroke();
+      }
+    },
+
+    // Structure worn on the outside: diagonal bracing, not a window grid.
+    {
+      id: "lattice", name: "Exoskeleton", note: "A braced tube wearing its diagonal structure on the outside.",
+      make(rng) { const s = 18 + rng() * 8; return { w: s, d: s, h: 60 + rng() * 40 }; },
+      draw(g, b, x0, z0) {
+        const x1 = x0 + b.w, z1 = z0 + b.d, h = b.h;
+        g.fade(z0, 0.9);
+        g.ctx.beginPath();
+        posts(g, x0, x1, z0, z1, 0, h, g.detail > 0.4);
+        topFace(g, x0, x1, z0, z1, h, true);
+        g.ctx.stroke();
+        // Three braced bays: an X across the front of each, plus the belt between them.
+        const bays = 3, bh = h / bays;
+        g.fade(z0, 0.34);
+        g.ctx.beginPath();
+        for (let i = 0; i < bays; i++) {
+          const ya = bh * i, yb = bh * (i + 1);
+          g.seg(g.P(x0, ya, z0), g.P(x1, yb, z0));
+          g.seg(g.P(x1, ya, z0), g.P(x0, yb, z0));
+          if (i > 0) g.seg(g.P(x0, ya, z0), g.P(x1, ya, z0)); // belt at the bay joint
+          // One brace on the left flank, so the bracing wraps the corner.
+          if (g.detail > 0.5) g.seg(g.P(x0, ya, z0), g.P(x0, yb, z1));
+        }
+        g.ctx.stroke();
+      }
+    }
+
+  ];
+})();
+
+</script>
+
+<script>
+/* lib-voice.js — THE VOICE. Eight canvas-2D objects that sit at the centre of the
+   neon-city frame and react to an amplitude value. Exposes window.VOICES only. */
+
+(() => {
+  const TAU = Math.PI * 2;
+
+  // Deterministic pseudo-random from an integer seed, so every frame agrees.
+  const rnd = (i) => {
+    const s = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+    return s - Math.floor(s);
+  };
+
+  // Rotate a 3D point around X then Y then Z. Used by the 3D-ish variants.
+  const rot3 = (p, ax, ay, az) => {
+    let [x, y, z] = p;
+    let c = Math.cos(ax), s = Math.sin(ax);
+    let y1 = y * c - z * s, z1 = y * s + z * c;
+    c = Math.cos(ay); s = Math.sin(ay);
+    let x1 = x * c + z1 * s; z1 = -x * s + z1 * c;
+    c = Math.cos(az); s = Math.sin(az);
+    return [x1 * c - y1 * s, x1 * s + y1 * c, z1];
+  };
+
+  // Weak perspective: things behind the origin shrink, things in front grow.
+  const persp = (z) => 1 / (1 - z * 0.28);
+
+  // Icosahedron vertices, normalised, plus its 30 edges found once by distance.
+  const PHI = (1 + Math.sqrt(5)) / 2;
+  const ICO_V = [];
+  [[0, 1, PHI], [0, -1, PHI], [0, 1, -PHI], [0, -1, -PHI]].forEach((p) => {
+    ICO_V.push(p, [p[1], p[2], p[0]], [p[2], p[0], p[1]]);
+  });
+  const ICO_LEN = Math.hypot(0, 1, PHI);
+  ICO_V.forEach((p) => { p[0] /= ICO_LEN; p[1] /= ICO_LEN; p[2] /= ICO_LEN; });
+  const ICO_E = [];
+  for (let i = 0; i < ICO_V.length; i++) {
+    for (let j = i + 1; j < ICO_V.length; j++) {
+      const d = Math.hypot(
+        ICO_V[i][0] - ICO_V[j][0], ICO_V[i][1] - ICO_V[j][1], ICO_V[i][2] - ICO_V[j][2]
+      );
+      // Shortest edge on a unit icosahedron is 2/sqrt(phi*sqrt(5)) ≈ 1.0515.
+      if (d < 1.12) ICO_E.push([i, j]);
+    }
+  }
+
+  // Fixed orbit set for the flagship variant: radius, flatten, tilt, speed, size.
+  const ORBITS = [
+    { R: 0.62, k: 0.30, tilt: -0.35, sp: 1.40, sz: 0.085 },
+    { R: 0.88, k: 0.62, tilt: 1.15, sp: -0.95, sz: 0.070 },
+    { R: 1.10, k: 0.22, tilt: 0.45, sp: 0.66, sz: 0.100 },
+    { R: 1.22, k: 0.80, tilt: -1.05, sp: -0.48, sz: 0.058 },
+    { R: 1.02, k: 0.45, tilt: 2.30, sp: 1.05, sz: 0.048 }
+  ];
+
+  window.VOICES = [
+
+    // A glowing core with tilted elliptical orbits whose bodies pass in front and behind.
+    {
+      id: 'orbit',
+      name: 'Orbit',
+      note: 'A glowing core ringed by tilted orbits whose bodies cross in front of and behind it.',
+      draw(ctx, r, t, amp, ink) {
+        ctx.save();
+        const a = Math.min(1, Math.max(0, amp)) || 0; // clamp, and treat NaN as silence
+        // Loud speech speeds the whole system up and swells the core.
+        const rate = 1 + a * 1.6;
+        const core = r * (0.26 + a * 0.10 + Math.sin(t * 2.2) * 0.012);
+        // At high amp a fifth body joins; idle keeps four.
+        const count = a > 0.55 ? ORBITS.length : ORBITS.length - 1;
+
+        const front = [];
+        for (let i = 0; i < count; i++) {
+          const o = ORBITS[i];
+          const R = r * o.R * (1 + a * 0.08);
+          // Faint orbit path, brighter as the voice rises.
+          ctx.globalAlpha = 0.16 + a * 0.22;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, R, R * o.k, o.tilt, 0, TAU);
+          ctx.stroke();
+
+          const th = t * o.sp * rate + i * 1.7;
+          // Un-tilted ellipse point, then rotated into the orbit's own plane.
+          const ex = R * Math.cos(th), ey = R * o.k * Math.sin(th);
+          const c = Math.cos(o.tilt), s = Math.sin(o.tilt);
+          const x = ex * c - ey * s, y = ex * s + ey * c;
+          // sin(th) is the depth: positive means the body is on the near side.
+          const z = Math.sin(th);
+          const sz = r * o.sz * (1 + a * 0.55) * (1 + z * 0.35);
+          if (z > 0) { front.push([x, y, sz, z]); continue; }
+          ctx.globalAlpha = 0.45;
+          ctx.beginPath();
+          ctx.arc(x, y, sz, 0, TAU);
+          ctx.fill();
+        }
+
+        // Core: three stacked discs fake a soft glow without changing colour.
+        ctx.globalAlpha = 0.14 + a * 0.10;
+        ctx.beginPath(); ctx.arc(0, 0, core * 1.75, 0, TAU); ctx.fill();
+        ctx.globalAlpha = 0.32;
+        ctx.beginPath(); ctx.arc(0, 0, core * 1.25, 0, TAU); ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.beginPath(); ctx.arc(0, 0, core, 0, TAU); ctx.fill();
+        // A thin accent ring on the core breathes with the amplitude.
+        ctx.strokeStyle = ink[1];
+        ctx.globalAlpha = 0.5 + a * 0.5;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(0, 0, core * (1.5 + a * 0.35 + Math.sin(t * 3.1) * 0.05), 0, TAU);
+        ctx.stroke();
+        ctx.strokeStyle = ink[0];
+
+        // Near-side bodies last so they clearly sit in front of the core.
+        front.forEach(([x, y, sz, z]) => {
+          ctx.globalAlpha = 0.85 + z * 0.15;
+          ctx.beginPath(); ctx.arc(x, y, sz, 0, TAU); ctx.fill();
+        });
+
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = ink[0];
+        ctx.restore();
+        ctx.strokeStyle = ink[0];
+      }
+    },
+
+    // A ring with a live speech trace across its middle, flat at rest and full when loud.
+    {
+      id: 'waveform',
+      name: 'Waveform',
+      note: 'A ring carrying a speech trace across its middle, near flat at rest and full when loud.',
+      draw(ctx, r, t, amp, ink) {
+        ctx.save();
+        const a = Math.min(1, Math.max(0, amp)) || 0; // clamp, and treat NaN as silence
+        const N = 64;
+        const span = r * 0.9;
+
+        // The ring itself, plus a thin outer ring that swells with the voice.
+        ctx.globalAlpha = 0.85;
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(0, 0, r, 0, TAU); ctx.stroke();
+        ctx.globalAlpha = 0.2 + a * 0.4;
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(0, 0, r * (1.08 + a * 0.14), 0, TAU); ctx.stroke();
+
+        // Baseline, visible only when the trace is quiet.
+        ctx.globalAlpha = 0.25 * (1 - a);
+        ctx.beginPath(); ctx.moveTo(-span, 0); ctx.lineTo(span, 0); ctx.stroke();
+
+        // The trace. Idle is a slow shallow ripple; amp adds three faster layers.
+        const trace = (phase, gain) => {
+          ctx.beginPath();
+          for (let i = 0; i <= N; i++) {
+            const u = (i / N) * 2 - 1;             // -1..1 across the ring
+            const env = Math.sqrt(Math.max(0, 1 - u * u)); // taper to nothing at the edges
+            const idle = Math.sin(u * 6 + t * 1.8 + phase) * 0.035;
+            const live = a * (
+              Math.sin(u * 9 - t * 7 + phase) * 0.26 +
+              Math.sin(u * 15.5 + t * 4.3 + phase) * 0.14 +
+              Math.sin(u * 24 - t * 11 + phase) * 0.08
+            );
+            const y = -env * (idle + live) * r * 1.55 * gain;
+            const x = u * span;
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        };
+
+        // Ghost trace one beat behind, for a little depth.
+        ctx.strokeStyle = ink[1];
+        ctx.globalAlpha = 0.25 + a * 0.3;
+        ctx.lineWidth = 1;
+        trace(0.9, 0.7);
+        ctx.strokeStyle = ink[0];
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 2 + a * 1.2;
+        trace(0, 1);
+
+        // Two end caps mark where the trace meets the ring.
+        ctx.globalAlpha = 0.7;
+        ctx.beginPath(); ctx.arc(-span, 0, 2 + a * 2, 0, TAU); ctx.fill();
+        ctx.beginPath(); ctx.arc(span, 0, 2 + a * 2, 0, TAU); ctx.fill();
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+        ctx.strokeStyle = ink[0];
+      }
+    },
+
+    // Concentric rings born at the core and pushed outward, faster and thicker when loud.
+    {
+      id: 'pulse-rings',
+      name: 'Pulse Rings',
+      note: 'Rings born at the core and pushed outward, faster and denser as the voice rises.',
+      draw(ctx, r, t, amp, ink) {
+        ctx.save();
+        const a = Math.min(1, Math.max(0, amp)) || 0; // clamp, and treat NaN as silence
+        const RING = 5;
+        const speed = 0.22 + a * 0.55;   // rings per second
+
+        for (let i = 0; i < RING; i++) {
+          // Each ring holds a fixed slot in the 0..1 life cycle, offset by i.
+          const life = ((t * speed + i / RING) % 1);
+          const R = r * (0.18 + life * 1.25);
+          ctx.globalAlpha = (1 - life) * (0.25 + a * 0.6);
+          ctx.lineWidth = 1 + (1 - life) * (1 + a * 2.5);
+          ctx.beginPath(); ctx.arc(0, 0, R, 0, TAU); ctx.stroke();
+          // A travelling marker rides each ring so idle never looks static.
+          const th = t * (0.8 + i * 0.3) + i;
+          ctx.beginPath();
+          ctx.arc(Math.cos(th) * R, Math.sin(th) * R, 1.5 + a * 2, 0, TAU);
+          ctx.fill();
+        }
+
+        // Core disc, breathing at rest and swelling with amplitude.
+        ctx.globalAlpha = 0.9;
+        const core = r * (0.13 + a * 0.16 + Math.sin(t * 2.6) * 0.02);
+        ctx.beginPath(); ctx.arc(0, 0, core, 0, TAU); ctx.fill();
+        ctx.strokeStyle = ink[1];
+        ctx.globalAlpha = 0.4 + a * 0.5;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(0, 0, core * 1.6, 0, TAU); ctx.stroke();
+
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = ink[0];
+        ctx.restore();
+        ctx.strokeStyle = ink[0];
+      }
+    },
+
+    // A wireframe icosahedron tumbling in three axes, faster and larger when loud.
+    {
+      id: 'polyhedron',
+      name: 'Polyhedron',
+      note: 'A wireframe icosahedron tumbling on three axes, spinning harder as the voice rises.',
+      draw(ctx, r, t, amp, ink) {
+        ctx.save();
+        const a = Math.min(1, Math.max(0, amp)) || 0; // clamp, and treat NaN as silence
+        const spin = 1 + a * 2.2;
+        const R = r * (0.82 + a * 0.24 + Math.sin(t * 1.9) * 0.02);
+
+        // Project all twelve vertices once, then draw the thirty edges.
+        const P = ICO_V.map((v) => {
+          const [x, y, z] = rot3(v, t * 0.31 * spin, t * 0.47 * spin, t * 0.17 * spin);
+          const k = persp(z) * R;
+          return [x * k, y * k, z];
+        });
+
+        ctx.lineWidth = 1.2;
+        ICO_E.forEach((e) => {
+          const p = P[e[0]], q = P[e[1]];
+          // Depth fade: edges at the back sit around 0.15 alpha, front ones near 0.9.
+          const zm = (p[2] + q[2]) * 0.5;
+          ctx.globalAlpha = (0.18 + (zm + 1) * 0.32) * (0.6 + a * 0.4);
+          ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+        });
+
+        // Vertex dots in the accent colour, larger with amplitude.
+        ctx.fillStyle = ink[1];
+        P.forEach((p) => {
+          ctx.globalAlpha = 0.3 + (p[2] + 1) * 0.3;
+          ctx.beginPath(); ctx.arc(p[0], p[1], (1.2 + a * 2.2) * persp(p[2]), 0, TAU); ctx.fill();
+        });
+        ctx.fillStyle = ink[0];
+
+        // Small hard core so the shape reads as containing a voice.
+        ctx.globalAlpha = 0.8;
+        ctx.beginPath(); ctx.arc(0, 0, r * (0.06 + a * 0.09), 0, TAU); ctx.fill();
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+        ctx.strokeStyle = ink[0];
+      }
+    },
+
+    // A sphere of particles that drifts loose at rest and bursts outward when loud.
+    {
+      id: 'particle-sphere',
+      name: 'Particle Sphere',
+      note: 'A shell of particles that drifts loosely at rest and bursts outward when loud.',
+      draw(ctx, r, t, amp, ink) {
+        ctx.save();
+        const a = Math.min(1, Math.max(0, amp)) || 0; // clamp, and treat NaN as silence
+        const N = 52;
+        const golden = Math.PI * (3 - Math.sqrt(5)); // Fibonacci sphere spacing
+
+        for (let i = 0; i < N; i++) {
+          // Even latitude band, then the golden angle in longitude.
+          const yy = 1 - (i / (N - 1)) * 2;
+          const rad = Math.sqrt(Math.max(0, 1 - yy * yy));
+          const th = golden * i;
+          const p = rot3([Math.cos(th) * rad, yy, Math.sin(th) * rad],
+            Math.sin(t * 0.23) * 0.6, t * (0.28 + a * 0.5), 0);
+          // Per-particle breathing at rest; amp throws them outward and apart.
+          const wob = Math.sin(t * 1.6 + rnd(i) * TAU) * 0.06;
+          const R = r * (0.58 + wob + a * (0.30 + rnd(i + 9) * 0.40));
+          const k = persp(p[2]);
+          ctx.globalAlpha = (0.2 + (p[2] + 1) * 0.34) * (0.65 + a * 0.35);
+          ctx.beginPath();
+          ctx.arc(p[0] * R * k, p[1] * R * k, (0.9 + a * 1.6) * k, 0, TAU);
+          ctx.fill();
+        }
+
+        // Faint containing ring shows the shell the particles leave and return to.
+        ctx.strokeStyle = ink[1];
+        ctx.globalAlpha = 0.25 * (1 - a * 0.7);
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(0, 0, r * 0.58, 0, TAU); ctx.stroke();
+        ctx.strokeStyle = ink[0];
+
+        ctx.globalAlpha = 0.9;
+        ctx.beginPath(); ctx.arc(0, 0, r * (0.05 + a * 0.10), 0, TAU); ctx.fill();
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+        ctx.strokeStyle = ink[0];
+      }
+    },
+
+    // Three rings on separate axes spinning like a gyroscope, faster and wider when loud.
+    {
+      id: 'gyroscope',
+      name: 'Gyroscope',
+      note: 'Three rings on separate axes spinning like a gimbal, faster and wider when loud.',
+      draw(ctx, r, t, amp, ink) {
+        ctx.save();
+        const a = Math.min(1, Math.max(0, amp)) || 0; // clamp, and treat NaN as silence
+        const spin = 0.5 + a * 2.0;
+        const S = 26; // samples per ring
+
+        // Each ring gets its own axis pair and its own drift rate.
+        const rings = [
+          { ax: t * 0.9 * spin, ay: 0.4, az: 0, R: 1.0, w: 2 },
+          { ax: 0.3, ay: t * 0.7 * spin, az: 1.1, R: 0.82, w: 1.6 },
+          { ax: t * 0.5 * spin + 1.0, ay: 1.3, az: t * 0.3 * spin, R: 0.64, w: 1.3 }
+        ];
+
+        rings.forEach((g, gi) => {
+          const R = r * g.R * (1 + a * 0.16);
+          ctx.lineWidth = g.w + a * 1.2;
+          ctx.globalAlpha = 0.35 + a * 0.45;
+          ctx.beginPath();
+          for (let i = 0; i <= S; i++) {
+            const th = (i / S) * TAU;
+            const p = rot3([Math.cos(th), Math.sin(th), 0], g.ax, g.ay, g.az);
+            const k = persp(p[2]) * R;
+            if (i === 0) ctx.moveTo(p[0] * k, p[1] * k); else ctx.lineTo(p[0] * k, p[1] * k);
+          }
+          ctx.stroke();
+
+          // One bead per ring marks its rotation and keeps idle alive.
+          const bt = t * (1.3 + gi * 0.6);
+          const bp = rot3([Math.cos(bt), Math.sin(bt), 0], g.ax, g.ay, g.az);
+          const bk = persp(bp[2]) * R;
+          ctx.globalAlpha = 0.9;
+          ctx.beginPath();
+          ctx.arc(bp[0] * bk, bp[1] * bk, (1.6 + a * 2.4) * persp(bp[2]), 0, TAU);
+          ctx.fill();
+        });
+
+        ctx.fillStyle = ink[1];
+        ctx.globalAlpha = 0.85;
+        ctx.beginPath(); ctx.arc(0, 0, r * (0.10 + a * 0.12), 0, TAU); ctx.fill();
+        ctx.fillStyle = ink[0];
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+        ctx.strokeStyle = ink[0];
+      }
+    },
+
+    // A bar spectrum bent into a circle, bars growing outward with the voice.
+    {
+      id: 'spectrum-ring',
+      name: 'Spectrum Ring',
+      note: 'A bar spectrum bent into a circle, bars climbing outward as the voice rises.',
+      draw(ctx, r, t, amp, ink) {
+        ctx.save();
+        const a = Math.min(1, Math.max(0, amp)) || 0; // clamp, and treat NaN as silence
+        const N = 44;
+        const inner = r * 0.58;
+
+        ctx.lineWidth = 2.4;
+        ctx.lineCap = 'round';
+        for (let i = 0; i < N; i++) {
+          // Mirror the bins left and right so it reads as one spectrum wrapped round.
+          const bin = i < N / 2 ? i : N - 1 - i;
+          const f = bin / (N / 2);
+          // Low bins are tall and slow, high bins short and fast: a plausible spectrum.
+          const band =
+            Math.sin(t * (2 + f * 9) + bin * 0.8) * 0.5 +
+            Math.sin(t * (1.1 + f * 4) - bin * 1.7) * 0.3;
+          const tilt = 1 - f * 0.55;                       // rolloff towards high bins
+          const idle = 0.05 + 0.03 * (band * 0.5 + 0.5);   // never fully still
+          const h = inner * (idle + a * tilt * (0.35 + band * 0.35));
+          const th = (i / N) * TAU - Math.PI / 2 + t * 0.12;
+          const c = Math.cos(th), s = Math.sin(th);
+          ctx.globalAlpha = 0.35 + a * 0.55;
+          ctx.beginPath();
+          ctx.moveTo(c * inner, s * inner);
+          ctx.lineTo(c * (inner + h), s * (inner + h));
+          ctx.stroke();
+        }
+        ctx.lineCap = 'butt';
+
+        // Baseline ring the bars stand on, and an accent ring marking full scale.
+        ctx.globalAlpha = 0.6;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.arc(0, 0, inner, 0, TAU); ctx.stroke();
+        ctx.strokeStyle = ink[1];
+        ctx.globalAlpha = 0.15 + a * 0.45;
+        ctx.beginPath(); ctx.arc(0, 0, inner * 1.62, 0, TAU); ctx.stroke();
+        ctx.strokeStyle = ink[0];
+
+        ctx.globalAlpha = 0.8;
+        ctx.beginPath(); ctx.arc(0, 0, r * (0.07 + a * 0.10), 0, TAU); ctx.fill();
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+        ctx.strokeStyle = ink[0];
+      }
+    },
+
+    // A core throwing spokes outward, each carrying a pulse that races away when loud.
+    {
+      id: 'spokes',
+      name: 'Spokes',
+      note: 'A core throwing spokes outward, each carrying a pulse that races away when loud.',
+      draw(ctx, r, t, amp, ink) {
+        ctx.save();
+        const a = Math.min(1, Math.max(0, amp)) || 0; // clamp, and treat NaN as silence
+        const N = 20;
+        const inner = r * 0.20;
+        const spin = t * (0.15 + a * 0.5);
+
+        ctx.lineWidth = 1.4;
+        for (let i = 0; i < N; i++) {
+          const th = (i / N) * TAU + spin;
+          const c = Math.cos(th), s = Math.sin(th);
+          // Alternating long and short spokes, each with its own slow sway.
+          const base = (i % 2 ? 0.62 : 0.95) + Math.sin(t * 1.3 + rnd(i) * TAU) * 0.06;
+          const len = r * base * (0.55 + a * 0.65);
+          ctx.globalAlpha = 0.22 + a * 0.4;
+          ctx.beginPath();
+          ctx.moveTo(c * inner, s * inner);
+          ctx.lineTo(c * (inner + len), s * (inner + len));
+          ctx.stroke();
+          // A pulse travels the spoke; louder means faster and brighter.
+          const p = ((t * (0.35 + a * 1.4) + rnd(i + 3)) % 1);
+          const d = inner + len * p;
+          ctx.globalAlpha = (1 - p) * (0.5 + a * 0.5);
+          ctx.beginPath(); ctx.arc(c * d, s * d, 1.4 + a * 2.4, 0, TAU); ctx.fill();
+        }
+
+        // Core: filled disc plus an accent ring that swells with amplitude.
+        ctx.globalAlpha = 0.9;
+        ctx.beginPath(); ctx.arc(0, 0, inner * (0.7 + a * 0.5), 0, TAU); ctx.fill();
+        ctx.strokeStyle = ink[1];
+        ctx.globalAlpha = 0.35 + a * 0.55;
+        ctx.lineWidth = 1.5 + a * 1.5;
+        ctx.beginPath();
+        ctx.arc(0, 0, inner * (1.25 + a * 0.4 + Math.sin(t * 2.4) * 0.08), 0, TAU);
+        ctx.stroke();
+        ctx.strokeStyle = ink[0];
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+        ctx.strokeStyle = ink[0];
+      }
+    }
+
+  ];
+})();
+
+</script>
+
+<script>
+/*
+  lib-sky.js — three catalogues for the wireframe neon-city flyover.
+  window.PALETTES  14 two-ink neon schemes for black backgrounds.
+  window.SKIES     7 backdrops, drawn in screen space behind the city.
+  window.FLOATS    10 neon objects that hang in the air, drawn in world space.
+  Pure canvas 2D, no DOM, no libraries.
+*/
+
+// Wrapped so the local helpers below never land on the global scope.
+(() => {
+
+/* ------------------------------------------------------------------ */
+/* 1. PALETTES                                                         */
+/* ------------------------------------------------------------------ */
+
+window.PALETTES = [
+  // The house pair: vermilion ink against the brand cyan.
+  { id: 'vermilion-signal', name: 'Vermilion Signal', inks: ['#D9482B', '#38BDF8'], glow: 12 },
+  // Magenta and cyan, the crossing at 2am.
+  { id: 'shinjuku-crossing', name: 'Shinjuku Crossing', inks: ['#FF2E88', '#22D3EE'], glow: 14 },
+  // Ice cyan with a warm amber counter-light, Tron grid.
+  { id: 'grid-legacy', name: 'Grid Legacy', inks: ['#7DF9FF', '#FFB338'], glow: 13 },
+  // Single hue: two depths of cyan, drafting-table blue.
+  { id: 'cyan-blueprint', name: 'Cyan Blueprint', inks: ['#7DD3FC', '#0E7490'], glow: 9 },
+  // Single hue: amber CRT, warm and dim.
+  { id: 'amber-terminal', name: 'Amber Terminal', inks: ['#FFC24B', '#B26B00'], glow: 8 },
+  // Single hue: two blues, rain on cobalt.
+  { id: 'cobalt-rain', name: 'Cobalt Rain', inks: ['#7FD4FF', '#1E6FE0'], glow: 9 },
+  // No glow at all: white line art, a printed plate.
+  { id: 'broadsheet', name: 'Broadsheet', inks: ['#FFFFFF', '#BFBFBF'], glow: 0 },
+  // Acid green over sea green, circuit etch.
+  { id: 'jade-circuit', name: 'Jade Circuit', inks: ['#39FF14', '#00E0A4'], glow: 11 },
+  // Teal wire cut by deep indigo, cold and synthetic.
+  { id: 'sector-indigo', name: 'Sector Indigo', inks: ['#2DD4BF', '#4F46E5'], glow: 12 },
+  // Pale sky-white next to hot cyan, lantern light.
+  { id: 'ice-lantern', name: 'Ice Lantern', inks: ['#E0F2FE', '#38BDF8'], glow: 10 },
+  // Dust haze: warm orange with a washed blue, 2049 weather.
+  { id: 'harbour-fog', name: 'Harbour Fog', inks: ['#FFA24C', '#9FD8E8'], glow: 7 },
+  // Gold signage against a hard broadcast blue.
+  { id: 'ginza-gold', name: 'Ginza Gold', inks: ['#FFD400', '#00B3FF'], glow: 12 },
+  // Soft green over near-white, hospital-ward calm.
+  { id: 'ward-green', name: 'Ward Green', inks: ['#22C55E', '#E2FFF0'], glow: 6 },
+  // A single red warning ink with grey structure behind it.
+  { id: 'signal-red', name: 'Signal Red', inks: ['#FF3355', '#E6E6E6'], glow: 9 }
+];
+
+/* ------------------------------------------------------------------ */
+/* 2. SKIES                                                            */
+/* ------------------------------------------------------------------ */
+
+// Deterministic 0..1 noise so star and cloud layouts never flicker between frames.
+const skyHash = (i) => {
+  const x = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+  return x - Math.floor(x);
+};
+
+window.SKIES = [
+  {
+    id: 'sun-bands',
+    name: 'Setting Sun',
+    note: 'Large disc on the horizon, sliced by horizontal bands that widen downward.',
+    draw: (g, horizonY, t) => {
+      const c = g.ctx;
+      c.save();
+      c.shadowBlur = 0;
+      const r = Math.min(g.width, g.height) * 0.3;      // disc radius
+      const cx = g.width * 0.5;
+      const cy = horizonY + r * 0.12;                   // centre sits just under the horizon
+      // Clip to the disc, then to the sky half, so nothing spills onto the ground.
+      c.beginPath();
+      c.arc(cx, cy, r, 0, Math.PI * 2);
+      c.clip();
+      c.beginPath();
+      c.rect(0, 0, g.width, horizonY);
+      c.clip();
+      const grad = c.createLinearGradient(0, cy - r, 0, cy + r);
+      grad.addColorStop(0, g.inks[1]);
+      grad.addColorStop(1, g.inks[0]);
+      c.fillStyle = grad;
+      c.globalAlpha = 0.26 + 0.03 * Math.sin(t * 0.4);  // slow breathing, stays dim
+      // Only the lit bands are painted; the gaps are left as bare background.
+      let y = cy - r;
+      let band = r * 0.17;
+      let gap = r * 0.015;
+      for (let i = 0; i < 40 && y < cy + r && band > 0.6; i++) {
+        c.fillRect(cx - r, y, r * 2, band);
+        y += band + gap;
+        gap *= 1.38;                                    // gaps grow, bands shrink: the retrowave slice
+        band *= 0.9;
+      }
+      c.restore();
+      c.globalAlpha = 1;
+    }
+  },
+
+  {
+    id: 'clear-night',
+    name: 'Clear Night',
+    note: 'Nothing but a whisper of light gathered at the horizon line.',
+    draw: (g, horizonY, t) => {
+      const c = g.ctx;
+      c.save();
+      c.shadowBlur = 0;
+      const top = Math.max(0, horizonY - g.height * 0.35);
+      const grad = c.createLinearGradient(0, top, 0, horizonY);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(1, g.inks[1]);
+      c.globalAlpha = 0.1 + 0.01 * Math.sin(t * 0.3);
+      c.fillStyle = grad;
+      c.fillRect(0, top, g.width, horizonY - top);
+      c.restore();
+      c.globalAlpha = 1;
+    }
+  },
+
+  {
+    id: 'haze-band',
+    name: 'Low Haze',
+    note: 'A thick band of smog pressed flat against the skyline.',
+    draw: (g, horizonY, t) => {
+      const c = g.ctx;
+      c.save();
+      c.shadowBlur = 0;
+      const h = g.height * 0.12;                        // band thickness
+      const top = horizonY - h;
+      const grad = c.createLinearGradient(0, top, 0, horizonY + h * 0.2);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(0.6, g.inks[0]);
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      c.fillStyle = grad;
+      c.globalAlpha = 0.14;
+      c.fillRect(0, top, g.width, h * 1.2);
+      // Two hairlines drifting sideways give the haze a slow current.
+      c.strokeStyle = g.inks[1];
+      c.lineWidth = 1;
+      c.globalAlpha = 0.08;
+      for (let i = 0; i < 2; i++) {
+        const y = horizonY - h * (0.25 + i * 0.35);
+        const off = ((t * (6 + i * 4)) % (g.width + 200)) - 100;
+        c.beginPath();
+        c.moveTo(off - 220, y);
+        c.lineTo(off + 220, y);
+        c.stroke();
+      }
+      c.restore();
+      c.globalAlpha = 1;
+    }
+  },
+
+  {
+    id: 'low-planet',
+    name: 'Low Planet',
+    note: 'A huge ringed body half-sunk behind the city, outline only.',
+    draw: (g, horizonY, t) => {
+      const c = g.ctx;
+      c.save();
+      c.shadowBlur = 0;
+      const r = Math.min(g.width, g.height) * 0.38;
+      const cx = g.width * 0.68;
+      const cy = horizonY + r * 0.35;
+      c.beginPath();
+      c.rect(0, 0, g.width, horizonY);
+      c.clip();                                          // keep the body above the ground plane
+      c.globalAlpha = 0.09;
+      c.fillStyle = g.inks[1];
+      c.beginPath();
+      c.arc(cx, cy, r, 0, Math.PI * 2);
+      c.fill();
+      c.globalAlpha = 0.2;
+      c.strokeStyle = g.inks[1];
+      c.lineWidth = 1.2;
+      c.stroke();
+      // Three surface arcs, offset from centre so they read as banding.
+      c.globalAlpha = 0.12;
+      for (let i = 1; i <= 3; i++) {
+        c.beginPath();
+        c.ellipse(cx, cy - r * 0.15 * i, r * (1 - i * 0.12), r * 0.1, 0, 0, Math.PI * 2);
+        c.stroke();
+      }
+      // The ring, a flattened ellipse tipped a few degrees.
+      c.globalAlpha = 0.16;
+      c.strokeStyle = g.inks[0];
+      c.beginPath();
+      c.ellipse(cx, cy, r * 1.5, r * 0.22, -0.24 + 0.01 * Math.sin(t * 0.2), 0, Math.PI * 2);
+      c.stroke();
+      c.restore();
+      c.globalAlpha = 1;
+    }
+  },
+
+  {
+    id: 'star-field',
+    name: 'Star Field',
+    note: 'Scattered pinpricks that twinkle slowly and thin out near the horizon.',
+    draw: (g, horizonY, t) => {
+      const c = g.ctx;
+      c.save();
+      c.shadowBlur = 0;
+      c.fillStyle = g.inks[1];
+      const count = 140;
+      for (let i = 0; i < count; i++) {
+        const x = skyHash(i) * g.width;
+        // Squaring the vertical hash pushes stars up, leaving the horizon sparse.
+        const yf = skyHash(i + 900);
+        const y = yf * yf * horizonY;
+        const s = 0.6 + skyHash(i + 300) * 1.1;
+        c.globalAlpha = 0.1 + 0.12 * (0.5 + 0.5 * Math.sin(t * 0.9 + i));
+        c.fillRect(x, y, s, s);
+      }
+      c.restore();
+      c.globalAlpha = 1;
+    }
+  },
+
+  {
+    id: 'cloud-strata',
+    name: 'Cloud Strata',
+    note: 'Thin flat cloud bars drifting sideways at different speeds.',
+    draw: (g, horizonY, t) => {
+      const c = g.ctx;
+      c.save();
+      c.shadowBlur = 0;
+      c.fillStyle = g.inks[0];
+      const rows = 9;
+      for (let i = 0; i < rows; i++) {
+        const y = horizonY - (i + 1) * (horizonY / (rows + 2)) * 0.85;
+        const w = g.width * (0.25 + skyHash(i + 11) * 0.5);
+        const speed = 4 + skyHash(i + 51) * 10;
+        // Wrap the bar across a track wider than the canvas so it never pops in view.
+        const span = g.width + w * 2;
+        const x = ((skyHash(i + 71) * span + t * speed) % span) - w;
+        c.globalAlpha = 0.06 + 0.04 * (1 - i / rows);    // lower strata are denser
+        c.fillRect(x, y, w, 1.5 + skyHash(i + 91) * 2);
+      }
+      c.restore();
+      c.globalAlpha = 1;
+    }
+  },
+
+  {
+    id: 'megastructure',
+    name: 'Megastructure',
+    note: 'A distant arcology silhouette, faint edges and a few lit floors.',
+    draw: (g, horizonY, t) => {
+      const c = g.ctx;
+      c.save();
+      c.shadowBlur = 0;
+      c.lineWidth = 1;
+      const blocks = 5;
+      for (let i = 0; i < blocks; i++) {
+        const w = g.width * (0.1 + skyHash(i + 5) * 0.12);
+        const x = g.width * (0.05 + skyHash(i + 17) * 0.8) - w * 0.5;
+        const h = horizonY * (0.35 + skyHash(i + 29) * 0.5);
+        const y = horizonY - h;
+        c.globalAlpha = 0.06;
+        c.fillStyle = g.inks[1];
+        c.fillRect(x, y, w, h);
+        c.globalAlpha = 0.13;
+        c.strokeStyle = g.inks[1];
+        c.strokeRect(x, y, w, h);
+        // A slow beacon on top of each tower.
+        c.globalAlpha = 0.1 + 0.14 * (0.5 + 0.5 * Math.sin(t * 1.3 + i * 2));
+        c.fillStyle = g.inks[0];
+        c.fillRect(x + w * 0.5 - 1, y - 4, 2, 2);
+      }
+      c.restore();
+      c.globalAlpha = 1;
+    }
+  }
+];
+
+/* ------------------------------------------------------------------ */
+/* 3. FLOATS                                                           */
+/* ------------------------------------------------------------------ */
+
+// Project a point given as an offset from the float's anchor.
+const lp = (g, f, dx, dy, dz) => g.P(f.x + dx, f.y + dy, f.z + dz);
+
+// Rotate an (x, z) pair about the vertical axis.
+const spinY = (x, z, a) => [x * Math.cos(a) - z * Math.sin(a), x * Math.sin(a) + z * Math.cos(a)];
+
+// Common opening: bail if the anchor is behind the camera, otherwise start a path at the right alpha.
+const begin = (g, f) => {
+  const anchor = g.P(f.x, f.y, f.z);
+  if (!anchor) return null;
+  g.ctx.beginPath();
+  g.fade(anchor[2], 0.85);
+  return anchor;
+};
+
+// Common close: stroke and hand the context back at full alpha.
+const end = (g) => {
+  g.ctx.stroke();
+  g.ctx.globalAlpha = 1;
+};
+
+window.FLOATS = [
+  {
+    id: 'torii',
+    name: 'Torii Gate',
+    note: 'Two pillars, a drooping lintel and a cross beam. 10 segments.',
+    make: (rng) => ({ size: 16 + rng() * 10, lean: (rng() - 0.5) * 0.3 }),
+    draw: (g, f, t) => {
+      if (!begin(g, f)) return;
+      const s = f.size, w = s * 0.55, h = s;
+      const sway = Math.sin(t * 0.4 + f.z * 0.01) * 0.4;  // gentle drift so it never sits dead still
+      const P = (dx, dy) => lp(g, f, dx + sway, dy, 0);
+      const lb = P(-w, 0), lt = P(-w, h);
+      const rb = P(w, 0), rt = P(w, h);
+      g.seg(lb, lt);
+      g.seg(rb, rt);
+      const ll = P(-w * 1.35, h * 1.02), rl = P(w * 1.35, h * 1.02);
+      g.seg(ll, rl);                                     // lintel
+      g.seg(ll, P(-w * 1.5, h * 0.9));                   // drooping ends
+      g.seg(rl, P(w * 1.5, h * 0.9));
+      g.seg(P(-w * 1.15, h * 0.78), P(w * 1.15, h * 0.78)); // cross beam
+      const a = P(-w * 0.18, h * 0.8), b = P(w * 0.18, h * 0.8);
+      const cTop = P(w * 0.18, h * 1.0), dTop = P(-w * 0.18, h * 1.0);
+      g.seg(a, b); g.seg(b, cTop); g.seg(cTop, dTop); g.seg(dTop, a); // plaque
+      end(g);
+    }
+  },
+
+  {
+    id: 'billboard',
+    name: 'Slashed Billboard',
+    note: 'A hanging advertising panel cut corner to corner. 9 segments.',
+    make: (rng) => ({ size: 14 + rng() * 12, ratio: 0.5 + rng() * 0.25 }),
+    draw: (g, f, t) => {
+      if (!begin(g, f)) return;
+      const w = f.size, h = f.size * f.ratio;
+      const P = (dx, dy) => lp(g, f, dx, dy, 0);
+      const a = P(-w, 0), b = P(w, 0), c = P(w, h), d = P(-w, h);
+      g.seg(a, b); g.seg(b, c); g.seg(c, d); g.seg(d, a);
+      g.seg(a, c);                                       // the slash
+      g.seg(P(-w, h * 0.78), P(w, h * 0.78));            // header rule
+      g.seg(P(-w * 0.6, h), P(-w * 0.6, h + f.size * 0.5)); // hanger wires
+      g.seg(P(w * 0.6, h), P(w * 0.6, h + f.size * 0.5));
+      // Scan bar sliding down the face, position wrapped into 0..1.
+      const p = (t * 0.25) % 1;
+      g.seg(P(-w, h * p), P(w, h * p));
+      end(g);
+    }
+  },
+
+  {
+    id: 'sign-rod',
+    name: 'Sign Rod',
+    note: 'A long horizontal bar with hanging tick marks and an end box. 12 segments.',
+    make: (rng) => ({ size: 20 + rng() * 16, ticks: 4 + Math.floor(rng() * 2) }),
+    draw: (g, f, t) => {
+      if (!begin(g, f)) return;
+      const w = f.size, drop = f.size * 0.16;
+      const P = (dx, dy) => lp(g, f, dx, dy, 0);
+      g.seg(P(-w, 0), P(w, 0));                          // rod
+      g.seg(P(-w, -drop * 0.6), P(-w, drop * 0.6));      // end caps
+      g.seg(P(w, -drop * 0.6), P(w, drop * 0.6));
+      for (let i = 0; i < f.ticks; i++) {
+        // Ticks spread evenly across the rod, each a short drop line.
+        const x = -w + (2 * w) * ((i + 1) / (f.ticks + 1));
+        const len = drop * (0.6 + 0.5 * Math.sin(t * 1.1 + i));
+        g.seg(P(x, 0), P(x, -len));
+      }
+      const bw = f.size * 0.18, bh = f.size * 0.22;
+      const a = P(w - bw * 2, 0), b = P(w, 0), c = P(w, bh), d = P(w - bw * 2, bh);
+      g.seg(a, b); g.seg(b, c); g.seg(c, d); g.seg(d, a); // end box
+      end(g);
+    }
+  },
+
+  {
+    id: 'diamond',
+    name: 'Rotating Diamond',
+    note: 'An octahedron turning on its vertical axis. 12 segments.',
+    make: (rng) => ({ size: 8 + rng() * 7, speed: 0.3 + rng() * 0.5 }),
+    draw: (g, f, t) => {
+      if (!begin(g, f)) return;
+      const s = f.size, a = t * f.speed;
+      const top = lp(g, f, 0, s, 0);
+      const bot = lp(g, f, 0, -s, 0);
+      const eq = [];
+      for (let i = 0; i < 4; i++) {
+        // Four equator vertices, quarter turn apart, spun together over time.
+        const ang = a + i * Math.PI * 0.5;
+        const [x, z] = spinY(s * 0.8, 0, ang);
+        eq.push(lp(g, f, x, 0, z));
+      }
+      for (let i = 0; i < 4; i++) {
+        g.seg(top, eq[i]);
+        g.seg(bot, eq[i]);
+        g.seg(eq[i], eq[(i + 1) % 4]);
+      }
+      end(g);
+    }
+  },
+
+  {
+    id: 'panel-cluster',
+    name: 'Panel Cluster',
+    note: 'Four small screens hung at staggered offsets. 16 segments.',
+    make: (rng) => {
+      const cells = [];
+      for (let i = 0; i < 4; i++) {
+        cells.push({
+          dx: (rng() - 0.5) * 22,
+          dy: (rng() - 0.5) * 18,
+          w: 3 + rng() * 4,
+          h: 2 + rng() * 3,
+          ph: rng() * 6.28                               // phase so the panels blink out of sync
+        });
+      }
+      return { size: 12, cells };
+    },
+    draw: (g, f, t) => {
+      if (!begin(g, f)) return;
+      f.cells.forEach((cl) => {
+        // Each panel pulses slightly in size, which reads as flicker on a wireframe.
+        const k = 1 + 0.08 * Math.sin(t * 1.6 + cl.ph);
+        const w = cl.w * k, h = cl.h * k;
+        const P = (dx, dy) => lp(g, f, cl.dx + dx, cl.dy + dy, 0);
+        const a = P(-w, -h), b = P(w, -h), c = P(w, h), d = P(-w, h);
+        g.seg(a, b); g.seg(b, c); g.seg(c, d); g.seg(d, a);
+      });
+      end(g);
+    }
+  },
+
+  {
+    id: 'ring',
+    name: 'Edge-On Ring',
+    note: 'A horizontal hoop that reads as a thin slit from ground level. 14 segments.',
+    make: (rng) => ({ size: 10 + rng() * 9, tilt: 0.1 + rng() * 0.2, speed: 0.2 + rng() * 0.3 }),
+    draw: (g, f, t) => {
+      if (!begin(g, f)) return;
+      const n = 14, r = f.size, a0 = t * f.speed;
+      let prev = null, first = null;
+      for (let i = 0; i < n; i++) {
+        const th = a0 + (i / n) * Math.PI * 2;
+        // Ring lies in the horizontal plane, lifted by a small tilt term.
+        const p = lp(g, f, Math.cos(th) * r, Math.sin(th) * r * f.tilt, Math.sin(th) * r);
+        if (i === 0) first = p; else g.seg(prev, p);
+        prev = p;
+      }
+      g.seg(prev, first);
+      end(g);
+    }
+  },
+
+  {
+    id: 'banner',
+    name: 'Hanging Banner',
+    note: 'A tall cloth sign on a rod, swaying, with rules and a notched hem. 11 segments.',
+    make: (rng) => ({ size: 18 + rng() * 14, ratio: 0.24 + rng() * 0.12 }),
+    draw: (g, f, t) => {
+      const h = f.size, w = f.size * f.ratio;
+      if (!begin(g, f)) return;
+      const sway = Math.sin(t * 0.7 + f.x * 0.05) * 0.08; // radians, pivoting at the rod
+      // Rotate about the top so the hem swings further than the head.
+      const P = (dx, dy) => {
+        const d = h - dy;
+        return lp(g, f, dx + Math.sin(sway) * d, dy - (1 - Math.cos(sway)) * d, 0);
+      };
+      const a = P(-w, 0), b = P(w, 0), c = P(w, h), d = P(-w, h);
+      g.seg(a, b); g.seg(b, c); g.seg(c, d); g.seg(d, a);
+      g.seg(P(-w, h * 0.82), P(w, h * 0.82));
+      g.seg(P(-w, h * 0.5), P(w, h * 0.5));
+      g.seg(P(-w * 1.5, h), P(w * 1.5, h));              // rod
+      g.seg(P(-w * 1.2, h), P(-w * 1.2, h + w));         // hangers
+      g.seg(P(w * 1.2, h), P(w * 1.2, h + w));
+      g.seg(a, P(0, w * 0.8));                           // hem notch
+      g.seg(b, P(0, w * 0.8));
+      end(g);
+    }
+  },
+
+  {
+    id: 'drone',
+    name: 'Patrol Drone',
+    note: 'A quad body with four arms and blinking running lights. 12 segments.',
+    make: (rng) => ({ size: 3 + rng() * 3, speed: 0.6 + rng() * 0.8 }),
+    draw: (g, f, t) => {
+      if (!begin(g, f)) return;
+      const s = f.size, a = t * f.speed;
+      const arms = [];
+      for (let i = 0; i < 4; i++) {
+        const [x, z] = spinY(s * 1.8, 0, a + i * Math.PI * 0.5);
+        arms.push(lp(g, f, x, 0, z));
+      }
+      const body = [];
+      for (let i = 0; i < 4; i++) {
+        const [x, z] = spinY(s * 0.6, 0, a + i * Math.PI * 0.5);
+        body.push(lp(g, f, x, 0, z));
+      }
+      for (let i = 0; i < 4; i++) {
+        g.seg(body[i], body[(i + 1) % 4]);               // body square
+        g.seg(body[i], arms[i]);                         // arm out to each rotor
+      }
+      // Running lights: a stub at each arm tip, length driven by an offset blink.
+      for (let i = 0; i < 4; i++) {
+        const blink = 0.5 + 0.5 * Math.sin(t * 4 + i * 1.6);
+        const [x, z] = spinY(s * 1.8, 0, a + i * Math.PI * 0.5);
+        g.seg(arms[i], lp(g, f, x, s * 0.5 * blink, z));
+      }
+      end(g);
+    }
+  },
+
+  {
+    id: 'blimp',
+    name: 'Wire Blimp',
+    note: 'An airship hull as a 12-point profile with a keel and two fins. 17 segments.',
+    make: (rng) => ({ size: 14 + rng() * 12, fat: 0.3 + rng() * 0.12 }),
+    draw: (g, f, t) => {
+      if (!begin(g, f)) return;
+      const n = 12, r = f.size;
+      const roll = Math.sin(t * 0.3 + f.z * 0.01) * 0.05; // slow nose-up, nose-down
+      let prev = null, first = null;
+      for (let i = 0; i < n; i++) {
+        const th = (i / n) * Math.PI * 2;
+        const x = Math.cos(th) * r;
+        // Vertical radius is a fraction of the length, giving the cigar profile.
+        const y = Math.sin(th) * r * f.fat + x * roll;
+        const p = lp(g, f, x, y, 0);
+        if (i === 0) first = p; else g.seg(prev, p);
+        prev = p;
+      }
+      g.seg(prev, first);
+      g.seg(lp(g, f, -r, roll * -r, 0), lp(g, f, r, roll * r, 0)); // keel line
+      const tail = lp(g, f, -r, -roll * r, 0);
+      g.seg(tail, lp(g, f, -r * 1.35, r * f.fat * 1.2, 0));        // fins
+      g.seg(tail, lp(g, f, -r * 1.35, -r * f.fat * 1.2, 0));
+      g.seg(lp(g, f, -r * 1.35, r * f.fat * 1.2, 0), lp(g, f, -r * 1.35, -r * f.fat * 1.2, 0));
+      end(g);
+    }
+  },
+
+  {
+    id: 'glyph',
+    name: 'Glyph Block',
+    note: 'An abstract sign character: a frame with a set of strokes inside. 12 segments.',
+    make: (rng) => ({
+      size: 8 + rng() * 6,
+      // Four optional strokes, chosen once so the glyph keeps its identity.
+      bars: [rng() > 0.3, rng() > 0.4, rng() > 0.5, rng() > 0.5]
+    }),
+    draw: (g, f, t) => {
+      if (!begin(g, f)) return;
+      const s = f.size;
+      const P = (dx, dy) => lp(g, f, dx, dy, 0);
+      const a = P(-s, -s), b = P(s, -s), c = P(s, s), d = P(-s, s);
+      g.seg(a, b); g.seg(b, c); g.seg(c, d); g.seg(d, a); // frame
+      g.seg(P(-s * 0.6, s * 0.55), P(s * 0.6, s * 0.55)); // head bar
+      g.seg(P(0, s * 0.7), P(0, -s * 0.7));               // spine
+      if (f.bars[0]) g.seg(P(-s * 0.7, 0), P(s * 0.7, 0));
+      if (f.bars[1]) g.seg(P(-s * 0.5, -s * 0.5), P(s * 0.5, -s * 0.5));
+      if (f.bars[2]) g.seg(P(-s * 0.55, -s * 0.7), P(-s * 0.2, -s * 0.1));
+      if (f.bars[3]) g.seg(P(s * 0.55, -s * 0.7), P(s * 0.2, -s * 0.1));
+      // One stroke pulses in length, like a character segment cycling on a sign.
+      const k = 0.3 + 0.4 * (0.5 + 0.5 * Math.sin(t * 2 + f.size));
+      g.seg(P(-s * 0.7, s * 0.85), P(-s * 0.7 + s * 1.4 * k, s * 0.85));
+      end(g);
+    }
+  }
+];
+
+})();
+
+</script>
+
+<script>
+// lib-strip.js - the bottom control strip for the neon-city flyover.
+// Builds its own DOM and CSS, owns the control state, and reports every change
+// back through onChange. Defines exactly one global: window.buildStrip.
+
+(function () {
+  "use strict";
+
+  // Injected once per document, no matter how many strips get built.
+  var STYLE_ID = "strip-style";
+
+  var CSS = [
+    // Panel: fixed to the bottom, full width, sits above the canvas.
+    ".strip{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:stretch;",
+    "background:rgba(8,9,12,.92);border-top:1px solid rgba(255,255,255,.14);",
+    // Backdrop blur keeps the city readable through the panel where supported.
+    "-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);",
+    // Safe area keeps the row clear of the iPhone home indicator.
+    "padding-bottom:env(safe-area-inset-bottom);",
+    "font-family:ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;",
+    "color:#E8ECF2;transition:transform .22s ease}",
+
+    // Hidden state slides the whole panel out of view rather than removing it.
+    ".strip.is-hidden{transform:translateY(110%);pointer-events:none}",
+
+    // Main area: holds the scrolling row and its end fades, and may shrink.
+    ".strip-main{position:relative;flex:1 1 auto;min-width:0}",
+
+    // Scroller: the single horizontal row. Scrollbar hidden, sideways scroll kept.
+    ".strip-scroll{display:flex;align-items:stretch;gap:14px;",
+    "overflow-x:auto;overflow-y:hidden;scrollbar-width:none;",
+    "-webkit-overflow-scrolling:touch;padding:8px 12px}",
+    ".strip-scroll::-webkit-scrollbar{display:none}",
+
+    // Soft fades at both ends signal there is more row off-screen.
+    ".strip-fade{position:absolute;top:0;bottom:0;width:36px;pointer-events:none;z-index:2}",
+    ".strip-fade.left{left:0;background:linear-gradient(90deg,#0B0D11,rgba(11,13,17,0))}",
+    ".strip-fade.right{right:0;background:linear-gradient(270deg,#0B0D11,rgba(11,13,17,0))}",
+
+    // One control cell: label stacked over the input, fixed minimum width.
+    ".strip-cell{display:flex;flex-direction:column;justify-content:center;gap:4px;flex:0 0 auto}",
+
+    // Labels: small uppercase mono, muted, wide tracking.
+    ".strip-label{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;",
+    "font-size:9px;line-height:1;letter-spacing:.14em;text-transform:uppercase;",
+    "color:rgba(232,236,242,.48);white-space:nowrap}",
+
+    // Selects: dark field, accent-tinted focus, 44px tall for touch.
+    ".strip-select{appearance:none;-webkit-appearance:none;",
+    "min-height:44px;min-width:132px;max-width:200px;",
+    "padding:0 26px 0 10px;border-radius:6px;",
+    "border:1px solid rgba(255,255,255,.18);background-color:rgba(255,255,255,.05);",
+    // Chevron drawn as a background gradient pair, no image asset needed.
+    "background-image:linear-gradient(45deg,transparent 50%,rgba(232,236,242,.7) 50%),",
+    "linear-gradient(135deg,rgba(232,236,242,.7) 50%,transparent 50%);",
+    "background-position:calc(100% - 14px) 20px,calc(100% - 9px) 20px;",
+    "background-size:5px 5px,5px 5px;background-repeat:no-repeat;",
+    "color:#E8ECF2;font-size:13px;font-family:inherit;cursor:pointer}",
+    ".strip-select option{background:#0B0D11;color:#E8ECF2}",
+
+    // The preset cell reads as the driver: accent text, then a divider.
+    ".strip-cell.preset .strip-select{border-color:var(--accent,#38BDF8);",
+    "color:var(--accent,#38BDF8)}",
+    ".strip-divider{flex:0 0 auto;width:1px;align-self:stretch;margin:4px 0;",
+    "background:rgba(255,255,255,.16)}",
+
+    // Slider cell: track and readout share a row under the label.
+    ".strip-slider-row{display:flex;align-items:center;gap:8px;min-height:44px}",
+    ".strip-range{appearance:none;-webkit-appearance:none;width:104px;height:44px;",
+    "background:transparent;cursor:pointer;margin:0}",
+    // Track and thumb need vendor-split rules; they cannot be merged.
+    ".strip-range::-webkit-slider-runnable-track{height:3px;border-radius:2px;",
+    "background:rgba(255,255,255,.22)}",
+    ".strip-range::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;",
+    "border-radius:50%;background:var(--accent,#38BDF8);margin-top:-5.5px;border:0}",
+    ".strip-range::-moz-range-track{height:3px;border-radius:2px;background:rgba(255,255,255,.22)}",
+    ".strip-range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;",
+    "background:var(--accent,#38BDF8);border:0}",
+
+    // Readout: bright mono number, fixed width so the row does not jitter.
+    ".strip-value{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;",
+    "font-size:12px;color:#FFFFFF;min-width:34px;text-align:right;",
+    "font-variant-numeric:tabular-nums}",
+
+    // End cap: never scrolls, so the hide button always sits at the right edge.
+    ".strip-end{flex:0 0 auto;display:flex;align-items:center;padding:0 10px;",
+    "border-left:1px solid rgba(255,255,255,.12)}",
+    ".strip-hide{width:36px;height:36px;border-radius:6px;",
+    "border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);",
+    "color:#E8ECF2;font-size:14px;line-height:1;cursor:pointer;padding:0}",
+
+    // Show button: only visible while the strip is hidden.
+    ".strip-show{position:fixed;right:12px;z-index:50;",
+    "bottom:calc(12px + env(safe-area-inset-bottom));",
+    "min-height:44px;padding:0 14px;border-radius:8px;",
+    "border:1px solid var(--accent,#38BDF8);background:rgba(8,9,12,.92);",
+    "-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);",
+    "color:var(--accent,#38BDF8);cursor:pointer;",
+    "font-family:ui-monospace,SFMono-Regular,Menlo,monospace;",
+    "font-size:10px;letter-spacing:.14em;text-transform:uppercase}",
+    ".strip-show[hidden]{display:none}",
+
+    // One focus treatment for every control in the strip.
+    ".strip :focus-visible,.strip-show:focus-visible{outline:2px solid var(--accent,#38BDF8);",
+    "outline-offset:2px}",
+
+    // Reduced motion drops the slide, the panel just appears and disappears.
+    "@media (prefers-reduced-motion:reduce){.strip{transition:none}}"
+  ].join("");
+
+  // Adds the stylesheet once, keyed by id.
+  function ensureStyle() {
+    if (document.getElementById(STYLE_ID)) return;
+    var el = document.createElement("style");
+    el.id = STYLE_ID;
+    el.textContent = CSS;
+    document.head.appendChild(el);
+  }
+
+  // Builds a <select> from items, no innerHTML anywhere near option text.
+  function makeSelect(items, id) {
+    var sel = document.createElement("select");
+    sel.className = "strip-select";
+    sel.id = id;
+    items.forEach(function (item) {
+      var opt = document.createElement("option");
+      opt.value = String(item.id);
+      opt.textContent = String(item.name);
+      sel.appendChild(opt);
+    });
+    return sel;
+  }
+
+  // Wraps a label and a control into one cell.
+  function makeCell(labelText, controlId, control, extraClass) {
+    var cell = document.createElement("div");
+    cell.className = "strip-cell" + (extraClass ? " " + extraClass : "");
+    var label = document.createElement("label");
+    label.className = "strip-label";
+    label.htmlFor = controlId;
+    label.textContent = String(labelText);
+    cell.appendChild(label);
+    cell.appendChild(control);
+    return cell;
+  }
+
+  // Formats a slider value: integers plain, fractional steps to 2 decimals.
+  function formatValue(value, step) {
+    var n = Number(value);
+    return Number(step) >= 1 ? String(Math.round(n)) : n.toFixed(2);
+  }
+
+  window.buildStrip = function (options) {
+    ensureStyle();
+
+    var groups = options.groups || [];
+    var sliders = options.sliders || [];
+    var presets = options.presets || [];
+    var onChange = typeof options.onChange === "function" ? options.onChange : function () {};
+
+    // Unique id prefix so two strips on one page never collide on label targets.
+    var uid = "s" + Math.random().toString(36).slice(2, 8);
+
+    var state = {};                 // full state, group keys plus slider keys
+    var selects = {};               // key -> <select>
+    var ranges = {};                // key -> <input type=range>
+    var readouts = {};              // key -> value <span>
+    var stepFor = {};               // key -> slider step, for formatting
+    var silent = false;             // true while setState writes controls
+
+    // Panel and scroller.
+    var strip = document.createElement("div");
+    strip.className = "strip";
+    strip.setAttribute("role", "group");
+    strip.setAttribute("aria-label", "Scene controls");
+
+    var main = document.createElement("div");
+    main.className = "strip-main";
+    strip.appendChild(main);
+
+    var scroll = document.createElement("div");
+    scroll.className = "strip-scroll";
+    main.appendChild(scroll);
+
+    // Fades sit above the scroller at both ends.
+    var fadeLeft = document.createElement("div");
+    fadeLeft.className = "strip-fade left";
+    var fadeRight = document.createElement("div");
+    fadeRight.className = "strip-fade right";
+    main.appendChild(fadeLeft);
+    main.appendChild(fadeRight);
+
+    // Fires onChange with a fresh copy unless we are mid setState.
+    function emit() {
+      if (silent) return;
+      onChange(api.getState());
+    }
+
+    // Preset picker at the left end, plus its divider.
+    var presetSelect = null;
+    if (presets.length) {
+      presetSelect = makeSelect(presets, uid + "-preset");
+      scroll.appendChild(makeCell("Preset", presetSelect.id, presetSelect, "preset"));
+      var divider = document.createElement("div");
+      divider.className = "strip-divider";
+      scroll.appendChild(divider);
+
+      presetSelect.addEventListener("change", function () {
+        var found = null;
+        presets.forEach(function (p) {
+          if (String(p.id) === presetSelect.value) found = p;
+        });
+        if (found && found.state) api.setState(found.state);
+      });
+    }
+
+    // Dropdown per group, in the order given.
+    groups.forEach(function (group) {
+      var id = uid + "-" + group.key;
+      var sel = makeSelect(group.items || [], id);
+      selects[group.key] = sel;
+      state[group.key] = sel.value;
+      scroll.appendChild(makeCell(group.label, id, sel));
+      sel.addEventListener("change", function () {
+        state[group.key] = sel.value;
+        emit();
+      });
+    });
+
+    // Slider per entry, each with a live mono readout beside it.
+    sliders.forEach(function (slider) {
+      var id = uid + "-" + slider.key;
+      var row = document.createElement("div");
+      row.className = "strip-slider-row";
+
+      var input = document.createElement("input");
+      input.type = "range";
+      input.className = "strip-range";
+      input.id = id;
+      input.min = String(slider.min);
+      input.max = String(slider.max);
+      input.step = String(slider.step);
+      input.value = String(slider.value);
+
+      var out = document.createElement("span");
+      out.className = "strip-value";
+      out.textContent = formatValue(slider.value, slider.step);
+
+      row.appendChild(input);
+      row.appendChild(out);
+
+      ranges[slider.key] = input;
+      readouts[slider.key] = out;
+      stepFor[slider.key] = slider.step;
+      state[slider.key] = Number(slider.value);
+
+      scroll.appendChild(makeCell(slider.label, id, row));
+
+      input.addEventListener("input", function () {
+        state[slider.key] = Number(input.value);
+        out.textContent = formatValue(input.value, slider.step);
+        emit();
+      });
+    });
+
+    // Hide button in a fixed end cap at the right of the panel.
+    var end = document.createElement("div");
+    end.className = "strip-end";
+    var hideBtn = document.createElement("button");
+    hideBtn.type = "button";
+    hideBtn.className = "strip-hide";
+    hideBtn.textContent = "\u2715";
+    hideBtn.title = "Hide controls";
+    hideBtn.setAttribute("aria-label", "Hide controls");
+    end.appendChild(hideBtn);
+    strip.appendChild(end);
+
+    // Matching floating button that brings the strip back.
+    var showBtn = document.createElement("button");
+    showBtn.type = "button";
+    showBtn.className = "strip-show";
+    showBtn.textContent = "Controls";
+    showBtn.setAttribute("aria-label", "Show controls");
+    showBtn.hidden = true;
+
+    hideBtn.addEventListener("click", function () { api.toggle(); });
+    showBtn.addEventListener("click", function () { api.toggle(); });
+
+    // Hides each end fade once the row is scrolled hard against that end.
+    function updateFades() {
+      var max = scroll.scrollWidth - scroll.clientWidth;
+      fadeLeft.style.opacity = scroll.scrollLeft > 2 ? "1" : "0";
+      fadeRight.style.opacity = max > 2 && scroll.scrollLeft < max - 2 ? "1" : "0";
+    }
+    scroll.addEventListener("scroll", updateFades);
+    window.addEventListener("resize", updateFades);
+
+    var mount = options.mount || document.body;
+    mount.appendChild(strip);
+    mount.appendChild(showBtn);
+    updateFades();
+
+    var api = {
+      // Returns a shallow copy so callers cannot mutate the strip's state.
+      getState: function () {
+        var copy = {};
+        Object.keys(state).forEach(function (k) { copy[k] = state[k]; });
+        return copy;
+      },
+
+      // Merges a partial state, syncs every control, then reports once.
+      setState: function (partial) {
+        silent = true;
+        Object.keys(partial || {}).forEach(function (key) {
+          var value = partial[key];
+          if (selects[key]) {
+            selects[key].value = String(value);
+            state[key] = selects[key].value;
+          } else if (ranges[key]) {
+            ranges[key].value = String(value);
+            state[key] = Number(ranges[key].value);
+            readouts[key].textContent = formatValue(state[key], stepFor[key]);
+          }
+        });
+        silent = false;
+        emit();
+      },
+
+      // Flips the panel between shown and hidden, swapping which button shows.
+      toggle: function () {
+        var hidden = strip.classList.toggle("is-hidden");
+        strip.setAttribute("aria-hidden", hidden ? "true" : "false");
+        showBtn.hidden = !hidden;
+        if (!hidden) { hideBtn.focus(); updateFades(); } else { showBtn.focus(); }
+      }
+    };
+
+    emit();
+    return api;
+  };
+})();
+
+</script>
+
+<script>
+/* The core: camera, world, loop.
+   Everything visual comes from the four catalogues:
+   BUILDINGS, VOICES, PALETTES, SKIES, FLOATS. */
+
+(function () {
+
+  /* ---------- Camera ----------
+     A world point moves into camera space, then divides by depth.
+       dy = y - eye
+       yr = dy*cos(pitch) + z*sin(pitch)
+       zr = z*cos(pitch) - dy*sin(pitch)
+     A wider lens means a shorter focal length, which thins the road. */
+
+  const EYE = 62;                      // level with the taller roofs
+  const PITCH = 9 * Math.PI / 180;     // tilted down
+  const FOV = 88;                      // degrees
+  const SIN_P = Math.sin(PITCH), COS_P = Math.cos(PITCH);
+
+  const ROAD_HALF = 9;
+  const FOG = 340;                     // where the world ends
+  const ROWS = 4;                      // blocks deep on each side of the road
+  const ROW_GAP = 46;                  // metres between one row and the next
+  const VOICE_Y = 46;                  // half the average roof height
+  const VOICE_Z = 105;                 // held, so the voice never recedes
+  const VOICE_R = 7;                   // its radius in world units
+
+  const CALM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const canvas = document.getElementById("city");
+  const ctx = canvas.getContext("2d");
+
+  let width = 0, height = 0, focal = 0, cx = 0, cy = 0, horizon = 0;
+  let city = [], floats = [], time = 0;
+
+  /* ---------- The drawing kit handed to every catalogue entry ---------- */
+
+  function P(x, y, z) {
+    const dy = y - EYE;
+    const zr = z * COS_P - dy * SIN_P;
+    if (zr < 1) return null;
+    const yr = dy * COS_P + z * SIN_P;
+    return [cx + (x * focal) / zr, cy - (yr * focal) / zr, zr];
+  }
+
+  function seg(a, b) {
+    if (!a || !b) return;
+    ctx.moveTo(a[0], a[1]);
+    ctx.lineTo(b[0], b[1]);
+  }
+
+  function fade(z, base) {
+    const depth = 1 - Math.min(1, z / FOG);
+    ctx.globalAlpha = Math.pow(Math.max(0, depth), 1.4) * base;
+  }
+
+  const g = { ctx: ctx, P: P, seg: seg, fade: fade, focal: 0, detail: 0.6, width: 0, height: 0, inks: ["#fff", "#fff"] };
+
+  /* ---------- State ---------- */
+
+  const state = {
+    palette: "shinjuku-crossing",
+    sky: "haze-band",
+    voice: "orbit",
+    float: "torii",
+    skyline: "mixed",
+    speed: 30,
+    density: 1,
+    detail: 0.6,
+    amp: 0.2
+  };
+
+  function find(list, id) {
+    for (const item of list) if (item.id === id) return item;
+    return list[0];
+  }
+
+  /* Skyline recipes, matched loosely against whatever ids the
+     building catalogue actually ships, so a rename cannot break this. */
+  const SKYLINES = [
+    { id: "mixed",     name: "Mixed downtown", match: null },
+    { id: "towers",    name: "Tower district", match: ["tower", "slab", "taper", "setback", "twin", "cylind", "cross"] },
+    { id: "low",       name: "Low blocks",     match: ["podium", "block", "zigg", "monolith"] },
+    { id: "needles",   name: "Needles",        match: ["needle", "spire", "taper", "lattice"] },
+    { id: "monoliths", name: "Monoliths",      match: ["monolith", "slab", "podium"] },
+    { id: "exotic",    name: "Exotic",         match: ["cylind", "tri", "cross", "twin", "zigg", "lattice"] }
+  ];
+
+  function palette() { return find(window.PALETTES, state.palette); }
+
+  function skylineSet() {
+    const recipe = find(SKYLINES, state.skyline);
+    if (!recipe.match) return window.BUILDINGS;
+    const kept = window.BUILDINGS.filter(function (b) {
+      return recipe.match.some(function (needle) { return b.id.indexOf(needle) !== -1; });
+    });
+    return kept.length ? kept : window.BUILDINGS;
+  }
+
+  /* ---------- Building the world ----------
+     Blocks sit in rows going back from the road, not in one line along it.
+     Each row further out is sparser and taller, which is how a real
+     downtown reads from above. */
+
+  function seedCity() {
+    const set = skylineSet();
+    const rng = Math.random;
+    city = [];
+
+    for (const side of [-1, 1]) {
+      for (let row = 0; row < ROWS; row++) {
+        const lateral = ROAD_HALF + 7 + row * ROW_GAP;
+        let z = 6 + rng() * 40;
+
+        while (z < FOG) {
+          const arch = set[Math.floor(rng() * set.length)];
+          const b = arch.make(rng);
+
+          // Rows further from the road carry the taller towers.
+          b.h *= 0.75 + row * 0.16;
+
+          if (rng() < state.density * (1 - row * 0.13)) {
+            city.push({
+              arch: arch,
+              b: b,
+              side: side,
+              row: row,
+              lateral: lateral + rng() * 14,
+              z0: z
+            });
+          }
+
+          z += b.d + 8 + rng() * 34;      // the gap between blocks is the street
+        }
+      }
+    }
+  }
+
+  function seedFloats() {
+    const kind = find(window.FLOATS, state.float);
+    const rng = Math.random;
+    floats = [];
+    for (let z = 40; z < FOG; z += 34 + rng() * 40) {
+      const f = kind.make(rng);
+      f.kind = kind;
+      f.x = (Math.random() - 0.5) * 260;
+      f.y = 62 + Math.random() * 74;
+      f.z = z;
+      f.phase = Math.random() * 6.28;
+      floats.push(f);
+    }
+  }
+
+  /* ---------- Sizing ---------- */
+
+  function resize() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    width = innerWidth;
+    height = innerHeight;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = width / 2;
+    cy = height / 2;
+
+    // The lens is set across the width, then held wide enough on a tall
+    // phone frame that the towers do not stretch.
+    focal = (width / 2) / Math.tan((FOV * Math.PI / 180) / 2);
+    if (height > width) focal = Math.max(focal, (height / 2) / Math.tan((112 * Math.PI / 180) / 2));
+
+    horizon = cy - Math.tan(PITCH) * focal;
+    g.focal = focal;
+    g.width = width;
+    g.height = height;
+  }
+
+  /* ---------- The frame ---------- */
+
+  function draw(dt) {
+    time += dt;
+    const pal = palette();
+    const move = state.speed * dt;
+
+    g.detail = state.detail;
+    g.inks = pal.inks;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = "#020306";
+    ctx.fillRect(0, 0, width, height);
+
+    // --- behind everything ---
+    ctx.strokeStyle = pal.inks[1];
+    ctx.fillStyle = pal.inks[1];
+    ctx.shadowBlur = 0;
+    find(window.SKIES, state.sky).draw(g, horizon, time);
+    ctx.globalAlpha = 1;
+
+    ctx.lineWidth = 1;
+    ctx.shadowBlur = pal.glow;
+
+    // --- the ground ---
+    ctx.strokeStyle = pal.inks[1];
+    ctx.shadowColor = pal.inks[1];
+    const spacing = 14;
+    const roll = (time * state.speed) % spacing;
+
+    ctx.beginPath();
+    for (const side of [-1, 1]) seg(P(side * ROAD_HALF, 0, 2), P(side * ROAD_HALF, 0, FOG));
+    fade(2, 0.75);
+    ctx.stroke();
+
+    for (let z = 2 + roll; z < FOG; z += spacing) {
+      ctx.beginPath();
+      seg(P(-ROAD_HALF, 0, z), P(ROAD_HALF, 0, z));
+      fade(z, 0.45);
+      ctx.stroke();
+    }
+
+    ctx.globalAlpha = 0.3;
+    ctx.beginPath();
+    ctx.moveTo(0, horizon);
+    ctx.lineTo(width, horizon);
+    ctx.stroke();
+
+    // --- the city, far to near ---
+    ctx.strokeStyle = pal.inks[0];
+    ctx.shadowColor = pal.inks[0];
+    city.sort(function (a, b) { return b.z0 - a.z0; });
+
+    for (const item of city) {
+      item.z0 -= move;
+      if (item.z0 + item.b.d < 1.5) {
+        // Rebuilt at the back of the world, so the drive never ends.
+        const set = skylineSet();
+        item.arch = set[Math.floor(Math.random() * set.length)];
+        item.b = item.arch.make(Math.random);
+        item.b.h *= 0.75 + item.row * 0.16;
+        item.z0 = FOG + Math.random() * 40;
+        continue;
+      }
+      // Rows behind the front one draw quieter, so the city has depth.
+      g.detail = state.detail * (1 - item.row * 0.18);
+      const x0 = item.side > 0 ? item.lateral : -(item.lateral + item.b.w);
+      item.arch.draw(g, item.b, x0, item.z0);
+    }
+
+    // --- signs hanging over the city ---
+    for (const f of floats) {
+      f.z -= move;
+      if (f.z < 4) { f.z = FOG + Math.random() * 30; f.x = (Math.random() - 0.5) * 260; }
+      f.kind.draw(g, f, time);
+    }
+
+    // --- the voice ---
+    ctx.globalAlpha = 1;
+    const anchor = P(0, VOICE_Y, VOICE_Z);
+    if (anchor) {
+      const r = (VOICE_R * focal) / anchor[2];
+      ctx.save();
+      ctx.translate(anchor[0], anchor[1]);
+      ctx.strokeStyle = pal.inks[1];
+      ctx.fillStyle = pal.inks[1];
+      ctx.shadowColor = pal.inks[1];
+      ctx.shadowBlur = pal.glow + 12;
+      ctx.lineWidth = 1.2;
+      find(window.VOICES, state.voice).draw(ctx, r, time, state.amp, pal.inks);
+      ctx.restore();
+    }
+
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  }
+
+  /* ---------- Controls ---------- */
+
+  const PRESETS = [
+    { id: "tokyo",   name: "Neon Tokyo",    state: { palette: "shinjuku-crossing", sky: "haze-band",   voice: "orbit",       float: "torii",     skyline: "towers",    speed: 30, density: 1.1,  detail: 0.6,  amp: 0.35 } },
+    { id: "ghost",   name: "Ghost teal",    state: { palette: "sector-indigo",     sky: "clear-night", voice: "waveform",    float: "sign-rod",  skyline: "needles",   speed: 24, density: 0.7,  detail: 0.5,  amp: 0.5 } },
+    { id: "sundown", name: "Sundown",       state: { palette: "ginza-gold",        sky: "sun-bands",   voice: "orbit",       float: "ring",      skyline: "low",       speed: 34, density: 0.8,  detail: 0.55, amp: 0.3 } },
+    { id: "house",   name: "House colours", state: { palette: "vermilion-signal",  sky: "haze-band",   voice: "orbit",       float: "billboard", skyline: "mixed",     speed: 26, density: 0.9,  detail: 0.6,  amp: 0.3 } },
+    { id: "print",   name: "White print",   state: { palette: "broadsheet",        sky: "clear-night", voice: "polyhedron",  float: "torii",     skyline: "exotic",    speed: 20, density: 1,    detail: 0.85, amp: 0.2 } },
+    { id: "empty",   name: "Nearly empty",  state: { palette: "ice-lantern",       sky: "star-field",  voice: "waveform",    float: "drone",     skyline: "monoliths", speed: 18, density: 0.35, detail: 0.4,  amp: 0.15 } },
+    { id: "planet",  name: "Low planet",    state: { palette: "harbour-fog",       sky: "low-planet",  voice: "spectrum-ring", float: "blimp",   skyline: "monoliths", speed: 22, density: 0.6,  detail: 0.5,  amp: 0.4 } },
+    { id: "mega",    name: "Megastructure", state: { palette: "jade-circuit",      sky: "megastructure", voice: "gyroscope", float: "glyph",     skyline: "exotic",    speed: 28, density: 1.2,  detail: 0.7,  amp: 0.3 } }
+  ];
+
+  function options(list) {
+    return list.map(function (item) { return { id: item.id, name: item.name }; });
+  }
+
+  /* Anything that changes what exists in the world rebuilds it.
+     Anything that only changes how it looks does not. */
+  function apply(next) {
+    const rebuildCity = next.skyline !== state.skyline || next.density !== state.density;
+    const rebuildFloats = next.float !== state.float;
+    Object.assign(state, next);
+    document.documentElement.style.setProperty("--accent", palette().inks[0]);
+    if (rebuildCity) seedCity();
+    if (rebuildFloats) seedFloats();
+    if (CALM) draw(0);
+  }
+
+  /* ---------- Go ---------- */
+
+  resize();
+  addEventListener("resize", function () { resize(); if (CALM) draw(0); });
+
+  seedCity();
+  seedFloats();
+  document.documentElement.style.setProperty("--accent", palette().inks[0]);
+
+  const strip = window.buildStrip({
+    mount: document.body,
+    groups: [
+      { key: "palette", label: "Colour", items: options(window.PALETTES) },
+      { key: "sky", label: "Sky", items: options(window.SKIES) },
+      { key: "voice", label: "Voice", items: options(window.VOICES) },
+      { key: "float", label: "Sky objects", items: options(window.FLOATS) },
+      { key: "skyline", label: "Skyline", items: options(SKYLINES) }
+    ],
+    sliders: [
+      { key: "speed", label: "Speed", min: 0, max: 80, step: 1, value: state.speed },
+      { key: "density", label: "Density", min: 0.2, max: 2, step: 0.05, value: state.density },
+      { key: "detail", label: "Detail", min: 0, max: 1, step: 0.05, value: state.detail },
+      { key: "amp", label: "Voice level", min: 0, max: 1, step: 0.01, value: state.amp }
+    ],
+    presets: PRESETS,
+    onChange: apply
+  });
+
+  // The strip starts on its first preset, and the core follows it, so the
+  // dropdowns can never disagree with what is on screen.
+  strip.setState(PRESETS[0].state);
+
+  let last = performance.now();
+
+  function frame(now) {
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    draw(dt);
+    requestAnimationFrame(frame);
+  }
+
+  if (CALM) draw(0); else requestAnimationFrame(frame);
+
+})();
+
+</script>
+
+</body>
+</html>

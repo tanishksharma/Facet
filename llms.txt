@@ -3196,6 +3196,10 @@ per page at exact size.
 result total), one-pager; true print margins, one .page per sheet.
 /templates/card.html — 3.5x2in business card, front and back, plus a
 print sheet: five duplex-aligned pairs per A4 at exact size.
+/templates/city.html — neon city console: a generative wireframe city
+on one 2D canvas behind a control strip, with five swappable catalogues
+(12 building archetypes, 8 voice objects, 14 palettes, 7 skies, 10 sky
+objects) and eight presets; the pattern for any canvas-driven hero.
 /templates/manifest.json — the PWA manifest template with the icon
 checklist. robots.txt and sitemap.xml ship at the site root as the
 copyable pattern.
