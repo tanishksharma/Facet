@@ -18,6 +18,7 @@
   <script src="/lib/facet.js" defer></script>
   <script src="/lib/gem.js" defer></script>
   <script src="/lib/facet-shaders.js" defer></script>
+  <script src="/lib/facet-daysky.js" defer></script>
   <link rel="stylesheet" href="/docs.css">
 </head>
 <body>
@@ -3716,7 +3717,7 @@ https://facet.tanishksharma.com/templates/city.html</code></pre>
       <article class="element stack" id="backgrounds">
         <h3 data-status="live">Backgrounds</h3>
         <p>
-          Very faint materials for big quiet surfaces. Four variants: Grid shows its five looks stacked below — the technical grid, the dot grid, the circle grid of outlined rings, graph paper and the custom grid of your own symbols — and each area carries its own controls, so every look tunes independently; Fluid is the liquid field, blobs melting into one another and drifting apart like a lava lamp; Shader is a continuous opalescent gradient drawn on the GPU by the optional facet-shaders.js engine; Aero is the living Frutiger Aero scene, with soap bubbles rising, fish swimming and light shafts drifting. The technical, dot and circle grids can also scatter your own characters across the pattern, at a size you pick, in a fresh arrangement on every visit.
+          Very faint materials for big quiet surfaces. Five variants: Grid shows its five looks stacked below — the technical grid, the dot grid, the circle grid of outlined rings, graph paper and the custom grid of your own symbols — and each area carries its own controls, so every look tunes independently; Fluid is the liquid field, blobs melting into one another and drifting apart like a lava lamp; Shader is a continuous opalescent gradient drawn on the GPU by the optional facet-shaders.js engine; Aero is the living Frutiger Aero scene, with soap bubbles rising, fish swimming and light shafts drifting; Day sky is a volumetric cloud sky living through a whole day — dawn to night with a travelling sun and moon — from the optional facet-daysky.js engine. The technical, dot and circle grids can also scatter your own characters across the pattern, at a size you pick, in a fresh arrangement on every visit.
         </p>
 
         <p class="chips variant-row" role="group" aria-label="Variant">
@@ -3724,6 +3725,7 @@ https://facet.tanishksharma.com/templates/city.html</code></pre>
           <button class="chip" aria-pressed="false" data-bg-variant="fluid" data-tip="The liquid field — blobs melt together and drift apart">Fluid</button>
           <button class="chip" aria-pressed="false" data-bg-variant="shader" data-tip="The opalescent GPU gradient — needs the optional facet-shaders.js engine">Shader</button>
           <button class="chip" aria-pressed="false" data-bg-variant="aero" data-tip="The living Frutiger Aero scene: bubbles, fish and light shafts">Aero</button>
+          <button class="chip" aria-pressed="false" data-bg-variant="daysky" data-tip="The volumetric day cycle — needs the optional facet-daysky.js engine">Day sky</button>
         </p>
 
         <div class="demo stack">
@@ -3964,6 +3966,17 @@ https://facet.tanishksharma.com/templates/city.html</code></pre>
                 <button class="chip" aria-pressed="true" data-shader-swirl-chip="0.1" data-tip="The default — a hint of vortex">Default</button>
                 <button class="chip" aria-pressed="false" data-shader-swirl-chip="0.5" data-tip="A clear whirl">Whirl</button>
                 <button class="chip" aria-pressed="false" data-shader-swirl-chip="0.9" data-tip="Full vortex">Vortex</button>
+              </p>
+            </div>
+          </section>
+          <section id="bg-variant-daysky" data-bg-daysky data-daysky="loop" data-daysky-loop="20" hidden style="min-height: 22rem; overflow: hidden; border-radius: var(--radius-card);">
+            <h4 style="position: relative; z-index: 2; margin: var(--space-card) var(--space-card) 0; padding: var(--space-tight) var(--space-inline);">The day cycle</h4>
+            <p style="position: relative; z-index: 2; margin: var(--space-tight) var(--space-card) var(--space-card); padding: var(--space-tight) var(--space-inline);">A raymarched cloud sky living through a whole day — dawn reds, midday blue, golden hour, violet dusk, indigo night — with a soft arcing sunlight and a hazy moon. Rendered by <a href="https://www.vantajs.com/?effect=clouds" target="_blank" rel="noopener">Vanta.js</a> (MIT, shader after Inigo Quilez), loaded live at runtime by the optional engine. Here it plays a fast loop; on a real page it follows the visitor's clock.</p>
+            <div class="stack" data-demo-chrome style="position: relative; z-index: 2; padding: 0 var(--space-card) var(--space-card);">
+              <p class="chips" role="group" aria-label="Day length" style="margin: 0;">
+                <button class="chip" aria-pressed="true" data-daysky-chip="20" data-tip="The whole day in twenty seconds">20s loop</button>
+                <button class="chip" aria-pressed="false" data-daysky-chip="60" data-tip="The whole day in a minute">60s loop</button>
+                <button class="chip" aria-pressed="false" data-daysky-chip="clock" data-tip="The sky matches your local time — the shipped default">Real time</button>
               </p>
             </div>
           </section>

@@ -29,6 +29,11 @@ The repo root is the library's website, deployed by Vercel as a static site on e
                    Shaders (shaders.paper.design, Apache-2.0), whose
                    published package it imports live at runtime; nothing
                    of theirs is hosted or forked here
+  facet-daysky.js  optional volumetric day-cycle sky — powered by Vanta.js
+                   clouds (vantajs.com, MIT, shader after Inigo Quilez) on
+                   three.js, both loaded live at runtime from the authors'
+                   published packages; the engine adds only the day-cycle
+                   choreography (palette keyframes, the sun and the moon)
   gem.js           the animated SVG gemstone engine (optional extra script;
                    fully standalone — cuts, stones, jeweller lighting effects;
                    the site's brand mark is one, spinning, with fire)

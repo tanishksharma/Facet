@@ -138,7 +138,12 @@ backgrounds from the optional shader engine (/lib/facet-shaders.js) —
 data-bg-shader mounts Paper Shaders' mesh gradient
 (shaders.paper.design, Apache-2.0, imported live from the authors'
 published package, never hosted here) into any surface (see the
-Shader backgrounds section).
+Shader backgrounds section); a volumetric day-cycle sky from the
+optional day-sky engine (/lib/facet-daysky.js) — data-bg-daysky runs
+Vanta.js's raymarched clouds (vantajs.com, MIT, loaded live from the
+authors' published package) through a whole day of palettes with a
+travelling sun and moon, following the visitor's clock (see the Day
+sky background section).
 
 Base layer: raw semantic HTML looks designed with no classes; one visible
 keyboard focus ring everywhere; selection colors, thin scrollbars,
@@ -269,7 +274,9 @@ host; everything is served from /lib on whatever domain hosts it.)
 Optional extras, each its own additional script tag, only when used:
 /lib/gem.js (animated gemstones — see the Gems section),
 /lib/facet-shaders.js (WebGL shader backgrounds powered by Paper
-Shaders — see the Shader backgrounds section) and the service-worker
+Shaders — see the Shader backgrounds section),
+/lib/facet-daysky.js (the volumetric day-cycle sky powered by
+Vanta.js — see the Day sky background section) and the service-worker
 engine /lib/facet-sw.js (loaded from a one-line sw.js stub, not a
 script tag — see the PWA section).
 
@@ -1725,6 +1732,40 @@ has — pair data-bg-shader with data-bg-fluid for a same-palette
 fallback. prefers-reduced-motion mounts the gradient static.
 facetShaders.mount(el) mounts a late-added surface; every mount
 stores its handle on el.__facetShader (with .dispose()).
+
+### Day sky background (facet-daysky.js)
+
+WHEN TO USE: when a page's ground should be a living sky — a
+raymarched volumetric cloud field that lives through a whole day:
+dawn reds into morning and midday blues, golden hour, violet dusk and
+indigo night, with a soft arcing suggestion of sunlight by day and a
+hazy moon crossing the night. POWERED BY VANTA.JS (vantajs.com, MIT,
+by Teng Bao; the cloud shader descends from Inigo Quilez's raymarching
+work) on three.js. Facet does not host or fork their code:
+/lib/facet-daysky.js loads the published packages from jsdelivr at
+runtime (pinned) — all credit for the cloud rendering is theirs; the
+engine adds only the declarative adapter and the day-cycle
+choreography (nine palette keyframes interpolated continuously, the
+sun and the moon). One optional script tag beside facet.js (an
+optional engine like gem.js; no component requires it):
+
+    <script src="https://facet.tanishksharma.com/lib/facet-daysky.js" defer></script>
+
+    <div class="bg-fixed" data-bg-daysky aria-hidden="true"></div>
+
+data-bg-daysky mounts the cycle at the element's own size (give it
+one — .bg-fixed for a whole-page ground). data-daysky picks the mode:
+"clock" (the default) folds the visitor's local time onto the cycle —
+06:00 to 18:30 is the sun's arc, the rest of the night the moon's
+pass — so the page's sky matches the world's; "loop" plays the whole
+day on a fixed loop, data-daysky-loop seconds per day (default 60).
+Degrades honestly: prefers-reduced-motion, no WebGL or an unreachable
+CDN paint a still gradient of the current moment's sky instead — no
+drift, no sun, no moon. facetDaysky.mount(el) mounts a late-added
+surface; every mount stores its handle on el.__facetDaysky (with
+.dispose()). The palette and clock maths are exposed for hosts that
+want to match interface colors to the sky: facetDaysky.paletteAt(t)
+and facetDaysky.clockT(date).
 
 ### Gems (gem.js)
 

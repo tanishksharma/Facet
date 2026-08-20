@@ -278,6 +278,7 @@ const BG_VARIANT_LLMS = {
   fluid: "backgrounds — fluid",
   shader: "shader backgrounds (facet-shaders.js)",
   aero: "backgrounds — aero",
+  daysky: "day sky background (facet-daysky.js)",
 };
 function setBackgroundNotes(variant) {
   if (!llmsSections) return;   // llms.txt not loaded (yet) — fallback stays
@@ -326,20 +327,23 @@ function initBackgroundDemo() {
   const fluid = document.querySelector("#bg-variant-fluid");
   const shader = document.querySelector("#bg-variant-shader");
   const aero = document.querySelector("#bg-variant-aero");
+  const daysky = document.querySelector("#bg-variant-daysky");
   const surfaces = [...document.querySelectorAll("[data-bg-surface]")];
   if (!article || !fluid || !surfaces.length) return;
   const refresh = () => renderSnippet(article);
 
   for (const chip of document.querySelectorAll("[data-bg-variant]")) {
     chip.addEventListener("click", () => {
-      const v = chip.dataset.bgVariant;   // "grid" | "fluid" | "shader" | "aero"
+      const v = chip.dataset.bgVariant;   // "grid" | "fluid" | "shader" | "aero" | "daysky"
       for (const s of surfaces) s.hidden = v !== "grid";
       fluid.hidden = v !== "fluid";
       if (shader) shader.hidden = v !== "shader";
       if (aero) aero.hidden = v !== "aero";
+      if (daysky) daysky.hidden = v !== "daysky";
       if (v === "fluid" && window.facet) facet.fluidBackground(fluid);
       if (v === "shader" && window.facetShaders && shader) facetShaders.mount(shader);
       if (v === "aero" && window.facet && aero) facet.aeroAmbient(aero);
+      if (v === "daysky" && window.facetDaysky && daysky) facetDaysky.mount(daysky);
       for (const c of document.querySelectorAll("[data-bg-variant]")) {
         c.setAttribute("aria-pressed", String(c === chip));
       }
@@ -1712,6 +1716,37 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 })();
 
+
+/* Backgrounds wall · day-sky pace. Docs chrome only: each chip rewrites the
+   surface's data-daysky attributes and remounts the optional engine, so the
+   copied snippet always matches what plays. */
+(function () {
+  var demo = document.getElementById("bg-variant-daysky");
+  if (!demo) return;
+  var chips = document.querySelectorAll("[data-daysky-chip]");
+  for (var i = 0; i < chips.length; i++) {
+    (function (chip) {
+      chip.addEventListener("click", function (e) {
+        e.stopImmediatePropagation();   // radio row — see the shader knobs note
+        var kin = chip.parentElement.querySelectorAll(".chip");
+        for (var k = 0; k < kin.length; k++) {
+          kin[k].setAttribute("aria-pressed", kin[k] === chip ? "true" : "false");
+        }
+        var v = chip.getAttribute("data-daysky-chip");
+        if (v === "clock") {
+          demo.setAttribute("data-daysky", "clock");
+          demo.removeAttribute("data-daysky-loop");
+        } else {
+          demo.setAttribute("data-daysky", "loop");
+          demo.setAttribute("data-daysky-loop", v);
+        }
+        if (demo.__facetDaysky) demo.__facetDaysky.dispose();
+        if (window.facetDaysky) facetDaysky.mount(demo);
+        renderSnippet(document.querySelector("#backgrounds"));
+      });
+    })(chips[i]);
+  }
+})();
 
 /* Backgrounds wall · shader knobs. Docs chrome only: each chip writes the
    matching data-shader-* attribute onto the demo surface (so the copied
