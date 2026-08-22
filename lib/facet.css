@@ -2102,6 +2102,16 @@ body [data-theme] {
   margin: 0;
 }
 
+/* iOS paints a grey rectangle over anything tappable the moment a finger
+   lands on it — over the whole box, ignoring the element's own radius, so
+   a bare button flashes as a hard-edged slab. Every control here already
+   shows its own :active state, so the platform's rectangle is redundant
+   noise. :where() keeps specificity at 0, so an author who wants it back
+   just declares it. */
+:where(a, button, summary, label, select, [role="button"], [tabindex]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Color eases everywhere by default: hover tints, status flips, theme
    and mode switches all cross-fade instead of snapping. Paint-only
    properties on purpose — transform, size and position stay instant
