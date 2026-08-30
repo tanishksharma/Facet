@@ -8137,7 +8137,12 @@ body.nav-menu-open { overflow: hidden; touch-action: none; }
   position: fixed;
   inset: 0;
   z-index: 60;
-  background: rgb(0 0 0 / 0.94);      /* deliberately fixed: dark in every theme */
+  /* OPAQUE, not 94%: a semi-transparent full-screen dim is one more layer
+     for a compositor to drop, and this screen is the one an iPhone shows
+     when it has no install prompt of its own — text on a ground that did
+     not paint is unreadable. The 6% of page showing through bought
+     nothing. The palette stays deliberately fixed: dark in every theme. */
+  background: rgb(0 0 0);
   display: flex;
   flex-direction: column;
   align-items: center;
