@@ -4163,7 +4163,13 @@ https://facet.tanishksharma.com/templates/card.html</code></pre>
       <article class="element stack" id="tab-bar" data-cat="appkit">
         <h3 data-status="live">Tab bar</h3>
         <p>
-          The app's floating command bar, like the pill in Apple's Photos app: a round menu button that slides the navigation in from the left edge, the pill of sections with its gliding highlight, and a round settings button that slides the settings panel in from the right. Every piece is optional, and one extra class turns the same bar into a desktop site bar pinned to the top. This site's own bar — with its corner panels condensing in and out of their buttons — is the whole system running live.
+          The app's floating command bar, like the pill in Apple's Photos app: a round menu button that slides the navigation in from the left edge, the pill of sections with its gliding highlight, and a round settings button that slides the settings panel in from the right. Every piece is optional, and one extra class turns the same bar into a desktop site bar pinned to the top. This site's own bar — with its corner panels condensing in and out of their buttons — is the whole system running live. One attribute makes it get out of the way: the bar then leaves through its own edge as the page is read down, with the finger rather than on a clock of its own, and a touch of scroll the other way brings it back.
+        </p>
+        <p class="text-caption">
+          Getting out of the way needs a page long enough to scroll and a bar
+          that really floats, so it cannot be shown in the flow here — the demo
+          below is the bar at rest. Add <code>data-bar-hide</code> to try it on
+          a page of your own.
         </p>
         <div class="demo stack">
           <p class="eyebrow" style="margin: 0;">Phone · the app bar — floats at the bottom</p>

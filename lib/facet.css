@@ -6989,6 +6989,37 @@ button.list-item:active { background: var(--surface-active); }
     z-index: 1;
   }
 }
+/* GETTING OUT OF THE WAY — data-bar-hide on the .tab-bar.
+   Reading DOWN, the bar leaves through its own edge, and it leaves WITH
+   THE FINGER rather than on a clock of its own: --bar-away is how far out
+   it is, 0 showing and 1 gone, and initBarHide() sets it from how far you
+   have scrolled. That is the whole point — a timed animation runs at its
+   own speed, so a fast flick outruns it and the bar is simply not there
+   by the time the eye arrives. It travels far enough to clear its own
+   height, its edge inset and the home indicator with room to spare, so no
+   sliver is ever left showing. No transition is declared here on purpose:
+   the JS owns the whole move, and a timed one would be a second animator
+   fighting it. The bottom pill leaves downward; the top site bar leaves
+   upward, through the edge it is pinned to. */
+.tab-bar[data-bar-hide] {
+  --bar-away: 0;
+  transform: translate(-50%, calc(
+    var(--bar-away) * (100% + var(--space-inline) + var(--safe-bottom) + 3rem)));
+  will-change: transform;
+}
+@media (min-width: 40rem) {
+  .tab-bar-top[data-bar-hide] {
+    transform: translateY(calc(
+      var(--bar-away) * -1 * (100% + var(--space-pin) + var(--safe-top) + 3rem)));
+  }
+}
+/* A bar that slides off the screen and back is a large movement, so
+   reduced motion keeps it put: the behaviour stops writing --bar-away and
+   the bar simply stays where it belongs. */
+@media (prefers-reduced-motion: reduce) {
+  .tab-bar[data-bar-hide] { --bar-away: 0 !important; }
+}
+
 .tab-indicator {
   position: absolute;
   top: var(--space-tight);
