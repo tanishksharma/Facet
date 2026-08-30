@@ -1906,8 +1906,21 @@ reason the wrapper law allows a container inside a container.
       <section class="snap-section"> results </section>
     </main>
 
-With facet.js present, a full-viewport .snap auto-upgrades to the
-iOS-proven pager (CSS mandatory snap breaks on iOS): the outer never
+With facet.js present, a full-viewport .snap upgrades itself in one of
+two modes, chosen from the sections' shape. NATIVE MODE (.is-snapped) —
+when every section FITS the viewport, the app-fold case where scrolling
+happens in nested scrollers inside the sections: the base CSS
+scroll-snap stays in charge (mandatory, scroll-snap-stop: always so
+momentum crosses one section per gesture), and facet.js only adds the
+"facet:section" events, the facetPager API and a hidden scrollbar.
+Reaching an inner list's edge never pages the fold — iOS gesture
+latching hands a swipe to the snap container only on a NEW gesture.
+RULE for native mode: inner scrollers must NOT set overscroll-behavior:
+contain — it blocks that handoff and the fold becomes unpageable from
+that pane. data-pager="snap" forces this mode; the scroll gauge stays a
+pager-mode feature. PAGER MODE (.is-paged, forced by
+data-pager="spring") — when any section can OUTGROW the viewport, where
+CSS mandatory snap breaks on iOS: the outer never
 free-scrolls — a spring (w=11, z=0.9, tuned and final) moves it between
 section tops — sections stay one viewport tall and scroll natively
 inside themselves, pulling past an edge pages to the neighbour with a
@@ -1915,10 +1928,10 @@ elastic hint, a wheel edge-push advances once with a cooldown, and
 paging up lands at the previous section's bottom. After a transition
 lands, input is swallowed for a beat so residual momentum from the
 same swipe can never page twice. Gestures starting on
-.chart, input or textarea are ignored. The pager dispatches
-"facet:section" ({id, index}) on the .snap and exposes
+.chart, input or textarea are ignored. Both modes dispatch
+"facet:section" ({id, index}) on the .snap and expose
 element.facetPager {go, toEl, index, settle}. data-pager="off" opts
-out; without JS, plain CSS snapping remains. Each paged section gets
+out entirely; without JS, plain CSS snapping remains. Each paged section gets
 generous top/bottom padding (var(--space-section)) plus clearance
 (var(--nav-menu-clearance)) so its centered content never falls behind
 the fixed nav-menu on a short screen, and a hairline divider marks each
