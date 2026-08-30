@@ -345,12 +345,15 @@
         <article class="element stack" id="fn-pager" data-llms="Snap section">
           <h3>Snap pager</h3>
           <p>
-            Full-page snap sections that survive iOS: facet.js upgrades a
-            .snap container of .snap-section children into a pager with
-            momentum, elastic overscroll and per-section scrolling for
-            sections taller than the screen — the machinery CSS scroll-snap
-            cannot deliver on an iPhone. It wires itself: give the container
-            the class and the pager exists. Links and tab segments carrying
+            Full-page snap sections that survive iOS, in the mode the page
+            needs: sections that all fit the screen keep native CSS
+            scroll-snap and facet.js adds only events and the pager API
+            (app folds with lists inside — reaching a list's edge never
+            flings the page); sections taller than the screen get the
+            spring pager with momentum, elastic overscroll and per-section
+            scrolling — the machinery CSS scroll-snap cannot deliver there
+            on an iPhone. It wires itself: give the container the class and
+            the right mode exists. Links and tab segments carrying
             data-section page to their target.
           </p>
           <pre id="code-fn-pager"><code>&lt;main class="snap"&gt;

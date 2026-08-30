@@ -2102,6 +2102,16 @@ body [data-theme] {
   margin: 0;
 }
 
+/* iOS paints a grey rectangle over anything tappable the moment a finger
+   lands on it — over the whole box, ignoring the element's own radius, so
+   a bare button flashes as a hard-edged slab. Every control here already
+   shows its own :active state, so the platform's rectangle is redundant
+   noise. :where() keeps specificity at 0, so an author who wants it back
+   just declares it. */
+:where(a, button, summary, label, select, [role="button"], [tabindex]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Color eases everywhere by default: hover tints, status flips, theme
    and mode switches all cross-fade instead of snapping. Paint-only
    properties on purpose — transform, size and position stay instant
@@ -2819,6 +2829,7 @@ input, textarea, [contenteditable] {
 .snap-section {
   min-height: 100dvh;
   scroll-snap-align: start;
+  scroll-snap-stop: always;   /* momentum crosses one section per gesture, never two */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2833,14 +2844,31 @@ input, textarea, [contenteditable] {
   margin-inline: auto;
 }
 
-/* THE PAGER MODEL (.is-paged, added by facet.js on full-viewport snaps).
-   The law, learned the hard way on iOS: CSS mandatory snap re-snaps any
-   section taller than the viewport and wedges the next gesture;
-   proximity doesn't snap; free-scrolling outers fight their sections.
-   So with JS present the outer NEVER free-scrolls — facet.js springs
-   its scrollTop between section tops — and every section is exactly one
+/* THE TWO SNAP MODES (chosen by facet.js from the sections' shape).
+   NATIVE (.is-snapped): when every section FITS the viewport — app folds
+   whose scrolling happens in nested scrollers — the CSS snapping above
+   stays in charge; facet.js only adds events, the pager API and polish.
+   iOS gesture latching hands a swipe from an inner scroller to the snap
+   container only on a NEW gesture, so reaching a list's edge never
+   flings the page. Inner scrollers must NOT set overscroll-behavior:
+   contain — it blocks that handoff and the fold becomes unpageable.
+   PAGER (.is-paged): the law, learned the hard way on iOS — CSS
+   mandatory snap re-snaps any section TALLER than the viewport and
+   wedges the next gesture; proximity doesn't snap; free-scrolling
+   outers fight their sections. So when any section can outgrow the
+   viewport the outer NEVER free-scrolls — facet.js springs its
+   scrollTop between section tops — and every section is exactly one
    viewport tall, scrolling natively inside itself. Without JS the plain
    CSS snapping above still works. */
+
+/* Native mode chrome: the outer keeps scrolling itself; hide its bar and
+   stop chaining past it (rubber-band stays inside the snap). */
+.snap.is-snapped {
+  scrollbar-width: none;
+  overscroll-behavior-y: contain;
+}
+.snap.is-snapped::-webkit-scrollbar { display: none; }
+
 .snap.is-paged {
   scroll-snap-type: none;
   overflow-y: hidden;
