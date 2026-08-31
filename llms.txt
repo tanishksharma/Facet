@@ -1924,7 +1924,9 @@ CSS mandatory snap breaks on iOS: the outer never
 free-scrolls — a spring (w=11, z=0.9, tuned and final) moves it between
 section tops — sections stay one viewport tall and scroll natively
 inside themselves, pulling past an edge pages to the neighbour with a
-elastic hint, a wheel edge-push advances once with a cooldown, and
+elastic hint, a wheel edge-push advances once with a cooldown (only a
+gesture that begins at the edge pages - a scroll that merely arrives at
+the edge stops there, and the next burst is the push that turns), and
 paging up lands at the previous section's bottom. After a transition
 lands, input is swallowed for a beat so residual momentum from the
 same swipe can never page twice. Gestures starting on
