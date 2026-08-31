@@ -61,6 +61,7 @@
           <li><a href="#fn-fold">Top menu fold</a></li>
           <li><a href="#fn-nav-menu">facet.navMenu</a></li>
           <li><a href="#fn-tab-indicator">facet.tabIndicator</a></li>
+          <li><a href="#fn-show-bar">facet.showBar</a></li>
           <li><a href="#fn-scroll-gauge">facet.scrollGauge</a></li>
           <li><a href="#fn-controls">Settings controls</a></li>
           <li><a href="#fn-appearance">facet.appearance</a></li>
@@ -464,6 +465,17 @@
   bar.moveTo(1);
 &lt;/script&gt;</code></pre>
           <p><button class="btn btn-small" data-copy="#code-fn-tab-indicator" data-tip="Copies this code">Copy</button></p>
+        </article>
+
+        <article class="element stack" id="fn-show-bar" data-llms="Tab bar">
+          <h3 data-status="dev">facet.showBar</h3>
+          <p>A tab bar carrying <code>data-bar-hide</code> leaves through its own
+            edge as the page is read down and comes back on a touch of scroll the
+            other way. It wires itself; this brings the bar back at any moment,
+            for the case the scroll cannot see — a panel opening, a dialog
+            closing, a view swapping underneath it.</p>
+<pre><code class="language-html">&lt;nav class="tab-bar" data-bar-hide aria-label="Sections"&gt;…&lt;/nav&gt;</code></pre>
+<pre><code class="language-js">facet.showBar();   // bring the bar back now</code></pre>
         </article>
 
         <article class="element stack" id="fn-scroll-gauge" data-llms="Scroll gauge">
