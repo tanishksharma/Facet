@@ -47,6 +47,7 @@
           <li><a href="#prompt-paper">11 · Paper pieces</a></li>
           <li><a href="#prompt-ship">12 · Hand over and ship</a></li>
           <li><a href="#prompt-contribute">13 · Contribute a component</a></li>
+          <li><a href="#prompt-animated-fold">14 · An animated first fold</a></li>
           </ul>
         </div>
       </nav>
@@ -401,6 +402,37 @@ library page's wall entry and llms.txt together. A new entry ships
 marked in development; only the maintainer promotes it. Open the
 change as a pull request. Then stop.</code></pre>
         <p><button class="btn btn-small" data-copy="#code-prompt-contribute" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-contribute">Copy</button></p>
+      </article>
+
+      <article class="prompt-entry stack" id="prompt-animated-fold">
+        <h2>14 · The first fold is an animation</h2>
+        <p class="prompt-when">The page should open on a full screen of artwork the visitor plays with, then become an ordinary site below it.</p>
+        <pre id="code-prompt-animated-fold"><code>Build my page so it opens on a full-screen animation and becomes an
+ordinary website below it. I will describe the artwork in my next
+message.
+
+First read https://facet.tanishksharma.com/llms.txt, and in it the
+Build advice entries "The animated fold" and "Animating a fold like
+that". They carry the exact structure, the three-line scroll contract
+and the animation laws. Follow them literally — every law there was
+paid for by a shipped bug — and do not reach for the .snap pager for
+this shape.
+
+Give me exactly two sections at body level: the fold, holding the
+artwork and nothing else, and the site, holding the header, the main
+and the footer. The header is sticky inside the site section, never
+fixed and never over the fold.
+
+Before building the artwork, tell me in a few lines what moves, in
+what phases, and how a visitor gets back to the start — and wait for
+my yes. Then build it with no JavaScript if the state fits radios and
+:has(), which it usually does.
+
+Verify it rather than hoping: pause the animations, step currentTime
+and read the geometry back to find the exact frame anything swaps on,
+and screenshot desktop, tablet and phone every round. Show me those
+before you call it done.</code></pre>
+        <p><button class="btn btn-small" data-copy="#code-prompt-animated-fold" data-tip="Copies the whole prompt to paste into your AI" data-event="copy-prompt-animated-fold">Copy</button></p>
       </article>
     </main>
 

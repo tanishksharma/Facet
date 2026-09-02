@@ -3274,6 +3274,80 @@ Choosing a shell (one per page):
   visible, hash-routed, the browser's Back works.
 Never nest one shell inside another.
 
+The animated fold (one full-screen opening, then an ordinary site):
+a page that opens on a full-viewport piece of artwork the visitor
+plays with, and continues below it as a normal website with a header
+that pins. Do NOT reach for the .snap pager for this — the pager is
+for a story told over several screens. This is two sections and three
+lines of CSS, and the pager's machinery only gets in the way.
+- Structure: exactly two <section>s at body level and nothing else.
+  #fold holds the artwork alone; #site holds the header, the main and
+  the footer. The header lives INSIDE #site so it can never float over
+  the fold, and it is position:sticky, never fixed.
+- The scroll contract, exactly three lines and no fourth:
+    html  { scroll-snap-type: y proximity; scroll-behavior: smooth; }
+    #fold { scroll-snap-align: end;   scroll-snap-stop: always; }
+    #site { scroll-snap-align: start; scroll-snap-stop: always; }
+  proximity, never mandatory: mandatory re-snaps a section taller than
+  the viewport and wedges the next gesture on iOS. align:end plus
+  align:start is ONE boundary written twice, so it settles the same
+  way from either direction. scroll-snap-stop stops a fling skipping
+  it. scroll-behavior:smooth because iOS Safari lands hard without it.
+  How near "near" is is not expressible — it is the browser's number.
+  Do not reimplement snapping in JS to get at it.
+- The fold: min-height:100dvh (never 100vh — vh ignores the mobile
+  browser's collapsing chrome and the fold outgrows the screen, which
+  then fights the snap); overflow:hidden so artwork that animates
+  outward never widens the document; and a centred flex column, so on
+  a screen too small for the artwork to fill the height the heading
+  and the artwork still sit as one group in the middle of the page.
+- Give #site's anchored sections scroll-margin-top of the header's
+  height, or a jump link puts the heading under the pinned bar.
+- The whole pattern runs with no JavaScript: one hidden radio per
+  state plus one for "closed", every clickable part a <label for>,
+  every rule keyed off :has(). Leave NO radio checked at load —
+  "nothing chosen yet" and "closed again" must be different states or
+  the closing animation plays by itself on load.
+
+Animating a fold like that (the laws, each one paid for by a bug):
+- One timing table of custom properties, and no other clock on the
+  page. Every duration and delay is written off it. A second number
+  meaning the same instant is the bug where the two drift apart.
+- One animation per PHASE, laid end to end — never two phases in one
+  @keyframes block. Keyframe percentages are fixed numbers, so a
+  single keyframe set silently pins the phases to whatever ratio those
+  numbers encode, whatever durations you name. Lay them out as:
+    animation: phase1 var(--p1) linear both,
+               phase2 var(--p2) ease-in-out var(--p1) forwards;
+  The second fills FORWARDS only, so it contributes nothing during its
+  delay and wins the moment it starts. The handover moves nothing.
+- A single eased run has exactly two keyframes. An easing curve
+  decelerates to a dead stop at every keyframe it ends on, so one at
+  the midpoint is a visible pause.
+- If one direction is an animation, both directions are. A transition
+  on a property an animation has been driving never fires: measured,
+  172 degrees in one frame.
+- Change transform-origin only at exactly zero degrees, between two
+  zero-degree keyframes, or the element jumps.
+- ONE camera: perspective on the shared parent, never one per child.
+  Per-child perspective gives each its own vanishing point, and pieces
+  that share an edge bend apart there even though their matrices are
+  identical — a projection fault, so inspecting the boxes tells you
+  nothing.
+- Measure the instant to swap a face, never guess it. Edge-on to the
+  VIEWER is not 90 degrees: the eye sits in front of the composition's
+  centre, off to the side of any one hinge, so a piece goes edge-on
+  before it is square to the screen (79 degrees in the case we
+  measured). Pause the animations, step currentTime, read
+  getBoundingClientRect, and centre the swap on the narrowest frame
+  rather than starting it there.
+- A repeating pattern spanning several sibling pieces needs a pitch
+  written as a FRACTION of the whole composition, chosen to divide
+  each piece. A fixed pixel pitch lands out of phase on every piece
+  that does not start at the origin.
+- Reduced motion collapses all of it: transition-duration 0s and
+  animation:none, so every state lands at once.
+
 Choosing navigation (one primary navigation per page): the four
 navigation pieces are different components on purpose — they share the
 same pill and token primitives and the same data-control self-wiring,

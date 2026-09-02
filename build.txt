@@ -38,6 +38,8 @@ person just asked, without being told which.
 - It needs to exist on paper → 11
 - It is done and needs to go live → 12
 - The piece belongs in the Facet library itself → 13
+- The page should open on a full-screen animation, then become an
+  ordinary site below it → 14
 
 Moments compose: a bug found mid-build means prompt 6, then back to
 the build. After every big step, prompt 8's audit is worth a pass —
@@ -400,6 +402,37 @@ and one commit that updates the CSS, the JS if it has behaviour, the
 library page's wall entry and llms.txt together. A new entry ships
 marked in development; only the maintainer promotes it. Open the
 change as a pull request. Then stop.
+----------------------------------------------------------------------
+
+
+## 14 — The first fold is an animation
+
+----------------------------------------------------------------------
+Build my page so it opens on a full-screen animation and becomes an
+ordinary website below it. I will describe the artwork in my next
+message.
+
+First read https://facet.tanishksharma.com/llms.txt, and in it the
+Build advice entries "The animated fold" and "Animating a fold like
+that". They carry the exact structure, the three-line scroll contract
+and the animation laws. Follow them literally — every law there was
+paid for by a shipped bug — and do not reach for the .snap pager for
+this shape.
+
+Give me exactly two sections at body level: the fold, holding the
+artwork and nothing else, and the site, holding the header, the main
+and the footer. The header is sticky inside the site section, never
+fixed and never over the fold.
+
+Before building the artwork, tell me in a few lines what moves, in
+what phases, and how a visitor gets back to the start — and wait for
+my yes. Then build it with no JavaScript if the state fits radios and
+:has(), which it usually does.
+
+Verify it rather than hoping: pause the animations, step currentTime
+and read the geometry back to find the exact frame anything swaps on,
+and screenshot desktop, tablet and phone every round. Show me those
+before you call it done.
 ----------------------------------------------------------------------
 
 

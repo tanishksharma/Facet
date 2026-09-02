@@ -370,6 +370,51 @@ iOS breaks in ways desktop browsers don't. Each rule below exists because we shi
 
 -------------------------------------------------------------------------------
 
+## Animation laws — fixes for real CSS-animation bugs
+===============================================================================
+
+Each of these cost a debugging session on a shipped page. They bind anything
+in the library that moves. The user-facing versions are the two llms.txt Build
+advice entries, "The animated fold" and "Animating a fold like that"; these are
+the builder's short forms. (Learned 2 Sep 2026 on the Origami landing page.)
+
+- One clock law: a page's motion has ONE timing table of custom properties, and
+  every duration and delay is written off it. A second number that means the
+  same instant is the bug where the two silently drift apart.
+- Phase law: one animation per phase, laid end to end — never two phases in one
+  `@keyframes` block. Keyframe percentages are fixed numbers, so a single
+  keyframe set pins the phases to whatever ratio those numbers encode no matter
+  what durations you name. The second animation fills FORWARDS only, so it
+  contributes nothing during its delay and wins the moment it starts.
+- Easing law: a single eased run has exactly two keyframes. An easing curve
+  decelerates to a dead stop at EVERY keyframe it ends on, so an intermediate
+  one at the midpoint is a visible pause, not a smooth pass-through.
+- Reverse law: if one direction is an animation, both directions are. A
+  transition on a property an animation has been driving never fires — measured,
+  172 degrees in a single frame. A CSS-only "closed" state also needs to be
+  distinguishable from "not yet chosen", or the reverse animation plays on load.
+- Hinge law: `transform-origin` changes only at exactly zero degrees, between
+  two zero-degree keyframes, or the element jumps.
+- One camera law: `perspective` goes on the shared parent, never one per child.
+  Per-child perspective gives each child its own vanishing point, so pieces that
+  share an edge bend apart at that edge even though their transform matrices are
+  identical and their boxes are exactly adjacent. It is a projection fault, which
+  is why inspecting the geometry tells you nothing.
+- Measured-moment law: the instant a rotating face is edge-on TO THE VIEWER is
+  not 90 degrees — the eye sits in front of the composition's centre, off to the
+  side of any one hinge, so a face goes edge-on before it is square to the screen
+  (79 degrees in the case measured). Find it by pausing the animations, stepping
+  `currentTime` and reading `getBoundingClientRect()`, then CENTRE the swap on the
+  narrowest frame rather than starting it there. A transition cannot be scrubbed
+  this way — it runs on the wall clock — so sample those in real time instead.
+- Composite-pattern law: a repeating pattern that spans several sibling pieces
+  needs its pitch written as a FRACTION of the whole composition, chosen to divide
+  each piece. A fixed pixel pitch lands out of phase on every piece that does not
+  start at the composition's origin.
+
+
+-------------------------------------------------------------------------------
+
 ## Analytics
 ===============================================================================
 
@@ -497,17 +542,20 @@ The shipped set, by design intent:
 >
 > **SECOND EDITION (27 Jul 2026) — the prompt shelf.** product.html is
 > now a plain LIST of prompts, not a pitch: no hero, no "how it works",
-> no "why this works" — the home page sells, this page lists. Thirteen
+> no "why this works" — the home page sells, this page lists. Fourteen
 > situations, each one card (number · situation title · one muted line
 > naming the moment · the prompt · Copy). build.txt carries the same
-> thirteen plus a "Choosing the prompt" section that maps a project's
+> fourteen plus a "Choosing the prompt" section that maps a project's
 > moment to a prompt number, so an agent sent to the file picks its own
 > prompt instead of being told which. The situations: 1 start from
 > nothing non-technical · 2 start from nothing technical · 3 backend
 > needed · 4 continue a half-built product · 5 add a feature · 6 fix a
 > bug · 7 restyle or rebrand · 8 review and cut · 9 add a language ·
 > 10 make it installable · 11 produce the paper pieces · 12 hand over
-> and ship · 13 contribute a component to the library. Adding a
+> and ship · 13 contribute a component to the library · 14 the first
+> fold is an animation (added 2 Sep 2026, from the Origami landing
+> page; its pattern and laws live as two llms.txt Build advice
+> entries, and the prompt points at them). Adding a
 > situation means adding it in BOTH files plus the Choosing list.
 > Still open: the phase-keyed router that detects the moment
 > automatically (the board row), and worked example runs. The spec
