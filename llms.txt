@@ -132,7 +132,8 @@ print & export system (see its section); animated SVG gemstones from
 the optional gem engine (/lib/gem.js, its own script tag) — data-gem
 turns any sized element into a faceted, cursor/tilt-lit stone with
 34 cuts, 17 stones, jeweller effects (brilliance, highlight,
-sheen, scintillation, fire), a passive idle loop and a perpetual
+sheen, scintillation, fire on by default: multicolor for diamond, white
+for other stones), a passive idle loop and a perpetual
 data-spin brand-mark mode (see the Gems section); true WebGL shader
 backgrounds from the optional shader engine (/lib/facet-shaders.js) —
 data-bg-shader mounts Paper Shaders' mesh gradient
@@ -1735,8 +1736,9 @@ by a single moving light source — the cursor on desktop, device tilt on
 mobile — reproducing the optical properties jewellers name: brilliance
 (facets brighten and darken as the light moves), highlight (two orbiting
 specular spots), sheen (a soft sweeping band), scintillation (sparkle
-stars during movement) and fire (brief spectral flashes on random
-facets; diamond-strength, opt-in elsewhere). The stone is two layers — a
+stars during movement) and fire (brief flashes on random facets).
+Fire is on by default: multicolor for diamond, white for every other stone.
+The stone is two layers — a
 deep pavilion under a translucent crown that shift apart on tilt, so it
 reads as a 3-D body. It lives in its OWN optional file, loaded next to
 facet.js (it is fully standalone and needs neither facet file):
@@ -1770,7 +1772,8 @@ Options (attributes or Gem.create keys):
 - data-effects / effects: which effect layers run — highlight, sheen,
   scintillation, fire, idle. As an attribute list the ON ones (the rest
   turn off); programmatically pass booleans. Defaults: highlight, sheen
-  and scintillation on; fire and idle off. idle is the passive
+  scintillation and fire on; idle off. Explicit fire:false or a
+  data-effects list without fire disables it. idle is the passive
   look-at-me: left alone, the gem traces one full circle every few
   seconds, desynced from its neighbours, yielding instantly to real
   input.
